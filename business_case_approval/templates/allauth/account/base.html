@@ -1,42 +1,54 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
   <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
-    <link rel="stylesheet" href="{% static 'allauth.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto:wght@500&display=swap"
+      rel="stylesheet">
+    <script type="module" crossorigin src="{% static 'i-dot-ai/assets/index.4a9da20d.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'i-dot-ai/assets/index.cf554c68.css' %}">
   </head>
-  <body>
-    {% block body %}
 
-    {% if messages %}
+  <body class="iai bg">
     <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+      {% block body %}
 
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% if messages %}
+          <section class="example">
+            <div class="box w-2-3 center">
+              <div>
+                <strong>Messages:</strong>
+                <ul>
+                  {% for message in messages %}
+                    <li>{{message}}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </section>
         {% endif %}
-      </ul>
+
+        <section class="example">
+          <div class="box w-2-3 center">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </section>
+
+        {% block extra_body %}
+        {% endblock %}
+      {% endblock %}
+
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
+
   </body>
+
 </html>
