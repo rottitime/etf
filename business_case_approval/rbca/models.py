@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
 from . import choices
@@ -130,7 +130,9 @@ class Locations(choices.Choices):
 class LondonReasons(choices.Choices):
     MINISTER_SUPPORT = "Be in direct support of ministers and are expected to meet with ministers personally as part of their core daily tasks, eg private secretaries, permanent secretaries, and their offices."
     BUSINESS_NEEDS = "Require a London presence to satisfy essential business needs / are public-facing operational delivery roles serving the London population."
-    SPECIALIST_FACILITIES = "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere."
+    SPECIALIST_FACILITIES = (
+        "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere."
+    )
 
 
 class Application(models.Model):
@@ -145,9 +147,9 @@ class Application(models.Model):
     ddat_family = models.CharField(max_length=127, choices=DDATFamilies.choices, blank=True, null=True)
     funding_source = models.CharField(max_length=127, choices=FundingSource.choices, blank=True, null=True)
     recruitment_type = models.CharField(max_length=127, choices=RecruitmentTypes.choices, blank=True, null=True)
-    recruitment_mechanism = models.CharField(max_length=127, choices=RecruitmentMechanisms.choices, blank=True, null=True)
-    locations = ArrayField(
-        models.CharField(max_length=127, choices=Locations.choices, blank=True, null=True)
+    recruitment_mechanism = models.CharField(
+        max_length=127, choices=RecruitmentMechanisms.choices, blank=True, null=True
     )
+    locations = ArrayField(models.CharField(max_length=127, choices=Locations.choices, blank=True, null=True))
     location_strategy = models.BooleanField(blank=True, null=True)
     london_reason = models.CharField(max_length=127, choices=LondonReasons.choices, blank=True, null=True)
