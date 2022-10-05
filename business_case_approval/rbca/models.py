@@ -44,7 +44,7 @@ class Grades(choices.Choices):
     CROWN_REPRESENTIATIVE = "Crown Representiative"
 
 
-class BusinessUnits(choices.Choice):
+class BusinessUnits(choices.Choices):
     PRIME_MINISTERS_OFFICE = "Prime Minister's Office"
     OFFICE_FOR_SCIENCE_AND_TECHNOLOGY_STRATEGY = "Office for Science and Technology Strategy"
     CABINET_SECRETARY_GROUP = "Cabinet Secretary Group"
@@ -60,7 +60,7 @@ class BusinessUnits(choices.Choice):
     JOINT_INTELLIGENCE_ORGANISATION = "Joint Intelligence Organisation"
 
 
-class DDATFamilies(choices.Choice):
+class DDATFamilies(choices.Choices):
     DATA = "Data"
     IT_OPERATIONS = "IT operations"
     PRODUCT_AND_DELIVERY = "Product and delivery"
@@ -69,14 +69,14 @@ class DDATFamilies(choices.Choice):
     USER_CENTRED_DESIGN = "User-centred design"
 
 
-class FundingSource(choices.Choice):
+class FundingSource(choices.Choices):
     OGD = "OGD"
     RECHARGE = "Recharge"
     PROGRAMME = "Programme"
     OTHER = "Other"
 
 
-class RecruitmentTypes(choices.Choice):
+class RecruitmentTypes(choices.Choices):
     CONTINGENT_LABOUR = "Contingent Labour"
     CONTINGENT_LABOR_EXTENSION = "Contingent Labor Extension"
     CROWN_REPRESENTATIVE = "Crown Representative"
@@ -94,7 +94,7 @@ class RecruitmentTypes(choices.Choice):
     OTHER = "Other"
 
 
-class RecruitmentMechanisms(choices.Choice):
+class RecruitmentMechanisms(choices.Choices):
     CONTINGENT_LABOUR = "Contingent Labour"
     CONTINGENT_LABOR_EXTENSION = "Contingent Labor Extension"
     EOI_CO = "EOI CO"
@@ -111,7 +111,7 @@ class RecruitmentMechanisms(choices.Choice):
     N_A = "N/A"
 
 
-class Locations(choices.Choice):
+class Locations(choices.Choices):
     GLASGOW = "Glasgow"
     BELFAST = "Belfast"
     CARDIFF = "Cardiff"
@@ -127,7 +127,7 @@ class Locations(choices.Choice):
     LONDON = "London"
 
 
-class LondonReasons(choices.Choice):
+class LondonReasons(choices.Choices):
     MINISTER_SUPPORT = "Be in direct support of ministers and are expected to meet with ministers personally as part of their core daily tasks, eg private secretaries, permanent secretaries, and their offices."
     BUSINESS_NEEDS = "Require a London presence to satisfy essential business needs / are public-facing operational delivery roles serving the London population."
     SPECIALIST_FACILITIES = "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere."
