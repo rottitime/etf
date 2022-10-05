@@ -1,0 +1,6 @@
+---
+applications:
+- name: business-case-approval-develop
+  memory: 512M
+  buildpacks:
+  - python_buildpack

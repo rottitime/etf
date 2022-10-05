@@ -1,0 +1,11 @@
+DJANGO_SETTINGS_MODULE=business_case_approval.settings
+PORT=8010
+DEBUG=True
+DJANGO_SECRET_KEY='1n53cur3K3y'
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_DB=business-case-approval
+POSTGRES_USER=business-case-approval
+POSTGRES_PASSWORD=insecure
+PGPASSWORD=insecure
+DATABASE_URL="postgres://business-case-approval:insecure@db:5432/business-case-approval"
