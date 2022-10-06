@@ -5,8 +5,11 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from . import models
+
 page_order = (
     "index",
+    "exemption",
 )
 
 view_map = {}
@@ -46,3 +49,15 @@ def page_view(request, page_name="index"):
 @register("index")
 def index_view(request, url_data):
     return render(request, "index.html", {**url_data})
+
+
+
+class ExemptionAdmin(forms.ModelForm):
+    class Meta:
+        model = models.Application
+        fields = ["hrbp", "grade", "title"]
+
+
+@register("exemption")
+def exemption_view(request, url_data):
+    return render(request, "exemption.html", {'grades':models.Grades.options, "errors": {}, "data": {}, **url_data})
