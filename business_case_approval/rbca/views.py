@@ -45,4 +45,4 @@ def page_view(request, page_name="index"):
 
 @register("index")
 def index_view(request, url_data):
-    return render(request, "index.html")
+    return render(request, "index.html", {**url_data})
