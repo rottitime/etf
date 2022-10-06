@@ -45,11 +45,9 @@ def page_view(request, page_name="index"):
     return view_map[page_name](request, url_data)
 
 
-
 @register("index")
 def index_view(request, url_data):
     return render(request, "index.html", {**url_data})
-
 
 
 class ExemptionAdmin(forms.ModelForm):
@@ -60,4 +58,4 @@ class ExemptionAdmin(forms.ModelForm):
 
 @register("exemption")
 def exemption_view(request, url_data):
-    return render(request, "exemption.html", {'grades':models.Grades.options, "errors": {}, "data": {}, **url_data})
+    return render(request, "exemption.html", {"grades": models.Grades.options, "errors": {}, "data": {}, **url_data})

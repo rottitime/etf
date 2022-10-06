@@ -49,7 +49,7 @@ class ChoicesMeta(enum.EnumMeta):
 
     @property
     def options(cls):
-        return tuple({'value': value, 'text': text} for value, text in cls.choices)
+        return tuple({"value": value, "text": text} for value, text in cls.choices)
 
 
 class Choices(enum.Enum, metaclass=ChoicesMeta):
