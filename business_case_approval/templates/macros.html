@@ -1,0 +1,23 @@
+{% macro input(name, label, type='text') -%}
+  <div class="form-group {{errors.name and 'error'}}">
+    <label class="label" for="{{name}}">{{label}}</label>
+    <input type="{{type}}" class="{{errors.name and 'invalid'}}" value="{{data.name or ''}}" id="{{name}}" name="{{name}}">
+    {% for error in errors.name %}
+      <span class="error">{{error}}</span>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
+{% macro select(name, label, options, empty_option=False) -%}
+  <div>
+    <label class="label" for="{{name}}">{{label}}</label>
+    <select name="{{name}}" id="{{name}}">
+      {% if empty_option %}
+        <option value="" disabled {{(not data.name) and 'selected'}}>{{empty_option}}</option>
+      {% endif %}
+      {% for option in options %}
+        <option value="{{option.value}}" {{data.name == option.value and 'selected'}}>{{option.text}}</option>
+      {% endfor %}
+    </select>
+  </div>
+{%- endmacro %}
