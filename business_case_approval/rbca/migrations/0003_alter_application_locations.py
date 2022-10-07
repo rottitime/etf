@@ -7,13 +7,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('rbca', '0002_application'),
+        ("rbca", "0002_application"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='application',
-            name='locations',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.CharField(choices=[('GLASGOW', 'Glasgow'), ('BELFAST', 'Belfast'), ('CARDIFF', 'Cardiff'), ('EDINBURGH', 'Edinburgh'), ('MANCHESTER', 'Manchester'), ('BRISTOL', 'Bristol'), ('YORK', 'York'), ('NORWICH', 'Norwich'), ('BASINGSTOKE', 'Basingstoke'), ('NEWCASTLE', 'Newcastle'), ('MILTON_KEYNES', 'Milton Keynes'), ('BIRMINGHAM', 'Birmingham'), ('LONDON', 'London')], max_length=127), blank=True, null=True, size=None),
+            model_name="application",
+            name="locations",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=models.CharField(
+                    choices=[
+                        ("GLASGOW", "Glasgow"),
+                        ("BELFAST", "Belfast"),
+                        ("CARDIFF", "Cardiff"),
+                        ("EDINBURGH", "Edinburgh"),
+                        ("MANCHESTER", "Manchester"),
+                        ("BRISTOL", "Bristol"),
+                        ("YORK", "York"),
+                        ("NORWICH", "Norwich"),
+                        ("BASINGSTOKE", "Basingstoke"),
+                        ("NEWCASTLE", "Newcastle"),
+                        ("MILTON_KEYNES", "Milton Keynes"),
+                        ("BIRMINGHAM", "Birmingham"),
+                        ("LONDON", "London"),
+                    ],
+                    max_length=127,
+                ),
+                blank=True,
+                null=True,
+                size=None,
+            ),
         ),
     ]

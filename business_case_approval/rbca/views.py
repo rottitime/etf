@@ -61,9 +61,9 @@ def name_view(request, url_data):
     if request.method == "POST":
         form = NameForm(request.POST)
         if form.is_valid():
-            application = models.Application(user=user, name=request.POST['name'])
+            application = models.Application(user=user, name=request.POST["name"])
             application.save()
-            request.session['application_id'] = application.id
+            request.session["application_id"] = application.id
             return redirect(url_data["next_url"])
         else:
             data = request.POST
@@ -83,7 +83,7 @@ class ExemptionAdminForm(forms.ModelForm):
 @register("exemption")
 def exemption_view(request, url_data):
     if request.method == "POST":
-        application_id = request.session['application_id']
+        application_id = request.session["application_id"]
         application = models.Application.get(application_id)
         form = ExemptionAdminForm(request.POST, instance=application)
         if form.is_valid():
@@ -95,4 +95,6 @@ def exemption_view(request, url_data):
     else:
         data = {}
         errors = {}
-    return render(request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data})
+    return render(
+        request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
+    )
