@@ -1,0 +1,27 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+  <form method="POST">
+    {{csrf_input}}
+
+    <fieldset class="fieldset">
+      <legend>
+        <h1>
+          Name of application (for your reference)
+        </h1>
+      </legend>
+
+      {{macros.input("name", "Give a name for this application")}}
+
+    </fieldset>
+
+    <input type="submit" class="btn-primary" value="Next">
+
+  </form>
+
+
+
+{% endblock %}

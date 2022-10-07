@@ -7,6 +7,7 @@ from . import models
 
 page_order = (
     "index",
+    "name",
     "exemption",
 )
 
@@ -48,6 +49,31 @@ def index_view(request, url_data):
     return render(request, "index.html", {**url_data})
 
 
+class NameForm(forms.ModelForm):
+    class Meta:
+        model = models.Application
+        fields = ["name"]
+
+
+@register("name")
+def name_view(request, url_data):
+    user = request.user
+    if request.method == "POST":
+        form = NameForm(request.POST)
+        if form.is_valid():
+            application = models.Application(user=user, name=request.POST['name'])
+            application.save()
+            request.session['application_id'] = application.id
+            return redirect(url_data["next_url"])
+        else:
+            data = request.POST
+            errors = form.errors
+    else:
+        data = {}
+        errors = {}
+    return render(request, "name.html", {"errors": errors, "data": data, **url_data})
+
+
 class ExemptionAdminForm(forms.ModelForm):
     class Meta:
         model = models.Application
@@ -57,9 +83,11 @@ class ExemptionAdminForm(forms.ModelForm):
 @register("exemption")
 def exemption_view(request, url_data):
     if request.method == "POST":
-        form = ExemptionAdminForm(request.POST)
+        application_id = request.session['application_id']
+        application = models.Application.get(application_id)
+        form = ExemptionAdminForm(request.POST, instance=application)
         if form.is_valid():
-            data = form.cleaned_data
+            form.save()
             return redirect(url_data["next_url"])
         else:
             data = request.POST
@@ -67,5 +95,4 @@ def exemption_view(request, url_data):
     else:
         data = {}
         errors = {}
-
     return render(request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data})
