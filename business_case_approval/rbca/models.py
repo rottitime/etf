@@ -152,6 +152,6 @@ class Application(models.Model):
     recruitment_mechanism = models.CharField(
         max_length=127, choices=RecruitmentMechanisms.choices, blank=True, null=True
     )
-    locations = ArrayField(models.CharField(max_length=127, choices=Locations.choices, blank=True, null=True))
+    locations = ArrayField(models.CharField(max_length=127, choices=Locations.choices), blank=True, null=True)
     location_strategy = models.BooleanField(blank=True, null=True)
     london_reason = models.CharField(max_length=127, choices=LondonReasons.choices, blank=True, null=True)
