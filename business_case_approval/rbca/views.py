@@ -48,7 +48,7 @@ def index_view(request, url_data):
     return render(request, "index.html", {**url_data})
 
 
-class ExemptionAdmin(forms.ModelForm):
+class ExemptionAdminForm(forms.ModelForm):
     class Meta:
         model = models.Application
         fields = ["hrbp", "grade", "title"]
@@ -56,4 +56,16 @@ class ExemptionAdmin(forms.ModelForm):
 
 @register("exemption")
 def exemption_view(request, url_data):
-    return render(request, "exemption.html", {"grades": models.Grades.options, "errors": {}, "data": {}, **url_data})
+    if request.method == "POST":
+        form = ExemptionAdminForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            return redirect(url_data["next_url"])
+        else:
+            data = request.POST
+            errors = form.errors
+    else:
+        data = {}
+        errors = {}
+
+    return render(request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data})
