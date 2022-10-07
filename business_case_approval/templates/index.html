@@ -17,10 +17,15 @@
     <p>
       <a href="{{url('account_logout')}}">Logout</a>
     </p>
-  {% endif %}
 
-  <a class="btn-primary" href="{{next_url}}">
-    Start
-  </a>
+    {% for application in applications %}
+      <p>{{application.name}}</p>
+    {% endfor %}
+
+    <a class="btn-primary" href="{{next_url}}">
+      New Application
+    </a>
+
+  {% endif %}
 
 {% endblock %}
