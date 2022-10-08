@@ -7,6 +7,7 @@ from . import models
 
 page_order = (
     "index",
+    "intro",
     "name",
     "exemption",
     "establishment",
@@ -49,6 +50,13 @@ def page_view(request, page_name="index"):
 @register("index")
 def index_view(request, url_data):
     return render(request, "index.pug", {**url_data})
+
+
+@register("intro")
+def intro_view(request, url_data):
+    return render(request, "intro.pug", {**url_data})
+
+
 
 
 class NameForm(forms.ModelForm):
