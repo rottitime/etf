@@ -10,6 +10,7 @@ page_order = (
     "name",
     "exemption",
     "establishment",
+    "end",
 )
 
 view_map = {}
@@ -125,3 +126,8 @@ def establishment_view(request, url_data):
     return render(
         request, "establishment.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
     )
+
+
+@register("end")
+def end_view(request, url_data):
+    return render(request, "end.html", {**url_data})
