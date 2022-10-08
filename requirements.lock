@@ -30,3 +30,4 @@ waitress==2.1.2
 watchdog==2.1.9
 whitenoise==6.2.0
 pypugjs
+markdown
