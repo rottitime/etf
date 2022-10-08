@@ -10,4 +10,4 @@ waitress
 psycopg2-binary
 pyyaml
 pypugjs
-markdown
+markdown-it-py
