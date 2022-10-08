@@ -1,0 +1,16 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.html" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h1 Establishment
+
+      {{macros.input("establishment", "Establishment")}}
+
+      input(type="submit" class="btn-primary" value="Next")

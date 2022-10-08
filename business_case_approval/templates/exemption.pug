@@ -1,0 +1,18 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.html" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h1 BU / Exemption admin - all roles
+
+      {{macros.input("hrbp", "Who is your HRBP?")}}
+
+      {{macros.select("grade", "Grade of post(s) / Equivalent if Contingent Labour", options=grades)}}
+
+    input(type="submit" class="btn-primary" value="Next")

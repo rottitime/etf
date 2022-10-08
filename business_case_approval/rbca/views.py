@@ -48,7 +48,7 @@ def page_view(request, page_name="index"):
 
 @register("index")
 def index_view(request, url_data):
-    return render(request, "index.html", {**url_data})
+    return render(request, "index.pug", {**url_data})
 
 
 class NameForm(forms.ModelForm):
@@ -73,7 +73,7 @@ def name_view(request, url_data):
     else:
         data = {}
         errors = {}
-    return render(request, "name.html", {"errors": errors, "data": data, **url_data})
+    return render(request, "name.pug", {"errors": errors, "data": data, **url_data})
 
 
 class ExemptionAdminForm(forms.ModelForm):
@@ -98,7 +98,7 @@ def exemption_view(request, url_data):
         data = {}
         errors = {}
     return render(
-        request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
+        request, "exemption.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
     )
 
 
@@ -124,7 +124,7 @@ def establishment_view(request, url_data):
         data = {}
         errors = {}
     return render(
-        request, "establishment.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
+        request, "establishment.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
     )
 
 
