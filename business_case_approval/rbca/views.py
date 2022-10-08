@@ -57,8 +57,6 @@ def intro_view(request, url_data):
     return render(request, "intro.pug", {**url_data})
 
 
-
-
 class NameForm(forms.ModelForm):
     class Meta:
         model = models.Application

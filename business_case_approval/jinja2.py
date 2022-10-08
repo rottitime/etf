@@ -1,13 +1,13 @@
 import jinja2
+import pypugjs
 from django.templatetags.static import static
 from django.urls import reverse
 from markdown_it import MarkdownIt
-import pypugjs
 
 markdown_converter = MarkdownIt()
 
 
-@pypugjs.register_filter('markdown')
+@pypugjs.register_filter("markdown")
 def markdown(text, ast):
     return markdown_converter.render(text)
 

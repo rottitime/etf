@@ -58,10 +58,9 @@ TEMPLATES = [
             BASE_DIR / "business_case_approval" / "templates",
         ],
         "OPTIONS": {
-"environment": "business_case_approval.jinja2.environment",
-            "extensions": ['pypugjs.ext.jinja.PyPugJSExtension'],
-
-},
+            "environment": "business_case_approval.jinja2.environment",
+            "extensions": ["pypugjs.ext.jinja.PyPugJSExtension"],
+        },
     },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
