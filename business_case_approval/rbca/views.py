@@ -136,4 +136,4 @@ def establishment_view(request, url_data):
 
 @register("end")
 def end_view(request, url_data):
-    return render(request, "end.html", {**url_data})
+    return render(request, "end.pug", {**url_data})
