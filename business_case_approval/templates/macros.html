@@ -8,6 +8,16 @@
   </div>
 {%- endmacro %}
 
+{% macro textarea(name, label) -%}
+  <div class="form-group {{errors.name and 'error'}}">
+    <label class="label" for="{{name}}">{{label}}</label>
+    <textarea class="{{errors.name and 'invalid'}}" id="{{name}}" name="{{name}}">{{data.name or ''}}</textarea>
+      {% for error in errors.name %}
+      <span class="error">{{error}}</span>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
 {% macro select(name, label, options, empty_option=False) -%}
   <div>
     <label class="label" for="{{name}}">{{label}}</label>
