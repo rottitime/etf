@@ -1,7 +1,15 @@
 import jinja2
 from django.templatetags.static import static
 from django.urls import reverse
+import markdown
+import pypugjs
 
+
+
+
+@pypugjs.register_filter('markdown')
+def _markdown(text, ast):
+  return markdown.markdown(text)
 
 def environment(**options):
     extra_options = dict()
