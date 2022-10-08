@@ -9,6 +9,7 @@ page_order = (
     "index",
     "name",
     "exemption",
+    "establishment",
 )
 
 view_map = {}
@@ -84,7 +85,7 @@ class ExemptionAdminForm(forms.ModelForm):
 def exemption_view(request, url_data):
     if request.method == "POST":
         application_id = request.session["application_id"]
-        application = models.Application.get(application_id)
+        application = models.Application.objects.get(pk=application_id)
         form = ExemptionAdminForm(request.POST, instance=application)
         if form.is_valid():
             form.save()
@@ -97,4 +98,30 @@ def exemption_view(request, url_data):
         errors = {}
     return render(
         request, "exemption.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
+    )
+
+
+class EstablishmentForm(forms.ModelForm):
+    class Meta:
+        model = models.Application
+        fields = ["establishment"]
+
+
+@register("establishment")
+def establishment_view(request, url_data):
+    if request.method == "POST":
+        application_id = request.session["application_id"]
+        application = models.Application.objects.get(pk=application_id)
+        form = EstablishmentForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()
+            return redirect(url_data["next_url"])
+        else:
+            data = request.POST
+            errors = form.errors
+    else:
+        data = {}
+        errors = {}
+    return render(
+        request, "establishment.html", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
     )
