@@ -137,7 +137,7 @@ class LondonReasons(choices.Choices):
 
 class Application(models.Model):
     user = models.ForeignKey(User, related_name="applications", on_delete=models.CASCADE)
-    name = models.CharField(max_length=127, blank=False, null=False)
+    name = models.CharField(max_length=127, blank=True, null=True)
     hrbp = models.CharField(max_length=127, blank=True, null=True)
     grade = models.CharField(max_length=127, choices=Grades.choices, blank=True, null=True)
     title = models.CharField(max_length=127, blank=True, null=True)
