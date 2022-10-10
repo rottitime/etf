@@ -12,7 +12,7 @@ page_order = (
     "exemption",
     "establishment",
     "impact",
-"justification",
+    "justification",
     "end",
 )
 
@@ -112,5 +112,14 @@ create_form_view("name", ("name",))
 create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
 create_form_view("establishment", ("establishment",))
 create_form_view("impact", ("impact_statement",))
-create_form_view("justification", ("ddat_role", "ddat_family", "funding_source", "recruitment_type", "recruitment_mechanism"), extra_data={'ddat_families': models.DDATFamilies.options, 'funding_sources': models.FundingSource.options, 'recruitment_types': models.RecruitmentTypes.options, 'recruitment_mechanisms': models.RecruitmentMechanisms.options})
+create_form_view(
+    "justification",
+    ("ddat_role", "ddat_family", "funding_source", "recruitment_type", "recruitment_mechanism"),
+    extra_data={
+        "ddat_families": models.DDATFamilies.options,
+        "funding_sources": models.FundingSource.options,
+        "recruitment_types": models.RecruitmentTypes.options,
+        "recruitment_mechanisms": models.RecruitmentMechanisms.options,
+    },
+)
 create_simple_view("end")
