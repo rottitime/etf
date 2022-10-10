@@ -76,11 +76,6 @@ def page_view(request, application_id, page_name="intro"):
     return view_map[page_name](request, url_data)
 
 
-@register("intro")
-def intro_view(request, url_data):
-    return render(request, "intro.pug", {**url_data})
-
-
 def _create_form_page_response(request, url_data, form_class, template_name, extra_data=None):
     if not extra_data:
         extra_data = {}
@@ -116,11 +111,14 @@ def create_form_view(name, field_names, extra_data=None):
         )
 
 
+def create_simple_view(name, extra_data=None):
+    @register(name)
+    def _view(request, url_data):
+        return render(request, f"{name}.pug", {**url_data})
+
+
+create_simple_view("intro")
 create_form_view("name", ("name",))
 create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
 create_form_view("establishment", ("establishment",))
-
-
-@register("end")
-def end_view(request, url_data):
-    return render(request, "end.pug", {**url_data})
+create_simple_view("end")
