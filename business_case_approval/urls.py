@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from business_case_approval.rbca import views
+from business_case_approval.approval import views
 
 urlpatterns = [
     path("", views.index_view, name="index"),

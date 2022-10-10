@@ -9,7 +9,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("rbca", "0001_initial"),
+        ("approval", "0001_initial"),
     ]
 
     operations = [

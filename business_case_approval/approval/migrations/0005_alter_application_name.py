@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("rbca", "0004_alter_application_name"),
+        ("approval", "0004_alter_application_name"),
     ]
 
     operations = [
