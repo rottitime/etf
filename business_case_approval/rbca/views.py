@@ -100,45 +100,25 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
     return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
 
 
-class NameForm(forms.ModelForm):
-    class Meta:
-        model = models.Application
-        fields = ["name"]
+def create_form_view(name, field_names, extra_data=None):
+    if not extra_data:
+        extra_data = {}
+
+    class _Form(forms.ModelForm):
+        class Meta:
+            model = models.Application
+            fields = field_names
+
+    @register(name)
+    def _view(request, url_data):
+        return _create_form_page_response(
+            request, url_data, form_class=_Form, template_name=f"{name}.pug", extra_data=extra_data
+        )
 
 
-@register("name")
-def name_view(request, url_data):
-    return _create_form_page_response(request, url_data, form_class=NameForm, template_name="name.pug")
-
-
-class ExemptionAdminForm(forms.ModelForm):
-    class Meta:
-        model = models.Application
-        fields = ["hrbp", "grade", "title"]
-
-
-@register("exemption")
-def exemption_view(request, url_data):
-    return _create_form_page_response(
-        request,
-        url_data,
-        form_class=ExemptionAdminForm,
-        template_name="exemption.pug",
-        extra_data={"grades": models.Grades.options},
-    )
-
-
-class EstablishmentForm(forms.ModelForm):
-    class Meta:
-        model = models.Application
-        fields = ["establishment"]
-
-
-@register("establishment")
-def establishment_view(request, url_data):
-    return _create_form_page_response(
-        request, url_data, form_class=EstablishmentForm, template_name="establishment.pug"
-    )
+create_form_view("name", ("name",))
+create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
+create_form_view("establishment", ("establishment",))
 
 
 @register("end")
