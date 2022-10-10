@@ -63,39 +63,13 @@ def intro_view(request, url_data):
     return render(request, "intro.pug", {**url_data})
 
 
-class NameForm(forms.ModelForm):
-    class Meta:
-        model = models.Application
-        fields = ["name"]
-
-
-@register("name")
-def name_view(request, url_data):
-    if request.method == "POST":
-        form = NameForm(request.POST, instance=url_data['application_id'])
-        if form.is_valid():
-            return redirect(url_data["next_url"])
-        else:
-            data = request.POST
-            errors = form.errors
-    else:
-        data = {}
-        errors = {}
-    return render(request, "name.pug", {"errors": errors, "data": data, **url_data})
-
-
-class ExemptionAdminForm(forms.ModelForm):
-    class Meta:
-        model = models.Application
-        fields = ["hrbp", "grade", "title"]
-
-
-@register("exemption")
-def exemption_view(request, url_data):
+def _create_form_page_response(request, url_data, form_class, template_name, extra_data=None):
+    if not extra_data:
+        extra_data = {}
     application_id = request.session["application_id"]
     application = models.Application.objects.get(pk=application_id)
     if request.method == "POST":
-        form = ExemptionAdminForm(request.POST, instance=application)
+        form = form_class(request.POST, instance=application)
         if form.is_valid():
             form.save()
             return redirect(url_data["next_url"])
@@ -106,8 +80,31 @@ def exemption_view(request, url_data):
         data = model_to_dict(application)
         errors = {}
     return render(
-        request, "exemption.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
+        request, template_name, {"errors": errors, "data": data, **url_data, **extra_data}
     )
+
+
+class NameForm(forms.ModelForm):
+    class Meta:
+        model = models.Application
+        fields = ["name"]
+
+
+@register("name")
+def name_view(request, url_data):
+    _create_form_page_response(request, url_data, form_class=NameForm, template_name="name.pug")
+
+
+class ExemptionAdminForm(forms.ModelForm):
+    class Meta:
+        model = models.Application
+        fields = ["hrbp", "grade", "title"]
+
+
+
+@register("exemption")
+def exemption_view(request, url_data):
+    _create_form_page_response(request, url_data, form_class=ExemptionAdminForm, template_name="exemption.pug")
 
 
 class EstablishmentForm(forms.ModelForm):
@@ -118,22 +115,7 @@ class EstablishmentForm(forms.ModelForm):
 
 @register("establishment")
 def establishment_view(request, url_data):
-    application_id = request.session["application_id"]
-    application = models.Application.objects.get(pk=application_id)
-    if request.method == "POST":
-        form = EstablishmentForm(request.POST, instance=application)
-        if form.is_valid():
-            form.save()
-            return redirect(url_data["next_url"])
-        else:
-            data = request.POST
-            errors = form.errors
-    else:
-        data = model_to_dict(application)
-        errors = {}
-    return render(
-        request, "establishment.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
-    )
+    _create_form_page_response(request, url_data, form_class=EstablishmentForm, template_name="establishment.pug", extra_data={"grades": models.Grades.options})
 
 
 @register("end")
