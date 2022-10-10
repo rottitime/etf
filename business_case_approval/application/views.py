@@ -34,6 +34,12 @@ def index_view(request):
     return render(request, "index.pug")
 
 
+def make_url(application_id, page_name):
+    if not page_name:
+        return None
+    return reverse("pages", args=(application_id, page_name))
+
+
 def page_view(request, application_id, page_name="intro"):
     if page_name not in page_order:
         raise Http404()
@@ -41,27 +47,9 @@ def page_view(request, application_id, page_name="intro"):
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
     next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
-    prev_url = prev_page and reverse(
-        "pages",
-        args=(
-            application_id,
-            prev_page,
-        ),
-    )
-    this_url = reverse(
-        "pages",
-        args=(
-            application_id,
-            page_name,
-        ),
-    )
-    next_url = next_page and reverse(
-        "pages",
-        args=(
-            application_id,
-            next_page,
-        ),
-    )
+    prev_url = make_url(prev_page)
+    this_url = make_url(page_name)
+    next_url = make_url(next_page)
 
     url_data = {
         "application_id": application_id,
