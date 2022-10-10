@@ -14,7 +14,7 @@ def markdown(text, ast):
 
 def finalize(thing):
     if thing is None:
-        return ''
+        return ""
     else:
         return thing
 
@@ -26,7 +26,7 @@ def environment(**options):
         **{
             **options,
             **extra_options,
-        }
+        },
     )
     env.globals.update(
         {

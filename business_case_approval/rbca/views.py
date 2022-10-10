@@ -1,8 +1,8 @@
 from django import forms
+from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.forms.models import model_to_dict
 
 from . import models
 
@@ -41,9 +41,27 @@ def page_view(request, application_id, page_name="intro"):
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
     next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
-    prev_url = prev_page and reverse("pages", args=(application_id, prev_page,))
-    this_url = reverse("pages", args=(application_id, page_name,))
-    next_url = next_page and reverse("pages", args=(application_id, next_page,))
+    prev_url = prev_page and reverse(
+        "pages",
+        args=(
+            application_id,
+            prev_page,
+        ),
+    )
+    this_url = reverse(
+        "pages",
+        args=(
+            application_id,
+            page_name,
+        ),
+    )
+    next_url = next_page and reverse(
+        "pages",
+        args=(
+            application_id,
+            next_page,
+        ),
+    )
 
     url_data = {
         "application_id": application_id,
@@ -79,9 +97,7 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
     else:
         data = model_to_dict(application)
         errors = {}
-    return render(
-        request, template_name, {"errors": errors, "data": data, **url_data, **extra_data}
-    )
+    return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
 
 
 class NameForm(forms.ModelForm):
@@ -101,10 +117,15 @@ class ExemptionAdminForm(forms.ModelForm):
         fields = ["hrbp", "grade", "title"]
 
 
-
 @register("exemption")
 def exemption_view(request, url_data):
-    return _create_form_page_response(request, url_data, form_class=ExemptionAdminForm, template_name="exemption.pug", extra_data={"grades": models.Grades.options})
+    return _create_form_page_response(
+        request,
+        url_data,
+        form_class=ExemptionAdminForm,
+        template_name="exemption.pug",
+        extra_data={"grades": models.Grades.options},
+    )
 
 
 class EstablishmentForm(forms.ModelForm):
@@ -115,7 +136,9 @@ class EstablishmentForm(forms.ModelForm):
 
 @register("establishment")
 def establishment_view(request, url_data):
-    return _create_form_page_response(request, url_data, form_class=EstablishmentForm, template_name="establishment.pug")
+    return _create_form_page_response(
+        request, url_data, form_class=EstablishmentForm, template_name="establishment.pug"
+    )
 
 
 @register("end")
