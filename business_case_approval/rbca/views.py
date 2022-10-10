@@ -2,6 +2,7 @@ from django import forms
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.forms.models import model_to_dict
 
 from . import models
 
@@ -102,7 +103,7 @@ def exemption_view(request, url_data):
             data = request.POST
             errors = form.errors
     else:
-        data = {}
+        data = model_to_dict(application)
         errors = {}
     return render(
         request, "exemption.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
@@ -128,7 +129,7 @@ def establishment_view(request, url_data):
             data = request.POST
             errors = form.errors
     else:
-        data = {}
+        data = model_to_dict(application)
         errors = {}
     return render(
         request, "establishment.pug", {"grades": models.Grades.options, "errors": errors, "data": data, **url_data}
