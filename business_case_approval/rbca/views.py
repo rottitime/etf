@@ -104,7 +104,7 @@ class ExemptionAdminForm(forms.ModelForm):
 
 @register("exemption")
 def exemption_view(request, url_data):
-    return _create_form_page_response(request, url_data, form_class=ExemptionAdminForm, template_name="exemption.pug")
+    return _create_form_page_response(request, url_data, form_class=ExemptionAdminForm, template_name="exemption.pug", extra_data={"grades": models.Grades.options})
 
 
 class EstablishmentForm(forms.ModelForm):
@@ -115,7 +115,7 @@ class EstablishmentForm(forms.ModelForm):
 
 @register("establishment")
 def establishment_view(request, url_data):
-    return _create_form_page_response(request, url_data, form_class=EstablishmentForm, template_name="establishment.pug", extra_data={"grades": models.Grades.options})
+    return _create_form_page_response(request, url_data, form_class=EstablishmentForm, template_name="establishment.pug")
 
 
 @register("end")
