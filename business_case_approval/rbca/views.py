@@ -6,7 +6,6 @@ from django.urls import reverse
 from . import models
 
 page_order = (
-    "index",
     "intro",
     "name",
     "exemption",
@@ -25,18 +24,29 @@ def register(name):
     return _inner
 
 
-def page_view(request, page_name="index"):
+def index_view(request):
+    if request.method == "POST":
+        user = request.user
+        application = models.Application(user=user)
+        application.save()
+        return redirect(page_view, application_id=application.id)
+    return render(request, "index.pug")
+
+
+def page_view(request, application_id, page_name="intro"):
     if page_name not in page_order:
         raise Http404()
 
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
     next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
-    prev_url = prev_page and reverse("pages", args=(prev_page,))
-    this_url = reverse("pages", args=(page_name,))
-    next_url = next_page and reverse("pages", args=(next_page,))
+    prev_url = prev_page and reverse("pages", args=(application_id, prev_page,))
+    this_url = reverse("pages", args=(application_id, page_name,))
+    next_url = next_page and reverse("pages", args=(application_id, next_page,))
 
     url_data = {
+        "application_id": application_id,
+        "page_name": page_name,
         "index": index,
         "prev_page": prev_page,
         "next_page": next_page,
@@ -45,11 +55,6 @@ def page_view(request, page_name="index"):
         "next_url": next_url,
     }
     return view_map[page_name](request, url_data)
-
-
-@register("index")
-def index_view(request, url_data):
-    return render(request, "index.pug", {**url_data})
 
 
 @register("intro")
@@ -65,13 +70,9 @@ class NameForm(forms.ModelForm):
 
 @register("name")
 def name_view(request, url_data):
-    user = request.user
     if request.method == "POST":
-        form = NameForm(request.POST)
+        form = NameForm(request.POST, instance=url_data['application_id'])
         if form.is_valid():
-            application = models.Application(user=user, name=request.POST["name"])
-            application.save()
-            request.session["application_id"] = application.id
             return redirect(url_data["next_url"])
         else:
             data = request.POST
@@ -90,9 +91,9 @@ class ExemptionAdminForm(forms.ModelForm):
 
 @register("exemption")
 def exemption_view(request, url_data):
+    application_id = request.session["application_id"]
+    application = models.Application.objects.get(pk=application_id)
     if request.method == "POST":
-        application_id = request.session["application_id"]
-        application = models.Application.objects.get(pk=application_id)
         form = ExemptionAdminForm(request.POST, instance=application)
         if form.is_valid():
             form.save()
@@ -116,9 +117,9 @@ class EstablishmentForm(forms.ModelForm):
 
 @register("establishment")
 def establishment_view(request, url_data):
+    application_id = request.session["application_id"]
+    application = models.Application.objects.get(pk=application_id)
     if request.method == "POST":
-        application_id = request.session["application_id"]
-        application = models.Application.objects.get(pk=application_id)
         form = EstablishmentForm(request.POST, instance=application)
         if form.is_valid():
             form.save()
