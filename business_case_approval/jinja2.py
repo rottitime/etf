@@ -12,9 +12,17 @@ def markdown(text, ast):
     return markdown_converter.render(text)
 
 
+def finalize(thing):
+    if thing is None:
+        return ''
+    else:
+        return thing
+
+
 def environment(**options):
     extra_options = dict()
     env = jinja2.Environment(
+        finalize=finalize,
         **{
             **options,
             **extra_options,

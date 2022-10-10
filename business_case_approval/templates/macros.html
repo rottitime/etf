@@ -1,18 +1,18 @@
 {% macro input(name, label, type='text') -%}
-  <div class="form-group {{errors.name and 'error'}}">
+  <div class="form-group {{errors.get(name) and 'error'}}">
     <label class="label" for="{{name}}">{{label}}</label>
-    <input type="{{type}}" class="{{errors.name and 'invalid'}}" value="{{data.name or ''}}" id="{{name}}" name="{{name}}">
-    {% for error in errors.name %}
+    <input type="{{type}}" class="{{errors.get(name) and 'invalid'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+    {% for error in errors.get(name, []) %}
       <span class="error">{{error}}</span>
     {% endfor %}
   </div>
 {%- endmacro %}
 
 {% macro textarea(name, label) -%}
-  <div class="form-group {{errors.name and 'error'}}">
+  <div class="form-group {{errors.get(name) and 'error'}}">
     <label class="label" for="{{name}}">{{label}}</label>
-    <textarea class="{{errors.name and 'invalid'}}" id="{{name}}" name="{{name}}">{{data.name or ''}}</textarea>
-      {% for error in errors.name %}
+    <textarea class="{{errors.get(name) and 'invalid'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
+    {% for error in errors.get(name, []) %}
       <span class="error">{{error}}</span>
     {% endfor %}
   </div>
@@ -23,10 +23,10 @@
     <label class="label" for="{{name}}">{{label}}</label>
     <select name="{{name}}" id="{{name}}">
       {% if empty_option %}
-        <option value="" disabled {{(not data.name) and 'selected'}}>{{empty_option}}</option>
+        <option value="" disabled {{(not data.get(name)) and 'selected'}}>{{empty_option}}</option>
       {% endif %}
       {% for option in options %}
-        <option value="{{option.value}}" {{data.name == option.value and 'selected'}}>{{option.text}}</option>
+        <option value="{{option.value}}" {{data.get(name) == option.value and 'selected'}}>{{option.text}}</option>
       {% endfor %}
     </select>
   </div>
