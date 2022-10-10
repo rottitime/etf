@@ -47,9 +47,9 @@ def page_view(request, application_id, page_name="intro"):
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
     next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
-    prev_url = make_url(prev_page)
-    this_url = make_url(page_name)
-    next_url = make_url(next_page)
+    prev_url = make_url(application_id, prev_page)
+    this_url = make_url(application_id, page_name)
+    next_url = make_url(application_id, next_page)
 
     url_data = {
         "application_id": application_id,
