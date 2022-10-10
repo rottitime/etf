@@ -5,7 +5,7 @@ define _update_requirements
 endef
 
 .PHONY: update-requirements
-update-api-requirements:
+update-requirements:
 	$(call _update_requirements,requirements)
 	$(call _update_requirements,requirements-dev)
 
