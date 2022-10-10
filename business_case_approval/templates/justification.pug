@@ -1,0 +1,24 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.pug" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h1 Justification - all roles
+
+      {{macros.input("ddat_role", "Is this a role on the DDaT framework?", type="checkbox")}}
+      {{macros.select("ddat_family", "If so, which family does it belong to?", options=ddat_families)}}
+      {{macros.select("funding_source", "Where is the funding coming from?", options=funding_sources)}}
+      {{macros.select("recruitment_type", "Type of contract/recruitment?", options=recruitment_types)}}
+      {{macros.select("recruitment_mechanism", "Recruitment Mechanism?", options=recruitment_mechanisms)}}
+
+      p
+        For SCS roles requesting anything other than external advertising, please complete the SCS section later.
+
+    a.btn-primary(href='{{prev_url}}') Back
+    input(type="submit" class="btn-primary" value="Next")
