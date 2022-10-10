@@ -66,7 +66,7 @@ def intro_view(request, url_data):
 def _create_form_page_response(request, url_data, form_class, template_name, extra_data=None):
     if not extra_data:
         extra_data = {}
-    application_id = request.session["application_id"]
+    application_id = url_data["application_id"]
     application = models.Application.objects.get(pk=application_id)
     if request.method == "POST":
         form = form_class(request.POST, instance=application)
