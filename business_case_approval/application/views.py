@@ -11,6 +11,7 @@ page_order = (
     "name",
     "exemption",
     "establishment",
+    "impact",
     "end",
 )
 
@@ -109,4 +110,5 @@ create_simple_view("intro")
 create_form_view("name", ("name",))
 create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
 create_form_view("establishment", ("establishment",))
+create_form_view("impact", ("impact_statement",))
 create_simple_view("end")
