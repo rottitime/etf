@@ -25,7 +25,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "business_case_approval.approval",
+    "business_case_approval.application",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -116,7 +116,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "approval.User"
+AUTH_USER_MODEL = "application.User"
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
