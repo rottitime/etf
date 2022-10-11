@@ -13,6 +13,7 @@ page_order = (
     "establishment",
     "impact",
     "justification",
+    "location",
     "end",
 )
 
@@ -122,4 +123,5 @@ create_form_view(
         "recruitment_mechanisms": models.RecruitmentMechanisms.options,
     },
 )
+create_form_view("location", ("location_strategy", "locations", "london_reason"), extra_data={"london_reasons": models.LondonReasons.options, "locations": models.Locations.options})
 create_simple_view("end")
