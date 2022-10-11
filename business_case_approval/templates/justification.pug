@@ -11,7 +11,7 @@ block content
       legend
         h1 Justification - all roles
 
-      {{macros.input("ddat_role", "Is this a role on the DDaT framework?", type="checkbox")}}
+      {{macros.checkbox("ddat_role", "Is this a role on the DDaT framework?")}}
       {{macros.select("ddat_family", "If so, which family does it belong to?", options=ddat_families)}}
       {{macros.select("funding_source", "Where is the funding coming from?", options=funding_sources)}}
       {{macros.select("recruitment_type", "Type of contract/recruitment?", options=recruitment_types)}}
