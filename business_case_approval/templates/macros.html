@@ -31,3 +31,20 @@
     </select>
   </div>
 {%- endmacro %}
+
+{% macro checkbox(name, label) -%}
+  <div>
+      <label class="label" for="{{name}}">{{label}}</label>
+      <input type="checkbox" class="{{errors.get(name) and 'invalid'}}" id="{{name}}" name="{{name}}" {{data.get(name) == name and 'checked'}}>
+  </div>
+{%- endmacro %}
+
+{% macro checkboxes(name, label, options) -%}
+  <div>
+    <p>{{label}}</p>
+    {% for option in options %}
+      <label class="label" for="{{name}}_{{option.value}}">{{option.text}}</label>
+      <input type="checkbox" class="{{errors.get(name) and 'invalid'}}" value="{{option.value}}" id="{{name}}_{{option.value}}" name="{{name}}" {{data.get(name) == option.value and 'checked'}}>
+    {% endfor %}
+  </div>
+{%- endmacro %}
