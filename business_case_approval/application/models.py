@@ -130,9 +130,22 @@ class Locations(choices.Choices):
 class LondonReasons(choices.Choices):
     MINISTER_SUPPORT = "Be in direct support of ministers and are expected to meet with ministers personally as part of their core daily tasks, eg private secretaries, permanent secretaries, and their offices."  # noqa
     BUSINESS_NEEDS = "Require a London presence to satisfy essential business needs / are public-facing operational delivery roles serving the London population."  # noqa
-    SPECIALIST_FACILITIES = (
-        "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere."
-    )
+    SPECIALIST_FACILITIES = "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere." # noqa
+
+
+class TDAHowFilled(choices.Choices):
+    EOI = "EOI"
+    DIRECT_APPOINTMENT = "Direct appointment"
+
+
+class FTAHowFilled(choices.Choices):
+    FAIR_OPEN_COMPETITION = "Fair & open competition"
+    OTHER_ROUTES = "Other routes"
+
+
+class IR35Consideration(choices.Choices):
+    IN_SCOPE = "In Scope - SCS signed off"
+    OUT_OF_SCOPE = "Out of scope - SCS signed off"
 
 
 class Application(models.Model):
@@ -155,3 +168,19 @@ class Application(models.Model):
     locations = ArrayField(models.CharField(max_length=127, choices=Locations.choices), blank=True, null=True)
     location_strategy = models.BooleanField(blank=True, null=True)
     london_reason = models.CharField(max_length=127, choices=LondonReasons.choices, blank=True, null=True)
+    scs_adverts = models.TextField(blank=True, null=True)
+    scs_assignments_lengths = models.TextField(blank=True, null=True)
+    tda_how_filled = models.CharField(max_length=127, choices=TDAHowFilled.choices, blank=True, null=True)
+    tda_further_infomation = models.TextField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    new_end_date = models.DateField(blank=True, null=True)
+    fta_how_filled = models.CharField(max_length=127, choices=FTAHowFilled.choices, blank=True, null=True)
+    fta_further_infomation = models.TextField(blank=True, null=True)
+    day_rate = models.CharField(max_length=127, blank=True, null=True)
+    why_contingent = models.TextField(blank=True, null=True)
+    via_ams = models.BooleanField(blank=True, null=True)
+    alternate_supplier = models.TextField(blank=True, null=True)
+    ir35_consideration = models.CharField(max_length=127, choices=IR35Consideration.choices, blank=True, null=True)
+    finance_bp_comments = models.TextField(blank=True, null=True)
+    hrbp_comments = models.TextField(blank=True, null=True)
