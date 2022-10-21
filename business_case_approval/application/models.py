@@ -130,7 +130,9 @@ class Locations(choices.Choices):
 class LondonReasons(choices.Choices):
     MINISTER_SUPPORT = "Be in direct support of ministers and are expected to meet with ministers personally as part of their core daily tasks, eg private secretaries, permanent secretaries, and their offices."  # noqa
     BUSINESS_NEEDS = "Require a London presence to satisfy essential business needs / are public-facing operational delivery roles serving the London population."  # noqa
-    SPECIALIST_FACILITIES = "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere." # noqa
+    SPECIALIST_FACILITIES = (
+        "Require specialist facilities that would be prohibitivelv expensive to re-establish elsewhere."  # noqa
+    )
 
 
 class TDAHowFilled(choices.Choices):
