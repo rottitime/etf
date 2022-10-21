@@ -20,7 +20,7 @@ def finalize(thing):
 
 
 def environment(**options):
-    extra_options = dict()
+    extra_options = {"autoescape": True}
     env = jinja2.Environment(
         finalize=finalize,
         **{
