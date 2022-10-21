@@ -5,14 +5,15 @@ html(lang="en")
       meta(charset="UTF-8")
       link(rel="icon", type="image/svg+xml", href="{{static('i-dot-ai/images/crown.svg')}}")
       meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      meta(http-equiv="x-ua-compatible", content="ie=edge")
       title Business Case Approval
-      link(rel="preconnect", href="https://fonts.googleapis.com")
-      link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
-      link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto:wght@500&display=swap", rel="stylesheet")
-      script(type="module", crossorigin, src="{{static('i-dot-ai/assets/index.4a9da20d.js')}}")
-      link(rel="stylesheet", href="{{static('i-dot-ai/assets/index.cf554c68.css')}}")
-    body.iai.bg
-      div
-        section
-          .box.w-2-3.center
+      link(rel="stylesheet", href="{{static('foundation/css/foundation.css')}}")
+      link(rel="stylesheet", href="{{static('foundation/css/app.css')}}")
+
+    body
+      section
+        div.grid-x
+          div.cell.small-3
+          div.cell.small-6
             block content
+          div.cell.small-3
