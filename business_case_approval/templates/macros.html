@@ -21,10 +21,10 @@
     <label class="label" for="{{name}}">{{label}}</label>
     <select name="{{name}}" id="{{name}}">
       {% if empty_option %}
-        <option value="" disabled {{(not data.get(name)) and 'selected'}}>{{empty_option}}</option>
+        <option disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
       {% endif %}
       {% for option in options %}
-        <option value="{{option.value}}" {{data.get(name) == option.value and 'selected'}}>{{option.text}}</option>
+        <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
       {% endfor %}
     </select>
   </div>
