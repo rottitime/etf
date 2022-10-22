@@ -16,11 +16,11 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro select(name, label, options, empty_option=False) -%}
+{% macro select(name, label, options, empty_option=DEFAULT) -%}
   <div>
     <label class="label" for="{{name}}">{{label}}</label>
     <select name="{{name}}" id="{{name}}">
-      {% if empty_option %}
+      {% if not empty_option is sameas DEFAULT %}
         <option disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
       {% endif %}
       {% for option in options %}
