@@ -30,6 +30,10 @@
   </div>
 {%- endmacro %}
 
+{% macro select_with_empty(name, label, options) -%}
+  {{select(name, label, options, empty_option="Please choose one...")}}
+{%- endmacro %}
+
 {% macro yes_no(name, label) -%}
   {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
 {%- endmacro %}
