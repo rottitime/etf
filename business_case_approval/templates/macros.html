@@ -1,21 +1,19 @@
 {% macro input(name, label, type='text') -%}
-  <div class="form-group {{errors.get(name) and 'error'}}">
-    <label class="label" for="{{name}}">{{label}}</label>
-    <input type="{{type}}" class="{{errors.get(name) and 'invalid'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
-    {% for error in errors.get(name, []) %}
-      <span class="error">{{error}}</span>
-    {% endfor %}
-  </div>
+  <label class="{{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}
+    <input type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  </label>
+  {% for error in errors.get(name, []) %}
+    <span class="form-error">{{error}}</span>
+  {% endfor %}
 {%- endmacro %}
 
 {% macro textarea(name, label) -%}
-  <div class="form-group {{errors.get(name) and 'error'}}">
-    <label class="label" for="{{name}}">{{label}}</label>
-    <textarea class="{{errors.get(name) and 'invalid'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
-    {% for error in errors.get(name, []) %}
-      <span class="error">{{error}}</span>
-    {% endfor %}
-  </div>
+  <label class="{{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}
+    <textarea class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
+  </label>
+  {% for error in errors.get(name, []) %}
+    <span class="form-error">{{error}}</span>
+  {% endfor %}
 {%- endmacro %}
 
 {% macro select(name, label, options, empty_option=False) -%}
@@ -48,3 +46,8 @@
     {% endfor %}
   </div>
 {%- endmacro %}
+
+{% macro buttons(prev_url) -%}
+  <a href="{{prev_url}}" class="button float-left"><i class="fi-arrow-left"></i> Back</a>
+  <button type="submit" class="button float-right">Next <i class="fi-arrow-right"></i></button>
+{%- endmacro%}
