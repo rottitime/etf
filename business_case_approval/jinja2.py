@@ -6,6 +6,7 @@ from markdown_it import MarkdownIt
 
 markdown_converter = MarkdownIt()
 
+DEFAULT = object()
 
 @pypugjs.register_filter("markdown")
 def markdown(text, ast):
@@ -48,6 +49,7 @@ def environment(**options):
             "url": reverse,
             "is_selected": is_selected,
             "is_empty_selected": is_empty_selected,
+            "DEFAULT": DEFAULT,
         }
     )
     return env
