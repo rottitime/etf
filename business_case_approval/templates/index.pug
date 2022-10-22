@@ -2,19 +2,17 @@ extends base.pug
 
 block content
 
-    h1 Hello!
-      - if not request.user.is_authenticated
-          p
-            a(href="{{url('account_login')}}') Login
-          p
-            a(href=url('account_signup')) Register
-      - if request.user.is_authenticated
-        p
-          a(href=url('account_logout')) Logout
+  - if not request.user.is_authenticated
+    div.card
+      div.card-divider Login or register
+        div.button-group.align-spaced
+          a.button(href=url('account_login')) Login 
+            i.bi-box-arrow-in-right
+          a.button(href=url('account_signup')) Register 
+            i.bi-clipboard-check
 
-      - for application in applications
-        p {{application.name}}
-
+  - if request.user.is_authenticated
     form(method="POST")
       {{csrf_input}}
-      input(type="submit" class="btn-primary" value="New Application")
+      button(type="submit" class="button") Create Application 
+        i.bi-file-earmark-plus
