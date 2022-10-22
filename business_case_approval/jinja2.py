@@ -19,6 +19,20 @@ def finalize(thing):
         return thing
 
 
+def is_empty_selected(data, name):
+    if data.get(name) in ('', None):
+        return "selected"
+    else:
+        return ""
+
+
+def is_selected(data, name, value):
+    if data.get(name) is value:
+        return "selected"
+    else:
+        return ""
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -32,6 +46,8 @@ def environment(**options):
         {
             "static": static,
             "url": reverse,
+            "is_selected": is_selected,
+            "is_empty_selected": is_empty_selected,
         }
     )
     return env
