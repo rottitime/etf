@@ -13,5 +13,4 @@ block content
 
       {{macros.input("name", "Give a name for this application")}}
 
-      a.btn-primary(href='{{prev_url}}') Back
-      input(type="submit" class="btn-primary" value="Next")
+      {{macros.buttons(prev_url)}}

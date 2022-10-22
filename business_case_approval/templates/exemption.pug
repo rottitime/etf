@@ -15,5 +15,4 @@ block content
 
       {{macros.select("grade", "Grade of post(s) / Equivalent if Contingent Labour", options=grades)}}
 
-    a.btn-primary(href='{{prev_url}}') Back
-    input(type="submit" class="btn-primary" value="Next")
+      {{macros.buttons(prev_url)}}
