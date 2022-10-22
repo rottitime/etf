@@ -16,6 +16,6 @@ block content
 
       {{macros.checkbox("location_strategy", "Are those selected below in line with your BU locations strategy?")}}
       {{macros.checkboxes("locations", "Locations", options=locations)}}
-      {{macros.select("london_reason", "If London, why?", options=london_reasons)}}
+      {{macros.select_with_empty("london_reason", "If London, why?", options=london_reasons)}}
 
       {{macros.buttons(prev_url)}}
