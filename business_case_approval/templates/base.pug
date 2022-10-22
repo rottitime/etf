@@ -12,6 +12,15 @@ html(lang="en")
       link(rel="stylesheet", href="{{static('bootstrap-icons/bootstrap-icons.css')}}")
 
     body
+      nav.top-bar
+        div.top-bar-left
+          h2 Recruitment Exemption Business Case
+        div.top-bar-right
+          ul
+          - if request.user.is_authenticated
+            a.button(href=url('account_logout')) Logout 
+              i.bi-box-arrow-right
+
       section
         div.grid-x
           div.cell.small-3
