@@ -128,4 +128,6 @@ create_form_view(
     ("location_strategy", "locations", "london_reason"),
     extra_data={"london_reasons": models.LondonReasons.options, "locations": models.Locations.options},
 )
+create_form_view("scs_roles", ("scs_adverts", "scs_assignments_lengths"))
+
 create_simple_view("end")
