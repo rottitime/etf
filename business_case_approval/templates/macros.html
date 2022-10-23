@@ -65,7 +65,7 @@
 {%- endmacro%}
 
 {% macro callout(tags) -%}
-  <div class="callout {{tags|join(' ')}}" data-closable>
+  <div class="callout {{tags}}" data-closable>
     {{ caller() }}
   </div>
 {%- endmacro %}
