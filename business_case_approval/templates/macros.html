@@ -39,8 +39,8 @@
 {%- endmacro %}
 
 {% macro checkbox(name, label) -%}
-    <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
-    <label for="{{name}}">{{label}}</label>
+  <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
+  <label for="{{name}}">{{label}}</label>
 {%- endmacro %}
 
 {% macro checkboxes(name, label, options) -%}
@@ -48,14 +48,14 @@
     <legend>{{label}}</legend>
     <div class="grid-container">
       <div class="grid-x large-up-4 medium-up-2">
-      {% for option in options %}
-        <div class="cell">
-          <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{option.value}}" id="{{name}}_{{option.value}}" name="{{name}}" {{data.get(name) == option.value and 'checked' or ''}}>
-          <label for="{{name}}_{{option.value}}">{{option.text}}</label>
-        </div>
-      {% endfor %}
+        {% for option in options %}
+          <div class="cell">
+            <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{option.value}}" id="{{name}}_{{option.value}}" name="{{name}}" {{data.get(name) == option.value and 'checked' or ''}}>
+            <label for="{{name}}_{{option.value}}">{{option.text}}</label>
+          </div>
+        {% endfor %}
+      </div>
     </div>
-</div>
   </fieldset>
 {%- endmacro %}
 
