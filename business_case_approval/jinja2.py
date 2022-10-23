@@ -1,5 +1,6 @@
 import jinja2
 import pypugjs
+from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 from markdown_it import MarkdownIt
@@ -51,6 +52,7 @@ def environment(**options):
             "is_selected": is_selected,
             "is_empty_selected": is_empty_selected,
             "DEFAULT": DEFAULT,
+            'get_messages': messages.get_messages,
         }
     )
     return env

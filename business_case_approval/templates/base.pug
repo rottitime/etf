@@ -1,3 +1,5 @@
+{% import 'macros.html' as macros with context %}
+
 doctype html
 html(lang="en")
   head
@@ -24,6 +26,17 @@ html(lang="en")
           - if request.user.is_authenticated
             a.button(href=url('account_logout')) Logout 
               i.bi-box-arrow-right
+
+      section
+        div.grid-x
+          div.cell.small-3
+          div.cell.small-6
+            {% set messages = get_messages(request) %}
+            - if messages
+              - for message in messages
+                +macros.callout(message.tags)
+                  p {{message}}
+          div.cell.small-3
 
       section
         div.grid-x
