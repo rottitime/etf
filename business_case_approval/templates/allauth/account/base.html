@@ -16,8 +16,8 @@
     {% endblock %}
 
     <style>
-      section {
-        margin-top: 3em;
+      nav {
+        margin-bottom: 1em;
       }
     </style>
   </head>
@@ -39,12 +39,11 @@
             <div class="grid-x">
               <div class="cell small-3"></div>
               <div class="cell small-6">
-                <strong>Messages:</strong>
-                <ul>
-                  {% for message in messages %}
-                    <li>{{message}}</li>
-                  {% endfor %}
-                </ul>
+                {% for message in messages %}
+                  <div class="callout {{message.tags}}" data-closable>
+                    <p>{{message}}</p>
+                  </div>
+                {% endfor %}
               </div>
               <div class="cell small-3"></div>
             </div>
@@ -57,8 +56,8 @@
             <div class="cell small-3"></div>
             <div class="cell small-6">
 
-{% block content %}
-{% endblock %}
+              {% block content %}
+              {% endblock %}
 
             </div>
             <div class="cell small-3"></div>
