@@ -11,3 +11,4 @@ psycopg2-binary
 pyyaml
 pypugjs
 markdown-it-py
+pdfkit
