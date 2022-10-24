@@ -186,3 +186,4 @@ class Application(models.Model):
     ir35_consideration = models.CharField(max_length=127, choices=IR35Consideration.choices, blank=True, null=True)
     finance_bp_comments = models.TextField(blank=True, null=True)
     hrbp_comments = models.TextField(blank=True, null=True)
+    pdf = models.BinaryField(blank=True, null=True)
