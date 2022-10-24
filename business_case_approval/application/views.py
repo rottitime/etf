@@ -147,9 +147,7 @@ def end_view(request, url_data):
     data = model_to_dict(application)
     input_url = f"http://localhost:8010/application/{application_id}/print"
     output_filename = "/tmp/applicaton_{application_id}.pdf"
-    pdfkit.from_url(input_url, output_filename)
-    with open(output_filename, 'rb') as f:
-        pdf_data = f.read()
+    pdf_data = pdfkit.from_url(input_url, output_filename)
     application.pdf = pdf_data
     application.save()
     return render(request, "end.pug", {**data})
