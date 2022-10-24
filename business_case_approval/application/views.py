@@ -1,15 +1,12 @@
 import io
 
+import pdfkit
 from django import forms
 from django.forms.models import model_to_dict
-from django.http import Http404, FileResponse
+from django.http import FileResponse, Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.contrib.staticfiles import finders
-from django.template.loader import render_to_string
 from django.utils.text import slugify
-
-import pdfkit
 
 from . import models
 
