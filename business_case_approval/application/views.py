@@ -15,6 +15,7 @@ page_order = (
     "justification",
     "location",
     "end",
+    "print",
 )
 
 view_map = {}
@@ -131,3 +132,12 @@ create_form_view(
 create_form_view("scs_roles", ("scs_adverts", "scs_assignments_lengths"))
 
 create_simple_view("end")
+
+
+@register("print")
+def print_view(request, url_data):
+    application_id = url_data["application_id"]
+    application = models.Application.objects.get(pk=application_id)
+    data = model_to_dict(application)
+    return render(request, "print.pug", {**data})
+

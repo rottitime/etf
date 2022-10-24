@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  head
+    head
+      meta(charset="UTF-8")
+      link(rel="icon", type="image/svg+xml", href="{{static('i-dot-ai/images/crown.svg')}}")
+      meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      meta(http-equiv="x-ua-compatible", content="ie=edge")
+      link(rel="stylesheet", href="{{static('foundation/css/foundation.css')}}")
+      title Business Case Approval
+
+    body
+      nav.top-bar
+        h2 Recruitment Exemption Business Case
+
+      section
+        div.card
+          div.card-divider BU / Exemption admin - all roles
+          div.card-section
+            h3 Who is your HRBP?
+            p {{hrbp}}
+            
+
