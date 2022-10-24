@@ -1,8 +1,15 @@
+import io
+
 from django import forms
 from django.forms.models import model_to_dict
-from django.http import Http404
+from django.http import Http404, FileResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.contrib.staticfiles import finders
+from django.template.loader import render_to_string
+from django.utils.text import slugify
+
+import pdfkit
 
 from . import models
 
@@ -16,6 +23,7 @@ page_order = (
     "location",
     "end",
     "print",
+    "download",
 )
 
 view_map = {}
@@ -131,7 +139,20 @@ create_form_view(
 )
 create_form_view("scs_roles", ("scs_adverts", "scs_assignments_lengths"))
 
-create_simple_view("end")
+
+@register("end")
+def end_view(request, url_data):
+    application_id = url_data["application_id"]
+    application = models.Application.objects.get(pk=application_id)
+    data = model_to_dict(application)
+    input_url = f"http://localhost:8010/application/{application_id}/print"
+    output_filename = "/tmp/applicaton_{application_id}.pdf"
+    pdfkit.from_url(input_url, output_filename)
+    with open(output_filename, 'rb') as f:
+        pdf_data = f.read()
+    application.pdf = pdf_data
+    application.save()
+    return render(request, "end.pug", {**data})
 
 
 @register("print")
@@ -141,3 +162,12 @@ def print_view(request, url_data):
     data = model_to_dict(application)
     return render(request, "print.pug", {**data})
 
+
+@register("download")
+def download_file(request, url_data):
+    application_id = url_data["application_id"]
+    application = models.Application.objects.get(pk=application_id)
+    filename = slugify(f"application_{application_id}_{application.name}.pdf")
+    filelike = io.BytesIO(application.pdf)
+    response = FileResponse(filelike, as_attachment=True, filename=filename)
+    return response
