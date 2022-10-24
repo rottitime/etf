@@ -8,6 +8,9 @@ WORKDIR /app
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+RUN apt-get update && \
+    apt-get install -y xvfb xfonts-scalable wkhtmltopdf
+
 RUN python3 -m pip install -U pip setuptools wheel
 
 COPY ./requirements.lock /app/requirements.lock
