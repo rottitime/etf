@@ -1,6 +1,6 @@
 ---
 applications:
-- name: business-case-approval-develop
+- name: etf-develop
   memory: 512M
   buildpacks:
   - python_buildpack

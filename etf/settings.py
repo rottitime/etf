@@ -16,7 +16,7 @@ STATIC_ROOT = STATIC_ROOT
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = [
-    "business-case-approval-develop.london.cloudapps.digital",
+    "etf-develop.london.cloudapps.digital",
     "localhost",
     "127.0.0.1",
 ]
