@@ -22,7 +22,7 @@ RUN chmod +x /start.sh
 COPY . /app
 
 RUN \
-    DJANGO_SETTINGS_MODULE=business_case_approval.settings_base \
+    DJANGO_SETTINGS_MODULE=etf.settings_base \
     DJANGO_SECRET_KEY="temp" \
     python manage.py collectstatic --no-input
 

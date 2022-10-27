@@ -25,7 +25,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "business_case_approval.application",
+    "etf.application",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -49,23 +49,23 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "business_case_approval.urls"
+ROOT_URLCONF = "etf.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         "DIRS": [
-            BASE_DIR / "business_case_approval" / "templates",
+            BASE_DIR / "etf" / "templates",
         ],
         "OPTIONS": {
-            "environment": "business_case_approval.jinja2.environment",
+            "environment": "etf.jinja2.environment",
             "extensions": ["pypugjs.ext.jinja.PyPugJSExtension"],
         },
     },
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            BASE_DIR / "business_case_approval" / "templates" / "allauth",
+            BASE_DIR / "etf" / "templates" / "allauth",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "business_case_approval.wsgi.application"
+WSGI_APPLICATION = "etf.wsgi.application"
 
 DATABASES = {
     "default": {
