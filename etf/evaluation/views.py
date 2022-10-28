@@ -37,31 +37,31 @@ def register(name):
 def index_view(request):
     if request.method == "POST":
         user = request.user
-        application = models.Application(user=user)
-        application.save()
-        return redirect(page_view, application_id=application.id)
+        evaluation = models.Evaluation(user=user)
+        evaluation.save()
+        return redirect(page_view, evaluation_id=evaluation.id)
     return render(request, "index.pug")
 
 
-def make_url(application_id, page_name):
+def make_url(evaluation_id, page_name):
     if not page_name:
         return None
-    return reverse("pages", args=(application_id, page_name))
+    return reverse("pages", args=(evaluation_id, page_name))
 
 
-def page_view(request, application_id, page_name="intro"):
+def page_view(request, evaluation_id, page_name="intro"):
     if page_name not in page_order:
         raise Http404()
 
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
     next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
-    prev_url = make_url(application_id, prev_page)
-    this_url = make_url(application_id, page_name)
-    next_url = make_url(application_id, next_page)
+    prev_url = make_url(evaluation_id, prev_page)
+    this_url = make_url(evaluation_id, page_name)
+    next_url = make_url(evaluation_id, next_page)
 
     url_data = {
-        "application_id": application_id,
+        "evaluation_id": evaluation_id,
         "page_name": page_name,
         "index": index,
         "prev_page": prev_page,
@@ -76,10 +76,10 @@ def page_view(request, application_id, page_name="intro"):
 def _create_form_page_response(request, url_data, form_class, template_name, extra_data=None):
     if not extra_data:
         extra_data = {}
-    application_id = url_data["application_id"]
-    application = models.Application.objects.get(pk=application_id)
+    evaluation_id = url_data["evaluation_id"]
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "POST":
-        form = form_class(request.POST, instance=application)
+        form = form_class(request.POST, instance=evaluation)
         if form.is_valid():
             form.save()
             return redirect(url_data["next_url"])
@@ -87,7 +87,7 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
             data = request.POST
             errors = form.errors
     else:
-        data = model_to_dict(application)
+        data = model_to_dict(evaluation)
         errors = {}
     return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
 
@@ -98,7 +98,7 @@ def create_form_view(name, field_names, extra_data=None):
 
     class _Form(forms.ModelForm):
         class Meta:
-            model = models.Application
+            model = models.Evaluation
             fields = field_names
 
     @register(name)
@@ -139,30 +139,30 @@ create_form_view("scs_roles", ("scs_adverts", "scs_assignments_lengths"))
 
 @register("end")
 def end_view(request, url_data):
-    application_id = url_data["application_id"]
-    application = models.Application.objects.get(pk=application_id)
-    data = model_to_dict(application)
-    input_url = f"http://localhost:8010/application/{application_id}/print"
-    output_filename = "/tmp/applicaton_{application_id}.pdf"
+    evaluation_id = url_data["evaluation_id"]
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    data = model_to_dict(evaluation)
+    input_url = f"http://localhost:8010/evaluation/{evaluation_id}/print"
+    output_filename = "/tmp/applicaton_{evaluation_id}.pdf"
     pdf_data = pdfkit.from_url(input_url, output_filename)
-    application.pdf = str(pdf_data).encode("utf-8")
-    application.save()
+    evaluation.pdf = str(pdf_data).encode("utf-8")
+    evaluation.save()
     return render(request, "end.pug", {**data})
 
 
 @register("print")
 def print_view(request, url_data):
-    application_id = url_data["application_id"]
-    application = models.Application.objects.get(pk=application_id)
-    data = model_to_dict(application)
+    evaluation_id = url_data["evaluation_id"]
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    data = model_to_dict(evaluation)
     return render(request, "print.pug", {**data})
 
 
 @register("download")
 def download_file(request, url_data):
-    application_id = url_data["application_id"]
-    application = models.Application.objects.get(pk=application_id)
-    filename = slugify(f"application_{application_id}_{application.name}.pdf")
-    filelike = io.BytesIO(application.pdf)
+    evaluation_id = url_data["evaluation_id"]
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    filename = slugify(f"evaluation_{evaluation_id}_{evaluation.name}.pdf")
+    filelike = io.BytesIO(evaluation.pdf)
     response = FileResponse(filelike, as_attachment=True, filename=filename)
     return response

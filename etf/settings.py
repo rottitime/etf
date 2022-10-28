@@ -25,7 +25,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    "etf.application",
+    "etf.evaluation",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -116,7 +116,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "application.User"
+AUTH_USER_MODEL = "evaluation.User"
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
