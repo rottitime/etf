@@ -13,7 +13,7 @@ class User(BaseUser):
         super().save(*args, **kwargs)
 
 
-class EvaluationType(choices.Choice):
+class EvaluationType(choices.Choices):
     UNKNOWN = "Unknown"
 
 
