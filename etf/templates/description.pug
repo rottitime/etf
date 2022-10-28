@@ -1,0 +1,28 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.pug" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h3 Description
+
+      :markdown
+        Blah, blah, blah
+
+        * Bullet 1
+        * Bullet 2
+
+      {{macros.textarea("description", "Description")}}
+
+      {{macros.textarea("issue_description", "Issue Description")}}
+
+      {{macros.textarea("evaluation_type", "Evaluation type")}}
+
+      {{macros.select_with_empty("evaluation_type", "Evaluation type", options=evaluation_types)}}
+
+      {{macros.buttons(prev_url)}}

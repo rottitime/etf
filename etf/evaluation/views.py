@@ -12,7 +12,7 @@ from . import models
 
 page_order = (
     "intro",
-    "name",
+    "title",
     "description",
     "end",
 )
@@ -109,6 +109,6 @@ def create_simple_view(name, extra_data=None):
 
 
 create_simple_view("intro")
-create_form_view("name", ("name",))
-create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
+create_form_view("title", ("title",))
+create_form_view("description", ("description", "issue_description", "evaluation_type"), extra_data={"evaluation_types": models.EvaluationType.options})
 create_simple_view("end")
