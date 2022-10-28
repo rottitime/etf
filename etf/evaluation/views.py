@@ -13,14 +13,8 @@ from . import models
 page_order = (
     "intro",
     "name",
-    "exemption",
-    "establishment",
-    "impact",
-    "justification",
-    "location",
+    "description",
     "end",
-    "print",
-    "download",
 )
 
 view_map = {}
@@ -117,52 +111,4 @@ def create_simple_view(name, extra_data=None):
 create_simple_view("intro")
 create_form_view("name", ("name",))
 create_form_view("exemption", ("hrbp", "grade", "title"), extra_data={"grades": models.Grades.options})
-create_form_view("establishment", ("establishment",))
-create_form_view("impact", ("impact_statement",))
-create_form_view(
-    "justification",
-    ("ddat_role", "ddat_family", "funding_source", "recruitment_type", "recruitment_mechanism"),
-    extra_data={
-        "ddat_families": models.DDATFamilies.options,
-        "funding_sources": models.FundingSource.options,
-        "recruitment_types": models.RecruitmentTypes.options,
-        "recruitment_mechanisms": models.RecruitmentMechanisms.options,
-    },
-)
-create_form_view(
-    "location",
-    ("location_strategy", "locations", "london_reason"),
-    extra_data={"london_reasons": models.LondonReasons.options, "locations": models.Locations.options},
-)
-create_form_view("scs_roles", ("scs_adverts", "scs_assignments_lengths"))
-
-
-@register("end")
-def end_view(request, url_data):
-    evaluation_id = url_data["evaluation_id"]
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    data = model_to_dict(evaluation)
-    input_url = f"http://localhost:8010/evaluation/{evaluation_id}/print"
-    output_filename = "/tmp/applicaton_{evaluation_id}.pdf"
-    pdf_data = pdfkit.from_url(input_url, output_filename)
-    evaluation.pdf = str(pdf_data).encode("utf-8")
-    evaluation.save()
-    return render(request, "end.pug", {**data})
-
-
-@register("print")
-def print_view(request, url_data):
-    evaluation_id = url_data["evaluation_id"]
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    data = model_to_dict(evaluation)
-    return render(request, "print.pug", {**data})
-
-
-@register("download")
-def download_file(request, url_data):
-    evaluation_id = url_data["evaluation_id"]
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    filename = slugify(f"evaluation_{evaluation_id}_{evaluation.name}.pdf")
-    filelike = io.BytesIO(evaluation.pdf)
-    response = FileResponse(filelike, as_attachment=True, filename=filename)
-    return response
+create_simple_view("end")
