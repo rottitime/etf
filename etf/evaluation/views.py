@@ -106,5 +106,9 @@ def create_simple_view(name, extra_data=None):
 
 create_simple_view("intro")
 create_form_view("title", ("title",))
-create_form_view("description", ("description", "issue_description", "evaluation_type"), extra_data={"evaluation_types": models.EvaluationType.options})
+create_form_view(
+    "description",
+    ("description", "issue_description", "evaluation_type"),
+    extra_data={"evaluation_types": models.EvaluationType.options},
+)
 create_simple_view("end")
