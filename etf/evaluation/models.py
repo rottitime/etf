@@ -120,7 +120,7 @@ class Evaluation(TimeStampedModel):
     issue_relevance = models.TextField(blank=True, null=True)
 
     # TODO - how do we store detail on 'other' types of evaluation?
-    evaluation_type = models.MultipleChoiceField(blank=True, null=True, choices=EvaluationType.choices)
+    evaluation_type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationType.choices)
     # TODO - is there a bettter way to store this data https://www.doi.org/
     doi = models.CharField(max_length=256, blank=True, null=True)
 
