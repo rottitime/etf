@@ -100,6 +100,7 @@ class TimeStampedModel(models.Model):
 
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
 
+
 class Evaluation(TimeStampedModel):
     # TODO - how do evaluations interact with users?
     # (Probably) a few users should be able to amend a particular evaluation.
@@ -122,7 +123,7 @@ class Evaluation(TimeStampedModel):
     evaluation_type = models.MultipleChoiceField(blank=True, null=True, choices=EvaluationType.choices)
     # TODO - is there a bettter way to store this data https://www.doi.org/
     doi = models.CharField(max_length=256, blank=True, null=True)
-    
+
     # TODO - add Dates modified/created
     evaluation_start_date = models.DateField(blank=True, null=True)
     evaluation_end_date = models.DateField(blank=True, null=True)
@@ -134,7 +135,7 @@ class Evaluation(TimeStampedModel):
     rap_planned_detail = models.TextField(blank=True, null=True)
     rap_outcome = models.CharField(max_length=10, blank=True, null=True, choices=YesNoPartial.choices)
     rap_outcome_detail = models.TextField(blank=True, null=True)
-    
+
     # Participant recruitment approach
     target_population = models.TextField(blank=True, null=True)
     eligibility_criteria = models.TextField(blank=True, null=True)
@@ -162,9 +163,19 @@ class Intervention(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True, verbose_name="Brief description of intervention")
-    rationale = models.TextField(blank=True, null=True, verbose_name="Rationale, theory or goals of intervention elements")
-    materials_used = models.TextField(blank=True, null=True, verbose_name="Description of physical or informational materials used in the intervention, including those used in intervention delivery or in training of intervention providers")
-    procedures = models.TextField(blank=True, null=True, verbose_name="Description of each of the procedures, activities and/or processes used in the intervention, including enabling or supporting activities")
+    rationale = models.TextField(
+        blank=True, null=True, verbose_name="Rationale, theory or goals of intervention elements"
+    )
+    materials_used = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Description of physical or informational materials used in the intervention, including those used in intervention delivery or in training of intervention providers",
+    )
+    procedures = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Description of each of the procedures, activities and/or processes used in the intervention, including enabling or supporting activities",
+    )
     modes_of_delivery = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     frequency_of_delivery = models.TextField(blank=True, null=True)
