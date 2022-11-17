@@ -16,7 +16,7 @@ class User(BaseUser):
 
 
 # TODO - is there a better way to nest choices? (ie for economic evaluation)
-class EvaluationType(choices.Choices):
+class EvaluationTypeOptions(choices.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
     ECONOMIC_COST_MINIMISATION = "Economic evaluation: Cost-minimisation analysis"
@@ -119,8 +119,6 @@ class Evaluation(TimeStampedModel):
     current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # TODO - how do we store detail on 'other' types of evaluation?
-    evaluation_type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationType.choices)
     # TODO - is there a bettter way to store this data https://www.doi.org/
     doi = models.CharField(max_length=256, blank=True, null=True)
 
@@ -157,6 +155,12 @@ class Evaluation(TimeStampedModel):
     confidentiality_and_personal_data = models.TextField(blank=True, null=True)
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
+
+
+class EvaluationType(models.Model):
+    evaluation = models.ForeignKey(Evaluation, related_name="evaluation_types", on_delete=models.CASCADE)
+    type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationTypeOptions.choices)
+    other_description = models.CharField(max_length=256)
 
 
 class Intervention(TimeStampedModel):

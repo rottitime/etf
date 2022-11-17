@@ -108,7 +108,6 @@ create_simple_view("intro")
 create_form_view("title", ("title",))
 create_form_view(
     "description",
-    ("description", "issue_description", "evaluation_type"),
-    extra_data={"evaluation_types": models.EvaluationType.options},
+    ("description", "issue_description"),
 )
 create_simple_view("end")
