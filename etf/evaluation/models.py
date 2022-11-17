@@ -156,6 +156,9 @@ class Evaluation(TimeStampedModel):
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.id} : {self.title}"
+
 
 class EvaluationType(models.Model):
     evaluation = models.ForeignKey(Evaluation, related_name="evaluation_types", on_delete=models.CASCADE)
