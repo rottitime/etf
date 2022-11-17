@@ -42,7 +42,6 @@ class YesNoPartial(choices.Choices):
     PARTIAL = "Partial"
 
 
-
 # TODO - to improve, for now just have UK Gov depts
 class Organisation(choices.Choices):
     NO10 = "Prime Minister's Office, 10 Downing Street"
@@ -91,9 +90,17 @@ class Organisation(choices.Choices):
     WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
 
 
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_at = models.DateTimeField(editable=False, auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
 
-class Evaluation(models.Model):
+class Evaluation(TimeStampedModel):
     # TODO - how do evaluations interact with users?
     # (Probably) a few users should be able to amend a particular evaluation.
     user = models.ForeignKey(User, related_name="evaluations", on_delete=models.CASCADE)
@@ -151,8 +158,7 @@ class Evaluation(models.Model):
     other_ethical_information = models.TextField(blank=True, null=True)
 
 
-
-class Intervention(models.Model):
+class Intervention(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True, verbose_name="Brief description of intervention")
@@ -168,7 +174,7 @@ class Intervention(models.Model):
     # TODO - add date
 
 
-class OutcomeMeasure(models.Model):
+class OutcomeMeasure(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
@@ -180,7 +186,7 @@ class OutcomeMeasure(models.Model):
     relevance = models.TextField(blank=True, null=True)
 
 
-class OtherMeasure(models.Model):
+class OtherMeasure(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
