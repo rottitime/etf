@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
@@ -13,8 +15,15 @@ class User(BaseUser):
         super().save(*args, **kwargs)
 
 
+# TODO - is there a better way to nest choices? (ie for economic evaluation)
 class EvaluationType(choices.Choices):
-    UNKNOWN = "Unknown"
+    IMPACT = "Impact evaluation"
+    PROCESS = "Process evaluation"
+    ECONOMIC_COST_MINIMISATION = "Economic evaluation: Cost-minimisation analysis"
+    ECONOMIC_COST_EFFECTIVENESS = "Economic evaluation: Cost-effectiveness analysis"
+    ECONOMIC_COST_BENEFIT = "Economic evaluation: Cost-benefit analysis"
+    ECONOMIC_COST_UTILITY = "Economic evaluation: Cost-utility"
+    OTHER = "Other"
 
 
 class OutcomeType(choices.Choices):
@@ -25,6 +34,13 @@ class OutcomeType(choices.Choices):
 class OutcomeMeasure(choices.Choices):
     DIRECT = "Direct"
     SURROGATE = "Surrogate"
+
+
+class YesNoPartial(choices.Choices):
+    YES = "Yes"
+    NO = "No"
+    PARTIAL = "Partial"
+
 
 
 # TODO - to improve, for now just have UK Gov depts
@@ -75,21 +91,65 @@ class Organisation(choices.Choices):
     WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
 
 
+# TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
+
 class Evaluation(models.Model):
     # TODO - how do evaluations interact with users?
     # (Probably) a few users should be able to amend a particular evaluation.
     user = models.ForeignKey(User, related_name="evaluations", on_delete=models.CASCADE)
 
+    # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
-    # TODO - think of good names for the subsequent issue fields!
+    those_experiencing_issue = models.TextField(blank=True, null=True)
+    why_improvements_matter = models.TextField(blank=True, null=True)
+    who_improvements_matter_to = models.TextField(blank=True, null=True)
+    current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # TODO - need to be able to add multiple evaluations
-    evaluation_type = models.CharField(max_length=128, blank=True, null=True, choices=EvaluationType.choices)
+    # TODO - how do we store detail on 'other' types of evaluation?
+    evaluation_type = models.MultipleChoiceField(blank=True, null=True, choices=EvaluationType.choices)
+    # TODO - is there a bettter way to store this data https://www.doi.org/
+    doi = models.CharField(max_length=256, blank=True, null=True)
+    
+    # TODO - add Dates modified/created
+    evaluation_start_date = models.DateField(blank=True, null=True)
+    evaluation_end_date = models.DateField(blank=True, null=True)
+    date_of_intended_publication = models.DateField(blank=True, null=True)
+    reasons_for_delays_in_publication = models.TextField(blank=True, null=True)
+
+    # Boasts/badges/conformity
+    rap_planned = models.CharField(max_length=10, blank=True, null=True, choices=YesNoPartial.choices)
+    rap_planned_detail = models.TextField(blank=True, null=True)
+    rap_outcome = models.CharField(max_length=10, blank=True, null=True, choices=YesNoPartial.choices)
+    rap_outcome_detail = models.TextField(blank=True, null=True)
+    
+    # Participant recruitment approach
+    target_population = models.TextField(blank=True, null=True)
+    eligibility_criteria = models.TextField(blank=True, null=True)
+    process_for_recruitment = models.TextField(blank=True, null=True)
+    target_sample_size = models.TextField(blank=True, null=True)
+    intended_recruitment_schedule = models.TextField(blank=True, null=True)
+    date_of_first_recruitment = models.DateField(blank=True, null=True)
+
+    # Ethical considerations
+    ethics_committee_approval = models.BooleanField(blank=True, null=True)
+    ethics_committee_details = models.TextField(blank=True, null=True)
+    ethical_state_given_existing_evidence_base = models.TextField(blank=True, null=True)
+    risks_to_participants = models.TextField(blank=True, null=True)
+    risks_to_study_team = models.TextField(blank=True, null=True)
+    participant_involvement = models.TextField(blank=True, null=True)
+    participant_consent = models.TextField(blank=True, null=True)
+    participant_information = models.TextField(blank=True, null=True)
+    participant_payment = models.TextField(blank=True, null=True)
+    confidentiality_and_personal_data = models.TextField(blank=True, null=True)
+    breaking_confidentiality = models.TextField(blank=True, null=True)
+    other_ethical_information = models.TextField(blank=True, null=True)
+
 
 
 class Intervention(models.Model):
