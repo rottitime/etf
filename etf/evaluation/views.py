@@ -108,17 +108,26 @@ create_form_view(
 
 create_form_view(
     "issue",
-    ("issue_description", "those_experiencing_issue", "why_improvements_matter", "who_improvements_matter_to", "current_practice", "issue_relevance")
+    (
+        "issue_description",
+        "those_experiencing_issue",
+        "why_improvements_matter",
+        "who_improvements_matter_to",
+        "current_practice",
+        "issue_relevance",
+    ),
 )
 
-create_form_view(
-    "doi",
-    ("doi",)
-)
+create_form_view("doi", ("doi",))
 
 create_form_view(
     "dates",
-    ("evaluation_start_date", "evaluation_end_date", "date_of_intended_publication", "reasons_for_delays_in_publication")
+    (
+        "evaluation_start_date",
+        "evaluation_end_date",
+        "date_of_intended_publication",
+        "reasons_for_delays_in_publication",
+    ),
 )
 
 create_simple_view("end")
