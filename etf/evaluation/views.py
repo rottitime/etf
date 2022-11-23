@@ -115,4 +115,10 @@ create_form_view(
     "issue",
     ("issue_description", "those_experiencing_issue", "why_improvements_matter", "who_improvements_matter_to", "current_practice", "issue_relevance")
 )
+
+create_form_view(
+    "doi",
+    ("doi",)
+)
+
 create_simple_view("end")
