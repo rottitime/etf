@@ -121,4 +121,9 @@ create_form_view(
     ("doi",)
 )
 
+create_form_view(
+    "dates",
+    ("evaluation_start_date", "evaluation_end_date", "date_of_intended_publication", "reasons_for_delays_in_publication")
+)
+
 create_simple_view("end")
