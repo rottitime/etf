@@ -130,4 +130,15 @@ create_form_view(
     ),
 )
 
+create_form_view(
+    "rap",
+    (
+        "rap_planned",
+        "rap_planned_detail",
+        "rap_outcome",
+        "rap_outcome_detail"
+    )
+
+)
+
 create_simple_view("end")
