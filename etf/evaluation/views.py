@@ -6,16 +6,6 @@ from django.urls import reverse
 
 from . import models
 
-page_order = (
-    "intro",
-    "title",
-    "description",
-    "issue",
-    "doi",
-    "dates",
-    "end",
-)
-
 view_map = {}
 
 
@@ -43,8 +33,10 @@ def make_url(evaluation_id, page_name):
 
 
 def page_view(request, evaluation_id, page_name="intro"):
-    if page_name not in page_order:
+    if page_name not in view_map:
         raise Http404()
+
+    page_order = tuple(view_map.keys())
 
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
