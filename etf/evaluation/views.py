@@ -29,7 +29,7 @@ def index_view(request):
         user = request.user
         evaluation = models.Evaluation(user=user)
         evaluation.save()
-        return redirect(page_view, evaluation_id=evaluation.id)
+        return redirect(page_view, evaluation_id=str(evaluation.id))
     return render(request, "index.pug")
 
 
