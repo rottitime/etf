@@ -8,7 +8,7 @@ html(lang="en")
       link(rel="icon", type="image/svg+xml", href="{{static('i-dot-ai/images/crown.svg')}}")
       meta(name="viewport", content="width=device-width, initial-scale=1.0")
       meta(http-equiv="x-ua-compatible", content="ie=edge")
-      title Evaluation Store
+      title Evaluation Registry
       link(rel="stylesheet", href="{{static('foundation/css/foundation.css')}}")
       link(rel="stylesheet", href="{{static('bootstrap-icons/bootstrap-icons.css')}}")
       style.
@@ -19,7 +19,7 @@ html(lang="en")
     body
       nav.top-bar
         div.top-bar-left
-          h2 Evaluation Store
+          h2 Evaluation Registry
         div.top-bar-right
           ul
           - if request.user.is_authenticated
