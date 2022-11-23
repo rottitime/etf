@@ -6,13 +6,6 @@ from django.urls import reverse
 
 from . import models
 
-page_order = (
-    "intro",
-    "title",
-    "description",
-    "end",
-)
-
 view_map = {}
 
 
@@ -29,7 +22,7 @@ def index_view(request):
         user = request.user
         evaluation = models.Evaluation(user=user)
         evaluation.save()
-        return redirect(page_view, evaluation_id=evaluation.id)
+        return redirect(page_view, evaluation_id=str(evaluation.id))
     return render(request, "index.pug")
 
 
@@ -40,8 +33,10 @@ def make_url(evaluation_id, page_name):
 
 
 def page_view(request, evaluation_id, page_name="intro"):
-    if page_name not in page_order:
+    if page_name not in view_map:
         raise Http404()
+
+    page_order = tuple(view_map.keys())
 
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
@@ -110,4 +105,29 @@ create_form_view(
     "description",
     ("description", "issue_description"),
 )
+
+create_form_view(
+    "issue",
+    (
+        "issue_description",
+        "those_experiencing_issue",
+        "why_improvements_matter",
+        "who_improvements_matter_to",
+        "current_practice",
+        "issue_relevance",
+    ),
+)
+
+create_form_view("doi", ("doi",))
+
+create_form_view(
+    "dates",
+    (
+        "evaluation_start_date",
+        "evaluation_end_date",
+        "date_of_intended_publication",
+        "reasons_for_delays_in_publication",
+    ),
+)
+
 create_simple_view("end")

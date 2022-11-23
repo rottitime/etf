@@ -1,0 +1,26 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.pug" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h3 Issue Description
+
+      {{macros.textarea("issue_description", "Issue Description")}}
+
+      {{macros.textarea("those_experiencing_issue", "Those experiencing the issue")}}
+
+      {{macros.textarea("why_improvements_matter", "Why improvements matter")}}
+
+      {{macros.textarea("who_improvements_matter_to", "Who improvements matter to")}}
+
+      {{macros.textarea("current_practice", "Current practice")}}
+
+      {{macros.textarea("issue_relevance", "Issue relevance")}}
+
+      {{macros.buttons(prev_url)}}
