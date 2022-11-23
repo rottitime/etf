@@ -10,6 +10,9 @@ page_order = (
     "intro",
     "title",
     "description",
+    "issue",
+    "doi",
+    "dates",
     "end",
 )
 
