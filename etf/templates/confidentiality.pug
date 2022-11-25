@@ -1,0 +1,24 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.pug" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h3 Confidentiality
+
+      :markdown
+        Blah, blah, blah
+
+        * Bullet 1
+        * Bullet 2
+
+      {{macros.textarea("confidentiality_and_personal_data", "Confidentiality and personal data")}}
+
+      {{macros.textarea("breaking_confidentiality", "Breaking confidentiality")}}
+
+      {{macros.buttons(prev_url)}}

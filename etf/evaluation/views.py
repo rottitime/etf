@@ -181,4 +181,6 @@ create_form_view(
         "participant_payment",
     ),
 )
+
+create_form_view("confidentiality", ("confidentiality_and_personal_data", "breaking_confidentiality"))
 create_simple_view("end")
