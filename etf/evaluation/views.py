@@ -183,4 +183,7 @@ create_form_view(
 )
 
 create_form_view("confidentiality", ("confidentiality_and_personal_data", "breaking_confidentiality"))
+
+create_form_view("other-ethical", ("other_ethical_information",))
+
 create_simple_view("end")
