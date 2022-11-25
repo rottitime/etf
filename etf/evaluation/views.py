@@ -100,7 +100,9 @@ def create_simple_view(name, extra_data=None):
 
 
 create_simple_view("intro")
+
 create_form_view("title", ("title",))
+
 create_form_view(
     "description",
     ("description", "issue_description"),
@@ -130,16 +132,7 @@ create_form_view(
     ),
 )
 
-create_form_view(
-    "rap",
-    (
-        "rap_planned",
-        "rap_planned_detail",
-        "rap_outcome",
-        "rap_outcome_detail"
-    )
-
-)
+create_form_view("rap", ("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
 create_form_view(
     "participant_recruitment",
@@ -149,8 +142,39 @@ create_form_view(
         "process_for_recruitment",
         "target_sample_size",
         "intended_recruitment_schedule",
-        "date_of_first_recruitment"
-    )
+        "date_of_first_recruitment",
+    ),
 )
+
+create_form_view(
+    "ethics",
+    (
+        "ethics_committee_approval",
+        "ethics_committee_details",
+        "ethical_state_given_existing_evidence_base",
+    ),
+)
+
+create_form_view(
+    "risks",
+    (
+        "risks_to_participants",
+        "risks_to_study_team",
+    ),
+)
+
+create_form_view(
+    "participants",
+    (
+        "participant_involvement",
+        "participant_consent",
+        "participant_information",
+        "participant_payment",
+    ),
+)
+
+create_form_view("confidentiality", ("confidentiality_and_personal_data", "breaking_confidentiality"))
+
+create_form_view("other-ethical", ("other_ethical_information",))
 
 create_simple_view("end")

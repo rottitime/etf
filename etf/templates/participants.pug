@@ -1,0 +1,28 @@
+{% import 'macros.html' as macros with context %}
+
+{% extends "base.pug" %}
+
+block content
+
+  form(method="POST")
+    {{csrf_input}}
+
+    fieldset(class="fieldset")
+      legend
+        h3 Participants
+
+      :markdown
+        Blah, blah, blah
+
+        * Bullet 1
+        * Bullet 2
+
+      {{macros.textarea("participant_involvement", "Participant involvement")}}
+
+      {{macros.textarea("participant_consent", "Participant consent")}}
+
+      {{macros.textarea("participant_information", "Participant information")}}
+
+      {{macros.textarea("participant_payment", "Participant payment")}}
+
+      {{macros.buttons(prev_url)}}
