@@ -171,4 +171,14 @@ create_form_view(
         "risks_to_study_team",
     ),
 )
+
+create_form_view(
+    "participants",
+    (
+        "participant_involvement",
+        "participant_consent",
+        "participant_information",
+        "participant_payment",
+    ),
+)
 create_simple_view("end")
