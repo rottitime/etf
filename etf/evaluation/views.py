@@ -155,4 +155,12 @@ create_form_view(
     )
 )
 
+create_form_view(
+    "ethics",
+    (
+        "ethics_committee_approval",
+        "ethics_committee_details",
+        "ethical_state_given_existing_evidence_base",
+    ),
+)
 create_simple_view("end")
