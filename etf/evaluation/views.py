@@ -132,16 +132,7 @@ create_form_view(
     ),
 )
 
-create_form_view(
-    "rap",
-    (
-        "rap_planned",
-        "rap_planned_detail",
-        "rap_outcome",
-        "rap_outcome_detail"
-    )
-
-)
+create_form_view("rap", ("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
 create_form_view(
     "participant_recruitment",
@@ -151,8 +142,8 @@ create_form_view(
         "process_for_recruitment",
         "target_sample_size",
         "intended_recruitment_schedule",
-        "date_of_first_recruitment"
-    )
+        "date_of_first_recruitment",
+    ),
 )
 
 create_form_view(
