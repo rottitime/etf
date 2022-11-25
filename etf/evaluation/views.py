@@ -163,4 +163,12 @@ create_form_view(
         "ethical_state_given_existing_evidence_base",
     ),
 )
+
+create_form_view(
+    "risks",
+    (
+        "risks_to_participants",
+        "risks_to_study_team",
+    ),
+)
 create_simple_view("end")
