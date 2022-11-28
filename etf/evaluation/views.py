@@ -37,6 +37,7 @@ def page_view(request, evaluation_id, page_name="intro"):
         raise Http404()
 
     page_order = tuple(view_map.keys())
+    pages = tuple((page_name, make_url(evaluation_id, page_name)) for page_name in page_order)
 
     index = page_order.index(page_name)
     prev_page = index and page_order[index - 1] or None
@@ -46,6 +47,7 @@ def page_view(request, evaluation_id, page_name="intro"):
     next_url = make_url(evaluation_id, next_page)
 
     url_data = {
+        "pages": pages,
         "evaluation_id": evaluation_id,
         "page_name": page_name,
         "index": index,
