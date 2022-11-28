@@ -1,5 +1,9 @@
+#main {
+  margin-top: 3rem;
+}
+
 section {
-  margin-top: 3em;
+  margin-bottom: 3rem;
 }
 
 .card, .callout, fieldset {
@@ -11,5 +15,6 @@ section {
 }
 
 .label {
-  margin-bottom: 0.125em;
+  margin-bottom: 0.125rem;
+}
 }

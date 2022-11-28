@@ -20,18 +20,17 @@ html(lang="en")
         div.top-bar-left
           h2 Evaluation Registry
         div.top-bar-right
-          ul
           - if request.user.is_authenticated
             a.button(href=url('account_logout')) Logout 
               i.bi-box-arrow-right
 
-      div.grid-x
+      div#main.grid-x
         div.cell.small-3
         div.cell.small-6
 
-          section
-            {% set messages = get_messages(request) %}
-            - if messages
+          {% set messages = get_messages(request) %}
+          - if messages
+            section
               - for message in messages
                 +macros.callout(message.tags)
                   p {{message}}
