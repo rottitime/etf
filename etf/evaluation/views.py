@@ -86,7 +86,7 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
     return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
 
 
-def create_form_view(name, field_names, extra_data=None):
+def create_form_view(slug, field_names, extra_data=None):
     if not extra_data:
         extra_data = {}
 
@@ -95,17 +95,17 @@ def create_form_view(name, field_names, extra_data=None):
             model = models.Evaluation
             fields = field_names
 
-    @register(name)
+    @register(slug)
     def _view(request, url_data):
         return _create_form_page_response(
-            request, url_data, form_class=_Form, template_name=f"{name}.pug", extra_data=extra_data
+            request, url_data, form_class=_Form, template_name=f"{slug}.pug", extra_data=extra_data
         )
 
 
-def create_simple_view(name, extra_data=None):
-    @register(name)
+def create_simple_view(slug, extra_data=None):
+    @register(slug)
     def _view(request, url_data):
-        return render(request, f"{name}.pug", {**url_data})
+        return render(request, f"{slug}.pug", {**url_data})
 
 
 create_simple_view("intro")
