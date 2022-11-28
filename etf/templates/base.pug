@@ -15,6 +15,7 @@ html(lang="en")
       style.
 
     body#etf
+
       nav.top-bar
         div.top-bar-left
           h2 Evaluation Registry
@@ -24,20 +25,18 @@ html(lang="en")
             a.button(href=url('account_logout')) Logout 
               i.bi-box-arrow-right
 
-      section
-        div.grid-x
-          div.cell.small-3
-          div.cell.small-6
+      div.grid-x
+        div.cell.small-3
+        div.cell.small-6
+
+          section
             {% set messages = get_messages(request) %}
             - if messages
               - for message in messages
                 +macros.callout(message.tags)
                   p {{message}}
-          div.cell.small-3
 
-      section
-        div.grid-x
-          div.cell.small-3
-          div.cell.small-6
+          section
             block content
-          div.cell.small-3
+
+        div.cell.small-3

@@ -30,43 +30,34 @@
       </div>
     </nav>
 
-    <div>
-      {% block body %}
+    <div class="grid-x">
+      <div class="cell small-3"></div>
+      <div class="cell small-6">
 
-        {% if messages %}
+        {% block body %}
+
+          {% if messages %}
+            <section>
+              {% for message in messages %}
+                <div class="callout {{message.tags}}" data-closable>
+                  <p>{{message}}</p>
+                </div>
+              {% endfor %}
+            </section>
+          {% endif %}
 
           <section>
-            <div class="grid-x">
-              <div class="cell small-3"></div>
-              <div class="cell small-6">
-                {% for message in messages %}
-                  <div class="callout {{message.tags}}" data-closable>
-                    <p>{{message}}</p>
-                  </div>
-                {% endfor %}
-              </div>
-              <div class="cell small-3"></div>
-            </div>
+            {% block content %}
+            {% endblock %}
           </section>
-        {% endif %}
 
-
-        <section>
-          <div class="grid-x">
-            <div class="cell small-3"></div>
-            <div class="cell small-6">
-
-              {% block content %}
-              {% endblock %}
-
-            </div>
-            <div class="cell small-3"></div>
-          </div>
-        </section>
-
-        {% block extra_body %}
+          {% block extra_body %}
+          {% endblock %}
         {% endblock %}
-      {% endblock %}
+
+      </div>
+
+      <div class="cell small-3"></div>
 
     </div>
 
