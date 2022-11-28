@@ -9,3 +9,7 @@ section {
 .button, #etf input, #etf textarea, #etf select, .label {
   border-radius: 4px;
 }
+
+.label {
+  margin-bottom: 0.125em;
+}
