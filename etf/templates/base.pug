@@ -27,10 +27,14 @@ html(lang="en")
       div#main.grid-x
         div.cell.small-3
           nav.sidebar
-              - for page_name, page_url in pages
-                ul.menu.vertical.simple
+              ul.menu.vertical.simple
+                - for page in pages
                   li
-                    = page_name.capitalize()
+                    - if page.completed
+                      i.bi-check-square-fill.completed &nbsp;
+                    - else
+                      i.bi-question-square &nbsp;
+                    = page.title
         div.cell.small-6
 
           {% set messages = get_messages(request) %}
