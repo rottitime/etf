@@ -47,11 +47,13 @@ def page_view(request, evaluation_id, page_name="intro"):
 
     pages = tuple(
         {
-            'name': _pn,
-            'url': make_url(evaluation_id, _pn),
-            'title': _pn.capitalize(),
-            'completed': page_order.index(_pn) < index
-        } for _pn in page_order)
+            "name": _pn,
+            "url": make_url(evaluation_id, _pn),
+            "title": _pn.capitalize(),
+            "completed": page_order.index(_pn) < index,
+        }
+        for _pn in page_order
+    )
 
     url_data = {
         "pages": pages,
