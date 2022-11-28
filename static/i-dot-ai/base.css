@@ -17,4 +17,18 @@ section {
 .label {
   margin-bottom: 0.125rem;
 }
+
+nav.sidebar {
+  margin: 1.25rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#etf nav.sidebar ul {
+  align-items: start;
+}
+
+#etf nav.sidebar li {
+  text-align: left;
+  margin: 0.25rem;
 }

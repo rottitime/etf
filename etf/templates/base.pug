@@ -26,6 +26,11 @@ html(lang="en")
 
       div#main.grid-x
         div.cell.small-3
+          nav.sidebar
+              - for page_name, page_url in pages
+                ul.menu.vertical.simple
+                  li
+                    = page_name.capitalize()
         div.cell.small-6
 
           {% set messages = get_messages(request) %}
