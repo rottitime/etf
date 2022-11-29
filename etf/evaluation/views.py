@@ -102,9 +102,6 @@ def _create_form_page_response(request, url_data, page):
 
 
 def create_form_view(slug, field_names, extra_data=None):
-    if not extra_data:
-        extra_data = {}
-
     page = Page(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
 
     @register(slug)
