@@ -7,15 +7,7 @@ from django.utils.text import slugify
 
 from . import models
 
-view_map = {}
-
-
-def register(name):
-    def _inner(func):
-        view_map[name] = func
-        return func
-
-    return _inner
+page_map = {}
 
 
 def index_view(request):
@@ -34,14 +26,14 @@ def make_url(evaluation_id, page_name):
 
 
 def page_view(request, evaluation_id, page_name="intro"):
-    if page_name not in view_map:
+    if page_name not in page_map:
         raise Http404()
 
-    page_order = tuple(view_map.keys())
+    page_name_order = tuple(page_map.keys())
 
-    index = page_order.index(page_name)
-    prev_page = index and page_order[index - 1] or None
-    next_page = (index < len(page_order) - 1) and page_order[index + 1] or None
+    index = page_name_order.index(page_name)
+    prev_page = index and page_name_order[index - 1] or None
+    next_page = (index < len(page_name_order) - 1) and page_name_order[index + 1] or None
     prev_url = make_url(evaluation_id, prev_page)
     this_url = make_url(evaluation_id, page_name)
     next_url = make_url(evaluation_id, next_page)
@@ -51,9 +43,9 @@ def page_view(request, evaluation_id, page_name="intro"):
             "name": _pn,
             "url": make_url(evaluation_id, _pn),
             "title": _pn.capitalize(),
-            "completed": page_order.index(_pn) < index,
+            "completed": page_name_order.index(_pn) < index,
         }
-        for _pn in page_order
+        for _pn in page_name_order
     )
 
     url_data = {
@@ -67,7 +59,7 @@ def page_view(request, evaluation_id, page_name="intro"):
         "this_url": this_url,
         "next_url": next_url,
     }
-    return view_map[page_name](request, url_data)
+    return page_map[page_name].view(request, url_data)
 
 
 class FormPage:
@@ -84,7 +76,7 @@ class FormPage:
                 fields = field_names
 
         self.form_class = _Form
-        register(self.slug)(self.view)
+        page_map[self.slug] = self
 
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
@@ -108,7 +100,7 @@ class SimplePage:
         self.title = title
         self.slug = slugify(title)
         self.extra_data = extra_data or {}
-        register(self.slug)(self.view)
+        page_map[self.slug] = self
 
     def view(self, request, url_data):
         return render(request, f"{self.slug}.pug", {**url_data})
