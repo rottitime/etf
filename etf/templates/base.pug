@@ -29,9 +29,11 @@ html(lang="en")
           nav.sidebar
               ul.menu.vertical.simple
                 - for page in pages
-                  li
+                  li(class={'completed': page.completed, 'current': page.current})
                     - if page.completed
-                      i.bi-check-square-fill.completed &nbsp;
+                      i.bi-check-square-fill &nbsp;
+                    - elif page.current
+                      i.bi-dash-square-fill &nbsp;
                     - else
                       i.bi-question-square &nbsp;
                     = page.title
