@@ -45,7 +45,18 @@ def page_view(request, evaluation_id, page_name="intro"):
     this_url = make_url(evaluation_id, page_name)
     next_url = make_url(evaluation_id, next_page)
 
+    pages = tuple(
+        {
+            "name": _pn,
+            "url": make_url(evaluation_id, _pn),
+            "title": _pn.capitalize(),
+            "completed": page_order.index(_pn) < index,
+        }
+        for _pn in page_order
+    )
+
     url_data = {
+        "pages": pages,
         "evaluation_id": evaluation_id,
         "page_name": page_name,
         "index": index,
@@ -77,7 +88,7 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
     return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
 
 
-def create_form_view(name, field_names, extra_data=None):
+def create_form_view(slug, field_names, extra_data=None):
     if not extra_data:
         extra_data = {}
 
@@ -86,31 +97,31 @@ def create_form_view(name, field_names, extra_data=None):
             model = models.Evaluation
             fields = field_names
 
-    @register(name)
+    @register(slug)
     def _view(request, url_data):
         return _create_form_page_response(
-            request, url_data, form_class=_Form, template_name=f"{name}.pug", extra_data=extra_data
+            request, url_data, form_class=_Form, template_name=f"{slug}.pug", extra_data=extra_data
         )
 
 
-def create_simple_view(name, extra_data=None):
-    @register(name)
+def create_simple_view(slug, extra_data=None):
+    @register(slug)
     def _view(request, url_data):
-        return render(request, f"{name}.pug", {**url_data})
+        return render(request, f"{slug}.pug", {**url_data})
 
 
-create_simple_view("intro")
+create_simple_view(slug="intro")
 
-create_form_view("title", ("title",))
+create_form_view(slug="title", field_names=("title",))
 
 create_form_view(
-    "description",
-    ("description", "issue_description"),
+    slug="description",
+    field_names=("description", "issue_description"),
 )
 
 create_form_view(
-    "issue",
-    (
+    slug="issue",
+    field_names=(
         "issue_description",
         "those_experiencing_issue",
         "why_improvements_matter",
@@ -120,11 +131,11 @@ create_form_view(
     ),
 )
 
-create_form_view("doi", ("doi",))
+create_form_view(slug="doi", field_names=("doi",))
 
 create_form_view(
-    "dates",
-    (
+    slug="dates",
+    field_names=(
         "evaluation_start_date",
         "evaluation_end_date",
         "date_of_intended_publication",
@@ -132,11 +143,11 @@ create_form_view(
     ),
 )
 
-create_form_view("rap", ("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
+create_form_view(slug="rap", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
 create_form_view(
-    "participant_recruitment",
-    (
+    slug="participant_recruitment",
+    field_names=(
         "target_population",
         "eligibility_criteria",
         "process_for_recruitment",
@@ -147,8 +158,8 @@ create_form_view(
 )
 
 create_form_view(
-    "ethics",
-    (
+    slug="ethics",
+    field_names=(
         "ethics_committee_approval",
         "ethics_committee_details",
         "ethical_state_given_existing_evidence_base",
@@ -156,16 +167,16 @@ create_form_view(
 )
 
 create_form_view(
-    "risks",
-    (
+    slug="risks",
+    field_names=(
         "risks_to_participants",
         "risks_to_study_team",
     ),
 )
 
 create_form_view(
-    "participants",
-    (
+    slug="participants",
+    field_names=(
         "participant_involvement",
         "participant_consent",
         "participant_information",
@@ -173,8 +184,8 @@ create_form_view(
     ),
 )
 
-create_form_view("confidentiality", ("confidentiality_and_personal_data", "breaking_confidentiality"))
+create_form_view(slug="confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
 
-create_form_view("other-ethical", ("other_ethical_information",))
+create_form_view(slug="other-ethical", field_names=("other_ethical_information",))
 
-create_simple_view("end")
+create_simple_view(slug="end")
