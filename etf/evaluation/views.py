@@ -3,6 +3,7 @@ from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils.text import slugify
 
 from . import models
 
@@ -70,10 +71,11 @@ def page_view(request, evaluation_id, page_name="intro"):
 
 
 class FormPage:
-    def __init__(self, slug, field_names, extra_data=None):
-        self.slug = slug
+    def __init__(self, title, field_names, extra_data=None):
+        self.title = title
+        self.slug = slugify(title)
         self.field_names = field_names
-        self.template_name = f"{slug}.pug"
+        self.template_name = f"{self.slug}.pug"
         self.extra_data = extra_data or {}
 
         class _Form(forms.ModelForm):
@@ -102,8 +104,9 @@ class FormPage:
 
 
 class SimplePage:
-    def __init__(self, slug, extra_data=None):
-        self.slug = slug
+    def __init__(self, title, extra_data=None):
+        self.title = title
+        self.slug = slugify(title)
         self.extra_data = extra_data or {}
         register(self.slug)(self.view)
 
@@ -111,17 +114,17 @@ class SimplePage:
         return render(request, f"{self.slug}.pug", {**url_data})
 
 
-SimplePage(slug="intro")
+SimplePage(title="Intro")
 
-FormPage(slug="title", field_names=("title",))
+FormPage(title="Title", field_names=("title",))
 
 FormPage(
-    slug="description",
+    title="Description",
     field_names=("description", "issue_description"),
 )
 
 FormPage(
-    slug="issue",
+    title="Issue",
     field_names=(
         "issue_description",
         "those_experiencing_issue",
@@ -132,10 +135,10 @@ FormPage(
     ),
 )
 
-FormPage(slug="doi", field_names=("doi",))
+FormPage(title="DOI", field_names=("doi",))
 
 FormPage(
-    slug="dates",
+    title="Dates",
     field_names=(
         "evaluation_start_date",
         "evaluation_end_date",
@@ -144,10 +147,10 @@ FormPage(
     ),
 )
 
-FormPage(slug="rap", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
+FormPage(title="RAP", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
 FormPage(
-    slug="participant_recruitment",
+    title="Participant recruitment",
     field_names=(
         "target_population",
         "eligibility_criteria",
@@ -159,7 +162,7 @@ FormPage(
 )
 
 FormPage(
-    slug="ethics",
+    title="Ethics",
     field_names=(
         "ethics_committee_approval",
         "ethics_committee_details",
@@ -168,7 +171,7 @@ FormPage(
 )
 
 FormPage(
-    slug="risks",
+    title="Risks",
     field_names=(
         "risks_to_participants",
         "risks_to_study_team",
@@ -176,7 +179,7 @@ FormPage(
 )
 
 FormPage(
-    slug="participants",
+    title="Participants",
     field_names=(
         "participant_involvement",
         "participant_consent",
@@ -185,8 +188,8 @@ FormPage(
     ),
 )
 
-FormPage(slug="confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
+FormPage(title="Confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
 
-FormPage(slug="other-ethical", field_names=("other_ethical_information",))
+FormPage(title="Other ethical", field_names=("other_ethical_information",))
 
-SimplePage(slug="end")
+SimplePage(title="End")
