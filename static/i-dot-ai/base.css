@@ -33,6 +33,10 @@ nav.sidebar {
   margin: 0.25rem;
 }
 
-i.completed {
+.completed i {
   color: #3adb76;
+}
+
+.current i {
+  color: #1779ba;
 }
