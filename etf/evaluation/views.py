@@ -69,13 +69,26 @@ def page_view(request, evaluation_id, page_name="intro"):
     return view_map[page_name](request, url_data)
 
 
-def _create_form_page_response(request, url_data, form_class, template_name, extra_data=None):
-    if not extra_data:
-        extra_data = {}
+class Page:
+    def __init__(self, slug, field_names, template_name, extra_data):
+        self.slug = slug
+        self.field_names = field_names
+        self.template_name = template_name
+        self.extra_data = extra_data or {}
+
+        class _Form(forms.ModelForm):
+            class Meta:
+                model = models.Evaluation
+                fields = field_names
+
+        self.form_class = _Form
+
+
+def _create_form_page_response(request, url_data, page):
     evaluation_id = url_data["evaluation_id"]
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "POST":
-        form = form_class(request.POST, instance=evaluation)
+        form = page.form_class(request.POST, instance=evaluation)
         if form.is_valid():
             form.save()
             return redirect(url_data["next_url"])
@@ -85,23 +98,18 @@ def _create_form_page_response(request, url_data, form_class, template_name, ext
     else:
         data = model_to_dict(evaluation)
         errors = {}
-    return render(request, template_name, {"errors": errors, "data": data, **url_data, **extra_data})
+    return render(request, page.template_name, {"errors": errors, "data": data, **url_data, **page.extra_data})
 
 
 def create_form_view(slug, field_names, extra_data=None):
     if not extra_data:
         extra_data = {}
 
-    class _Form(forms.ModelForm):
-        class Meta:
-            model = models.Evaluation
-            fields = field_names
+    page = Page(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
 
     @register(slug)
     def _view(request, url_data):
-        return _create_form_page_response(
-            request, url_data, form_class=_Form, template_name=f"{slug}.pug", extra_data=extra_data
-        )
+        return _create_form_page_response(request, url_data, page)
 
 
 def create_simple_view(slug, extra_data=None):
