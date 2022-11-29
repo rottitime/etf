@@ -70,7 +70,7 @@ def page_view(request, evaluation_id, page_name="intro"):
 
 
 class FormPage:
-    def __init__(self, slug, field_names, extra_data):
+    def __init__(self, slug, field_names, extra_data=None):
         self.slug = slug
         self.field_names = field_names
         self.template_name = f"{slug}.pug"
