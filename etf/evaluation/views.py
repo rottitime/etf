@@ -70,10 +70,10 @@ def page_view(request, evaluation_id, page_name="intro"):
 
 
 class FormPage:
-    def __init__(self, slug, field_names, template_name, extra_data):
+    def __init__(self, slug, field_names, extra_data):
         self.slug = slug
         self.field_names = field_names
-        self.template_name = template_name
+        self.template_name = f"{slug}.pug"
         self.extra_data = extra_data or {}
 
         class _Form(forms.ModelForm):
@@ -82,8 +82,9 @@ class FormPage:
                 fields = field_names
 
         self.form_class = _Form
+        register(self.slug)(self.view)
 
-    def _create_form_page_response(self, request, url_data):
+    def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         if request.method == "POST":
@@ -110,24 +111,16 @@ class SimplePage:
         return render(request, f"{self.slug}.pug", {**url_data})
 
 
-def create_form_view(slug, field_names, extra_data=None):
-    page = FormPage(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
-
-    @register(slug)
-    def _view(request, url_data):
-        return page._create_form_page_response(request, url_data)
-
-
 SimplePage(slug="intro")
 
-create_form_view(slug="title", field_names=("title",))
+FormPage(slug="title", field_names=("title",))
 
-create_form_view(
+FormPage(
     slug="description",
     field_names=("description", "issue_description"),
 )
 
-create_form_view(
+FormPage(
     slug="issue",
     field_names=(
         "issue_description",
@@ -139,9 +132,9 @@ create_form_view(
     ),
 )
 
-create_form_view(slug="doi", field_names=("doi",))
+FormPage(slug="doi", field_names=("doi",))
 
-create_form_view(
+FormPage(
     slug="dates",
     field_names=(
         "evaluation_start_date",
@@ -151,9 +144,9 @@ create_form_view(
     ),
 )
 
-create_form_view(slug="rap", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
+FormPage(slug="rap", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
-create_form_view(
+FormPage(
     slug="participant_recruitment",
     field_names=(
         "target_population",
@@ -165,7 +158,7 @@ create_form_view(
     ),
 )
 
-create_form_view(
+FormPage(
     slug="ethics",
     field_names=(
         "ethics_committee_approval",
@@ -174,7 +167,7 @@ create_form_view(
     ),
 )
 
-create_form_view(
+FormPage(
     slug="risks",
     field_names=(
         "risks_to_participants",
@@ -182,7 +175,7 @@ create_form_view(
     ),
 )
 
-create_form_view(
+FormPage(
     slug="participants",
     field_names=(
         "participant_involvement",
@@ -192,8 +185,8 @@ create_form_view(
     ),
 )
 
-create_form_view(slug="confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
+FormPage(slug="confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
 
-create_form_view(slug="other-ethical", field_names=("other_ethical_information",))
+FormPage(slug="other-ethical", field_names=("other_ethical_information",))
 
 SimplePage(slug="end")
