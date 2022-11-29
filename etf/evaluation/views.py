@@ -40,12 +40,12 @@ def page_view(request, evaluation_id, page_name="intro"):
 
     pages = tuple(
         {
-            "name": _pn,
-            "url": make_url(evaluation_id, _pn),
-            "title": _pn.capitalize(),
-            "completed": page_name_order.index(_pn) < index,
+            "slug": _p.slug,
+            "url": make_url(evaluation_id, _p.slug),
+            "title": _p.title,
+            "completed": page_name_order.index(_p.slug) < index,
         }
-        for _pn in page_name_order
+        for _p in page_map.values()
     )
 
     url_data = {
