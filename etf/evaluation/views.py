@@ -100,6 +100,16 @@ class FormPage:
         return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
 
 
+class SimplePage:
+    def __init__(self, slug, extra_data=None):
+        self.slug = slug
+        self.extra_data = extra_data or {}
+        register(self.slug)(self.view)
+
+    def view(self, request, url_data):
+        return render(request, f"{self.slug}.pug", {**url_data})
+
+
 def create_form_view(slug, field_names, extra_data=None):
     page = FormPage(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
 
@@ -108,13 +118,7 @@ def create_form_view(slug, field_names, extra_data=None):
         return page._create_form_page_response(request, url_data)
 
 
-def create_simple_view(slug, extra_data=None):
-    @register(slug)
-    def _view(request, url_data):
-        return render(request, f"{slug}.pug", {**url_data})
-
-
-create_simple_view(slug="intro")
+SimplePage(slug="intro")
 
 create_form_view(slug="title", field_names=("title",))
 
@@ -192,4 +196,4 @@ create_form_view(slug="confidentiality", field_names=("confidentiality_and_perso
 
 create_form_view(slug="other-ethical", field_names=("other_ethical_information",))
 
-create_simple_view(slug="end")
+SimplePage(slug="end")
