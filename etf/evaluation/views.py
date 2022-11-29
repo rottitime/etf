@@ -69,7 +69,7 @@ def page_view(request, evaluation_id, page_name="intro"):
     return view_map[page_name](request, url_data)
 
 
-class Page:
+class FormPage:
     def __init__(self, slug, field_names, template_name, extra_data):
         self.slug = slug
         self.field_names = field_names
@@ -101,7 +101,7 @@ class Page:
 
 
 def create_form_view(slug, field_names, extra_data=None):
-    page = Page(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
+    page = FormPage(slug=slug, field_names=field_names, template_name=f"{slug}.pug", extra_data=extra_data)
 
     @register(slug)
     def _view(request, url_data):
