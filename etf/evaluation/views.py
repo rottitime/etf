@@ -83,22 +83,21 @@ class Page:
 
         self.form_class = _Form
 
-
-def _create_form_page_response(request, url_data, page):
-    evaluation_id = url_data["evaluation_id"]
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if request.method == "POST":
-        form = page.form_class(request.POST, instance=evaluation)
-        if form.is_valid():
-            form.save()
-            return redirect(url_data["next_url"])
+    def _create_form_page_response(self, request, url_data):
+        evaluation_id = url_data["evaluation_id"]
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        if request.method == "POST":
+            form = self.form_class(request.POST, instance=evaluation)
+            if form.is_valid():
+                form.save()
+                return redirect(url_data["next_url"])
+            else:
+                data = request.POST
+                errors = form.errors
         else:
-            data = request.POST
-            errors = form.errors
-    else:
-        data = model_to_dict(evaluation)
-        errors = {}
-    return render(request, page.template_name, {"errors": errors, "data": data, **url_data, **page.extra_data})
+            data = model_to_dict(evaluation)
+            errors = {}
+        return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
 
 
 def create_form_view(slug, field_names, extra_data=None):
@@ -106,7 +105,7 @@ def create_form_view(slug, field_names, extra_data=None):
 
     @register(slug)
     def _view(request, url_data):
-        return _create_form_page_response(request, url_data, page)
+        return page._create_form_page_response(request, url_data)
 
 
 def create_simple_view(slug, extra_data=None):
