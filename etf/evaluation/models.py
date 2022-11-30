@@ -163,7 +163,7 @@ class Evaluation(TimeStampedModel):
 class EvaluationType(models.Model):
     evaluation = models.ForeignKey(Evaluation, related_name="evaluation_types", on_delete=models.CASCADE)
     type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationTypeOptions.choices)
-    other_description = models.CharField(max_length=256)
+    other_description = models.CharField(max_length=256, blank=True, null=True)
 
 
 class Intervention(TimeStampedModel):
