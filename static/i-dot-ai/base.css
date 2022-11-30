@@ -40,3 +40,8 @@ nav.sidebar {
 .current i {
   color: #1779ba;
 }
+
+ul.vertical.tabs {
+  border-radius: 12px;
+  padding: 1.25rem;
+}
