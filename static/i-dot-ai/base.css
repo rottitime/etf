@@ -33,6 +33,15 @@ nav.sidebar {
   margin: 0.25rem;
 }
 
-i.completed {
+.completed i {
   color: #3adb76;
+}
+
+.current i {
+  color: #1779ba;
+}
+
+ul.vertical.tabs {
+  border-radius: 12px;
+  padding: 1.25rem;
 }

@@ -27,11 +27,13 @@ html(lang="en")
       div#main.grid-x
         div.cell.small-3
           nav.sidebar
-              ul.menu.vertical.simple
+              ul.vertical.tabs
                 - for page in pages
-                  li
+                  li.tabs-title(class={'completed': page.completed, 'current': page.current, 'is-active': page.current})
                     - if page.completed
-                      i.bi-check-square-fill.completed &nbsp;
+                      i.bi-check-square-fill &nbsp;
+                    - elif page.current
+                      i.bi-dash-square-fill &nbsp;
                     - else
                       i.bi-question-square &nbsp;
                     = page.title
