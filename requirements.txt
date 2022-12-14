@@ -12,3 +12,4 @@ pyyaml
 pypugjs
 markdown-it-py
 pdfkit
+faker
