@@ -110,6 +110,7 @@ class Evaluation(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    organisation = models.CharField(max_length=256, blank=True, null=True, choices=Organisation.choices)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
