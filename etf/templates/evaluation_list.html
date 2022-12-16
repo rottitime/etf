@@ -1,0 +1,20 @@
+{% extends "base.pug" %}
+    {% block content %}
+    {% for e in evaluations %}
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Organisation</td>
+            </tr>
+
+            <tr>
+                <td>{{e.id}}</td>
+                <td>{{e.title}}</td>
+                <td>{{e.organisation}}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    {% endblock %}
+
+
