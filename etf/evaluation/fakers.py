@@ -30,15 +30,25 @@ def make_fake_user():
     return data
 
 
+def generate_topics():
+    num_topics = random.randint(0, 4)
+    set_topics = set()
+    for i in range(num_topics):
+        set_topics.add(random.choice(models.Topics.values))
+    return list(set_topics)
+
+
 def make_evaluation(user):
     evaluation_start_date = make_random_date()
     evaluation_end_date = evaluation_start_date + datetime.timedelta(random.randint(100, 2 * 365))
     date_of_intended_publication = evaluation_end_date + datetime.timedelta(random.randint(50, 365))
     date_of_first_recruitment = evaluation_start_date + datetime.timedelta(random.randint(10, 50))
+    topics = generate_topics()
     data = dict(
         user=user,
         title=fake.sentence(),
         description=fake.text(),
+        topics=topics,
         organisation=random.choice(models.Organisation.values),
         issue_description=fake.text(),
         those_experiencing_issue=fake.text(),
