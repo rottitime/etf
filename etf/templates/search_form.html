@@ -1,0 +1,30 @@
+{% extends "base.pug" %}
+    {% block content %}
+        <form>
+            {{macros.input("id", "ID")}}
+            {{macros.input("title", "Title contains")}}
+            {{macros.input("description", "Description contains")}}
+            {{macros.input("organisations", "Organisations")}}
+            {{macros.input("topics", "Topics")}}
+            
+            <input type="submit" value="Submit">
+        </form>
+
+    {% for e in evaluations %}
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Organisation</td>
+            </tr>
+
+            <tr>
+                <td>{{e.id}}</td>
+                <td>{{e.title}}</td>
+                <td>{{e.organisation}}</td>
+            </tr>
+        </table>
+    {% endfor %}
+    {% endblock %}
+
+

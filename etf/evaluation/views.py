@@ -188,14 +188,42 @@ FormPage(title="Other ethical", field_names=("other_ethical_information",))
 SimplePage(title="End")
 
 
-# class EvaluationSearchForm(forms.ModelForm):
-
+class EvaluationSearchForm(forms.Form):
+    id = forms.CharField(max_length=100, required=False)
+    title = forms.CharField(max_length=100, required=False)
+    description = forms.CharField(max_length=100, required=False)
+    topics = forms.CharField(max_length=100, required=False)
+    organisations = forms.CharField(max_length=100, required=False)
 
 
 def search_evaluations_view(request):
     qs = models.Evaluation.objects.all() 
-    # TODO - add filtering
-    return render(request, "evaluation_list.html", {"evaluations": qs})
+    data = {}
+    errors = {}
+    if request.method == "GET":
+        form = EvaluationSearchForm(request.GET)
+        if form.is_valid():
+            print("is valid")
+            id = form.cleaned_data["id"]
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            topics = form.cleaned_data["topics"]
+            if id:
+                qs = qs.filter(id=id)
+            if title:
+                qs = qs.filter(title__icontains=title)
+            if description:
+                qs = qs.filter(description__icontains=description)
+            if topics:
+                print(topics)
+        else:
+            data = request.GET
+            errors = form.errors
+
+        print(errors)
+    return render(request, "search_form.html", {"evaluations": qs, "errors": errors, "data": data})
 
 
+    #  <!-- {{macros.checkboxes("topics", "Topics", options=({"text": "Topic 1", "value": "Value 1"}, {"text": "Topic 2", "value": "Value 2"})}}-->
+    #         <!--{{macros.checkboxes("organisations", "Organisations", options=({"text": "Topic 1", "value": "Value 1"}, {"text": "Topic 2", "value": "Value 2"})}} -->
 
