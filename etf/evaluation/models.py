@@ -43,7 +43,7 @@ class YesNoPartial(choices.Choices):
 
 
 # TODO - to improve
-class Topics(choices.Choices):
+class Topic(choices.Choices):
     BREXIT = "Brexit"
     BUSINESS_AND_INDUSTRY = "Business and industry"
     CORONAVIRUS = "Coronavirus"
