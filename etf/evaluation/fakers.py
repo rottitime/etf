@@ -12,10 +12,16 @@ from . import models
 fake = faker.Faker()
 
 
-def make_random_date(start_interval=3 * 365, end_interval=3 * 365):
-    num_days = random.randint(start_interval, end_interval)
+def make_random_date(interval_start=3 * 365, interval_end=3 * 365):
+    num_days = random.randint(interval_start, interval_end)
     date = datetime.date.today() - datetime.timedelta(days=num_days)
     return date
+
+
+def random_days_later(start_date, range_start, range_end):
+    delta = datetime.timedelta(random.randint(range_start, range_end))
+    random_date = start_date + delta
+    return random_date    
 
 
 def make_fake_user():
@@ -40,9 +46,9 @@ def generate_topics():
 
 def make_evaluation(user):
     evaluation_start_date = make_random_date()
-    evaluation_end_date = evaluation_start_date + datetime.timedelta(random.randint(100, 2 * 365))
-    date_of_intended_publication = evaluation_end_date + datetime.timedelta(random.randint(50, 365))
-    date_of_first_recruitment = evaluation_start_date + datetime.timedelta(random.randint(10, 50))
+    evaluation_end_date = random_days_later(evaluation_start_date, 100, 2 * 365)
+    date_of_intended_publication = random_days_later(evaluation_end_date, 50, 365)
+    date_of_first_recruitment = random_days_later(evaluation_start_date, 10, 50)
     topics = generate_topics()
     data = dict(
         user=user,
