@@ -1,5 +1,5 @@
 asgiref==3.5.2
-certifi==2022.9.24
+certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==2.1.1
 cryptography==38.0.4
@@ -9,6 +9,7 @@ django-allauth==0.51.0
 django-environ==0.9.0
 django-ninja==0.19.1
 django-use-email-as-username==1.2.0
+Faker==15.3.4
 idna==3.4
 Jinja2==3.1.2
 markdown-it-py==2.1.0
@@ -21,6 +22,7 @@ pycparser==2.21
 pydantic==1.10.2
 PyJWT==2.6.0
 pypugjs==5.9.12
+python-dateutil==2.8.2
 python3-openid==3.2.0
 pytz==2022.6
 PyYAML==6.0
@@ -31,5 +33,5 @@ sqlparse==0.4.3
 typing_extensions==4.4.0
 urllib3==1.26.13
 waitress==2.1.2
-watchdog==2.1.9
+watchdog==2.2.0
 whitenoise==6.2.0

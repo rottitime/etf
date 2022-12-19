@@ -42,6 +42,31 @@ class YesNoPartial(choices.Choices):
     PARTIAL = "Partial"
 
 
+# TODO - to improve
+class Topic(choices.Choices):
+    BREXIT = "Brexit"
+    BUSINESS_AND_INDUSTRY = "Business and industry"
+    CORONAVIRUS = "Coronavirus"
+    CORPORATE_INFORMATION = "Corporate information"
+    CRIME_JUSTICE_AND_LAW = "Crime, justice and law"
+    DEFENCE_AND_ARMED_FORCES = "Defence and armed forces"
+    EDUCATION_TRAINING_AND_SKILLS = "Education, training and skills"
+    ENTERING_AND_STAYING_IN_THE_UK = "Entering and staying in the UK"
+    ENVIRONMENT = "Environment"
+    GOING_AND_BEING_ABROAD = "Going and being abroad"
+    GOVERNMENT = "Government"
+    HEALTH_AND_SOCIAL_CARE = "Health and social care"
+    HOUSING_LOCAL_AND_COMMUNITY = "Housing, local and community"
+    INTERNATIONAL = "International"
+    LIFE_CIRCUMSTANCES = "Life circumstances"
+    MONEY = "Money"
+    PARENTING_CHILDCARE_AND_CHILDRENS_SERVICES = "Parenting, childcare and children's services"
+    REGIONAL_AND_LOCAL_GOVERNMENT = "Regional and local government"
+    SOCIETY_AND_CULTURE = "Society and culture"
+    TRANSPORT = "Transport"
+    WELFARE = "Welfare"
+
+
 # TODO - to improve, for now just have UK Gov depts
 class Organisation(choices.Choices):
     NO10 = "Prime Minister's Office, 10 Downing Street"
@@ -110,6 +135,8 @@ class Evaluation(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    topics = models.JSONField(default=list)
+    organisation = models.CharField(max_length=256, blank=True, null=True, choices=Organisation.choices)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
