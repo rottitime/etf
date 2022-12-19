@@ -21,7 +21,7 @@ def make_random_date(interval_start=3 * 365, interval_end=3 * 365):
 def random_days_later(start_date, range_start, range_end):
     delta = datetime.timedelta(random.randint(range_start, range_end))
     random_date = start_date + delta
-    return random_date    
+    return random_date
 
 
 def make_fake_user():
