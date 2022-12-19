@@ -34,7 +34,7 @@ def generate_topics():
     num_topics = random.randint(0, 4)
     set_topics = set()
     for i in range(num_topics):
-        set_topics.add(random.choice(models.Topics.values))
+        set_topics.add(random.choice(models.Topic.values))
     return list(set_topics)
 
 
