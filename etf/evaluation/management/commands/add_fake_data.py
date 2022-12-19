@@ -4,10 +4,10 @@ from etf.evaluation import fakers
 
 
 class Command(BaseCommand):
-    help = "Add some fake users"
+    help = "Add some fake data to populate database"
 
     def add_arguments(self, parser):
-        parser.add_argument("-n", "--number", type=int, default=128, help="How many to add")
+        parser.add_argument("-n", "--number", type=int, default=128, help="How many users to add")
 
     def handle(self, *args, **kwargs):
         number = kwargs["number"]
