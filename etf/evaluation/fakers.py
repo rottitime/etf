@@ -12,8 +12,8 @@ from . import models
 fake = faker.Faker()
 
 
-def make_random_date(interval_start=3 * 365, interval_end=3 * 365):
-    num_days = random.randint(interval_start, interval_end)
+def make_random_date(range_start=3 * 365, range_end=3 * 365):
+    num_days = random.randint(range_start, range_end)
     date = datetime.date.today() - datetime.timedelta(days=num_days)
     return date
 
