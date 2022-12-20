@@ -189,11 +189,12 @@ SimplePage(title="End")
 
 
 class EvaluationSearchForm(forms.Form):
-    id = forms.CharField(max_length=100, required=False)
+    id = forms.UUIDField(required=False)
     title = forms.CharField(max_length=100, required=False)
     description = forms.CharField(max_length=100, required=False)
-    topics = forms.CharField(max_length=100, required=False)
-    organisations = forms.CharField(max_length=100, required=False)
+    topics = forms.MultipleChoiceField(max_length=100, required=False)
+    organisations = forms.MultipleChoiceField(max_length=100, required=False)
+    
 
 
 def search_evaluations_view(request):
