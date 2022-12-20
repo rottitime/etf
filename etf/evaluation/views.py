@@ -190,11 +190,11 @@ SimplePage(title="End")
 
 class EvaluationSearchForm(forms.Form):
     id = forms.UUIDField(required=False)
-    title = forms.CharField(max_length=100, required=False)
+    title = forms.CharField(max_length=100, required=True)
     description = forms.CharField(max_length=100, required=False)
-    topics = forms.MultipleChoiceField(max_length=100, required=False)
-    organisations = forms.MultipleChoiceField(max_length=100, required=False)
-    
+    topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
+    organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
+    is_published = forms.BooleanField(required=False)
 
 
 def search_evaluations_view(request):
@@ -209,6 +209,8 @@ def search_evaluations_view(request):
             title = form.cleaned_data["title"]
             description = form.cleaned_data["description"]
             topics = form.cleaned_data["topics"]
+            organisations = form.cleaned_data["organisations"]
+            is_published = form.cleaned_data["is_published"]
             if id:
                 qs = qs.filter(id=id)
             if title:
@@ -217,12 +219,14 @@ def search_evaluations_view(request):
                 qs = qs.filter(description__icontains=description)
             if topics:
                 print(topics)
+            return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
+
         else:
             data = request.GET
             errors = form.errors
 
         print(errors)
-    return render(request, "search_form.html", {"evaluations": qs, "errors": errors, "data": data})
+    return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
 
 
     #  <!-- {{macros.checkboxes("topics", "Topics", options=({"text": "Topic 1", "value": "Value 1"}, {"text": "Topic 2", "value": "Value 2"})}}-->
