@@ -137,6 +137,7 @@ class Evaluation(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)
     organisation = models.CharField(max_length=256, blank=True, null=True, choices=Organisation.choices)
+    is_published = models.BooleanField(blank=True, null=True)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
