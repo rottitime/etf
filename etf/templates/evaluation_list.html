@@ -1,18 +1,20 @@
 {% extends "base.pug" %}
     {% block content %}
+    {{evaluations.count()}} evaluations found
+
     <table>
         <tr>
             <td>ID</td>
             <td>Title</td>
+            <td>Description</td>
             <td>Organisation</td>
         </tr>
         {% for e in evaluations %}
-
-
         <tr>
             <td>{{e.id}}</td>
             <td>{{e.title}}</td>
-            <td>{{e.organisation}}</td>
+            <td>{{e.description}}</td>
+            <td>{{e.get_organisation_display()}}</td>
         </tr>
         {% endfor %}
     </table>

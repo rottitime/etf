@@ -2,14 +2,10 @@
     {% block content %}
     <form method="get">
         {{macros.textarea("id", "Evaluation ID")}}
-        {{macros.textarea("title", "Title contains")}}
-
         {{ form.topics }}
         {{ form.organisations }}
-        {{ form.is_published }}
-
         {{macros.select("is_published", "Published", options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="----")}}
-
+        {{macros.textarea("search_phrase", "Search phrase")}}
         <input type="submit" value="Submit">
     </form>
 

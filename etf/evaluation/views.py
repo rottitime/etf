@@ -4,6 +4,7 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.postgres.search import SearchVector, SearchQuery
 
 from . import models
 
@@ -190,11 +191,12 @@ SimplePage(title="End")
 
 class EvaluationSearchForm(forms.Form):
     id = forms.UUIDField(required=False)
-    title = forms.CharField(max_length=100, required=True)
+    title = forms.CharField(max_length=100, required=False)
     description = forms.CharField(max_length=100, required=False)
     topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
     organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
     is_published = forms.BooleanField(required=False)
+    search_phrase = forms.CharField(max_length=100, required=True)
 
 
 def search_evaluations_view(request):
@@ -204,31 +206,28 @@ def search_evaluations_view(request):
     if request.method == "GET":
         form = EvaluationSearchForm(request.GET)
         if form.is_valid():
-            print("is valid")
             id = form.cleaned_data["id"]
-            title = form.cleaned_data["title"]
-            description = form.cleaned_data["description"]
             topics = form.cleaned_data["topics"]
             organisations = form.cleaned_data["organisations"]
             is_published = form.cleaned_data["is_published"]
+            search_phrase = form.cleaned_data["search_phrase"]
             if id:
                 qs = qs.filter(id=id)
-            if title:
-                qs = qs.filter(title__icontains=title)
-            if description:
-                qs = qs.filter(description__icontains=description)
             if topics:
-                print(topics)
+                # TODO - search this JSON field properly
+                qs = qs.filter(topic__in=topics)
+            if organisations:
+                qs = qs.filter(organisation__in=organisations)
+            if is_published:
+                qs = qs.filter(is_published=True)
+            if search_phrase:
+                # TODO - add other fields
+                search_vector = SearchVector("title", "description")
+                search_query = SearchQuery(search_phrase)
+                qs = qs.annotate(search=search_vector).filter(search=search_query)
             return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
             errors = form.errors
-
-        print(errors)
     return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
-
-
-    #  <!-- {{macros.checkboxes("topics", "Topics", options=({"text": "Topic 1", "value": "Value 1"}, {"text": "Topic 2", "value": "Value 2"})}}-->
-    #         <!--{{macros.checkboxes("organisations", "Organisations", options=({"text": "Topic 1", "value": "Value 1"}, {"text": "Topic 2", "value": "Value 2"})}} -->
-
