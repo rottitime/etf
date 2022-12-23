@@ -213,13 +213,16 @@ def search_evaluations_view(request):
             search_phrase = form.cleaned_data["search_phrase"]
             if id:
                 qs = qs.filter(id=id)
-            if topics:
-                # TODO - search this JSON field properly
-                qs = qs.filter(topic__in=topics)
             if organisations:
                 qs = qs.filter(organisation__in=organisations)
             if is_published:
                 qs = qs.filter(is_published=True)
+            if topics:
+                topics_qs = models.Evaluation.objects.none()
+                for topic in topics:
+                    topic_qs = qs.filter(topics__contains=topic)
+                    topics_qs = topics_qs | topic_qs
+                qs = topics_qs
             if search_phrase:
                 # TODO - add other fields
                 search_vector = SearchVector("title", "description")
