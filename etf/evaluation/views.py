@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
-from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 from . import models
 
@@ -218,6 +218,8 @@ def search_evaluations_view(request):
             if is_published:
                 qs = qs.filter(is_published=True)
             if topics:
+                print("topics")
+                print(topics)
                 topics_qs = models.Evaluation.objects.none()
                 for topic in topics:
                     topic_qs = qs.filter(topics__contains=topic)
@@ -225,10 +227,18 @@ def search_evaluations_view(request):
                 qs = topics_qs
             if search_phrase:
                 # TODO - add other fields
-                search_vector = SearchVector("title", "description")
+                most_important_fields = {"title", "description", "topics", "organisation"}
+                all_fields = {f.name for f in models.Evaluation._meta.get_fields()}
+                other_fields = all_fields.difference(most_important_fields)
+                #search_vector = SearchVector(most_important_fields, weight="A") + SearchVector(other_fields, weight="B")
+                search_vector = SearchVector(most_important_fields)
                 search_query = SearchQuery(search_phrase)
+    #            rank = SearchRank(search_vector, search_query)
                 qs = qs.annotate(search=search_vector).filter(search=search_query)
-            return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
+                #qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
+                print(qs)
+                print(qs)
+                return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
