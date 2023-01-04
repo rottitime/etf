@@ -1,10 +1,14 @@
 from django import forms
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+)
 from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 from . import models
 
@@ -200,7 +204,7 @@ class EvaluationSearchForm(forms.Form):
 
 
 def search_evaluations_view(request):
-    qs = models.Evaluation.objects.all() 
+    qs = models.Evaluation.objects.all()
     data = {}
     errors = {}
     if request.method == "GET":
@@ -218,26 +222,25 @@ def search_evaluations_view(request):
             if is_published:
                 qs = qs.filter(is_published=True)
             if topics:
-                print("topics")
-                print(topics)
                 topics_qs = models.Evaluation.objects.none()
                 for topic in topics:
                     topic_qs = qs.filter(topics__contains=topic)
                     topics_qs = topics_qs | topic_qs
                 qs = topics_qs
             if search_phrase:
-                # TODO - add other fields
-                most_important_fields = {"title", "description", "topics", "organisation"}
+                # TODO - what fields do we care about?
+                most_important_fields = ["title", "description", "topics", "organisation"]
                 all_fields = {f.name for f in models.Evaluation._meta.get_fields()}
-                other_fields = all_fields.difference(most_important_fields)
-                #search_vector = SearchVector(most_important_fields, weight="A") + SearchVector(other_fields, weight="B")
-                search_vector = SearchVector(most_important_fields)
+                other_fields = all_fields.difference(set(most_important_fields))
+                most_important_fields = {"title", "description", "topics", "organisation"}
+                search_vector = SearchVector("title", weight="A")
+                for field in most_important_fields[1:]:
+                    search_vector = search_vector + SearchVector(field, weight="A")
+                for field in other_fields:
+                    search_vector = search_vector + SearchVector(field, weight="B")
                 search_query = SearchQuery(search_phrase)
-    #            rank = SearchRank(search_vector, search_query)
-                qs = qs.annotate(search=search_vector).filter(search=search_query)
-                #qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-                print(qs)
-                print(qs)
+                rank = SearchRank(search_vector, search_query)
+                qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
                 return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
