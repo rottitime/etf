@@ -232,8 +232,7 @@ def search_evaluations_view(request):
                 most_important_fields = ["title", "description", "topics", "organisation"]
                 all_fields = {f.name for f in models.Evaluation._meta.get_fields()}
                 other_fields = all_fields.difference(set(most_important_fields))
-                most_important_fields = {"title", "description", "topics", "organisation"}
-                search_vector = SearchVector("title", weight="A")
+                search_vector = SearchVector(most_important_fields[0], weight="A")
                 for field in most_important_fields[1:]:
                     search_vector = search_vector + SearchVector(field, weight="A")
                 for field in other_fields:
