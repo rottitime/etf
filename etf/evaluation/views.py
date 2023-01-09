@@ -230,8 +230,14 @@ def search_evaluations_view(request):
             if search_phrase:
                 # TODO - what fields do we care about?
                 most_important_fields = ["title", "description", "topics", "organisation"]
-                all_fields = {f.name for f in models.Evaluation._meta.get_fields()}
-                other_fields = all_fields.difference(set(most_important_fields))
+                other_fields = [
+                    "issue_description",
+                    "those_experiencing_issue",
+                    "why_improvements_matter",
+                    "who_improvements_matter_to",
+                    "current_practice",
+                    "issue_relevance",
+                ]
                 search_vector = SearchVector(most_important_fields[0], weight="A")
                 for field in most_important_fields[1:]:
                     search_vector = search_vector + SearchVector(field, weight="A")
