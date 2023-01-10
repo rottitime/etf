@@ -225,6 +225,10 @@ body {
   padding: 16px 0;
 }
 
+.top-bar .button {
+  margin-left: 0.5rem;
+}
+
 .no-margin-bottom.button {
   margin-bottom: 0;
 }
