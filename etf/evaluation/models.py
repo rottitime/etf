@@ -115,6 +115,11 @@ class Organisation(choices.Choices):
     WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
 
 
+def get_topic_display_name(db_name):
+    result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
+    return result[0]
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, auto_now=True)
@@ -183,6 +188,9 @@ class Evaluation(TimeStampedModel):
     confidentiality_and_personal_data = models.TextField(blank=True, null=True)
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
+
+    def get_list_topics_display_names(self):
+        return [get_topic_display_name(x) for x in self.topics]
 
     def __str__(self):
         return f"{self.id} : {self.title}"

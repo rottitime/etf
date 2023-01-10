@@ -1,4 +1,9 @@
 from django import forms
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+)
 from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
@@ -186,3 +191,64 @@ FormPage(title="Confidentiality", field_names=("confidentiality_and_personal_dat
 FormPage(title="Other ethical", field_names=("other_ethical_information",))
 
 SimplePage(title="End")
+
+
+class EvaluationSearchForm(forms.Form):
+    id = forms.UUIDField(required=False)
+    title = forms.CharField(max_length=100, required=False)
+    description = forms.CharField(max_length=100, required=False)
+    topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
+    organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
+    is_published = forms.BooleanField(required=False)
+    search_phrase = forms.CharField(max_length=100, required=True)
+
+
+def search_evaluations_view(request):
+    qs = models.Evaluation.objects.all()
+    data = {}
+    errors = {}
+    if request.method == "GET":
+        form = EvaluationSearchForm(request.GET)
+        if form.is_valid():
+            id = form.cleaned_data["id"]
+            topics = form.cleaned_data["topics"]
+            organisations = form.cleaned_data["organisations"]
+            is_published = form.cleaned_data["is_published"]
+            search_phrase = form.cleaned_data["search_phrase"]
+            if id:
+                qs = qs.filter(id=id)
+            if organisations:
+                qs = qs.filter(organisation__in=organisations)
+            if is_published:
+                qs = qs.filter(is_published=True)
+            if topics:
+                topics_qs = models.Evaluation.objects.none()
+                for topic in topics:
+                    topic_qs = qs.filter(topics__contains=topic)
+                    topics_qs = topics_qs | topic_qs
+                qs = topics_qs
+            if search_phrase:
+                # TODO - what fields do we care about?
+                most_important_fields = ["title", "description", "topics", "organisation"]
+                other_fields = [
+                    "issue_description",
+                    "those_experiencing_issue",
+                    "why_improvements_matter",
+                    "who_improvements_matter_to",
+                    "current_practice",
+                    "issue_relevance",
+                ]
+                search_vector = SearchVector(most_important_fields[0], weight="A")
+                for field in most_important_fields[1:]:
+                    search_vector = search_vector + SearchVector(field, weight="A")
+                for field in other_fields:
+                    search_vector = search_vector + SearchVector(field, weight="B")
+                search_query = SearchQuery(search_phrase)
+                rank = SearchRank(search_vector, search_query)
+                qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
+                return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
+
+        else:
+            data = request.GET
+            errors = form.errors
+    return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})

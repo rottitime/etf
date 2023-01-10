@@ -9,4 +9,5 @@ urlpatterns = [
     path("evaluation/<uuid:evaluation_id>/<str:page_name>", views.page_view, name="pages"),
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path("search/", views.search_evaluations_view, name="search"),
 ]

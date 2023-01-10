@@ -16,6 +16,11 @@ reset-db:
 	docker-compose run ${POSTGRES_HOST} createdb -U ${POSTGRES_USER} -h ${POSTGRES_HOST} ${POSTGRES_DB}
 	docker-compose kill
 
+.PHONY: add-fake-data
+add-fake-data:
+	docker-compose build web
+	docker-compose run web python manage.py add_fake_data
+
 # -------------------------------------- Code Style  -------------------------------------
 
 .PHONY: check-python-code

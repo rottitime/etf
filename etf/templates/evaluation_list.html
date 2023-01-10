@@ -1,0 +1,29 @@
+{% extends "base.pug" %}
+    {% block content %}
+    {{evaluations.count()}} evaluations found
+
+    <table>
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Description</td>
+                <td>Topics</td>
+                <td>Organisation</td>
+                <td>Published</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in evaluations %}
+            <tr>
+                <td>{{e.id}}</td>
+                <td>{{e.title}}</td>
+                <td>{{e.description}}</td>
+                <td>{{e.get_list_topics_display_names()}}</td>
+                <td>{{e.get_organisation_display()}}</td>
+                <td>{{e.is_published}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

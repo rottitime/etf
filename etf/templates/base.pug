@@ -21,6 +21,8 @@ html(lang="en")
           h2 Evaluation Registry
         div.top-bar-right
           - if request.user.is_authenticated
+            a.button(href=url('search')) Search 
+            &nbsp;
             a.button(href=url('account_logout')) Logout 
               i.bi-box-arrow-right
 
