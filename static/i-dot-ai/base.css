@@ -198,6 +198,7 @@ nav.sidebar {
 #etf nav.sidebar li {
   text-align: left;
   margin: 0.25rem;
+  z-index: 10;
 }
 
 .completed i {
@@ -290,6 +291,28 @@ nav.sidebar:before {
 nav.sidebar ul.vertical.tabs {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+nav.sidebar .tabs-title {
+  position: relative;
+}
+
+nav.sidebar .tabs-title i::before {
+  background-color: #fff;
+}
+
+nav.sidebar .tabs-title::before {
+  content: "\00a0";
+  position: absolute;
+  top: -10px;
+  left: 7px;
+  background-color: #000000de;
+  z-index: -1;
+  width: 2px;
+}
+
+nav.sidebar .tabs-title:first-of-type::before {
+  display: none;
 }
 
 section.inner {
