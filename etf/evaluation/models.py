@@ -152,20 +152,11 @@ class Evaluation(TimeStampedModel):
     current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # TODO - is there a bettter way to store this data https://www.doi.org/
-    doi = models.CharField(max_length=256, blank=True, null=True)
-
     # TODO - add Dates modified/created
     evaluation_start_date = models.DateField(blank=True, null=True)
     evaluation_end_date = models.DateField(blank=True, null=True)
     date_of_intended_publication = models.DateField(blank=True, null=True)
     reasons_for_delays_in_publication = models.TextField(blank=True, null=True)
-
-    # Boasts/badges/conformity
-    rap_planned = models.CharField(max_length=10, blank=True, null=True, choices=YesNoPartial.choices)
-    rap_planned_detail = models.TextField(blank=True, null=True)
-    rap_outcome = models.CharField(max_length=10, blank=True, null=True, choices=YesNoPartial.choices)
-    rap_outcome_detail = models.TextField(blank=True, null=True)
 
     # Participant recruitment approach
     target_population = models.TextField(blank=True, null=True)
