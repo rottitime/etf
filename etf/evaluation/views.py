@@ -21,7 +21,7 @@ def index_view(request):
         evaluation = models.Evaluation(user=user)
         evaluation.save()
         return redirect(page_view, evaluation_id=str(evaluation.id))
-    return render(request, "index.pug")
+    return render(request, "index.html")
 
 
 def make_url(evaluation_id, page_name):
@@ -73,7 +73,7 @@ class FormPage:
         self.title = title
         self.slug = slugify(title)
         self.field_names = field_names
-        self.template_name = f"{self.slug}.pug"
+        self.template_name = f"{self.slug}.html"
         self.extra_data = extra_data or {}
 
         class _Form(forms.ModelForm):
@@ -109,7 +109,7 @@ class SimplePage:
         page_map[self.slug] = self
 
     def view(self, request, url_data):
-        return render(request, f"{self.slug}.pug", {**url_data})
+        return render(request, f"{self.slug}.html", {**url_data})
 
 
 SimplePage(title="Intro")

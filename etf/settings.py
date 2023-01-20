@@ -62,7 +62,6 @@ TEMPLATES = [
         ],
         "OPTIONS": {
             "environment": "etf.jinja2.environment",
-            "extensions": ["pypugjs.ext.jinja.PyPugJSExtension"],
         },
     },
     {

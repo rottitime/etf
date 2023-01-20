@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if not request.user or not request.user.is_authenticated %}
+        <div class="card">
+            <div class="card-divider">Login or register</div>
+            <div class="card-section">
+                <div class="button-group align-spaced">
+                    <a class="button" href="{{ url('account_login')}}">Login <i class="bi-box-arrow-in-right"></i></a>
+                    <a class="button" href="{{ url('account_signup')}}">Register <i class="bi-clipboard-check"></i></a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if request.user and request.user.is_authenticated %}
+        <section class="wrapper">
+            <form method="POST">{{ csrf_input }}
+                <button class="button" type="submit">Create Evaluation <i class="bi-file-earmark-plus"></i></button>
+            </form>
+        </section>
+    {% endif %}
+{% endblock %}

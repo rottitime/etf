@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+    <form method="POST">{{ csrf_input }}
+        <fieldset class="fieldset">
+            <legend>
+                <h3>Ethics</h3>
+            </legend>
+            {{ parse_markdown('# Blah, blah, blah\n\n- Bullet 1\n\n- Bullet 2') | safe}}
+            {{ macros.yes_no("ethics_committee_approval", "Ethics committee approval")}}
+            {{ macros.textarea("ethics_committee_details", "Ethics committee details")}}
+            {{ macros.textarea("ethical", "Ethics committee details")}}
+            {{ macros.buttons(prev_url)}}
+        </fieldset>
+    </form>
+{% endblock %}

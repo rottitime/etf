@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+    <form method="POST">{{ csrf_input }}
+        <fieldset class="fieldset">
+            <legend>
+                <h3>Participants</h3>
+            </legend>
+            {{ parse_markdown('# Blah, blah, blah\n\n- Bullet 1\n\n- Bullet 2') | safe}}
+            {{ macros.textarea("participant_involvement", "Participant involvement")}}
+            {{ macros.textarea("participant_consent", "Participant consent")}}
+            {{ macros.textarea("participant_information", "Participant information")}}
+            {{ macros.textarea("participant_payment", "Participant payment")}}
+            {{ macros.buttons(prev_url)}}
+        </fieldset>
+    </form>
+{% endblock %}

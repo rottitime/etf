@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+    <form method="POST">{{ csrf_input }}
+        <fieldset class="fieldset">
+            <legend>
+                <h3>Confidentiality</h3>
+            </legend>
+            {{ parse_markdown('# Blah, blah, blah\n\n- Bullet 1\n\n- Bullet 2') | safe}}
+            {{ macros.textarea("confidentiality_and_personal_data", "Confidentiality and personal data")}}
+            {{ macros.textarea("breaking_confidentiality", "Breaking confidentiality")}}
+            {{ macros.buttons(prev_url)}}
+        </fieldset>
+    </form>
+{% endblock %}
