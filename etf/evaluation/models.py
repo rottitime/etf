@@ -205,40 +205,14 @@ class EvaluationType(models.Model):
 class Intervention(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
-    brief_description = models.TextField(blank=True, null=True, verbose_name="Brief description of intervention")
-    rationale = models.TextField(
-        blank=True, null=True, verbose_name="Rationale, theory or goals of intervention elements"
-    )
-    materials_used = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Description of physical or informational materials used in the intervention, including those used in intervention delivery or in training of intervention providers",
-    )
-    procedures = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Description of each of the procedures, activities and/or processes used in the intervention, including enabling or supporting activities",
-    )
-    provider_description = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="For each category of intervention provider (e.g. housing officer) description of their expertise, background and any specific training they will receive",
-    )
-    modes_of_delivery = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Description of modes of delivery (e.g. face-to-face, telephone) of the intervention and whether it will be provided individually or in a group",
-    )
-    location = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features",
-    )
-    frequency_of_delivery = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.",
-    )
+    brief_description = models.TextField(blank=True, null=True)
+    rationale = models.TextField(blank=True, null=True)
+    materials_used = models.TextField(blank=True, null=True)
+    procedures = models.TextField(blank=True, null=True)
+    provider_description = models.TextField(blank=True, null=True)
+    modes_of_delivery = models.TextField(blank=True, null=True)
+    location = models.TextField(blank=True, null=True)
+    frequency_of_delivery = models.TextField(blank=True, null=True)
     tailoring = models.TextField(blank=True, null=True)
     fidelity = models.TextField(blank=True, null=True)
     resource_requirements = models.TextField(blank=True, null=True)
