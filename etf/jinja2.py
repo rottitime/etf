@@ -51,7 +51,7 @@ def environment(**options):
             "is_empty_selected": is_empty_selected,
             "DEFAULT": DEFAULT,
             "get_messages": messages.get_messages,
-            "parse_markdown": parse_markdown
+            "parse_markdown": parse_markdown,
         }
     )
     return env
