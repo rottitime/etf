@@ -11,10 +11,10 @@ class EvaluationSchema(Schema):
     id = fields.UUID()
     title = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
-    topics = fields.Str() # TODO - this should be a JSON field
+    topics = fields.Str()  # TODO - this should be a JSON field
     organisation = fields.Str(validate=validate.Length(max=256))
     is_published = fields.Boolean()
-    
+
     # Issue description
     issue_description = fields.Str()
     those_experiencing_issue = fields.Str()
@@ -46,8 +46,8 @@ class Intervention(Schema):
 class OutcomeMeasureSchema(Schema):
     evaluation = fields.Nested(EvaluationSchema)
     name = fields.Str(validate=validate.Length(max=256))
-    primary_or_secondary = fields.Str(validate=validate.Length(max=10)) # TODO - choices
-    direct_or_surrogate = fields.Str(validate=validate.Length(max=10)) # TODO - choices
+    primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
     description = fields.Str()
     collection_process = fields.Str()
     timepoint = fields.Str()
