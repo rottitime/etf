@@ -4,11 +4,11 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
-from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from marshmallow import exceptions
 
 from . import models, serializers
 
@@ -75,45 +75,31 @@ class FormPage:
         self.field_names = field_names
         self.template_name = f"{self.slug}.html"
         self.extra_data = extra_data or {}
-
-        # class _Form(forms.ModelForm):
-        #     class Meta:
-        #         model = models.Evaluation
-        #         fields = field_names
-
-        # self.form_class = _Form
         page_map[self.slug] = self
 
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
-        print(f"evaluation id: {evaluation_id}")
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        print(f"evaluation: {evaluation}. Ends here")
-        eval_serializer = serializers.EvaluationSchema()  # restrict to field names?
+        eval_serializer = serializers.EvaluationSchema()
         data = eval_serializer.dump(evaluation)
         errors = {}
         if request.method == "POST":
             data = request.POST
-            print(data)
-            fields = set(self.field_names).intersection(set(data.keys()))
+            fields = set(self.field_names).intersection(set(data.keys()))  # TODO - can we do this without field_names?
             new_eval_data = {key: data[key] for key in fields}
-            print(new_eval_data)
-            serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
-            # TODO - catch errors
-            for field_name in serialized_evaluation:
-                setattr(evaluation, field_name, serialized_evaluation[field_name])
-            evaluation.save()
-            return redirect(url_data["next_url"])
-            # form = self.form_class(request.POST, instance=evaluation)
-            # if form.is_valid():
-            #     form.save()
-            #     return redirect(url_data["next_url"])
-            # else:
-            #     data = request.POST
-            #     errors = form.errors
+            try:
+                serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
+                for field_name in serialized_evaluation:
+                    setattr(evaluation, field_name, serialized_evaluation[field_name])
+                evaluation.save()
+                return redirect(url_data["next_url"])
+            except exceptions.ValidationError as err:
+                data = request.POST
+                errors = err
         else:
-            data = model_to_dict(evaluation)
+            data = eval_serializer.dump(evaluation)
             errors = {}
+        # TODO - What are we actually doing with the errors?
         return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
 
 
