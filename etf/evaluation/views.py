@@ -101,10 +101,8 @@ class FormPage:
             serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
             # TODO - catch errors
             for field_name in serialized_evaluation:
-                print("hi")
                 setattr(evaluation, field_name, serialized_evaluation[field_name])
-                print(getattr(evaluation, field_name))
-                evaluation.save()
+            evaluation.save()
             return redirect(url_data["next_url"])
             # form = self.form_class(request.POST, instance=evaluation)
             # if form.is_valid():
