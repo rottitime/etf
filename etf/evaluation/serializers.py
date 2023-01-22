@@ -6,7 +6,7 @@ class UserSchema(Schema):
 
 
 class EvaluationSchema(Schema):
-    # TODO - add validation?
+    # TODO - add validation? Esp for choice fields.
     user = fields.Nested(UserSchema())
     id = fields.UUID()
     title = fields.Str(validate=validate.Length(max=256))

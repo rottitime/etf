@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
 
-from . import models
+from . import models, serializers
 
 page_map = {}
 
@@ -76,25 +76,43 @@ class FormPage:
         self.template_name = f"{self.slug}.html"
         self.extra_data = extra_data or {}
 
-        class _Form(forms.ModelForm):
-            class Meta:
-                model = models.Evaluation
-                fields = field_names
+        # class _Form(forms.ModelForm):
+        #     class Meta:
+        #         model = models.Evaluation
+        #         fields = field_names
 
-        self.form_class = _Form
+        # self.form_class = _Form
         page_map[self.slug] = self
 
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
+        print(f"evaluation id: {evaluation_id}")
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        print(f"evaluation: {evaluation}. Ends here")
+        eval_serializer = serializers.EvaluationSchema()  # restrict to field names?
+        data = eval_serializer.dump(evaluation)
+        errors = {}
         if request.method == "POST":
-            form = self.form_class(request.POST, instance=evaluation)
-            if form.is_valid():
-                form.save()
-                return redirect(url_data["next_url"])
-            else:
-                data = request.POST
-                errors = form.errors
+            data = request.POST
+            print(data)
+            fields = set(self.field_names).intersection(set(data.keys()))
+            new_eval_data = {key: data[key] for key in fields}
+            print(new_eval_data)
+            serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
+            # TODO - catch errors
+            for field_name in serialized_evaluation:
+                print("hi")
+                setattr(evaluation, field_name, serialized_evaluation[field_name])
+                print(getattr(evaluation, field_name))
+                evaluation.save()
+            return redirect(url_data["next_url"])
+            # form = self.form_class(request.POST, instance=evaluation)
+            # if form.is_valid():
+            #     form.save()
+            #     return redirect(url_data["next_url"])
+            # else:
+            #     data = request.POST
+            #     errors = form.errors
         else:
             data = model_to_dict(evaluation)
             errors = {}
@@ -118,7 +136,7 @@ FormPage(title="Title", field_names=("title",))
 
 FormPage(
     title="Description",
-    field_names=("description", "issue_description"),
+    field_names=("description",),
 )
 
 FormPage(
