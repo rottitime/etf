@@ -1,0 +1,19 @@
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
+
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Other ethical</h3>
+      </legend>
+      <h1>Blah, blah, blah</h1>
+      <ul>
+        <li>Bullet 1</li>
+        <li>Bullet 2</li>
+      </ul>
+      {{macros.textarea("other_ethical_information", "Other ethical information")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

@@ -1,26 +1,26 @@
-{% extends "account/base.html" %}
+{%extends "account/base.html"%}
 
-{% load account socialaccount %}
+{%load account socialaccount%}
 
-{% block head_title %}Log In{% endblock %}
+{%block head_title%}Log In{%endblock%}
 
-{% block content %}
+{%block content%}
 
-<section class="wrapper">
-  <h1>Log In</h1>
+  <section class="wrapper">
+    <h1>Log In</h1>
 
-  <p>If you have not created an account yet, then please <a href="{{ signup_url }}">register</a> first.</p>
+    <p>If you have not created an account yet, then please <a href="{{signup_url}}">register</a> first.</p>
 
-  <form class="login" method="POST" action="{% url 'account_login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
+    <form class="login" method="POST" action="{%url 'account_login'%}">
+      {%csrf_token%}
+      {{form.as_p}}
+      {%if redirect_field_value%}
+        <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+      {%endif%}
 
-    <button class="button" type="submit">Log in</button>
-  </form>
-</section>
+      <button class="button" type="submit">Log in</button>
+    </form>
+  </section>
 
 
-{% endblock %}
+{%endblock%}

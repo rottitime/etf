@@ -1,16 +1,13 @@
-{% extends "base.pug" %}
-    {% block content %}
-    <form method="get">
-        {{macros.textarea("id", "Evaluation ID")}}
-        {{ form.topics }}
-        {{ form.organisations }}
-        {{macros.select("is_published", "Published", options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="----")}}
-        {{macros.textarea("search_phrase", "Search phrase")}}
-        <input type="submit" value="Submit">
-    </form>
+{%extends "base.html"%}
+{%import "macros.html" as macros with context%}
 
-    {% endblock %}
-
-
-
-
+{%block content%}
+  <form method="get">
+    {{macros.textarea("id", "Evaluation ID")}}
+    {{form.topics}}
+    {{form.organisations}}
+    {{macros.select("is_published", "Published", options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="----")}}
+    {{macros.textarea("search_phrase", "Search phrase")}}
+    <input type="submit" value="Submit">
+  </form>
+{%endblock%}

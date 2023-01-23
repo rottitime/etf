@@ -1,22 +1,17 @@
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% extends "base.pug" %}
-
-block content
-
-  form(method="POST")
-    {{csrf_input}}
-
-    fieldset(class="fieldset")
-      legend
-        h3 Dates
-
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Dates</h3>
+      </legend>
       {{macros.input("evaluation_start_date", "Evaluation start date", type="date")}}
-
       {{macros.input("evaluation_end_date", "Evaluation end date", type="date")}}
-
       {{macros.input("date_of_intended_publication", "Date of intended publication", type="date")}}
-
       {{macros.textarea("reasons_for_delays_in_publication", "Reasons for delays in publication")}}
-
       {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

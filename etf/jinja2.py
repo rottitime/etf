@@ -1,18 +1,9 @@
 import jinja2
-import pypugjs
 from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
-from markdown_it import MarkdownIt
-
-markdown_converter = MarkdownIt()
 
 DEFAULT = object()
-
-
-@pypugjs.register_filter("markdown")
-def markdown(text, ast):
-    return markdown_converter.render(text)
 
 
 def finalize(thing):
