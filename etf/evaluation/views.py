@@ -69,10 +69,9 @@ def page_view(request, evaluation_id, page_name="intro"):
 
 
 class FormPage:
-    def __init__(self, title, field_names, extra_data=None):
+    def __init__(self, title, extra_data=None):
         self.title = title
         self.slug = slugify(title)
-        self.field_names = field_names
         self.template_name = f"{self.slug}.html"
         self.extra_data = extra_data or {}
         page_map[self.slug] = self
@@ -80,12 +79,13 @@ class FormPage:
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        all_field_names = [f.name for f in models.Evaluation._meta.get_fields()]
         eval_serializer = schemas.EvaluationSchema()
         data = eval_serializer.dump(evaluation)
         errors = {}
         if request.method == "POST":
             data = request.POST
-            fields = set(self.field_names).intersection(set(data.keys()))  # TODO - can we do this without field_names?
+            fields = set(all_field_names).intersection(set(data.keys()))
             new_eval_data = {key: data[key] for key in fields}
             try:
                 serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
@@ -116,46 +116,15 @@ class SimplePage:
 
 SimplePage(title="Intro")
 
-FormPage(title="Title", field_names=("title",))
+FormPage(title="Title")
 
-FormPage(
-    title="Description",
-    field_names=("description",),
-)
+FormPage(title="Description")
 
-FormPage(
-    title="Issue",
-    field_names=(
-        "issue_description",
-        "those_experiencing_issue",
-        "why_improvements_matter",
-        "who_improvements_matter_to",
-        "current_practice",
-        "issue_relevance",
-    ),
-)
+FormPage(title="Issue")
 
-FormPage(
-    title="Dates",
-    field_names=(
-        "evaluation_start_date",
-        "evaluation_end_date",
-        "date_of_intended_publication",
-        "reasons_for_delays_in_publication",
-    ),
-)
+FormPage(title="Dates")
 
-FormPage(
-    title="Participant recruitment",
-    field_names=(
-        "target_population",
-        "eligibility_criteria",
-        "process_for_recruitment",
-        "target_sample_size",
-        "intended_recruitment_schedule",
-        "date_of_first_recruitment",
-    ),
-)
+FormPage(title="Participant recruitment")
 
 FormPage(
     title="Ethics",
@@ -174,6 +143,16 @@ FormPage(
         "other_ethical_information",
     ),
 )
+
+FormPage(title="Ethics")
+
+FormPage(title="Risks")
+
+FormPage(title="Participants")
+
+FormPage(title="Confidentiality")
+
+FormPage(title="Other ethical")
 
 SimplePage(title="End")
 
