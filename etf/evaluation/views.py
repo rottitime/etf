@@ -133,8 +133,6 @@ FormPage(
     ),
 )
 
-FormPage(title="DOI", field_names=("doi",))
-
 FormPage(
     title="Dates",
     field_names=(
@@ -144,8 +142,6 @@ FormPage(
         "reasons_for_delays_in_publication",
     ),
 )
-
-FormPage(title="RAP", field_names=("rap_planned", "rap_planned_detail", "rap_outcome", "rap_outcome_detail"))
 
 FormPage(
     title="Participant recruitment",
