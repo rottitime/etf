@@ -1,19 +1,19 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% block content %}
-    <form method="POST">{{ csrf_input }}
-        <fieldset class="fieldset">
-            <legend>
-                <h3>Issue description</h3>
-            </legend>
-            {{ macros.textarea("issue_description", "Issue description")}}
-            {{ macros.textarea("those_experiencing_issue", "Who experiences the issue")}}
-            {{ macros.textarea("why_improvements_matter", "Why would improvements in relation to this issue matter?")}}
-            {{ macros.textarea("who_improvements_matter_to", "Who does it matter to?")}}
-            {{ macros.textarea("current_practice", "Current practice")}}
-            {{ macros.textarea("issue_relevance", "Relevance of the study")}}
-            {{ macros.buttons(prev_url)}}
-        </fieldset>
-    </form>
-{% endblock %}
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Issue description</h3>
+      </legend>
+      {{macros.textarea("issue_description", "Issue description")}}
+      {{macros.textarea("those_experiencing_issue", "Who experiences the issue")}}
+      {{macros.textarea("why_improvements_matter", "Why would improvements in relation to this issue matter?")}}
+      {{macros.textarea("who_improvements_matter_to", "Who does it matter to?")}}
+      {{macros.textarea("current_practice", "Current practice")}}
+      {{macros.textarea("issue_relevance", "Relevance of the study")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

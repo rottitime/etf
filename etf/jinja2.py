@@ -2,9 +2,6 @@ import jinja2
 from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
-from markdown_it import MarkdownIt
-
-markdown_converter = MarkdownIt()
 
 DEFAULT = object()
 
@@ -30,10 +27,6 @@ def is_selected(data, name, value):
         return ""
 
 
-def parse_markdown(raw_markdown):
-    return markdown_converter.render(raw_markdown)
-
-
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -51,7 +44,6 @@ def environment(**options):
             "is_empty_selected": is_empty_selected,
             "DEFAULT": DEFAULT,
             "get_messages": messages.get_messages,
-            "parse_markdown": parse_markdown,
         }
     )
     return env

@@ -1,17 +1,17 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% block content %}
-    <form method="POST">{{ csrf_input }}
-        <fieldset class="fieldset">
-            <legend>
-                <h3>Reproducible analytical pipeline (RAP)</h3>
-            </legend>
-            {{ macros.yes_no_partial("rap_planned", "Reproducible analytical pipeline planned")}}
-            {{ macros.textarea("rap_planned_detail", "Details of planned reproducible analytical pipeline")}}
-            {{ macros.yes_no_partial("rap_outcome", "Outcome of reproducible analysis")}}
-            {{ macros.textarea("rap_outcome_detail", "Details of outcome of reproducible analytical pipeline")}}
-            {{ macros.buttons(prev_url)}}
-        </fieldset>
-    </form>
-{% endblock %}
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Reproducible analytical pipeline (RAP)</h3>
+      </legend>
+      {{macros.yes_no_partial("rap_planned", "Reproducible analytical pipeline planned")}}
+      {{macros.textarea("rap_planned_detail", "Details of planned reproducible analytical pipeline")}}
+      {{macros.yes_no_partial("rap_outcome", "Outcome of reproducible analysis")}}
+      {{macros.textarea("rap_outcome_detail", "Details of outcome of reproducible analytical pipeline")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

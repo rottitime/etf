@@ -1,16 +1,20 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% block content %}
-    <form method="POST">{{ csrf_input }}
-        <fieldset class="fieldset">
-            <legend>
-                <h3>Risks</h3>
-            </legend>
-            {{ parse_markdown('# Blah, blah, blah\n\n- Bullet 1\n\n- Bullet 2') | safe}}
-            {{ macros.textarea("risks_to_participants", "Risks to participants")}}
-            {{ macros.textarea("risks_to_study_team", "Risks to study team")}}
-            {{ macros.buttons(prev_url)}}
-        </fieldset>
-    </form>
-{% endblock %}
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Risks</h3>
+      </legend>
+      <h1>Blah, blah, blah</h1>
+      <ul>
+        <li>Bullet 1</li>
+        <li>Bullet 2</li>
+      </ul>
+      {{macros.textarea("risks_to_participants", "Risks to participants")}}
+      {{macros.textarea("risks_to_study_team", "Risks to study team")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

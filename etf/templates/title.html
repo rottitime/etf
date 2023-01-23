@@ -1,14 +1,14 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% block content %}
-    <form method="POST">{{ csrf_input }}
-        <fieldset class="fieldset">
-            <legend>
-                <h3>Title of evaluation</h3>
-            </legend>
-            {{ macros.input(name="title", label="Give a title for this evaluation") }}
-            {{ macros.buttons(prev_url)}}
-        </fieldset>
-    </form>
-{% endblock %}
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Title of evaluation</h3>
+      </legend>
+      {{macros.input(name="title", label="Give a title for this evaluation")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

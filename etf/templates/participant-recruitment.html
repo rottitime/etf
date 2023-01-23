@@ -1,19 +1,19 @@
-{% extends "base.html" %}
-{% import 'macros.html' as macros with context %}
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
 
-{% block content %}
-    <form method="POST">{{ csrf_input }}
-        <fieldset class="fieldset">
-            <legend>
-                <h3>Participant recruitment approach</h3>
-            </legend>
-            {{ macros.textarea("target_population", "Target population including location(s)")}}
-            {{ macros.textarea("eligibility_criteria", "Eligibility criteria")}}
-            {{ macros.textarea("process_for_recruitment", "Process for recruitment")}}
-            {{ macros.textarea("target_sample_size", "Target sample size")}}
-            {{ macros.textarea("intended_recruitment_schedule", "Intended recruitment schedule")}}
-            {{ macros.input("date_of_first_recruitment", "Date of first recruitment", type="date")}}
-            {{ macros.buttons(prev_url)}}
-        </fieldset>
-    </form>
-{% endblock %}
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Participant recruitment approach</h3>
+      </legend>
+      {{macros.textarea("target_population", "Target population including location(s)")}}
+      {{macros.textarea("eligibility_criteria", "Eligibility criteria")}}
+      {{macros.textarea("process_for_recruitment", "Process for recruitment")}}
+      {{macros.textarea("target_sample_size", "Target sample size")}}
+      {{macros.textarea("intended_recruitment_schedule", "Intended recruitment schedule")}}
+      {{macros.input("date_of_first_recruitment", "Date of first recruitment", type="date")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}

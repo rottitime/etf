@@ -1,7 +1,7 @@
 django<3.3
 whitenoise
 watchdog[watchmedo]
-jinja2~=3.1.2
+jinja2
 django-environ
 django-allauth
 django_use_email_as_username
@@ -9,5 +9,4 @@ waitress
 psycopg2-binary
 pyyaml
 pdfkit
-faker~=15.3.4
-markdown-it-py
+faker
