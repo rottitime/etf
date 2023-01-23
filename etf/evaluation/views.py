@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from marshmallow import exceptions
 
-from . import models, serializers
+from . import models, schemas
 
 page_map = {}
 
@@ -80,7 +80,7 @@ class FormPage:
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        eval_serializer = serializers.EvaluationSchema()
+        eval_serializer = schemas.EvaluationSchema()
         data = eval_serializer.dump(evaluation)
         errors = {}
         if request.method == "POST":
