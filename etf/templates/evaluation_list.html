@@ -19,7 +19,7 @@
       {%for e in evaluations%}
         <tr>
           <td>
-            <a class="link" href="{{ url('pages-index', args=[e.id])}}">{{e.id}}</a>
+            <a class="link" href="{{url('pages-index', args=[e.id])}}">{{e.id}}</a>
           </td>
           <td>{{e.title}}</td>
           <td>{%if not e.description%}N/A{%else%}{{e.description}}{%endif%}</td>
