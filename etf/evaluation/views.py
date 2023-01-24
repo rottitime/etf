@@ -161,30 +161,17 @@ FormPage(
         "ethics_committee_approval",
         "ethics_committee_details",
         "ethical_state_given_existing_evidence_base",
-    ),
-)
-
-FormPage(
-    title="Risks",
-    field_names=(
+        "confidentiality_and_personal_data",
+        "breaking_confidentiality",
         "risks_to_participants",
         "risks_to_study_team",
-    ),
-)
-
-FormPage(
-    title="Participants",
-    field_names=(
         "participant_involvement",
         "participant_consent",
         "participant_information",
         "participant_payment",
+        "other_ethical_information",
     ),
 )
-
-FormPage(title="Confidentiality", field_names=("confidentiality_and_personal_data", "breaking_confidentiality"))
-
-FormPage(title="Other ethical", field_names=("other_ethical_information",))
 
 SimplePage(title="End")
 
