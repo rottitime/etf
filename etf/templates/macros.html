@@ -41,8 +41,13 @@
 {%- endmacro%}
 
 {%macro checkbox(name, label) -%}
+<div>
   <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
   <label class="label" for="{{name}}">{{label}}</label>
+  {%for error in errors.get(name, [])%}
+    <span class="form-error">{{error}}</span>
+  {%endfor%}
+</div>
 {%- endmacro%}
 
 {%macro checkboxes(name, label, options) -%}
