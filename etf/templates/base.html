@@ -20,9 +20,14 @@
   </div>
   <div class="top-bar-right">
     {%if request.user.is_authenticated%}
-      <a class="no-margin-bottom button" href="{{url('search')}}">Search</a>
-      <a class="no-margin-bottom button" href="{{url('account_logout')}}">
-        Logout <i class="bi-box-arrow-right"></i>
+      <form method="POST">{{csrf_input}}
+        <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
+        <a class="no-margin-bottom button" href="{{url('search')}}">Search</a>
+        <a class="no-margin-bottom button" href="{{url('account_logout')}}">
+          Logout <i class="bi-box-arrow-right"></i>
+
+      </form>
+
       </a>
     {%endif%}
   </div>
