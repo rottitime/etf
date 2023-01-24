@@ -17,3 +17,6 @@ def test_date_and_blank_field():
     assert deserialized_obj["date"] == None
     deserialized_obj = schema.load({"date": None})
     assert deserialized_obj["date"] == None
+
+
+# TODO - add more tests for schemas, esp after validation added
