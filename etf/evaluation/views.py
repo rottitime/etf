@@ -125,33 +125,7 @@ FormPage(title="Dates")
 
 FormPage(title="Participant recruitment")
 
-FormPage(
-    title="Ethics",
-    field_names=(
-        "ethics_committee_approval",
-        "ethics_committee_details",
-        "ethical_state_given_existing_evidence_base",
-        "confidentiality_and_personal_data",
-        "breaking_confidentiality",
-        "risks_to_participants",
-        "risks_to_study_team",
-        "participant_involvement",
-        "participant_consent",
-        "participant_information",
-        "participant_payment",
-        "other_ethical_information",
-    ),
-)
-
 FormPage(title="Ethics")
-
-FormPage(title="Risks")
-
-FormPage(title="Participants")
-
-FormPage(title="Confidentiality")
-
-FormPage(title="Other ethical")
 
 SimplePage(title="End")
 
