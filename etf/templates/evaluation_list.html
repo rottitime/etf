@@ -18,7 +18,15 @@
     {%elif evaluations.count() > 0%}
       {%for e in evaluations%}
         <tr>
-          <td>{{e.id}}</td>
+          <td>
+{#            <form method="POST" action="{{url("pages-index")}}">{{csrf_input}}#}
+{#              <input type="hidden" name="evaluation_id" value="{{e.id}}">#}
+{#              <button class="button" type="submit">{{e.id}}</button>#}
+{#            </form>#}
+{#            <a class="link" href="{{ url('pages-index'), e.id}}">{{e.id}}</a>#}
+{#            <a class="link" href="{{url("pages-index", evaluation_id=(e.id|string))}}">{{e.id}}</a>#}
+            {{ e.id }}
+          </td>
           <td>{{e.title}}</td>
           <td>{%if not e.description%}N/A{%else%}{{e.description}}{%endif%}</td>
           <td>{%if not e.topics or e.topics == []%}None{%else%}{{e.get_list_topics_display_names()}}{%endif%}</td>
