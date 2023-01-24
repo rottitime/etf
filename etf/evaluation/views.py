@@ -80,15 +80,15 @@ class FormPage:
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         all_field_names = [f.name for f in models.Evaluation._meta.get_fields()]
-        eval_serializer = schemas.EvaluationSchema()
-        data = eval_serializer.dump(evaluation)
+        eval_schema = schemas.EvaluationSchema()
+        data = eval_schema.dump(evaluation)
         errors = {}
         if request.method == "POST":
             data = request.POST
             fields = set(all_field_names).intersection(set(data.keys()))
             new_eval_data = {key: data[key] for key in fields}
             try:
-                serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
+                serialized_evaluation = eval_schema.load(data=new_eval_data, partial=True)
                 for field_name in serialized_evaluation:
                     setattr(evaluation, field_name, serialized_evaluation[field_name])
                 evaluation.save()
@@ -97,9 +97,8 @@ class FormPage:
                 data = request.POST
                 errors = dict(err.messages)
         else:
-            data = eval_serializer.dump(evaluation)
+            data = eval_schema.dump(evaluation)
             errors = {}
-        # TODO - What are we actually doing with the errors?
         return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
 
 
