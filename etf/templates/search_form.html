@@ -8,6 +8,7 @@
     {{form.organisations}}
     {{macros.select("is_published", "Published", options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="----")}}
     {{macros.textarea("search_phrase", "Search phrase")}}
+    {{macros.checkbox("mine_only", "Only my evaluations")}}
     <input type="submit" value="Submit">
   </form>
 {%endblock%}

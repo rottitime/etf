@@ -184,6 +184,7 @@ class EvaluationSearchForm(forms.Form):
     organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
     is_published = forms.BooleanField(required=False)
     search_phrase = forms.CharField(max_length=100, required=True)
+    mine_only = forms.BooleanField(required=False)
 
 
 def search_evaluations_view(request):
@@ -198,6 +199,9 @@ def search_evaluations_view(request):
             organisations = form.cleaned_data["organisations"]
             is_published = form.cleaned_data["is_published"]
             search_phrase = form.cleaned_data["search_phrase"]
+            mine_only = form.cleaned_data["mine_only"]
+            if mine_only:
+                qs = qs.filter(user=request.user)
             if id:
                 qs = qs.filter(id=id)
             if organisations:
@@ -229,7 +233,7 @@ def search_evaluations_view(request):
                 search_query = SearchQuery(search_phrase)
                 rank = SearchRank(search_vector, search_query)
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-                return render(request, "evaluation_list.html", {"evaluations": qs, "errors": errors, "data": data})
+                return render(request, "search_results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
