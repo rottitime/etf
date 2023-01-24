@@ -3,18 +3,10 @@ from marshmallow import Schema, fields, validate
 
 class DateAndBlankField(fields.Date):
     def _deserialize(self, value, attr, data, **kwargs):
-        print(f"value: {value}")
-        print(f"attr: {attr}")
-        print(f"data: {data}")
         if value:
-            print(super()._deserialize(value, attr, data, **kwargs))
             return super()._deserialize(value, attr, data, **kwargs)
         else:
             return None
-
-
-# TODO - fix this
-# https://stackoverflow.com/questions/60491613/allowing-empty-dates-with-marshmallow
 
 
 class UserSchema(Schema):
@@ -40,9 +32,9 @@ class EvaluationSchema(Schema):
     issue_relevance = fields.Str()
 
     # Evaluation - event dates
-    evaluation_start_date = fields.Date()
-    evaluation_end_date = fields.Date()
-    date_of_intended_publication = fields.Date()
+    evaluation_start_date = DateAndBlankField(allow_none=True)
+    evaluation_end_date = DateAndBlankField(allow_none=True)
+    date_of_intended_publication = DateAndBlankField(allow_none=True)
     reasons_for_delays_in_publication = fields.Str()
 
     # Participant recruitment approach
