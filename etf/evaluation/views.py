@@ -87,6 +87,7 @@ class FormPage:
             data = request.POST
             fields = set(all_field_names).intersection(set(data.keys()))
             new_eval_data = {key: data[key] for key in fields}
+            print(new_eval_data)
             try:
                 serialized_evaluation = eval_serializer.load(data=new_eval_data, partial=True)
                 for field_name in serialized_evaluation:
@@ -95,7 +96,8 @@ class FormPage:
                 return redirect(url_data["next_url"])
             except exceptions.ValidationError as err:
                 data = request.POST
-                errors = err
+                errors = dict(err.messages)
+                print(errors)
         else:
             data = eval_serializer.dump(evaluation)
             errors = {}
