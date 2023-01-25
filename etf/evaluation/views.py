@@ -112,7 +112,7 @@ def page_view(request, evaluation_id, page_name="intro"):
     return page_map[page_name].view(request, url_data)
 
 
-class FormPage:
+class EvaluationFormPage:
     def __init__(self, title, extra_data=None):
         self.title = title
         self.slug = slugify(title)
@@ -163,6 +163,38 @@ class FormPage:
         )
 
 
+class OutcomeMeasureFormPage:
+    def __init__(self, title, extra_data=None):
+        self.title = title
+        self.slug = slugify(title)
+        self.template_name = f"{self.slug}.html"
+        self.extra_data = extra_data or {}
+        page_map[self.slug] = self
+
+    def view(self, request, url_data):
+        evaluation_id = url_data["evaluation_id"]
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
+        outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation)
+        # TODO - get existing outcomes
+        outcome = models.OutcomeMeasure(evaluation=evaluation)
+        errors = {}
+        if request.method == "POST":
+            data = request.POST
+            try:
+                serialized_outcome = outcome_schema.load(data=data, partial=True)
+                for field_name in serialized_outcome:
+                    setattr(outcome, field_name, serialized_outcome[field_name])
+                outcome.save()
+                # TODO - what if no data?
+                return redirect(url_data["next_url"])
+            except marshmallow.exceptions.ValidationError as err:
+                errors = dict(err.messages)
+        else:
+            data = outcome_schema.dump(outcome)
+        return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
+
+
 class SimplePage:
     def __init__(self, title, extra_data=None):
         self.title = title
@@ -176,19 +208,22 @@ class SimplePage:
 
 SimplePage(title="Intro")
 
-FormPage(title="Title")
+EvaluationFormPage(title="Title")
 
-FormPage(title="Description")
+EvaluationFormPage(title="Description")
+
+EvaluationFormPage(title="Issue")
 
 FormPage(title="Contributors")
 
 FormPage(title="Issue")
+EvaluationFormPage(title="Dates")
 
-FormPage(title="Dates")
+EvaluationFormPage(title="Participant recruitment")
 
-FormPage(title="Participant recruitment")
+EvaluationFormPage(title="Ethics")
 
-FormPage(title="Ethics")
+OutcomeMeasureFormPage(title="Outcome measure")
 
 FormPage(title="Status")
 
