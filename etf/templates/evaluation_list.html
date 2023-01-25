@@ -1,5 +1,5 @@
 {%block evaluations%}
-  <table>
+  <table class="hover unstriped">
     <thead>
     <tr>
       <td>ID</td>
@@ -17,7 +17,7 @@
       </tr>
     {%elif evaluations.count() > 0%}
       {%for e in evaluations%}
-        <tr>
+        <tr onclick='location.href="{{url('pages-index', args=[e.id])}}"'>
           <td>
             <a href="{{url('pages-index', args=[e.id])}}">{{e.id}}</a>
           </td>
