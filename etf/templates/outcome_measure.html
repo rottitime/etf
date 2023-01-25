@@ -1,0 +1,26 @@
+{%extends "base.html"%}
+{%import 'macros.html' as macros with context%}
+
+{%block content%}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Outcome measure</h3>
+      </legend>
+      <h1>Blah, blah, blah</h1>
+      <ul>
+        <li>Bullet 1</li>
+        <li>Bullet 2</li>
+      </ul>
+      {{macros.input("name", "Outcome name")}}
+      {{macros.select("primary_or_secondary", "Primary or secondary", options=({'text': 'Primary', 'value': 'SECONDARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
+      {{macros.select("direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'}, {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----")}}
+      {{macros.textarea("description", "Description of measure")}}
+      {{macros.textarea("collection_process", "Collection process")}}
+      {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
+      {{macros.textarea("minimum_difference", "Minimum practically important difference")}}
+      {{macros.textarea("relevance", "Relevance of outcome")}}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{%endblock%}
