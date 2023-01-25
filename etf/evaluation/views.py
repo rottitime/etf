@@ -187,3 +187,12 @@ def search_evaluations_view(request):
             data = request.GET
             errors = form.errors
     return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
+
+
+def my_evaluations_view(request):
+    data = {}
+    errors = {}
+    if request.method == "GET":
+        qs = models.Evaluation.objects.filter(user=request.user)
+        data = request.GET
+    return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
