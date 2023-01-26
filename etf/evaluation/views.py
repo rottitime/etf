@@ -1,5 +1,6 @@
 import marshmallow
 from django import forms
+from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
@@ -15,6 +16,7 @@ from . import models, schemas
 page_map = {}
 
 
+@login_required
 def index_view(request):
     if request.method == "POST":
         user = request.user
@@ -30,6 +32,7 @@ def make_url(evaluation_id, page_name):
     return reverse("pages", args=(evaluation_id, page_name))
 
 
+@login_required
 def page_view(request, evaluation_id, page_name="intro"):
     if page_name not in page_map:
         raise Http404()
@@ -136,6 +139,7 @@ class EvaluationSearchForm(forms.Form):
     is_search = forms.CharField(max_length=6, required=True)
 
 
+@login_required
 def search_evaluations_view(request):
     qs = models.Evaluation.objects.all()
     data = {}
@@ -190,6 +194,7 @@ def search_evaluations_view(request):
     return render(request, "search-form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
 
 
+@login_required
 def my_evaluations_view(request):
     data = {}
     errors = {}
