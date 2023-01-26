@@ -1,6 +1,7 @@
-{%macro input(name, label, type='text') -%}
+{%macro input(name, label, placeholder = '', tooltip = '', type='text') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  <input type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
   {%for error in errors.get(name, [])%}
     <span class="form-error">{{error}}</span>
   {%endfor%}
@@ -74,8 +75,10 @@
 {%- endmacro%}
 
 {%macro buttons(prev_url) -%}
-  <a href="{{prev_url}}" class="button float-left"><i class="bi-caret-left"></i> Back</a>
-  <button type="submit" class="button float-right">Next <i class="bi-caret-right"></i></button>
+  <div class="evaluation-button-row">
+    <a href="{{prev_url}}" class="button float-left"><i class="bi-caret-left"></i> Back</a>
+    <button type="submit" class="button float-right">Next <i class="bi-caret-right"></i></button>
+  </div>
 {%- endmacro%}
 
 {%macro callout(tags) -%}
