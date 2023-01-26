@@ -18,9 +18,7 @@
     {%elif evaluations.count() > 0%}
       {%for e in evaluations%}
         <tr onclick='location.href="{{url('pages-index', args=[e.id])}}"'>
-          <td>
-            <a href="{{url('pages-index', args=[e.id])}}">{{e.id}}</a>
-          </td>
+          <td>{{e.id}}</td>
           <td>{{e.title}}</td>
           <td>{%if not e.description%}N/A{%else%}{{e.description}}{%endif%}</td>
           <td>{%if not e.topics or e.topics == []%}None{%else%}{{e.get_list_topics_display_names()}}{%endif%}</td>
