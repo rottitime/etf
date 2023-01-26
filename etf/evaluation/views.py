@@ -1,16 +1,16 @@
+import marshmallow
 from django import forms
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
     SearchVector,
 )
-from django.forms.models import model_to_dict
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
 
-from . import models
+from . import models, schemas
 
 page_map = {}
 
@@ -69,35 +69,30 @@ def page_view(request, evaluation_id, page_name="intro"):
 
 
 class FormPage:
-    def __init__(self, title, field_names, extra_data=None):
+    def __init__(self, title, extra_data=None):
         self.title = title
         self.slug = slugify(title)
-        self.field_names = field_names
         self.template_name = f"{self.slug}.html"
         self.extra_data = extra_data or {}
-
-        class _Form(forms.ModelForm):
-            class Meta:
-                model = models.Evaluation
-                fields = field_names
-
-        self.form_class = _Form
         page_map[self.slug] = self
 
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
+        errors = {}
         if request.method == "POST":
-            form = self.form_class(request.POST, instance=evaluation)
-            if form.is_valid():
-                form.save()
+            data = request.POST
+            try:
+                serialized_evaluation = eval_schema.load(data=data, partial=True)
+                for field_name in serialized_evaluation:
+                    setattr(evaluation, field_name, serialized_evaluation[field_name])
+                evaluation.save()
                 return redirect(url_data["next_url"])
-            else:
-                data = request.POST
-                errors = form.errors
+            except marshmallow.exceptions.ValidationError as err:
+                errors = dict(err.messages)
         else:
-            data = model_to_dict(evaluation)
-            errors = {}
+            data = eval_schema.dump(evaluation)
         return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
 
 
@@ -114,64 +109,17 @@ class SimplePage:
 
 SimplePage(title="Intro")
 
-FormPage(title="Title", field_names=("title",))
+FormPage(title="Title")
 
-FormPage(
-    title="Description",
-    field_names=("description", "issue_description"),
-)
+FormPage(title="Description")
 
-FormPage(
-    title="Issue",
-    field_names=(
-        "issue_description",
-        "those_experiencing_issue",
-        "why_improvements_matter",
-        "who_improvements_matter_to",
-        "current_practice",
-        "issue_relevance",
-    ),
-)
+FormPage(title="Issue")
 
-FormPage(
-    title="Dates",
-    field_names=(
-        "evaluation_start_date",
-        "evaluation_end_date",
-        "date_of_intended_publication",
-        "reasons_for_delays_in_publication",
-    ),
-)
+FormPage(title="Dates")
 
-FormPage(
-    title="Participant recruitment",
-    field_names=(
-        "target_population",
-        "eligibility_criteria",
-        "process_for_recruitment",
-        "target_sample_size",
-        "intended_recruitment_schedule",
-        "date_of_first_recruitment",
-    ),
-)
+FormPage(title="Participant recruitment")
 
-FormPage(
-    title="Ethics",
-    field_names=(
-        "ethics_committee_approval",
-        "ethics_committee_details",
-        "ethical_state_given_existing_evidence_base",
-        "confidentiality_and_personal_data",
-        "breaking_confidentiality",
-        "risks_to_participants",
-        "risks_to_study_team",
-        "participant_involvement",
-        "participant_consent",
-        "participant_information",
-        "participant_payment",
-        "other_ethical_information",
-    ),
-)
+FormPage(title="Ethics")
 
 SimplePage(title="End")
 
@@ -234,9 +182,18 @@ def search_evaluations_view(request):
                 search_query = SearchQuery(search_phrase)
                 rank = SearchRank(search_vector, search_query)
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-            return render(request, "search_results.html", {"evaluations": qs, "errors": errors, "data": data})
+            return render(request, "search-results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
             errors = form.errors
-    return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
+    return render(request, "search-form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
+
+
+def my_evaluations_view(request):
+    data = {}
+    errors = {}
+    if request.method == "GET":
+        qs = models.Evaluation.objects.filter(user=request.user)
+        data = request.GET
+    return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
