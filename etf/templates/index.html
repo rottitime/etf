@@ -16,7 +16,7 @@
   {%if request.user and request.user.is_authenticated%}
     <section class="wrapper">
       <form method="POST">{{csrf_input}}
-        <button class="button" type="submit">Create Evaluation <i class="bi-file-earmark-plus"></i></button>
+        <button class="button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
       </form>
     </section>
   {%endif%}

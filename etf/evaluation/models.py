@@ -152,7 +152,7 @@ class Evaluation(TimeStampedModel):
     current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # TODO - add Dates modified/created
+    # Evaluation - event dates
     evaluation_start_date = models.DateField(blank=True, null=True)
     evaluation_end_date = models.DateField(blank=True, null=True)
     date_of_intended_publication = models.DateField(blank=True, null=True)

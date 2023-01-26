@@ -379,3 +379,16 @@ label[for="id_remember"] {
   float: left;
   margin-right: 10px;
 }
+
+table.unstriped tbody tr {
+  border-bottom: 1px solid #817c7c;
+}
+
+table.unstriped thead {
+  background: #fefefe;
+  border: none;
+}
+
+table tbody tr:hover {
+    cursor: pointer;
+  }
