@@ -179,6 +179,7 @@ fieldset {
 #etf select,
 .label {
   border-radius: 4px;
+  margin: 0 0 0.25rem;
 }
 
 .label {
@@ -390,5 +391,14 @@ table.unstriped thead {
 }
 
 table tbody tr:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
+
+p.subheader {
+  font-size: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+div.evaluation-button-row {
+  margin-top: 1rem;
+}
