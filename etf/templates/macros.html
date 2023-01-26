@@ -1,6 +1,6 @@
-{%macro input(name, label, type='text') -%}
+{%macro input(name, label, hoverover = '', type='text') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  <input type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <input title="{{hoverover}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
   {%for error in errors.get(name, [])%}
     <span class="form-error">{{error}}</span>
   {%endfor%}
