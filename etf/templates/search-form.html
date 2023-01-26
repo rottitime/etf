@@ -3,9 +3,10 @@
 
 {%block content%}
   <form method="get">
+    <input type="hidden" value="False" name="is_search" id="is_search">
     {{macros.textarea("id", "Evaluation ID")}}
-    {{form.topics}}
-    {{form.organisations}}
+    {{macros.select_many_from_formfield("topics", "Topics", field=form.topics)}}
+    {{macros.select_many_from_formfield("organisations", "Organisations", field=form.organisations)}}
     {{macros.select("is_published", "Published", options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="----")}}
     {{macros.textarea("search_phrase", "Search phrase")}}
     {{macros.checkbox("mine_only", "Only my evaluations")}}
