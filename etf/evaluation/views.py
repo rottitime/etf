@@ -183,8 +183,9 @@ class EvaluationSearchForm(forms.Form):
     topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
     organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
     is_published = forms.BooleanField(required=False)
-    search_phrase = forms.CharField(max_length=100, required=True)
+    search_phrase = forms.CharField(max_length=100, required=False)
     mine_only = forms.BooleanField(required=False)
+    is_search = forms.CharField(max_length=6, required=True)
 
 
 def search_evaluations_view(request):
@@ -193,7 +194,7 @@ def search_evaluations_view(request):
     errors = {}
     if request.method == "GET":
         form = EvaluationSearchForm(request.GET)
-        if form.is_valid():
+        if form.is_valid() and form.cleaned_data["is_search"]:
             id = form.cleaned_data["id"]
             topics = form.cleaned_data["topics"]
             organisations = form.cleaned_data["organisations"]
@@ -233,7 +234,7 @@ def search_evaluations_view(request):
                 search_query = SearchQuery(search_phrase)
                 rank = SearchRank(search_vector, search_query)
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-                return render(request, "search_results.html", {"evaluations": qs, "errors": errors, "data": data})
+            return render(request, "search_results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
