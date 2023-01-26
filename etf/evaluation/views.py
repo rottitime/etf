@@ -181,9 +181,18 @@ def search_evaluations_view(request):
                 search_query = SearchQuery(search_phrase)
                 rank = SearchRank(search_vector, search_query)
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-                return render(request, "search_results.html", {"evaluations": qs, "errors": errors, "data": data})
+                return render(request, "search-results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
             data = request.GET
             errors = form.errors
-    return render(request, "search_form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
+    return render(request, "search-form.html", {"form": form, "evaluations": qs, "errors": errors, "data": data})
+
+
+def my_evaluations_view(request):
+    data = {}
+    errors = {}
+    if request.method == "GET":
+        qs = models.Evaluation.objects.filter(user=request.user)
+        data = request.GET
+    return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
