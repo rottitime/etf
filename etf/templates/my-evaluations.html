@@ -1,9 +1,9 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-{%block content%}
+{% block content %}
   {{evaluations.count()}} evaluations found
 
-  {%block evaluations%}
-    {%include "evaluation_list.html"%}
-  {%endblock%}
-{%endblock%}
+  {% block evaluations %}
+    {% include "evaluation_list.html" %}
+  {% endblock %}
+{% endblock %}

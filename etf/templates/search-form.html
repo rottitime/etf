@@ -1,7 +1,7 @@
-{%extends "base.html"%}
-{%import "macros.html" as macros with context%}
+{% extends "base.html" %}
+{% import "macros.html" as macros with context %}
 
-{%block content%}
+{% block content %}
   <form method="get">
     <input type="hidden" value="False" name="is_search" id="is_search">
     {{macros.textarea("id", "Evaluation ID")}}
@@ -12,4 +12,4 @@
     {{macros.checkbox("mine_only", "Only my evaluations")}}
     <input type="submit" value="Submit">
   </form>
-{%endblock%}
+{% endblock %}
