@@ -34,7 +34,7 @@
 </nav>
 <div id="main" class="grid-x">
   <div class="cell medium-4 large-3">
-    {%if '/evaluation' in request.path%}
+    {%if legend_visible == True%}
       <nav class="sidebar">
         <ul class="vertical tabs">
           {%for page in pages%}

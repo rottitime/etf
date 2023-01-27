@@ -67,6 +67,7 @@ def page_view(request, evaluation_id, page_name="intro"):
         "prev_url": prev_url,
         "this_url": this_url,
         "next_url": next_url,
+        "legend_visible": True
     }
     return page_map[page_name].view(request, url_data)
 
