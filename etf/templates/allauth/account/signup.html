@@ -1,8 +1,8 @@
-{%extends "account/base.html"%}
+{% extends "account/base.html" %}
 
-{%block head_title%}Register{%endblock%}
+{% block head_title %}Register{% endblock %}
 
-{%block content%}
+{% block content %}
 
 
   <div class="card">
@@ -13,16 +13,16 @@
 
       <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
 
-      <form method="post" action="{%url 'account_signup'%}">
-        {%csrf_token%}
+      <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
         {{form.as_p}}
-        {%if redirect_field_value%}
+        {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
-        {%endif%}
+        {% endif %}
         <button class="button float-right" type="submit">Sign Up</button>
       </form>
 
     </div>
   </div>
 
-{%endblock%}
+{% endblock %}

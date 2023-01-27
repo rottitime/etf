@@ -1,7 +1,7 @@
-{%extends "base.html"%}
-{%import 'macros.html' as macros with context%}
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
 
-{%block content%}
+{% block content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
@@ -14,4 +14,4 @@
       {{macros.buttons(prev_url)}}
     </fieldset>
   </form>
-{%endblock%}
+{% endblock %}

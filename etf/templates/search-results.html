@@ -1,11 +1,11 @@
-{%extends "base.html"%}
-{%block content%}
+{% extends "base.html" %}
+{% block content %}
   <div>
     <a class="button" href="{{url("search")}}">Search again<i class="bi-arrow-counterclockwise"></i></a>
   </div>
   {{evaluations.count()}} evaluations found
 
-  {%block evaluations%}
-    {%include "evaluation_list.html"%}
-  {%endblock%}
-{%endblock%}
+  {% block evaluations %}
+    {% include "evaluation_list.html" %}
+  {% endblock %}
+{% endblock %}
