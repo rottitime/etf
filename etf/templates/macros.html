@@ -1,26 +1,26 @@
-{% macro input(name, label, placeholder = '', tooltip = '', type='text') -%}
+{% macro input(name, label, placeholder = '', tooltip = [], type='text') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 {%- endmacro %}
 
-{% macro textarea(name, label, placeholder = '', tooltip = '') -%}
+{% macro textarea(name, label, placeholder = '', tooltip = []) -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   <textarea placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 {%- endmacro %}
 
-{% macro select(name, label, options, tooltip = '', empty_option=DEFAULT) -%}
+{% macro select(name, label, options, tooltip = [], empty_option=DEFAULT) -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
     <select name="{{name}}" id="{{name}}">
@@ -31,57 +31,57 @@
         <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
       {% endfor %}
     </select>
-    {% if tooltip %}
-      <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-    {% endif %}
+    {% for tt in tooltip %}
+      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_many_from_formfield(name, label, field, tooltip = '') -%}
+{% macro select_many_from_formfield(name, label, field, tooltip = []) -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
     {{field}}
-    {% if tooltip %}
-      <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-    {% endif %}
+    {% for tt in tooltip %}
+      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_with_empty(name, label, options, tooltip = '') -%}
+{% macro select_with_empty(name, label, options, tooltip = []) -%}
   {{select(name, label, options, empty_option="Please choose one...")}}
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
 {%- endmacro %}
 
-{% macro yes_no(name, label, tooltip = '') -%}
+{% macro yes_no(name, label, tooltip = []) -%}
   {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
 {%- endmacro %}
 
-{% macro yes_no_partial(name, label, tooltip = '') -%}
+{% macro yes_no_partial(name, label, tooltip = []) -%}
   {{select(name, label, options=({'text': '', 'value': None}, {'text': 'Yes', 'value': 'Yes'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option=None)}}
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
 {%- endmacro %}
 
-{% macro checkbox(name, label, tooltip = '') -%}
+{% macro checkbox(name, label, tooltip = []) -%}
 <div>
   <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
   <label class="label" for="{{name}}">{{label}}</label>
-  {% if tooltip %}
-    <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-  {% endif %}
+  {% for tt in tooltip %}
+    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+  {% endfor %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 </div>
 {%- endmacro %}
 
-{% macro checkboxes(name, label, options, tooltip = '') -%}
+{% macro checkboxes(name, label, options, tooltip = []) -%}
   <fieldset>
     <legend>{{label}}</legend>
     <div class="grid-container">
@@ -94,9 +94,9 @@
         {% endfor %}
       </div>
     </div>
-    {% if tooltip %}
-      <p class="subheader" id="{{name}}-tt">{{tooltip}}</p>
-    {% endif %}
+    {% for tt in tooltip %}
+      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+    {% endfor %}
   </fieldset>
 {%- endmacro %}
 
