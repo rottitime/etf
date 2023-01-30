@@ -7,10 +7,10 @@
       <legend>
         <h3>Participant recruitment approach</h3>
       </legend>
-      {{macros.textarea("target_population", "Target population including location(s)")}}
-      {{macros.textarea("eligibility_criteria", "Eligibility criteria")}}
-      {{macros.textarea("process_for_recruitment", "Process for recruitment")}}
-      {{macros.textarea("target_sample_size", "Target sample size")}}
+      {{macros.textarea("target_population", "Target population including location(s)", tooltip=["Description of the target population including settings and locations where the data are planned to be collected."])}}
+      {{macros.textarea("eligibility_criteria", "Eligibility criteria", tooltip=["A comprehensive description of the eligibility criteria used to select the study participants. The criteria should be justified and information provided on the degree to which they reflect the typical population that the intervention would be intended to be offered to if proven effective.", "Potential participants at substantially elevated risk of adverse outcomes from the intervention being studied should be excluded."])}}
+      {{macros.textarea("process_for_recruitment", "Process for recruitment", tooltip=["Method of recruitment, such as by referral or self-selection. If recruiting by referral, where will referrals be accepted from? If recruiting by self-selection, where will the opportunity to participate be promoted?"])}}
+      {{macros.textarea("target_sample_size", "Target sample size", tooltip=["The target sample size (including number per arm of the study).", "Details of how the sample size was determined. If a formal power calculation was used, identify the primary outcome on which the calculation was based (see section 7.3.1), all the quantities used in the calculation, and the resulting target sample size per arm.", "Details should be given of any allowance made for attrition or non-complicance during the study."])}}
       {{macros.textarea("intended_recruitment_schedule", "Intended recruitment schedule")}}
       {{macros.input("date_of_first_recruitment", "Date of first recruitment", type="date")}}
       {{macros.buttons(prev_url)}}
