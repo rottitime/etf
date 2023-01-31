@@ -21,10 +21,12 @@ def test_date_and_blank_field():
     assert deserialized_obj["date"] is None
 
 
-def test_evaluation_schema_all_fields():
+def test_evaluation_schema_has_relevant_fields():
+    related_fields_to_ignore = {"interventions", "outcome_measures", "evaluation_types", "other_measures"}
     model_field_names = {f.name for f in Evaluation._meta.get_fields()}
+    model_field_names_to_include = model_field_names.difference(related_fields_to_ignore)
     schema_field_names = set(EvaluationSchema._declared_fields.keys())
-    assert schema_field_names == model_field_names
+    assert schema_field_names == model_field_names_to_include
 
 
 # TODO - add more tests for schemas, esp after validation added
