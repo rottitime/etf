@@ -16,9 +16,9 @@ def with_authenticated_client(func):
         with httpx.Client(app=etf.wsgi.application, base_url=TEST_SERVER_URL, follow_redirects=True) as client:
             response = client.get("/accounts/login/")
             csrf = response.cookies["csrftoken"]
-            data = {'login': user.email, 'password': 'P455W0rd'}
-            headers = {'X-CSRFToken': csrf}
-            client.post("/accounts/login/", data=data, headers=headers)  # Fails here
+            data = {"login": user.email, "password": "P455W0rd"}
+            headers = {"X-CSRFToken": csrf}
+            client.post("/accounts/login/", data=data, headers=headers)
             return func(client, *args, **kwargs)
 
     return _inner
