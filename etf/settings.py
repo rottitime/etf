@@ -1,3 +1,6 @@
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from .settings_base import (
     BASE_DIR,
     SECRET_KEY,
@@ -117,6 +120,19 @@ USE_L10N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SENTRY_DSN = env.str("SENTRY_DSN", default="")
+SENTRY_ENVIRONMENT = env.str("SENTRY_ENVIRONMENT", default="")
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[
+        DjangoIntegration(),
+    ],
+    environment=SENTRY_ENVIRONMENT,
+    send_default_pii=True,
+    traces_sample_rate=0.0,
+)
 
 AUTH_USER_MODEL = "evaluation.User"
 

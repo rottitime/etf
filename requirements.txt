@@ -5,6 +5,7 @@ jinja2
 django-environ
 django-allauth
 django_use_email_as_username
+sentry-sdk
 waitress
 psycopg2-binary
 pyyaml
