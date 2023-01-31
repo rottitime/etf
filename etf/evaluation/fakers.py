@@ -88,8 +88,8 @@ def make_evaluation_type(evaluation):
     return data
 
 
-def add_evals_to_users(user):
-    num_evals = random.randint(0, 3)
+def add_evals_to_users(user, allow_empty=True):
+    num_evals = random.randint(0 if allow_empty is True else 1, 3)
     for j in range(num_evals):
         eval_data = make_evaluation(user)
         evaluation = models.Evaluation(**eval_data)
