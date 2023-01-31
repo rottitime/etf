@@ -130,7 +130,7 @@ sentry_sdk.init(
         DjangoIntegration(),
     ],
     environment=SENTRY_ENVIRONMENT,
-    send_default_pii=False,
+    send_default_pii=True,
     traces_sample_rate=0.0,
 )
 
