@@ -22,7 +22,7 @@ if [ "$apps" != "Getting" ] && [ "$apps" != "name" ] && [ "$apps" ]; then
 fi
 done < <(./cf apps)
 
-#remove proxy apps
+#remove proxy apps from list
 for value in "${cfapps[@]}"
 do
     if grep -q "proxy" <<< "$value"; then
@@ -40,7 +40,7 @@ do
         else
             $(./cf set-env ${value} DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY} &> /dev/null)
         fi
-        if [ $autoscale ]; then
+        if [ $sentry ]; then
             $(./cf set-env ${value} SENTRY_DSN ${SENTRY_DSN}  &> /dev/null)
             $(./cf set-env ${value} SENTRY_ENVIRONMENT ${CF_SPACE} &> /dev/null)
         fi
