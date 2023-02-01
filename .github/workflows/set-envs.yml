@@ -58,7 +58,7 @@ jobs:
         working-directory: ./cfscripts
         env:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          SENTRY_DNS: ${{ secrets.SENTRY_DNS }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           LIVE_DJANGO_SECRET_KEY: ${{ secrets.LIVE_DJANGO_SECRET_KEY }}
         run: |
             echo "THE CF_SPACE IS: ${CF_SPACE}"
