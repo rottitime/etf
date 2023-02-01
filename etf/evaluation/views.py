@@ -153,7 +153,7 @@ class EvaluationSearchForm(forms.Form):
     description = forms.CharField(max_length=100, required=False)
     topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
     organisations = forms.MultipleChoiceField(choices=models.Organisation.choices, required=False)
-    is_published = forms.BooleanField(required=False)
+    status = forms.ChoiceField(choices=(("", "-----"), *models.EvaluationStatus.choices), required=False)
     search_phrase = forms.CharField(max_length=100, required=False)
     mine_only = forms.BooleanField(required=False)
     is_search = forms.CharField(max_length=6, required=True)
@@ -169,7 +169,7 @@ def search_evaluations_view(request):
         if form.is_valid() and form.cleaned_data["is_search"]:
             topics = form.cleaned_data["topics"]
             organisations = form.cleaned_data["organisations"]
-            is_published = form.cleaned_data["is_published"]
+            status = form.cleaned_data["status"]
             search_phrase = form.cleaned_data["search_phrase"]
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
@@ -180,8 +180,8 @@ def search_evaluations_view(request):
                     organisation_qs = qs.filter(organisations__contains=organisation)
                     organisations_qs = organisations_qs | organisation_qs
                 qs = organisations_qs
-            if is_published:
-                qs = qs.filter(is_published=True)
+            if status:
+                qs = qs.filter(status=status)
             if topics:
                 topics_qs = models.Evaluation.objects.none()
                 for topic in topics:

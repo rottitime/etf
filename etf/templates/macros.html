@@ -47,6 +47,16 @@
   </div>
 {%- endmacro %}
 
+{% macro select_from_formfield(name, label, field, tooltip=[]) -%}
+  <div>
+    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {{field}}
+    {% for tt in tooltip %}
+      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
 {% macro select_many_from_list(name, label, list, tooltip=[]) -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>

@@ -21,7 +21,7 @@ class EvaluationSchema(Schema):
     description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
-    is_published = fields.Boolean()
+    status = fields.Str(validate=validate.Length(max=256))
 
     # Issue description
     issue_description = fields.Str()

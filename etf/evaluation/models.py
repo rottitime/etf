@@ -115,6 +115,12 @@ class Organisation(choices.Choices):
     WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
 
 
+class EvaluationStatus(choices.Choices):
+    DRAFT = "Draft"
+    CIVIL_SERVICE = "Civil Service"
+    PUBLIC = "Public"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -147,7 +153,7 @@ class Evaluation(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)
     organisations = models.JSONField(default=list)
-    is_published = models.BooleanField(blank=True, null=True)
+    status = models.CharField(max_length=256, blank=True, null=False, choices=EvaluationStatus.choices)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
