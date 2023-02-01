@@ -112,7 +112,7 @@ def page_view(request, evaluation_id, page_name="intro"):
     return page_map[page_name].view(request, url_data)
 
 
-class EvaluationFormPage:
+class BasePage:
     def __init__(self, title, extra_data=None):
         self.title = title
         self.slug = slugify(title)
@@ -120,6 +120,8 @@ class EvaluationFormPage:
         self.extra_data = extra_data or {}
         page_map[self.slug] = self
 
+
+class EvaluationFormPage(BasePage):
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
@@ -163,14 +165,7 @@ class EvaluationFormPage:
         )
 
 
-class OutcomeMeasureFormPage:
-    def __init__(self, title, extra_data=None):
-        self.title = title
-        self.slug = slugify(title)
-        self.template_name = f"{self.slug}.html"
-        self.extra_data = extra_data or {}
-        page_map[self.slug] = self
-
+class OutcomeMeasureFormPage(BasePage):
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
@@ -206,13 +201,7 @@ class OutcomeMeasureFormPage:
         )
 
 
-class SimplePage:
-    def __init__(self, title, extra_data=None):
-        self.title = title
-        self.slug = slugify(title)
-        self.extra_data = extra_data or {}
-        page_map[self.slug] = self
-
+class SimplePage(BasePage):
     def view(self, request, url_data):
         return render(request, f"{self.slug}.html", {**url_data})
 
