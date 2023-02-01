@@ -68,20 +68,7 @@ jobs:
         run: |
             ./proxy-deploy.sh
 
-      # - name: CF push proxy apps non-prod
-      #   if: ${{ github.ref_name == 'prod' && matrix.app == 'organogram' }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     GITHUB_ACTOR: ${{ github.actor }}
-      #     ROUTE_SERVICE_APP_NAME: ${{ matrix.app }}-proxy
-      #     ROUTE_SERVICE_NAME: ${{ matrix.app }}-route
-      #     PROTECTED_APP_NAME: digital-${{ matrix.app }}
-      #     ALLOWED_IPS: ${{ steps.get_ips.outputs.ips }}
-      #   working-directory: ./proxy
-      #   run: |
-      #       ./proxy-deploy.sh
-
-      - name: CF push proxy apps non-prod
+      - name: CF push proxy apps prod
         if: ${{ github.ref_name == 'prod' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
