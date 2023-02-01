@@ -17,7 +17,7 @@
         {% csrf_token %}
         <p>
           <label for="id_email">Email:</label>
-          <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off" data-np-autofill-type="email">
+          <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off">
         </p>
         <p>
           <label for="id_password1">Password:</label>
@@ -25,7 +25,7 @@
         </p>
         <p>
           <label for="id_password2">Password:</label>
-          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off" data-np-autofill-type="newPassword">
+          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
         </p>
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
