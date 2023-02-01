@@ -13,7 +13,7 @@
         <li>Bullet 2</li>
       </ul>
       {{macros.input("name", "Outcome name")}}
-      {{macros.select("primary_or_secondary", "Primary or secondary", options=({'text': 'Primary', 'value': 'SECONDARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
+      {{macros.select("primary_or_secondary", "Primary or secondary", options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
       {{macros.select("direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'}, {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----")}}
       {{macros.textarea("description", "Description of measure")}}
       {{macros.textarea("collection_process", "Collection process")}}
@@ -21,11 +21,12 @@
       {{macros.textarea("minimum_difference", "Minimum practically important difference")}}
       {{macros.textarea("relevance", "Relevance of outcome")}}
       {{macros.add_button("outcome measure")}}
+      <hr>
+      {% block outcome %}
+        {% include "outcome-read-only.html" %}
+      {% endblock %}
+      {{macros.buttons(prev_url)}}
     </fieldset>
-    {% block outcome %}
-      {% include "outcome-measure-read-only.html" %}
-    {% endblock %}
-    {{macros.buttons(prev_url)}}
   </form>
 
 {% endblock %}
