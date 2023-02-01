@@ -15,11 +15,22 @@
 
       <form method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        {{form.as_p}}
+        <p>
+          <label for="id_login">Email:</label>
+          <input type="email" placeholder="Email address" name="login" id="id_login" required autocomplete="off">
+        </p>
+        <p>
+          <label for="id_password1">Password:</label>
+          <input type="password" name="password" placeholder="Password" id="id_password1" required autocomplete="off">
+        </p>
+        <p>
+          <label for="id_password2">Password:</label>
+          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
+        </p>
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
         {% endif %}
-        <button class="button float-right" type="submit">Sign Up</button>
+        <button class="button float-right" type="submit">Sign up</button>
       </form>
 
     </div>
