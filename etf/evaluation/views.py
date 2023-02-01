@@ -179,6 +179,7 @@ class OutcomeMeasureFormPage:
         # TODO - get existing outcomes
         outcome = models.OutcomeMeasure(evaluation=evaluation)
         errors = {}
+        data = {}
         if request.method == "POST":
             data = request.POST
             try:
@@ -191,8 +192,14 @@ class OutcomeMeasureFormPage:
             except marshmallow.exceptions.ValidationError as err:
                 errors = dict(err.messages)
         else:
-            data = outcome_schema.dump(outcome)
-        return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
+            outcome_measures = outcome_schema.dump(outcomes_for_eval, many=True)
+            print("some outcome measures")
+            print(outcome_measures)
+        return render(
+            request,
+            self.template_name,
+            {"errors": errors, "data": data, "outcome_measures": outcome_measures, **url_data, **self.extra_data},
+        )
 
 
 class SimplePage:
