@@ -16,16 +16,16 @@
       <form method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         <p>
-          <label for="id_login">Email:</label>
-          <input type="email" placeholder="Email address" name="login" id="id_login" required autocomplete="off">
+          <label for="id_email">Email:</label>
+          <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off" data-np-autofill-type="email">
         </p>
         <p>
           <label for="id_password1">Password:</label>
-          <input type="password" name="password" placeholder="Password" id="id_password1" required autocomplete="off">
+          <input type="password" name="password1" placeholder="Password" id="id_password1" required autocomplete="off">
         </p>
         <p>
           <label for="id_password2">Password:</label>
-          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
+          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off" data-np-autofill-type="newPassword">
         </p>
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
