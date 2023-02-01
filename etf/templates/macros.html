@@ -148,6 +148,18 @@
   </div>
 {%- endmacro %}
 
+{% macro add_button(object_name) -%}
+  <div class="evaluation-button-row">
+    <button type="submit" name="add" class="button float-right">Add {{object_name}} <i class="bi-file-earmark-plus"></i></button>
+  </div>
+{%- endmacro %}
+
+{% macro delete_button(id) -%}
+  <div class="evaluation-button-row">
+    <button type="submit" name="delete" value="{{id}}" class="button float-right">Delete</button>
+  </div>
+{%- endmacro %}
+
 {% macro callout(tags) -%}
   <div class="callout {{tags}}" data-closable>
     {{caller()}}

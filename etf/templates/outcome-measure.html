@@ -1,7 +1,7 @@
-{%extends "base.html"%}
-{%import 'macros.html' as macros with context%}
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
 
-{%block content%}
+{% block content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
@@ -20,13 +20,12 @@
       {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
       {{macros.textarea("minimum_difference", "Minimum practically important difference")}}
       {{macros.textarea("relevance", "Relevance of outcome")}}
-      {{macros.buttons(prev_url)}}
+      {{macros.add_button("outcome measure")}}
     </fieldset>
+    {% block outcome %}
+      {% include "outcome-measure-read-only.html" %}
+    {% endblock %}
+    {{macros.buttons(prev_url)}}
   </form>
 
-
-  {% block outcome %}
-    {% include "outcome-measure-read-only.html" %}
-  {% endblock %}
-
-{%endblock%}
+{% endblock %}

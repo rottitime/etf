@@ -2,6 +2,7 @@
   {% for outcome_measure in outcome_measures %}
     Name: {{outcome_measure.name}}
     {{outcome_measure.primary_or_secondary}}
+    {{macros.delete_button(outcome_measure.id)}}
     <hr>
   {% endfor %}
 {% endblock %}
