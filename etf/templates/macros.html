@@ -47,6 +47,20 @@
   </div>
 {%- endmacro %}
 
+{% macro select_many_from_list(name, label, list, tooltip=[]) -%}
+  <div>
+    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    <select multiple name="{{name}}" id="{{name}}">
+      {% for item in list %}
+        <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
+      {% endfor %}
+    </select>
+    {% for tt in tooltip %}
+      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
 {% macro select_with_empty(name, label, options, tooltip=[]) -%}
   {{select(name, label, options, empty_option="Please choose one...")}}
   {% for tt in tooltip %}

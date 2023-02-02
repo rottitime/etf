@@ -85,20 +85,16 @@ class FormPage:
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
         errors = {}
-        # topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
         topics = models.Topic.choices
         if request.method == "POST":
             data = request.POST
-            print('data')
-            print(data)
-            print(data)
             try:
                 serialized_evaluation = eval_schema.load(data=data, partial=True)
                 for field_name in serialized_evaluation:
-                    # print('serialized')
-                    if 'topics' in serialized_evaluation.keys():
-                        print(serialized_evaluation['topics'])
                     setattr(evaluation, field_name, serialized_evaluation[field_name])
+                if 'topics' in data.keys():
+                    topic_list = data.getlist('topics') or None
+                    setattr(evaluation, 'topics', topic_list)
                 evaluation.save()
                 return redirect(url_data["next_url"])
             except marshmallow.exceptions.ValidationError as err:

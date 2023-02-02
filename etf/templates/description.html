@@ -13,18 +13,8 @@
         <li>Bullet 2</li>
       </ul>
       {{macros.textarea("description", "Description", tooltip=["Please provide one or two sentences to describe the evaluation. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."])}}
+      {{macros.select_many_from_list("topics", "Topics", topics, tooltip=["Please select one or more topics to associate with this evaluation. The topics should be relevant to the target of the evaluation as well as those who might find this item relevant to their area of interest."])}}
       {{macros.buttons(prev_url)}}
-    {{ data }}
-      {% if topics %}
-      <div>
-        <label class="label {{errors.get('topics') and 'is-invalid-label'}}" for="topics">Topics</label>
-        <select multiple name="topics" id="topics">
-          {% for tp in topics %}
-            <option value="{{tp[0]}}" {{is_in(data, 'topics', tp[0])}}>{{tp[1]}}</option>
-          {% endfor %}
-        </select>
-      </div>
-    {% endif %}
     </fieldset>
   </form>
 {% endblock %}

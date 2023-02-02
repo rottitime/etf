@@ -28,14 +28,6 @@ def is_selected(data, name, value):
 
 
 def is_in(data, name, value):
-    # print('data name')
-    # print(data.get(name))
-    # print('data')
-    # print(data)
-    # print("is_in")
-    # print(value in data.get(name))
-    # print('value')
-    # print(value)
     if value in data.get(name):
         return "selected"
     else:
