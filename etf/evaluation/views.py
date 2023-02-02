@@ -86,6 +86,7 @@ class FormPage:
         eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
         errors = {}
         topics = models.Topic.choices
+        organisations = models.Organisation.choices
         if request.method == "POST":
             data = request.POST
             try:
@@ -101,7 +102,7 @@ class FormPage:
                 errors = dict(err.messages)
         else:
             data = eval_schema.dump(evaluation)
-        return render(request, self.template_name, {"errors": errors, 'topics': topics, "data": data, **url_data, **self.extra_data})
+        return render(request, self.template_name, {"errors": errors, 'topics': topics, 'organisations': organisations, "data": data, **url_data, **self.extra_data})
 
 
 class SimplePage:
