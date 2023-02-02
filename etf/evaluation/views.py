@@ -93,16 +93,16 @@ class FormPage:
                 serialized_evaluation = eval_schema.load(data=data, partial=True)
                 for field_name in serialized_evaluation:
                     setattr(evaluation, field_name, serialized_evaluation[field_name])
-                if 'topics' in data.keys():
-                    topic_list = data.getlist('topics') or None
-                    setattr(evaluation, 'topics', topic_list)
+                if "topics" in data.keys():
+                    topic_list = data.getlist("topics") or None
+                    setattr(evaluation, "topics", topic_list)
                 evaluation.save()
                 return redirect(url_data["next_url"])
             except marshmallow.exceptions.ValidationError as err:
                 errors = dict(err.messages)
         else:
             data = eval_schema.dump(evaluation)
-        return render(request, self.template_name, {"errors": errors, 'topics': topics, 'organisations': organisations, "data": data, **url_data, **self.extra_data})
+        return render(request, self.template_name, {"errors": errors, "topics": topics, "organisations": organisations, "data": data, **url_data, **self.extra_data})
 
 
 class SimplePage:
