@@ -85,11 +85,19 @@ class FormPage:
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
         errors = {}
+        # topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
+        topics = models.Topic.choices
         if request.method == "POST":
             data = request.POST
+            print('data')
+            print(data)
+            print(data)
             try:
                 serialized_evaluation = eval_schema.load(data=data, partial=True)
                 for field_name in serialized_evaluation:
+                    # print('serialized')
+                    if 'topics' in serialized_evaluation.keys():
+                        print(serialized_evaluation['topics'])
                     setattr(evaluation, field_name, serialized_evaluation[field_name])
                 evaluation.save()
                 return redirect(url_data["next_url"])
@@ -97,7 +105,7 @@ class FormPage:
                 errors = dict(err.messages)
         else:
             data = eval_schema.dump(evaluation)
-        return render(request, self.template_name, {"errors": errors, "data": data, **url_data, **self.extra_data})
+        return render(request, self.template_name, {"errors": errors, 'topics': topics, "data": data, **url_data, **self.extra_data})
 
 
 class SimplePage:

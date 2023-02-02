@@ -21,7 +21,8 @@
           <td>{{e.id}}</td>
           <td>{{e.title}}</td>
           <td>{% if not e.description %}N/A{% else %}{{e.description}}{% endif %}</td>
-          <td>{% if not e.topics%}None{% else %}{{e.get_list_topics_display_names()|join(', ')}}{% endif %}</td>
+{#          <td>{% if not e.topics%}None{% elif e.topics > 1 %}{{e.get_list_topics_display_names()|join(', ')}}{% else %}{{e.get_list_topics_display_names()}}{% endif %}</td>#}
+        <td>{{ e.topics }}</td>
           <td>{% if not e.organisation%}None{% else %}{{e.get_organisation_display()}}{% endif %}</td>
           <td>{% if e.is_published == True %}Yes{% elif e.is_published == False %}No{% else %}N/A{% endif %}</td>
         </tr>

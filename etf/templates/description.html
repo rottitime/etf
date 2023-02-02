@@ -14,6 +14,18 @@
       </ul>
       {{macros.textarea("description", "Description", tooltip=["Please provide one or two sentences to describe the evaluation. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."])}}
       {{macros.buttons(prev_url)}}
+    {{ data }}
+      {% if topics %}
+      <div>
+        <label class="label {{errors.get('topics') and 'is-invalid-label'}}" for="topics">Topics</label>
+        <select multiple name="topics" id="topics">
+          {% for tp in topics %}
+            <option value="{{tp[0]}}" {{is_in(data, 'topics', tp[0])}}>{{tp[1]}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
     </fieldset>
   </form>
 {% endblock %}
+{#{#}

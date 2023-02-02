@@ -27,6 +27,21 @@ def is_selected(data, name, value):
         return ""
 
 
+def is_in(data, name, value):
+    # print('data name')
+    # print(data.get(name))
+    # print('data')
+    # print(data)
+    # print("is_in")
+    # print(value in data.get(name))
+    # print('value')
+    # print(value)
+    if value in data.get(name):
+        return "selected"
+    else:
+        return ""
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -44,6 +59,7 @@ def environment(**options):
             "is_empty_selected": is_empty_selected,
             "DEFAULT": DEFAULT,
             "get_messages": messages.get_messages,
+            "is_in": is_in,
         }
     )
     return env
