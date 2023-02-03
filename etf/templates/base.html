@@ -1,5 +1,15 @@
 {% import 'macros.html' as macros with context %}
 
+<script>
+  $(document).ready(function() {
+    $('#search_phrase').keypress(function(e) {
+      if (e.which == 13) {
+        $(this).closest('form').submit();
+      }
+    });
+  });
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,14 +30,21 @@
       </div>
       <div class="top-bar-right">
         {% if request.user.is_authenticated %}
+          <form action="{{url('search')}}" method="GET">{{csrf_input}}
+            <input type="hidden" value="False" name="is_search" id="is_search">
+            <div class="global--search">
+              <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
+              <button type="submit" class="button float-right">Go <i class="fi-arrow-right"></i></button>
+            </div>
+          </form>
+          <a class="no-margin-bottom button" href="{{url('search')}}">Advanced search</a>
           <form action="{{url('index')}}" method="POST">{{csrf_input}}
             <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
-            <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
-            <a class="no-margin-bottom button" href="{{url('search')}}">Search</a>
-            <a class="no-margin-bottom button" href="{{url('account_logout')}}">
-              Logout <i class="bi-box-arrow-right"></i>
-            </a>
           </form>
+          <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
+          <a class="no-margin-bottom button" href="{{url('account_logout')}}">
+            Logout <i class="bi-box-arrow-right"></i>
+          </a>
         {% endif %}
       </div>
     </nav>

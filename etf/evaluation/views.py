@@ -167,7 +167,6 @@ def search_evaluations_view(request):
     if request.method == "GET":
         form = EvaluationSearchForm(request.GET)
         if form.is_valid() and form.cleaned_data["is_search"]:
-            id = form.cleaned_data["id"]
             topics = form.cleaned_data["topics"]
             organisations = form.cleaned_data["organisations"]
             is_published = form.cleaned_data["is_published"]
@@ -175,8 +174,6 @@ def search_evaluations_view(request):
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
                 qs = qs.filter(user=request.user)
-            if id:
-                qs = qs.filter(id=id)
             if organisations:
                 organisations_qs = models.Evaluation.objects.none()
                 for organisation in organisations:
@@ -193,7 +190,7 @@ def search_evaluations_view(request):
                 qs = topics_qs
             if search_phrase:
                 # TODO - what fields do we care about?
-                most_important_fields = ["title", "description", "topics", "organisations"]
+                most_important_fields = ["id", "title", "description", "topics", "organisations"]
                 other_fields = [
                     "issue_description",
                     "those_experiencing_issue",
