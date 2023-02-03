@@ -120,6 +120,11 @@ def get_topic_display_name(db_name):
     return result[0]
 
 
+def get_organisation_display_name(db_name):
+    result = [organisation[1] for organisation in Organisation.choices if organisation[0] == db_name]
+    return result[0]
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, auto_now=True)
@@ -141,7 +146,7 @@ class Evaluation(TimeStampedModel):
     title = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)
-    organisation = models.CharField(max_length=256, blank=True, null=True, choices=Organisation.choices)
+    organisations = models.JSONField(default=list)
     is_published = models.BooleanField(blank=True, null=True)
 
     # Issue description
@@ -182,6 +187,9 @@ class Evaluation(TimeStampedModel):
 
     def get_list_topics_display_names(self):
         return [get_topic_display_name(x) for x in self.topics]
+
+    def get_list_organisations_display_names(self):
+        return [get_organisation_display_name(x) for x in self.organisations]
 
     def __str__(self):
         return f"{self.id} : {self.title}"
