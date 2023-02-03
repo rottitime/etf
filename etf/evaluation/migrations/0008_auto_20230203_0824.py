@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0007_auto_20230120_1434'),
+        ("evaluation", "0007_auto_20230120_1434"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='evaluation',
-            name='organisation',
+            model_name="evaluation",
+            name="organisation",
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='organisations',
+            model_name="evaluation",
+            name="organisations",
             field=models.JSONField(default=list),
         ),
     ]
