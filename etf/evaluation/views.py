@@ -6,6 +6,7 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -87,6 +88,7 @@ class FormPage:
         errors = {}
         topics = models.Topic.choices
         organisations = models.Organisation.choices
+        statuses = models.EvaluationStatus.choices
         if request.method == "POST":
             data = request.POST
             try:
@@ -112,6 +114,7 @@ class FormPage:
                 "errors": errors,
                 "topics": topics,
                 "organisations": organisations,
+                "statuses": statuses,
                 "data": data,
                 **url_data,
                 **self.extra_data,
@@ -143,6 +146,8 @@ FormPage(title="Dates")
 FormPage(title="Participant recruitment")
 
 FormPage(title="Ethics")
+
+FormPage(title="Status")
 
 SimplePage(title="End")
 
@@ -180,8 +185,20 @@ def search_evaluations_view(request):
                     organisation_qs = qs.filter(organisations__contains=organisation)
                     organisations_qs = organisations_qs | organisation_qs
                 qs = organisations_qs
-            if status:
-                qs = qs.filter(status=status)
+            print(status)
+            if not status:
+                qs.filter(
+                    Q(status="draft", user=request.user) | Q(status__in=["public", "civil service"])
+                )
+            else:
+                if status == models.EvaluationStatus.DRAFT:
+                    qs = qs.filter(status=status)
+                    qs = qs.filter(user=request.user)
+                # TODO: make civil service and public filter more sophisticated once roles are in
+                if status == models.EvaluationStatus.PUBLIC:
+                    qs = qs.filter(status=status)
+                if status == models.EvaluationStatus.CIVIL_SERVICE:
+                    qs = qs.filter(status=status)
             if topics:
                 topics_qs = models.Evaluation.objects.none()
                 for topic in topics:

@@ -131,6 +131,11 @@ def get_organisation_display_name(db_name):
     return result[0]
 
 
+def get_status_display_name(db_name):
+    result = [status[1] for status in EvaluationStatus.choices if status[0] == db_name]
+    return result[0]
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, auto_now=True)
@@ -196,6 +201,9 @@ class Evaluation(TimeStampedModel):
 
     def get_list_organisations_display_names(self):
         return [get_organisation_display_name(x) for x in self.organisations]
+
+    def get_status_display_name(self):
+        return get_status_display_name(self.status)
 
     def __str__(self):
         return f"{self.id} : {self.title}"
