@@ -14,7 +14,7 @@
       </ul>
       {{macros.textarea("description", "Description", tooltip=["Please provide one or two sentences to describe the evaluation. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."])}}
       {{macros.select_many_from_list("topics", "Topics", topics, tooltip=["Please select one or more topics to associate with this evaluation. The topics should be relevant to the target of the evaluation as well as those who might find this item relevant to their area of interest."])}}
-      {{macros.select_from_list("organisation", "Organisation", organisations, tooltip=["Please select an organisation this evaluation is relevant to."], empty_option="----")}}
+      {{macros.select_many_from_list("organisations", "Organisations", organisations, tooltip=["Please select the organisations this evaluation is relevant to."])}}
       {{macros.buttons(prev_url)}}
     </fieldset>
   </form>

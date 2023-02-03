@@ -96,6 +96,9 @@ class FormPage:
                 if "topics" in data.keys():
                     topic_list = data.getlist("topics") or None
                     setattr(evaluation, "topics", topic_list)
+                if "organisations" in data.keys():
+                    organisation_list = data.getlist("organisations") or None
+                    setattr(evaluation, "organisations", organisation_list)
                 evaluation.save()
                 return redirect(url_data["next_url"])
             except marshmallow.exceptions.ValidationError as err:
@@ -175,7 +178,11 @@ def search_evaluations_view(request):
             if id:
                 qs = qs.filter(id=id)
             if organisations:
-                qs = qs.filter(organisation__in=organisations)
+                organisations_qs = models.Evaluation.objects.none()
+                for organisation in organisations:
+                    organisation_qs = qs.filter(organisations__contains=organisation)
+                    organisations_qs = organisations_qs | organisation_qs
+                qs = organisations_qs
             if is_published:
                 qs = qs.filter(is_published=True)
             if topics:
@@ -186,7 +193,7 @@ def search_evaluations_view(request):
                 qs = topics_qs
             if search_phrase:
                 # TODO - what fields do we care about?
-                most_important_fields = ["title", "description", "topics", "organisation"]
+                most_important_fields = ["title", "description", "topics", "organisations"]
                 other_fields = [
                     "issue_description",
                     "those_experiencing_issue",

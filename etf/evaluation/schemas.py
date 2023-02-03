@@ -19,8 +19,8 @@ class EvaluationSchema(Schema):
     id = fields.UUID()
     title = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
-    topics = fields.Raw()  # TODO - this should be a JSON field
-    organisation = fields.Str(validate=validate.Length(max=256))
+    topics = fields.Raw()
+    organisations = fields.Raw()
     is_published = fields.Boolean()
 
     # Issue description
