@@ -366,14 +366,11 @@ section fieldset.fieldset label {
 
 .wrapper {
   background-color: #fff;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 12px;
   display: block;
   float: left;
   width: 100%;
-  padding: 16px 16px 0 16px;
+  padding: 16px;
 }
 
 label[for="id_remember"] {
@@ -401,4 +398,8 @@ p.subheader {
 
 div.evaluation-button-row {
   margin-top: 1rem;
+}
+
+section.flex {
+  display: flex;
 }
