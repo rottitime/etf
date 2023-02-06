@@ -17,7 +17,7 @@ class UserSchema(Schema):
 
 class EvaluationSchema(Schema):
     # TODO - add more validation esp. for choice fields, around dates
-    user = fields.Nested(UserSchema())
+    users = fields.Nested(UserSchema(), many=True)
     id = fields.UUID()
     title = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()

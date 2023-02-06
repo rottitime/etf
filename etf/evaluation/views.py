@@ -21,7 +21,8 @@ page_map = {}
 def index_view(request):
     if request.method == "POST":
         user = request.user
-        evaluation = models.Evaluation(user=user)
+        evaluation = models.Evaluation.objects.create()
+        evaluation.users.set([user])
         evaluation.save()
         return redirect(page_view, evaluation_id=str(evaluation.id))
     return render(request, "index.html")
@@ -178,7 +179,7 @@ def search_evaluations_view(request):
             search_phrase = form.cleaned_data["search_phrase"]
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
-                qs = qs.filter(user=request.user)
+                qs = qs.filter(users__in=[request.user])
             if organisations:
                 organisations_qs = models.Evaluation.objects.none()
                 for organisation in organisations:
@@ -237,6 +238,6 @@ def my_evaluations_view(request):
     data = {}
     errors = {}
     if request.method == "GET":
-        qs = models.Evaluation.objects.filter(user=request.user)
+        qs = models.Evaluation.objects.filter(users__in=[request.user])
         data = request.GET
     return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})

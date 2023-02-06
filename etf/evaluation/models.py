@@ -195,7 +195,7 @@ class TimeStampedModel(models.Model):
 
 
 class Evaluation(TimeStampedModel):
-    user = models.ForeignKey(User, related_name="evaluations", on_delete=models.CASCADE)
+    users = models.ManyToManyField(User)
 
     # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
