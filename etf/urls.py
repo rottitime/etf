@@ -36,6 +36,7 @@ urlpatterns = [
     path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
     path("evaluation/<uuid:evaluation_id>/", views.page_view, name="pages-index"),
     path("evaluation/<uuid:evaluation_id>/<str:page_name>", views.page_view, name="pages"),
+    path("evaluation/<uuid:evaluation_id>/outcome-measure/<int:outcome_id>", views.page_view, name="outcome-measure"),
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),

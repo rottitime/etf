@@ -72,6 +72,8 @@ def make_url(evaluation_id, page_name):
 
 @login_required
 def page_view(request, evaluation_id, page_name="intro"):
+    print("page map")
+    print(page_map)
     if page_name not in page_map:
         raise Http404()
 
