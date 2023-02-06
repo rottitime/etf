@@ -115,6 +115,12 @@ class Organisation(choices.Choices):
     WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
 
 
+class EvaluationStatus(choices.Choices):
+    DRAFT = "Draft"
+    CIVIL_SERVICE = "Civil Service"
+    PUBLIC = "Public"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -122,6 +128,11 @@ def get_topic_display_name(db_name):
 
 def get_organisation_display_name(db_name):
     result = [organisation[1] for organisation in Organisation.choices if organisation[0] == db_name]
+    return result[0]
+
+
+def get_status_display_name(db_name):
+    result = [status[1] for status in EvaluationStatus.choices if status[0] == db_name]
     return result[0]
 
 
@@ -147,7 +158,9 @@ class Evaluation(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)
     organisations = models.JSONField(default=list)
-    is_published = models.BooleanField(blank=True, null=True)
+    status = models.CharField(
+        max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
+    )
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
@@ -190,6 +203,9 @@ class Evaluation(TimeStampedModel):
 
     def get_list_organisations_display_names(self):
         return [get_organisation_display_name(x) for x in self.organisations]
+
+    def get_status_display_name(self):
+        return get_status_display_name(self.status)
 
     def __str__(self):
         return f"{self.id} : {self.title}"

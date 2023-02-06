@@ -44,18 +44,28 @@ def generate_topics():
     return list(set_topics)
 
 
+def generate_organisations():
+    num_organisations = random.randint(0, 4)
+    set_organisations = set()
+    for i in range(num_organisations):
+        set_organisations.add(random.choice(models.Organisation.values))
+    return list(set_organisations)
+
+
 def make_evaluation(user):
     evaluation_start_date = make_random_date()
     evaluation_end_date = random_days_later(evaluation_start_date, 100, 2 * 365)
     date_of_intended_publication = random_days_later(evaluation_end_date, 50, 365)
     date_of_first_recruitment = random_days_later(evaluation_start_date, 10, 50)
     topics = generate_topics()
+    organisations = generate_organisations()
     data = dict(
         user=user,
         title=fake.sentence(),
         description=fake.text(),
         topics=topics,
-        organisation=random.choice(models.Organisation.values),
+        status=random.choice(models.EvaluationStatus.values),
+        organisations=organisations,
         issue_description=fake.text(),
         those_experiencing_issue=fake.text(),
         why_improvements_matter=fake.text(),

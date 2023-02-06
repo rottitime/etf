@@ -1,5 +1,7 @@
 from marshmallow import Schema, fields, validate
 
+from . import models
+
 
 class DateAndBlankField(fields.Date):
     def _deserialize(self, value, attr, data, **kwargs):
@@ -21,7 +23,7 @@ class EvaluationSchema(Schema):
     description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
-    is_published = fields.Boolean()
+    status = fields.Str(validate=validate.Length(max=256), default=models.EvaluationStatus.DRAFT.value)
 
     # Issue description
     issue_description = fields.Str()
