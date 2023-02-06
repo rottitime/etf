@@ -186,7 +186,10 @@ def search_evaluations_view(request):
                     organisations_qs = organisations_qs | organisation_qs
                 qs = organisations_qs
             if not status:
-                qs.filter(Q(status="draft", user=request.user) | Q(status__in=["public", "civil service"]))
+                qs = qs.filter(
+                    Q(status=models.EvaluationStatus.DRAFT.value, user=request.user)
+                    | Q(status__in=[models.EvaluationStatus.PUBLIC.value, models.EvaluationStatus.CIVIL_SERVICE.value])
+                )
             else:
                 if status == models.EvaluationStatus.DRAFT:
                     qs = qs.filter(status=status)
