@@ -185,7 +185,6 @@ def search_evaluations_view(request):
                     organisation_qs = qs.filter(organisations__contains=organisation)
                     organisations_qs = organisations_qs | organisation_qs
                 qs = organisations_qs
-            print(status)
             if not status:
                 qs.filter(Q(status="draft", user=request.user) | Q(status__in=["public", "civil service"]))
             else:
