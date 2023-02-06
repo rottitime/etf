@@ -158,7 +158,9 @@ class Evaluation(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)
     organisations = models.JSONField(default=list)
-    status = models.CharField(max_length=256, blank=True, null=False, choices=EvaluationStatus.choices)
+    status = models.CharField(
+        max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
+    )
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
