@@ -1,3 +1,7 @@
+@import "layouts.css";
+@import "table.css";
+@import "text.css";
+
 @font-face {
   font-family: "Poppins";
   font-style: italic;
