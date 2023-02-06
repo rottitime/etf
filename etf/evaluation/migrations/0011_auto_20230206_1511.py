@@ -5,19 +5,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0010_alter_evaluation_status'),
+        ("evaluation", "0010_alter_evaluation_status"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='evaluation',
-            name='user',
+            model_name="evaluation",
+            name="user",
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='users',
+            model_name="evaluation",
+            name="users",
             field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
         ),
     ]
