@@ -14,3 +14,7 @@ table tbody tr:hover {
 table thead tr th.contributor-email-header {
   width: 95%;
 }
+
+table.contributors {
+  margin-top: 2em;
+}

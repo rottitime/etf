@@ -22,7 +22,7 @@ def index_view(request):
     if request.method == "POST":
         user = request.user
         evaluation = models.Evaluation.objects.create()
-        evaluation.users.set([user])
+        evaluation.users.add(user)
         evaluation.save()
         return redirect(page_view, evaluation_id=str(evaluation.id))
     return render(request, "index.html")
@@ -183,7 +183,7 @@ def search_evaluations_view(request):
             search_phrase = form.cleaned_data["search_phrase"]
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
-                qs = qs.filter(users__in=[request.user])
+                qs = qs.filter(users__email__contains=request.user.email)
             if organisations:
                 organisations_qs = models.Evaluation.objects.none()
                 for organisation in organisations:
@@ -192,7 +192,7 @@ def search_evaluations_view(request):
                 qs = organisations_qs
             if not status:
                 qs = qs.filter(
-                    Q(status=models.EvaluationStatus.DRAFT.value, user=request.user)
+                    Q(status=models.EvaluationStatus.DRAFT.value, users__email__contains=request.user.email)
                     | Q(status__in=[models.EvaluationStatus.PUBLIC.value, models.EvaluationStatus.CIVIL_SERVICE.value])
                 )
             else:
@@ -242,6 +242,36 @@ def my_evaluations_view(request):
     data = {}
     errors = {}
     if request.method == "GET":
-        qs = models.Evaluation.objects.filter(users__in=[request.user])
+        qs = models.Evaluation.objects.filter(users__email__contains=request.user.email)
         data = request.GET
     return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
+
+
+@login_required
+def evaluation_contributors_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    if request.method == "POST":
+        email = request.POST.get("add-user-email")
+        user = models.User.objects.get(email=email)
+        if not user:
+            return
+        evaluation.users.add(user)
+        evaluation.save()
+        users = evaluation.users.values()
+        return render(request, "contributor-rows.html", {"contributors": users})
+    elif request.method == "GET":
+        return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
+
+
+@login_required
+def evaluation_contributor_add_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    if request.method == "POST":
+        email = request.POST.get("add-user-email")
+        user = models.User.objects.get(email=email)
+        if not user:
+            return
+        evaluation.users.add(user)
+        evaluation.save()
+        # users = evaluation.users.values()
+        return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
