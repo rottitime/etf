@@ -13,11 +13,12 @@ class DateAndBlankField(fields.Date):
 
 class UserSchema(Schema):
     email = fields.Str()
+    evaluations = fields.Nested(lambda: EvaluationSchema())
 
 
 class EvaluationSchema(Schema):
     # TODO - add more validation esp. for choice fields, around dates
-    users = fields.Nested(UserSchema(), many=True)
+    users = fields.Function(lambda o: UserSchema(many=True, exclude=("evaluations",)).dump(o.users.all()))
     id = fields.UUID()
     title = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
