@@ -1,3 +1,4 @@
+from random import randint
 import marshmallow
 from allauth.account.views import SignupView
 from django import forms
@@ -17,6 +18,7 @@ from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
+from etf import evaluation
 
 page_map = {}
 
@@ -70,6 +72,45 @@ def make_url(evaluation_id, page_name):
     return reverse("pages", args=(evaluation_id, page_name))
 
 
+def make_outcome_measure_url(evaluation_id, outcome_measure_id):
+    return reverse("outcome-measures", args=(evaluation_id, outcome_measure_id))
+
+
+def get_next_outcome_measure(evaluation_id, outcome_measure_id):
+    next_id = None
+    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
+    outcomes_ids = outcomes_for_eval.values_list("id", flat=True)
+    num_outcomes = len(outcomes_ids)
+    if outcomes_ids:
+        if not outcome_measure_id:
+            next_id = outcomes_ids[0]
+        else:
+            current_index = outcomes_ids.index(outcome_measure_id)
+            next_index = current_index + 1
+            if next_index < num_outcomes:
+                next_id = outcomes_ids[next_index]
+    return next_id
+
+
+def get_next_page_url(evaluation_id, page_name, outcome_measure_id=None):
+    # TODO - sort this out!
+    if page_name == "intro":
+        next_page_url = make_url(evaluation_id, "title")
+    elif page_name == "title":
+        next_page_url = make_url(evaluation_id, "description")
+    elif page_name == "description":
+        next_page_url = make_url(evaluation_id, "")
+
+    next_outcome_measure_id = get_next_outcome_measure(evaluation_id, outcome_measure_id)
+    if page_name == "outcome-measures":
+        if next_outcome_measure_id:
+            next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
+        else:
+            next_page_url = make_url(evaluation_id, "status")  # TODO - this is the page afterwards
+    elif page_name == "ethics":  # TODO - ethics is the page before
+        next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
+
+
 @login_required
 def page_view(request, evaluation_id, page_name="intro"):
     print("page map")
@@ -111,6 +152,13 @@ def page_view(request, evaluation_id, page_name="intro"):
         "next_url": next_url,
         "legend_visible": True,
     }
+    print(page_map)
+    print(url_data)
+    # if page_name != "outcome-measures":
+    #     return page_map[page_name].view(request, url_data)
+    # else:
+    #     return
+
     return page_map[page_name].view(request, url_data)
 
 
@@ -168,32 +216,33 @@ class EvaluationFormPage(BasePage):
 
 
 class OutcomeMeasureFormPage(BasePage):
-    def view(self, request, url_data):
+    def view(self, request, url_data, outcome_measure_id=None):
         evaluation_id = url_data["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
         outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation)
-        outcome = models.OutcomeMeasure(evaluation=evaluation)
+        # outcome = models.OutcomeMeasure(evaluation=evaluation)
+        if outcome_measure_id:
+            outcome = outcomes_for_eval.get(id=outcome_measure_id)
+        else:
+            outcome = models.OutcomeMeasure(evaluation=evaluation)
+        next_outcome_id = None  # or the next one in the list
+        data = outcome_schema.dump(outcome)
         errors = {}
-        data = {}
         if request.method == "POST":
             data = request.POST
-            id_to_delete = request.POST.get("delete")
-            if "add" in request.POST:
-                try:
-                    serialized_outcome = outcome_schema.load(data=data, partial=True)
-                    for field_name in serialized_outcome:
-                        setattr(outcome, field_name, serialized_outcome[field_name])
-                    outcome.save()
-                    return redirect(url_data["this_url"])
-                except marshmallow.exceptions.ValidationError as err:
-                    errors = dict(err.messages)
-            elif id_to_delete:
-                measure_to_del = models.OutcomeMeasure.objects.get(id=id_to_delete)
-                measure_to_del.delete()
-                return redirect(url_data["this_url"])
-            else:
+            # id_to_delete = request.POST.get("delete")
+
+            try:
+                serialized_outcome = outcome_schema.load(data=data, partial=True)
+                # TODO - if there's no data, then don't save?
+                for field_name in serialized_outcome:
+                    setattr(outcome, field_name, serialized_outcome[field_name])
+                outcome.save()
                 return redirect(url_data["next_url"])
+            except marshmallow.exceptions.ValidationError as err:
+                errors = dict(err.messages)
+
         else:
             outcome_measures = outcome_schema.dump(outcomes_for_eval, many=True)
         return render(
@@ -225,9 +274,9 @@ EvaluationFormPage(title="Participant recruitment")
 
 EvaluationFormPage(title="Ethics")
 
-OutcomeMeasureFormPage(title="Outcome measure")
+OutcomeMeasureFormPage(title="Outcome measures")
 
-FormPage(title="Status")
+EvaluationFormPage(title="Status")
 
 SimplePage(title="End")
 
