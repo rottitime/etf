@@ -20,7 +20,7 @@ from django.views.decorators.http import require_http_methods
 from . import models, schemas
 from etf import evaluation
 
-page_map = {}
+# page_map = {}
 
 
 class MethodDispatcher:
@@ -62,14 +62,17 @@ def index_view(request):
         evaluation = models.Evaluation.objects.create()
         evaluation.users.add(user)
         evaluation.save()
-        return redirect(page_view, evaluation_id=str(evaluation.id))
+        return redirect(
+            intro_page_view,
+            evaluation_id=str(evaluation.id),
+        )
     return render(request, "index.html")
 
 
 def make_url(evaluation_id, page_name):
     if not page_name:
         return None
-    return reverse("pages", args=(evaluation_id, page_name))
+    return reverse(page_name, args=(evaluation_id,))
 
 
 def make_outcome_measure_url(evaluation_id, outcome_measure_id):
@@ -92,85 +95,177 @@ def get_next_outcome_measure(evaluation_id, outcome_measure_id):
     return next_id
 
 
-def get_next_page_url(evaluation_id, page_name, outcome_measure_id=None):
-    # TODO - sort this out!
-    if page_name == "intro":
-        next_page_url = make_url(evaluation_id, "title")
-    elif page_name == "title":
-        next_page_url = make_url(evaluation_id, "description")
-    elif page_name == "description":
-        next_page_url = make_url(evaluation_id, "")
-
-    next_outcome_measure_id = get_next_outcome_measure(evaluation_id, outcome_measure_id)
-    if page_name == "outcome-measures":
-        if next_outcome_measure_id:
-            next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
-        else:
-            next_page_url = make_url(evaluation_id, "status")  # TODO - this is the page afterwards
-    elif page_name == "ethics":  # TODO - ethics is the page before
-        next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
+# def get_next_page_url(evaluation_id, page_name, outcome_measure_id=None):
+#     # TODO - sort this out!
+#     next_outcome_measure_id = get_next_outcome_measure(evaluation_id, outcome_measure_id)
+#     if page_name == "outcome-measures":
+#         if next_outcome_measure_id:
+#             next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
+#         else:
+#             next_page_url = make_url(evaluation_id, "status")  # TODO - this is the page afterwards
+#     elif page_name == "ethics":  # TODO - ethics is the page before
+#         next_page_url = make_outcome_measure_url(evaluation_id, next_outcome_measure_id)
 
 
-@login_required
-def page_view(request, evaluation_id, page_name="intro"):
-    print("page map")
-    print(page_map)
-    if page_name not in page_map:
-        raise Http404()
+# @login_required
+# def page_view(request, evaluation_id, page_name="intro"):
+#     # print("page map")
+#     # print(page_map)
+#     # if page_name not in page_map:
+#     #     raise Http404()
+
+#     # page_name_order = tuple(page_map.keys())
+
+#     # index = page_name_order.index(page_name)
+#     # prev_page = index and page_name_order[index - 1] or None
+#     # next_page = (index < len(page_name_order) - 1) and page_name_order[index + 1] or None
+#     # prev_url = make_url(evaluation_id, prev_page)
+#     # this_url = make_url(evaluation_id, page_name)
+#     # next_url = make_url(evaluation_id, next_page)
+
+#     # pages = tuple(
+#     #     {
+#     #         "slug": _p.slug,
+#     #         "url": make_url(evaluation_id, _p.slug),
+#     #         "title": _p.title,
+#     #         "completed": page_name_order.index(_p.slug) < index,
+#     #         "current": _p.slug == page_name,
+#     #     }
+#     #     for _p in page_map.values()
+#     # )
+
+#     # url_data = {
+#     #     "pages": pages,
+#     #     "evaluation_id": evaluation_id,
+#     #     "page_name": page_name,
+#     #     "index": index,
+#     #     "prev_page": prev_page,
+#     #     "next_page": next_page,
+#     #     "prev_url": prev_url,
+#     #     "this_url": this_url,
+#     #     "next_url": next_url,
+#     #     "legend_visible": True,
+#     # }
+#     print(page_map)
+#     # print(url_data)
+#     # if page_name != "outcome-measures":
+#     #     return page_map[page_name].view(request, url_data)
+#     # else:
+#     #     return
+
+#     return page_map[page_name].view(request, evaluation_id)
+
+
+class BasePage:
+    def __init__(self, title, slug, url_data={}):
+        self.title = title
+        self.slug = slug
+        self.url_data = url_data
+        self.template_name = f"{self.slug}.html"
 
     #  TODO: Add redirect if user isn't allowed to see evaluation
 
     page_name_order = tuple(page_map.keys())
 
-    index = page_name_order.index(page_name)
-    prev_page = index and page_name_order[index - 1] or None
-    next_page = (index < len(page_name_order) - 1) and page_name_order[index + 1] or None
-    prev_url = make_url(evaluation_id, prev_page)
-    this_url = make_url(evaluation_id, page_name)
-    next_url = make_url(evaluation_id, next_page)
+# class EvaluationFormPage(BasePage):
+#     def view(self, request, evaluation_id):
+#         next_url = make_url(evaluation_id, self.url_data["next_page"])
+#         print("next_url")
+#         print(next_url)
+#         prev_url = make_url(evaluation_id, self.url_data["prev_page"])
 
-    pages = tuple(
+#         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+#         eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
+#         errors = {}
+#         topics = models.Topic.choices
+#         organisations = models.Organisation.choices
+#         statuses = models.EvaluationStatus.choices
+#         if request.method == "POST":
+#             data = request.POST
+#             try:
+#                 serialized_evaluation = eval_schema.load(data=data, partial=True)
+#                 for field_name in serialized_evaluation:
+#                     setattr(evaluation, field_name, serialized_evaluation[field_name])
+#                 if "topics" in data.keys():
+#                     topic_list = data.getlist("topics") or None
+#                     setattr(evaluation, "topics", topic_list)
+#                 if "organisations" in data.keys():
+#                     organisation_list = data.getlist("organisations") or None
+#                     setattr(evaluation, "organisations", organisation_list)
+#                 evaluation.save()
+#                 return redirect(next_url)
+#             except marshmallow.exceptions.ValidationError as err:
+#                 errors = dict(err.messages)
+#         else:
+#             data = eval_schema.dump(evaluation)
+#         return render(
+#             request,
+#             self.template_name,
+#             {
+#                 "errors": errors,
+#                 "topics": topics,
+#                 "organisations": organisations,
+#                 "statuses": statuses,
+#                 "data": data,
+#                 "next_url": next_url,
+#                 "prev_url": prev_url,
+#                 **self.url_data,
+#             },
+#         )
+
+
+def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
+    next_url = make_url(evaluation_id, next_page)
+    prev_url = make_url(evaluation_id, prev_page)
+    template_name = f"{slug}.html"
+
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
+    errors = {}
+    topics = models.Topic.choices
+    organisations = models.Organisation.choices
+    statuses = models.EvaluationStatus.choices
+    if request.method == "POST":
+        data = request.POST
+        try:
+            serialized_evaluation = eval_schema.load(data=data, partial=True)
+            for field_name in serialized_evaluation:
+                setattr(evaluation, field_name, serialized_evaluation[field_name])
+            if "topics" in data.keys():
+                topic_list = data.getlist("topics") or None
+                setattr(evaluation, "topics", topic_list)
+            if "organisations" in data.keys():
+                organisation_list = data.getlist("organisations") or None
+                setattr(evaluation, "organisations", organisation_list)
+            evaluation.save()
+            return redirect(next_url)
+        except marshmallow.exceptions.ValidationError as err:
+            errors = dict(err.messages)
+    else:
+        data = eval_schema.dump(evaluation)
+    return render(
+        request,
+        template_name,
         {
-            "slug": _p.slug,
-            "url": make_url(evaluation_id, _p.slug),
-            "title": _p.title,
-            "completed": page_name_order.index(_p.slug) < index,
-            "current": _p.slug == page_name,
-        }
-        for _p in page_map.values()
+            "errors": errors,
+            "topics": topics,
+            "organisations": organisations,
+            "statuses": statuses,
+            "data": data,
+            "next_url": next_url,
+            "prev_url": prev_url,
+            "title": title,
+        },
     )
 
-    url_data = {
-        "pages": pages,
-        "evaluation_id": evaluation_id,
-        "page_name": page_name,
-        "index": index,
-        "prev_page": prev_page,
-        "next_page": next_page,
-        "prev_url": prev_url,
-        "this_url": this_url,
-        "next_url": next_url,
-        "legend_visible": True,
-    }
-    print(page_map)
-    print(url_data)
-    # if page_name != "outcome-measures":
-    #     return page_map[page_name].view(request, url_data)
-    # else:
-    #     return
 
-    return page_map[page_name].view(request, url_data)
+def evaluation_title_view(request, evaluation_id):
+    return evaluation_view(
+        request, evaluation_id, title="Title", slug="title", prev_page="intro", next_page="description"
+    )
 
 
-class BasePage:
-    def __init__(self, title, extra_data=None):
-        self.title = title
-        self.slug = slugify(title)
-        self.template_name = f"{self.slug}.html"
-        self.extra_data = extra_data or {}
-        page_map[self.slug] = self
-
-
+<<<<<<< HEAD
 class EvaluationFormPage(BasePage):
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
@@ -213,6 +308,12 @@ class EvaluationFormPage(BasePage):
                 **self.extra_data,
             },
         )
+=======
+def evaluation_description_view(request, evaluation_id):
+    return evaluation_view(
+        request, evaluation_id, title="Description", slug="description", prev_page="title", next_page="end"
+    )
+>>>>>>> 111b733 (unpick the views for evaluation pages)
 
 
 class OutcomeMeasureFormPage(BasePage):
@@ -253,32 +354,119 @@ class OutcomeMeasureFormPage(BasePage):
 
 
 class SimplePage(BasePage):
-    def view(self, request, url_data):
-        return render(request, f"{self.slug}.html", {**url_data})
+    def view(self, request, evaluation_id):
+        next_url = make_url(evaluation_id, self.url_data["next_page"])
+        print("next_url")
+        print(next_url)
+        prev_url = make_url(evaluation_id, self.url_data["prev_page"])
+        return render(request, f"{self.slug}.html", {next_url: next_url, **self.url_data})
 
 
-SimplePage(title="Intro")
+def simple_page_view(request, evaluation_id, title, slug, prev_page, next_page):
+    prev_url = make_url(evaluation_id, prev_page)
+    next_url = make_url(evaluation_id, next_page)
+    template_name = f"{slug}.html"
+    return render(request, template_name, {"title": title, "prev_url": prev_url, "next_url": next_url})
 
-EvaluationFormPage(title="Title")
 
-EvaluationFormPage(title="Description")
-
-EvaluationFormPage(title="Issue")
-
+<<<<<<< HEAD
 FormPage(title="Contributors")
 
 FormPage(title="Issue")
 EvaluationFormPage(title="Dates")
+=======
+def intro_page_view(request, evaluation_id):
+    return simple_page_view(
+        request, evaluation_id, title="Introduction", slug="intro", prev_page=None, next_page="title"
+    )
+>>>>>>> 111b733 (unpick the views for evaluation pages)
 
-EvaluationFormPage(title="Participant recruitment")
 
-EvaluationFormPage(title="Ethics")
+def end_page_view(request, evaluation_id):
+    return simple_page_view(request, evaluation_id, title="End", slug="end", prev_page="description", next_page=None)
 
-OutcomeMeasureFormPage(title="Outcome measures")
 
-EvaluationFormPage(title="Status")
+# page_map = {
+#     "intro": SimplePage(title="Intro", slug="intro", url_data={"prev_page": None, "next_page": "title"}),
+#     "title": EvaluationFormPage(
+#         title="Title", slug="title", url_data={"prev_page": "intro", "next_page": "description"}
+#     ),
+#     "description": EvaluationFormPage(
+#         title="Description", slug="description", url_data={"prev_page": "title", "next_page": "issue"}
+#     ),
+#     "issue": EvaluationFormPage(
+#         title="Issue", slug="issue", url_data={"prev_page": "description", "next_page": "dates"}
+#     ),
+#     "dates": EvaluationFormPage(
+#         title="Dates", slug="dates", url_data={"prev_page": "issue", "next_page": "participant-recruitment"}
+#     ),
+#     "participant-recruitment": EvaluationFormPage(
+#         title="Participant recruitment",
+#         slug="participant-recruitment",
+#         url_data={"prev_page": "dates", "next_page": "ethics"},
+#     ),
+#     # EvaluationFormPage(title="Ethics", slug="ethics", prev_page="participant_recruitment", next_page="outcome-measures")
+#     "ethics": EvaluationFormPage(
+#         title="Ethics",
+#         slug="ethics",
+#         url_data={"prev_page": "participant_recruitment", "next_page": "outcome-measures"},
+#     ),
+#     # OutcomeMeasureFormPage(title="Outcome measures")
+#     "status": EvaluationFormPage(title="Status", slug="status", url_data={"prev_page": "ethics", "next_page": "end"}),
+#     "end": SimplePage(title="End", slug="end"),
+# }
 
-SimplePage(title="End")
+
+@login_required
+def page_view(request, evaluation_id, page_name):
+    # print("page map")
+    # print(page_map)
+    # if page_name not in page_map:
+    #     raise Http404()
+
+    # page_name_order = tuple(page_map.keys())
+
+    # index = page_name_order.index(page_name)
+    # prev_page = index and page_name_order[index - 1] or None
+    # next_page = (index < len(page_name_order) - 1) and page_name_order[index + 1] or None
+    # prev_url = make_url(evaluation_id, prev_page)
+    # this_url = make_url(evaluation_id, page_name)
+    # next_url = make_url(evaluation_id, next_page)
+
+    # pages = tuple(
+    #     {
+    #         "slug": _p.slug,
+    #         "url": make_url(evaluation_id, _p.slug),
+    #         "title": _p.title,
+    #         "completed": page_name_order.index(_p.slug) < index,
+    #         "current": _p.slug == page_name,
+    #     }
+    #     for _p in page_map.values()
+    # )
+
+    # url_data = {
+    #     "pages": pages,
+    #     "evaluation_id": evaluation_id,
+    #     "page_name": page_name,
+    #     "index": index,
+    #     "prev_page": prev_page,
+    #     "next_page": next_page,
+    #     "prev_url": prev_url,
+    #     "this_url": this_url,
+    #     "next_url": next_url,
+    #     "legend_visible": True,
+    # }
+    # print(page_map)
+    # print(url_data)
+    # if page_name != "outcome-measures":
+    #     return page_map[page_name].view(request, url_data)
+    # else:
+    #     return
+    # page_map = {
+    #     "intro": SimplePage(title="Intro", slug="intro", url_data={"prev_page": None, "next_page": "title"})
+    # }
+
+    return page_map[page_name].view(request, evaluation_id)
 
 
 class EvaluationSearchForm(forms.Form):
