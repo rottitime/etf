@@ -77,20 +77,21 @@ def make_outcome_measure_url(evaluation_id, outcome_measure_id):
     return reverse("outcome-measures", args=(evaluation_id, outcome_measure_id))
 
 
-def get_next_outcome_measure(evaluation_id, outcome_measure_id):
-    next_id = None
+def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True):
+    adjacent_id = None
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     outcomes_ids = outcomes_for_eval.values_list("id", flat=True)
-    num_outcomes = len(outcomes_ids)
-    if outcomes_ids:
-        if not outcome_measure_id:
-            next_id = outcomes_ids[0]
-        else:
-            current_index = outcomes_ids.index(outcome_measure_id)
-            next_index = current_index + 1
-            if next_index < num_outcomes:
-                next_id = outcomes_ids[next_index]
-    return next_id
+    current_index = outcomes_ids.index(outcome_measure_id)
+
+    if next:
+        next_index = current_index + 1
+        if next_index < len(outcomes_ids):
+            adjacent_id = outcomes_ids[next_index]
+    else:
+        prev_index = current_index + 1
+        if prev_index >= 0:
+            adjacent_id = outcomes_ids[prev_index]
+    return adjacent_id
 
 
 # def get_next_page_url(evaluation_id, page_name, outcome_measure_id=None):
