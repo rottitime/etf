@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Contributors</h3>
+      </legend>
+
+{#      <table>#}
+{#        <thead>#}
+{#          <tr>#}
+{#            <th>Name</th>#}
+{#            <th>Email</th>#}
+{#            <th></th>#}
+{#          </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for u in contributors %}#}
+{#          <tr>#}
+{#            <td>{{u.name}}</td>#}
+{#            <td>{{u.email}}</td>#}
+{#            <td><button class="button"><i class="fi-trash"></i></button></td>#}
+{#          </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#      </table>#}
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{% endblock %}
