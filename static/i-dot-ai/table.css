@@ -10,3 +10,7 @@ table.unstriped thead {
 table tbody tr:hover {
   cursor: pointer;
 }
+
+table thead tr th.contributor-email-header {
+  width: 95%;
+}

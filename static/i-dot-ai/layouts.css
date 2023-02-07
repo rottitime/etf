@@ -36,3 +36,17 @@ div.global--search button.button {
     margin-bottom: 0px;
     margin-left: 0.15rem;
 }
+
+div.input-button-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+}
+
+div.input-button-pair input.input-button-pair-input {
+    margin-right: 0.5em !important;
+}
+
+div.input-button-pair button.input-button-pair-button {
+}

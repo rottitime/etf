@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Contributors</h3>
+      </legend>
+
+    <label class="label" for="add-user">Add contributor</label>
+    <div class="input-button-pair">
+      <input class="input-button-pair-input" placeholder="Enter a users email..." type="email" id="add-user" name="add-user">
+      <button class="button input-button-pair-button">Add</button>
+    </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="contributor-email-header">Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for c in contributors %}
+          <tr>
+            <td>{{c.email}}</td>
+            <td class="align-middle"><button class="btn-delete"><i class="bi-trash"></i></button></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{% endblock %}

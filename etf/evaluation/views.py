@@ -90,38 +90,25 @@ class FormPage:
         topics = models.Topic.choices
         organisations = models.Organisation.choices
         statuses = models.EvaluationStatus.choices
-        users = evaluation.users.all()
-        print(1)
+        users = evaluation.users.values()
         if request.method == "POST":
             data = request.POST
-            print(2)
             try:
                 serialized_evaluation = eval_schema.load(data=data, partial=True)
-                print(3)
-                i = 0
                 for field_name in serialized_evaluation:
-                    i = i + 1
-                    print(4 + i)
                     setattr(evaluation, field_name, serialized_evaluation[field_name])
                 if "topics" in data.keys():
-                    print('a')
                     topic_list = data.getlist("topics") or None
                     setattr(evaluation, "topics", topic_list)
                 if "organisations" in data.keys():
-                    print('b')
                     organisation_list = data.getlist("organisations") or None
                     setattr(evaluation, "organisations", organisation_list)
                 evaluation.save()
-                print('c')
                 return redirect(url_data["next_url"])
             except marshmallow.exceptions.ValidationError as err:
                 errors = dict(err.messages)
-                print('error')
         else:
-            print('d')
-            print(evaluation)
             data = eval_schema.dump(evaluation)
-            print('f')
         return render(
             request,
             self.template_name,
@@ -130,7 +117,7 @@ class FormPage:
                 "topics": topics,
                 "organisations": organisations,
                 "statuses": statuses,
-                "users": users,
+                "contributors": users,
                 "data": data,
                 **url_data,
                 **self.extra_data,
