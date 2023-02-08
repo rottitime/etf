@@ -5,7 +5,8 @@ from etf.evaluation import views
 
 api_urlpatterns = [
     path("evaluation-contributors/<uuid:evaluation_id>/", views.evaluation_contributors_view, name="evaluation-contributors"),
-    path("evaluation-contributor-add/<uuid:evaluation_id>/", views.evaluation_contributor_add_view, name="evaluation-contributor-add")
+    path("evaluation-contributor-add/<uuid:evaluation_id>/", views.evaluation_contributor_add_view, name="evaluation-contributor-add"),
+    path("evaluation-contributor-remove/<uuid:evaluation_id>/<str:email>/", views.evaluation_contributor_remove_view, name="evaluation-contributor-remove")
 ]
 
 urlpatterns = [

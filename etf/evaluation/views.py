@@ -258,7 +258,7 @@ def evaluation_contributors_view(request, evaluation_id):
         evaluation.users.add(user)
         evaluation.save()
         users = evaluation.users.values()
-        return render(request, "contributor-rows.html", {"contributors": users})
+        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
     elif request.method == "GET":
         return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
 
@@ -273,5 +273,17 @@ def evaluation_contributor_add_view(request, evaluation_id):
             return
         evaluation.users.add(user)
         evaluation.save()
-        # users = evaluation.users.values()
         return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+
+
+@login_required
+def evaluation_contributor_remove_view(request, evaluation_id, email):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    if request.method == "POST":
+        user = models.User.objects.get(email=email)
+        if not user:
+            return
+        evaluation.users.remove(user)
+        evaluation.save()
+        users = evaluation.users.values()
+        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})

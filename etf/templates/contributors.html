@@ -11,11 +11,12 @@
       <label class="label" for="add-user">Add contributor</label>
       <div class="input-button-pair">
         <input class="input-button-pair-input" placeholder="Enter a contributors email..." type="email" id="add-user-email" name="add-user-email">
-        <a href="{{url("evaluation-contributors", args=[evaluation_id])}}"
+        <a id="add"
            hx-data="#add-user-email"
            hx-post="{{url("evaluation-contributors", args=[evaluation_id])}}"
            hx-target="#contributor-table-body"
-           hx-append="innerHTML" class="button input-button-pair-button">Add</a>
+           hx-append="innerHTML"
+           class="button input-button-pair-button">Add</a>
       </div>
 
       <table class="contributors">
@@ -28,8 +29,16 @@
         <tbody id="contributor-table-body">
         {% for c in contributors %}
           <tr>
-            <td>{{c.email}}</td>
-            <td class="align-middle"><button class="btn-delete"><i class="bi-trash"></i></button></td>
+            <td id="td-{{loop.index}}">{{c.email}}</td>
+            <td>
+              <a class="button"
+                   id="delete"
+                   hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
+                   hx-post="{{url("evaluation-contributor-remove", args=[evaluation_id, c.email])}}"
+                   hx-target="#contributor-table-body"
+                   hx-append="innerHTML"
+                   hx-trigger="click">Remove</a>
+            </td>
           </tr>
         {% endfor %}
         </tbody>

@@ -1,7 +1,14 @@
 {% for contributor in contributors %}
   <tr>
-    <td>{{contributor.email}}</td>
-    <td class="align-middle"><button class="btn-delete"><i class="bi-trash"></i></button></td>
+    <td id="td-{{loop.index}}">{{contributor.email}}</td>
+            <td><a class="button"
+                   id="delete"
+                   hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
+                   hx-post="{{url("evaluation-contributor-remove", args=[evaluation_id, contributor.email])}}"
+                   hx-target="#contributor-table-body"
+                   hx-append="innerHTML"
+                   hx-trigger="click"
+            >Remove</a></td>
   </tr>
 {% endfor %}
 
