@@ -35,8 +35,8 @@ check-migrations:
 	docker-compose run web python manage.py migrate
 	docker-compose run web python manage.py makemigrations --check
 
-.PHONY: tests
-tests:
+.PHONY: test
+test:
 	docker-compose down
 	docker-compose build tests-etf etf-test-db && docker-compose run --rm tests-etf || docker-compose down
 	docker-compose down
