@@ -1,4 +1,3 @@
-from random import randint
 import marshmallow
 from allauth.account.views import SignupView
 from django import forms
