@@ -32,12 +32,12 @@
             <td id="td-email-a-{{loop.index}}">{{c.email}}</td>
             <td>
               <a class="button"
-                   id="delete-a-{{loop.index}}"
-                   hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
-                   hx-delete="{{url("evaluation-contributors", args=[evaluation_id, c.email])}}"
-                   hx-target="#contributor-table-body"
-                   hx-append="innerHTML"
-                   hx-trigger="click">Remove</a>
+                 {% if contributors.count() <= 1 %} disabled hx-disable="true" {% endif %}
+                 id="delete-a-{{loop.index}}"
+                 hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
+                 hx-delete="{{url("evaluation-contributors", args=[evaluation_id, c.email])}}"
+                 hx-target="#contributor-table-body"
+                 hx-append="innerHTML">Remove</a>
             </td>
           </tr>
         {% endfor %}

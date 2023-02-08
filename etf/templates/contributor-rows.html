@@ -2,12 +2,12 @@
   <tr>
     <td id="td-email-b-{{loop.index}}">{{contributor.email}}</td>
             <td><a class="button"
+                   {% if contributors.count() <= 1 %} disabled hx-disable="true" {% endif %}
                    id="delete-b-{{loop.index}}"
                    hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
                    hx-delete="{{url("evaluation-contributors", args=[evaluation_id, contributor.email])}}"
                    hx-target="#contributor-table-body"
                    hx-append="innerHTML"
-                   hx-trigger="click"
             >Remove</a></td>
   </tr>
 {% endfor %}
