@@ -29,12 +29,12 @@
         <tbody id="contributor-table-body">
         {% for c in contributors %}
           <tr>
-            <td id="td-{{loop.index}}">{{c.email}}</td>
+            <td id="td-email-a-{{loop.index}}">{{c.email}}</td>
             <td>
               <a class="button"
-                   id="delete"
+                   id="delete-a-{{loop.index}}"
                    hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
-                   hx-post="{{url("evaluation-contributor-remove", args=[evaluation_id, c.email])}}"
+                   hx-delete="{{url("evaluation-contributors", args=[evaluation_id, c.email])}}"
                    hx-target="#contributor-table-body"
                    hx-append="innerHTML"
                    hx-trigger="click">Remove</a>

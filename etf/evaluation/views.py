@@ -248,7 +248,7 @@ def my_evaluations_view(request):
 
 
 @login_required
-def evaluation_contributors_view(request, evaluation_id):
+def evaluation_contributors_view(request, evaluation_id, remove_email=None):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "POST":
         email = request.POST.get("add-user-email")
@@ -256,6 +256,14 @@ def evaluation_contributors_view(request, evaluation_id):
         if not user:
             return
         evaluation.users.add(user)
+        evaluation.save()
+        users = evaluation.users.values()
+        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
+    if request.method == "DELETE":
+        remove_user = models.User.objects.get(email=remove_email)
+        if not remove_user:
+            return
+        evaluation.users.remove(remove_user)
         evaluation.save()
         users = evaluation.users.values()
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
@@ -274,16 +282,3 @@ def evaluation_contributor_add_view(request, evaluation_id):
         evaluation.users.add(user)
         evaluation.save()
         return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
-
-
-@login_required
-def evaluation_contributor_remove_view(request, evaluation_id, email):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if request.method == "POST":
-        user = models.User.objects.get(email=email)
-        if not user:
-            return
-        evaluation.users.remove(user)
-        evaluation.save()
-        users = evaluation.users.values()
-        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
