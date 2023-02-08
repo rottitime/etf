@@ -171,6 +171,7 @@ def simple_page_view(request, evaluation_id, title, slug, prev_page, next_page):
     next_url = make_evaluation_url(evaluation_id, next_page)
     template_name = f"{slug}.html"
     return render(request, template_name, {"title": title, "prev_url": prev_url, "next_url": next_url})
+@login_required
 def simple_page_view(request, evaluation_id, page_data):
     prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
     next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
@@ -181,6 +182,7 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
+@login_required
 def initial_outcome_measure_page_view(request, evaluation_id):
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     errors = {}
@@ -202,6 +204,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     )
 
 
+@login_required
 def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
     next_url = make_evaluation_url(evaluation_id, next_page)
     prev_url = make_evaluation_url(evaluation_id, prev_page)
@@ -246,6 +249,7 @@ def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
     )
 
 
+@login_required
 def add_outcome_measure_page_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     outcome = models.OutcomeMeasure(evaluation=evaluation)
@@ -253,6 +257,7 @@ def add_outcome_measure_page_view(request, evaluation_id):
     return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
 
 
+@login_required
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
     outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
@@ -343,7 +348,6 @@ def evaluation_description_view(request, evaluation_id):
     )
 
 
-<<<<<<< HEAD
 # class OutcomeMeasureFormPage(BasePage):
 #     def view(self, request, url_data, outcome_measure_id=None):
 #         evaluation_id = url_data["evaluation_id"]
