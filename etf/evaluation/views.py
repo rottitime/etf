@@ -181,8 +181,7 @@ def simple_page_view(request, evaluation_id, title, slug, prev_page, next_page):
 
 def initial_outcome_measure_page_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation).order_by(id)
-    # outcome = models.OutcomeMeasure(evaluation=evaluation)
+    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation).order_by("id")
     errors = {}
     data = {}
     next_url = reverse("end", args=(evaluation_id,))
@@ -210,6 +209,35 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     data = {}
+    show_add = False
+    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True)
+    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
+    if next_outcome_id:
+        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
+        show_add = True
+    else:
+        next_url = reverse("end", args=(evaluation_id,))
+    if prev_outcome_id:
+        prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
+    else:
+        prev_url = reverse("description", args=(evaluation_id,))
+    if request.method == "POST":
+        if "add" in request.POST:
+            return reverse("outcome-measure-add", args=(evaluation_id,))
+        else:
+            try:
+                serialized_outcome = outcome_schema.load(data=data, partial=True)
+                for field_name in serialized_outcome:
+                    setattr(outcome, field_name, serialized_outcome[field_name])
+                outcome.save()
+                return redirect(next_url, args=(evaluation_id,))
+            except marshmallow.exceptions.ValidationError as err:
+                errors = dict(err.messages)
+    return render(
+        request,
+        "outcome-measures-individual.html",
+        {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
+    )
 
 
 def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
