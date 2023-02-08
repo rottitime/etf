@@ -269,7 +269,11 @@ def evaluation_contributors_view(request, evaluation_id, remove_email=None):
         evaluation.save()
         users = evaluation.users.values()
         if remove_user == request.user:
-            response = render(request, "contributor-rows.html", {"redirect": True, "contributors": users, "evaluation_id": evaluation_id})
+            response = render(
+                request,
+                "contributor-rows.html",
+                {"redirect": True, "contributors": users, "evaluation_id": evaluation_id},
+            )
             response["HX-Redirect"] = reverse("index")
             return response
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
