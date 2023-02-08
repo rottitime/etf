@@ -205,10 +205,12 @@ def initial_outcome_measure_page_view(request, evaluation_id):
 
 
 @login_required
-def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
-    next_url = make_evaluation_url(evaluation_id, next_page)
-    prev_url = make_evaluation_url(evaluation_id, prev_page)
-    template_name = f"{slug}.html"
+def evaluation_view(request, evaluation_id, page_data):
+    title = page_data["title"]
+    page_name = page_data["page_name"]
+    next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
+    prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
+    template_name = f"{page_name}.html"
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
@@ -294,10 +296,9 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     )
 
 
-def evaluation_title_view(request, evaluation_id):
-    return evaluation_view(
-        request, evaluation_id, title="Title", slug="title", prev_page="intro", next_page="description"
-    )
+def intro_page_view(request, evaluation_id):
+    page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
+    return simple_page_view(request, evaluation_id, page_data)
 
 
 class EvaluationFormPage(BasePage):
@@ -393,6 +394,19 @@ def intro_page_view(request, evaluation_id):
 
     page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
     return simple_page_view(request, evaluation_id, page_data)
+def evaluation_title_view(request, evaluation_id):
+    page_data = {"title": "Title", "page_name": "title", "prev_page": "intro", "next_page": "description"}
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_description_view(request, evaluation_id):
+    page_data = {
+        "title": "Description",
+        "page_name": "description",
+        "prev_page": "title",
+        "next_page": "outcome-measures",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
 
 
 
