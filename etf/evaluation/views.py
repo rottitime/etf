@@ -18,7 +18,6 @@ from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
-from etf import evaluation
 
 
 class MethodDispatcher:
@@ -67,24 +66,17 @@ def index_view(request):
     return render(request, "index.html")
 
 
-def make_url(evaluation_id, page_name):
+def make_evaluation_url(evaluation_id, page_name):
     if not page_name:
         return None
     return reverse(page_name, args=(evaluation_id,))
-
-
-def make_outcome_measure_url(evaluation_id, outcome_measure_id):
-    return reverse("outcome-measures", args=(evaluation_id, outcome_measure_id))
 
 
 def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True):
     adjacent_id = None
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
-    print(outcomes_ids)
     current_index = outcomes_ids.index(outcome_measure_id)
-    print(current_index)
-
     if next:
         next_index = current_index + 1
         if next_index < len(outcomes_ids):
@@ -175,8 +167,8 @@ class BasePage:
 #         print(next_url)
 #         prev_url = make_url(evaluation_id, self.url_data["prev_page"])
 def simple_page_view(request, evaluation_id, title, slug, prev_page, next_page):
-    prev_url = make_url(evaluation_id, prev_page)
-    next_url = make_url(evaluation_id, next_page)
+    prev_url = make_evaluation_url(evaluation_id, prev_page)
+    next_url = make_evaluation_url(evaluation_id, next_page)
     template_name = f"{slug}.html"
     return render(request, template_name, {"title": title, "prev_url": prev_url, "next_url": next_url})
 
@@ -246,8 +238,8 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
 
 
 def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
-    next_url = make_url(evaluation_id, next_page)
-    prev_url = make_url(evaluation_id, prev_page)
+    next_url = make_evaluation_url(evaluation_id, next_page)
+    prev_url = make_evaluation_url(evaluation_id, prev_page)
     template_name = f"{slug}.html"
 
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
@@ -347,6 +339,7 @@ def evaluation_description_view(request, evaluation_id):
 >>>>>>> 111b733 (unpick the views for evaluation pages)
 
 
+<<<<<<< HEAD
 # class OutcomeMeasureFormPage(BasePage):
 #     def view(self, request, url_data, outcome_measure_id=None):
 #         evaluation_id = url_data["evaluation_id"]
@@ -390,6 +383,8 @@ FormPage(title="Contributors")
 FormPage(title="Issue")
 EvaluationFormPage(title="Dates")
 =======
+=======
+>>>>>>> 773cc9f (code tidying)
 def intro_page_view(request, evaluation_id):
     return simple_page_view(
         request, evaluation_id, title="Introduction", slug="intro", prev_page=None, next_page="title"
