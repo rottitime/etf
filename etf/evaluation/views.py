@@ -80,7 +80,7 @@ def make_outcome_measure_url(evaluation_id, outcome_measure_id):
 def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True):
     adjacent_id = None
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
-    outcomes_ids = outcomes_for_eval.values_list("id", flat=True)
+    outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
     current_index = outcomes_ids.index(outcome_measure_id)
 
     if next:
@@ -194,7 +194,9 @@ def initial_outcome_measure_page_view(request, evaluation_id):
                 return reverse("outcome-measure-add", args=(evaluation_id,))
             else:
                 return reverse("end", args=(evaluation_id,))
-    return render(request, "outcome-measures.html", {"errors": errors, "data": data, "next_url": next_url})
+    return render(
+        request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
+    )
 
 
 def add_outcome_measure_page_view(request, evaluation_id):
