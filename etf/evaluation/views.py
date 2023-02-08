@@ -182,8 +182,7 @@ def simple_page_view(request, evaluation_id, page_data):
 
 
 def initial_outcome_measure_page_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation).order_by("id")
+    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     errors = {}
     data = {}
     prev_url = reverse("description", args=(evaluation_id,))
@@ -195,10 +194,9 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         if request.method == "POST":
             print("posting")
             if "add" in request.POST:
+                print("add")
                 return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
-            else:
-                print("here")
-                return redirect(reverse("end", args=(evaluation_id,)))
+            return redirect(next_url)
     return render(
         request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
     )
@@ -208,7 +206,6 @@ def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
     next_url = make_evaluation_url(evaluation_id, next_page)
     prev_url = make_evaluation_url(evaluation_id, prev_page)
     template_name = f"{slug}.html"
-
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
