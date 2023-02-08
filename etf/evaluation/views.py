@@ -171,6 +171,14 @@ def simple_page_view(request, evaluation_id, title, slug, prev_page, next_page):
     next_url = make_evaluation_url(evaluation_id, next_page)
     template_name = f"{slug}.html"
     return render(request, template_name, {"title": title, "prev_url": prev_url, "next_url": next_url})
+def simple_page_view(request, evaluation_id, page_data):
+    prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
+    next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
+    page_name = page_data["page_name"]
+    template_name = f"{page_name}.html"
+    title = page_data["title"]
+    form_data = {"title": title, "prev_url": prev_url, "next_url": next_url}
+    return render(request, template_name, form_data)
 
 
 def initial_outcome_measure_page_view(request, evaluation_id):
@@ -185,55 +193,14 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         return redirect(reverse("outcome-measure-page", args=(evaluation_id, first_id)))
     else:
         if request.method == "POST":
+            print("posting")
             if "add" in request.POST:
                 return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
             else:
+                print("here")
                 return redirect(reverse("end", args=(evaluation_id,)))
     return render(
         request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
-    )
-
-
-def add_outcome_measure_page_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    outcome = models.OutcomeMeasure(evaluation=evaluation)
-    outcome.save()
-    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
-
-
-def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
-    outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
-    errors = {}
-    data = {}
-    show_add = False
-    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True)
-    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
-    if next_outcome_id:
-        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
-        show_add = True
-    else:
-        next_url = reverse("end", args=(evaluation_id,))
-    if prev_outcome_id:
-        prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
-    else:
-        prev_url = reverse("description", args=(evaluation_id,))
-    if request.method == "POST":
-        if "add" in request.POST:
-            return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
-        else:
-            try:
-                serialized_outcome = outcome_schema.load(data=data, partial=True)
-                for field_name in serialized_outcome:
-                    setattr(outcome, field_name, serialized_outcome[field_name])
-                outcome.save()
-                return redirect(next_url, args=(evaluation_id,))
-            except marshmallow.exceptions.ValidationError as err:
-                errors = dict(err.messages)
-    return render(
-        request,
-        "outcome-measures-individual.html",
-        {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
     )
 
 
@@ -279,6 +246,49 @@ def evaluation_view(request, evaluation_id, title, slug, prev_page, next_page):
             "prev_url": prev_url,
             "title": title,
         },
+    )
+
+
+def add_outcome_measure_page_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    outcome = models.OutcomeMeasure(evaluation=evaluation)
+    outcome.save()
+    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
+
+
+def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+    outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
+    outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
+    errors = {}
+    data = {}
+    show_add = False
+    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True)
+    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
+    if next_outcome_id:
+        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
+        show_add = True
+    else:
+        next_url = reverse("end", args=(evaluation_id,))
+    if prev_outcome_id:
+        prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
+    else:
+        prev_url = reverse("description", args=(evaluation_id,))
+    if request.method == "POST":
+        if "add" in request.POST:
+            return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
+        else:
+            try:
+                serialized_outcome = outcome_schema.load(data=data, partial=True)
+                for field_name in serialized_outcome:
+                    setattr(outcome, field_name, serialized_outcome[field_name])
+                outcome.save()
+                return redirect(next_url, args=(evaluation_id,))
+            except marshmallow.exceptions.ValidationError as err:
+                errors = dict(err.messages)
+    return render(
+        request,
+        "outcome-measures-individual.html",
+        {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
     )
 
 
@@ -386,14 +396,20 @@ EvaluationFormPage(title="Dates")
 =======
 >>>>>>> 773cc9f (code tidying)
 def intro_page_view(request, evaluation_id):
+<<<<<<< HEAD
     return simple_page_view(
         request, evaluation_id, title="Introduction", slug="intro", prev_page=None, next_page="title"
     )
 >>>>>>> 111b733 (unpick the views for evaluation pages)
+=======
+    page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
+    return simple_page_view(request, evaluation_id, page_data)
+>>>>>>> 1dd4e3e (code tidying)
 
 
 def end_page_view(request, evaluation_id):
-    return simple_page_view(request, evaluation_id, title="End", slug="end", prev_page="description", next_page=None)
+    page_data = {"title": "End", "page_name": "end", "prev_page": "description", "next_page": None}
+    return simple_page_view(request, evaluation_id, page_data)
 
 
 class EvaluationSearchForm(forms.Form):
