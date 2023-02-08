@@ -81,14 +81,16 @@ def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True
     adjacent_id = None
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
+    print(outcomes_ids)
     current_index = outcomes_ids.index(outcome_measure_id)
+    print(current_index)
 
     if next:
         next_index = current_index + 1
         if next_index < len(outcomes_ids):
             adjacent_id = outcomes_ids[next_index]
     else:
-        prev_index = current_index + 1
+        prev_index = current_index - 1
         if prev_index >= 0:
             adjacent_id = outcomes_ids[prev_index]
     return adjacent_id
@@ -184,16 +186,17 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation=evaluation).order_by("id")
     errors = {}
     data = {}
+    prev_url = reverse("description", args=(evaluation_id,))
     next_url = reverse("end", args=(evaluation_id,))
     if outcomes_for_eval:
         first_id = outcomes_for_eval[0].id
-        return reverse("outcome-measure-page", args=(evaluation_id, first_id))
+        return redirect(reverse("outcome-measure-page", args=(evaluation_id, first_id)))
     else:
         if request.method == "POST":
             if "add" in request.POST:
-                return reverse("outcome-measure-add", args=(evaluation_id,))
+                return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
             else:
-                return reverse("end", args=(evaluation_id,))
+                return redirect(reverse("end", args=(evaluation_id,)))
     return render(
         request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
     )
@@ -203,7 +206,7 @@ def add_outcome_measure_page_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     outcome = models.OutcomeMeasure(evaluation=evaluation)
     outcome.save()
-    return reverse("outcome-measure-page", args=(evaluation_id, outcome.id))
+    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
 
 
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
@@ -225,7 +228,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         prev_url = reverse("description", args=(evaluation_id,))
     if request.method == "POST":
         if "add" in request.POST:
-            return reverse("outcome-measure-add", args=(evaluation_id,))
+            return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
         else:
             try:
                 serialized_outcome = outcome_schema.load(data=data, partial=True)
@@ -339,7 +342,7 @@ class EvaluationFormPage(BasePage):
 =======
 def evaluation_description_view(request, evaluation_id):
     return evaluation_view(
-        request, evaluation_id, title="Description", slug="description", prev_page="title", next_page="end"
+        request, evaluation_id, title="Description", slug="description", prev_page="title", next_page="outcome-measures"
     )
 >>>>>>> 111b733 (unpick the views for evaluation pages)
 
