@@ -183,7 +183,7 @@ def search_evaluations_view(request):
             search_phrase = form.cleaned_data["search_phrase"]
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
-                qs = qs.filter(users__email__contains=request.user.email)
+                qs = qs.filter(users__in=[request.user])
             if organisations:
                 organisations_qs = models.Evaluation.objects.none()
                 for organisation in organisations:
@@ -192,7 +192,7 @@ def search_evaluations_view(request):
                 qs = organisations_qs
             if not status:
                 qs = qs.filter(
-                    Q(status=models.EvaluationStatus.DRAFT.value, users__email__contains=request.user.email)
+                    Q(status=models.EvaluationStatus.DRAFT.value, users__in=[request.user])
                     | Q(status__in=[models.EvaluationStatus.PUBLIC.value, models.EvaluationStatus.CIVIL_SERVICE.value])
                 )
             else:
