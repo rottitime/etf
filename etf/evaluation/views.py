@@ -284,7 +284,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
                 errors = dict(err.messages)
     return render(
         request,
-        "outcome-measures-individual.html",
+        "outcome-measure-page.html",
         {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
     )
 
@@ -295,7 +295,6 @@ def evaluation_title_view(request, evaluation_id):
     )
 
 
-<<<<<<< HEAD
 class EvaluationFormPage(BasePage):
     def view(self, request, url_data):
         evaluation_id = url_data["evaluation_id"]
@@ -338,12 +337,10 @@ class EvaluationFormPage(BasePage):
                 **self.extra_data,
             },
         )
-=======
 def evaluation_description_view(request, evaluation_id):
     return evaluation_view(
         request, evaluation_id, title="Description", slug="description", prev_page="title", next_page="outcome-measures"
     )
->>>>>>> 111b733 (unpick the views for evaluation pages)
 
 
 <<<<<<< HEAD
@@ -384,24 +381,15 @@ def evaluation_description_view(request, evaluation_id):
 #         )
 
 
-<<<<<<< HEAD
-FormPage(title="Contributors")
 
-FormPage(title="Issue")
-EvaluationFormPage(title="Dates")
-=======
-=======
->>>>>>> 773cc9f (code tidying)
+
 def intro_page_view(request, evaluation_id):
-<<<<<<< HEAD
     return simple_page_view(
         request, evaluation_id, title="Introduction", slug="intro", prev_page=None, next_page="title"
-    )
->>>>>>> 111b733 (unpick the views for evaluation pages)
-=======
+
     page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
     return simple_page_view(request, evaluation_id, page_data)
->>>>>>> 1dd4e3e (code tidying)
+
 
 
 def end_page_view(request, evaluation_id):

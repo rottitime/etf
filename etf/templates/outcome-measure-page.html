@@ -20,7 +20,9 @@
       {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
       {{macros.textarea("minimum_difference", "Minimum practically important difference")}}
       {{macros.textarea("relevance", "Relevance of outcome")}}
-      {{macros.add_button("outcome measure")}}
+      {% if show_add %}
+        {{macros.add_button("outcome measure")}}
+      {% endif %}
       <hr>
       {% block outcome %}
         {% include "outcome-read-only.html" %}
