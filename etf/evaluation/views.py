@@ -193,9 +193,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         return redirect(reverse("outcome-measure-page", args=(evaluation_id, first_id)))
     else:
         if request.method == "POST":
-            print("posting")
             if "add" in request.POST:
-                print("add")
                 return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
             return redirect(next_url)
     return render(
