@@ -315,3 +315,9 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
         if user == request.user:
             return redirect(reverse("index"))
         return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+
+
+@login_required
+def evaluation_summary_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    return render(request, "evaluation-summary.html", {"data": evaluation})
