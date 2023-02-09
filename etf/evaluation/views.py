@@ -50,6 +50,8 @@ def page_view(request, evaluation_id, page_name="intro"):
     if page_name not in page_map:
         raise Http404()
 
+    #  TODO: Add redirect if user isn't allowed to see evaluation
+
     page_name_order = tuple(page_map.keys())
 
     index = page_name_order.index(page_name)
