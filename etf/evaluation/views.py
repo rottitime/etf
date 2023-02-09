@@ -262,13 +262,13 @@ def evaluation_contributors_view(request, evaluation_id, remove_email=None):
         users = evaluation.users.values()
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
     if request.method == "DELETE":
-        remove_user = models.User.objects.get(email=remove_email)
-        if not remove_user:
+        user_to_remove = models.User.objects.get(email=remove_email)
+        if not user_to_remove:
             return
-        evaluation.users.remove(remove_user)
+        evaluation.users.remove(user_to_remove)
         evaluation.save()
         users = evaluation.users.values()
-        if remove_user == request.user:
+        if user_to_remove == request.user:
             response = render(
                 request,
                 "contributor-rows.html",
@@ -297,22 +297,20 @@ def evaluation_contributor_add_view(request, evaluation_id):
 
 
 @login_required
-def evaluation_contributor_remove_view(request, evaluation_id, remove_email=None):
+def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=None):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if not evaluation:
         return
     if request.method == "GET":
         email = None
-        if remove_email:
-            user = models.User.objects.get(email=remove_email)
+        if email_to_remove:
+            user = models.User.objects.get(email=email_to_remove)
             if user:
                 email = user.email
         return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email})
     if request.method == "POST":
         email = request.POST.get("remove-user-email")
         user = models.User.objects.get(email=email)
-        if not user:
-            return
         evaluation.users.remove(user)
         evaluation.save()
         if user == request.user:
