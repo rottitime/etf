@@ -7,14 +7,26 @@ from django.contrib.postgres.search import (
     SearchVector,
 )
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
 
 page_map = {}
+
+
+class MethodDispatcher:
+    def __new__(cls, request, *args, **kwargs):
+        view = super().__new__(cls)
+        method = getattr(view, request.method, None)
+        if method:
+            print(args, kwargs)
+            return method(request, *args, **kwargs)
+        else:
+            return HttpResponseNotAllowed(request)
 
 
 @login_required
@@ -248,11 +260,13 @@ def my_evaluations_view(request):
 
 
 @login_required
-def evaluation_contributors_view(request, evaluation_id, remove_email=None):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if not evaluation:
-        return
-    if request.method == "POST":
+@require_http_methods(["GET", "POST", "DELETE"])
+class EvaluationContributor(MethodDispatcher):
+    def GET(self, request, evaluation_id):
+        return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
+
+    def POST(self, request, evaluation_id):
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         email = request.POST.get("add-user-email")
         user = models.User.objects.get(email=email)
         if not user:
@@ -261,8 +275,10 @@ def evaluation_contributors_view(request, evaluation_id, remove_email=None):
         evaluation.save()
         users = evaluation.users.values()
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
-    if request.method == "DELETE":
-        user_to_remove = models.User.objects.get(email=remove_email)
+
+    def DELETE(self, request, evaluation_id, email_to_remove=None):
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        user_to_remove = models.User.objects.get(email=email_to_remove)
         if not user_to_remove:
             return
         evaluation.users.remove(user_to_remove)
@@ -277,8 +293,6 @@ def evaluation_contributors_view(request, evaluation_id, remove_email=None):
             response["HX-Redirect"] = reverse("index")
             return response
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
-    elif request.method == "GET":
-        return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
 
 
 @login_required
