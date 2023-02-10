@@ -156,16 +156,24 @@
 
 {% macro display_simple_value(name, label, value=None) -%}
   <label class="label" for="{{name}}">{{label}}</label>
-  {% if value %}
-    <p>{{value}}</p>
+  {% if not value and not data[name] %}
+    <p>N/A</p>
   {% else %}
-    <p>{{data[name]}}</p>
-  {% endif %}
+    {% if value %}
+      <p>{{value}}</p>
+    {% else %}
+      <p>{{data[name]}}</p>
+    {% endif %}
+    {% endif %}
 {%- endmacro %}
 
 {% macro display_list_value(name, label, value=None) -%}
   <label class="label" for="{{name}}">{{label}}</label>
-  <ul>
+
+  {% if not value and not data[name] %}
+    <p>N/A</p>
+  {% else %}
+    <ul>
     {% if value %}
       {% for val in value %}
         <li>{{val}}</li>
@@ -175,5 +183,6 @@
         <li>{{val}}</li>
       {% endfor %}
     {% endif %}
-  </ul>
+    </ul>
+  {% endif %}
 {%- endmacro %}
