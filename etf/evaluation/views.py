@@ -322,4 +322,5 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
 @login_required
 def evaluation_summary_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    return render(request, "evaluation-summary.html", {"data": evaluation})
+    user_can_edit = evaluation.user == request.user
+    return render(request, "evaluation-summary.html", {"data": evaluation, "user_can_edit": user_can_edit})

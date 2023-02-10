@@ -8,6 +8,8 @@
     {{macros.display_simple_value("status", "Status", data.get_status_display_name())}}
     {{macros.display_list_value("topics", "Topics", data.get_list_topics_display_names())}}
     {{macros.display_list_value("organisations", "Organisations", data.get_list_organisations_display_names())}}
-    <a href="{{url("pages-index", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+    {% if user_can_edit %}
+      <a href="{{url("pages-index", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+    {% endif %}
   </div>
 {% endblock %}
