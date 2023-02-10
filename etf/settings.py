@@ -167,3 +167,5 @@ if ALLOW_EXAMPLE_EMAILS:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS.union({"example.com"})
 else:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS
+
+ACCOUNT_ADAPTER = "etf.evaluation.restrict_email_adapter.RestrictEmailAdapter"
