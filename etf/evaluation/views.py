@@ -269,8 +269,6 @@ class EvaluationContributor(MethodDispatcher):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         email = request.POST.get("add-user-email")
         user = models.User.objects.get(email=email)
-        if not user:
-            return
         evaluation.users.add(user)
         evaluation.save()
         users = evaluation.users.values()
@@ -279,8 +277,6 @@ class EvaluationContributor(MethodDispatcher):
     def DELETE(self, request, evaluation_id, email_to_remove=None):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         user_to_remove = models.User.objects.get(email=email_to_remove)
-        if not user_to_remove:
-            return
         evaluation.users.remove(user_to_remove)
         evaluation.save()
         users = evaluation.users.values()
@@ -298,13 +294,9 @@ class EvaluationContributor(MethodDispatcher):
 @login_required
 def evaluation_contributor_add_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if not evaluation:
-        return
     if request.method == "POST":
         email = request.POST.get("add-user-email")
         user = models.User.objects.get(email=email)
-        if not user:
-            return
         evaluation.users.add(user)
         evaluation.save()
         return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
@@ -313,15 +305,8 @@ def evaluation_contributor_add_view(request, evaluation_id):
 @login_required
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=None):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if not evaluation:
-        return
     if request.method == "GET":
-        email = None
-        if email_to_remove:
-            user = models.User.objects.get(email=email_to_remove)
-            if user:
-                email = user.email
-        return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email})
+        return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email_to_remove})
     if request.method == "POST":
         email = request.POST.get("remove-user-email")
         user = models.User.objects.get(email=email)
