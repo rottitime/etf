@@ -10,7 +10,6 @@ class RestrictEmailAdapter(DefaultAccountAdapter):
         allowed_domains = ["cabinetoffice.gov.uk"]
         domain = email.split("@")[-1]
         allow_example_domain = env.bool("ALLOW_EXAMPLE_EMAILS", default=False)
-        print(allow_example_domain)
         if allow_example_domain:
             allowed_domains.append("example.com")
         if domain not in allowed_domains:
