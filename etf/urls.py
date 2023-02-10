@@ -48,6 +48,21 @@ urlpatterns = [
         name="outcome-measures",
     ),
     path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/last",
+        views.last_outcome_measure_page_view,
+        name="outcome-measure-last",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/first",
+        views.first_outcome_measure_page_view,
+        name="outcome-measure-first",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/last",
+        views.last_outcome_measure_page_view,
+        name="outcome-measure-last",
+    ),
+    path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/add",
         views.add_outcome_measure_page_view,
         name="outcome-measure-add",
@@ -56,6 +71,11 @@ urlpatterns = [
         "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>",
         views.outcome_measure_page_view,
         name="outcome-measure-page",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/delete",
+        views.delete_outcome_measure_page_view,
+        name="outcome-measure-delete",
     ),
     path("evaluation/<uuid:evaluation_id>/end", views.end_page_view, name="end"),
     path("admin/", admin.site.urls),
