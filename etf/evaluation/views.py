@@ -35,18 +35,18 @@ class MethodDispatcher:
 class CustomSignupView(SignupView):
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        if request.method == 'POST':
+        if request.method == "POST":
             form = self.get_form()
             if not form.is_valid():
                 for field, error in form.errors.items():
                     messages.error(request, error)
-                return render(request, self.template_name, {'form': form})
+                return render(request, self.template_name, {"form": form})
             if form.is_valid():
                 try:
                     self.form_valid(form)
                 except ValidationError as e:
                     messages.error(request, str(e))
-                    return render(request, self.template_name, {'form': form})
+                    return render(request, self.template_name, {"form": form})
         return response
 
 
