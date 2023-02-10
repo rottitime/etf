@@ -23,7 +23,6 @@ class MethodDispatcher:
         view = super().__new__(cls)
         method = getattr(view, request.method, None)
         if method:
-            print(args, kwargs)
             return method(request, *args, **kwargs)
         else:
             return HttpResponseNotAllowed(request)
