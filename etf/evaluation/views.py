@@ -296,13 +296,21 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     if request.method == "POST":
         data = request.POST
         try:
+            if "delete" in request.POST:
+                print(evaluation_id)
+                print(outcome_measure_id)
+                delete_url = reverse("outcome-measure-delete", args=(evaluation_id, outcome_measure_id))
+                print("delete_url")
+                print(delete_url)
+                return redirect(delete_url)
             serialized_outcome = outcome_schema.load(data=data, partial=True)
             for field_name in serialized_outcome:
                 setattr(outcome, field_name, serialized_outcome[field_name])
             outcome.save()
             if "add" in request.POST:
-                return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
-            return redirect(next_url, args=(evaluation_id,))
+                add_url = reverse("outcome-measure-add", args=(evaluation_id,))
+                return redirect(add_url)
+            return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
     else:
@@ -318,7 +326,6 @@ def delete_outcome_measure_page_view(evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
     prev_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
     outcome.delete()
-    # TODO - is this being deleted?
     if prev_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
     else:
