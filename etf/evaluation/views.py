@@ -71,19 +71,16 @@ def make_evaluation_url(evaluation_id, page_name):
     return reverse(page_name, args=(evaluation_id,))
 
 
-def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True):
-    adjacent_id = None
+def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="next"):
+    direction_map = {"next": 1, "prev": -1}
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
     current_index = outcomes_ids.index(outcome_measure_id)
-    if next:
-        next_index = current_index + 1
-        if next_index < len(outcomes_ids):
-            adjacent_id = outcomes_ids[next_index]
-    else:
-        prev_index = current_index - 1
-        if prev_index >= 0:
-            adjacent_id = outcomes_ids[prev_index]
+    adjacent_index = current_index + direction_map[next_or_prev]
+    try:
+        adjacent_id = outcomes_ids[adjacent_index]
+    except IndexError:
+        adjacent_id = None
     return adjacent_id
 
 
@@ -297,11 +294,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         data = request.POST
         try:
             if "delete" in request.POST:
-                print(evaluation_id)
-                print(outcome_measure_id)
                 delete_url = reverse("outcome-measure-delete", args=(evaluation_id, outcome_measure_id))
-                print("delete_url")
-                print(delete_url)
                 return redirect(delete_url)
             serialized_outcome = outcome_schema.load(data=data, partial=True)
             for field_name in serialized_outcome:
