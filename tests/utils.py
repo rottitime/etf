@@ -3,7 +3,7 @@ import functools
 import httpx
 
 import etf.wsgi
-from etf.evaluation.fakers import add_users
+from etf.evaluation.models import User
 
 TEST_SERVER_URL = "http://etf-testserver:8010/"
 
@@ -20,8 +20,8 @@ def with_client(func):
 def with_authenticated_client(func):
     @functools.wraps(func)
     def _inner(*args, **kwargs):
-        user_gen = add_users(1)
-        user = list(user_gen)[0]
+        user, _ = User.objects.get_or_create(email="peter.rabbit@example.com")
+        user.set_password("P455W0rd")
         with httpx.Client(app=etf.wsgi.application, base_url=TEST_SERVER_URL, follow_redirects=True) as client:
             response = client.get("/accounts/login/")
             csrf = response.cookies["csrftoken"]
