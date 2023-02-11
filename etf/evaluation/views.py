@@ -322,7 +322,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     )
 
 
-def delete_outcome_measure_page_view(evaluation_id, outcome_measure_id):
+def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
     prev_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
     outcome.delete()
