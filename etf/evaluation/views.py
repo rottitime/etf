@@ -72,15 +72,15 @@ def make_evaluation_url(evaluation_id, page_name):
 
 
 def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="next"):
+    adjacent_id = None
     direction_map = {"next": 1, "prev": -1}
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
     outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
+    num_outcomes = len(outcomes_ids)
     current_index = outcomes_ids.index(outcome_measure_id)
     adjacent_index = current_index + direction_map[next_or_prev]
-    try:
+    if 0 <= adjacent_index < num_outcomes:
         adjacent_id = outcomes_ids[adjacent_index]
-    except IndexError:
-        adjacent_id = None
     return adjacent_id
 
 
@@ -322,7 +322,7 @@ def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id)
     if prev_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
     else:
-        next_url = reverse("outcome-measures")
+        next_url = reverse("outcome-measures", args=(evaluation_id,))
     return redirect(next_url)
 
 

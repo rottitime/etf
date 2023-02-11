@@ -1,4 +1,3 @@
-from pkg_resources import evaluate_marker
 from nose.tools import with_setup
 
 from etf.evaluation import models
@@ -8,7 +7,7 @@ from .utils import with_authenticated_client
 
 
 def setup_eval():
-    user = models.User.objects.get(email="peter.rabbit@example.com")
+    user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
     evaluation = models.Evaluation(user=user, title="An Evaluation")
     evaluation.save()
     for i in range(3):
@@ -40,7 +39,7 @@ def test_evaluation_urls(client):
 
 @with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
-def test_evaluation_urls(client):
+def test_outcome_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
     evaluation = user.evaluations.all()[0]
     outcome_measure = models.OutcomeMeasure.objects.filter(evaluation=evaluation).first()
@@ -55,3 +54,19 @@ def test_evaluation_urls(client):
     for url in urls_to_test:
         response = client.get(url)
         assert response.status_code == 200
+
+
+@with_setup(setup_eval, teardown_eval)
+def test_get_adjacent_outcome_measure_id():
+    user = models.User.objects.get(email="peter.rabbit@example.com")
+    evaluation = user.evaluations.all().first()
+    outcome_measures = evaluation.outcome_measures.all().order_by("id")
+    outcome_ids = list(outcome_measures.values_list("id", flat=True))
+    outcome_id = get_adjacent_outcome_measure_id(evaluation.id, outcome_ids[1], next_or_prev="next")
+    assert outcome_id == outcome_ids[2]
+    outcome_id = get_adjacent_outcome_measure_id(evaluation.id, outcome_ids[1], next_or_prev="prev")
+    assert outcome_id == outcome_ids[0]
+    outcome_id = get_adjacent_outcome_measure_id(evaluation.id, outcome_ids[2], next_or_prev="next")
+    assert not outcome_id
+    outcome_id = get_adjacent_outcome_measure_id(evaluation.id, outcome_ids[0], next_or_prev="prev")
+    assert not outcome_id
