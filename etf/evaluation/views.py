@@ -279,8 +279,8 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     errors = {}
     data = {}
     show_add = False
-    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=True)
-    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
+    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="next")
+    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="prev")
     if next_outcome_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
     else:
@@ -317,7 +317,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
 
 def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
-    prev_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next=False)
+    prev_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="prev")
     outcome.delete()
     if prev_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
