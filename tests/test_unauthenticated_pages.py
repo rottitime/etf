@@ -1,19 +1,4 @@
-import functools
-
-import httpx
-
-import etf.wsgi
-
-TEST_SERVER_URL = "http://etf-testserver:8010/"
-
-
-def with_client(func):
-    @functools.wraps(func)
-    def _inner(*args, **kwargs):
-        with httpx.Client(app=etf.wsgi.application, base_url=TEST_SERVER_URL) as client:
-            return func(client, *args, **kwargs)
-
-    return _inner
+from .utils import with_client
 
 
 @with_client
@@ -23,9 +8,11 @@ def test_add_evaluation(client):
 
 
 @with_client
-def test_get_my_evaluations(client):
-    response = client.get("/my-evaluations/")
-    assert response.status_code == 302
+def test_urls_no_access(client):
+    urls_to_test = ["/search/", "/my-evaluations/"]
+    for url in urls_to_test:
+        response = client.get(url)
+        assert response.status_code == 302
 
 
 @with_client
