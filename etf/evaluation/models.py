@@ -130,6 +130,22 @@ class EvaluationStatus(choices.Choices):
     PUBLIC = "Public"
 
 
+class DocumentType(choices.Choices):
+    SCOPING_REPORT = "Scoping report"
+    FEASIBILITY_STUDY_REPORT = "Feasibility study report"
+    STUDY_PROTOCOL = "Study protocol"
+    ANALYSIS_PLAN = "Analysis plan"
+    THEORY_OF_CHANGE = "Theory of change/Causal-chain map/Logic model"
+    SUMMARY_INTERIM = "Summary interim results report"
+    MAIN_INTERIM = "Main interim results report"
+    SUMMARY_FINAL = "Summary final results report"
+    MAIN_FINAL = "Main final results report"
+    TECHNICAL_REPORT = "Technical report"
+    DATASET = "Data set"
+    ANALYSIS_CODE = "Analysis code"
+    OTHER = "Other"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -261,7 +277,14 @@ class OtherMeasure(TimeStampedModel):
 
 
 class ProcessesAndStandards(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="processes_and_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
+    description = models.TextField(blank=True, null=True)
+
+
+class Documents(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
