@@ -14,6 +14,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
+from . import models, schemas
+from .email_handler import send_password_reset_email
 from . import models
 
 
@@ -47,6 +49,21 @@ class CustomSignupView(SignupView):
                     return render(request, self.template_name, {"form": form})
         response = super().dispatch(request, *args, **kwargs)
         return response
+
+@require_http_methods(["GET", "POST"])
+class PasswordReset(MethodDispatcher):
+
+    def get(self, request):
+        return render(request, "account/password_reset.html", {})
+
+    def post(self, request):
+        email = request.POST.get("id_email")
+        try:
+            user = models.User.objects.get(email=email)
+        except models.User.DoesNotExist:
+            return render(request, "account/password_reset_sent.html", {})
+        send_password_reset_email(user)
+        return render(request, "account/password_reset_sent.html", {})
 
 
 # Unused request and exception arguments are required by django 404 handler function
