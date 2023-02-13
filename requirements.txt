@@ -4,10 +4,12 @@ django-environ
 django-gov-notify
 django_use_email_as_username
 faker
+furl
 jinja2
 marshmallow
 pdfkit
 psycopg2-binary
+pytz
 pyyaml
 sentry-sdk
 waitress
