@@ -35,11 +35,11 @@ def test_evaluation_schema_has_relevant_fields():
         "outcome_measures",
         "evaluation_types",
         "other_measures",
-        "process_standard",
+        "process_standards",
         "documents",
-        "event_date",
-        "link_other_service",
-        "cost",
+        "event_dates",
+        "link_other_services",
+        "costs",
     }
     check_schema_model_match_fields(
         model_name="Evaluation", schema_name="EvaluationSchema", related_fields_to_ignore=related_fields_to_ignore
