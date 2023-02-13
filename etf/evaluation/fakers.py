@@ -52,16 +52,12 @@ def generate_organisations():
     return list(set_organisations)
 
 
-def make_evaluation():
-    evaluation_start_date = make_random_date()
-    evaluation_end_date = random_days_later(evaluation_start_date, 100, 2 * 365)
-    date_of_intended_publication = random_days_later(evaluation_end_date, 50, 365)
-    date_of_first_recruitment = random_days_later(evaluation_start_date, 10, 50)
+def make_evaluation(user):
     topics = generate_topics()
     organisations = generate_organisations()
     data = dict(
         title=fake.sentence(),
-        description=fake.text(),
+        brief_description=fake.text(),
         topics=topics,
         status=random.choice(models.EvaluationStatus.values),
         organisations=organisations,
@@ -71,16 +67,8 @@ def make_evaluation():
         who_improvements_matter_to=fake.text(),
         current_practice=fake.text(),
         issue_relevance=fake.text(),
-        evaluation_start_date=evaluation_start_date,
-        evaluation_end_date=evaluation_end_date,
-        date_of_intended_publication=date_of_intended_publication,
-        reasons_for_delays_in_publication=fake.text(),
-        target_population=fake.text(),
         eligibility_criteria=fake.text(),
         process_for_recruitment=fake.text(),
-        target_sample_size=fake.text(),
-        intended_recruitment_schedule=fake.text(),
-        date_of_first_recruitment=date_of_first_recruitment,
         # TODO - add other fields
     )
     return data
