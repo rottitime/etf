@@ -4,7 +4,7 @@
 {% block content %}
   <div class="wrapper">
     <h1>{% if data.title %}{{data.title}}{% else %}No title provided{% endif %}</h1>
-    {{macros.display_simple_value("description", "Desription")}}
+    {{macros.display_simple_value("description", "Description")}}
     {{macros.display_simple_value("status", "Status", data.get_status_display_name())}}
     {{macros.display_list_value("topics", "Topics", data.get_list_topics_display_names())}}
     {{macros.display_list_value("organisations", "Organisations", data.get_list_organisations_display_names())}}
