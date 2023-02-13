@@ -42,6 +42,12 @@ class YesNoPartial(choices.Choices):
     PARTIAL = "Partial"
 
 
+class FullNoPartial(choices.Choices):
+    FULL = "Full"
+    PARTIAL = "Partial"
+    NO = "No"
+
+
 # TODO - to improve
 class Topic(choices.Choices):
     BREXIT = "Brexit"
@@ -151,8 +157,6 @@ class TimeStampedModel(models.Model):
 
 
 class Evaluation(TimeStampedModel):
-    # TODO - how do evaluations interact with users?
-    # (Probably) a few users should be able to amend a particular evaluation.
     user = models.ForeignKey(User, related_name="evaluations", on_delete=models.CASCADE)
 
     # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
@@ -254,3 +258,10 @@ class OtherMeasure(TimeStampedModel):
     name = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
+
+
+class ProcessesAndStandards(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
+    name = models.CharField(max_length=256, blank=True, null=True)
+    conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
+    description = models.TextField(blank=True, null=True)
