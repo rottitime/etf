@@ -2,8 +2,8 @@ import datetime
 
 import furl as furl
 import pytz
-from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
@@ -40,9 +40,9 @@ def _send_token_email(user, subject, template_name, from_address, url_path, toke
     user.last_token_sent_at = datetime.datetime.now(tz=pytz.UTC)
     user.save()
     token = token_generator.make_token(user)
-    api_host_url = settings.HOST_URL.strip("/")
-    web_host_url = settings.HOST_MAP[api_host_url]
-    url = str(furl.furl(url=web_host_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
+    request = None
+    full_url = ''.join(['http://', get_current_site(request).domain, obj.get_absolute_url()])
+    url = str(furl.furl(url=full_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
     context = dict(user=user, url=url)
     body = render_to_string(template_name, context)
     response = send_mail(
