@@ -19,11 +19,13 @@ class EvaluationSchema(Schema):
     # TODO - add more validation esp. for choice fields, around dates
     users = fields.Function(lambda o: UserSchema(many=True).dump(o.users.all()))
     id = fields.UUID()
-    title = fields.Str(validate=validate.Length(max=256))
-    description = fields.Str()
+    title = fields.Str(required=True, validate=validate.Length(max=256))
+    short_title = fields.Str(validate=validate.Length(max=64))
+    brief_description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
     status = fields.Str(validate=validate.Length(max=256), default=models.EvaluationStatus.DRAFT.value)
+    doi = models.CharField(max_length=64, blank=True, null=True)
 
     # Issue description
     issue_description = fields.Str()
@@ -33,19 +35,19 @@ class EvaluationSchema(Schema):
     current_practice = fields.Str()
     issue_relevance = fields.Str()
 
-    # Evaluation - event dates
-    evaluation_start_date = DateAndBlankField(allow_none=True)
-    evaluation_end_date = DateAndBlankField(allow_none=True)
-    date_of_intended_publication = DateAndBlankField(allow_none=True)
-    reasons_for_delays_in_publication = fields.Str()
+    # Evaluation type
+    evaluation_type = fields.Raw()
+
+    # Studied population
+    studied_population = fields.Str()
+    eligibility_criteria = fields.Str()
+    sample_size = fields.Int()
+    sample_size_units = models.Str(validate=validate.Length(max=256))
+    sample_size_details = fields.Str()
 
     # Participant recruitment approach
-    target_population = fields.Str()
-    eligibility_criteria = fields.Str()
     process_for_recruitment = fields.Str()
-    target_sample_size = fields.Str()
-    intended_recruitment_schedule = fields.Str()
-    date_of_first_recruitment = DateAndBlankField(allow_none=True)
+    recruitment_schedule = fields.Str()
 
     # Ethical considerations
     ethics_committee_approval = fields.Boolean()
