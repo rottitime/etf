@@ -1,0 +1,8 @@
+# .flake8
+
+[flake8]
+ignore = N801,N806
+exclude =
+    __init__.py
+    GET
+    POST
