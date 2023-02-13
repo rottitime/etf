@@ -208,6 +208,7 @@ class Evaluation(TimeStampedModel):
     status = models.CharField(
         max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
     )
+    doi = models.CharField(max_length=64, blank=True, null=True)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
@@ -220,13 +221,17 @@ class Evaluation(TimeStampedModel):
     # Evaluation type (multiselect)
     evaluation_type = models.JSONField(default=list)
 
-    # Participant recruitment approach
-    target_population = models.TextField(blank=True, null=True)
+    # Studied population
+    studied_population = models.TextField(blank=True, null=True)
     eligibility_criteria = models.TextField(blank=True, null=True)
+    sample_size = models.PositiveIntegerField(blank=True, null=True)
+    sample_size_units = models.CharField(max_length=256, blank=True, null=True)
+    sample_size_details = models.TextField(blank=True, null=True)
+
+    # Participant recruitment approach
     process_for_recruitment = models.TextField(blank=True, null=True)
-    target_sample_size = models.TextField(blank=True, null=True)
-    intended_recruitment_schedule = models.TextField(blank=True, null=True)
-    date_of_first_recruitment = models.DateField(blank=True, null=True)
+    recruitment_schedule = models.TextField(blank=True, null=True)
+    # TODO - what happens with dates?
 
     # Ethical considerations
     ethics_committee_approval = models.BooleanField(blank=True, null=True)
@@ -241,6 +246,8 @@ class Evaluation(TimeStampedModel):
     confidentiality_and_personal_data = models.TextField(blank=True, null=True)
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
+
+    # TODO - add fields on evaluation design, analysis and findings
 
     def get_list_topics_display_names(self):
         return [get_topic_display_name(x) for x in self.topics]
@@ -275,7 +282,7 @@ class Intervention(TimeStampedModel):
     tailoring = models.TextField(blank=True, null=True)
     fidelity = models.TextField(blank=True, null=True)
     resource_requirements = models.TextField(blank=True, null=True)
-    # TODO - add date
+    geographical_information = models.TextField(blank=True, null=True)
 
 
 class OutcomeMeasure(TimeStampedModel):
@@ -317,3 +324,21 @@ class EventDate(TimeStampedModel):
     date = models.DateField(blank=True, null=True)
     type = models.CharField(max_length=10, blank=True, null=True)
     reasons_for_change = models.TextField(blank=True, null=True)
+
+
+class LinkOtherService(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="link_other_service", on_delete=models.CASCADE)
+    name_of_service = models.CharField(max_length=256, blank=True, null=True)
+    link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
+
+
+class EvaluationCost(TimeStampedModel):
+    item_name = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    item_cost = models.FloatField(blank=True, null=True)
+    earliest_spend_date = models.DateField(blank=True, null=True)
+    latest_spend_date = models.DateField(blank=True, null=True)
+
+
+# TODO - add a total cost for eval
+# TODO - add column for notes on evaluation costs
