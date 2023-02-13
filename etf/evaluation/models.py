@@ -201,9 +201,10 @@ class Evaluation(TimeStampedModel):
     # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    topics = models.JSONField(default=list)
-    organisations = models.JSONField(default=list)
+    short_title = models.CharField(max_length=64, blank=True, null=True)
+    brief_description = models.TextField(blank=True, null=True)
+    topics = models.JSONField(default=list)  # TODO - do we use these?
+    organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
     status = models.CharField(
         max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
     )
@@ -216,11 +217,8 @@ class Evaluation(TimeStampedModel):
     current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # Evaluation - event dates
-    evaluation_start_date = models.DateField(blank=True, null=True)
-    evaluation_end_date = models.DateField(blank=True, null=True)
-    date_of_intended_publication = models.DateField(blank=True, null=True)
-    reasons_for_delays_in_publication = models.TextField(blank=True, null=True)
+    # Evaluation type (multiselect)
+    evaluation_type = models.JSONField(default=list)
 
     # Participant recruitment approach
     target_population = models.TextField(blank=True, null=True)
