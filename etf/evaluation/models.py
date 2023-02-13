@@ -42,6 +42,12 @@ class YesNoPartial(choices.Choices):
     PARTIAL = "Partial"
 
 
+class FullNoPartial(choices.Choices):
+    FULL = "Full"
+    PARTIAL = "Partial"
+    NO = "No"
+
+
 # TODO - to improve
 class Topic(choices.Choices):
     BREXIT = "Brexit"
@@ -124,6 +130,44 @@ class EvaluationStatus(choices.Choices):
     PUBLIC = "Public"
 
 
+class DocumentType(choices.Choices):
+    SCOPING_REPORT = "Scoping report"
+    FEASIBILITY_STUDY_REPORT = "Feasibility study report"
+    STUDY_PROTOCOL = "Study protocol"
+    ANALYSIS_PLAN = "Analysis plan"
+    THEORY_OF_CHANGE = "Theory of change/Causal-chain map/Logic model"
+    SUMMARY_INTERIM = "Summary interim results report"
+    MAIN_INTERIM = "Main interim results report"
+    SUMMARY_FINAL = "Summary final results report"
+    MAIN_FINAL = "Main final results report"
+    TECHNICAL_REPORT = "Technical report"
+    DATASET = "Data set"
+    ANALYSIS_CODE = "Analysis code"
+
+
+class EventDateOption(choices.Choices):
+    EVALUATION_START = "Evaluation start"
+    EVALUATION_END = "Evaluation end"
+    FIRST_PARTICIPANT_RECRUITED = "First participant recruited"
+    LAST_PARTICIPANT_RECRUITED = "Last participant recruited"
+    INTERVENTION_START_DATE = "Intervention start date"
+    INTERVENTION_END_DATE = "Intervention end date"
+    INTERIM_DATA_EXTRACTION_DATE = "Interim data extraction date"
+    INTERIM_DATA_ANALYSIS_START = "Interim data analysis start"
+    INTERIM_DATA_ANALYSIS_END = "Interim data analysis end"
+    PUBLICATION_INTERIM_RESULTS = "Publication of interim results"
+    FINAL_DATA_EXTRACTION_DATE = "Final data extraction date"
+    FINAL_DATA_ANALYSIS_START = "Final data analysis start"
+    FINAL_DATA_ANALYSIS_END = "Final data analysis end"
+    PUBLICATION_FINAL_RESULTS = "Publication of final results"
+    OTHER = "Other"
+
+
+class EventDateType(choices.Choices):
+    INTENDED = "Intended"
+    ACTUAL = "Actual"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -151,8 +195,6 @@ class TimeStampedModel(models.Model):
 
 
 class Evaluation(TimeStampedModel):
-    # TODO - how do evaluations interact with users?
-    # (Probably) a few users should be able to amend a particular evaluation.
     user = models.ForeignKey(User, related_name="evaluations", on_delete=models.CASCADE)
 
     # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
@@ -254,3 +296,25 @@ class OtherMeasure(TimeStampedModel):
     name = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
+
+
+class ProcessStandard(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="process_standard", on_delete=models.CASCADE)
+    name = models.CharField(max_length=256)
+    conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
+    description = models.TextField(blank=True, null=True)
+
+
+class Document(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
+    title = models.CharField(max_length=256)
+    url = models.URLField(max_length=512, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+
+class EventDate(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="event_date", on_delete=models.CASCADE)
+    name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
+    date = models.DateField(blank=True, null=True)
+    type = models.CharField(max_length=10, blank=True, null=True)
+    reasons_for_change = models.TextField(blank=True, null=True)
