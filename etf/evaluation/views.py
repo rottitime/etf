@@ -291,22 +291,23 @@ class EvaluationContributor(MethodDispatcher):
 
 
 @login_required
+@require_http_methods(["POST"])
 def evaluation_contributor_add_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if request.method == "POST":
-        email = request.POST.get("add-user-email")
-        user = models.User.objects.get(email=email)
-        evaluation.users.add(user)
-        evaluation.save()
-        return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+    email = request.POST.get("add-user-email")
+    user = models.User.objects.get(email=email)
+    evaluation.users.add(user)
+    evaluation.save()
+    return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
 
 
 @login_required
+@require_http_methods(["POST", "GET"])
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=None):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "GET":
         return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email_to_remove})
-    if request.method == "POST":
+    elif request.method == "POST":
         email = request.POST.get("remove-user-email")
         user = models.User.objects.get(email=email)
         evaluation.users.remove(user)
