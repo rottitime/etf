@@ -316,6 +316,7 @@ class Document(TimeStampedModel):
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    # TODO - file upload
 
 
 class EventDate(TimeStampedModel):
@@ -333,12 +334,11 @@ class LinkOtherService(TimeStampedModel):
 
 
 class EvaluationCost(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="cost", on_delete=models.CASCADE)
     item_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     item_cost = models.FloatField(blank=True, null=True)
     earliest_spend_date = models.DateField(blank=True, null=True)
     latest_spend_date = models.DateField(blank=True, null=True)
-
-
-# TODO - add a total cost for eval
-# TODO - add column for notes on evaluation costs
+    # TODO - add a total cost for eval
+    # TODO - add column for notes on evaluation costs
