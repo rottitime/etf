@@ -171,3 +171,22 @@ else:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS
 
 ACCOUNT_ADAPTER = "etf.evaluation.restrict_email_adapter.RestrictEmailAdapter"
+
+# Email
+
+EMAIL_BACKEND_TYPE = env.str("EMAIL_BACKEND_TYPE")
+
+if EMAIL_BACKEND_TYPE == "FILE":
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = env.str("EMAIL_FILE_PATH")
+elif EMAIL_BACKEND_TYPE == "CONSOLE":
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+elif EMAIL_BACKEND_TYPE == "GOVUKNOTIFY":
+    EMAIL_BACKEND = "django_gov_notify.backends.NotifyEmailBackend"
+    GOVUK_NOTIFY_API_KEY = env.str("GOVUK_NOTIFY_API_KEY")
+    GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID = env.str("GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID")
+else:
+    if EMAIL_BACKEND_TYPE not in ("FILE", "CONSOLE", "GOVUKNOTIFY"):
+        raise Exception(f"Unknown EMAIL_BACKEND_TYPE of {EMAIL_BACKEND_TYPE}")
+
+SEND_VERIFICATION_EMAIL = env.bool("SEND_VERIFICATION_EMAIL", default=False)
