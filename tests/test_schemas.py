@@ -3,7 +3,7 @@ from datetime import date
 from marshmallow import Schema
 
 from etf.evaluation import models, schemas
-from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
+from etf.evaluation.schemas import DateAndBlankField
 
 
 class MadeUpSchema(Schema):

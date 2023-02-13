@@ -1,5 +1,3 @@
-from re import L
-
 from marshmallow import Schema, fields, validate
 
 from . import models
