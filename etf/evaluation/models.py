@@ -145,7 +145,7 @@ class DocumentType(choices.Choices):
     ANALYSIS_CODE = "Analysis code"
 
 
-class EventDateOptions(choices.Choices):
+class EventDateOption(choices.Choices):
     EVALUATION_START = "Evaluation start"
     EVALUATION_END = "Evaluation end"
     FIRST_PARTICIPANT_RECRUITED = "First participant recruited"
@@ -161,6 +161,11 @@ class EventDateOptions(choices.Choices):
     FINAL_DATA_ANALYSIS_END = "Final data analysis end"
     PUBLICATION_FINAL_RESULTS = "Publication of final results"
     OTHER = "Other"
+
+
+class EventDateType(choices.Choices):
+    INTENDED = "Intended"
+    ACTUAL = "Actual"
 
 
 def get_topic_display_name(db_name):
@@ -293,15 +298,23 @@ class OtherMeasure(TimeStampedModel):
     collection_process = models.TextField(blank=True, null=True)
 
 
-class ProcessesAndStandards(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="processes_and_standards", on_delete=models.CASCADE)
+class ProcessStandard(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="process_standard", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
 
 
-class Documents(TimeStampedModel):
+class Document(TimeStampedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+
+
+class EventDate(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="event_date", on_delete=models.CASCADE)
+    name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
+    date = models.DateField(blank=True, null=True)
+    type = models.CharField(max_length=10, blank=True, null=True)
+    reasons_for_change = models.TextField(blank=True, null=True)
