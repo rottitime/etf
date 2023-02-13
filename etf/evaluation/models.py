@@ -305,7 +305,7 @@ class OtherMeasure(TimeStampedModel):
 
 
 class ProcessStandard(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="process_standard", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
@@ -320,7 +320,7 @@ class Document(TimeStampedModel):
 
 
 class EventDate(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="event_date", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
     type = models.CharField(max_length=10, blank=True, null=True)
@@ -328,13 +328,13 @@ class EventDate(TimeStampedModel):
 
 
 class LinkOtherService(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="link_other_service", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
     name_of_service = models.CharField(max_length=256, blank=True, null=True)
     link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
 
 
 class EvaluationCost(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="cost", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
     item_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     item_cost = models.FloatField(blank=True, null=True)
