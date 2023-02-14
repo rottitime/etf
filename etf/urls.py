@@ -10,6 +10,8 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
+    path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
+    path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
 ]
 
 api_urlpatterns = [
@@ -38,20 +40,6 @@ api_urlpatterns = [
         views.evaluation_contributor_remove_view,
         name="evaluation-contributor-remove",
     ),
-]
-
-urlpatterns = [
-    path("", views.index_view, name="index"),
-    path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
-    path("evaluation/<uuid:evaluation_id>/", views.page_view, name="pages-index"),
-    path("evaluation/<uuid:evaluation_id>/<str:page_name>", views.page_view, name="pages"),
-    path("evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_id>", views.page_view, name="outcome-measures"),
-    path("evaluation/<uuid:evaluation_id>/outcome-measures", views.page_view),
-    #    path("evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_id>/delete"),
-    path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
-    path("search/", views.search_evaluations_view, name="search"),
-    path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
 ]
 
 evaluation_entry_urlpatterns = [
@@ -98,11 +86,6 @@ outcome_measure_urlpatterns = [
         name="outcome-measure-delete",
     ),
     path("evaluation/<uuid:evaluation_id>/end", views.end_page_view, name="end"),
-    path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
-    path("search/", views.search_evaluations_view, name="search"),
-    path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
-    path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
 ]
 
 urlpatterns = urlpatterns + api_urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns

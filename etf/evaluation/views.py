@@ -19,9 +19,6 @@ from django.views.decorators.http import require_http_methods
 from . import models, schemas
 
 
-page_map = {}
-
-
 class MethodDispatcher:
     def __new__(cls, request, *args, **kwargs):
         view = super().__new__(cls)
@@ -362,48 +359,6 @@ def my_evaluations_view(request):
 
 
 @login_required
-def page_view(request, evaluation_id, page_name="intro"):
-    if page_name not in page_map:
-        raise Http404()
-
-    #  TODO: Add redirect if user isn't allowed to see evaluation
-
-    page_name_order = tuple(page_map.keys())
-
-    index = page_name_order.index(page_name)
-    prev_page = index and page_name_order[index - 1] or None
-    next_page = (index < len(page_name_order) - 1) and page_name_order[index + 1] or None
-    prev_url = make_evaluation_url(evaluation_id, prev_page)
-    this_url = make_evaluation_url(evaluation_id, page_name)
-    next_url = make_evaluation_url(evaluation_id, next_page)
-
-    pages = tuple(
-        {
-            "slug": _p.slug,
-            "url": make_evaluation_url(evaluation_id, _p.slug),
-            "title": _p.title,
-            "completed": page_name_order.index(_p.slug) < index,
-            "current": _p.slug == page_name,
-        }
-        for _p in make_evaluation_url.values()
-    )
-
-    url_data = {
-        "pages": pages,
-        "evaluation_id": evaluation_id,
-        "page_name": page_name,
-        "index": index,
-        "prev_page": prev_page,
-        "next_page": next_page,
-        "prev_url": prev_url,
-        "this_url": this_url,
-        "next_url": next_url,
-        "legend_visible": True,
-    }
-    return page_map[page_name].view(request, url_data)
-
-
-@login_required
 @require_http_methods(["GET", "POST", "DELETE"])
 class EvaluationContributor(MethodDispatcher):
     def get(self, request, evaluation_id):
@@ -443,7 +398,7 @@ def evaluation_contributor_add_view(request, evaluation_id):
     user = models.User.objects.get(email=email)
     evaluation.users.add(user)
     evaluation.save()
-    return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+    return redirect(reverse("evaluation-contributors", args=(evaluation_id,)))
 
 
 @login_required
@@ -459,11 +414,11 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
         evaluation.save()
         if user == request.user:
             return redirect(reverse("index"))
-        return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+        return redirect(reverse("evaluation-contributors", args=(evaluation_id,)))
 
 
 @login_required
 def evaluation_summary_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    user_can_edit = evaluation.users__contains(request.user)
+    user_can_edit = request.user in evaluation.users.all()
     return render(request, "evaluation-summary.html", {"data": evaluation, "user_can_edit": user_can_edit})
