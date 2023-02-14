@@ -18,7 +18,6 @@
     {% elif evaluations.count() > 0 %}
       {% for e in evaluations %}
         <tr onclick='location.href="{{url('evaluation-summary', args=[e.id])}}"'>
-        <tr onclick='location.href="{{url('intro', args=[e.id])}}"'>
           <td>{{e.id}}</td>
           <td>{{e.title}}</td>
           <td>{% if not e.description %}N/A{% else %}{{e.description}}{% endif %}</td>
