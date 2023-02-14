@@ -3,7 +3,6 @@ from django.urls import include, path
 
 from etf.evaluation import views
 
-
 urlpatterns = [
     path("", views.index_view, name="index"),
     path("admin/", admin.site.urls),
