@@ -1,11 +1,14 @@
 import marshmallow
+from allauth.account.views import SignupView
 from django import forms
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
     SearchVector,
 )
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
@@ -27,6 +30,27 @@ class MethodDispatcher:
             return method(request, *args, **kwargs)
         else:
             return HttpResponseNotAllowed(request)
+
+
+class CustomSignupView(SignupView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "POST":
+            if models.User.objects.filter(email=request.POST.get("email")).exists():
+                messages.error(request, "A user with this email already exists, please try again.")
+                return render(request, self.template_name)
+            form = self.get_form()
+            if not form.is_valid():
+                for field, error in form.errors.items():
+                    messages.error(request, error)
+                return render(request, self.template_name, {"form": form})
+            if form.is_valid():
+                try:
+                    self.form_valid(form)
+                except ValidationError as e:
+                    messages.error(request, str(e))
+                    return render(request, self.template_name, {"form": form})
+        response = super().dispatch(request, *args, **kwargs)
+        return response
 
 
 @login_required
@@ -256,7 +280,7 @@ def my_evaluations_view(request):
     data = {}
     errors = {}
     if request.method == "GET":
-        qs = models.Evaluation.objects.filter(users__email__contains=request.user.email)
+        qs = models.Evaluation.objects.filter(users__in=[request.user])
         data = request.GET
     return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
 
