@@ -4,7 +4,6 @@ name: Deploy Proxy
 on:
   push:
     branches:
-      - develop
       - sandbox
       - staging
       - pentest
