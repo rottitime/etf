@@ -10,10 +10,9 @@ from django.contrib.postgres.search import (
 )
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.http import Http404, HttpResponseNotAllowed
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
