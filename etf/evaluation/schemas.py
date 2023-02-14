@@ -61,12 +61,60 @@ class EvaluationSchema(TimeStampedModelSchema):
     risks_to_participants = fields.Str()
     risks_to_study_team = fields.Str()
     participant_involvement = fields.Str()
-    participant_consent = fields.Str()
     participant_information = fields.Str()
+    participant_consent = fields.Str()
     participant_payment = fields.Str()
     confidentiality_and_personal_data = fields.Str()
     breaking_confidentiality = fields.Str()
     other_ethical_information = fields.Str()
+
+    # Impact evaluation design
+    impact_eval_design_name = fields.Raw()
+    impact_eval_design_justification = fields.Str()
+    impact_eval_design_description = fields.Str()
+    impact_eval_design_features = fields.Str()
+    impact_eval_design_equity = fields.Str()
+    impact_eval_design_assumptions = fields.Str()
+    impact_eval_design_approach_limitations = fields.Str()
+
+    # Impact evaluation analysis
+    impact_eval_analysis_set = fields.Str()
+    impact_eval_effect_measure = fields.Str()
+
+    # Process evaluation design
+    process_eval_methods = fields.Str(validate=validate.Length(max=256))
+
+    # Process evaluation analysis
+    process_eval_analysis_description = fields.Str()
+
+    # Economic evaluation design
+    economic_eval_type = fields.Str(validate=validate.Length(max=256))
+
+    # Economic evaluation analysis
+    economic_eval_analysis_description = fields.Str()
+
+    # Other evaluation design
+    other_eval_design_type = fields.Str()
+    other_eval_design_details = fields.Str()
+
+    # Other evaluation analysis
+    other_eval_analysis_description = fields.Str()
+
+    # Impact evaluation findings
+    impact_eval_comparison = fields.Str()
+    impact_eval_outcome = fields.Str()
+
+    # Economic evaluation findings
+    economic_eval_summary_findings = fields.Str()
+    economic_eval_findings = fields.Str()
+
+    # Process evaluation findings
+    process_eval_summary_findings = fields.Str()
+    process_eval_findings = fields.Str()
+
+    # Other evaluation findings
+    other_eval_summary_findings = fields.Str()
+    other_eval_findings = fields.Str()
 
 
 class Intervention(TimeStampedModelSchema):
