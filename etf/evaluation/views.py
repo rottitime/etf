@@ -187,14 +187,6 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-# @login_required
-# def add_outcome_measure_page_view(request, evaluation_id):
-#     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-#     outcome = models.OutcomeMeasure(evaluation=evaluation)
-#     outcome.save()
-#     return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
-
-
 @login_required
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
@@ -225,8 +217,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
             outcome.save()
             if "add" in request.POST:
                 return add_outcome_measure(evaluation_id)
-                # add_url = reverse("outcome-measure-add", args=(evaluation_id,))
-                # return redirect(add_url)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
