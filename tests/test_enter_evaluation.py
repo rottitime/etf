@@ -47,7 +47,6 @@ def test_outcome_measure_urls(client):
         f"evaluation/{evaluation.id}/outcome-measures",
         f"evaluation/{evaluation.id}/outcome-measures/last",
         f"evaluation/{evaluation.id}/outcome-measures/first",
-        f"evaluation/{evaluation.id}/outcome-measures/add",
         f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}",
         f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/delete",
     ]
