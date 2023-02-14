@@ -1,0 +1,11 @@
+---
+applications:
+- name: etf-staging
+  services:
+    - etf-postgres-staging
+  routes:
+  - route: etf-staging.london.cloudapps.digital
+    protocol: http1
+  disk_quota: 4092M
+  memory: 512M
+  health-check-type: port

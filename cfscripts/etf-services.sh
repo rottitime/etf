@@ -6,13 +6,9 @@ fi
 
 autoscale_envs=(
     prod
-    develop
-    staging
-    pentest
 )
 
 unencrypted_dbs_envs=(
-    develop
     sandbox
     demo
     temp
