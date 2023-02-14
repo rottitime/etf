@@ -3,6 +3,15 @@ from django.urls import include, path
 
 from etf.evaluation import views
 
+
+urlpatterns = [
+    path("", views.index_view, name="index"),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
+    path("search/", views.search_evaluations_view, name="search"),
+    path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
+]
+
 api_urlpatterns = [
     path(
         "evaluation-contributors/<uuid:evaluation_id>/",
@@ -88,16 +97,12 @@ outcome_measure_urlpatterns = [
         views.delete_outcome_measure_page_view,
         name="outcome-measure-delete",
     ),
-<<<<<<< HEAD
     path("evaluation/<uuid:evaluation_id>/end", views.end_page_view, name="end"),
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
-] + api_urlpatterns
-=======
 ]
 
-urlpatterns = urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns
->>>>>>> 8a501de (refactor urls)
+urlpatterns = urlpatterns + api_urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns
