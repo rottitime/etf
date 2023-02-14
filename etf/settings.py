@@ -161,6 +161,7 @@ DEFAULT_ALLOWED_DOMAINS = frozenset(
         "ipa.gov.uk",
         "no10.gov.uk",
         "odandd.gov.uk",
+        "xansium.com",
     ]
 )
 
