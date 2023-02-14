@@ -52,7 +52,7 @@ def generate_organisations():
     return list(set_organisations)
 
 
-def make_evaluation(user):
+def make_evaluation():
     evaluation_start_date = make_random_date()
     evaluation_end_date = random_days_later(evaluation_start_date, 100, 2 * 365)
     date_of_intended_publication = random_days_later(evaluation_end_date, 50, 365)
@@ -60,7 +60,6 @@ def make_evaluation(user):
     topics = generate_topics()
     organisations = generate_organisations()
     data = dict(
-        user=user,
         title=fake.sentence(),
         description=fake.text(),
         topics=topics,
@@ -101,8 +100,9 @@ def make_evaluation_type(evaluation):
 def add_evals_to_users(user, allow_empty=True):
     num_evals = random.randint(0 if allow_empty is True else 1, 3)
     for j in range(num_evals):
-        eval_data = make_evaluation(user)
-        evaluation = models.Evaluation(**eval_data)
+        eval_data = make_evaluation()
+        evaluation = models.Evaluation.objects.create(**eval_data)
+        evaluation.users.set([user])
         evaluation.save()
         for k in range(random.randint(0, 3)):
             eval_type_data = make_evaluation_type(evaluation)

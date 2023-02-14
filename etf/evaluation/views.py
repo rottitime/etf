@@ -7,21 +7,33 @@ from django.contrib.postgres.search import (
     SearchVector,
 )
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.text import slugify
+from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
 
 page_map = {}
 
 
+class MethodDispatcher:
+    def __new__(cls, request, *args, **kwargs):
+        view = super().__new__(cls)
+        method = getattr(view, request.method, None)
+        if method:
+            return method(request, *args, **kwargs)
+        else:
+            return HttpResponseNotAllowed(request)
+
+
 @login_required
 def index_view(request):
     if request.method == "POST":
         user = request.user
-        evaluation = models.Evaluation(user=user)
+        evaluation = models.Evaluation.objects.create()
+        evaluation.users.add(user)
         evaluation.save()
         return redirect(page_view, evaluation_id=str(evaluation.id))
     return render(request, "index.html")
@@ -89,6 +101,7 @@ class FormPage:
         topics = models.Topic.choices
         organisations = models.Organisation.choices
         statuses = models.EvaluationStatus.choices
+        users = evaluation.users.values()
         if request.method == "POST":
             data = request.POST
             try:
@@ -115,6 +128,7 @@ class FormPage:
                 "topics": topics,
                 "organisations": organisations,
                 "statuses": statuses,
+                "contributors": users,
                 "data": data,
                 **url_data,
                 **self.extra_data,
@@ -138,6 +152,8 @@ SimplePage(title="Intro")
 FormPage(title="Title")
 
 FormPage(title="Description")
+
+FormPage(title="Contributors")
 
 FormPage(title="Issue")
 
@@ -178,7 +194,7 @@ def search_evaluations_view(request):
             search_phrase = form.cleaned_data["search_phrase"]
             mine_only = form.cleaned_data["mine_only"]
             if mine_only:
-                qs = qs.filter(user=request.user)
+                qs = qs.filter(users__in=[request.user])
             if organisations:
                 organisations_qs = models.Evaluation.objects.none()
                 for organisation in organisations:
@@ -187,7 +203,7 @@ def search_evaluations_view(request):
                 qs = organisations_qs
             if not status:
                 qs = qs.filter(
-                    Q(status=models.EvaluationStatus.DRAFT.value, user=request.user)
+                    Q(status=models.EvaluationStatus.DRAFT.value, users__in=[request.user])
                     | Q(status__in=[models.EvaluationStatus.PUBLIC.value, models.EvaluationStatus.CIVIL_SERVICE.value])
                 )
             else:
@@ -237,6 +253,65 @@ def my_evaluations_view(request):
     data = {}
     errors = {}
     if request.method == "GET":
-        qs = models.Evaluation.objects.filter(user=request.user)
+        qs = models.Evaluation.objects.filter(users__email__contains=request.user.email)
         data = request.GET
     return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
+
+
+@login_required
+@require_http_methods(["GET", "POST", "DELETE"])
+class EvaluationContributor(MethodDispatcher):
+    def get(self, request, evaluation_id):
+        return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
+
+    def post(self, request, evaluation_id):
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        email = request.POST.get("add-user-email")
+        user = models.User.objects.get(email=email)
+        evaluation.users.add(user)
+        evaluation.save()
+        users = evaluation.users.values()
+        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
+
+    def delete(self, request, evaluation_id, email_to_remove=None):
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        user_to_remove = models.User.objects.get(email=email_to_remove)
+        evaluation.users.remove(user_to_remove)
+        evaluation.save()
+        users = evaluation.users.values()
+        if user_to_remove == request.user:
+            response = render(
+                request,
+                "contributor-rows.html",
+                {"redirect": True, "contributors": users, "evaluation_id": evaluation_id},
+            )
+            response["HX-Redirect"] = reverse("index")
+            return response
+        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
+
+
+@login_required
+@require_http_methods(["POST"])
+def evaluation_contributor_add_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    email = request.POST.get("add-user-email")
+    user = models.User.objects.get(email=email)
+    evaluation.users.add(user)
+    evaluation.save()
+    return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+
+
+@login_required
+@require_http_methods(["POST", "GET"])
+def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=None):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    if request.method == "GET":
+        return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email_to_remove})
+    elif request.method == "POST":
+        email = request.POST.get("remove-user-email")
+        user = models.User.objects.get(email=email)
+        evaluation.users.remove(user)
+        evaluation.save()
+        if user == request.user:
+            return redirect(reverse("index"))
+        return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")

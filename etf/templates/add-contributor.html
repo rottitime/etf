@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form method="POST" action="{{url("evaluation-contributor-add", args=[evaluation_id])}}">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Add Contributor</h3>
+      </legend>
+
+      <label class="label" for="add-user">Contributor email</label>
+      <div class="input-button-pair">
+        <input class="input-button-pair-input" placeholder="Enter a contributors email..." type="email" id="add-user-email" name="add-user-email">
+        <button type="submit" class="button input-button-pair-button">Add</button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
