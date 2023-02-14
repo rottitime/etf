@@ -201,12 +201,14 @@ class Evaluation(TimeStampedModel):
     # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    topics = models.JSONField(default=list)
-    organisations = models.JSONField(default=list)
+    short_title = models.CharField(max_length=64, blank=True, null=True)
+    brief_description = models.TextField(blank=True, null=True)
+    topics = models.JSONField(default=list)  # TODO - do we use these?
+    organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
     status = models.CharField(
         max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
     )
+    doi = models.CharField(max_length=64, blank=True, null=True)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
@@ -216,19 +218,20 @@ class Evaluation(TimeStampedModel):
     current_practice = models.TextField(blank=True, null=True)
     issue_relevance = models.TextField(blank=True, null=True)
 
-    # Evaluation - event dates
-    evaluation_start_date = models.DateField(blank=True, null=True)
-    evaluation_end_date = models.DateField(blank=True, null=True)
-    date_of_intended_publication = models.DateField(blank=True, null=True)
-    reasons_for_delays_in_publication = models.TextField(blank=True, null=True)
+    # Evaluation type (multiselect)
+    evaluation_type = models.JSONField(default=list)
+
+    # Studied population
+    studied_population = models.TextField(blank=True, null=True)
+    eligibility_criteria = models.TextField(blank=True, null=True)
+    sample_size = models.PositiveIntegerField(blank=True, null=True)
+    sample_size_units = models.CharField(max_length=256, blank=True, null=True)
+    sample_size_details = models.TextField(blank=True, null=True)
 
     # Participant recruitment approach
-    target_population = models.TextField(blank=True, null=True)
-    eligibility_criteria = models.TextField(blank=True, null=True)
     process_for_recruitment = models.TextField(blank=True, null=True)
-    target_sample_size = models.TextField(blank=True, null=True)
-    intended_recruitment_schedule = models.TextField(blank=True, null=True)
-    date_of_first_recruitment = models.DateField(blank=True, null=True)
+    recruitment_schedule = models.TextField(blank=True, null=True)
+    # TODO - what happens with dates?
 
     # Ethical considerations
     ethics_committee_approval = models.BooleanField(blank=True, null=True)
@@ -243,6 +246,8 @@ class Evaluation(TimeStampedModel):
     confidentiality_and_personal_data = models.TextField(blank=True, null=True)
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
+
+    # TODO - add fields on evaluation design, analysis and findings
 
     def get_list_topics_display_names(self):
         return [get_topic_display_name(x) for x in self.topics]
@@ -277,7 +282,7 @@ class Intervention(TimeStampedModel):
     tailoring = models.TextField(blank=True, null=True)
     fidelity = models.TextField(blank=True, null=True)
     resource_requirements = models.TextField(blank=True, null=True)
-    # TODO - add date
+    geographical_information = models.TextField(blank=True, null=True)
 
 
 class OutcomeMeasure(TimeStampedModel):
@@ -300,7 +305,7 @@ class OtherMeasure(TimeStampedModel):
 
 
 class ProcessStandard(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="process_standard", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
@@ -311,11 +316,29 @@ class Document(TimeStampedModel):
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    # TODO - file upload
 
 
 class EventDate(TimeStampedModel):
-    evaluation = models.ForeignKey(Evaluation, related_name="event_date", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
     type = models.CharField(max_length=10, blank=True, null=True)
     reasons_for_change = models.TextField(blank=True, null=True)
+
+
+class LinkOtherService(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
+    name_of_service = models.CharField(max_length=256, blank=True, null=True)
+    link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
+
+
+class EvaluationCost(TimeStampedModel):
+    evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
+    item_name = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    item_cost = models.FloatField(blank=True, null=True)
+    earliest_spend_date = models.DateField(blank=True, null=True)
+    latest_spend_date = models.DateField(blank=True, null=True)
+    # TODO - add a total cost for eval
+    # TODO - add column for notes on evaluation costs
