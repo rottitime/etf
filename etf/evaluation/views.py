@@ -56,7 +56,7 @@ class PasswordReset(MethodDispatcher):
         return render(request, "account/password_reset.html", {})
 
     def post(self, request):
-        email = request.POST.get("id_email")
+        email = request.POST.get("email")
         try:
             user = models.User.objects.get(email=email)
         except models.User.DoesNotExist:

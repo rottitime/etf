@@ -11,4 +11,5 @@ PGPASSWORD=insecure
 DATABASE_URL="postgres://etf:insecure@etf-test-db:5432/etf"
 EMAIL_BACKEND_TYPE=FILE
 EMAIL_FILE_PATH='/app/mail'
+BASE_URL=http://localhost:8010/
 ALLOW_EXAMPLE_EMAILS=True

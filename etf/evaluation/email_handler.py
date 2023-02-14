@@ -2,8 +2,8 @@ import datetime
 
 import furl as furl
 import pytz
+from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
@@ -30,7 +30,7 @@ EMAIL_MAPPING = {
         "from_address": "support-etf@cabinetoffice.gov.uk",
         "subject": "Evaluation Registry: password reset",
         "template_name": "email/password-reset.txt",
-        "url_path": "/accounts/signin/forgotten-password/reset",
+        "url_path": "/accounts/change-password/reset",
         "token_generator": PASSWORD_RESET_TOKEN_GENERATOR,
     },
 }
@@ -40,9 +40,8 @@ def _send_token_email(user, subject, template_name, from_address, url_path, toke
     user.last_token_sent_at = datetime.datetime.now(tz=pytz.UTC)
     user.save()
     token = token_generator.make_token(user)
-    request = None
-    full_url = "".join(["http://", get_current_site(request).domain, obj.get_absolute_url()])
-    url = str(furl.furl(url=full_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
+    base_url = settings.BASE_URL
+    url = str(furl.furl(url=base_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
     context = dict(user=user, url=url)
     body = render_to_string(template_name, context)
     response = send_mail(

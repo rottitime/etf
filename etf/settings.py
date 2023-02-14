@@ -18,6 +18,8 @@ STATIC_ROOT = STATIC_ROOT
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
+BASE_URL = env.str("BASE_URL")
+
 ALLOWED_HOSTS = [
     "etf-develop.london.cloudapps.digital",
     "etf-sandbox.london.cloudapps.digital",
