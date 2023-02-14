@@ -261,10 +261,10 @@ def my_evaluations_view(request):
 @login_required
 @require_http_methods(["GET", "POST", "DELETE"])
 class EvaluationContributor(MethodDispatcher):
-    def GET(self, request, evaluation_id):
+    def get(self, request, evaluation_id):
         return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
 
-    def POST(self, request, evaluation_id):
+    def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         email = request.POST.get("add-user-email")
         user = models.User.objects.get(email=email)
@@ -273,7 +273,7 @@ class EvaluationContributor(MethodDispatcher):
         users = evaluation.users.values()
         return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
 
-    def DELETE(self, request, evaluation_id, email_to_remove=None):
+    def delete(self, request, evaluation_id, email_to_remove=None):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         user_to_remove = models.User.objects.get(email=email_to_remove)
         evaluation.users.remove(user_to_remove)
