@@ -21,7 +21,8 @@ page_map = {}
 class MethodDispatcher:
     def __new__(cls, request, *args, **kwargs):
         view = super().__new__(cls)
-        method = getattr(view, request.method, None)
+        method_name = request.method.lower()
+        method = getattr(view, method_name, None)
         if method:
             return method(request, *args, **kwargs)
         else:
@@ -322,5 +323,5 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
 @login_required
 def evaluation_summary_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    user_can_edit = evaluation.user == request.user
+    user_can_edit = evaluation.users__contains(request.user)
     return render(request, "evaluation-summary.html", {"data": evaluation, "user_can_edit": user_can_edit})
