@@ -8,6 +8,7 @@ cf ssh etf-proxy-staging
 
 Then run the following command replacing <username> as needed and typing in the password when prompted.
 
+NOTE: **MAKE SURE YOU LEAVE THE `:`** (colon) inside the single quotes after the `username`
 ```
 echo -n '<username>:' >> /app/.htpasswd
 openssl passwd -apr1 >> /app/.htpasswd
