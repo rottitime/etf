@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0013_merge_0011_auto_20230206_1511_0012_auto_20230213_1645'),
+        ("evaluation", "0013_merge_0011_auto_20230206_1511_0012_auto_20230213_1645"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='last_token_sent_at',
+            model_name="user",
+            name="last_token_sent_at",
             field=models.DateTimeField(blank=True, editable=False, null=True),
         ),
         migrations.AddField(
-            model_name='user',
-            name='verified',
+            model_name="user",
+            name="verified",
             field=models.BooleanField(blank=True, default=False, null=True),
         ),
     ]
