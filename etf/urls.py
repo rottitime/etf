@@ -69,11 +69,11 @@ outcome_measure_urlpatterns = [
         views.last_outcome_measure_page_view,
         name="outcome-measure-last",
     ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/add",
-        views.add_outcome_measure_page_view,
-        name="outcome-measure-add",
-    ),
+    # path(
+    #     "evaluation/<uuid:evaluation_id>/outcome-measures/add",
+    #     views.add_outcome_measure_page_view,
+    #     name="outcome-measure-add",
+    # ),
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>",
         views.outcome_measure_page_view,

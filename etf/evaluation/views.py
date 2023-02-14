@@ -94,6 +94,13 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
+def add_outcome_measure(evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    outcome = models.OutcomeMeasure(evaluation=evaluation)
+    outcome.save()
+    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
+
+
 @login_required
 def initial_outcome_measure_page_view(request, evaluation_id):
     errors = {}
@@ -102,7 +109,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     next_url = reverse("end", args=(evaluation_id,))
     if request.method == "POST":
         if "add" in request.POST:
-            return redirect(reverse("outcome-measure-add", args=(evaluation_id,)))
+            return add_outcome_measure(evaluation_id)
         return redirect(next_url)
     return render(
         request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
@@ -180,12 +187,12 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-@login_required
-def add_outcome_measure_page_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    outcome = models.OutcomeMeasure(evaluation=evaluation)
-    outcome.save()
-    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
+# @login_required
+# def add_outcome_measure_page_view(request, evaluation_id):
+#     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+#     outcome = models.OutcomeMeasure(evaluation=evaluation)
+#     outcome.save()
+#     return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
 
 
 @login_required
@@ -217,8 +224,9 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
                 setattr(outcome, field_name, serialized_outcome[field_name])
             outcome.save()
             if "add" in request.POST:
-                add_url = reverse("outcome-measure-add", args=(evaluation_id,))
-                return redirect(add_url)
+                return add_outcome_measure(evaluation_id)
+                # add_url = reverse("outcome-measure-add", args=(evaluation_id,))
+                # return redirect(add_url)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
