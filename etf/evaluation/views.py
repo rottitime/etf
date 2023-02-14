@@ -21,7 +21,8 @@ page_map = {}
 class MethodDispatcher:
     def __new__(cls, request, *args, **kwargs):
         view = super().__new__(cls)
-        method = getattr(view, request.method, None)
+        method_name = request.method.lower()
+        method = getattr(view, method_name, None)
         if method:
             return method(request, *args, **kwargs)
         else:
@@ -49,6 +50,8 @@ def make_url(evaluation_id, page_name):
 def page_view(request, evaluation_id, page_name="intro"):
     if page_name not in page_map:
         raise Http404()
+
+    #  TODO: Add redirect if user isn't allowed to see evaluation
 
     page_name_order = tuple(page_map.keys())
 
@@ -315,3 +318,10 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
         if user == request.user:
             return redirect(reverse("index"))
         return redirect(page_view, evaluation_id=evaluation_id, page_name="contributors")
+
+
+@login_required
+def evaluation_summary_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    user_can_edit = evaluation.users__contains(request.user)
+    return render(request, "evaluation-summary.html", {"data": evaluation, "user_can_edit": user_can_edit})

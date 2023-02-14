@@ -153,3 +153,36 @@
     {{caller()}}
   </div>
 {%- endmacro %}
+
+{% macro display_simple_value(name, label, value=None) -%}
+  <label class="label" for="{{name}}">{{label}}</label>
+  {% if not value and not data[name] %}
+    <p>N/A</p>
+  {% else %}
+    {% if value %}
+      <p>{{value}}</p>
+    {% else %}
+      <p>{{data[name]}}</p>
+    {% endif %}
+    {% endif %}
+{%- endmacro %}
+
+{% macro display_list_value(name, label, value=None) -%}
+  <label class="label" for="{{name}}">{{label}}</label>
+
+  {% if not value and not data[name] %}
+    <p>N/A</p>
+  {% else %}
+    <ul>
+    {% if value %}
+      {% for val in value %}
+        <li>{{val}}</li>
+      {% endfor %}
+    {% else %}
+      {% for val in data[name] %}
+        <li>{{val}}</li>
+      {% endfor %}
+    {% endif %}
+    </ul>
+  {% endif %}
+{%- endmacro %}
