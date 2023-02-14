@@ -41,7 +41,7 @@ def _send_token_email(user, subject, template_name, from_address, url_path, toke
     user.save()
     token = token_generator.make_token(user)
     request = None
-    full_url = ''.join(['http://', get_current_site(request).domain, obj.get_absolute_url()])
+    full_url = "".join(["http://", get_current_site(request).domain, obj.get_absolute_url()])
     url = str(furl.furl(url=full_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
     context = dict(user=user, url=url)
     body = render_to_string(template_name, context)

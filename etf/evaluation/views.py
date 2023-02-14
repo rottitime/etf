@@ -52,7 +52,6 @@ class CustomSignupView(SignupView):
 
 @require_http_methods(["GET", "POST"])
 class PasswordReset(MethodDispatcher):
-
     def get(self, request):
         return render(request, "account/password_reset.html", {})
 
