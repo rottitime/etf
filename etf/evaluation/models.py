@@ -240,12 +240,68 @@ class Evaluation(TimeStampedModel):
     risks_to_participants = models.TextField(blank=True, null=True)
     risks_to_study_team = models.TextField(blank=True, null=True)
     participant_involvement = models.TextField(blank=True, null=True)
-    participant_consent = models.TextField(blank=True, null=True)
     participant_information = models.TextField(blank=True, null=True)
+    participant_consent = models.TextField(blank=True, null=True)
     participant_payment = models.TextField(blank=True, null=True)
     confidentiality_and_personal_data = models.TextField(blank=True, null=True)
     breaking_confidentiality = models.TextField(blank=True, null=True)
     other_ethical_information = models.TextField(blank=True, null=True)
+
+    # Impact evaluation design
+    impact_eval_design_name = models.JSONField(default=list)
+    impact_eval_design_justification = models.TextField(blank=True, null=True)
+    impact_eval_design_description = models.TextField(blank=True, null=True)
+    impact_eval_design_features = models.TextField(blank=True, null=True)
+    impact_eval_design_equity = models.TextField(blank=True, null=True)
+    impact_eval_design_assumptions = models.TextField(blank=True, null=True)
+    impact_eval_design_approach_limitations = models.TextField(blank=True, null=True)
+
+    # Impact evaluation analysis
+    # TODO - add analysis plan document?
+    impact_eval_analysis_set = models.TextField(blank=True, null=True)
+    impact_eval_effect_measure = models.TextField(blank=True, null=True)
+    # TODO - add more
+
+    # Process evaluation design
+    process_eval_methods = models.CharField(blank=True, null=True, max_length=256)
+    # TODO - add more
+
+    # Process evaluation analysis
+    # TODO - add analysis plan document
+    process_eval_analysis_description = models.TextField(blank=True, null=True)
+
+    # Economic evaluation design
+    economic_eval_type = models.CharField(blank=True, null=True, max_length=256)
+    # TODO - add more details
+
+    # Economic evaluation analysis
+    economic_eval_analysis_description = models.TextField(blank=True, null=True)
+    # TODO - add more details
+
+    # Other evaluation design
+    other_eval_design_type = models.TextField(blank=True, null=True)
+    other_eval_design_details = models.TextField(blank=True, null=True)
+
+    # Other evaluation analysis
+    other_eval_analysis_description = models.TextField(blank=True, null=True)
+    # TODO - add more
+
+    # Impact evaluation findings
+    impact_eval_comparison = models.TextField(blank=True, null=True)
+    impact_eval_outcome = models.TextField(blank=True, null=True)
+    # TODO - add more
+
+    # Economic evaluation findings
+    economic_eval_summary_findings = models.TextField(blank=True, null=True)
+    economic_eval_findings = models.TextField(blank=True, null=True)
+
+    # Process evaluation findings
+    process_eval_summary_findings = models.TextField(blank=True, null=True)
+    process_eval_findings = models.TextField(blank=True, null=True)
+
+    # Other evaluation findings
+    other_eval_summary_findings = models.TextField(blank=True, null=True)
+    other_eval_findings = models.TextField(blank=True, null=True)
 
     # TODO - add fields on evaluation design, analysis and findings
 
