@@ -48,8 +48,16 @@ def test_evaluation_schema_has_relevant_fields():
     )
 
 
+def test_intervention_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="Intervention", schema_name="InterventionSchema")
+
+
 def test_outcome_measure_schema_has_relevant_fields():
     check_schema_model_match_fields(model_name="OutcomeMeasure", schema_name="OutcomeMeasureSchema")
+
+
+def test_other_measure_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="OtherMeasure", schema_name="OtherMeasureSchema")
 
 
 # TODO - add more tests for schemas, esp after validation added
