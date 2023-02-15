@@ -5,8 +5,10 @@
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
-        <h3>Participant recruitment approach - PLACEHOLDER</h3>
+        <h3>{{title}}</h3>
       </legend>
+      PLACEHOLDER
+      
       {{macros.textarea("process_for_recruitment", "Process for recruitment", tooltip=["Method of recruitment, such as by referral or self-selection. If recruiting by referral, where will referrals be accepted from? If recruiting by self-selection, where will the opportunity to participate be promoted?"])}}
 
       {{macros.buttons(prev_url)}}

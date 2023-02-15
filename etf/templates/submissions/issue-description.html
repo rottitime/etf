@@ -5,7 +5,7 @@
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
-        <h3>Issue description</h3>
+        <h3>{{title}}</h3>
       </legend>
       {{macros.textarea("issue_description", "Issue description", tooltip=["The problem, circumstance or situation that it is intended that an intervention should respond to.", "When studying interventions to attend to particular problems this should be presented as undesirable aspects of a situation that it is hoped can be improved if an effective intervention can be identified.", "When studying an intervention that is untested but assumed to have a positive influence on aspects of a situation this should be presented as the aspects that it is thought that the intervention may be improving."])}}
       {{macros.textarea("those_experiencing_issue", "Who experiences the issue", tooltip=["Those directly experiencing the issue."])}}
