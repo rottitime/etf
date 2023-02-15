@@ -23,14 +23,14 @@ jobs:
     env:
       IMAGE_TAG: ${{ github.ref_name }}
       DOCKER_REPOSITORY: ghcr.io
-      BASE_URL: http://etf-${{ github.ref_name }}.london.cloudapps.digital
+      BASE_URL: https://etf-${{ github.ref_name }}.london.cloudapps.digital
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup prod api host
         if:  ${{ github.event_name == 'release' }}
-        run: echo "BASE_URL=http://etf.london.cloudapps.digital" >> $GITHUB_ENV
+        run: echo "BASE_URL=https://etf.london.cloudapps.digital" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
