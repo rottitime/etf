@@ -71,6 +71,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
 class Intervention(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema())
+    id = fields.Int(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     brief_description = fields.Str()
     rationale = fields.Str()
@@ -88,6 +89,7 @@ class Intervention(TimeStampedModelSchema):
 
 class OutcomeMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
+    id = fields.Int(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
     direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices

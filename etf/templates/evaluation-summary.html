@@ -9,7 +9,7 @@
     {{macros.display_list_value("topics", "Topics", data.get_list_topics_display_names())}}
     {{macros.display_list_value("organisations", "Organisations", data.get_list_organisations_display_names())}}
     {% if user_can_edit %}
-      <a href="{{url("pages-index", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
 {% endblock %}
