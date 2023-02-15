@@ -11,8 +11,16 @@ sentry_envs=(
     pentest
 )
 
+live_notify_api=(
+    staging
+)
+
 if [[ " ${sentry_envs[*]} " =~ " ${CF_SPACE} " ]]; then
   sentry=true
+fi
+
+if [[ " ${live_notify_api[*]} " =~ " ${CF_SPACE} " ]]; then
+    live_api_key=true
 fi
 
 while read -r line; do
@@ -40,6 +48,19 @@ do
         else
             $(./cf set-env ${value} DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY} &> /dev/null)
         fi
+        if [ $gov_notify ] || [ "$value" == "etf" ]; then
+            if [ $live_api_key ] || [ "$value" == "etf" ]; then
+                $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${LIVE_NOTIFY_API_KEY} &> /dev/null)
+        else
+            $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${TEAM_NOTIFY_API_KEY} &> /dev/null)
+        fi
+
+            $(./cf set-env ${value} EMAIL_BACKEND_TYPE GOVUKNOTIFY &> /dev/null)
+            $(./cf set-env ${value} GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID ${NOTIFY_PLAIN_EMAIL_TEMPLATE_ID} &> /dev/null)
+        else
+            $(./cf set-env ${value} EMAIL_BACKEND_TYPE CONSOLE &> /dev/null)
+        fi
+
         if [ $sentry ]; then
             $(./cf set-env ${value} SENTRY_DSN ${SENTRY_DSN}  &> /dev/null)
             $(./cf set-env ${value} SENTRY_ENVIRONMENT ${CF_SPACE} &> /dev/null)
