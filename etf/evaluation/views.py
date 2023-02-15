@@ -265,6 +265,36 @@ def evaluation_issue_description_view(request, evaluation_id):
         "title": "Issue description",
         "page_name": "issue-description",
         "prev_page": "description",
+        "next_page": "studied-population",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_studied_population_view(request, evaluation_id):
+    page_data = {
+        "title": "Studied population",
+        "page_name": "studied-population",
+        "prev_page": "issue-description",
+        "next_page": "participant-recruitment",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_participant_recruitment(request, evaluation_id):
+    page_data = {
+        "title": "Participant recruitment",
+        "page_name": "participant-recruitment",
+        "prev_page": "studied-population",
+        "next_page": "evaluation-costs-budget",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_costs_view(request, evaluation_id):
+    page_data = {
+        "title": "Evaluation costs and budget",
+        "page_name": "evaluation-costs",
+        "prev_page": "participant-recruitment",
         "next_page": None,
     }
     return evaluation_view(request, evaluation_id, page_data)
