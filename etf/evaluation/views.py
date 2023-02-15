@@ -189,7 +189,7 @@ def evaluation_view(request, evaluation_id, page_data):
 
 @login_required
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
+    outcome = models.OutcomeMeasure.objects.get(id=outcome_measure_id)
     outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     data = {}
