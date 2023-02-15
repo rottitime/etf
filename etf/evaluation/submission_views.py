@@ -70,7 +70,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     return render(
         request,
         "submissions/outcome-measures.html",
-        {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+        {"title": "Outcome measures", "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
     )
 
 
@@ -183,7 +183,14 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     return render(
         request,
         "submissions/outcome-measure-page.html",
-        {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
+        {
+            "title": "Outcome measures",
+            "errors": errors,
+            "data": data,
+            "next_url": next_url,
+            "prev_url": prev_url,
+            "show_add": show_add,
+        },
     )
 
 
