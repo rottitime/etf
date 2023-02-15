@@ -498,14 +498,16 @@ def evaluation_metadata_view(request, evaluation_id):
         "title": "Metadata",
         "page_name": "metadata",
         "prev_page": "links",
-        "next_page": "end",
+        "next_page": "status",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
 
+def evaluation_status_view(request, evaluation_id):
+    page_data = {"title": "Status", "page_name": "status", "prev_page": "metadata", "next_page": "end"}
+    return evaluation_view(request, evaluation_id, page_data)
+
+
 def end_page_view(request, evaluation_id):
-    page_data = {"title": "End", "page_name": "end", "prev_page": "metadata", "next_page": None}
+    page_data = {"title": "End", "page_name": "end", "prev_page": "status", "next_page": None}
     return simple_page_view(request, evaluation_id, page_data)
-
-
-# TODO - add status

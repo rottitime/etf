@@ -187,6 +187,11 @@ evaluation_entry_urlpatterns = [
         submission_views.evaluation_metadata_view,
         name="metadata",
     ),
+    path(
+        "evaluation/<uuid:evaluation_id>/status",
+        submission_views.evaluation_status_view,
+        name="status",
+    ),
     path("evaluation/<uuid:evaluation_id>/end", submission_views.end_page_view, name="end"),
 ]
 
