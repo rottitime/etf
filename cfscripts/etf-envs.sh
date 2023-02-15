@@ -67,7 +67,6 @@ do
             else
                 $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${TEAM_NOTIFY_API_KEY} &> /dev/null)
             fi
-
             $(./cf set-env ${value} EMAIL_BACKEND_TYPE GOVUKNOTIFY &> /dev/null)
             $(./cf set-env ${value} GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID ${NOTIFY_PLAIN_EMAIL_TEMPLATE_ID} &> /dev/null)
         else
@@ -82,10 +81,10 @@ do
 done
 
 
-# for value in "${cfapps[@]}"
-# do
-#     if grep -q "etf" <<< "$value"; then
-#         echo "Starting ${value}....."
-#         $(./cf restage ${value} &> /dev/null)
-#     fi
-# done
+for value in "${cfapps[@]}"
+do
+    if grep -q "etf" <<< "$value"; then
+        echo "Starting ${value}....."
+        $(./cf restage ${value} &> /dev/null)
+    fi
+done
