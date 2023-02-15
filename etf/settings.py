@@ -174,6 +174,8 @@ else:
 
 ACCOUNT_ADAPTER = "etf.evaluation.restrict_email_adapter.RestrictEmailAdapter"
 
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
+
 # Email
 
 EMAIL_BACKEND_TYPE = env.str("EMAIL_BACKEND_TYPE")
