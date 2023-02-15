@@ -7,6 +7,8 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
+from etf.evaluation import models
+
 
 def _strip_microseconds(dt):
     if not dt:
@@ -67,3 +69,9 @@ def _send_normal_email(subject, template_name, from_address, to_address, context
 def send_password_reset_email(user):
     data = EMAIL_MAPPING["password-reset"]
     return _send_token_email(user, **data)
+
+
+def verify_reset_token(user_id, token):
+    user = models.User.objects.get(id=user_id)
+    result = PASSWORD_RESET_TOKEN_GENERATOR.check_token(user, token)
+    return result
