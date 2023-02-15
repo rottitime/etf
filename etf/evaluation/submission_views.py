@@ -1,19 +1,7 @@
 import marshmallow
-from allauth.account.views import SignupView
-from django import forms
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import (
-    SearchQuery,
-    SearchRank,
-    SearchVector,
-)
-from django.core.exceptions import ValidationError
-from django.db.models import Q
-from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.decorators.http import require_http_methods
 
 from . import models, schemas
 

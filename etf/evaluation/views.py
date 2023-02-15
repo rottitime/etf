@@ -1,4 +1,3 @@
-import marshmallow
 from allauth.account.views import SignupView
 from django import forms
 from django.contrib import messages
@@ -15,7 +14,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from . import models, schemas
+from . import models
 
 
 class MethodDispatcher:
