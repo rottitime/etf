@@ -14,7 +14,8 @@ sentry_envs=(
 
 ### What environments need GOV NOTIFY
 govuk_email_backend=(
-    sandbox
+    develop
+    staging
 )
 
 live_notify_api=(
