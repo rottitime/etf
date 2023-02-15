@@ -51,7 +51,7 @@ class CustomSignupView(SignupView):
 
 # Unused request and exception arguments are required by django 404 handler function
 def view_404(request, exception=None):
-    return redirect(reverse("index"))
+    return render(request, "page-not-found.html", {})
 
 
 class EvaluationSearchForm(forms.Form):
