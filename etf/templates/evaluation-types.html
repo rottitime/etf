@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Evaluation types - PLACEHOLDER</h3>
+      </legend>
+      Add one or more evaluation types...
+
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{% endblock %}

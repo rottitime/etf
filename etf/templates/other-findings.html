@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form method="POST">{{csrf_input}}
+    <fieldset class="fieldset">
+      <legend>
+        <h3>Other evaluation findings - placeholder</h3>
+      </legend>
+      Only display if one of the evaluation types is "Other evaluation"
+      {{macros.buttons(prev_url)}}
+    </fieldset>
+  </form>
+{% endblock %}

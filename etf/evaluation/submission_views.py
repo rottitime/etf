@@ -167,7 +167,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     if next_outcome_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
     else:
-        next_url = reverse("end", args=(evaluation_id,))
+        next_url = reverse("other-measures", args=(evaluation_id,))
         show_add = True
     if prev_outcome_id:
         prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
@@ -293,11 +293,214 @@ def evaluation_documents_view(request, evaluation_id):
         "title": "Documents",
         "page_name": "documents",
         "prev_page": "publication-intention",
+        "next_page": "event-dates",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_event_dates_view(request, evaluation_id):
+    page_data = {
+        "title": "Event dates",
+        "page_name": "event-dates",
+        "prev_page": "documents",
+        "next_page": "evaluation-types",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_types_view(request, evaluation_id):
+    page_data = {
+        "title": "Evaluation types",
+        "page_name": "evaluation-types",
+        "prev_page": "event-dates",
+        "next_page": "impact-design",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_impact_eval_design_view(request, evaluation_id):
+    page_data = {
+        "title": "Impact evaluation design",
+        "page_name": "impact-design",
+        "prev_page": "evaluation-types",
+        "next_page": "impact-analysis",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_impact_eval_analysis_view(request, evaluation_id):
+    page_data = {
+        "title": "Impact evaluation analysis",
+        "page_name": "impact-analysis",
+        "prev_page": "impact-design",
+        "next_page": "process-design",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_process_eval_design_view(request, evaluation_id):
+    page_data = {
+        "title": "Process evaluation design",
+        "page_name": "process-design",
+        "prev_page": "impact-analysis",
+        "next_page": "process-analysis",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_process_eval_analysis_view(request, evaluation_id):
+    page_data = {
+        "title": "Process evaluation analysis",
+        "page_name": "process-analysis",
+        "prev_page": "process-design",
+        "next_page": "economic-design",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_economic_eval_design_view(request, evaluation_id):
+    page_data = {
+        "title": "Economic evaluation design",
+        "page_name": "economic-design",
+        "prev_page": "process-analysis",
+        "next_page": "economic-analysis",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_economic_eval_analysis_view(request, evaluation_id):
+    page_data = {
+        "title": "Economic evaluation analysis",
+        "page_name": "economic-analysis",
+        "prev_page": "economic-design",
+        "next_page": "other-design",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_other_eval_design_view(request, evaluation_id):
+    page_data = {
+        "title": "Other evaluation design",
+        "page_name": "other-design",
+        "prev_page": "economic-analysis",
+        "next_page": "other-analysis",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_other_eval_analysis_view(request, evaluation_id):
+    page_data = {
+        "title": "Other evaluation analysis",
+        "page_name": "other-analysis",
+        "prev_page": "other-design",
+        "next_page": "interventions",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+# TODO - likely to be more like outcome measures ie many interventions
+def evaluation_intervention_view(request, evaluation_id):
+    page_data = {
+        "title": "Interventions",
+        "page_name": "interventions",
+        "prev_page": "other-analysis",
+        "next_page": "outcome-measure-first",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+# TODO - likely to be more like outcome measures ie many interventions
+def evaluation_other_measures_view(request, evaluation_id):
+    page_data = {
+        "title": "Other measure",
+        "page_name": "other-measures",
+        "prev_page": "outcome-measure-last",
+        "next_page": "ethics",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_ethics_view(request, evaluation_id):
+    page_data = {
+        "title": "Ethics",
+        "page_name": "ethics",
+        "prev_page": "other-measures",
+        "next_page": "impact-findings",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_impact_findings_view(request, evaluation_id):
+    page_data = {
+        "title": "Impact evaluation findings",
+        "page_name": "impact-findings",
+        "prev_page": "ethics",
+        "next_page": "economic-findings",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_economic_findings_view(request, evaluation_id):
+    page_data = {
+        "title": "Economic evaluation findings",
+        "page_name": "economic-findings",
+        "prev_page": "impact-findings",
+        "next_page": "process-findings",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_process_findings_view(request, evaluation_id):
+    page_data = {
+        "title": "Process evaluation findings",
+        "page_name": "process-findings",
+        "prev_page": "economic-findings",
+        "next_page": "other-findings",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_other_findings_view(request, evaluation_id):
+    page_data = {
+        "title": "Other evaluation findings",
+        "page_name": "other-findings",
+        "prev_page": "process-findings",
+        "next_page": "process-standards",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+# TODO - there may be many of these
+def evaluation_process_standards_view(request, evaluation_id):
+    page_data = {
+        "title": "Processes and standards",
+        "page_name": "process-standards",
+        "prev_page": "other-findings",
+        "next_page": "links",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_links_view(request, evaluation_id):
+    page_data = {
+        "title": "Links and IDs",
+        "page_name": "links",
+        "prev_page": "process-standards",
+        "next_page": "metadata",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_metadata_view(request, evaluation_id):
+    page_data = {
+        "title": "Metadata",
+        "page_name": "metadata",
+        "prev_page": "links",
         "next_page": "end",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
 
 def end_page_view(request, evaluation_id):
-    page_data = {"title": "End", "page_name": "end", "prev_page": "outcome-measure-last", "next_page": None}
+    page_data = {"title": "End", "page_name": "end", "prev_page": "metadata", "next_page": None}
     return simple_page_view(request, evaluation_id, page_data)
