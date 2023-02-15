@@ -56,7 +56,7 @@ def simple_page_view(request, evaluation_id, page_data):
     prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
     next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
     page_name = page_data["page_name"]
-    template_name = f"{page_name}.html"
+    template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
     form_data = {"title": title, "prev_url": prev_url, "next_url": next_url}
     return render(request, template_name, form_data)
@@ -73,14 +73,16 @@ def add_outcome_measure(evaluation_id):
 def initial_outcome_measure_page_view(request, evaluation_id):
     errors = {}
     data = {}
-    prev_url = reverse("description", args=(evaluation_id,))
-    next_url = reverse("end", args=(evaluation_id,))
+    prev_url = reverse("interventions", args=(evaluation_id,))
+    next_url = reverse("other-measures", args=(evaluation_id,))
     if request.method == "POST":
         if "add" in request.POST:
             return add_outcome_measure(evaluation_id)
         return redirect(next_url)
     return render(
-        request, "outcome-measures.html", {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url}
+        request,
+        "submissions/outcome-measures.html",
+        {"errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
     )
 
 
@@ -114,7 +116,7 @@ def evaluation_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
     prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
-    template_name = f"{page_name}.html"
+    template_name = f"submissions/{page_name}.html"
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
@@ -172,7 +174,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     if prev_outcome_id:
         prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
     else:
-        prev_url = reverse("description", args=(evaluation_id,))
+        prev_url = reverse("interventions", args=(evaluation_id,))
     if request.method == "POST":
         data = request.POST
         try:
@@ -192,7 +194,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         data = outcome_schema.dump(outcome)
     return render(
         request,
-        "outcome-measure-page.html",
+        "submissions/outcome-measure-page.html",
         {"errors": errors, "data": data, "next_url": next_url, "prev_url": prev_url, "show_add": show_add},
     )
 
@@ -504,3 +506,6 @@ def evaluation_metadata_view(request, evaluation_id):
 def end_page_view(request, evaluation_id):
     page_data = {"title": "End", "page_name": "end", "prev_page": "metadata", "next_page": None}
     return simple_page_view(request, evaluation_id, page_data)
+
+
+# TODO - add status
