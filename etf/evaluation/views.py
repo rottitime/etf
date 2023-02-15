@@ -255,7 +255,17 @@ def evaluation_description_view(request, evaluation_id):
         "title": "Description",
         "page_name": "description",
         "prev_page": "title",
-        "next_page": "outcome-measure-first",
+        "next_page": "issue-description",
+    }
+    return evaluation_view(request, evaluation_id, page_data)
+
+
+def evaluation_issue_description_view(request, evaluation_id):
+    page_data = {
+        "title": "Issue description",
+        "page_name": "issue-description",
+        "prev_page": "description",
+        "next_page": None,
     }
     return evaluation_view(request, evaluation_id, page_data)
 
