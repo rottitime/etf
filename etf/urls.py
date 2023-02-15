@@ -46,7 +46,9 @@ evaluation_entry_urlpatterns = [
     path("evaluation/<uuid:evaluation_id>/title", views.evaluation_title_view, name="title"),
     path("evaluation/<uuid:evaluation_id>/description", views.evaluation_description_view, name="description"),
     path(
-        "evaluation/<uuid:evaluation_id>/issue-description", views.evaluation_description_view, name="issue-description"
+        "evaluation/<uuid:evaluation_id>/issue-description",
+        views.evaluation_issue_description_view,
+        name="issue-description",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/studied-population",
@@ -59,7 +61,7 @@ evaluation_entry_urlpatterns = [
         name="participant-recruitment",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/participant-recruitment",
+        "evaluation/<uuid:evaluation_id>/evaluation-costs",
         views.evaluation_costs_view,
         name="evaluation-costs",
     ),

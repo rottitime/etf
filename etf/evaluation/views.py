@@ -285,7 +285,7 @@ def evaluation_participant_recruitment(request, evaluation_id):
         "title": "Participant recruitment",
         "page_name": "participant-recruitment",
         "prev_page": "studied-population",
-        "next_page": "evaluation-costs-budget",
+        "next_page": "evaluation-costs",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
