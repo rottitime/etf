@@ -4,16 +4,11 @@ env:
   DOCKER_BUILDKIT: 1
 
 on:
-  push:
+  workflow_dispatch:
     branches:
       - sandbox
-
-# on:
-#   workflow_dispatch:
-#     branches:
-#       - sandbox
-#       - develop
-#       - staging
+      - develop
+      - staging
 
 jobs:
   add_environment_vars:
