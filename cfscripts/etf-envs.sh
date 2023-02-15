@@ -4,6 +4,7 @@ if [ $1 ]; then
     CF_SPACE=$1
 fi
 
+### What environments need SENTRY
 sentry_envs=(
     prod
     develop
@@ -11,13 +12,25 @@ sentry_envs=(
     pentest
 )
 
+### What environments need GOV NOTIFY
+govuk_email_backend=(
+    sandbox
+)
+
 live_notify_api=(
     staging
 )
 
+
+###############################################################################################
 if [[ " ${sentry_envs[*]} " =~ " ${CF_SPACE} " ]]; then
   sentry=true
 fi
+
+if [[ " ${govuk_email_backend[*]} " =~ " ${CF_SPACE} " ]]; then
+    gov_notify=true
+fi
+echo "GOV NOTIFY= ${gov_notify}"
 
 if [[ " ${live_notify_api[*]} " =~ " ${CF_SPACE} " ]]; then
     live_api_key=true
@@ -51,9 +64,9 @@ do
         if [ $gov_notify ] || [ "$value" == "etf" ]; then
             if [ $live_api_key ] || [ "$value" == "etf" ]; then
                 $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${LIVE_NOTIFY_API_KEY} &> /dev/null)
-        else
-            $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${TEAM_NOTIFY_API_KEY} &> /dev/null)
-        fi
+            else
+                $(./cf set-env ${value} GOVUK_NOTIFY_API_KEY ${TEAM_NOTIFY_API_KEY} &> /dev/null)
+            fi
 
             $(./cf set-env ${value} EMAIL_BACKEND_TYPE GOVUKNOTIFY &> /dev/null)
             $(./cf set-env ${value} GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID ${NOTIFY_PLAIN_EMAIL_TEMPLATE_ID} &> /dev/null)
@@ -69,10 +82,10 @@ do
 done
 
 
-for value in "${cfapps[@]}"
-do
-    if grep -q "etf" <<< "$value"; then
-        echo "Starting ${value}....."
-        $(./cf restage ${value} &> /dev/null)
-    fi
-done
+# for value in "${cfapps[@]}"
+# do
+#     if grep -q "etf" <<< "$value"; then
+#         echo "Starting ${value}....."
+#         $(./cf restage ${value} &> /dev/null)
+#     fi
+# done
