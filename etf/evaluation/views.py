@@ -2,6 +2,7 @@ from allauth.account.views import SignupView
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
@@ -50,6 +51,7 @@ class CustomSignupView(SignupView):
         response = super().dispatch(request, *args, **kwargs)
         return response
 
+
 @require_http_methods(["GET", "POST"])
 class PasswordReset(MethodDispatcher):
     def get(self, request):
@@ -60,9 +62,57 @@ class PasswordReset(MethodDispatcher):
         try:
             user = models.User.objects.get(email=email)
         except models.User.DoesNotExist:
-            return render(request, "account/password_reset_sent.html", {})
+            return render(request, "account/password_reset_done.html", {})
         send_password_reset_email(user)
-        return render(request, "account/password_reset_sent.html", {})
+        return render(request, "account/password_reset_done.html", {})
+
+
+@require_http_methods(["GET", "POST"])
+class PasswordChange(MethodDispatcher):
+    def get(self, request):
+        user_id = request.GET.get("user_id", None)
+        token = request.GET.get("code", None)
+        valid_request = False
+        if not user_id or not token:
+            messages.error(request, "Some required parameters were not found for this request.")
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        result = verify_reset_token(user_id, token)
+        if not result:
+            messages.error(
+                request,
+                "The supplied parameters did not match a reset request. This might be because the link has already been used. Please try again.",
+            )
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        valid_request = True
+        return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+
+    def post(self, request):
+        user_id = request.GET.get("user_id", None)
+        token = request.GET.get("code", None)
+        pwd1 = request.POST.get("password1", None)
+        pwd2 = request.POST.get("password2", None)
+        valid_request = False
+        if pwd1 != pwd2:
+            messages.error(request, "Passwords must match.")
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        if not user_id or not token:
+            messages.error(request, "Some required parameters were not found for this request.")
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        result = verify_reset_token(user_id, token)
+        if not result:
+            messages.error(request, "The supplied parameters did not match a reset request. Please try again.")
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        user = models.User.objects.get(pk=user_id)
+        valid_request = True
+        try:
+            validate_password(pwd1, user)
+        except ValidationError as e:
+            for msg in e:
+                messages.error(request, str(msg))
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        user.set_password(pwd1)
+        user.save()
+        return render(request, "account/password_reset_from_key_done.html", {})
 
 
 # Unused request and exception arguments are required by django 404 handler function
