@@ -26,16 +26,21 @@ def make_evaluation_url(evaluation_id, page_name):
     return reverse(page_name, args=(evaluation_id,))
 
 
-def get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="next"):
+def get_adjacent_id_for_model(evaluation_id, id, model_name, next_or_prev="next"):
+    """
+    For models with evaluation as foreign key, find the adjacent object
+    sorted by created_at.
+    """
+    model = getattr(models, model_name)
     adjacent_id = None
     direction_map = {"next": 1, "prev": -1}
-    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).order_by("id")
-    outcomes_ids = list(outcomes_for_eval.values_list("id", flat=True))
-    num_outcomes = len(outcomes_ids)
-    current_index = outcomes_ids.index(outcome_measure_id)
+    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id).order_by("created_at")
+    ids = list(related_objects_for_eval.values_list("id", flat=True))
+    num_objects = len(ids)
+    current_index = ids.index(id)
     adjacent_index = current_index + direction_map[next_or_prev]
-    if 0 <= adjacent_index < num_outcomes:
-        adjacent_id = outcomes_ids[adjacent_index]
+    if 0 <= adjacent_index < num_objects:
+        adjacent_id = ids[adjacent_index]
     return adjacent_id
 
 
@@ -152,8 +157,12 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     errors = {}
     data = {}
     show_add = False
-    next_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="next")
-    prev_outcome_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="prev")
+    next_outcome_id = get_adjacent_id_for_model(
+        evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
+    )
+    prev_outcome_id = get_adjacent_id_for_model(
+        evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
+    )
     if next_outcome_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
     else:
@@ -196,7 +205,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
 
 def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
-    prev_id = get_adjacent_outcome_measure_id(evaluation_id, outcome_measure_id, next_or_prev="prev")
+    prev_id = get_adjacent_id_for_model(evaluation_id, outcome_measure_id, next_or_prev="prev")
     outcome.delete()
     if prev_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
