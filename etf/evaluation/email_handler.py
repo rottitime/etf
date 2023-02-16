@@ -29,7 +29,7 @@ PASSWORD_RESET_TOKEN_GENERATOR = PasswordResetTokenGenerator()
 
 EMAIL_MAPPING = {
     "password-reset": {
-        "from_address": "support-etf@cabinetoffice.gov.uk",
+        "from_address": "etf@cabinetoffice.gov.uk",
         "subject": "Evaluation Registry: password reset",
         "template_name": "email/password-reset.txt",
         "url_path": "/accounts/change-password/reset",

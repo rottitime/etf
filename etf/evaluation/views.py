@@ -74,13 +74,13 @@ class PasswordChange(MethodDispatcher):
         token = request.GET.get("code", None)
         valid_request = False
         if not user_id or not token:
-            messages.error(request, "Some required parameters were not found for this request.")
+            messages.error(request, "This link is not valid. It may have expired or have already been used. Please try again.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         result = verify_reset_token(user_id, token)
         if not result:
             messages.error(
                 request,
-                "The supplied parameters did not match a reset request. This might be because the link has already been used. Please try again.",
+                "This link is not valid. It may have expired or have already been used. Please try again.",
             )
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         valid_request = True
@@ -96,11 +96,11 @@ class PasswordChange(MethodDispatcher):
             messages.error(request, "Passwords must match.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         if not user_id or not token:
-            messages.error(request, "Some required parameters were not found for this request.")
+            messages.error(request, "This link is not valid. It may have expired or have already been used. Please try again.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         result = verify_reset_token(user_id, token)
         if not result:
-            messages.error(request, "The supplied parameters did not match a reset request. Please try again.")
+            messages.error(request, "This link is not valid. It may have expired or have already been used. Please try again.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         user = models.User.objects.get(pk=user_id)
         valid_request = True
