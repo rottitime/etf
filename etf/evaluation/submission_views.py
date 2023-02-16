@@ -55,89 +55,6 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
-    model = getattr(models, model_name)
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    new_object = model(evaluation=evaluation)
-    new_object.save()
-    response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
-    return response
-
-
-@login_required
-def initial_related_object_page_view(request, evaluation_id, model_name, form_data):
-    errors = {}
-    data = {}
-    title = form_data["title"]
-    template_name = form_data["template_name"]
-    prev_url_name = form_data["prev_url_name"]
-    next_url_name = form_data["next_url_name"]
-    add_url_name = form_data["add_url_name"]
-    prev_url = reverse(prev_url_name, args=(evaluation_id,))
-    next_url = reverse(next_url_name, args=(evaluation_id,))
-    if request.method == "POST":
-        if "add" in request.POST:
-            return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
-        return redirect(next_url)
-    response = render(
-        request,
-        template_name,
-        {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
-    )
-    return response
-
-
-def initial_outcome_measure_page_view(request, evaluation_id):
-    form_data = {
-        "title": "Outcome measures",
-        "template_name": "submissions/outcome-measures.html",
-        "prev_url_name": "interventions",
-        "next_url_name": "other-measures",
-        "add_url_name": "outcome-measure-page",
-    }
-    model_name = "OutcomeMeasure"
-    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
-@login_required
-def first_last_related_object_view(
-    request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
-):
-    model = getattr(models, model_name)
-    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id)
-    if first_or_last == "first":
-        related_objects_for_eval = related_objects_for_eval.order_by("created_at")
-    else:
-        related_objects_for_eval = related_objects_for_eval.order_by("-created_at")
-    if related_objects_for_eval:
-        id = related_objects_for_eval[0].id
-        response = redirect(reverse(page_url_name, args=(evaluation_id, id)))
-        return response
-    return redirect(reverse(initial_url_name, args=(evaluation_id,)))
-
-
-@login_required
-def first_outcome_measure_page_view(request, evaluation_id):
-    model_name = "OutcomeMeasure"
-    page_url_name = "outcome-measure-page"
-    initial_url_name = "outcome-measures"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-@login_required
-def last_outcome_measure_page_view(request, evaluation_id):
-    model_name = "OutcomeMeasure"
-    page_url_name = "outcome-measure-page"
-    initial_url_name = "outcome-measures"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
-    )
-    return response
-
-
 @login_required
 def evaluation_view(request, evaluation_id, page_data):
     title = page_data["title"]
@@ -183,6 +100,55 @@ def evaluation_view(request, evaluation_id, page_data):
             "title": title,
         },
     )
+
+
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
+    model = getattr(models, model_name)
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    new_object = model(evaluation=evaluation)
+    new_object.save()
+    response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
+    return response
+
+
+@login_required
+def initial_related_object_page_view(request, evaluation_id, model_name, form_data):
+    errors = {}
+    data = {}
+    title = form_data["title"]
+    template_name = form_data["template_name"]
+    prev_url_name = form_data["prev_url_name"]
+    next_url_name = form_data["next_url_name"]
+    add_url_name = form_data["add_url_name"]
+    prev_url = reverse(prev_url_name, args=(evaluation_id,))
+    next_url = reverse(next_url_name, args=(evaluation_id,))
+    if request.method == "POST":
+        if "add" in request.POST:
+            return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
+        return redirect(next_url)
+    response = render(
+        request,
+        template_name,
+        {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+    )
+    return response
+
+
+@login_required
+def first_last_related_object_view(
+    request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+):
+    model = getattr(models, model_name)
+    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id)
+    if first_or_last == "first":
+        related_objects_for_eval = related_objects_for_eval.order_by("created_at")
+    else:
+        related_objects_for_eval = related_objects_for_eval.order_by("-created_at")
+    if related_objects_for_eval:
+        id = related_objects_for_eval[0].id
+        response = redirect(reverse(page_url_name, args=(evaluation_id, id)))
+        return response
+    return redirect(reverse(initial_url_name, args=(evaluation_id,)))
 
 
 @login_required
@@ -238,28 +204,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     )
 
 
-def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    model_name = "OutcomeMeasure"
-    title = "Outcome measures"
-    template_name = "submissions/outcome-measure-page.html"
-    url_names = {
-        "page": "outcome-measure-page",
-        "prev_section": "interventions",
-        "next_section": "other-measures",
-        "delete": "outcome-measure-delete",
-    }
-    response = related_object_page_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=outcome_measure_id,
-        model_name=model_name,
-        title=title,
-        template_name=template_name,
-        url_names=url_names,
-    )
-    return response
-
-
 @login_required
 def delete_related_object_view(request, evaluation_id, id, model_name, initial_url_name, page_url_name):
     model = getattr(models, model_name)
@@ -275,22 +219,6 @@ def delete_related_object_view(request, evaluation_id, id, model_name, initial_u
     else:
         next_url = reverse(initial_url_name, args=(evaluation_id,))
     return redirect(next_url)
-
-
-def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    model_name = "OutcomeMeasure"
-    initial_url_name = "outcome-measures"
-    page_url_name = "outcome-measure-page"
-    evaluation_id, id, model_name, initial_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=outcome_measure_id,
-        model_name=model_name,
-        initial_url_name=initial_url_name,
-        page_url_name=page_url_name,
-    )
-    return response
 
 
 def intro_page_view(request, evaluation_id):
@@ -594,3 +522,73 @@ def evaluation_status_view(request, evaluation_id):
 def end_page_view(request, evaluation_id):
     page_data = {"title": "End", "page_name": "end", "prev_page": "status", "next_page": None}
     return simple_page_view(request, evaluation_id, page_data)
+
+
+def initial_outcome_measure_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Outcome measures",
+        "template_name": "submissions/outcome-measures.html",
+        "prev_url_name": "interventions",
+        "next_url_name": "other-measures",
+        "add_url_name": "outcome-measure-page",
+    }
+    model_name = "OutcomeMeasure"
+    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
+def first_outcome_measure_page_view(request, evaluation_id):
+    model_name = "OutcomeMeasure"
+    page_url_name = "outcome-measure-page"
+    initial_url_name = "outcome-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+    )
+    return response
+
+
+def last_outcome_measure_page_view(request, evaluation_id):
+    model_name = "OutcomeMeasure"
+    page_url_name = "outcome-measure-page"
+    initial_url_name = "outcome-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
+    )
+    return response
+
+
+def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+    model_name = "OutcomeMeasure"
+    title = "Outcome measures"
+    template_name = "submissions/outcome-measure-page.html"
+    url_names = {
+        "page": "outcome-measure-page",
+        "prev_section": "interventions",
+        "next_section": "other-measures",
+        "delete": "outcome-measure-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=outcome_measure_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+    model_name = "OutcomeMeasure"
+    initial_url_name = "outcome-measures"
+    page_url_name = "outcome-measure-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=outcome_measure_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
+    )
+    return response
