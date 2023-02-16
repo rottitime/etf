@@ -10,3 +10,25 @@ To run this project:
 To populate the database with fake data: 
 
     docker-compose run web python manage.py add_fake_data
+
+or
+
+    make add-fake-data
+
+**Note: This requires at least one user to be created to run correctly*
+
+To reset the database:
+
+    make reset-db
+
+To check for syntax errors:
+
+    make check-python-code
+
+To update the requirement lockfiles
+
+    make update-requirements
+
+To run tests
+
+    make test
