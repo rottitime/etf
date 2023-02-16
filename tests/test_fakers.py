@@ -1,5 +1,4 @@
 from etf.evaluation.fakers import add_evals_to_users, add_users
-from etf.evaluation.models import Evaluation
 
 
 def test_add_users():
