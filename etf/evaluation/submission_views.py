@@ -185,6 +185,10 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
+# model name, schema name, prev section page, next section page, individual page
+# title, template
+
+
 @login_required
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.get(id=outcome_measure_id)
@@ -240,23 +244,56 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     )
 
 
-def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
-    prev_id = get_adjacent_id_for_model(
-        evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
-    )
-    next_id = get_adjacent_id_for_model(
-        evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
-    )
-    outcome.delete()
+@login_required
+def delete_related_object_view(request, evaluation_id, id, model_name, initial_url_name, page_url_name):
+    model = getattr(models, model_name)
+    obj_to_delete = model.objects.get(id=id)
+    prev_id = get_adjacent_id_for_model(evaluation_id=evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
+    next_id = get_adjacent_id_for_model(evaluation_id=evaluation_id, id=id, model_name=model_name, next_or_prev="next")
+    obj_to_delete.delete()
 
     if prev_id:
-        next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
+        next_url = reverse(page_url_name, args=(evaluation_id, prev_id))
     elif next_id:
-        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_id))
+        next_url = reverse(page_url_name, args=(evaluation_id, next_id))
     else:
-        next_url = reverse("outcome-measures", args=(evaluation_id,))
+        next_url = reverse(initial_url_name, args=(evaluation_id,))
     return redirect(next_url)
+
+
+def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+    model_name = "OutcomeMeasure"
+    initial_url_name = "outcome-measures"
+    page_url_name = "outcome-measure-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=outcome_measure_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
+    )
+    return response
+
+
+# def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+#     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
+#     prev_id = get_adjacent_id_for_model(
+#         evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
+#     )
+#     next_id = get_adjacent_id_for_model(
+#         evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
+#     )
+#     outcome.delete()
+
+#     if prev_id:
+#         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
+#     elif next_id:
+#         next_url = reverse("outcome-measure-page", args=(evaluation_id, next_id))
+#     else:
+#         next_url = reverse("outcome-measures", args=(evaluation_id,))
+#     return redirect(next_url)
 
 
 def intro_page_view(request, evaluation_id):
