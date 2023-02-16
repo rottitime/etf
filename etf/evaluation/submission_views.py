@@ -140,14 +140,14 @@ def first_last_related_object_view(
     return redirect(reverse(initial_url_name, args=(evaluation_id,)))
 
 
-def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
-    model_name = "OutcomeMeasure"
-    page_url_name = "outcome-measure-page"
-    initial_url_name = "outcome-measures"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last
-    )
-    return response
+# def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
+#     model_name = "OutcomeMeasure"
+#     page_url_name = "outcome-measure-page"
+#     initial_url_name = "outcome-measures"
+#     response = first_last_related_object_view(
+#         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last
+#     )
+#     return response
 
 
 # @login_required
@@ -166,12 +166,24 @@ def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first
 
 @login_required
 def first_outcome_measure_page_view(request, evaluation_id):
-    return first_last_outcome_measure_view(request, evaluation_id, first_or_last="first")
+    model_name = "OutcomeMeasure"
+    page_url_name = "outcome-measure-page"
+    initial_url_name = "outcome-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+    )
+    return response
 
 
 @login_required
 def last_outcome_measure_page_view(request, evaluation_id):
-    return first_last_outcome_measure_view(request, evaluation_id, first_or_last="last")
+    model_name = "OutcomeMeasure"
+    page_url_name = "outcome-measure-page"
+    initial_url_name = "outcome-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
+    )
+    return response
 
 
 @login_required
