@@ -55,28 +55,72 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
-def add_outcome_measure(evaluation_id):
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
+    model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    outcome = models.OutcomeMeasure(evaluation=evaluation)
-    outcome.save()
-    return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
+    new_object = model(evaluation=evaluation)
+    new_object.save()
+    response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
+    return response
+
+
+# def add_outcome_measure(evaluation_id):
+#     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+#     outcome = models.OutcomeMeasure(evaluation=evaluation)
+#     outcome.save()
+#     return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome.id)))
 
 
 @login_required
-def initial_outcome_measure_page_view(request, evaluation_id):
+def initial_related_object_page_view(request, evaluation_id, model_name, form_data):
     errors = {}
     data = {}
-    prev_url = reverse("interventions", args=(evaluation_id,))
-    next_url = reverse("other-measures", args=(evaluation_id,))
+    title = form_data["title"]
+    template_name = form_data["template"]
+    prev_url_name = form_data["prev_url_name"]
+    next_url_name = form_data["next_url_name"]
+    add_url_name = form_data["add_url_name"]
+    prev_url = reverse(prev_url_name, args=(evaluation_id,))
+    next_url = reverse(next_url_name, args=(evaluation_id,))
     if request.method == "POST":
         if "add" in request.POST:
-            return add_outcome_measure(evaluation_id)
+            return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
         return redirect(next_url)
-    return render(
+    response = render(
         request,
-        "submissions/outcome-measures.html",
-        {"title": "Outcome measures", "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+        template_name,
+        {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
     )
+    return response
+
+
+def initial_outcome_measure_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Outcome measures",
+        "template_name": "submissions/outcome-measures.html",
+        "prev_url_name": "interventions",
+        "next_url_name": "other-measures",
+        "add_url_name": "outcome-measure-page",
+    }
+    model_name = "OutcomeMeasure"
+    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
+# @login_required
+# def initial_outcome_measure_page_view(request, evaluation_id):
+#     errors = {}
+#     data = {}
+#     prev_url = reverse("interventions", args=(evaluation_id,))
+#     next_url = reverse("other-measures", args=(evaluation_id,))
+#     if request.method == "POST":
+#         if "add" in request.POST:
+#             return add_outcome_measure(evaluation_id)
+#         return redirect(next_url)
+#     return render(
+#         request,
+#         "submissions/outcome-measures.html",
+#         {"title": "Outcome measures", "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+#     )
 
 
 @login_required
@@ -183,7 +227,9 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
                 setattr(outcome, field_name, serialized_outcome[field_name])
             outcome.save()
             if "add" in request.POST:
-                return add_outcome_measure(evaluation_id)
+                return add_related_object_for_eval(
+                    evaluation_id, model_name="OutcomeMeasure", redirect_url_name="outcome-measure-page"
+                )
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
