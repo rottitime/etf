@@ -1,5 +1,8 @@
 {% macro input(name, label, placeholder='', tooltip=[], type='text') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+  <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" title="{{ tooltip }}">
+    <i class="bi-question-circle-fill"></i>
+  </span>
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
   {% for tt in tooltip %}
     <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
