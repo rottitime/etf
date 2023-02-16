@@ -10,8 +10,8 @@ def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
     user.save()
     evaluation = models.Evaluation(title="An Evaluation")
-    evaluation.users.add(user)
     evaluation.save()
+    evaluation.users.add(user)
     for i in range(3):
         name = f"Outcome measure {i}"
         outcome_measure = models.OutcomeMeasure(name=name, evaluation=evaluation)
