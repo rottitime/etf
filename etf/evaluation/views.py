@@ -68,7 +68,8 @@ class PasswordReset(MethodDispatcher):
 
 @require_http_methods(["GET", "POST"])
 class PasswordChange(MethodDispatcher):
-    def get(self, request):
+    @staticmethod
+    def get_token_request_args(request):
         user_id = request.GET.get("user_id", None)
         token = request.GET.get("code", None)
         valid_request = False
@@ -76,39 +77,33 @@ class PasswordChange(MethodDispatcher):
             messages.error(
                 request, "This link is not valid. It may have expired or have already been used. Please try again."
             )
-            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
-        result = verify_reset_token(user_id, token)
-        if not result:
-            messages.error(
-                request,
-                "This link is not valid. It may have expired or have already been used. Please try again.",
-            )
-            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
-        valid_request = True
+        else:
+            result = verify_reset_token(user_id, token)
+            if not result:
+                messages.error(
+                    request, "This link is not valid. It may have expired or have already been used. Please try again."
+                )
+            else:
+                valid_request = True
+        return user_id, token, valid_request
+
+    def get(self, request):
+        user_id, token, valid_request = self.get_token_request_args(request)
         return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
 
     def post(self, request):
-        user_id = request.GET.get("user_id", None)
-        token = request.GET.get("code", None)
+        user_id, token, valid_request = self.get_token_request_args(request)
         pwd1 = request.POST.get("password1", None)
         pwd2 = request.POST.get("password2", None)
-        valid_request = False
         if pwd1 != pwd2:
             messages.error(request, "Passwords must match.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
-        if not user_id or not token:
-            messages.error(
-                request, "This link is not valid. It may have expired or have already been used. Please try again."
-            )
-            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
-        result = verify_reset_token(user_id, token)
-        if not result:
+        if not valid_request:
             messages.error(
                 request, "This link is not valid. It may have expired or have already been used. Please try again."
             )
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         user = models.User.objects.get(pk=user_id)
-        valid_request = True
         try:
             validate_password(pwd1, user)
         except ValidationError as e:
