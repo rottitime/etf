@@ -76,7 +76,7 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
     errors = {}
     data = {}
     title = form_data["title"]
-    template_name = form_data["template"]
+    template_name = form_data["template_name"]
     prev_url_name = form_data["prev_url_name"]
     next_url_name = form_data["next_url_name"]
     add_url_name = form_data["add_url_name"]
@@ -124,17 +124,44 @@ def initial_outcome_measure_page_view(request, evaluation_id):
 
 
 @login_required
-def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
-    outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id)
+def first_last_related_object_view(
+    request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+):
+    model = getattr(models, model_name)
+    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id)
     if first_or_last == "first":
-        outcomes_for_eval = outcomes_for_eval.order_by("created_at")
+        related_objects_for_eval = related_objects_for_eval.order_by("created_at")
     else:
-        outcomes_for_eval = outcomes_for_eval.order_by("-created_at")
-    if outcomes_for_eval:
-        outcome_id = outcomes_for_eval[0].id
-        return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome_id)))
-    else:
-        return redirect(reverse("outcome-measures", args=(evaluation_id,)))
+        related_objects_for_eval = related_objects_for_eval.order_by("-created_at")
+    if related_objects_for_eval:
+        id = related_objects_for_eval[0].id
+        response = redirect(reverse(page_url_name, args=(evaluation_id, id)))
+        return response
+    return redirect(reverse(initial_url_name, args=(evaluation_id,)))
+
+
+def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
+    model_name = "OutcomeMeasure"
+    page_url_name = "outcome-measure-page"
+    initial_url_name = "outcome-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last
+    )
+    return response
+
+
+# @login_required
+# def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
+#     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id)
+#     if first_or_last == "first":
+#         outcomes_for_eval = outcomes_for_eval.order_by("created_at")
+#     else:
+#         outcomes_for_eval = outcomes_for_eval.order_by("-created_at")
+#     if outcomes_for_eval:
+#         outcome_id = outcomes_for_eval[0].id
+#         return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome_id)))
+#     else:
+#         return redirect(reverse("outcome-measures", args=(evaluation_id,)))
 
 
 @login_required
