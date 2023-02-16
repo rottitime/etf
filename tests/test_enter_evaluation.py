@@ -8,8 +8,6 @@ from .utils import with_authenticated_client
 
 def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
-    print(user)
-    print(_)
     user.save()
     evaluation = models.Evaluation(title="An Evaluation")
     evaluation.users.add(user)
