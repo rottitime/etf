@@ -185,56 +185,109 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
+# @login_required
+# def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+#     outcome = models.OutcomeMeasure.objects.get(id=outcome_measure_id)
+#     outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
+#     errors = {}
+#     data = {}
+#     show_add = False
+#     next_outcome_id = get_adjacent_id_for_model(
+#         evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
+#     )
+#     prev_outcome_id = get_adjacent_id_for_model(
+#         evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
+#     )
+#     if next_outcome_id:
+#         next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
+#     else:
+#         next_url = reverse("other-measures", args=(evaluation_id,))
+#         show_add = True
+#     if prev_outcome_id:
+#         prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
+#     else:
+#         prev_url = reverse("interventions", args=(evaluation_id,))
+#     if request.method == "POST":
+#         data = request.POST
+#         try:
+#             if "delete" in request.POST:
+#                 delete_url = reverse("outcome-measure-delete", args=(evaluation_id, outcome_measure_id))
+#                 return redirect(delete_url)
+#             serialized_outcome = outcome_schema.load(data=data, partial=True)
+#             for field_name in serialized_outcome:
+#                 setattr(outcome, field_name, serialized_outcome[field_name])
+#             outcome.save()
+#             if "add" in request.POST:
+#                 return add_related_object_for_eval(
+#                     evaluation_id, model_name="OutcomeMeasure", redirect_url_name="outcome-measure-page"
+#                 )
+#             return redirect(next_url)
+#         except marshmallow.exceptions.ValidationError as err:
+#             errors = dict(err.messages)
+#     else:
+#         data = outcome_schema.dump(outcome)
+#     return render(
+#         request,
+#         "submissions/outcome-measure-page.html",
+#         {
+#             "title": "Outcome measures",
+#             "errors": errors,
+#             "data": data,
+#             "next_url": next_url,
+#             "prev_url": prev_url,
+#             "show_add": show_add,
+#         },
+#     )
+
+
 # model name, schema name, prev section page, next section page, individual page
 # title, template
 
 
 @login_required
-def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    outcome = models.OutcomeMeasure.objects.get(id=outcome_measure_id)
-    outcome_schema = schemas.OutcomeMeasureSchema(unknown=marshmallow.EXCLUDE)
+def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
+    model = getattr(models, model_name)
+    schema = getattr(schemas, f"{model_name}Schema")
+    obj = model.objects.get(id=id)
+    model_schema = schema(unknown=marshmallow.EXCLUDE)
     errors = {}
     data = {}
     show_add = False
-    next_outcome_id = get_adjacent_id_for_model(
-        evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
-    )
-    prev_outcome_id = get_adjacent_id_for_model(
-        evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
-    )
+    next_outcome_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="next")
+    prev_outcome_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
     if next_outcome_id:
-        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_outcome_id))
+        next_url = reverse(url_names["page"], args=(evaluation_id, next_outcome_id))
     else:
-        next_url = reverse("other-measures", args=(evaluation_id,))
+        next_url = reverse(url_names["next_section"], args=(evaluation_id,))
         show_add = True
     if prev_outcome_id:
-        prev_url = reverse("outcome-measure-page", args=(evaluation_id, prev_outcome_id))
+        prev_url = reverse(url_names["page"], args=(evaluation_id, prev_outcome_id))
     else:
-        prev_url = reverse("interventions", args=(evaluation_id,))
+        prev_url = reverse(url_names["prev_section"], args=(evaluation_id,))
     if request.method == "POST":
         data = request.POST
         try:
             if "delete" in request.POST:
-                delete_url = reverse("outcome-measure-delete", args=(evaluation_id, outcome_measure_id))
+                delete_url = reverse(url_names["delete"], args=(evaluation_id, id))
                 return redirect(delete_url)
-            serialized_outcome = outcome_schema.load(data=data, partial=True)
-            for field_name in serialized_outcome:
-                setattr(outcome, field_name, serialized_outcome[field_name])
-            outcome.save()
+            serialized_obj = model_schema.load(data=data, partial=True)
+            for field_name in serialized_obj:
+                setattr(obj, field_name, serialized_obj[field_name])
+            obj.save()
             if "add" in request.POST:
                 return add_related_object_for_eval(
-                    evaluation_id, model_name="OutcomeMeasure", redirect_url_name="outcome-measure-page"
+                    evaluation_id, model_name=model_name, redirect_url_name=url_names["page"]
                 )
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
     else:
-        data = outcome_schema.dump(outcome)
+        data = model_schema.dump(obj)
     return render(
         request,
-        "submissions/outcome-measure-page.html",
+        template_name,
         {
-            "title": "Outcome measures",
+            "title": title,
             "errors": errors,
             "data": data,
             "next_url": next_url,
@@ -242,6 +295,28 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
             "show_add": show_add,
         },
     )
+
+
+def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
+    model_name = "OutcomeMeasure"
+    title = "Outcome measures"
+    template_name = "submissions/outcome-measure-page.html"
+    url_names = {
+        "page": "outcome-measure-page",
+        "prev_section": "interventions",
+        "next_section": "other-measures",
+        "delete": "outcome-measure-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=outcome_measure_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
 
 
 @login_required
