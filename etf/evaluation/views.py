@@ -15,9 +15,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from . import models, schemas
-from .email_handler import send_password_reset_email
 from . import models
+from .email_handler import send_password_reset_email, verify_reset_token
 
 
 class MethodDispatcher:
