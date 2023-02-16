@@ -52,7 +52,7 @@ def generate_organisations():
     return list(set_organisations)
 
 
-def make_evaluation(user):
+def make_evaluation():
     topics = generate_topics()
     organisations = generate_organisations()
     data = dict(

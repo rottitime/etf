@@ -1,14 +1,18 @@
 from nose.tools import with_setup
 
 from etf.evaluation import models
-from etf.evaluation.views import get_adjacent_id_for_model
+from etf.evaluation.submission_views import get_adjacent_id_for_model
 
 from .utils import with_authenticated_client
 
 
 def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
-    evaluation = models.Evaluation(user=user, title="An Evaluation")
+    print(user)
+    print(_)
+    user.save()
+    evaluation = models.Evaluation(title="An Evaluation")
+    evaluation.users.add(user)
     evaluation.save()
     for i in range(3):
         name = f"Outcome measure {i}"
