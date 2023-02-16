@@ -205,10 +205,18 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
 
 def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     outcome = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id).get(id=outcome_measure_id)
-    prev_id = get_adjacent_id_for_model(evaluation_id, outcome_measure_id, next_or_prev="prev")
+    prev_id = get_adjacent_id_for_model(
+        evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="prev"
+    )
+    next_id = get_adjacent_id_for_model(
+        evaluation_id=evaluation_id, id=outcome_measure_id, model_name="OutcomeMeasure", next_or_prev="next"
+    )
     outcome.delete()
+
     if prev_id:
         next_url = reverse("outcome-measure-page", args=(evaluation_id, prev_id))
+    elif next_id:
+        next_url = reverse("outcome-measure-page", args=(evaluation_id, next_id))
     else:
         next_url = reverse("outcome-measures", args=(evaluation_id,))
     return redirect(next_url)
