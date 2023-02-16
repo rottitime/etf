@@ -83,9 +83,9 @@ def initial_outcome_measure_page_view(request, evaluation_id):
 def first_last_outcome_measure_view(request, evaluation_id, first_or_last="first"):
     outcomes_for_eval = models.OutcomeMeasure.objects.filter(evaluation__id=evaluation_id)
     if first_or_last == "first":
-        outcomes_for_eval = outcomes_for_eval.order_by("id")
+        outcomes_for_eval = outcomes_for_eval.order_by("created_at")
     else:
-        outcomes_for_eval = outcomes_for_eval.order_by("-id")
+        outcomes_for_eval = outcomes_for_eval.order_by("-created_at")
     if outcomes_for_eval:
         outcome_id = outcomes_for_eval[0].id
         return redirect(reverse("outcome-measure-page", args=(evaluation_id, outcome_id)))
