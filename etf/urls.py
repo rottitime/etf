@@ -209,11 +209,6 @@ outcome_measure_urlpatterns = [
         name="outcome-measures",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/last",
-        submission_views.last_outcome_measure_page_view,
-        name="outcome-measure-last",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/first",
         submission_views.first_outcome_measure_page_view,
         name="outcome-measure-first",
@@ -233,7 +228,6 @@ outcome_measure_urlpatterns = [
         submission_views.delete_outcome_measure_page_view,
         name="outcome-measure-delete",
     ),
-    path("evaluation/<uuid:evaluation_id>/end", submission_views.end_page_view, name="end"),
 ]
 
 urlpatterns = urlpatterns + api_urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns
