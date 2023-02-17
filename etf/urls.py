@@ -230,6 +230,35 @@ outcome_measure_urlpatterns = [
     ),
 ]
 
+intervention_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/interventions",
+        submission_views.initial_interventions_page_view,
+        name="interventions",
+    ),
+    # path(
+    #     "evaluation/<uuid:evaluation_id>/interventions/first",
+    #     submission_views.first_outcome_measure_page_view,
+    #     name="outcome-measure-first",
+    # ),
+    # path(
+    #     "evaluation/<uuid:evaluation_id>/outcome-measures/last",
+    #     submission_views.last_outcome_measure_page_view,
+    #     name="outcome-measure-last",
+    # ),
+    path(
+        "evaluation/<uuid:evaluation_id>/intervention/<int:intervention_id>",
+        submission_views.intervention_page_view,
+        name="intervention-page",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/delete",
+        submission_views.intervention_page_view,
+        name="intervention-delete",
+    ),
+]
+
+
 urlpatterns = urlpatterns + api_urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns
 
 handler404 = "etf.evaluation.views.view_404"
