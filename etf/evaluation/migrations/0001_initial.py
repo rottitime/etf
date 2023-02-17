@@ -22,8 +22,6 @@ class Migration(migrations.Migration):
             fields=[
                 ("password", models.CharField(max_length=128, verbose_name="password")),
                 ("last_login", models.DateTimeField(blank=True, null=True, verbose_name="last login")),
-                ("last_token_sent_at", models.DateTimeField(blank=True, editable=False, null=True)),
-                ("verified", models.BooleanField(blank=True, default=False, null=True)),
                 (
                     "is_superuser",
                     models.BooleanField(
