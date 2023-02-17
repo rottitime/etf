@@ -81,6 +81,11 @@
       {% endfor %}
     </select>
   </div>
+  <script>
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: document.querySelector('#{{name}}')
+    })
+  </script>
 {%- endmacro %}
 
 {% macro select_from_list(name, label, list, tooltip='', tooltip_position="top", empty_option=DEFAULT) -%}
