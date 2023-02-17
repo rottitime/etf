@@ -68,21 +68,20 @@ class PasswordReset(MethodDispatcher):
 
 @require_http_methods(["GET", "POST"])
 class PasswordChange(MethodDispatcher):
-    @staticmethod
-    def get_token_request_args(request):
+    password_reset_error_message = (
+        "This link is not valid. It may have expired or have already been used. Please try again."
+    )
+
+    def get_token_request_args(self, request):
         user_id = request.GET.get("user_id", None)
         token = request.GET.get("code", None)
         valid_request = False
         if not user_id or not token:
-            messages.error(
-                request, "This link is not valid. It may have expired or have already been used. Please try again."
-            )
+            messages.error(request, self.password_reset_error_message)
         else:
             result = verify_reset_token(user_id, token)
             if not result:
-                messages.error(
-                    request, "This link is not valid. It may have expired or have already been used. Please try again."
-                )
+                messages.error(request, self.password_reset_error_message)
             else:
                 valid_request = True
         return user_id, token, valid_request
@@ -99,9 +98,7 @@ class PasswordChange(MethodDispatcher):
             messages.error(request, "Passwords must match.")
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         if not valid_request:
-            messages.error(
-                request, "This link is not valid. It may have expired or have already been used. Please try again."
-            )
+            messages.error(request, self.password_reset_error_message)
             return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
         user = models.User.objects.get(pk=user_id)
         try:
