@@ -55,6 +55,7 @@
         {% endif %}
       </div>
       <div class="cell medium-7 large-6">
+        {% set messages = get_messages(request) %}
         {% if messages %}
           <section>
             {% for message in messages %} {% call macros.callout(message.tags) %}
