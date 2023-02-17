@@ -127,14 +127,10 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url_name = form_data["prev_url_name"]
     next_url_name = form_data["next_url_name"]
     add_url_name = form_data["add_url_name"]
-    print(add_url_name)
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
-    print("here")
     if request.method == "POST":
         if "add" in request.POST:
-            print(model_name)
-            print(add_url_name)
             return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
         return redirect(next_url)
     response = render(
@@ -431,17 +427,6 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
 
 
 # TODO - likely to be more like outcome measures ie many interventions
-def evaluation_intervention_view(request, evaluation_id):
-    page_data = {
-        "title": "Interventions",
-        "page_name": "interventions",
-        "prev_page": "other-analysis",
-        "next_page": "outcome-measure-first",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
-# TODO - likely to be more like outcome measures ie many interventions
 def evaluation_other_measures_view(request, evaluation_id):
     page_data = {
         "title": "Other measure",
@@ -497,18 +482,7 @@ def evaluation_other_findings_view(request, evaluation_id):
         "title": "Other evaluation findings",
         "page_name": "other-findings",
         "prev_page": "process-findings",
-        "next_page": "process-standards",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
-# TODO - there may be many of these
-def evaluation_process_standards_view(request, evaluation_id):
-    page_data = {
-        "title": "Processes and standards",
-        "page_name": "process-standards",
-        "prev_page": "other-findings",
-        "next_page": "links",
+        "next_page": "processes-standards-initial",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -517,7 +491,7 @@ def evaluation_links_view(request, evaluation_id):
     page_data = {
         "title": "Links and IDs",
         "page_name": "links",
-        "prev_page": "process-standards",
+        "prev_page": "process-standard-last",
         "next_page": "metadata",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -637,9 +611,6 @@ def initial_interventions_page_view(request, evaluation_id):
         "add_url_name": "intervention-page",
     }
     model_name = "Intervention"
-    print("hi")
-    print(model_name)
-    print(form_data)
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
@@ -694,6 +665,76 @@ def delete_intervention_page_view(request, evaluation_id, intervention_id):
         request,
         evaluation_id=evaluation_id,
         id=intervention_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
+    )
+    return response
+
+
+def initial_processes_standards_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Processes and standards",
+        "template_name": "submissions/processes-standards.html",
+        "prev_url_name": "other-findings",
+        "next_url_name": "links",
+        "add_url_name": "process-standard-page",
+    }
+    model_name = "ProcessStandard"
+    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
+def first_process_standard_page_view(request, evaluation_id):
+    model_name = "ProcessStandard"
+    page_url_name = "process-standard-page"
+    initial_url_name = "processes-standards-intial"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+    )
+    return response
+
+
+def last_process_standard_page_view(request, evaluation_id):
+    model_name = "ProcessStandard"
+    page_url_name = "process-standard-page"
+    initial_url_name = "processes-standards-initial"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
+    )
+    return response
+
+
+def process_standard_page_view(request, evaluation_id, process_standard_id):
+    model_name = "ProcessStandard"
+    title = "Processes and standards"
+    template_name = "submissions/process-standard-page.html"
+    url_names = {
+        "page": "process-standard-page",
+        "prev_section": "other-findings",
+        "next_section": "links",
+        "delete": "process-standard-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=process_standard_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def delete_process_standard_page_view(request, evaluation_id, process_standard_id):
+    model_name = "ProcessStandard"
+    initial_url_name = "processes-standards-initial"
+    page_url_name = "process-standard-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=process_standard_id,
         model_name=model_name,
         initial_url_name=initial_url_name,
         page_url_name=page_url_name,

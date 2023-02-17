@@ -140,19 +140,9 @@ evaluation_entry_urlpatterns = [
         name="other-analysis",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/interventions",
-        submission_views.evaluation_intervention_view,
-        name="interventions",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/other-measures",
         submission_views.evaluation_other_measures_view,
         name="other-measures",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/interventions",
-        submission_views.evaluation_intervention_view,
-        name="interventions",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/ethics",
@@ -178,11 +168,6 @@ evaluation_entry_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/other-findings",
         submission_views.evaluation_other_findings_view,
         name="other-findings",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/process-standards",
-        submission_views.evaluation_process_standards_view,
-        name="process-standards",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/links",
@@ -258,6 +243,34 @@ intervention_urlpatterns = [
     ),
 ]
 
+processes_standards_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/processes-standards/",
+        submission_views.initial_processes_standards_page_view,
+        name="processes-standards-initial",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/processes-standards/first/",
+        submission_views.first_process_standard_page_view,
+        name="process-standard-first",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/processes-standards/last/",
+        submission_views.last_process_standard_page_view,
+        name="process-standard-last",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/",
+        submission_views.process_standard_page_view,
+        name="process-standard-page",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/delete/",
+        submission_views.delete_process_standard_page_view,
+        name="process-standard-delete",
+    ),
+]
+
 
 urlpatterns = (
     urlpatterns
@@ -265,6 +278,7 @@ urlpatterns = (
     + evaluation_entry_urlpatterns
     + outcome_measure_urlpatterns
     + intervention_urlpatterns
+    + processes_standards_urlpatterns
 )
 
 handler404 = "etf.evaluation.views.view_404"
