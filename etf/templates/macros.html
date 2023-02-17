@@ -69,6 +69,11 @@
       <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
     {% endfor %}
   </div>
+  <script>
+    accessibleAutocomplete.enhanceSelectElement({
+      selectElement: document.querySelector('#{{name}}')
+    })
+  </script>
 {%- endmacro %}
 
 {% macro select_from_list(name, label, list, tooltip=[], empty_option=DEFAULT) -%}
