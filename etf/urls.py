@@ -187,34 +187,6 @@ evaluation_entry_urlpatterns = [
     path("evaluation/<uuid:evaluation_id>/end", submission_views.end_page_view, name="end"),
 ]
 
-outcome_measure_urlpatterns = [
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures",
-        submission_views.initial_outcome_measure_page_view,
-        name="outcome-measures",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/first",
-        submission_views.first_outcome_measure_page_view,
-        name="outcome-measure-first",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/last",
-        submission_views.last_outcome_measure_page_view,
-        name="outcome-measure-last",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/<uuid:outcome_measure_id>",
-        submission_views.outcome_measure_page_view,
-        name="outcome-measure-page",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/<uuid:outcome_measure_id>/delete",
-        submission_views.delete_outcome_measure_page_view,
-        name="outcome-measure-delete",
-    ),
-]
-
 intervention_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/interventions/",
@@ -242,6 +214,35 @@ intervention_urlpatterns = [
         name="intervention-delete",
     ),
 ]
+
+outcome_measure_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures",
+        submission_views.initial_outcome_measure_page_view,
+        name="outcome-measures",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/first",
+        submission_views.first_outcome_measure_page_view,
+        name="outcome-measure-first",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/last",
+        submission_views.last_outcome_measure_page_view,
+        name="outcome-measure-last",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>",
+        submission_views.outcome_measure_page_view,
+        name="outcome-measure-page",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/delete",
+        submission_views.delete_outcome_measure_page_view,
+        name="outcome-measure-delete",
+    ),
+]
+
 
 processes_standards_urlpatterns = [
     path(
