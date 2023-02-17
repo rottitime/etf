@@ -60,3 +60,4 @@ urllib3==1.26.14
 waitress==2.1.2
 watchdog==2.2.1
 whitenoise==6.3.0
+testino==0.3.9

@@ -194,3 +194,6 @@ else:
         raise Exception(f"Unknown EMAIL_BACKEND_TYPE of {EMAIL_BACKEND_TYPE}")
 
 SEND_VERIFICATION_EMAIL = env.bool("SEND_VERIFICATION_EMAIL", default=False)
+
+if DEBUG:
+    ACCOUNT_RATE_LIMITS = {}

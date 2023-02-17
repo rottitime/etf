@@ -22,7 +22,7 @@
       </div>
       <div class="top-bar-right">
         {% if request.user.is_authenticated %}
-          <form action="{{url('search')}}" method="GET">{{csrf_input}}
+          <form action="{{url('search')}}" method="GET" id="search-form">{{csrf_input}}
             <input type="hidden" value="False" name="is_search" id="is_search">
             <div class="global--search">
               <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
@@ -55,6 +55,7 @@
         {% endif %}
       </div>
       <div class="cell medium-7 large-6">
+        {% set messages = get_messages(request) %}
         {% if messages %}
           <section>
             {% for message in messages %} {% call macros.callout(message.tags) %}
