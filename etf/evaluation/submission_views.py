@@ -421,7 +421,7 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",
         "prev_page": "other-design",
-        "next_page": "interventions",
+        "next_page": "intervention-first",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -509,7 +509,7 @@ def end_page_view(request, evaluation_id):
 def first_intervention_page_view(request, evaluation_id):
     model_name = "Intervention"
     page_url_name = "intervention-page"
-    initial_url_name = "interventions"
+    initial_url_name = "interventions-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
     )
@@ -519,7 +519,7 @@ def first_intervention_page_view(request, evaluation_id):
 def last_intervention_page_view(request, evaluation_id):
     model_name = "Intervention"
     page_url_name = "intervention-page"
-    initial_url_name = "interventions"
+    initial_url_name = "interventions-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
     )
@@ -533,7 +533,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     url_names = {
         "page": "intervention-page",
         "prev_section": "other-analysis",
-        "next_section": "outcome-measures",
+        "next_section": "outcome-measure-first",
         "delete": "intervention-delete",
     }
     response = related_object_page_view(
@@ -550,7 +550,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
 
 def delete_intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
-    initial_url_name = "interventions"
+    initial_url_name = "interventions-initial"
     page_url_name = "intervention-page"
     evaluation_id, id, model_name, initial_url_name, page_url_name
     response = delete_related_object_view(
@@ -569,8 +569,8 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
-        "prev_url_name": "interventions",
-        "next_url_name": "other-measures",
+        "prev_url_name": "intervention-last",
+        "next_url_name": "other-measure-first",
         "add_url_name": "outcome-measure-page",
     }
     model_name = "OutcomeMeasure"
@@ -581,7 +581,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
 def first_outcome_measure_page_view(request, evaluation_id):
     model_name = "OutcomeMeasure"
     page_url_name = "outcome-measure-page"
-    initial_url_name = "outcome-measures"
+    initial_url_name = "outcome-measures-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
     )
@@ -591,7 +591,7 @@ def first_outcome_measure_page_view(request, evaluation_id):
 def last_outcome_measure_page_view(request, evaluation_id):
     model_name = "OutcomeMeasure"
     page_url_name = "outcome-measure-page"
-    initial_url_name = "outcome-measures"
+    initial_url_name = "outcome-measures-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
     )
@@ -604,8 +604,8 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     template_name = "submissions/outcome-measure-page.html"
     url_names = {
         "page": "outcome-measure-page",
-        "prev_section": "interventions",
-        "next_section": "other-measures",
+        "prev_section": "intervention-last",
+        "next_section": "other-measure-first",
         "delete": "outcome-measure-delete",
     }
     response = related_object_page_view(
@@ -622,7 +622,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
 
 def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
-    initial_url_name = "outcome-measures"
+    initial_url_name = "outcome-measures-initial"
     page_url_name = "outcome-measure-page"
     evaluation_id, id, model_name, initial_url_name, page_url_name
     response = delete_related_object_view(
@@ -664,7 +664,7 @@ def initial_other_measure_page_view(request, evaluation_id):
 def first_other_measure_page_view(request, evaluation_id):
     model_name = "OtherMeasure"
     page_url_name = "other-measure-page"
-    initial_url_name = "other-measures"
+    initial_url_name = "other-measures-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
     )
@@ -674,7 +674,7 @@ def first_other_measure_page_view(request, evaluation_id):
 def last_other_measure_page_view(request, evaluation_id):
     model_name = "OtherMeasure"
     page_url_name = "other-measure-page"
-    initial_url_name = "other-measures"
+    initial_url_name = "other-measures-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
     )
@@ -705,7 +705,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
 
 def delete_other_measure_page_view(request, evaluation_id, other_measure_id):
     model_name = "OtherMeasure"
-    initial_url_name = "other-measures"
+    initial_url_name = "other-measures-initial"
     page_url_name = "other-measure-page"
     evaluation_id, id, model_name, initial_url_name, page_url_name
     response = delete_related_object_view(
@@ -724,7 +724,7 @@ def initial_interventions_page_view(request, evaluation_id):
         "title": "Interventions",
         "template_name": "submissions/interventions.html",
         "prev_url_name": "other-analysis",
-        "next_url_name": "outcome-measures",
+        "next_url_name": "outcome-measures-initial",
         "add_url_name": "intervention-page",
     }
     model_name = "Intervention"

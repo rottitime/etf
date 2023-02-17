@@ -186,7 +186,7 @@ intervention_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/interventions/",
         submission_views.initial_interventions_page_view,
-        name="interventions",
+        name="interventions-initial",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/interventions/first/",
@@ -214,7 +214,7 @@ outcome_measure_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures",
         submission_views.initial_outcome_measure_page_view,
-        name="outcome-measures",
+        name="outcome-measures-initial",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/first",
@@ -243,7 +243,7 @@ other_measure_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/other-measures/",
         submission_views.initial_other_measure_page_view,
-        name="other-measures",
+        name="other-measures-initial",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/other-measures/first/",
