@@ -140,11 +140,6 @@ evaluation_entry_urlpatterns = [
         name="other-analysis",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/other-measures",
-        submission_views.evaluation_other_measures_view,
-        name="other-measures",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/ethics",
         submission_views.evaluation_ethics_view,
         name="ethics",
@@ -307,6 +302,7 @@ urlpatterns = (
     + api_urlpatterns
     + evaluation_entry_urlpatterns
     + outcome_measure_urlpatterns
+    + other_measure_urlpatterns
     + intervention_urlpatterns
     + processes_standards_urlpatterns
 )

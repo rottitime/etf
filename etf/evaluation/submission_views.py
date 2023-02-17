@@ -426,22 +426,11 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id, page_data)
 
 
-# TODO - likely to be more like outcome measures ie many interventions
-def evaluation_other_measures_view(request, evaluation_id):
-    page_data = {
-        "title": "Other measure",
-        "page_name": "other-measures",
-        "prev_page": "outcome-measure-last",
-        "next_page": "ethics",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
 def evaluation_ethics_view(request, evaluation_id):
     page_data = {
         "title": "Ethics",
         "page_name": "ethics",
-        "prev_page": "other-measures",
+        "prev_page": "other-measure-last",
         "next_page": "impact-findings",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -606,7 +595,7 @@ def initial_other_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
-        "prev_url_name": "other-measure-last",
+        "prev_url_name": "outcome-measure-last",
         "next_url_name": "ethics",
         "add_url_name": "other-measure-page",
     }
@@ -640,7 +629,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     template_name = "submissions/other-measure-page.html"
     url_names = {
         "page": "other-measure-page",
-        "prev_section": "other-measure-last",
+        "prev_section": "outcome-measure-last",
         "next_section": "ethics",
         "delete": "other-measure-delete",
     }
