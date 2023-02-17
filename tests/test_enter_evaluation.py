@@ -16,6 +16,14 @@ def setup_eval():
         name = f"Outcome measure {i}"
         outcome_measure = models.OutcomeMeasure(name=name, evaluation=evaluation)
         outcome_measure.save()
+    other_measure = models.OtherMeasure(name="Other measure 1", evaluation=evaluation)
+    other_measure.save()
+    intervention = models.Intervention(name="Intervention 1", evaluation=evaluation)
+    intervention.save()
+    for i in range(2):
+        name = f"Process {i}"
+        process = models.ProcessStandard(name=name, evaluation=evaluation)
+        process.save()
 
 
 def teardown_eval():
@@ -46,11 +54,66 @@ def test_outcome_measure_urls(client):
     evaluation = user.evaluations.all()[0]
     outcome_measure = models.OutcomeMeasure.objects.filter(evaluation=evaluation).first()
     urls_to_test = [
-        f"evaluation/{evaluation.id}/outcome-measures",
-        f"evaluation/{evaluation.id}/outcome-measures/last",
-        f"evaluation/{evaluation.id}/outcome-measures/first",
-        f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}",
-        f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/delete",
+        f"evaluation/{evaluation.id}/outcome-measures/",
+        f"evaluation/{evaluation.id}/outcome-measures/last/",
+        f"evaluation/{evaluation.id}/outcome-measures/first/",
+        f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/",
+        f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/delete/",
+    ]
+    for url in urls_to_test:
+        response = client.get(url)
+        assert response.status_code == 200
+
+
+@with_authenticated_client
+@with_setup(setup_eval, teardown_eval)
+def test_other_measure_urls(client):
+    user = models.User.objects.get(email="peter.rabbit@example.com")
+    evaluation = user.evaluations.all()[0]
+    other_measure = models.OtherMeasure.objects.filter(evaluation=evaluation).first()
+    urls_to_test = [
+        f"evaluation/{evaluation.id}/other-measures/",
+        f"evaluation/{evaluation.id}/other-measures/last/",
+        f"evaluation/{evaluation.id}/other-measures/first/",
+        f"evaluation/{evaluation.id}/other-measures/{other_measure.id}/",
+        f"evaluation/{evaluation.id}/other-measures/{other_measure.id}/delete/",
+    ]
+    for url in urls_to_test:
+        response = client.get(url)
+        assert response.status_code == 200
+
+
+@with_authenticated_client
+@with_setup(setup_eval, teardown_eval)
+def test_intervention_measure_urls(client):
+    user = models.User.objects.get(email="peter.rabbit@example.com")
+    evaluation = user.evaluations.all()[0]
+    intervention = models.Intervention.objects.filter(evaluation=evaluation).first()
+    print(intervention)
+    urls_to_test = [
+        f"evaluation/{evaluation.id}/interventions/",
+        f"evaluation/{evaluation.id}/interventions/last/",
+        f"evaluation/{evaluation.id}/interventions/first/",
+        f"evaluation/{evaluation.id}/interventions/{intervention.id}/",
+        f"evaluation/{evaluation.id}/interventions/{intervention.id}/delete/",
+    ]
+    for url in urls_to_test:
+        response = client.get(url)
+        assert response.status_code == 200
+
+
+@with_authenticated_client
+@with_setup(setup_eval, teardown_eval)
+def test_processes_standards_measure_urls(client):
+    user = models.User.objects.get(email="peter.rabbit@example.com")
+    evaluation = user.evaluations.all()[0]
+    process = models.ProcessStandard.objects.filter(evaluation=evaluation).first()
+    urls_to_test = [
+        f"evaluation/{evaluation.id}/processes-standards/",
+        f"evaluation/{evaluation.id}/processes-standards/last/",
+        f"evaluation/{evaluation.id}/processes-standards/first/",
+        f"evaluation/{evaluation.id}/processes-standards/{process.id}/",
+        f"evaluation/{evaluation.id}/processes-standards/{process.id}/delete/",
     ]
     for url in urls_to_test:
         response = client.get(url)

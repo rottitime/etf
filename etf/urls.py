@@ -199,7 +199,7 @@ intervention_urlpatterns = [
         name="intervention-last",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/intervention/<int:intervention_id>/",
+        "evaluation/<uuid:evaluation_id>/interventions/<int:intervention_id>/",
         submission_views.intervention_page_view,
         name="intervention-page",
     ),
