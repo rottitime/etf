@@ -9,7 +9,7 @@ def test_add_users():
 def test_add_evaluations_to_user():
     user_gen = add_users(1)
     user = list(user_gen)[0]
-    initial_num_evals = user.evaluation_set.count()
+    initial_num_evals = user.evaluations.count()
     add_evals_to_users(user, allow_empty=False)
-    new_num_evals = user.evaluation_set.count()
+    new_num_evals = user.evaluations.count()
     assert new_num_evals > initial_num_evals
