@@ -8,6 +8,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
+    path("accounts/password-reset/", views.PasswordReset, name="password-reset"),
+    path("accounts/change-password/reset/", views.PasswordChange, name="password-set"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
     path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),

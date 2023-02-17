@@ -10,6 +10,8 @@ class User(BaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = BaseUserManager()
     username = None
+    verified = models.BooleanField(default=False, blank=True, null=True)
+    last_token_sent_at = models.DateTimeField(editable=False, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
