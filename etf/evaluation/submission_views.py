@@ -506,6 +506,64 @@ def end_page_view(request, evaluation_id):
     return simple_page_view(request, evaluation_id, page_data)
 
 
+def first_intervention_page_view(request, evaluation_id):
+    model_name = "Intervention"
+    page_url_name = "intervention-page"
+    initial_url_name = "interventions"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+    )
+    return response
+
+
+def last_intervention_page_view(request, evaluation_id):
+    model_name = "Intervention"
+    page_url_name = "intervention-page"
+    initial_url_name = "interventions"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
+    )
+    return response
+
+
+def intervention_page_view(request, evaluation_id, intervention_id):
+    model_name = "Intervention"
+    title = "Interventions"
+    template_name = "submissions/intervention-page.html"
+    url_names = {
+        "page": "intervention-page",
+        "prev_section": "other-analysis",
+        "next_section": "outcome-measures",
+        "delete": "intervention-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=intervention_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def delete_intervention_page_view(request, evaluation_id, intervention_id):
+    model_name = "Intervention"
+    initial_url_name = "interventions"
+    page_url_name = "intervention-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=intervention_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
+    )
+    return response
+
+
 def initial_outcome_measure_page_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     form_data = {
@@ -671,64 +729,6 @@ def initial_interventions_page_view(request, evaluation_id):
     }
     model_name = "Intervention"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
-def first_intervention_page_view(request, evaluation_id):
-    model_name = "Intervention"
-    page_url_name = "intervention-page"
-    initial_url_name = "interventions"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-def last_intervention_page_view(request, evaluation_id):
-    model_name = "Intervention"
-    page_url_name = "intervention-page"
-    initial_url_name = "interventions"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
-    )
-    return response
-
-
-def intervention_page_view(request, evaluation_id, intervention_id):
-    model_name = "Intervention"
-    title = "Interventions"
-    template_name = "submissions/intervention-page.html"
-    url_names = {
-        "page": "intervention-page",
-        "prev_section": "other-analysis",
-        "next_section": "outcome-measures",
-        "delete": "intervention-delete",
-    }
-    response = related_object_page_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=intervention_id,
-        model_name=model_name,
-        title=title,
-        template_name=template_name,
-        url_names=url_names,
-    )
-    return response
-
-
-def delete_intervention_page_view(request, evaluation_id, intervention_id):
-    model_name = "Intervention"
-    initial_url_name = "interventions"
-    page_url_name = "intervention-page"
-    evaluation_id, id, model_name, initial_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=intervention_id,
-        model_name=model_name,
-        initial_url_name=initial_url_name,
-        page_url_name=page_url_name,
-    )
-    return response
 
 
 def initial_processes_standards_page_view(request, evaluation_id):

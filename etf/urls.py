@@ -301,9 +301,9 @@ urlpatterns = (
     urlpatterns
     + api_urlpatterns
     + evaluation_entry_urlpatterns
+    + intervention_urlpatterns
     + outcome_measure_urlpatterns
     + other_measure_urlpatterns
-    + intervention_urlpatterns
     + processes_standards_urlpatterns
 )
 
