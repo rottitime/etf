@@ -7,8 +7,15 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <button class="button" type="submit" name="add">Create other measure <i class="bi-file-earmark-plus"></i></button>  
-      {{macros.buttons(prev_url, data.id)}}
+      PLACEHOLDER
+
+      {{macros.textarea("", "", tooltip=[])}}
+      {% if show_add %}
+        {{macros.add_another_button("intervention")}}
+      {% endif %}
+      {{macros.delete_button("intervention")}}
+      
+      {{macros.buttons(prev_url)}}
     </fieldset>
   </form>
 {% endblock %}
