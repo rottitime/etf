@@ -172,7 +172,7 @@ def search_evaluations_view(request):
                 qs = topics_qs
             if search_phrase:
                 # TODO - what fields do we care about?
-                most_important_fields = ["id", "title", "description", "topics", "organisations"]
+                most_important_fields = ["id", "title", "brief_description", "topics", "organisations"]
                 other_fields = [
                     "issue_description",
                     "those_experiencing_issue",
