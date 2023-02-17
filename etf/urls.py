@@ -230,3 +230,5 @@ outcome_measure_urlpatterns = [
 ]
 
 urlpatterns = urlpatterns + api_urlpatterns + evaluation_entry_urlpatterns + outcome_measure_urlpatterns
+
+handler404 = "etf.evaluation.views.view_404"

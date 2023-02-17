@@ -49,6 +49,11 @@ class CustomSignupView(SignupView):
         return response
 
 
+# Unused request and exception arguments are required by django 404 handler function
+def view_404(request, exception=None):
+    return render(request, "page-not-found.html", {})
+
+
 class EvaluationSearchForm(forms.Form):
     id = forms.UUIDField(required=False)
     title = forms.CharField(max_length=100, required=False)
