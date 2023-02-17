@@ -1,8 +1,9 @@
+import json
 import uuid
 
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
-
+from django.conf import settings
 from . import choices
 
 
@@ -76,55 +77,11 @@ class Topic(choices.Choices):
     WELFARE = "Welfare"
 
 
-# TODO - to improve, for now just have UK Gov depts
-class Organisation(choices.Choices):
-    NO10 = "Prime Minister's Office, 10 Downing Street"
-    ATTORNEY_GENERAL = "Attorney General's Office"
-    CABINET_OFFICE = "Cabinet Office"
-    BEIS = "Department for Business, Energy & Industrial Strategy"
-    DCMS = "Department for Culture, Media & Sport"
-    DFE = "Department for Education"
-    DESNZ = "Department for Energy Security & Net Zero"
-    DEFRA = "Department for Environment Food & Rural Affairs"
-    DIT = "Department for International Trade"
-    DBAT = "Department for Business & Trade"
-    DLUHC = "Department for Levelling Up, Housing & Communities"
-    DSIT = "Department for Science, Innovation & Technology"
-    DFT = "Department for Transport"
-    DWP = "Department for Work & Pensions"
-    DHSC = "Department of Health & Social Care"
-    FCDO = "Foreign, Commonwealth & Development Office"
-    HMT = "HM Treasury"
-    HO = "Home Office"
-    MOD = "Ministry of Defence"
-    MOJ = "Ministry of Justice"
-    NI_OFFICE = "Northern Ireland Office"
-    ADVOCATE_GENERAL_SCOT = "Office of the Advocate General for Scotland"
-    LEADER_HOC = "Office of the Leader of the House of Commons"
-    LEADER_HOL = "Office of the Leader of the House of Lords"
-    SCOT_OFFICE = "Office of the Secretary of State for Scotland"
-    WALES_OFFICE = "Office of the Secretary of State for Wales"
-    UKEF = "UK Export Finance"
-    CHARITY_COMMISSION = "The Charity Commission"
-    CMA = "Competition and Markets Authority"
-    CPS = "Crown Prosecution Service"
-    FSA = "Food Standards Agency"
-    FORESTRY_COMMISSION = "Forestry Commission"
-    GAD = "Government Actuary's Department"
-    GLD = "Government Legal Department"
-    HMLR = "HM Land Registry"
-    HMRC = "HM Revenue & Customs"
-    NSI = "NS&I"
-    NATIONAL_ARCHIVES = "The National Archives"
-    NCA = "National Crime Agency"
-    ORR = "Office of Rail and Road"
-    OFGEM = "Ofgem"
-    OFQUAL = "Ofqual"
-    OFSTED = "Ofsted"
-    SERIOUS_FRAUD_OFFICE = "Serious Fraud Office"
-    SUPREME_COURT = "Supreme Court of the United Kingdom"
-    UK_STATS_AUTHORITY = "UK Statistics Authority"
-    WATER_SERVICES_REGULATION_AUTHORITY = "The Water Services Regulation Authority"
+with (settings.BASE_DIR / "data" / "organisations.json").open() as f:
+    org_data = json.load(f)
+    org_tuples = tuple((item['details']['slug'], item['details']['logo_formatted_name']) for item in org_data)
+    org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())
+    Organisation = choices.Choices("Organisation", org_tuples)
 
 
 class EvaluationStatus(choices.Choices):
