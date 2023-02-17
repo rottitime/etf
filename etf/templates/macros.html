@@ -1,31 +1,37 @@
-{% macro input(name, label, placeholder='', tooltip=[], type='text') -%}
+{% macro input(name, label, placeholder='', tooltip='', tooltip_position="top", type='text') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" title="{{ tooltip }}">
-    <i class="bi-question-circle-fill"></i>
-  </span>
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 {%- endmacro %}
 
-{% macro textarea(name, label, placeholder='', tooltip=[]) -%}
+{% macro textarea(name, label, placeholder='', tooltip='', tooltip_position="top") -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   <textarea placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 {%- endmacro %}
 
-{% macro select(name, label, options, tooltip=[], empty_option=DEFAULT) -%}
+{% macro select(name, label, options, tooltip='', tooltip_position="top", empty_option=DEFAULT) -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
     <select name="{{name}}" id="{{name}}">
       {% if not empty_option is sameas DEFAULT %}
         <option disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
@@ -34,49 +40,57 @@
         <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
       {% endfor %}
     </select>
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_many_from_formfield(name, label, field, tooltip=[]) -%}
+{% macro select_many_from_formfield(name, label, field, tooltip='', tooltip_position="top") -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
     {{field}}
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_from_formfield(name, label, field, tooltip=[]) -%}
+{% macro select_from_formfield(name, label, field, tooltip='', tooltip_position="top") -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
     {{field}}
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_many_from_list(name, label, list, tooltip=[]) -%}
+{% macro select_many_from_list(name, label, list, tooltip='', tooltip_position="top") -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
     <select multiple name="{{name}}" id="{{name}}">
       {% for item in list %}
         <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
       {% endfor %}
     </select>
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_from_list(name, label, list, tooltip=[], empty_option=DEFAULT) -%}
+{% macro select_from_list(name, label, list, tooltip='', tooltip_position="top", empty_option=DEFAULT) -%}
   <div>
     <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
     <select name="{{name}}" id="{{name}}">
       {% if not empty_option is sameas DEFAULT %}
           <option disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
@@ -85,47 +99,52 @@
         <option value="{{item[0]}}" {{is_selected(data, name, item[0])}}>{{item[1]}}</option>
       {% endfor %}
     </select>
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
   </div>
 {%- endmacro %}
 
-{% macro select_with_empty(name, label, options, tooltip=[]) -%}
+{% macro select_with_empty(name, label, options, tooltip='', tooltip_position="top") -%}
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   {{select(name, label, options, empty_option="Please choose one...")}}
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
 {%- endmacro %}
 
-{% macro yes_no(name, label, tooltip=[]) -%}
+{% macro yes_no(name, label, tooltip='', tooltip_position="top") -%}
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
 {%- endmacro %}
 
-{% macro yes_no_partial(name, label, tooltip=[]) -%}
+{% macro yes_no_partial(name, label, tooltip='', tooltip_position="top") -%}
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   {{select(name, label, options=({'text': '', 'value': None}, {'text': 'Yes', 'value': 'Yes'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option=None)}}
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
 {%- endmacro %}
 
-{% macro checkbox(name, label, tooltip=[]) -%}
+{% macro checkbox(name, label, tooltip='', tooltip_position="top") -%}
 <div>
   <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
   <label class="label" for="{{name}}">{{label}}</label>
-  {% for tt in tooltip %}
-    <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-  {% endfor %}
+  {% if tooltip %}
+    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+      <i class="bi-question-circle-fill"></i>
+    </span>
+  {% endif %}
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
 </div>
 {%- endmacro %}
 
-{% macro checkboxes(name, label, options, tooltip=[]) -%}
+{% macro checkboxes(name, label, options, tooltip='', tooltip_position="top") -%}
   <fieldset>
     <legend>{{label}}</legend>
     <div class="grid-container">
@@ -138,9 +157,11 @@
         {% endfor %}
       </div>
     </div>
-    {% for tt in tooltip %}
-      <p class="subheader" id="{{name}}-tt-{{loop.index}}">{{tt}}</p>
-    {% endfor %}
+    {% if tooltip %}
+      <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
+        <i class="bi-question-circle-fill"></i>
+      </span>
+    {% endif %}
   </fieldset>
 {%- endmacro %}
 
