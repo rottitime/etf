@@ -602,6 +602,76 @@ def evaluation_overview_view(request, evaluation_id):
     return render(request, "submissions/overview.html", {"errors": errors, "data": data})
 
 
+def initial_other_measure_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Other measures",
+        "template_name": "submissions/other-measures.html",
+        "prev_url_name": "other-measure-last",
+        "next_url_name": "ethics",
+        "add_url_name": "other-measure-page",
+    }
+    model_name = "OtherMeasure"
+    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
+def first_other_measure_page_view(request, evaluation_id):
+    model_name = "OtherMeasure"
+    page_url_name = "other-measure-page"
+    initial_url_name = "other-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
+    )
+    return response
+
+
+def last_other_measure_page_view(request, evaluation_id):
+    model_name = "OtherMeasure"
+    page_url_name = "other-measure-page"
+    initial_url_name = "other-measures"
+    response = first_last_related_object_view(
+        request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="last"
+    )
+    return response
+
+
+def other_measure_page_view(request, evaluation_id, other_measure_id):
+    model_name = "OtherMeasure"
+    title = "Other measures"
+    template_name = "submissions/other-measure-page.html"
+    url_names = {
+        "page": "other-measure-page",
+        "prev_section": "other-measure-last",
+        "next_section": "ethics",
+        "delete": "other-measure-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=other_measure_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def delete_other_measure_page_view(request, evaluation_id, other_measure_id):
+    model_name = "OtherMeasure"
+    initial_url_name = "other-measures"
+    page_url_name = "other-measure-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=other_measure_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
+    )
+    return response
+
+
 def initial_interventions_page_view(request, evaluation_id):
     form_data = {
         "title": "Interventions",

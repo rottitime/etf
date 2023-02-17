@@ -244,6 +244,35 @@ outcome_measure_urlpatterns = [
 ]
 
 
+other_measure_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/other-measures/",
+        submission_views.initial_other_measure_page_view,
+        name="other-measures",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/other-measures/first/",
+        submission_views.first_other_measure_page_view,
+        name="other-measure-first",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/other-measures/last/",
+        submission_views.last_other_measure_page_view,
+        name="other-measure-last",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/other-measures/<int:other_measure_id>/",
+        submission_views.other_measure_page_view,
+        name="other-measure-page",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/other-measures/<int:other_measure_id>/delete/",
+        submission_views.delete_other_measure_page_view,
+        name="other-measure-delete",
+    ),
+]
+
+
 processes_standards_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/",
