@@ -127,10 +127,14 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url_name = form_data["prev_url_name"]
     next_url_name = form_data["next_url_name"]
     add_url_name = form_data["add_url_name"]
+    print(add_url_name)
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
+    print("here")
     if request.method == "POST":
         if "add" in request.POST:
+            print(model_name)
+            print(add_url_name)
             return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
         return redirect(next_url)
     response = render(
@@ -633,6 +637,9 @@ def initial_interventions_page_view(request, evaluation_id):
         "add_url_name": "intervention-page",
     }
     model_name = "Intervention"
+    print("hi")
+    print(model_name)
+    print(form_data)
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
@@ -646,7 +653,7 @@ def first_intervention_page_view(request, evaluation_id):
     return response
 
 
-def last_outcome_measure_page_view(request, evaluation_id):
+def last_intervention_page_view(request, evaluation_id):
     model_name = "Intervention"
     page_url_name = "intervention-page"
     initial_url_name = "interventions"
@@ -674,5 +681,21 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+    )
+    return response
+
+
+def delete_intervention_page_view(request, evaluation_id, intervention_id):
+    model_name = "Intervention"
+    initial_url_name = "interventions"
+    page_url_name = "intervention-page"
+    evaluation_id, id, model_name, initial_url_name, page_url_name
+    response = delete_related_object_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=intervention_id,
+        model_name=model_name,
+        initial_url_name=initial_url_name,
+        page_url_name=page_url_name,
     )
     return response
