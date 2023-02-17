@@ -38,5 +38,5 @@ check-migrations:
 .PHONY: test
 test:
 	docker-compose down
-	docker-compose build tests-etf etf-test-db && docker-compose run --rm tests-etf || docker-compose down
+	docker-compose build tests-etf etf-test-db && docker-compose run --rm tests-etf
 	docker-compose down
