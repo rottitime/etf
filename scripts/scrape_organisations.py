@@ -28,11 +28,15 @@ def gather_results(start_url):
             yield result
 
 
+def dump_data(data):
+    output_filename = DATA_DIR / "organisations_raw.json"
+    with output_filename.open("w") as f:
+        json.dump(data, f)
+
+
 def main():
     results = list(gather_results(base_url))
-    output_filename = DATA_DIR / "organisations.json"
-    with output_filename.open("w") as f:
-        json.dump(results, f)
+    dump_data(results)
 
 
 if __name__ == "__main__":
