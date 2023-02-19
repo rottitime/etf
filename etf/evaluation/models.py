@@ -7,7 +7,7 @@ from . import choices, enums
 from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
-class UUIDPrimaryKey(models.Model):
+class UUIDPrimaryKeyBase(models.Model):
     class Meta:
         abstract = True
 
