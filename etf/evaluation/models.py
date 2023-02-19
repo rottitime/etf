@@ -281,13 +281,13 @@ class Evaluation(TimeStampedModel):
         return f"{self.id} : {self.title}"
 
 
-class EvaluationType(TimeStampedModel):
+class EvaluationType(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="evaluation_types", on_delete=models.CASCADE)
     type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationTypeOptions.choices)
     other_description = models.CharField(max_length=256, blank=True, null=True)
 
 
-class Intervention(TimeStampedModel):
+class Intervention(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
@@ -304,7 +304,7 @@ class Intervention(TimeStampedModel):
     geographical_information = models.TextField(blank=True, null=True)
 
 
-class OutcomeMeasure(TimeStampedModel):
+class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
@@ -316,21 +316,21 @@ class OutcomeMeasure(TimeStampedModel):
     relevance = models.TextField(blank=True, null=True)
 
 
-class OtherMeasure(TimeStampedModel):
+class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
 
-class ProcessStandard(TimeStampedModel):
+class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
 
 
-class Document(TimeStampedModel):
+class Document(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
@@ -338,7 +338,7 @@ class Document(TimeStampedModel):
     # TODO - file upload
 
 
-class EventDate(TimeStampedModel):
+class EventDate(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
@@ -346,13 +346,13 @@ class EventDate(TimeStampedModel):
     reasons_for_change = models.TextField(blank=True, null=True)
 
 
-class LinkOtherService(TimeStampedModel):
+class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
     name_of_service = models.CharField(max_length=256, blank=True, null=True)
     link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
 
 
-class EvaluationCost(TimeStampedModel):
+class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
     item_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
