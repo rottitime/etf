@@ -1,10 +1,9 @@
-import json
 import uuid
 
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
-from django.conf import settings
-from . import choices
+
+from . import choices, data
 
 
 class User(BaseUser):
@@ -77,13 +76,6 @@ class Topic(choices.Choices):
     WELFARE = "Welfare"
 
 
-with (settings.BASE_DIR / "data" / "organisations.json").open() as f:
-    org_data = json.load(f)
-    org_tuples = tuple((item['details']['slug'], item['details']['logo_formatted_name']) for item in org_data)
-    org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())
-    Organisation = choices.Choices("Organisation", org_tuples)
-
-
 class EvaluationStatus(choices.Choices):
     DRAFT = "Draft"
     CIVIL_SERVICE = "Civil Service"
@@ -134,7 +126,7 @@ def get_topic_display_name(db_name):
 
 
 def get_organisation_display_name(db_name):
-    result = [organisation[1] for organisation in Organisation.choices if organisation[0] == db_name]
+    result = [organisation[1] for organisation in data.Organisation.choices if organisation[0] == db_name]
     return result[0]
 
 

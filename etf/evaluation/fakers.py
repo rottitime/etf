@@ -7,7 +7,7 @@ import random
 
 import faker
 
-from . import models
+from . import data, models
 
 fake = faker.Faker()
 
@@ -48,7 +48,7 @@ def generate_organisations():
     num_organisations = random.randint(0, 4)
     set_organisations = set()
     for i in range(num_organisations):
-        set_organisations.add(random.choice(models.Organisation.values))
+        set_organisations.add(random.choice(data.Organisation.values))
     return list(set_organisations)
 
 
