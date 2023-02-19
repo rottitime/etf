@@ -11,7 +11,7 @@ class UUIDPrimaryKeyBase(models.Model):
     class Meta:
         abstract = True
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    new_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
 
 class User(BaseUser):
