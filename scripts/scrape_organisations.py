@@ -5,6 +5,7 @@ import httpx
 
 __here__ = pathlib.Path(__file__).parent
 DATA_DIR = __here__ / ".." / "data"
+APP_DIR = __here__ / ".." / "etf" / "evaluation"
 
 base_url = "https://www.gov.uk/api/organisations"
 
@@ -34,9 +35,27 @@ def dump_data(data):
         json.dump(data, f)
 
 
+def dump_python(data):
+    python_template = """
+from . import choices
+
+org_tuples = (
+{org_tuples}
+)
+Organisation = choices.Choices("Organisation", org_tuples)
+"""
+    org_tuples = tuple((item["details"]["slug"], item["title"]) for item in data)
+    org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())
+    org_tuples = ",\n".join(repr(t) for t in org_tuples)
+    content = python_template.format(org_tuples=org_tuples)
+    output_filename = APP_DIR / "data.py"
+    output_filename.write_text(content)
+
+
 def main():
     results = list(gather_results(base_url))
     dump_data(results)
+    dump_python(results)
 
 
 if __name__ == "__main__":
