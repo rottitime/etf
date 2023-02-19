@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
-from . import choices, data
+from . import choices, enums
 
 
 class User(BaseUser):
@@ -126,7 +126,7 @@ def get_topic_display_name(db_name):
 
 
 def get_organisation_display_name(db_name):
-    result = [organisation[1] for organisation in data.Organisation.choices if organisation[0] == db_name]
+    result = [organisation[1] for organisation in enums.Organisation.choices if organisation[0] == db_name]
     return result[0]
 
 

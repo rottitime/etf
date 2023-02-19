@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from . import data, models, schemas
+from . import enums, models, schemas
 
 
 @login_required
@@ -66,7 +66,7 @@ def evaluation_view(request, evaluation_id, page_data):
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     topics = models.Topic.choices
-    organisations = data.Organisation.choices
+    organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
     if request.method == "POST":
         data = request.POST

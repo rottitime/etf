@@ -15,7 +15,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from . import data, models
+from . import enums, models
 from .email_handler import send_password_reset_email, verify_reset_token
 
 
@@ -122,7 +122,7 @@ class EvaluationSearchForm(forms.Form):
     title = forms.CharField(max_length=100, required=False)
     description = forms.CharField(max_length=100, required=False)
     topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
-    organisations = forms.MultipleChoiceField(choices=data.Organisation.choices, required=False)
+    organisations = forms.MultipleChoiceField(choices=enums.Organisation.choices, required=False)
     status = forms.ChoiceField(choices=(("", "-----"), *models.EvaluationStatus.choices), required=False)
     search_phrase = forms.CharField(max_length=100, required=False)
     mine_only = forms.BooleanField(required=False)
