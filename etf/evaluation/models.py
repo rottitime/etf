@@ -7,6 +7,13 @@ from . import choices, enums
 from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
+class UUIDPrimaryKey(models.Model):
+    class Meta:
+        abstract = True
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+
 class User(BaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     objects = BaseUserManager()
