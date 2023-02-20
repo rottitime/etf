@@ -1,7 +1,6 @@
 import functools
 
 import httpx
-
 import testino
 
 import etf.wsgi

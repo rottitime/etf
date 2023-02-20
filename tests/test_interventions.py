@@ -10,7 +10,7 @@ def test_intervention():
     page = client.get("/")
     assert page.status_code == 200, page.status_code
 
-    form = page.get_form('''form[action="/"]''')
+    form = page.get_form("""form[action="/"]""")
     page = form.submit().follow()
     assert page.status_code == 200, page.status_code
 
@@ -18,8 +18,8 @@ def test_intervention():
     assert page.status_code == 200, page.status_code
     assert page.url.endswith("/title")
 
-    intervention_url = "/".join(page.url.split("/")[:-1]+["interventions/"])
+    intervention_url = "/".join(page.url.split("/")[:-1] + ["interventions/"])
     page = client.get(intervention_url)
 
-    form = page.get_form('''#intervention-add-form''')
+    form = page.get_form("""#intervention-add-form""")
     page = form.submit().follow()
