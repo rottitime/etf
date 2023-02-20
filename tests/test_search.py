@@ -1,18 +1,10 @@
-import testino
-
-from etf.wsgi import application
-
 from . import utils
-
-TEST_SERVER_URL = "http://etf-testserver/"
 
 USER_DATA = {"email": "mr_search_test@example.com", "password": "1-h4t3-p455w0rd-c0mpl3xity-53tt1ng5"}
 
 
-
 def test_search():
-    client = testino.WSGIAgent(application, TEST_SERVER_URL)
-
+    client = utils.make_testino_client()
     utils.register(client, **USER_DATA)
 
     page = client.get("/")

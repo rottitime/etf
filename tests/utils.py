@@ -2,6 +2,8 @@ import functools
 
 import httpx
 
+import testino
+
 import etf.wsgi
 from etf.evaluation.models import User
 
@@ -31,6 +33,11 @@ def with_authenticated_client(func):
             return func(client, *args, **kwargs)
 
     return _inner
+
+
+def make_testino_client():
+    client = testino.WSGIAgent(etf.wsgi.application, TEST_SERVER_URL)
+    return client
 
 
 def register(client, email, password):
