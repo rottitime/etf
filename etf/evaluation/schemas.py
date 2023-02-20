@@ -31,6 +31,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     organisations = fields.Raw()
     status = fields.Str(validate=validate.Length(max=256), default=models.EvaluationStatus.DRAFT.value)
     doi = fields.Str(validate=validate.Length(max=64))
+    page_statuses = fields.Raw()
 
     # Issue description
     issue_description = fields.Str()

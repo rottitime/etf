@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
+
+from .pages import get_default_page_statuses, PageNames, EvaluationPageStatus
 from . import choices, enums
 
 
@@ -135,6 +137,16 @@ def get_status_display_name(db_name):
     return result[0]
 
 
+def get_page_display_name(db_name):
+    result = [status[1] for status in PageNames.get_display_page_names().items() if status[0] == db_name]
+    return result[0]
+
+
+def get_page_status_display_name(db_name):
+    result = [status[1] for status in EvaluationPageStatus.choices if status[0] == db_name]
+    return result[0]
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     modified_at = models.DateTimeField(editable=False, auto_now=True)
@@ -160,6 +172,7 @@ class Evaluation(TimeStampedModel):
         max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
     )
     doi = models.CharField(max_length=64, blank=True, null=True)
+    page_statuses = models.JSONField(default=get_default_page_statuses())
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
