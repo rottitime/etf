@@ -7,14 +7,12 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      PLACEHOLDER
-
-      {% if show_add %}
-        {{macros.add_another_button("process or standard")}}
-      {% endif %}
-      {{macros.delete_button("process or standard")}}
-      <hr>
-      {{macros.buttons(prev_url)}}
+      <p>
+      Enter details of where the evaluation is conforming to a particular standard or where you have adopted a given set of principles.
+      </p>
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
     </fieldset>
   </form>
 {% endblock %}
