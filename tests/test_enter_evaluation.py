@@ -61,7 +61,7 @@ def test_outcome_measure_urls(client):
 def test_get_adjacent_id_for_model():
     user = models.User.objects.get(email="peter.rabbit@example.com")
     evaluation = user.evaluations.all().first()
-    outcome_measures = evaluation.outcome_measures.all().order_by("id")
+    outcome_measures = evaluation.outcome_measures.all().order_by("created_at")
     outcome_ids = list(outcome_measures.values_list("id", flat=True))
     outcome_id = get_adjacent_id_for_model(
         evaluation.id, outcome_ids[1], model_name="OutcomeMeasure", next_or_prev="next"
