@@ -7,10 +7,6 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <h1>Blah, blah, blah</h1>
-      <ul>
-        <li>Bullet 1</li>
-        <li>Bullet 2</li>
       </ul>
       {{macros.input("name", "Outcome name")}}
       {{macros.select("primary_or_secondary", "Primary or secondary", options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----", tooltip_position="right", tooltip="The primary outcome measure will provide the principal assessment of whether the intervention is effective or not. It should be selected on the basis of being the best measure of the main outcome of interest in the study. It will also have special status in the study, for example in reporting the findings and in setting the sample sizes. As well as the primary outcome measure, secondary outcome measures can be selected for a number of reasons: Establishing the effectiveness of intervention at delivering other benefits besides the primary target; Assessing the extent of any adverse outcomes; Monitoring the intermediate outcomes to assess the propagation of the impact of the intervention along the causal chain; Assessing the effectiveness of the intervention at timepoints other than the primary timepoint of interest; Collecting an alternative measure for compatibility with other studies.")}}
