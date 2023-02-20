@@ -9,10 +9,9 @@
       </legend>
       {{macros.input("name", "Intervention name")}}
 
-      {% if show_add %}
-        {{macros.add_another_button("intervention")}}
-      {% endif %}
-      {{macros.delete_button("intervention")}}
+      {% block buttons %}
+        {% include "submissions/multiple-objects-page.html" %}
+      {% endblock %}
       <hr>
       {{macros.buttons(prev_url)}}
     </fieldset>

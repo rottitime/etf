@@ -4,10 +4,10 @@
     <li><a href={{url}}>{{name}}</a></li>
     {% endfor %}
   </ul>
-  {% if data.objects.items() %}
-    <button class="button" type="submit" name="add">Create another {{data.object_type}}<i class="bi-file-earmark-plus"></i></button>
+  {% if not data.objects.items() %}
+    <button class="button" type="submit" name="add">Create {{data.object_name}}<i class="bi-file-earmark-plus"></i></button>
   {% else %}
-    <button class="button" type="submit" name="add">Create {{data.object_type}}<i class="bi-file-earmark-plus"></i></button>
+    {{macros.buttons_edit(data.object_name_plural)}}
   {% endif %}
   {{macros.buttons(prev_url, evaluation_id)}}
 {% endblock %}

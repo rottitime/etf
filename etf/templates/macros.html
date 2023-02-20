@@ -185,11 +185,36 @@
   </div>
 {%- endmacro %}
 
-{% macro add_another_button(object_name) -%}
+
+{% macro buttons_edit(object_name) -%}
   <div class="evaluation-button-row">
-    <button type="submit" name="add" class="padding-left button float-right">Add another {{object_name}} <i class="bi-file-earmark-plus"></i></button>
+    <button type="submit" name="edit" class="button float-right">Edit {{object_name}} <i class="bi-caret-right"></i></button>
   </div>
 {%- endmacro %}
+
+
+{% macro add_another_button(prev_obj_url, object_name) -%}
+  <div class="evaluation-button-row">
+    <a href="{{prev_obj_url}}" class="button float-left"><i class="bi-caret-left"></i> Previous {{object_name}}</a>
+    <button type="submit" name="add" class="padding-left button float-right">Save and add another {{object_name}} <i class="bi-file-earmark-plus"></i></button>
+  </div>
+{%- endmacro %}
+
+
+{% macro prev_next_obj_button(prev_obj_url, object_name) -%}
+  <div class="evaluation-button-row">
+    <a href="{{prev_obj_url}}" class="button float-left"><i class="bi-caret-left"></i> Previous {{object_name}}</a>
+    <button type="submit" name="prev_next" class="padding-left button float-right">Save and next {{object_name}}<i class="bi-caret-right"></i></button>
+  </div>
+{%- endmacro %}
+
+
+{% macro return_summary_button(object_name) -%}
+  <div class="evaluation-button-row">
+    <button type="submit" name="return" class="button float-right">Save and return to {{object_name}} summary</i></button>
+  </div>
+{%- endmacro %}
+
 
 {% macro delete_button(object_name) -%}
   <div class="evaluation-button-row">

@@ -17,10 +17,9 @@
       {{macros.textarea("minimum_difference", "Minimum practically important difference", tooltip_position="right", tooltip="A difference or change in this outcome measure below this level would be considered negligible, unimportant or irrelevant. Where a new intervention is being studied, the minimum practically important difference might be informed by the amount by which it would have to outperform the existing standard approach to be worth considering deploying. As well as the difference itself, record how the number was arrived at. Establishing the minimum practically important difference may require a small qualitative piece of research with decision-makers in the implementing organisation to identify. Having an accurate impression of the minimum practically important difference is particularly important for the primary outcome as this will be the main factor affecting how large the sample sizes need to be for the study.")}}
       {{macros.textarea("relevance", "Relevance of outcome")}}
       
-      {% if show_add %}
-        {{macros.add_another_button("outcome measure")}}
-      {% endif %}
-      {{macros.delete_button("outcome measure")}}
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects-page.html" %}
+      {% endblock %}
       <hr>
       {{macros.buttons(prev_url, data.evaluation_id)}}
     </fieldset>

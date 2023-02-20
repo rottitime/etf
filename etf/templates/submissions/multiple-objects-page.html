@@ -1,0 +1,10 @@
+{% block multipleobjects %}
+  {{macros.delete_button(object_name)}} 
+  {{macros.return_summary_button(object_name)}}
+  <hr>
+  {% if next_obj_url %}
+    {{macros.prev_next_obj_button(prev_obj_url, object_name)}}
+  {% else %}
+    {{macros.add_another_button(prev_obj_url, object_name)}}
+  {% endif %}
+{% endblock %}
