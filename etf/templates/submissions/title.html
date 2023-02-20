@@ -7,7 +7,8 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.input(name="title", label="Give a title for this evaluation", placeholder="e.g. R459-Waterways Pollution (2015-2020)", tooltip="Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar.")}}
+      {{macros.input(name="title", label="Evaluation title", placeholder="", tooltip="Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS). This should be a title for the evaluation as a whole, not for a given report or document associated with it, like 'Evaluation of the relative impact of ABC and DEF on XYZ outcomes' rater than 'Findings from an evaluation of ABC...' or 'Plans for an evaluation of ABC...'. This could include an indication of the evaluation type (eg impact evaluation) or method (eg randomised controlled trial) if known.")}}
+      {{macros.input(name="short_title", label="Short title for evaluation", tooltip="Please provide a short/abbreviated title for the evaluation, if you would like.")}}
       {{macros.buttons(prev_url)}}
     </fieldset>
   </form>
