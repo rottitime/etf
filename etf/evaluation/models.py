@@ -3,8 +3,8 @@ import uuid
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
-from .pages import EvaluationPageStatus, PageNames, get_default_page_statuses
 from . import choices, enums
+from .pages import EvaluationPageStatus, PageNames, get_default_page_statuses
 
 
 class User(BaseUser):
