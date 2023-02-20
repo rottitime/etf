@@ -31,3 +31,13 @@ def with_authenticated_client(func):
             return func(client, *args, **kwargs)
 
     return _inner
+
+
+def register(client, email, password):
+    page = client.get("/accounts/signup/")
+    form = page.get_form()
+    form["email"] = email
+    form["password1"] = password
+    form["password2"] = password
+    page = form.submit().follow()
+    assert page.has_text(f"Successfully signed in as {email}")
