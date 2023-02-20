@@ -46,12 +46,15 @@ def get_adjacent_id_for_model(evaluation_id, id, model_name, next_or_prev="next"
 
 @login_required
 def simple_page_view(request, evaluation_id, page_data):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
     next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
     page_name = page_data["page_name"]
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
     form_data = {"title": title, "prev_url": prev_url, "next_url": next_url}
+    evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.DONE.name
+    evaluation.save()
     return render(request, template_name, form_data)
 
 
@@ -80,6 +83,7 @@ def evaluation_view(request, evaluation_id, page_data):
             if "organisations" in data.keys():
                 organisation_list = data.getlist("organisations") or None
                 setattr(evaluation, "organisations", organisation_list)
+            evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.DONE.name
             evaluation.save()
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
@@ -592,3 +596,15 @@ def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id)
         page_url_name=page_url_name,
     )
     return response
+
+
+def evaluation_overview_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    statuses = evaluation.page_statuses
+    data = {
+        "statuses": statuses,
+        "evaluation_id": evaluation_id,
+    }
+    errors = {}
+
+    return render(request, "submissions/overview.html", {"errors": errors, "data": data})
