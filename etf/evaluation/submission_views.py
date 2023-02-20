@@ -112,7 +112,10 @@ def evaluation_view(request, evaluation_id, page_data):
 def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_type=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    new_object = model(evaluation=evaluation, name=f"New {object_type}")
+    if object_type:
+        new_object = model(evaluation=evaluation, name=f"New {object_type}")
+    else:
+        new_object = model(evaluation=evaluation)
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
     return response
@@ -200,7 +203,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     if prev_outcome_id:
         prev_url = reverse(url_names["page"], args=(evaluation_id, prev_outcome_id))
     else:
-        prev_url = reverse(url_names["prev_section"], args=(evaluation_id,))
+        prev_url = reverse(url_names["initial_page"], args=(evaluation_id,))
     if request.method == "POST":
         data = request.POST
         try:
@@ -567,6 +570,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         "page": "intervention-page",
         "prev_section": "other-analysis",
         "next_section": "outcome-measure-first",
+        "initial_page": "interventions-initial",
         "delete": "intervention-delete",
     }
     response = related_object_page_view(
@@ -641,6 +645,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         "page": "outcome-measure-page",
         "prev_section": "intervention-last",
         "next_section": "other-measure-first",
+        "initial_page": "outcome-measures-initial",
         "delete": "outcome-measure-delete",
     }
     response = related_object_page_view(
@@ -726,6 +731,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         "page": "other-measure-page",
         "prev_section": "outcome-measure-last",
         "next_section": "ethics",
+        "initial_page": "outcome-measures-initial",
         "delete": "other-measure-delete",
     }
     response = related_object_page_view(
@@ -772,7 +778,7 @@ def initial_processes_standards_page_view(request, evaluation_id):
 def first_process_standard_page_view(request, evaluation_id):
     model_name = "ProcessStandard"
     page_url_name = "process-standard-page"
-    initial_url_name = "processes-standards-intial"
+    initial_url_name = "processes-standards-initial"
     response = first_last_related_object_view(
         request, evaluation_id, model_name, initial_url_name, page_url_name, first_or_last="first"
     )
@@ -797,6 +803,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         "page": "process-standard-page",
         "prev_section": "other-findings",
         "next_section": "links",
+        "initial_page": "processes-standards-initial",
         "delete": "process-standard-delete",
     }
     response = related_object_page_view(
