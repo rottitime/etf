@@ -2,3 +2,14 @@ p.subheader {
   font-size: 0.75rem;
   margin: 0 0 1rem;
 }
+
+div.eval-overview-status {
+  text-align: end;
+  font-size: large;
+  font-weight: bold;
+}
+
+div.eval-overview-name {
+  font-size: 18px;
+  font-weight: 600;
+}
