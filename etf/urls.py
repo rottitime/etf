@@ -185,8 +185,8 @@ evaluation_entry_urlpatterns = [
 intervention_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/interventions/",
-        submission_views.initial_interventions_page_view,
-        name="interventions-initial",
+        submission_views.summary_interventions_page_view,
+        name="interventions-summary",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/interventions/first/",
@@ -213,8 +213,8 @@ intervention_urlpatterns = [
 outcome_measure_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/",
-        submission_views.initial_outcome_measure_page_view,
-        name="outcome-measures-initial",
+        submission_views.summary_outcome_measure_page_view,
+        name="outcome-measures-summary",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/first/",
@@ -242,8 +242,8 @@ outcome_measure_urlpatterns = [
 other_measure_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/other-measures/",
-        submission_views.initial_other_measure_page_view,
-        name="other-measures-initial",
+        submission_views.summary_other_measure_page_view,
+        name="other-measures-summary",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/other-measures/first/",
@@ -271,8 +271,8 @@ other_measure_urlpatterns = [
 processes_standards_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/",
-        submission_views.initial_processes_standards_page_view,
-        name="processes-standards-initial",
+        submission_views.summary_processes_standards_page_view,
+        name="processes-standards-summary",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/first/",
