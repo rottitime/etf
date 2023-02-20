@@ -118,9 +118,7 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
 @login_required
 def initial_related_object_page_view(request, evaluation_id, model_name, form_data):
     errors = {}
-    data = {
-        "evaluation_id": evaluation_id
-    }
+    data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
     template_name = form_data["template_name"]
     prev_url_name = form_data["prev_url_name"]
@@ -159,6 +157,7 @@ def first_last_related_object_view(
 
 @login_required
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
@@ -171,6 +170,9 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     if next_outcome_id:
         next_url = reverse(url_names["page"], args=(evaluation_id, next_outcome_id))
     else:
+        # TODO: Once submit buttons have been split on outcome measures. Figure out which one is pressed.
+        evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.DONE.name
+        evaluation.save()
         next_url = reverse(url_names["next_section"], args=(evaluation_id,))
         show_add = True
     if prev_outcome_id:
@@ -213,6 +215,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
 
 @login_required
 def delete_related_object_view(request, evaluation_id, id, model_name, initial_url_name, page_url_name):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     model = getattr(models, model_name)
     obj_to_delete = model.objects.get(id=id)
     prev_id = get_adjacent_id_for_model(evaluation_id=evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
@@ -225,6 +228,8 @@ def delete_related_object_view(request, evaluation_id, id, model_name, initial_u
         next_url = reverse(page_url_name, args=(evaluation_id, next_id))
     else:
         next_url = reverse(initial_url_name, args=(evaluation_id,))
+        evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.DONE.name
+        evaluation.save()
     return redirect(next_url)
 
 
