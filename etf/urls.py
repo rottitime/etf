@@ -12,7 +12,11 @@ urlpatterns = [
     path("accounts/change-password/reset/", views.PasswordChange, name="password-set"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
-    path("evaluation/<uuid:evaluation_id>/overview", submission_views.evaluation_overview_view, name="evaluation-overview"),
+    path(
+        "evaluation/<uuid:evaluation_id>/overview",
+        submission_views.evaluation_overview_view,
+        name="evaluation-overview",
+    ),
     path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
 ]
 

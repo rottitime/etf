@@ -43,7 +43,7 @@ class PageNames:
             "process-standards": "Process and standards",
             "links": "Links and IDs",
             "metadata": "Metadata",
-            "status": "Status"
+            "status": "Status",
         }
 
 
@@ -59,7 +59,7 @@ def get_default_page_statuses():
         "policy-costs": (EvaluationPageStatus.NOT_STARTED.name, 7),
         "publication-intention": (EvaluationPageStatus.NOT_STARTED.name, 8),
         "documents": (EvaluationPageStatus.NOT_STARTED.name, 9),
-        "event-dates":( EvaluationPageStatus.NOT_STARTED.name, 10),
+        "event-dates": (EvaluationPageStatus.NOT_STARTED.name, 10),
         "evaluation-types": (EvaluationPageStatus.NOT_STARTED.name, 11),
         "impact-design": (EvaluationPageStatus.NOT_STARTED.name, 12),
         "impact-analysis": (EvaluationPageStatus.NOT_STARTED.name, 13),
