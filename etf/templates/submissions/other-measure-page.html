@@ -11,11 +11,9 @@
 
       {{macros.textarea("", "", tooltip=[])}}
       
-      {% block multipleobjects %}
+      {% block buttons %}
         {% include "submissions/multiple-objects-page.html" %}
       {% endblock %}
-      <hr>
-      {{macros.buttons(prev_url)}}
     </fieldset>
   </form>
 {% endblock %}
