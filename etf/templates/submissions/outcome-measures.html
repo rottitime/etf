@@ -14,6 +14,10 @@
         {% endfor %}
       </ul>
       <button class="button" type="submit" name="add">Create outcome measure <i class="bi-file-earmark-plus"></i></button>
+      
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
       {{macros.buttons(prev_url, data.evaluation_id)}}
     </fieldset>
   </form>

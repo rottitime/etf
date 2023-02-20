@@ -109,10 +109,10 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_type=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    new_object = model(evaluation=evaluation, name="New")
+    new_object = model(evaluation=evaluation, name=f"New {object_type}")
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
     return response
@@ -123,6 +123,7 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
     errors = {}
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
+    object_type = form_data["object_type"]
     template_name = form_data["template_name"]
     prev_url_name = form_data["prev_section_url_name"]
     next_url_name = form_data["next_section_url_name"]
@@ -140,8 +141,7 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
         all_objects_dictionary[name] = url
 
     data["objects"] = all_objects_dictionary
-    print(all_objects_dictionary)
-    print(data)
+    data["object_type"] = object_type
 
     if all_objects.count():
         next_url_name = first_url_name
@@ -150,7 +150,7 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
 
     if request.method == "POST":
         if "add" in request.POST:
-            return add_related_object_for_eval(evaluation_id, model_name, page_url_name)
+            return add_related_object_for_eval(evaluation_id, model_name, page_url_name, object_type)
         return redirect(next_url)
     response = render(
         request,
@@ -533,6 +533,7 @@ def initial_interventions_page_view(request, evaluation_id):
         "next_section_url_name": "outcome-measures-initial",
         "page_url_name": "intervention-page",
         "first_url_name": "intervention-first",
+        "object_type": "intervention",
     }
     model_name = "Intervention"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
@@ -605,6 +606,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         "next_section_url_name": "other-measure-first",
         "page_url_name": "outcome-measure-page",
         "first_url_name": "outcome-measure-first",
+        "object_type": "outcome measure",
     }
     model_name = "OutcomeMeasure"
     evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
@@ -690,6 +692,7 @@ def initial_other_measure_page_view(request, evaluation_id):
         "next_section_url_name": "ethics",
         "page_url_name": "other-measure-page",
         "first_url_name": "other-measure-first",
+        "object_type": "other measure",
     }
     model_name = "OtherMeasure"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
@@ -760,6 +763,7 @@ def initial_processes_standards_page_view(request, evaluation_id):
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
         "page_url_name": "process-standard-page",
+        "object_type": "process or standard",
     }
     model_name = "ProcessStandard"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)

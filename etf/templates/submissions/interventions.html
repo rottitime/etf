@@ -6,6 +6,13 @@
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
+      </legend>
+      Enter data on each intervention in the evaluation in this section. For an impact evaluation we would expect at least 2 interventions, to include 'business as usual' or similar, if that is what a novel intervention is being compared against.
+      <ul>
+        {% for name, url in data.objects.items() %}
+        <li><a href={{url}}>{{name}}</a></li>
+        {% endfor %}
+      </ul>
       <button class="button" type="submit" name="add">Create intervention <i class="bi-file-earmark-plus"></i></button>
       {{macros.buttons(prev_url, data.id)}}
     </fieldset>
