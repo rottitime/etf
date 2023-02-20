@@ -170,10 +170,18 @@
   </fieldset>
 {%- endmacro %}
 
-{% macro buttons(prev_url) -%}
+{% macro buttons(prev_url, id) -%}
   <div class="evaluation-button-row">
-    <a href="{{prev_url}}" class="button float-left"><i class="bi-caret-left"></i> Back</a>
-    <button type="submit" class="button float-right">Next <i class="bi-caret-right"></i></button>
+    <div class="grid-x">
+      <div class="cell small-6">
+        <a href="{{ prev_url }}" class="button"><i class="bi-caret-left"></i> Back</a>
+        <a href="{{ url('evaluation-overview', args=[id]) }}" class="button margin-left-1"><i class="bi-house"></i>
+          Back to evaluation progress</a>
+      </div>
+      <div class="cell small-6">
+        <button type="submit" class="button float-right">Next <i class="bi-caret-right"></i></button>
+      </div>
+    </div>
   </div>
 {%- endmacro %}
 

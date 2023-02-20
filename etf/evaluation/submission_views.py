@@ -118,7 +118,9 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
 @login_required
 def initial_related_object_page_view(request, evaluation_id, model_name, form_data):
     errors = {}
-    data = {}
+    data = {
+        "evaluation_id": evaluation_id
+    }
     title = form_data["title"]
     template_name = form_data["template_name"]
     prev_url_name = form_data["prev_url_name"]
@@ -194,6 +196,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
+    data["evaluation_id"] = evaluation_id
     return render(
         request,
         template_name,
