@@ -89,7 +89,6 @@ def test_intervention_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
     evaluation = user.evaluations.all()[0]
     intervention = models.Intervention.objects.filter(evaluation=evaluation).first()
-    print(intervention)
     urls_to_test = [
         f"evaluation/{evaluation.id}/interventions/",
         f"evaluation/{evaluation.id}/interventions/last/",
