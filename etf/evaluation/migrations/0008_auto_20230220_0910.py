@@ -4,82 +4,90 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0007_auto_20230219_1534'),
+        ("evaluation", "0007_auto_20230219_1534"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='document',
-            name='id',        ),
+            model_name="document",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='evaluationcost',
-            name='id',        ),
+            model_name="evaluationcost",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='evaluationtype',
-            name='id',        ),
+            model_name="evaluationtype",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='eventdate',
-            name='id',        ),
+            model_name="eventdate",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='intervention',
-            name='id',        ),
+            model_name="intervention",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='linkotherservice',
-            name='id',        ),
+            model_name="linkotherservice",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='othermeasure',
-            name='id',        ),
+            model_name="othermeasure",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='outcomemeasure',
-            name='id',        ),
+            model_name="outcomemeasure",
+            name="id",
+        ),
         migrations.RemoveField(
-            model_name='processstandard',
-            name='id',        ),
-        migrations.RenameField(
-            model_name='document',
-            old_name='new_id',
-            new_name='id',
+            model_name="processstandard",
+            name="id",
         ),
         migrations.RenameField(
-            model_name='evaluationcost',
-            old_name='new_id',
-            new_name='id',
+            model_name="document",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='evaluationtype',
-            old_name='new_id',
-            new_name='id',
+            model_name="evaluationcost",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='eventdate',
-            old_name='new_id',
-            new_name='id',
+            model_name="evaluationtype",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='intervention',
-            old_name='new_id',
-            new_name='id',
+            model_name="eventdate",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='linkotherservice',
-            old_name='new_id',
-            new_name='id',
+            model_name="intervention",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='othermeasure',
-            old_name='new_id',
-            new_name='id',
+            model_name="linkotherservice",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='outcomemeasure',
-            old_name='new_id',
-            new_name='id',
+            model_name="othermeasure",
+            old_name="new_id",
+            new_name="id",
         ),
         migrations.RenameField(
-            model_name='processstandard',
-            old_name='new_id',
-            new_name='id',
+            model_name="outcomemeasure",
+            old_name="new_id",
+            new_name="id",
+        ),
+        migrations.RenameField(
+            model_name="processstandard",
+            old_name="new_id",
+            new_name="id",
         ),
     ]
