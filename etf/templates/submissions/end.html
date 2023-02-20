@@ -5,6 +5,15 @@
     <ul>
       <li>Blah, blah</li>
     </ul>
-    <a href="{{prev_url}}" class="button float-left"><i class="bi-caret-left"></i> Back</a>
+    <div class="evaluation-button-row">
+      <div class="grid-x">
+        <div class="cell small-6">
+          <a href="{{ prev_url }}" class="button"><i class="bi-caret-left"></i> Back</a>
+          <a href="
+              {{ url('evaluation-overview', args=[evaluation_id]) }}" class="button"><i class="bi-house"></i>Back
+            to evaluation progress</a>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

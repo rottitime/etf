@@ -52,7 +52,7 @@ def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
-    form_data = {"title": title, "prev_url": prev_url, "next_url": next_url}
+    form_data = {"title": title, "prev_url": prev_url, "next_url": next_url, "evaluation_id": evaluation_id}
     evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.DONE.name
     evaluation.save()
     return render(request, template_name, form_data)
