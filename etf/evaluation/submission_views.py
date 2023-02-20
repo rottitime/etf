@@ -124,15 +124,28 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
     template_name = form_data["template_name"]
-    prev_url_name = form_data["prev_url_name"]
-    next_url_name = form_data["next_url_name"]
-    add_url_name = form_data["add_url_name"]
+    prev_url_name = form_data["prev_section_url_name"]
+    next_url_name = form_data["next_section_url_name"]
+    page_url_name = form_data["page_url_name"]
+    first_url_name = form_data["first_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
-    next_url = reverse(next_url_name, args=(evaluation_id,))
+
+    related_model = getattr(models, model_name)
+    all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
+    all_objects_dictionary = {}
+    for obj in all_objects:
+        name = obj.name
+        obj_id = obj.id
+        url = reverse(page_url_name, args=(evaluation_id, obj_id))
+        all_objects_dictionary[name] = url
+
+    if all_objects.count():
+        next_url_name = first_url_name
+
     if request.method == "POST":
         if "add" in request.POST:
-            return add_related_object_for_eval(evaluation_id, model_name, add_url_name)
-        return redirect(next_url)
+            return add_related_object_for_eval(evaluation_id, model_name, page_url_name)
+        return redirect(reverse(next_url_name, args=(evaluation_id,)))
     response = render(
         request,
         template_name,
@@ -506,6 +519,19 @@ def end_page_view(request, evaluation_id):
     return simple_page_view(request, evaluation_id, page_data)
 
 
+def initial_interventions_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Interventions",
+        "template_name": "submissions/interventions.html",
+        "prev_section_url_name": "other-analysis",
+        "next_section_url_name": "outcome-measures-initial",
+        "page_url_name": "intervention-page",
+        "first_url_name": "intervention-first",
+    }
+    model_name = "Intervention"
+    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
 def first_intervention_page_view(request, evaluation_id):
     model_name = "Intervention"
     page_url_name = "intervention-page"
@@ -569,9 +595,10 @@ def initial_outcome_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
-        "prev_url_name": "intervention-last",
-        "next_url_name": "other-measure-first",
-        "add_url_name": "outcome-measure-page",
+        "prev_section_url_name": "intervention-last",
+        "next_section_url_name": "other-measure-first",
+        "page_url_name": "outcome-measure-page",
+        "first_url_name": "outcome-measure-first",
     }
     model_name = "OutcomeMeasure"
     evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
@@ -653,9 +680,10 @@ def initial_other_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
-        "prev_url_name": "outcome-measure-last",
-        "next_url_name": "ethics",
-        "add_url_name": "other-measure-page",
+        "prev_section_url_name": "outcome-measure-last",
+        "next_section_url_name": "ethics",
+        "page_url_name": "other-measure-page",
+        "first_url_name": "other-measure-first",
     }
     model_name = "OtherMeasure"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
@@ -719,25 +747,13 @@ def delete_other_measure_page_view(request, evaluation_id, other_measure_id):
     return response
 
 
-def initial_interventions_page_view(request, evaluation_id):
-    form_data = {
-        "title": "Interventions",
-        "template_name": "submissions/interventions.html",
-        "prev_url_name": "other-analysis",
-        "next_url_name": "outcome-measures-initial",
-        "add_url_name": "intervention-page",
-    }
-    model_name = "Intervention"
-    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
 def initial_processes_standards_page_view(request, evaluation_id):
     form_data = {
         "title": "Processes and standards",
         "template_name": "submissions/processes-standards.html",
-        "prev_url_name": "other-findings",
-        "next_url_name": "links",
-        "add_url_name": "process-standard-page",
+        "prev_section_url_name": "other-findings",
+        "next_section_url_name": "links",
+        "page_url_name": "process-standard-page",
     }
     model_name = "ProcessStandard"
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
