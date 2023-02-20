@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 
+from etf.evaluation import models
+
 DEFAULT = object()
 
 
@@ -34,6 +36,14 @@ def is_in(data, name, value):
         return ""
 
 
+def get_page_name(db_name):
+    return models.get_page_display_name(db_name)
+
+
+def get_page_status_name(db_name):
+    return models.get_page_status_display_name(db_name)
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -52,6 +62,8 @@ def environment(**options):
             "DEFAULT": DEFAULT,
             "get_messages": messages.get_messages,
             "is_in": is_in,
+            "get_page_display_name": get_page_name,
+            "get_page_status_display_name": get_page_status_name,
         }
     )
     return env
