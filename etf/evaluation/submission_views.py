@@ -189,7 +189,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     model_schema = schema(unknown=marshmallow.EXCLUDE)
     errors = {}
     data = {}
-    show_add = False
     next_obj_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="next")
     prev_obj_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
@@ -204,7 +203,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
         evaluation.save()
         next_url = reverse(url_names["next_section"], args=(evaluation_id,))
         next_obj_url = None
-        show_add = True
     if prev_obj_id:
         prev_obj_url = reverse(url_names["page"], args=(evaluation_id, prev_obj_id))
     else:
@@ -225,6 +223,8 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
                 )
             if "return" in request.POST:
                 return redirect(summary_url)
+            if "prev_next" in request.POST:
+                return redirect(next_obj_url)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
@@ -240,7 +240,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "data": data,
             "next_url": next_url,
             "prev_url": prev_url,
-            "show_add": show_add,
             "next_obj_url": next_obj_url,
             "prev_obj_url": prev_obj_url,
             "object_name": object_name,
