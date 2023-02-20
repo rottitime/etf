@@ -14,8 +14,7 @@ class UUIDPrimaryKeyBase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
 
-class User(BaseUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class User(BaseUser, UUIDPrimaryKeyBase):
     objects = BaseUserManager()
     username = None
     verified = models.BooleanField(default=False, blank=True, null=True)
@@ -157,11 +156,9 @@ class TimeStampedModel(models.Model):
 
 
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
-class Evaluation(TimeStampedModel):
+class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     users = models.ManyToManyField(User, related_name="evaluations")
 
-    # TODO - decide what we're doing with unique IDs for items in registry - this might be public?
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=256, blank=True, null=True)
     short_title = models.CharField(max_length=64, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
