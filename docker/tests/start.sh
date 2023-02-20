@@ -4,4 +4,7 @@ set -o errexit
 set -o nounset
 
 python manage.py migrate --noinput
-nosetests ./tests
+echo
+echo '----------------------------------------------------------------------'
+echo
+nosetests -v ./tests
