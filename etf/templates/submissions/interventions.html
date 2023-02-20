@@ -2,7 +2,7 @@
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-  <form method="POST">{{csrf_input}}
+  <form method="POST" id="intervention-add-form">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
