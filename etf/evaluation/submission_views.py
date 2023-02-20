@@ -139,13 +139,19 @@ def initial_related_object_page_view(request, evaluation_id, model_name, form_da
         url = reverse(page_url_name, args=(evaluation_id, obj_id))
         all_objects_dictionary[name] = url
 
+    data["objects"] = all_objects_dictionary
+    print(all_objects_dictionary)
+    print(data)
+
     if all_objects.count():
         next_url_name = first_url_name
+
+    next_url = reverse(next_url_name, args=(evaluation_id,))
 
     if request.method == "POST":
         if "add" in request.POST:
             return add_related_object_for_eval(evaluation_id, model_name, page_url_name)
-        return redirect(reverse(next_url_name, args=(evaluation_id,)))
+        return redirect(next_url)
     response = render(
         request,
         template_name,

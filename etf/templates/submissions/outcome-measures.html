@@ -9,7 +9,9 @@
       </legend>
       <h1>Blah, blah, blah</h1>
       <ul>
-        <li>Bullet 1</li>
+        {% for name, url in data.objects.items() %}
+        <li><a href={{url}}>{{name}}</a></li>
+        {% endfor %}
         <li>Bullet 2</li>
       </ul>
       <button class="button" type="submit" name="add">Create outcome measure <i class="bi-file-earmark-plus"></i></button>
