@@ -112,7 +112,7 @@ def evaluation_view(request, evaluation_id, page_data):
 def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    new_object = model(evaluation=evaluation)
+    new_object = model(evaluation=evaluation, name="New")
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
     return response

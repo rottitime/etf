@@ -7,12 +7,11 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <h1>Blah, blah, blah</h1>
+      Outcome measures are the things that you are measuring because you want to see how they vary between the arms, perhaps becuase you hope that the outcome will be better with a new intervention. Anything else you measure or record is an 'other measure', to be recorded in the next section.
       <ul>
         {% for name, url in data.objects.items() %}
         <li><a href={{url}}>{{name}}</a></li>
         {% endfor %}
-        <li>Bullet 2</li>
       </ul>
       <button class="button" type="submit" name="add">Create outcome measure <i class="bi-file-earmark-plus"></i></button>
       {{macros.buttons(prev_url, data.evaluation_id)}}
