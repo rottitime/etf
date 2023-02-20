@@ -89,6 +89,8 @@ def evaluation_view(request, evaluation_id, page_data):
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
     else:
+        evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.IN_PROGRESS.name
+        evaluation.save()
         data = eval_schema.dump(evaluation)
     return render(
         request,
@@ -537,6 +539,7 @@ def end_page_view(request, evaluation_id):
 
 
 def initial_outcome_measure_page_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
@@ -545,6 +548,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         "add_url_name": "outcome-measure-page",
     }
     model_name = "OutcomeMeasure"
+    evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
