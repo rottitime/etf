@@ -35,6 +35,14 @@ def dump_data(data):
         json.dump(data, f)
 
 
+def get_name(item):
+    title = item["title"]
+    abbreviation = item["details"]["abbreviation"]
+    if abbreviation:
+        title = f"{title} ({abbreviation})"
+    return title
+
+
 def dump_python(data):
     python_template = """
 from . import choices
@@ -44,7 +52,7 @@ org_tuples = (
 )
 Organisation = choices.Choices("Organisation", org_tuples)
 """
-    org_tuples = tuple((item["details"]["slug"], item["title"]) for item in data)
+    org_tuples = tuple((item["details"]["slug"], get_name(item)) for item in data)
     org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())
     org_tuples = ",\n".join(repr(t) for t in org_tuples)
     content = python_template.format(org_tuples=org_tuples)
