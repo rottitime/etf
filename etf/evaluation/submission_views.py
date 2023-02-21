@@ -74,6 +74,7 @@ def evaluation_view(request, evaluation_id, page_data):
     statuses = models.EvaluationStatus.choices
     if request.method == "POST":
         data = request.POST
+        data = {k: v for (k, v) in data.items() if v}
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
