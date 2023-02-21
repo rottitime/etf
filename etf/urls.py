@@ -203,11 +203,6 @@ intervention_urlpatterns = [
         submission_views.intervention_page_view,
         name="intervention-page",
     ),
-    path(
-        "evaluation/<uuid:evaluation_id>/interventions/<int:intervention_id>/delete/",
-        submission_views.delete_intervention_page_view,
-        name="intervention-delete",
-    ),
 ]
 
 outcome_measure_urlpatterns = [
@@ -230,11 +225,6 @@ outcome_measure_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/",
         submission_views.outcome_measure_page_view,
         name="outcome-measure-page",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/delete/",
-        submission_views.delete_outcome_measure_page_view,
-        name="outcome-measure-delete",
     ),
 ]
 
@@ -260,11 +250,6 @@ other_measure_urlpatterns = [
         submission_views.other_measure_page_view,
         name="other-measure-page",
     ),
-    path(
-        "evaluation/<uuid:evaluation_id>/other-measures/<int:other_measure_id>/delete/",
-        submission_views.delete_other_measure_page_view,
-        name="other-measure-delete",
-    ),
 ]
 
 
@@ -288,11 +273,6 @@ processes_standards_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/",
         submission_views.process_standard_page_view,
         name="process-standard-page",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/delete/",
-        submission_views.delete_process_standard_page_view,
-        name="process-standard-delete",
     ),
 ]
 

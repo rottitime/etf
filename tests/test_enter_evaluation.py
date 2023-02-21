@@ -58,7 +58,6 @@ def test_outcome_measure_urls(client):
         f"evaluation/{evaluation.id}/outcome-measures/last/",
         f"evaluation/{evaluation.id}/outcome-measures/first/",
         f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/",
-        f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/delete/",
     ]
     for url in urls_to_test:
         response = client.get(url)
@@ -76,7 +75,6 @@ def test_other_measure_urls(client):
         f"evaluation/{evaluation.id}/other-measures/last/",
         f"evaluation/{evaluation.id}/other-measures/first/",
         f"evaluation/{evaluation.id}/other-measures/{other_measure.id}/",
-        f"evaluation/{evaluation.id}/other-measures/{other_measure.id}/delete/",
     ]
     for url in urls_to_test:
         response = client.get(url)
@@ -94,7 +92,6 @@ def test_intervention_measure_urls(client):
         f"evaluation/{evaluation.id}/interventions/last/",
         f"evaluation/{evaluation.id}/interventions/first/",
         f"evaluation/{evaluation.id}/interventions/{intervention.id}/",
-        f"evaluation/{evaluation.id}/interventions/{intervention.id}/delete/",
     ]
     for url in urls_to_test:
         response = client.get(url)
@@ -112,7 +109,6 @@ def test_processes_standards_measure_urls(client):
         f"evaluation/{evaluation.id}/processes-standards/last/",
         f"evaluation/{evaluation.id}/processes-standards/first/",
         f"evaluation/{evaluation.id}/processes-standards/{process.id}/",
-        f"evaluation/{evaluation.id}/processes-standards/{process.id}/delete/",
     ]
     for url in urls_to_test:
         response = client.get(url)
