@@ -515,7 +515,7 @@ def evaluation_metadata_view(request, evaluation_id):
 
 
 def evaluation_status_view(request, evaluation_id):
-    page_data = {"title": "Status", "page_name": "status", "prev_page": "metadata", "next_page": "end"}
+    page_data = {"title": "Evaluation visibility", "page_name": "status", "prev_page": "metadata", "next_page": "end"}
     return evaluation_view(request, evaluation_id, page_data)
 
 
