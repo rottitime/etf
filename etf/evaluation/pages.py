@@ -9,39 +9,39 @@ class EvaluationPageStatus(choices.Choices):
 
 
 page_display_names = {
-        "intro": "Intro",
-        "title": "Title",
-        "description": "Description",
-        "issue-description": "Issue description",
-        "studied-population": "Studied population",
-        "participant-recruitment": "Participant recruitment",
-        "evaluation-costs": "Evaluation costs",
-        "policy-costs": "Policy costs",
-        "publication-intention": "Publication intention",
-        "documents": "Documents",
-        "event-dates": "Event dates",
-        "evaluation-types": "Evaluation types",
-        "impact-design": "Impact design",
-        "impact-analysis": "Impact analysis",
-        "process-design": "Process design",
-        "process-analysis": "Process analysis",
-        "economic-design": "Economic design",
-        "economic-analysis": "Economic analysis",
-        "other-design": "Other design",
-        "other-analysis": "Other analysis",
-        "interventions": "Interventions",
-        "outcome-measures": "Outcome measures",
-        "other-measures": "Other measures",
-        "ethics": "Ethics",
-        "impact-findings": "Impact findings",
-        "economic-findings": "Economic findings",
-        "process-findings": "Process findings",
-        "other-findings": "Other findings",
-        "process-standards": "Process and standards",
-        "links": "Links and IDs",
-        "metadata": "Metadata",
-        "status": "Status",
-    }
+    "intro": "Intro",
+    "title": "Title",
+    "description": "Description",
+    "issue-description": "Issue description",
+    "studied-population": "Studied population",
+    "participant-recruitment": "Participant recruitment",
+    "evaluation-costs": "Evaluation costs",
+    "policy-costs": "Policy costs",
+    "publication-intention": "Publication intention",
+    "documents": "Documents",
+    "event-dates": "Event dates",
+    "evaluation-types": "Evaluation types",
+    "impact-design": "Impact design",
+    "impact-analysis": "Impact analysis",
+    "process-design": "Process design",
+    "process-analysis": "Process analysis",
+    "economic-design": "Economic design",
+    "economic-analysis": "Economic analysis",
+    "other-design": "Other design",
+    "other-analysis": "Other analysis",
+    "interventions": "Interventions",
+    "outcome-measures": "Outcome measures",
+    "other-measures": "Other measures",
+    "ethics": "Ethics",
+    "impact-findings": "Impact findings",
+    "economic-findings": "Economic findings",
+    "process-findings": "Process findings",
+    "other-findings": "Other findings",
+    "process-standards": "Process and standards",
+    "links": "Links and IDs",
+    "metadata": "Metadata",
+    "status": "Status",
+}
 
 
 def get_default_page_statuses():
@@ -81,5 +81,7 @@ def get_default_page_statuses():
     }
 
     page_name_and_order = {page_name: page_info for page_name, page_info in page_statuses.items()}
-    page_name_and_status = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name, page_info in page_statuses.items()}
+    page_name_and_status = {
+        page_name: EvaluationPageStatus.NOT_STARTED.name for page_name, page_info in page_statuses.items()
+    }
     return {"page_status_order": page_name_and_order, "page_statuses": page_name_and_status}
