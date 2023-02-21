@@ -4,7 +4,6 @@
 
 {% block content %}
 
-
   <div class="card">
     <div class="card-divider">
       Register
@@ -16,14 +15,23 @@
       <form method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
         <p>
+          {% if form.errors.email %}
+            <span class="form-error">{{form.errors.email}}</span>
+          {% endif %}
           <label for="id_email">Email:</label>
           <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off">
         </p>
         <p>
+          {% if form.errors.email %}
+            <span class="form-error">{{form.errors.password1}}</span>
+          {% endif %}
           <label for="id_password1">Password:</label>
           <input type="password" name="password1" placeholder="Password" id="id_password1" required autocomplete="off">
         </p>
         <p>
+          {% if form.errors.email %}
+            <span class="form-error">{{form.errors.password2}}</span>
+          {% endif %}
           <label for="id_password2">Password:</label>
           <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
         </p>
