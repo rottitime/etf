@@ -55,8 +55,6 @@ def test_outcome_measure_urls(client):
     outcome_measure = models.OutcomeMeasure.objects.filter(evaluation=evaluation).first()
     urls_to_test = [
         f"evaluation/{evaluation.id}/outcome-measures/",
-        f"evaluation/{evaluation.id}/outcome-measures/last/",
-        f"evaluation/{evaluation.id}/outcome-measures/first/",
         f"evaluation/{evaluation.id}/outcome-measures/{outcome_measure.id}/",
     ]
     for url in urls_to_test:
@@ -72,8 +70,6 @@ def test_other_measure_urls(client):
     other_measure = models.OtherMeasure.objects.filter(evaluation=evaluation).first()
     urls_to_test = [
         f"evaluation/{evaluation.id}/other-measures/",
-        f"evaluation/{evaluation.id}/other-measures/last/",
-        f"evaluation/{evaluation.id}/other-measures/first/",
         f"evaluation/{evaluation.id}/other-measures/{other_measure.id}/",
     ]
     for url in urls_to_test:
@@ -89,8 +85,6 @@ def test_intervention_measure_urls(client):
     intervention = models.Intervention.objects.filter(evaluation=evaluation).first()
     urls_to_test = [
         f"evaluation/{evaluation.id}/interventions/",
-        f"evaluation/{evaluation.id}/interventions/last/",
-        f"evaluation/{evaluation.id}/interventions/first/",
         f"evaluation/{evaluation.id}/interventions/{intervention.id}/",
     ]
     for url in urls_to_test:
@@ -106,8 +100,6 @@ def test_processes_standards_measure_urls(client):
     process = models.ProcessStandard.objects.filter(evaluation=evaluation).first()
     urls_to_test = [
         f"evaluation/{evaluation.id}/processes-standards/",
-        f"evaluation/{evaluation.id}/processes-standards/last/",
-        f"evaluation/{evaluation.id}/processes-standards/first/",
         f"evaluation/{evaluation.id}/processes-standards/{process.id}/",
     ]
     for url in urls_to_test:

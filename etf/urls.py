@@ -189,37 +189,18 @@ intervention_urlpatterns = [
         name="interventions-summary",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/interventions/first/",
-        submission_views.first_intervention_page_view,
-        name="intervention-first",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/interventions/last/",
-        submission_views.last_intervention_page_view,
-        name="intervention-last",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/interventions/<int:intervention_id>/",
         submission_views.intervention_page_view,
         name="intervention-page",
     ),
 ]
 
+
 outcome_measure_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/",
         submission_views.summary_outcome_measure_page_view,
         name="outcome-measures-summary",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/first/",
-        submission_views.first_outcome_measure_page_view,
-        name="outcome-measure-first",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/last/",
-        submission_views.last_outcome_measure_page_view,
-        name="outcome-measure-last",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/",
@@ -236,16 +217,6 @@ other_measure_urlpatterns = [
         name="other-measures-summary",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/other-measures/first/",
-        submission_views.first_other_measure_page_view,
-        name="other-measure-first",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/other-measures/last/",
-        submission_views.last_other_measure_page_view,
-        name="other-measure-last",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/other-measures/<int:other_measure_id>/",
         submission_views.other_measure_page_view,
         name="other-measure-page",
@@ -258,16 +229,6 @@ processes_standards_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/processes-standards/",
         submission_views.summary_processes_standards_page_view,
         name="processes-standards-summary",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/processes-standards/first/",
-        submission_views.first_process_standard_page_view,
-        name="process-standard-first",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/processes-standards/last/",
-        submission_views.last_process_standard_page_view,
-        name="process-standard-last",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/",

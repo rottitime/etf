@@ -403,7 +403,7 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",
         "prev_page": "other-design",
-        "next_page": "intervention-first",
+        "next_page": "interventions-summary",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -495,32 +495,11 @@ def summary_interventions_page_view(request, evaluation_id):
         "prev_section_url_name": "other-analysis",
         "next_section_url_name": "outcome-measures-summary",
         "page_url_name": "intervention-page",
-        "first_url_name": "intervention-first",
         "object_name": "intervention",
         "object_name_plural": "interventions",
     }
     model_name = "Intervention"
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
-def first_intervention_page_view(request, evaluation_id):
-    model_name = "Intervention"
-    page_url_name = "intervention-page"
-    summary_url_name = "interventions-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-def last_intervention_page_view(request, evaluation_id):
-    model_name = "Intervention"
-    page_url_name = "intervention-page"
-    summary_url_name = "interventions-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="last"
-    )
-    return response
 
 
 def intervention_page_view(request, evaluation_id, intervention_id):
@@ -579,7 +558,6 @@ def summary_outcome_measure_page_view(request, evaluation_id):
         "prev_section_url_name": "interventions-summary",
         "next_section_url_name": "other-measures-summary",
         "page_url_name": "outcome-measure-page",
-        "first_url_name": "outcome-measure-first",
         "object_name": "outcome measure",
         "object_name_plural": "outcome measures",
     }
@@ -590,26 +568,6 @@ def summary_outcome_measure_page_view(request, evaluation_id):
 =======
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 >>>>>>> dad9f4d (refactoring)
-
-
-def first_outcome_measure_page_view(request, evaluation_id):
-    model_name = "OutcomeMeasure"
-    page_url_name = "outcome-measure-page"
-    summary_url_name = "outcome-measures-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-def last_outcome_measure_page_view(request, evaluation_id):
-    model_name = "OutcomeMeasure"
-    page_url_name = "outcome-measure-page"
-    summary_url_name = "outcome-measures-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="last"
-    )
-    return response
 
 
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
@@ -681,32 +639,11 @@ def summary_other_measure_page_view(request, evaluation_id):
         "prev_section_url_name": "outcome-measures-summary",
         "next_section_url_name": "ethics",
         "page_url_name": "other-measure-page",
-        "first_url_name": "other-measure-first",
         "object_name": "other measure",
         "object_name_plural": "other measures",
     }
     model_name = "OtherMeasure"
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
-def first_other_measure_page_view(request, evaluation_id):
-    model_name = "OtherMeasure"
-    page_url_name = "other-measure-page"
-    summary_url_name = "other-measures-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-def last_other_measure_page_view(request, evaluation_id):
-    model_name = "OtherMeasure"
-    page_url_name = "other-measure-page"
-    summary_url_name = "other-measures-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="last"
-    )
-    return response
 
 
 def other_measure_page_view(request, evaluation_id, other_measure_id):
@@ -746,26 +683,6 @@ def summary_processes_standards_page_view(request, evaluation_id):
     }
     model_name = "ProcessStandard"
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
-
-
-def first_process_standard_page_view(request, evaluation_id):
-    model_name = "ProcessStandard"
-    page_url_name = "process-standard-page"
-    summary_url_name = "processes-standards-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="first"
-    )
-    return response
-
-
-def last_process_standard_page_view(request, evaluation_id):
-    model_name = "ProcessStandard"
-    page_url_name = "process-standard-page"
-    summary_url_name = "processes-standards-summary"
-    response = first_last_related_object_view(
-        request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="last"
-    )
-    return response
 
 
 def process_standard_page_view(request, evaluation_id, process_standard_id):
