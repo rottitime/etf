@@ -132,7 +132,6 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url_name = form_data["prev_section_url_name"]
     next_url_name = form_data["next_section_url_name"]
     page_url_name = form_data["page_url_name"]
-    first_url_name = form_data["first_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
 
@@ -145,11 +144,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["object_name_plural"] = object_name_plural
 
     if request.method == "POST":
-        if "add" in request.POST:
-            return add_related_object_for_eval(evaluation_id, model_name, page_url_name, object_name)
-        if "edit" in request.POST:
-            return redirect(reverse(first_url_name, args=(evaluation_id,)))
-        return redirect(next_url)
+        return add_related_object_for_eval(evaluation_id, model_name, page_url_name, object_name)
     response = render(
         request,
         template_name,
