@@ -79,5 +79,4 @@ page_url_names = (
 )
 
 page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}
-page_name_and_status = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}
-default_page_statuses = {"page_status_order": page_name_and_order, "page_statuses": page_name_and_status}
+default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}

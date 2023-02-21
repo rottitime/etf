@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import enums, models, schemas
+from .pages import page_name_and_order
 
 
 @login_required
@@ -53,7 +54,7 @@ def simple_page_view(request, evaluation_id, page_data):
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
     form_data = {"title": title, "prev_url": prev_url, "next_url": next_url, "evaluation_id": evaluation_id}
-    evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.DONE.name
+    evaluation.page_statuses[page_name] = models.EvaluationPageStatus.DONE.name
     evaluation.save()
     return render(request, template_name, form_data)
 
@@ -83,13 +84,13 @@ def evaluation_view(request, evaluation_id, page_data):
             if "organisations" in data.keys():
                 organisation_list = data.getlist("organisations") or None
                 setattr(evaluation, "organisations", organisation_list)
-            evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.DONE.name
+            evaluation.page_statuses[page_name] = models.EvaluationPageStatus.DONE.name
             evaluation.save()
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
     else:
-        evaluation.page_statuses["page_statuses"][page_name] = models.EvaluationPageStatus.IN_PROGRESS.name
+        evaluation.page_statuses[page_name] = models.EvaluationPageStatus.IN_PROGRESS.name
         evaluation.save()
         data = eval_schema.dump(evaluation)
     return render(
@@ -173,7 +174,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
         next_url = reverse(url_names["page"], args=(evaluation_id, next_outcome_id))
     else:
         # TODO: Once submit buttons have been split on outcome measures. Figure out which one is pressed.
-        evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.DONE.name
+        evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.DONE.name
         evaluation.save()
         next_url = reverse(url_names["next_section"], args=(evaluation_id,))
         show_add = True
@@ -230,7 +231,7 @@ def delete_related_object_view(request, evaluation_id, id, model_name, initial_u
         next_url = reverse(page_url_name, args=(evaluation_id, next_id))
     else:
         next_url = reverse(initial_url_name, args=(evaluation_id,))
-        evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.DONE.name
+        evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.DONE.name
         evaluation.save()
     return redirect(next_url)
 
@@ -548,7 +549,7 @@ def initial_outcome_measure_page_view(request, evaluation_id):
         "add_url_name": "outcome-measure-page",
     }
     model_name = "OutcomeMeasure"
-    evaluation.page_statuses["page_statuses"]["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
+    evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
     return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
@@ -615,6 +616,7 @@ def evaluation_overview_view(request, evaluation_id):
     statuses = evaluation.page_statuses
     data = {
         "statuses": statuses,
+        "page_order": page_name_and_order,
         "evaluation_id": evaluation_id,
     }
     errors = {}
