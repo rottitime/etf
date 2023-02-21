@@ -120,7 +120,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
 class InterventionSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema())
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     brief_description = fields.Str()
     rationale = fields.Str()
@@ -138,7 +138,7 @@ class InterventionSchema(TimeStampedModelSchema):
 
 class OutcomeMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
     direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
@@ -151,7 +151,7 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
 
 class OtherMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
@@ -159,7 +159,7 @@ class OtherMeasureSchema(TimeStampedModelSchema):
 
 class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     conformity = fields.Str(validate=validate.Length(max=10))
     description = fields.Str()
@@ -167,7 +167,7 @@ class ProcessStandardSchema(TimeStampedModelSchema):
 
 class DocumentSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     title = fields.Str(validate=validate.Length(max=256))
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
@@ -175,7 +175,7 @@ class DocumentSchema(TimeStampedModelSchema):
 
 class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     date = fields.Date()
     type = fields.Str(validate=validate.Length(max=10))
@@ -184,14 +184,14 @@ class EventDateSchema(TimeStampedModelSchema):
 
 class LinkOtherServiceSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     name_of_service = fields.Str(validate=validate.Length(max=256))
     link_or_identifier = fields.Str(validate=validate.Length(max=256))
 
 
 class EvaluationCostSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
-    id = fields.Int(dump_only=True)
+    id = fields.UUID(dump_only=True)
     item_name = fields.Str()
     description = fields.Str()
     item_cost = fields.Float()
