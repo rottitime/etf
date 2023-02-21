@@ -80,3 +80,7 @@ page_url_names = (
 
 page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}
 default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}
+
+
+def get_default_page_statuses():
+    return dict(default_page_statuses)
