@@ -182,31 +182,15 @@ def first_last_related_object_view(
 
 @login_required
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
     model_schema = schema(unknown=marshmallow.EXCLUDE)
     errors = {}
     data = {}
-    next_obj_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="next")
-    prev_obj_id = get_adjacent_id_for_model(evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
-
-    if next_obj_id:
-        next_obj_url = reverse(url_names["page"], args=(evaluation_id, next_obj_id))
-    else:
-        # TODO: Once submit buttons have been split on outcome measures. Figure out which one is pressed.
-        evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.DONE.name
-        evaluation.save()
-        next_url = reverse(url_names["next_section"], args=(evaluation_id,))
-        next_obj_url = None
-    if prev_obj_id:
-        prev_obj_url = reverse(url_names["page"], args=(evaluation_id, prev_obj_id))
-    else:
-        prev_obj_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     if request.method == "POST":
         data = request.POST
         try:
@@ -223,8 +207,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
                 )
             if "return" in request.POST:
                 return redirect(summary_url)
-            if "prev_next" in request.POST:
-                return redirect(next_obj_url)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
@@ -240,8 +222,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "data": data,
             "next_url": next_url,
             "prev_url": prev_url,
-            "next_obj_url": next_obj_url,
-            "prev_obj_url": prev_obj_url,
             "object_name": object_name,
             "summary_url": summary_url,
         },
