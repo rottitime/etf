@@ -4,7 +4,7 @@ from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
 from . import choices, enums
-from .pages import EvaluationPageStatus, get_default_page_statuses
+from .pages import EvaluationPageStatus, default_page_statuses
 
 
 class User(BaseUser):
@@ -166,7 +166,7 @@ class Evaluation(TimeStampedModel):
         max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
     )
     doi = models.CharField(max_length=64, blank=True, null=True)
-    page_statuses = models.JSONField(default=get_default_page_statuses())
+    page_statuses = models.JSONField(default=default_page_statuses)
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)

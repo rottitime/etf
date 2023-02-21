@@ -43,45 +43,41 @@ page_display_names = {
     "status": "Status",
 }
 
+page_url_names = (
+    "intro",
+    "title",
+    "description",
+    "issue-description",
+    "studied-population",
+    "participant-recruitment",
+    "evaluation-costs",
+    "policy-costs",
+    "publication-intention",
+    "documents",
+    "event-dates",
+    "evaluation-types",
+    "impact-design",
+    "impact-analysis",
+    "process-design",
+    "process-analysis",
+    "economic-design",
+    "economic-analysis",
+    "other-design",
+    "other-analysis",
+    "interventions",
+    "outcome-measures",
+    "other-measures",
+    "ethics",
+    "impact-findings",
+    "economic-findings",
+    "process-findings",
+    "other-findings",
+    "process-standards",
+    "links",
+    "metadata",
+    "status",
+)
 
-def get_default_page_statuses():
-    page_statuses = {
-        "intro": 0,
-        "title": 1,
-        "description": 2,
-        "issue-description": 3,
-        "studied-population": 4,
-        "participant-recruitment": 5,
-        "evaluation-costs": 6,
-        "policy-costs": 7,
-        "publication-intention": 8,
-        "documents": 9,
-        "event-dates": 10,
-        "evaluation-types": 11,
-        "impact-design": 12,
-        "impact-analysis": 13,
-        "process-design": 14,
-        "process-analysis": 15,
-        "economic-design": 16,
-        "economic-analysis": 17,
-        "other-design": 18,
-        "other-analysis": 19,
-        "interventions": 20,
-        "outcome-measures": 21,
-        "other-measures": 22,
-        "ethics": 23,
-        "impact-findings": 24,
-        "economic-findings": 25,
-        "process-findings": 26,
-        "other-findings": 27,
-        "process-standards": 28,
-        "links": 29,
-        "metadata": 30,
-        "status": 31,
-    }
-
-    page_name_and_order = {page_name: page_info for page_name, page_info in page_statuses.items()}
-    page_name_and_status = {
-        page_name: EvaluationPageStatus.NOT_STARTED.name for page_name, page_info in page_statuses.items()
-    }
-    return {"page_status_order": page_name_and_order, "page_statuses": page_name_and_status}
+page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}
+page_name_and_status = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}
+default_page_statuses = {"page_status_order": page_name_and_order, "page_statuses": page_name_and_status}
