@@ -692,8 +692,8 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     object_name = "process or standard"
     url_names = {
         "page": "process-standard-page",
-        "prev_section": "other-findings",
-        "next_section": "links",
+        "prev_section_url_name": "other-findings",
+        "next_section_url_name": "links",
         "summary_page": "processes-standards-summary",
         "delete": "process-standard-delete",
     }
