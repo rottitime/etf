@@ -34,7 +34,7 @@
     {% endif %}
     <select name="{{name}}" id="{{name}}">
       {% if not empty_option is sameas DEFAULT %}
-        <option disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
+        <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
       {% endif %}
       {% for option in options %}
         <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
