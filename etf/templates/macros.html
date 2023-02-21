@@ -211,14 +211,14 @@
 
 {% macro return_summary_button(object_name) -%}
   <div class="evaluation-button-row">
-    <button type="submit" name="return" class="button float-right">Save and return to {{object_name}} summary</i></button>
+    <button type="submit" name="return" class="button float-right">Save <i class="bi-save"></i></button>
   </div>
 {%- endmacro %}
 
 
 {% macro delete_button(object_name) -%}
   <div class="evaluation-button-row">
-    <button type="submit" name="delete" class="button float-left">Delete {{object_name}} </i></button>
+    <button type="submit" name="delete" class="button float-left">Delete <i class="bi-x-circle"></i></button>
   </div>
 {%- endmacro %}
 
