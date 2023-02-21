@@ -188,10 +188,10 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     if request.method == "POST":
         data = request.POST
+        if "delete" in request.POST:
+            obj.delete()
+            return redirect(summary_url)
         try:
-            if "delete" in request.POST:
-                delete_url = reverse(url_names["delete"], args=(evaluation_id, id))
-                return redirect(delete_url)
             serialized_obj = model_schema.load(data=data, partial=True)
             for field_name in serialized_obj:
                 setattr(obj, field_name, serialized_obj[field_name])
