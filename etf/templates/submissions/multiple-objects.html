@@ -1,13 +1,9 @@
-{% block multipleobjects %}
-  <ul>
-    {% for name, url in data.objects.items() %}
+<ul>
+  {% for name, url in data.objects.items() %}
     <li><a href={{url}}>{{name}}</a></li>
-    {% endfor %}
-  </ul>
-  {% if not data.objects.items() %}
-    <button class="button" type="submit" name="add">Create {{data.object_name}}<i class="bi-file-earmark-plus"></i></button>
-  {% else %}
-    {{macros.buttons_edit(data.object_name_plural)}}
-  {% endif %}
-  {{macros.buttons(prev_url, evaluation_id)}}
-{% endblock %}
+  {% endfor %}
+</ul>
+<button class="button" type="submit" name="add">Create {{data.object_name}}<i class="bi-file-earmark-plus"></i></button>
+<hr>
+
+{{macros.buttons(prev_url, next_url)}}
