@@ -243,6 +243,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "next_obj_url": next_obj_url,
             "prev_obj_url": prev_obj_url,
             "object_name": object_name,
+            "summary_url": summary_url,
         },
     )
 
