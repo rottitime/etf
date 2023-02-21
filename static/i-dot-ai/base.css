@@ -407,3 +407,8 @@ div.evaluation-button-row {
 section.flex {
   display: flex;
 }
+
+.form-error {
+  display: block;
+  margin-top: 0;
+}
