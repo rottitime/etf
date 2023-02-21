@@ -138,12 +138,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    all_objects_dictionary = {}
-    for obj in all_objects:
-        name = obj.name
-        obj_id = obj.id
-        url = reverse(page_url_name, args=(evaluation_id, obj_id))
-        all_objects_dictionary[name] = url
+    all_objects_dictionary = {obj.name: reverse(page_url_name, args=(evaluation_id, obj.id)) for obj in all_objects}
 
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
