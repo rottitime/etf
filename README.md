@@ -35,3 +35,5 @@ To run tests:
 To update organisations data:
 
     python scripts/scrape_organisations.py
+
+And move the formatted data to the `enums.py` file.
