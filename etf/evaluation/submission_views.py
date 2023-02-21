@@ -223,26 +223,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     )
 
 
-@login_required
-def delete_related_object_view(request, evaluation_id, id, model_name, initial_url_name, page_url_name):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    model = getattr(models, model_name)
-    obj_to_delete = model.objects.get(id=id)
-    prev_id = get_adjacent_id_for_model(evaluation_id=evaluation_id, id=id, model_name=model_name, next_or_prev="prev")
-    next_id = get_adjacent_id_for_model(evaluation_id=evaluation_id, id=id, model_name=model_name, next_or_prev="next")
-    obj_to_delete.delete()
-
-    if prev_id:
-        next_url = reverse(page_url_name, args=(evaluation_id, prev_id))
-    elif next_id:
-        next_url = reverse(page_url_name, args=(evaluation_id, next_id))
-    else:
-        next_url = reverse(initial_url_name, args=(evaluation_id,))
-        evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.DONE.name
-        evaluation.save()
-    return redirect(next_url)
-
-
 def intro_page_view(request, evaluation_id):
     page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
     return simple_page_view(request, evaluation_id, page_data)
@@ -573,6 +553,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     return response
 
 
+<<<<<<< HEAD
 def delete_intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     summary_url_name = "interventions-summary"
@@ -593,6 +574,8 @@ def delete_intervention_page_view(request, evaluation_id, intervention_id):
 def initial_outcome_measure_page_view(request, evaluation_id):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
 =======
+=======
+>>>>>>> 40dd14d (Delete unused delete views)
 def summary_outcome_measure_page_view(request, evaluation_id):
 >>>>>>> dad9f4d (refactoring)
     form_data = {
@@ -660,6 +643,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     return response
 
 
+<<<<<<< HEAD
 def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
     summary_url_name = "outcome-measures-summary"
@@ -692,6 +676,8 @@ def evaluation_overview_view(request, evaluation_id):
 
 def initial_other_measure_page_view(request, evaluation_id):
 =======
+=======
+>>>>>>> 40dd14d (Delete unused delete views)
 def summary_other_measure_page_view(request, evaluation_id):
 >>>>>>> dad9f4d (refactoring)
     form_data = {
@@ -753,22 +739,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     return response
 
 
-def delete_other_measure_page_view(request, evaluation_id, other_measure_id):
-    model_name = "OtherMeasure"
-    summary_url_name = "other-measures-summary"
-    page_url_name = "other-measure-page"
-    evaluation_id, id, model_name, summary_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=other_measure_id,
-        model_name=model_name,
-        summary_url_name=summary_url_name,
-        page_url_name=page_url_name,
-    )
-    return response
-
-
 def summary_processes_standards_page_view(request, evaluation_id):
     form_data = {
         "title": "Processes and standards",
@@ -824,21 +794,5 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         template_name=template_name,
         object_name=object_name,
         url_names=url_names,
-    )
-    return response
-
-
-def delete_process_standard_page_view(request, evaluation_id, process_standard_id):
-    model_name = "ProcessStandard"
-    summary_url_name = "processes-standards-summary"
-    page_url_name = "process-standard-page"
-    evaluation_id, id, model_name, summary_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=process_standard_id,
-        model_name=model_name,
-        summary_url_name=summary_url_name,
-        page_url_name=page_url_name,
     )
     return response
