@@ -4,7 +4,7 @@ from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
 from . import choices, enums
-from .pages import EvaluationPageStatus, PageNames, get_default_page_statuses
+from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
 class User(BaseUser):
@@ -133,11 +133,6 @@ def get_organisation_display_name(db_name):
 
 def get_status_display_name(db_name):
     result = [status[1] for status in EvaluationStatus.choices if status[0] == db_name]
-    return result[0]
-
-
-def get_page_display_name(db_name):
-    result = [status[1] for status in PageNames.get_display_page_names().items() if status[0] == db_name]
     return result[0]
 
 

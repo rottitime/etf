@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 
-from etf.evaluation import models
+from etf.evaluation import models, pages
 
 DEFAULT = object()
 
@@ -37,7 +37,7 @@ def is_in(data, name, value):
 
 
 def get_page_name(db_name):
-    return models.get_page_display_name(db_name)
+    return pages.page_display_names[db_name]
 
 
 def get_page_status_name(db_name):
