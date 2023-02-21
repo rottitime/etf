@@ -412,7 +412,7 @@ def evaluation_ethics_view(request, evaluation_id):
     page_data = {
         "title": "Ethics",
         "page_name": "ethics",
-        "prev_page": "other-measure-last",
+        "prev_page": "other-measures-summary",
         "next_page": "impact-findings",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -462,7 +462,7 @@ def evaluation_links_view(request, evaluation_id):
     page_data = {
         "title": "Links and IDs",
         "page_name": "links",
-        "prev_page": "process-standard-last",
+        "prev_page": "processes-standards-summary",
         "next_page": "metadata",
     }
     return evaluation_view(request, evaluation_id, page_data)
