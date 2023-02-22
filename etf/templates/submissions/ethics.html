@@ -23,7 +23,7 @@
       {{macros.textarea("confidentiality_and_personal_data", "Confidentiality and personal data", tooltip="What steps will you take to protect the confidentiality of data of participants? Who will personally identifiable information be shared with? How will consent be obtained for use of personal data? How long will personal data be held for? How will it be disposed of?")}}
       {{macros.textarea("breaking_confidentiality", "Breaking confidentiality", tooltip="Are there circumstances under which confidentiality might be broken to prevent harm? If so, under what circumstances would this be done and what procedures would be used?")}}
       {{macros.textarea("other_ethical_information", "Other ethical information", tooltip="The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.")}}
-      {{macros.buttons(prev_url, data.id)}}
+      {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
 {% endblock %}

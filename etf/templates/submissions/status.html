@@ -8,7 +8,7 @@
         <h3>{{title}}</h3>
       </legend>
       {{macros.select_from_list("status", "Choose the visibility of this evaluation", statuses, tooltip="Draft evaluations are only visible to the users assigned to it. Evaluations marked 'Civil Service' are visible to all civil servants. Evaluations marked 'public' are visible to anyone")}}
-      {{macros.buttons(prev_url, data.id)}}
+      {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
 {% endblock %}
