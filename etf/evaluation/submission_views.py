@@ -387,7 +387,7 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",
         "prev_page": "other-design",
-        "next_page": "interventions-summary",
+        "next_page": "interventions",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -396,7 +396,7 @@ def evaluation_ethics_view(request, evaluation_id):
     page_data = {
         "title": "Ethics",
         "page_name": "ethics",
-        "prev_page": "other-measures-summary",
+        "prev_page": "other-measures",
         "next_page": "impact-findings",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -437,7 +437,7 @@ def evaluation_other_findings_view(request, evaluation_id):
         "title": "Other evaluation findings",
         "page_name": "other-findings",
         "prev_page": "process-findings",
-        "next_page": "processes-standards-summary",
+        "next_page": "process-standards",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -446,7 +446,7 @@ def evaluation_links_view(request, evaluation_id):
     page_data = {
         "title": "Links and IDs",
         "page_name": "links",
-        "prev_page": "processes-standards-summary",
+        "prev_page": "process-standards",
         "next_page": "metadata",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -477,7 +477,7 @@ def summary_interventions_page_view(request, evaluation_id):
         "title": "Interventions",
         "template_name": "submissions/interventions.html",
         "prev_section_url_name": "other-analysis",
-        "next_section_url_name": "outcome-measures-summary",
+        "next_section_url_name": "outcome-measures",
         "page_url_name": "intervention-page",
         "object_name": "intervention",
         "object_name_plural": "interventions",
@@ -494,8 +494,8 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     url_names = {
         "page": "intervention-page",
         "prev_section_url_name": "other-analysis",
-        "next_section_url_name": "outcome-measures-summary",
-        "summary_page": "interventions-summary",
+        "next_section_url_name": "outcome-measures",
+        "summary_page": "interventions",
         "delete": "intervention-delete",
     }
     response = related_object_page_view(
@@ -515,8 +515,8 @@ def summary_outcome_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
-        "prev_section_url_name": "interventions-summary",
-        "next_section_url_name": "other-measures-summary",
+        "prev_section_url_name": "interventions",
+        "next_section_url_name": "other-measures",
         "page_url_name": "outcome-measure-page",
         "object_name": "outcome measure",
         "object_name_plural": "outcome measures",
@@ -533,9 +533,9 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     object_name = "outcome measure"
     url_names = {
         "page": "outcome-measure-page",
-        "prev_section_url_name": "interventions-summary",
-        "next_section_url_name": "other-measures-summary",
-        "summary_page": "outcome-measures-summary",
+        "prev_section_url_name": "interventions",
+        "next_section_url_name": "other-measures",
+        "summary_page": "outcome-measures",
         "delete": "outcome-measure-delete",
     }
     response = related_object_page_view(
@@ -555,7 +555,7 @@ def summary_other_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
-        "prev_section_url_name": "outcome-measures-summary",
+        "prev_section_url_name": "outcome-measures",
         "next_section_url_name": "ethics",
         "page_url_name": "other-measure-page",
         "object_name": "other measure",
@@ -572,9 +572,9 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     object_name = "other measure"
     url_names = {
         "page": "other-measure-page",
-        "prev_section_url_name": "outcome-measures-summary",
+        "prev_section_url_name": "outcome-measures",
         "next_section_url_name": "ethics",
-        "summary_page": "other-measures-summary",
+        "summary_page": "other-measures",
         "delete": "other-measure-delete",
     }
     response = related_object_page_view(
@@ -593,7 +593,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
 def summary_processes_standards_page_view(request, evaluation_id):
     form_data = {
         "title": "Processes and standards",
-        "template_name": "submissions/processes-standards.html",
+        "template_name": "submissions/process-standards.html",
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
         "page_url_name": "process-standard-page",
@@ -613,7 +613,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         "page": "process-standard-page",
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
-        "summary_page": "processes-standards-summary",
+        "summary_page": "process-standards",
         "delete": "process-standard-delete",
     }
     response = related_object_page_view(
