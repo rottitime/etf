@@ -189,7 +189,7 @@ intervention_urlpatterns = [
         name="interventions",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/interventions/<int:intervention_id>/",
+        "evaluation/<uuid:evaluation_id>/interventions/<uuid:intervention_id>/",
         submission_views.intervention_page_view,
         name="intervention-page",
     ),
@@ -203,7 +203,7 @@ outcome_measure_urlpatterns = [
         name="outcome-measures",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/outcome-measures/<int:outcome_measure_id>/",
+        "evaluation/<uuid:evaluation_id>/outcome-measures/<uuid:outcome_measure_id>/",
         submission_views.outcome_measure_page_view,
         name="outcome-measure-page",
     ),
@@ -217,7 +217,7 @@ other_measure_urlpatterns = [
         name="other-measures",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/other-measures/<int:other_measure_id>/",
+        "evaluation/<uuid:evaluation_id>/other-measures/<uuid:other_measure_id>/",
         submission_views.other_measure_page_view,
         name="other-measure-page",
     ),
@@ -231,7 +231,7 @@ processes_standards_urlpatterns = [
         name="process-standards",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/processes-standards/<int:process_standard_id>/",
+        "evaluation/<uuid:evaluation_id>/processes-standards/<uuid:process_standard_id>/",
         submission_views.process_standard_page_view,
         name="process-standard-page",
     ),
