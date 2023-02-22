@@ -34,7 +34,7 @@ class CustomSignupView(SignupView):
     def dispatch(self, request, *args, **kwargs):
         if request.method == "POST":
             if models.User.objects.filter(email=request.POST.get("email")).exists():
-                messages.error(request, "A user with this email already exists, please try again.")
+                messages.error(request, "Registration was unsuccessful, please try again.")
                 return render(request, self.template_name)
             form = self.get_form()
             if not form.is_valid():
