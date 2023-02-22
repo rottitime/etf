@@ -124,6 +124,7 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
 
 @login_required
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     errors = {}
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
@@ -145,6 +146,8 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["object_name_plural"] = object_name_plural
 
     if request.method == "POST":
+        evaluation.page_statuses[page_url_name] = models.EvaluationPageStatus.IN_PROGRESS.name
+        # TODO - figure out logic for evaluation status
         return add_related_object_for_eval(evaluation_id, model_name, page_url_name, object_name)
     response = render(
         request,
