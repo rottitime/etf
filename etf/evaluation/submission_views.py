@@ -155,23 +155,6 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
 
 @login_required
-def first_last_related_object_view(
-    request, evaluation_id, model_name, summary_url_name, page_url_name, first_or_last="first"
-):
-    model = getattr(models, model_name)
-    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id)
-    if first_or_last == "first":
-        related_objects_for_eval = related_objects_for_eval.order_by("created_at")
-    else:
-        related_objects_for_eval = related_objects_for_eval.order_by("-created_at")
-    if related_objects_for_eval:
-        id = related_objects_for_eval[0].id
-        response = redirect(reverse(page_url_name, args=(evaluation_id, id)))
-        return response
-    return redirect(reverse(summary_url_name, args=(evaluation_id,)))
-
-
-@login_required
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
