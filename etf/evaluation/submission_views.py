@@ -118,7 +118,8 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
     else:
         new_object = model(evaluation=evaluation)
     new_object.save()
-    response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object.id)))
+    response = redirect(reverse(redirect_url_name, args=(evaluation_id,)))
+
     return response
 
 
@@ -134,21 +135,24 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url_name = form_data["prev_section_url_name"]
     next_url_name = form_data["next_section_url_name"]
     page_url_name = form_data["page_url_name"]
+    summary_url_name = form_data["summary_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    all_objects_dictionary = {obj.name: reverse(page_url_name, args=(evaluation_id, obj.id)) for obj in all_objects}
+    # TODO - this misses out some objects, names not unique
+
+    all_objects_dictionary = {reverse(page_url_name, args=(evaluation_id, obj.id)): obj.name for obj in all_objects}
 
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
 
     if request.method == "POST":
-        evaluation.page_statuses[page_url_name] = models.EvaluationPageStatus.IN_PROGRESS.name
+        evaluation.page_statuses[summary_url_name] = models.EvaluationPageStatus.IN_PROGRESS.name
         # TODO - figure out logic for evaluation status
-        return add_related_object_for_eval(evaluation_id, model_name, page_url_name, object_name)
+        return add_related_object_for_eval(evaluation_id, model_name, summary_url_name, object_name)
     response = render(
         request,
         template_name,
@@ -178,10 +182,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             for field_name in serialized_obj:
                 setattr(obj, field_name, serialized_obj[field_name])
             obj.save()
-            if "add" in request.POST:
-                return add_related_object_for_eval(
-                    evaluation_id, model_name=model_name, redirect_url_name=url_names["page"]
-                )
             if "return" in request.POST:
                 return redirect(summary_url)
             return redirect(next_url)
@@ -482,6 +482,7 @@ def summary_interventions_page_view(request, evaluation_id):
         "prev_section_url_name": "other-analysis",
         "next_section_url_name": "outcome-measures",
         "page_url_name": "intervention-page",
+        "summary_url_name": "interventions",
         "object_name": "intervention",
         "object_name_plural": "interventions",
     }
@@ -520,6 +521,7 @@ def summary_outcome_measure_page_view(request, evaluation_id):
         "template_name": "submissions/outcome-measures.html",
         "prev_section_url_name": "interventions",
         "next_section_url_name": "other-measures",
+        "summary_url_name": "outcome-measures",
         "page_url_name": "outcome-measure-page",
         "object_name": "outcome measure",
         "object_name_plural": "outcome measures",
@@ -560,6 +562,7 @@ def summary_other_measure_page_view(request, evaluation_id):
         "template_name": "submissions/other-measures.html",
         "prev_section_url_name": "outcome-measures",
         "next_section_url_name": "ethics",
+        "summary_url_name": "other-measures",
         "page_url_name": "other-measure-page",
         "object_name": "other measure",
         "object_name_plural": "other measures",
@@ -599,6 +602,7 @@ def summary_processes_standards_page_view(request, evaluation_id):
         "template_name": "submissions/process-standards.html",
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
+        "summary_url_name": "process-standards",
         "page_url_name": "process-standard-page",
         "object_name": "process or standard",
         "object_name_plural": "processes and standards",

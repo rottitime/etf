@@ -1,5 +1,5 @@
 <ul>
-  {% for name, url in data.objects.items() %}
+  {% for url, name in data.objects.items() %}
     <li><a href={{url}}>{{name}}</a></li>
   {% endfor %}
 </ul>
