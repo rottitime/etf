@@ -528,31 +528,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     return response
 
 
-<<<<<<< HEAD
-def delete_intervention_page_view(request, evaluation_id, intervention_id):
-    model_name = "Intervention"
-    summary_url_name = "interventions-summary"
-    page_url_name = "intervention-page"
-    evaluation_id, id, model_name, summary_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=intervention_id,
-        model_name=model_name,
-        summary_url_name=summary_url_name,
-        page_url_name=page_url_name,
-    )
-    return response
-
-
-<<<<<<< HEAD
-def initial_outcome_measure_page_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-=======
-=======
->>>>>>> 40dd14d (Delete unused delete views)
 def summary_outcome_measure_page_view(request, evaluation_id):
->>>>>>> dad9f4d (refactoring)
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
@@ -563,12 +539,7 @@ def summary_outcome_measure_page_view(request, evaluation_id):
         "object_name_plural": "outcome measures",
     }
     model_name = "OutcomeMeasure"
-<<<<<<< HEAD
-    evaluation.page_statuses["outcome-measures"] = models.EvaluationPageStatus.IN_PROGRESS.name
-    return initial_related_object_page_view(request, evaluation_id, model_name, form_data)
-=======
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
->>>>>>> dad9f4d (refactoring)
 
 
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
@@ -597,43 +568,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     return response
 
 
-<<<<<<< HEAD
-def delete_outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
-    model_name = "OutcomeMeasure"
-    summary_url_name = "outcome-measures-summary"
-    page_url_name = "outcome-measure-page"
-    evaluation_id, id, model_name, summary_url_name, page_url_name
-    response = delete_related_object_view(
-        request,
-        evaluation_id=evaluation_id,
-        id=outcome_measure_id,
-        model_name=model_name,
-        summary_url_name=summary_url_name,
-        page_url_name=page_url_name,
-    )
-    return response
-
-
-<<<<<<< HEAD
-def evaluation_overview_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    statuses = evaluation.page_statuses
-    data = {
-        "statuses": statuses,
-        "page_order": page_name_and_order,
-        "evaluation_id": evaluation_id,
-    }
-    errors = {}
-
-    return render(request, "submissions/overview.html", {"errors": errors, "data": data})
-
-
-def initial_other_measure_page_view(request, evaluation_id):
-=======
-=======
->>>>>>> 40dd14d (Delete unused delete views)
 def summary_other_measure_page_view(request, evaluation_id):
->>>>>>> dad9f4d (refactoring)
     form_data = {
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
@@ -709,3 +644,15 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         url_names=url_names,
     )
     return response
+
+
+def evaluation_overview_view(request, evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    statuses = evaluation.page_statuses
+    data = {
+        "statuses": statuses,
+        "page_order": page_name_and_order,
+        "evaluation_id": evaluation_id,
+    }
+    errors = {}
+    return render(request, "submissions/overview.html", {"errors": errors, "data": data})
