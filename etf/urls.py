@@ -6,6 +6,7 @@ from etf.evaluation import submission_views, views
 urlpatterns = [
     path("", submission_views.index_view, name="index"),
     path("admin/", admin.site.urls),
+    path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
     path("accounts/password-reset/", views.PasswordReset, name="password-reset"),
@@ -17,7 +18,6 @@ urlpatterns = [
         submission_views.evaluation_overview_view,
         name="evaluation-overview",
     ),
-    path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
 ]
 
 api_urlpatterns = [
