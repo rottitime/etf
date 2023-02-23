@@ -112,7 +112,7 @@
 {%- endmacro %}
 
 {% macro yes_no(name, label, tooltip='', tooltip_position="top") -%}
-  {{select(name, label, tooltip=tooltip, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
+  {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), tooltip=tooltip, tooltip_position=tooltip_position, empty_option="Please select...")}}
 {%- endmacro %}
 
 {% macro yes_no_partial(name, label, tooltip='', tooltip_position="top") -%}
