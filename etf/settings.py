@@ -151,18 +151,6 @@ ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 
 DEFAULT_ALLOWED_DOMAINS = frozenset(
     [
-        "cabinet-office.x.gsi.gov.uk",
-        "cabinetoffice.gov.uk",
-        "crowncommercial.gov.uk",
-        "csep.gov.uk",
-        "cslearning.gov.uk",
-        "csc.gov.uk",
-        "digital.cabinet-office.gov.uk",
-        "geo.gov.uk",
-        "gpa.gov.uk",
-        "ipa.gov.uk",
-        "no10.gov.uk",
-        "odandd.gov.uk",
         "xansium.com",
     ]
 )
