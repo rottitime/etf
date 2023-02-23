@@ -108,30 +108,15 @@
 {%- endmacro %}
 
 {% macro select_with_empty(name, label, options, tooltip='', tooltip_position="top") -%}
-  {% if tooltip %}
-    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
-      <i class="bi-question-circle-fill"></i>
-    </span>
-  {% endif %}
-  {{select(name, label, options, empty_option="Please choose one...")}}
+  {{select(name, label, options, tooltip=tooltip, empty_option="Please choose one...")}}
 {%- endmacro %}
 
 {% macro yes_no(name, label, tooltip='', tooltip_position="top") -%}
-  {% if tooltip %}
-    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
-      <i class="bi-question-circle-fill"></i>
-    </span>
-  {% endif %}
-  {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
+  {{select(name, label, tooltip=tooltip, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), empty_option="Please select...")}}
 {%- endmacro %}
 
 {% macro yes_no_partial(name, label, tooltip='', tooltip_position="top") -%}
-  {% if tooltip %}
-    <span data-tooltip aria-haspopup="true" class="has-tip {{tooltip_position}}" data-disable-hover="false" title="{{ tooltip }}">
-      <i class="bi-question-circle-fill"></i>
-    </span>
-  {% endif %}
-  {{select(name, label, options=({'text': '', 'value': None}, {'text': 'Yes', 'value': 'Yes'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option=None)}}
+  {{select(name, label, tooltip=tooltip, options=({'text': '', 'value': None}, {'text': 'Yes', 'value': 'Yes'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option=None)}}
 {%- endmacro %}
 
 {% macro checkbox(name, label, tooltip='', tooltip_position="top") -%}
