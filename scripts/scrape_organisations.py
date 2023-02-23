@@ -32,7 +32,15 @@ def gather_results(start_url):
 def dump_data(data):
     output_filename = DATA_DIR / "organisations_raw.json"
     with output_filename.open("w") as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=2)
+
+
+def get_name(item):
+    title = item["title"]
+    abbreviation = item["details"]["abbreviation"]
+    if abbreviation:
+        title = f"{title} ({abbreviation})"
+    return title
 
 
 def dump_python(data):
@@ -44,7 +52,7 @@ org_tuples = (
 )
 Organisation = choices.Choices("Organisation", org_tuples)
 """
-    org_tuples = tuple((item["details"]["slug"], item["title"]) for item in data)
+    org_tuples = tuple((item["details"]["slug"], get_name(item)) for item in data)
     org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())
     org_tuples = ",\n".join(repr(t) for t in org_tuples)
     content = python_template.format(org_tuples=org_tuples)
