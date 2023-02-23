@@ -16,17 +16,17 @@ def test_click_through_evaluation():
     page = form.submit().follow()
     assert page.status_code == 200, page.status_code
 
-    page = page.click(contains="Next")
+    page = page.click(contains="next")
     assert page.status_code == 200, page.status_code
 
-    selector = testino.XPath('//form[.//button[contains(text(), "Next")]]')
+    selector = testino.XPath('//form[.//button[contains(text(), "next")]]')
 
     while not page.has_text("The end"):
-        el = page.one("button:contains('Next'), a:contains('Next')")
+        el = page.one("button:contains('next'), a:contains('next')")
         if el.tag == "button":
             form_el = page.one(selector)
             form = testino.Form(page, form_el)
             page = form.submit().follow()
         else:
-            page = page.click(contains="Next")
+            page = page.click(contains="next")
         assert page.status_code == 200, page.status_code
