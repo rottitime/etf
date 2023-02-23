@@ -1,0 +1,10 @@
+button.help-text-button {
+  background: lightgrey;
+  opacity: 0.8;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button.help-text-button:hover {
+  opacity: 0.65;
+}

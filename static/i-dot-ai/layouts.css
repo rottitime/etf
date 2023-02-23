@@ -47,3 +47,7 @@ div.input-button-pair {
 div.input-button-pair input.input-button-pair-input {
   margin-right: 0.5em !important;
 }
+
+div.reveal {
+  padding: 2rem;
+}
