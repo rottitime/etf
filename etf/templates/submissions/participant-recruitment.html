@@ -7,7 +7,9 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.textarea("process_for_recruitment", "Process for recruitment", tooltip=["Method of recruitment, such as by referral or self-selection.", "If recruiting by referral, where will referrals be accepted from? If recruiting by self-selection, where will the opportunity to participate be promoted?"])}}
+      {{macros.textarea("process_for_recruitment", "Process for recruitment", short_description="Method of recruitment into the study, such as by referral, self-selection, or automatic inclusion of everyone in a category.",
+        tooltip=["Method of recruitment, such as by referral or self-selection.", "If recruiting by referral, where will referrals be accepted from? If recruiting by self-selection, where will the opportunity to participate be promoted?"])}}
+      {{macros.textarea("recruitment_schedule", "Recruitment schedule including date of first recruitment", tooltip=["If recording this information in the planning stages, describe the intended schedule. If recording it after that has concluded, record that actual schedule."])}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
