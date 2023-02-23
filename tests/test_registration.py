@@ -8,9 +8,9 @@ def test_emails():
 
     page = client.get("/accounts/signup/")
     form = page.get_form()
-    form["email"] = USER_DATA['email']
-    form["password1"] = USER_DATA['password']
-    form["password2"] = USER_DATA['password']
+    form["email"] = USER_DATA["email"]
+    form["password1"] = USER_DATA["password"]
+    form["password2"] = USER_DATA["password"]
     page = form.submit()
 
     assert page.has_text("This email domain is not yet supported")
