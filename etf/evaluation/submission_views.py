@@ -508,7 +508,6 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         "prev_section_url_name": "other-analysis",
         "next_section_url_name": "outcome-measures",
         "summary_page": "interventions",
-        "delete": "intervention-delete",
     }
     response = related_object_page_view(
         request,
@@ -549,7 +548,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         "prev_section_url_name": "interventions",
         "next_section_url_name": "other-measures",
         "summary_page": "outcome-measures",
-        "delete": "outcome-measure-delete",
     }
     response = related_object_page_view(
         request,
@@ -589,7 +587,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         "prev_section_url_name": "outcome-measures",
         "next_section_url_name": "ethics",
         "summary_page": "other-measures",
-        "delete": "other-measure-delete",
     }
     response = related_object_page_view(
         request,
@@ -629,7 +626,6 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
         "summary_page": "processes-standards",
-        "delete": "process-standard-delete",
     }
     response = related_object_page_view(
         request,
@@ -669,7 +665,6 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
         "prev_section_url_name": "participant-recruitment",
         "next_section_url_name": "policy-costs",
         "summary_page": "evaluation-costs",
-        "delete": "evaluation-cost-delete",
     }
     response = related_object_page_view(
         request,
