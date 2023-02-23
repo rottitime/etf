@@ -109,13 +109,12 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_name=""):
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, name_field="name", object_name=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    new_object = model(evaluation=evaluation)
     if object_name:
-        new_object = model(evaluation=evaluation, name=f"New {object_name}")
-    else:
-        new_object = model(evaluation=evaluation)
+        setattr(new_object, name_field, f"New {object_name}")
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id,)))
 
@@ -123,7 +122,7 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
 
 
 @login_required
-def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
+def summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name"):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     errors = {}
     data = {"evaluation_id": evaluation_id}
@@ -143,7 +142,9 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    all_objects_dictionary = {reverse(page_url_name, args=(evaluation_id, obj.id)): obj.name for obj in all_objects}
+    all_objects_dictionary = {
+        reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
+    }
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
@@ -151,7 +152,13 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
-        return add_related_object_for_eval(evaluation_id, model_name, summary_url_name, object_name)
+        return add_related_object_for_eval(
+            evaluation_id=evaluation_id,
+            model_name=model_name,
+            redirect_url_name=summary_url_name,
+            object_name=object_name,
+            name_field=name_field,
+        )
     else:
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
         response = render(
@@ -159,7 +166,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
             template_name,
             {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
         )
-        return response
+    return response
 
 
 @login_required
@@ -649,10 +656,10 @@ def summary_evaluation_costs_page_view(request, evaluation_id):
         "object_name_plural": "evaluation costs",
     }
     model_name = "EvaluationCost"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="item_name")
 
 
-def evaluation_cost_page_view(request, evaluation_id, process_standard_id):
+def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     model_name = "EvaluationCost"
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
@@ -667,7 +674,7 @@ def evaluation_cost_page_view(request, evaluation_id, process_standard_id):
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
-        id=process_standard_id,
+        id=evaluation_cost_id,
         model_name=model_name,
         title=title,
         template_name=template_name,
