@@ -8,7 +8,10 @@
         <h3>{{title}}</h3>
       </legend>
       <p>PLACEHOLDER</p>
-      <p>Only display if one of the evaluation types is "Other evaluation"</p>
+      <p>To display if one of the evaluation types is "Other evaluation"</p>
+      {{macros.textarea("other_eval_summary_findings", "Summary findings", short_description="A short description (one to two sentences) of the findings related to the evaluation.",
+        tooltip=["If the evaluation was of more than one type (eg, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'other evaluation' aspects of the evaluation."])}}
+      {{macros.textarea("other_eval_findings", "Findings", short_description="A longer description of the findings related to the evaluation, as required.")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
