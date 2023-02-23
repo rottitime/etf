@@ -14,7 +14,7 @@ def test_intervention():
     page = form.submit().follow()
     assert page.status_code == 200, page.status_code
 
-    page = page.click(contains="next")
+    page = page.click(contains="Next")
     assert page.status_code == 200, page.status_code
     assert page.url.endswith("/title")
 
