@@ -22,7 +22,6 @@ def test_click_through_evaluation():
     selector = testino.XPath('//form[.//button[contains(text(), "next")]]')
 
     while not page.has_text("Thank you"):
-        print(page)
         el = page.one("button:contains('next'), a:contains('next')")
         if el.tag == "button":
             form_el = page.one(selector)
