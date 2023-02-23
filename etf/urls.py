@@ -70,11 +70,6 @@ evaluation_entry_urlpatterns = [
         name="participant-recruitment",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/evaluation-costs",
-        submission_views.evaluation_costs_view,
-        name="evaluation-costs",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/policy-costs",
         submission_views.evaluation_policy_costs_view,
         name="policy-costs",
@@ -237,6 +232,19 @@ processes_standards_urlpatterns = [
     ),
 ]
 
+evaluation_costs_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/evaluation-costs/",
+        submission_views.summary_evaluation_costs_page_view,
+        name="evaluation-costs",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/evaluation-costs/<uuid:evaluation_cost_id>/",
+        submission_views.evaluation_cost_page_view,
+        name="evaluation-cost-page",
+    ),
+]
+
 
 urlpatterns = (
     urlpatterns
@@ -246,6 +254,7 @@ urlpatterns = (
     + outcome_measure_urlpatterns
     + other_measure_urlpatterns
     + processes_standards_urlpatterns
+    + evaluation_costs_urlpatterns
 )
 
 handler404 = "etf.evaluation.views.view_404"

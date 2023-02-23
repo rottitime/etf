@@ -8,10 +8,10 @@
         <h3>{{title}}</h3>
       </legend>
       PLACEHOLDER
+      
+      {{macros.textarea("", "")}}
 
-      {% block multipleobjects %}
-        {% include "submissions/multiple-objects.html" %}
-      {% endblock %}
+      {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>
 {% endblock %}

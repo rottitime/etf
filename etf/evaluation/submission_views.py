@@ -146,8 +146,12 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     # TODO - this misses out some objects, names not unique
 
     all_objects_dictionary = {reverse(page_url_name, args=(evaluation_id, obj.id)): obj.name for obj in all_objects}
+    print("all_objects_dictionary")
+    print(all_objects_dictionary)
 
     data["objects"] = all_objects_dictionary
+    print("data")
+    print(data)
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_url_name
@@ -626,6 +630,46 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         "next_section_url_name": "links",
         "summary_page": "processes-standards",
         "delete": "process-standard-delete",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=process_standard_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_evaluation_costs_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Evaluation costs and budget",
+        "template_name": "submissions/evaluation-costs.html",
+        "prev_section_url_name": "participant-recruitment",
+        "next_section_url_name": "policy-costs",
+        "summary_url_name": "evaluation-costs",
+        "page_url_name": "evaluation-cost-page",
+        "object_name": "evaluation cost",
+        "object_name_plural": "evaluation costs",
+    }
+    model_name = "EvaluationCost"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+
+
+def evaluation_cost_page_view(request, evaluation_id, process_standard_id):
+    model_name = "EvaluationCost"
+    title = "Evaluation costs and budget"
+    template_name = "submissions/evaluation-cost-page.html"
+    object_name = "evaluation cost"
+    url_names = {
+        "page": "evaluation-cost-page",
+        "prev_section_url_name": "participant-recruitment",
+        "next_section_url_name": "policy-costs",
+        "summary_page": "evaluation-costs",
+        "delete": "evaluation-cost-delete",
     }
     response = related_object_page_view(
         request,
