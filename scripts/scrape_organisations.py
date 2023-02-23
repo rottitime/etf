@@ -32,7 +32,7 @@ def gather_results(start_url):
 def dump_data(data):
     output_filename = DATA_DIR / "organisations_raw.json"
     with output_filename.open("w") as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=2)
 
 
 def get_name(item):
