@@ -143,15 +143,8 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    # TODO - this misses out some objects, names not unique
-
     all_objects_dictionary = {reverse(page_url_name, args=(evaluation_id, obj.id)): obj.name for obj in all_objects}
-    print("all_objects_dictionary")
-    print(all_objects_dictionary)
-
     data["objects"] = all_objects_dictionary
-    print("data")
-    print(data)
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_url_name
