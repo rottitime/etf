@@ -54,8 +54,7 @@ def simple_page_view(request, evaluation_id, page_data):
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
     form_data = {"title": title, "prev_url": prev_url, "next_url": next_url, "evaluation_id": evaluation_id}
-    evaluation.page_statuses[page_name] = models.EvaluationPageStatus.DONE.name
-    evaluation.save()
+    evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
     return render(request, template_name, form_data)
 
 
@@ -85,14 +84,12 @@ def evaluation_view(request, evaluation_id, page_data):
             if "organisations" in data.keys():
                 organisation_list = data.getlist("organisations") or None
                 setattr(evaluation, "organisations", organisation_list)
-            evaluation.page_statuses[page_name] = models.EvaluationPageStatus.DONE.name
-            evaluation.save()
+            evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
     else:
-        evaluation.page_statuses[page_name] = models.EvaluationPageStatus.IN_PROGRESS.name
-        evaluation.save()
+        evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.IN_PROGRESS)
         data = eval_schema.dump(evaluation)
     return render(
         request,
@@ -150,15 +147,17 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["object_name_plural"] = object_name_plural
 
     if request.method == "POST":
-        evaluation.page_statuses[summary_url_name] = models.EvaluationPageStatus.IN_PROGRESS.name
+        evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.DONE)
         # TODO - figure out logic for evaluation status
         return add_related_object_for_eval(evaluation_id, model_name, summary_url_name, object_name)
-    response = render(
-        request,
-        template_name,
-        {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
-    )
-    return response
+    else:
+        evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
+        response = render(
+            request,
+            template_name,
+            {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+        )
+        return response
 
 
 @login_required
@@ -440,7 +439,7 @@ def evaluation_other_findings_view(request, evaluation_id):
         "title": "Other evaluation findings",
         "page_name": "other-findings",
         "prev_page": "process-findings",
-        "next_page": "process-standards",
+        "next_page": "processes-standards",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -449,7 +448,7 @@ def evaluation_links_view(request, evaluation_id):
     page_data = {
         "title": "Links and IDs",
         "page_name": "links",
-        "prev_page": "process-standards",
+        "prev_page": "processes-standards",
         "next_page": "metadata",
     }
     return evaluation_view(request, evaluation_id, page_data)
@@ -599,11 +598,11 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
 def summary_processes_standards_page_view(request, evaluation_id):
     form_data = {
         "title": "Processes and standards",
-        "template_name": "submissions/process-standards.html",
+        "template_name": "submissions/processes-standards.html",
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
-        "summary_url_name": "process-standards",
-        "page_url_name": "process-standard-page",
+        "summary_url_name": "processes-standards",
+        "page_url_name": "processes-standard-page",
         "object_name": "process or standard",
         "object_name_plural": "processes and standards",
     }
@@ -614,13 +613,13 @@ def summary_processes_standards_page_view(request, evaluation_id):
 def process_standard_page_view(request, evaluation_id, process_standard_id):
     model_name = "ProcessStandard"
     title = "Processes and standards"
-    template_name = "submissions/process-standard-page.html"
+    template_name = "submissions/processes-standard-page.html"
     object_name = "process or standard"
     url_names = {
-        "page": "process-standard-page",
+        "page": "processes-standard-page",
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
-        "summary_page": "process-standards",
+        "summary_page": "processes-standards",
         "delete": "process-standard-delete",
     }
     response = related_object_page_view(

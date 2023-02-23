@@ -265,6 +265,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     # TODO - add fields on evaluation design, analysis and findings
 
+    def update_evaluation_page_status(self, page_name, status):
+        if page_name not in self.page_statuses:
+            return
+        self.page_statuses[page_name] = status.name
+        self.save()
+
     def get_list_topics_display_names(self):
         return [get_topic_display_name(x) for x in self.topics]
 
