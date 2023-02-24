@@ -151,7 +151,7 @@ ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 
 DEFAULT_ALLOWED_DOMAINS = frozenset(
     [
-        "xansium.com",
+        "xansium.com",  # Required for user research - to be removed later
     ]
 )
 
