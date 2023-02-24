@@ -23,7 +23,6 @@ def test_click_through_evaluation():
 
     while not page.has_text("Thank you"):
         el = page.one("button:contains('next'), a:contains('next')")
-        print(page)
         if el.tag == "button":
             form_el = page.one(selector)
             form = testino.Form(page, form_el)
