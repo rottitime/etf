@@ -401,7 +401,7 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
 
 def evaluation_ethics_view(request, evaluation_id):
     page_data = {
-        "title": "Ethics",
+        "title": "Ethical considerations",
         "page_name": "ethics",
         "prev_page": "other-measures",
         "next_page": "impact-findings",
