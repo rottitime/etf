@@ -47,7 +47,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Studied population
     studied_population = fields.Str()
     eligibility_criteria = fields.Str()
-    sample_size = fields.Int()
+    sample_size = fields.Int(min=0)
     sample_size_units = fields.Str(validate=validate.Length(max=256))
     sample_size_details = fields.Str()
 
