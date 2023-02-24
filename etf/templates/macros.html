@@ -159,7 +159,7 @@
       </div>
       <div class="cell small-6">
         {% if next_url and completed_page %}
-          <a href="{{next_url}}?Completed={{completed_page}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
+          <a href="{{next_url}}?completed={{completed_page}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
         {% elif next_url and not completed_page %}
           <a href="{{next_url}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
         {% else %}

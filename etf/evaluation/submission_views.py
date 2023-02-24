@@ -71,7 +71,7 @@ def evaluation_view(request, evaluation_id, page_data):
     topics = models.Topic.choices
     organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
-    if request.GET.get("Completed"):
+    if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
         data = request.POST
@@ -138,7 +138,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
 
-    if request.GET.get("Completed"):
+    if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
 
     related_model = getattr(models, model_name)
