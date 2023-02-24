@@ -63,8 +63,6 @@ def transform_post_data(post_data, list_vars):
     for var_name in list_vars:
         if var_name in post_data:
             data[var_name] = post_data.getlist(var_name)
-    print("output of transformation")
-    print(data)
     return data
 
 
@@ -85,23 +83,12 @@ def evaluation_view(request, evaluation_id, page_data):
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
-        data = request.POST
-        # data = transform_post_data(request.POST, list_vars)
+        data = transform_post_data(request.POST, list_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
-                print("serialized_eval")
-                print(serialized_evaluation)
                 setattr(evaluation, field_name, serialized_evaluation[field_name])
-
-            if "topics" in data.keys():
-                topic_list = data.getlist("topics") or None
-                setattr(evaluation, "topics", topic_list)
-            if "organisations" in data.keys():
-                print(type(data["organisations"]))
-                print(data["organisations"])
-                organisation_list = data.getlist("organisations") or None
-                setattr(evaluation, "organisations", organisation_list)
+            evaluation.save()
             evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
