@@ -58,6 +58,16 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
+def transform_post_data(post_data):
+    def retain_lists(k):
+        if len(v) == 1:
+            v = v[0]
+        return v
+
+    output_dict = {k: retain_lists(v) for k, v in post_data.items()}
+    return output_dict
+
+
 @login_required
 def evaluation_view(request, evaluation_id, page_data):
     title = page_data["title"]
@@ -75,15 +85,28 @@ def evaluation_view(request, evaluation_id, page_data):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
         data = request.POST
-        data = {k: v for (k, v) in data.items() if v}
+        print("data from form")
+
+        data = transform_post_data(data)
+
+        # data = {k: v for (k, v) in data.items() if v}
+        # TODO - this doesn't work for lists
+        # TODO - this doesn't work as we care about blanks, eg if there was info in a fiels that got deleted
+        print(data)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
+                print("serialized_eval")
+                print(serialized_evaluation)
                 setattr(evaluation, field_name, serialized_evaluation[field_name])
             if "topics" in data.keys():
+                print(type(data["topics"]))
+                print(data["topics"])
                 topic_list = data.getlist("topics") or None
                 setattr(evaluation, "topics", topic_list)
             if "organisations" in data.keys():
+                print(type(data["organisations"]))
+                print(data["organisations"])
                 organisation_list = data.getlist("organisations") or None
                 setattr(evaluation, "organisations", organisation_list)
             evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
