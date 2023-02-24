@@ -228,12 +228,12 @@ processes_standards_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/",
         submission_views.summary_processes_standards_page_view,
-        name="process-standards",
+        name="processes-standards",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/processes-standards/<uuid:process_standard_id>/",
         submission_views.process_standard_page_view,
-        name="process-standard-page",
+        name="processes-standard-page",
     ),
 ]
 
