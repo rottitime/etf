@@ -11,6 +11,14 @@ class DateAndBlankField(fields.Date):
             return None
 
 
+class FloatAndBlankField(fields.Float):
+    def _deserialize(self, value, attr, data, **kwargs):
+        if value:
+            return super()._deserialize(value, attr, data, **kwargs)
+        else:
+            return None
+
+
 class UserSchema(Schema):
     email = fields.Str()
 
@@ -194,6 +202,6 @@ class EvaluationCostSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     item_name = fields.Str()
     description = fields.Str()
-    item_cost = fields.Float()
+    item_cost = FloatAndBlankField()
     earliest_spend_date = fields.Date()
     latest_spend_date = fields.Date()
