@@ -191,7 +191,9 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             obj.delete()
             return redirect(summary_url)
         try:
+            print(data)
             serialized_obj = model_schema.load(data=data, partial=True)
+            print(serialized_obj)
             for field_name in serialized_obj:
                 setattr(obj, field_name, serialized_obj[field_name])
             obj.save()

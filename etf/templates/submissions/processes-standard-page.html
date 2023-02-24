@@ -7,10 +7,16 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>PLACEHOLDER</p>
       <p>
-        Enter details of where the evaluation is conforming to a particular standard or where you have adopted a given set of principles.
+      Enter details of where the evaluation is conforming to a particular standard or where you have adopted a given set of principles.
       </p>
+      {{macros.input("name", "Name of standard", tooltip=["Standards often have edition numbers, 
+        typically indicated by a year or a version number. Be sure to include the edition of the standard or process 
+        if the standard you are using has one, so it is clear which version of the standard you have followed. 
+        You should normally do this even if the version you are using is currently the only version, 
+        as there may be new versions in the future."])}}
+      {{macros.full_no_partial("conformity", "Conformity")}}
+      {{macros.textarea("description", "Description", short_description="Provide any information needed to describe the evaluation's conformity with the standard.")}}
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>
