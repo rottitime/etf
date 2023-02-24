@@ -7,12 +7,27 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.textarea("issue_description", "Issue description", tooltip=["The problem, circumstance or situation that it is intended that an intervention should respond to.", "When studying interventions to attend to particular problems this should be presented as undesirable aspects of a situation that it is hoped can be improved if an effective intervention can be identified.", "When studying an intervention that is untested but assumed to have a positive influence on aspects of a situation this should be presented as the aspects that it is thought that the intervention may be improving."])}}
-      {{macros.textarea("those_experiencing_issue", "Who experiences the issue", tooltip=["Those directly experiencing the issue."])}}
-      {{macros.textarea("why_improvements_matter", "Why would improvements in relation to this issue matter?", tooltip=["Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?"])}}
-      {{macros.textarea("who_improvements_matter_to", "Who does it matter to?", tooltip=["May be wider than those experiencing the issue directly."])}}
-      {{macros.textarea("current_practice", "Current practice", tooltip=["How is the issue currently typically attended to (if at all)?"])}}
-      {{macros.textarea("issue_relevance", "Relevance of the study", tooltip=["What decisions are the results of this study intended to inform?", "Are there deadlines for making those decisions?", "How might practice be changed if an effective intervention is identified or an intervention is found to be ineffective?", "What information would this study need to generate to be able to affect these decisions?"])}}
+      <p>
+      An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption. The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.
+      </p>
+
+      {{macros.textarea("issue_description", "Issue description", tooltip=["The problem, circumstance or situation that it is intended that an intervention should respond to.",
+        "When studying interventions to attend to particular problems this should be presented as undesirable aspects of a situation that it is hoped can be improved if an effective intervention can be identified.",
+        "When studying an intervention that is untested but assumed to have a positive influence on aspects of a situation this should be presented as the aspects that it is thought that the intervention may be improving."],
+        short_description="The problem, circumstance or situation that it is intended that an intervention should respond to.")}}
+      {{macros.textarea("those_experiencing_issue", "Who experiences the issue", short_description="Those directly experiencing the issue.")}}
+      {{macros.textarea("why_improvements_matter", "Why would improvements in relation to this issue matter?", tooltip=[
+        "It is helpful to check that the identified issue is important and document why it is.",
+        "For problems, this means establishing that the situation is actually bad. Sometimes the problem will be so clear and the intended outcomes so obvious that this step will just require a few sentences to document them; in other cases, considering this question will help to uncover assumptions that may not be shared by everyone involved in the intervention or study, or that need closer examination before they should be acted upon.",
+        "Whilst many issues will be self-evidently problematic, in some cases it will not be so obvious whether an issue is actually perceived or experienced as a problem by those it affects. In these cases it may be worth undertaking a small piece of research with the affected population to check your intuition. This will typically require a piece of qualitative research, perhaps using interviews or focus groups.",
+        "The same principles apply where the study is examining prospective improvements: sometimes the benefits will be immediately apparent; in other cases they should be examined to test that everyone would experience them as improvements."],
+        short_description="Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?")}}
+      {{macros.textarea("who_improvements_matter_to", "Who does it matter to?", short_description="May be wider than those experiencing the issue directly.")}}      
+      {{macros.textarea("current_practice", "Current practice", short_description="How is the issue currently typically attended to (if at all)?")}}
+      {{macros.textarea("issue_relevance", "Relevance of the study", tooltip=["What decisions are the results of this study intended to inform?", 
+        "Are there deadlines for making those decisions?",
+        "How might practice be changed if an effective intervention is identified or an intervention is found to be ineffective?",
+        "What information would this study need to generate to be able to affect these decisions?"], short_description="How will the results of the evaluation ultimately contribute to practice?")}} 
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
