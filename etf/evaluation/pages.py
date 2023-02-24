@@ -32,7 +32,7 @@ page_display_names = {
     "interventions": "Interventions",
     "outcome-measures": "Outcome measures",
     "other-measures": "Other measures",
-    "ethics": "Ethics",
+    "ethics": "Ethical considerations",
     "impact-findings": "Impact evaluation findings",
     "economic-findings": "Economic evaluation findings",
     "process-findings": "Process evaluation findings",
