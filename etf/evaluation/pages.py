@@ -40,7 +40,7 @@ page_display_names = {
     "process-standards": "Process and standards",
     "links": "Links and IDs",
     "metadata": "Metadata",
-    "status": "Evaluation visibility",
+    "status": "Evaluation status",
 }
 
 page_url_names = (
