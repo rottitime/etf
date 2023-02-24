@@ -80,6 +80,7 @@ def evaluation_view(request, evaluation_id, page_data):
     organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
     list_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
+
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":

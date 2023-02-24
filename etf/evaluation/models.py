@@ -25,14 +25,10 @@ class User(BaseUser, UUIDPrimaryKeyBase):
         super().save(*args, **kwargs)
 
 
-# TODO - is there a better way to nest choices? (ie for economic evaluation)
 class EvaluationTypeOptions(choices.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
-    ECONOMIC_COST_MINIMISATION = "Economic evaluation: Cost-minimisation analysis"
-    ECONOMIC_COST_EFFECTIVENESS = "Economic evaluation: Cost-effectiveness analysis"
-    ECONOMIC_COST_BENEFIT = "Economic evaluation: Cost-benefit analysis"
-    ECONOMIC_COST_UTILITY = "Economic evaluation: Cost-utility"
+    ECONOMIC = "Economic evaluation"
     OTHER = "Other"
 
 
