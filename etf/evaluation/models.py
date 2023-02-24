@@ -268,6 +268,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     def update_evaluation_page_status(self, page_name, status):
         if page_name not in self.page_statuses:
             return
+        if self.page_statuses[page_name] == EvaluationPageStatus.DONE.name:
+            return
         self.page_statuses[page_name] = status.name
         self.save()
 

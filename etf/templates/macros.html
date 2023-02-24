@@ -147,7 +147,7 @@
 {%- endmacro %}
 
 
-{% macro buttons(prev_url, next_url=None, id=None) -%}
+{% macro buttons(prev_url, completed_page=None, next_url=None, id=None) -%}
   <div class="evaluation-button-row">
     <div class="grid-x">
       <div class="cell small-6">
@@ -158,7 +158,9 @@
         {% endif %}
       </div>
       <div class="cell small-6">
-        {% if next_url %}
+        {% if next_url and completed_page %}
+          <a href="{{next_url}}?Completed={{completed_page}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
+        {% elif next_url and not completed_page %}
           <a href="{{next_url}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
         {% else %}
           <button type="submit" class="button float-right">Save and next <i class="bi-caret-right"></i></button>

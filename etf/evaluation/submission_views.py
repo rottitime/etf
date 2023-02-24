@@ -71,6 +71,8 @@ def evaluation_view(request, evaluation_id, page_data):
     topics = models.Topic.choices
     organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
+    if request.GET.get("Completed"):
+        evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
         data = request.POST
         data = {k: v for (k, v) in data.items() if v}
@@ -136,6 +138,9 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
 
+    if request.GET.get("Completed"):
+        evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
+
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
     # TODO - this misses out some objects, names not unique
@@ -145,9 +150,9 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
+    data["object_summary_page_name"] = summary_url_name
 
     if request.method == "POST":
-        evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.DONE)
         # TODO - figure out logic for evaluation status
         return add_related_object_for_eval(evaluation_id, model_name, summary_url_name, object_name)
     else:
