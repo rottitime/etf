@@ -109,13 +109,12 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_name=""):
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, name_field="name", object_name=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    new_object = model(evaluation=evaluation)
     if object_name:
-        new_object = model(evaluation=evaluation, name=f"New {object_name}")
-    else:
-        new_object = model(evaluation=evaluation)
+        setattr(new_object, name_field, f"New {object_name}")
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id,)))
 
@@ -123,7 +122,7 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
 
 
 @login_required
-def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
+def summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name"):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     errors = {}
     data = {"evaluation_id": evaluation_id}
@@ -143,10 +142,9 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    # TODO - this misses out some objects, names not unique
-
-    all_objects_dictionary = {reverse(page_url_name, args=(evaluation_id, obj.id)): obj.name for obj in all_objects}
-
+    all_objects_dictionary = {
+        reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
+    }
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
@@ -154,7 +152,13 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
-        return add_related_object_for_eval(evaluation_id, model_name, summary_url_name, object_name)
+        return add_related_object_for_eval(
+            evaluation_id=evaluation_id,
+            model_name=model_name,
+            redirect_url_name=summary_url_name,
+            object_name=object_name,
+            name_field=name_field,
+        )
     else:
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
         response = render(
@@ -162,7 +166,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
             template_name,
             {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
         )
-        return response
+    return response
 
 
 @login_required
@@ -504,7 +508,6 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         "prev_section_url_name": "other-analysis",
         "next_section_url_name": "outcome-measures",
         "summary_page": "interventions",
-        "delete": "intervention-delete",
     }
     response = related_object_page_view(
         request,
@@ -545,7 +548,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         "prev_section_url_name": "interventions",
         "next_section_url_name": "other-measures",
         "summary_page": "outcome-measures",
-        "delete": "outcome-measure-delete",
     }
     response = related_object_page_view(
         request,
@@ -585,7 +587,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         "prev_section_url_name": "outcome-measures",
         "next_section_url_name": "ethics",
         "summary_page": "other-measures",
-        "delete": "other-measure-delete",
     }
     response = related_object_page_view(
         request,
@@ -625,12 +626,50 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         "prev_section_url_name": "other-findings",
         "next_section_url_name": "links",
         "summary_page": "processes-standards",
-        "delete": "process-standard-delete",
     }
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
         id=process_standard_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_evaluation_costs_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Evaluation costs and budget",
+        "template_name": "submissions/evaluation-costs.html",
+        "prev_section_url_name": "participant-recruitment",
+        "next_section_url_name": "policy-costs",
+        "summary_url_name": "evaluation-costs",
+        "page_url_name": "evaluation-cost-page",
+        "object_name": "evaluation cost",
+        "object_name_plural": "evaluation costs",
+    }
+    model_name = "EvaluationCost"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="item_name")
+
+
+def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
+    model_name = "EvaluationCost"
+    title = "Evaluation costs and budget"
+    template_name = "submissions/evaluation-cost-page.html"
+    object_name = "evaluation cost"
+    url_names = {
+        "page": "evaluation-cost-page",
+        "prev_section_url_name": "participant-recruitment",
+        "next_section_url_name": "policy-costs",
+        "summary_page": "evaluation-costs",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=evaluation_cost_id,
         model_name=model_name,
         title=title,
         template_name=template_name,
