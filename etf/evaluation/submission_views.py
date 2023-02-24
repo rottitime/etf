@@ -76,10 +76,14 @@ def evaluation_view(request, evaluation_id, page_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
-    topics = models.Topic.choices
-    organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
-    list_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
+    list_vars = ["topics", "organisations", "evaluation_type"]
+    # TODO - add "impact_eval_design_name" when choices have been added
+    list_vars = {
+        "topics": models.Topic.choices,
+        "organisations": enums.Organisation.choices,
+        "evaluation_type": models.EvaluationTypeOptions.choices,
+    }
 
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
@@ -102,8 +106,7 @@ def evaluation_view(request, evaluation_id, page_data):
         template_name,
         {
             "errors": errors,
-            "topics": topics,
-            "organisations": organisations,
+            "list_vars": list_vars,
             "statuses": statuses,
             "data": data,
             "next_url": next_url,

@@ -8,8 +8,8 @@
         <h3>{{title}}</h3>
       </legend>
       {{macros.textarea("brief_description", "Brief description", short_description="Please provide one or two sentences to describe the evaluation.", tooltip=["This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."])}}
-      {{macros.select_many_from_list("topics", "Topics", topics, short_description="Please select one or more topics to associate with this evaluation.", tooltip=["The topics should be relevant to the target of the evaluation as well as those who might find this item relevant to their area of interest."])}}
-      {{macros.select_many_from_list("organisations", "Organisations", organisations, short_description="Please select the organisations responsible for this evaluation.")}}
+      {{macros.select_many_from_list("topics", "Topics", list_vars.topics, short_description="Please select one or more topics to associate with this evaluation.", tooltip=["The topics should be relevant to the target of the evaluation as well as those who might find this item relevant to their area of interest."])}}
+      {{macros.select_many_from_list("organisations", "Organisations", list_vars.organisations, short_description="Please select the organisations responsible for this evaluation.")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
