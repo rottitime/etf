@@ -84,7 +84,6 @@ def evaluation_view(request, evaluation_id, page_data):
         "organisations": enums.Organisation.choices,
         "evaluation_type": models.EvaluationTypeOptions.choices,
     }
-
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
