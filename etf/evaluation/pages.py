@@ -37,7 +37,7 @@ page_display_names = {
     "economic-findings": "Economic evaluation findings",
     "process-findings": "Process evaluation findings",
     "other-findings": "Other evaluation findings",
-    "processes-standards": "Process and standards",
+    "processes-standards": "Processes and standards",
     "links": "Links and IDs",
     "metadata": "Metadata",
     "status": "Evaluation visibility",
