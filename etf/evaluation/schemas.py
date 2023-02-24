@@ -19,6 +19,25 @@ class FloatAndBlankField(fields.Float):
             return None
 
 
+class IntAndBlankField(fields.Int):
+    def _deserialize(self, value, attr, data, **kwargs):
+        if value:
+            return super()._deserialize(value, attr, data, **kwargs)
+        else:
+            return None
+
+
+def is_non_neg_int_or_none(value):
+    error = validate.ValidationError("Value should be a non-negative integer")
+    if not isinstance(value, int):
+        if not value:
+            value = None
+        else:
+            raise error
+    elif value < 0:
+        raise error
+
+
 class UserSchema(Schema):
     email = fields.Str()
 
@@ -53,9 +72,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     evaluation_type = fields.Raw()
 
     # Studied population
-    studied_population = fields.Str()
+    studied_population = (fields.Str(),)
     eligibility_criteria = fields.Str()
-    sample_size = fields.Int(min=0)
+    sample_size = IntAndBlankField(validate=is_non_neg_int_or_none)
     sample_size_units = fields.Str(validate=validate.Length(max=256))
     sample_size_details = fields.Str()
 
