@@ -8,6 +8,7 @@ import random
 import faker
 
 from . import enums, models
+from .pages import get_default_page_statuses
 
 fake = faker.Faker()
 
@@ -52,14 +53,25 @@ def generate_organisations():
     return list(set_organisations)
 
 
+def generate_evaluation_types():
+    num_types = random.randint(0, 2)
+    set_types = set()
+    for i in range(num_types):
+        set_types.add(random.choice(models.EvaluationTypeOptions.values))
+    return list(set_types)
+
+
 def make_evaluation():
     topics = generate_topics()
     organisations = generate_organisations()
+    evaluation_type = generate_evaluation_types()
     data = dict(
         title=fake.sentence(),
+        short_title=fake.sentence(),
         brief_description=fake.text(),
         topics=topics,
         status=random.choice(models.EvaluationStatus.values),
+        page_statuses=get_default_page_statuses(),
         organisations=organisations,
         issue_description=fake.text(),
         those_experiencing_issue=fake.text(),
@@ -68,7 +80,49 @@ def make_evaluation():
         current_practice=fake.text(),
         issue_relevance=fake.text(),
         eligibility_criteria=fake.text(),
-        process_for_recruitment=fake.text(),
+        evaluation_type=evaluation_type,
+        studied_population=fake.text(),
+        sample_size=fake.pyint(),
+        sample_size_units=fake.text(5),
+        sample_size_details=fake.text(),
+        process_for_recruitment=fake.sentence(),
+        recruitment_schedule=fake.sentence(),
+        ethics_committee_approval=fake.pybool(),
+        ethics_committee_details=fake.text(),
+        ethical_state_given_existing_evidence_base=fake.text(),
+        risks_to_participants=fake.text(),
+        risks_to_study_team=fake.text(),
+        participant_involvement=fake.text(),
+        participant_information=fake.text(),
+        participant_consent=fake.text(),
+        participant_payment=fake.text(),
+        confidentiality_and_personal_data=fake.text(),
+        breaking_confidentiality=fake.text(),
+        other_ethical_information=fake.text(),
+        impact_eval_design_name=fake.words(),
+        impact_eval_design_justification=fake.text(),
+        impact_eval_design_description=fake.text(),
+        impact_eval_design_features=fake.text(),
+        impact_eval_design_equity=fake.text(),
+        impact_eval_design_assumptions=fake.text(),
+        impact_eval_design_approach_limitations=fake.text(),
+        impact_eval_analysis_set=fake.text(),
+        impact_eval_effect_measure=fake.text(),
+        process_eval_methods=fake.text(8),
+        process_eval_analysis_description=fake.text(),
+        economic_eval_type=fake.text(8),
+        economic_eval_analysis_description=fake.text(),
+        other_eval_design_type=fake.text(),
+        other_eval_design_details=fake.text(),
+        other_eval_analysis_description=fake.text(),
+        impact_eval_comparison=fake.text(),
+        impact_eval_outcome=fake.text(),
+        economic_eval_summary_findings=fake.text(),
+        economic_eval_findings=fake.text(),
+        process_eval_summary_findings=fake.text(),
+        process_eval_findings=fake.text(),
+        other_eval_summary_findings=fake.text(),
+        other_eval_findings=fake.text(),
         # TODO - add other fields
     )
     return data
