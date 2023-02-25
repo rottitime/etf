@@ -443,16 +443,6 @@ def evaluation_other_findings_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id, page_data)
 
 
-def evaluation_links_view(request, evaluation_id):
-    page_data = {
-        "title": "Links and IDs",
-        "page_name": "links",
-        "prev_page": "processes-standards",
-        "next_page": "metadata",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
 def evaluation_metadata_view(request, evaluation_id):
     page_data = {
         "title": "Metadata",
@@ -705,12 +695,51 @@ def document_page_view(request, evaluation_id, document_id):
         "page": "document-page",
         "prev_section_url_name": "publication-intention",
         "next_section_url_name": "event-dates",
-        "summary_page": "evaluation-costs",
+        "summary_page": "documents",
     }
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
         id=document_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_links_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Links to other services",
+        "template_name": "submissions/links.html",
+        "prev_section_url_name": "processes-standards",
+        "next_section_url_name": "metadata",
+        "summary_url_name": "links",
+        "page_url_name": "link-page",
+        "object_name": "link",
+        "object_name_plural": "links",
+    }
+    model_name = "LinkOtherService"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name_of_service")
+
+
+def links_page_view(request, evaluation_id, link_id):
+    model_name = "LinkOtherService"
+    title = "Link to other service"
+    template_name = "submissions/links-page.html"
+    object_name = "link"
+    url_names = {
+        "page": "link-page",
+        "prev_section_url_name": "processes-standards",
+        "next_section_url_name": "metadata",
+        "summary_page": "links",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=link_id,
         model_name=model_name,
         title=title,
         template_name=template_name,

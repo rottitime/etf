@@ -155,11 +155,6 @@ evaluation_entry_urlpatterns = [
         name="other-findings",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/links",
-        submission_views.evaluation_links_view,
-        name="links",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/metadata",
         submission_views.evaluation_metadata_view,
         name="metadata",
@@ -254,6 +249,19 @@ documents_urlpatterns = [
     ),
 ]
 
+links_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/links/",
+        submission_views.summary_links_page_view,
+        name="links",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/links/<uuid:link_id>/",
+        submission_views.links_page_view,
+        name="link-page",
+    ),
+]
+
 
 urlpatterns = (
     urlpatterns
@@ -265,6 +273,7 @@ urlpatterns = (
     + processes_standards_urlpatterns
     + evaluation_costs_urlpatterns
     + documents_urlpatterns
+    + links_urlpatterns
 )
 
 handler404 = "etf.evaluation.views.view_404"
