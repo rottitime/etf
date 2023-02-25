@@ -689,3 +689,42 @@ def evaluation_overview_view(request, evaluation_id):
     }
     errors = {}
     return render(request, "submissions/overview.html", {"errors": errors, "data": data})
+
+
+def summary_documents_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Documents",
+        "template_name": "submissions/documents.html",
+        "prev_section_url_name": "publication-intention",
+        "next_section_url_name": "event-dates",
+        "summary_url_name": "documents",
+        "page_url_name": "document-page",
+        "object_name": "document",
+        "object_name_plural": "documents",
+    }
+    model_name = "Document"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="title")
+
+
+def document_page_view(request, evaluation_id, document_id):
+    model_name = "Document"
+    title = "Document"
+    template_name = "submissions/document-page.html"
+    object_name = "document"
+    url_names = {
+        "page": "document-page",
+        "prev_section_url_name": "publication-intention",
+        "next_section_url_name": "event-dates",
+        "summary_page": "evaluation-costs",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=document_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response

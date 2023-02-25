@@ -7,11 +7,11 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>To add multiple documents (?)</p>
-      <p>Document upload to follow.</p>
-      {% block multipleobjects %}
-        {% include "submissions/multiple-objects.html" %}
-      {% endblock %}
+      PLACEHOLDER
+      
+      {{macros.textarea("", "")}}
+
+      {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>
 {% endblock %}
