@@ -7,10 +7,12 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      PLACEHOLDER
-      
-      {{macros.textarea("", "")}}
-
+      {{macros.input("name", "Event name [PLACEHOLDER - list of options]")}}
+      {{macros.input("date", "Event date", type="date")}}
+      {{macros.select_from_list("type", "Intended or actual date", list=[(None, ""), ("INTENDED", "Intended"), ("ACTUAL", "Actual")])}}
+      {{macros.textarea("reasons_for_change", "Reasons for change",
+        short_description="Only requested when amending an existing entry.",
+        tooltip=["Please enter a reason why the date is changing eg 'Targeted number of participants recruited quicker than expected so evaluation now scheduled to finish sooner'."])}}
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>
