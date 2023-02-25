@@ -186,7 +186,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     if request.method == "POST":
-        data = request.POST
+        data = request.POST.dict()
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
