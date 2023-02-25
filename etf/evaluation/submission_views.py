@@ -293,16 +293,6 @@ def evaluation_publication_intention_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id, page_data)
 
 
-def evaluation_event_dates_view(request, evaluation_id):
-    page_data = {
-        "title": "Event dates",
-        "page_name": "event-dates",
-        "prev_page": "documents",
-        "next_page": "evaluation-types",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
 def evaluation_types_view(request, evaluation_id):
     page_data = {
         "title": "Evaluation types",
@@ -740,6 +730,45 @@ def links_page_view(request, evaluation_id, link_id):
         request,
         evaluation_id=evaluation_id,
         id=link_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_event_dates_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Event dates",
+        "template_name": "submissions/event-dates.html",
+        "prev_section_url_name": "documents",
+        "next_section_url_name": "evaluation-types",
+        "summary_url_name": "event-dates",
+        "page_url_name": "event-date-page",
+        "object_name": "event date",
+        "object_name_plural": "event dates",
+    }
+    model_name = "EventDate"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="")
+
+
+def event_date_page_view(request, evaluation_id, event_date_id):
+    model_name = "EventDate"
+    title = "Event date"
+    template_name = "submissions/event-date-page.html"
+    object_name = "event date"
+    url_names = {
+        "page": "event-date-page",
+        "prev_section_url_name": "documents",
+        "next_section_url_name": "evaluation-types",
+        "summary_page": "event-dates",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=event_date_id,
         model_name=model_name,
         title=title,
         template_name=template_name,

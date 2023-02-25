@@ -80,11 +80,6 @@ evaluation_entry_urlpatterns = [
         name="publication-intention",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/event-dates",
-        submission_views.evaluation_event_dates_view,
-        name="event-dates",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/evaluation-types",
         submission_views.evaluation_types_view,
         name="evaluation-types",
@@ -263,6 +258,20 @@ links_urlpatterns = [
 ]
 
 
+event_date_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/event-dates/",
+        submission_views.summary_event_dates_page_view,
+        name="event-dates",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/event-dates/<uuid:event_date_id>/",
+        submission_views.event_date_page_view,
+        name="event-date-page",
+    ),
+]
+
+
 urlpatterns = (
     urlpatterns
     + api_urlpatterns
@@ -274,6 +283,7 @@ urlpatterns = (
     + evaluation_costs_urlpatterns
     + documents_urlpatterns
     + links_urlpatterns
+    + event_date_urlpatterns
 )
 
 handler404 = "etf.evaluation.views.view_404"
