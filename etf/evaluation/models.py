@@ -233,7 +233,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     # Economic evaluation design
     economic_eval_type = models.CharField(blank=True, null=True, max_length=256)
-    # TODO - add more details
+    perspective_costs = models.TextField(blank=True, null=True)
+    perspective_benefits = models.TextField(blank=True, null=True)
+    monetisation_approaches = models.TextField(blank=True, null=True)
+    economic_eval_design_details = models.TextField(blank=True, null=True)
 
     # Economic evaluation analysis
     economic_eval_analysis_description = models.TextField(blank=True, null=True)
