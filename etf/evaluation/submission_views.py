@@ -142,9 +142,14 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    all_objects_dictionary = {
-        reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
-    }
+    if name_field:
+        all_objects_dictionary = {
+            reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
+        }
+    else:
+        all_objects_dictionary = {
+            reverse(page_url_name, args=(evaluation_id, obj.id)): object_name for obj in all_objects
+        }
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
