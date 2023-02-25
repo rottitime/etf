@@ -105,7 +105,7 @@
 {%- endmacro %}
 
 {% macro yes_no(name, label, tooltip=[], short_description='') -%}
-  {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), tooltip=tooltip, short_description=short_description, empty_option="Please select...")}}
+  {{select(name, label, options=({'text': '------', 'value': None}, {'text': 'Yes', 'value': 'YES'}, {'text': 'No', 'value': 'NO'}), tooltip=tooltip, short_description=short_description)}}
 {%- endmacro %}
 
 

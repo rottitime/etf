@@ -83,7 +83,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     recruitment_schedule = fields.Str()
 
     # Ethical considerations
-    ethics_committee_approval = fields.Boolean()
+    ethics_committee_approval = fields.Str()
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
     risks_to_participants = fields.Str()

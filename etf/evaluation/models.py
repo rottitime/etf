@@ -42,6 +42,11 @@ class OutcomeMeasure(choices.Choices):
     SURROGATE = "Surrogate"
 
 
+class YesNo(choices.Choices):
+    YES = "Yes"
+    NO = "No"
+
+
 class YesNoPartial(choices.Choices):
     YES = "Yes"
     NO = "No"
@@ -190,7 +195,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # TODO - what happens with dates?
 
     # Ethical considerations
-    ethics_committee_approval = models.BooleanField(blank=True, null=True)
+    ethics_committee_approval = models.CharField(max_length=3, blank=True, null=True, choices=YesNo.choices)
     ethics_committee_details = models.TextField(blank=True, null=True)
     ethical_state_given_existing_evidence_base = models.TextField(blank=True, null=True)
     risks_to_participants = models.TextField(blank=True, null=True)
