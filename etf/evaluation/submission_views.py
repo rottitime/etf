@@ -293,16 +293,6 @@ def evaluation_publication_intention_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id, page_data)
 
 
-def evaluation_documents_view(request, evaluation_id):
-    page_data = {
-        "title": "Documents",
-        "page_name": "documents",
-        "prev_page": "publication-intention",
-        "next_page": "event-dates",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
 def evaluation_event_dates_view(request, evaluation_id):
     page_data = {
         "title": "Event dates",
