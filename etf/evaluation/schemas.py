@@ -107,7 +107,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation analysis
     impact_eval_analysis_set = fields.Str()
-    impact_eval_effect_measure = fields.Str()
+    impact_eval_primary_effect_size_measure = fields.Str()
     impact_eval_primary_effect_size_desc = fields.Str()
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
