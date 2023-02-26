@@ -117,6 +117,10 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Economic evaluation design
     economic_eval_type = fields.Str(validate=validate.Length(max=256))
+    perspective_costs = fields.Str()
+    perspective_benefits = fields.Str()
+    monetisation_approaches = fields.Str()
+    economic_eval_design_details = fields.Str()
 
     # Economic evaluation analysis
     economic_eval_analysis_description = fields.Str()
