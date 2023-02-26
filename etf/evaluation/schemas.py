@@ -108,6 +108,11 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Impact evaluation analysis
     impact_eval_analysis_set = fields.Str()
     impact_eval_effect_measure = fields.Str()
+    impact_eval_primary_effect_size_desc = fields.Str()
+    impact_eval_sensitivity_analysis = fields.Str()
+    impact_eval_subgroup_analysis = fields.Str()
+    impact_eval_missing_data_handling = fields.Str()
+    impact_eval_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
     process_eval_methods = fields.Str(validate=validate.Length(max=256))
@@ -135,6 +140,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
     impact_eval_outcome = fields.Str()
+    impact_eval_point_estimate_diff = fields.Str()
+    impact_eval_lower_uncertainty = fields.Str()
+    impact_eval_upper_uncertainty = fields.Str()
 
     # Economic evaluation findings
     economic_eval_summary_findings = fields.Str()
