@@ -53,7 +53,16 @@ def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
-    form_data = {"title": title, "prev_url": prev_url, "next_url": next_url, "evaluation_id": evaluation_id}
+    page_statuses = evaluation.page_statuses
+    form_data = {
+        "title": title,
+        "prev_url": prev_url,
+        "next_url": next_url,
+        "evaluation_id": evaluation_id,
+        "page_statuses": page_statuses,
+        "page_order": page_name_and_order,
+        "current_page": page_name,
+    }
     evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
     return render(request, template_name, form_data)
 
@@ -77,7 +86,7 @@ def evaluation_view(request, evaluation_id, page_data):
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     statuses = models.EvaluationStatus.choices
-    list_vars = ["topics", "organisations", "evaluation_type"]
+    page_statuses = evaluation.page_statuses
     # TODO - add "impact_eval_design_name" when choices have been added
     list_vars = {
         "topics": models.Topic.choices,
@@ -111,6 +120,10 @@ def evaluation_view(request, evaluation_id, page_data):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
+            "page_order": page_name_and_order,
+            "current_page": page_name,
+            "evaluation_id": evaluation_id,
+            "page_statuses": page_statuses,
         },
     )
 
@@ -142,6 +155,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     summary_url_name = form_data["summary_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
+    page_statuses = evaluation.page_statuses
 
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
@@ -175,13 +189,24 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
         response = render(
             request,
             template_name,
-            {"title": title, "errors": errors, "data": data, "prev_url": prev_url, "next_url": next_url},
+            {
+                "title": title,
+                "errors": errors,
+                "data": data,
+                "prev_url": prev_url,
+                "next_url": next_url,
+                "page_order": page_name_and_order,
+                "current_page": summary_url_name,
+                "evaluation_id": evaluation_id,
+                "page_statuses": page_statuses,
+            },
         )
     return response
 
 
 @login_required
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
@@ -191,6 +216,8 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
+    page_statuses = evaluation.page_statuses
+
     if request.method == "POST":
         data = request.POST.dict()
         if "delete" in request.POST:
@@ -220,6 +247,10 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "prev_url": prev_url,
             "object_name": object_name,
             "summary_url": summary_url,
+            "page_order": page_name_and_order,
+            "current_page": url_names["summary_page"],
+            "evaluation_id": evaluation_id,
+            "page_statuses": page_statuses,
         },
     )
 

@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "submissions/evaluation-base.html" %}
 {% import 'macros.html' as macros with context %}
 
-{% block content %}
+{% block eval_content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>

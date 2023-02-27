@@ -13,3 +13,7 @@ div.eval-overview-name {
   font-size: 18px;
   font-weight: 600;
 }
+
+span.current-page-name {
+  margin-left: 0.5rem;
+}
