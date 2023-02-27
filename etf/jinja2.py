@@ -57,8 +57,8 @@ def get_page_progress_icon(progress_status):
         return "bi-question-circle"
 
 
-def list_to_options(l):
-    result = tuple({"value": item[0], "text": item[1]} for item in l)
+def list_to_options(iterable):
+    result = tuple({"value": item[0], "text": item[1]} for item in iterable)
     return result
 
 
