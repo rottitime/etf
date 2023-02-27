@@ -218,6 +218,12 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
     list_vars = {"document_types": models.DocumentType.choices}
+    list_vars = {
+        "document_types": models.DocumentType.choices,
+        "event_date_name": models.EventDateOption.choices,
+        "event_date_type": models.EventDateType.choices,
+    }
+    print(list_vars)
     if request.method == "POST":
         data = transform_post_data(request.POST, list_vars.keys())
         if "delete" in request.POST:
