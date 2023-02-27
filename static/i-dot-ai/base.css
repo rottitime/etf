@@ -192,7 +192,6 @@ fieldset {
 }
 
 nav.sidebar {
-  margin: 1.25rem;
   margin-left: 1rem;
   margin-right: 1rem;
 }
@@ -201,10 +200,26 @@ nav.sidebar {
   align-items: start;
 }
 
+#etf nav.sidebar ul hr {
+  width: 100%;
+  margin: 0;
+}
+
 #etf nav.sidebar li {
   text-align: left;
-  margin: 0.25rem;
+  margin: 0.15rem;
   z-index: 10;
+  width: 100%;
+}
+
+#etf nav.sidebar li div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#etf nav.sidebar li a {
+  font-size: 14px;
+  padding: 0.25rem;
 }
 
 .completed i {
