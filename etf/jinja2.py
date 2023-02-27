@@ -44,6 +44,17 @@ def get_page_status_name(db_name):
     return models.get_page_status_display_name(db_name)
 
 
+def get_page_progress_icon(progress_status):
+    if progress_status == pages.EvaluationPageStatus.IN_PROGRESS.name:
+        return "bi-fast-forward-circle"
+    elif progress_status == pages.EvaluationPageStatus.DONE.name:
+        return "bi-check-circle"
+    elif progress_status == pages.EvaluationPageStatus.NOT_STARTED.name:
+        return "bi-dash-circle"
+    else:
+        return "bi-question-circle"
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -64,6 +75,7 @@ def environment(**options):
             "is_in": is_in,
             "get_page_display_name": get_page_name,
             "get_page_status_display_name": get_page_status_name,
+            "get_page_progress_icon": get_page_progress_icon,
         }
     )
     return env
