@@ -22,11 +22,11 @@ def test_click_through_evaluation():
     selector = testino.XPath('//form[.//button[contains(text(), "next")]]')
 
     while not page.has_text("Thank you"):
-        el = page.one("button:contains('next'), a:contains('next')")
+        el = page.one("button:contains('Save and next'), a:contains('Next')")
         if el.tag == "button":
             form_el = page.one(selector)
             form = testino.Form(page, form_el)
             page = form.submit().follow()
         else:
-            page = page.click(contains="next")
+            page = page.click(contains="Next")
         assert page.status_code == 200, page.status_code
