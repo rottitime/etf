@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import jinja2
 from django.contrib import messages
 from django.templatetags.static import static
@@ -6,6 +8,12 @@ from django.urls import reverse
 from etf.evaluation import models, pages
 
 DEFAULT = object()
+
+page_progress_icon_dict = defaultdict(lambda: "bi-question-circle", {
+    pages.EvaluationPageStatus.IN_PROGRESS.name: "bi-fast-forward-circle",
+    pages.EvaluationPageStatus.DONE.name: "bi-check-circle",
+    pages.EvaluationPageStatus.NOT_STARTED.name: "bi-dash-circle"
+})
 
 
 def finalize(thing):
@@ -46,15 +54,7 @@ def get_page_status_name(db_name):
 
 
 def get_page_progress_icon(progress_status):
-    # TODO: Convert to defaultdict
-    if progress_status == pages.EvaluationPageStatus.IN_PROGRESS.name:
-        return "bi-fast-forward-circle"
-    elif progress_status == pages.EvaluationPageStatus.DONE.name:
-        return "bi-check-circle"
-    elif progress_status == pages.EvaluationPageStatus.NOT_STARTED.name:
-        return "bi-dash-circle"
-    else:
-        return "bi-question-circle"
+    return page_progress_icon_dict[progress_status]
 
 
 def list_to_options(iterable):

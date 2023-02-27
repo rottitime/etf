@@ -6,7 +6,7 @@
       <nav class="sidebar">
         <ul class="vertical menu tabs accordion-menu" data-accordion-menu>
           <hr>
-          {% for page, order in page_order|dictsort(false, 'value') %}
+          {% for page, order in page_order|dictsort(by='value') %}
             <li>
               {% if current_page == page %}
                 <i class="bi-arrow-right-circle"></i><span class="current-page-name">{{ get_page_display_name(page) }}</span>
@@ -23,7 +23,7 @@
       </nav>
     </div>
     <div class="cell small-6">
-      {% block eval_content %}
+      {% block evaluation_content %}
       {% endblock %}
     </div>
   </div>
