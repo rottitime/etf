@@ -142,9 +142,14 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    all_objects_dictionary = {
-        reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
-    }
+    if name_field:
+        all_objects_dictionary = {
+            reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
+        }
+    else:
+        all_objects_dictionary = {
+            reverse(page_url_name, args=(evaluation_id, obj.id)): object_name for obj in all_objects
+        }
     data["objects"] = all_objects_dictionary
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
@@ -181,7 +186,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     if request.method == "POST":
-        data = request.POST
+        data = request.POST.dict()
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
@@ -289,26 +294,6 @@ def evaluation_publication_intention_view(request, evaluation_id):
         "page_name": "publication-intention",
         "prev_page": "policy-costs",
         "next_page": "documents",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
-def evaluation_documents_view(request, evaluation_id):
-    page_data = {
-        "title": "Documents",
-        "page_name": "documents",
-        "prev_page": "publication-intention",
-        "next_page": "event-dates",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
-def evaluation_event_dates_view(request, evaluation_id):
-    page_data = {
-        "title": "Event dates",
-        "page_name": "event-dates",
-        "prev_page": "documents",
-        "next_page": "evaluation-types",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -449,16 +434,6 @@ def evaluation_other_findings_view(request, evaluation_id):
         "page_name": "other-findings",
         "prev_page": "process-findings",
         "next_page": "processes-standards",
-    }
-    return evaluation_view(request, evaluation_id, page_data)
-
-
-def evaluation_links_view(request, evaluation_id):
-    page_data = {
-        "title": "Links and IDs",
-        "page_name": "links",
-        "prev_page": "processes-standards",
-        "next_page": "metadata",
     }
     return evaluation_view(request, evaluation_id, page_data)
 
@@ -689,3 +664,120 @@ def evaluation_overview_view(request, evaluation_id):
     }
     errors = {}
     return render(request, "submissions/overview.html", {"errors": errors, "data": data})
+
+
+def summary_documents_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Documents",
+        "template_name": "submissions/documents.html",
+        "prev_section_url_name": "publication-intention",
+        "next_section_url_name": "event-dates",
+        "summary_url_name": "documents",
+        "page_url_name": "document-page",
+        "object_name": "document",
+        "object_name_plural": "documents",
+    }
+    model_name = "Document"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="title")
+
+
+def document_page_view(request, evaluation_id, document_id):
+    model_name = "Document"
+    title = "Document"
+    template_name = "submissions/document-page.html"
+    object_name = "document"
+    url_names = {
+        "page": "document-page",
+        "prev_section_url_name": "publication-intention",
+        "next_section_url_name": "event-dates",
+        "summary_page": "documents",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=document_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_links_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Links to other services",
+        "template_name": "submissions/links.html",
+        "prev_section_url_name": "processes-standards",
+        "next_section_url_name": "metadata",
+        "summary_url_name": "links",
+        "page_url_name": "link-page",
+        "object_name": "link",
+        "object_name_plural": "links",
+    }
+    model_name = "LinkOtherService"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name_of_service")
+
+
+def links_page_view(request, evaluation_id, link_id):
+    model_name = "LinkOtherService"
+    title = "Link to other service"
+    template_name = "submissions/links-page.html"
+    object_name = "link"
+    url_names = {
+        "page": "link-page",
+        "prev_section_url_name": "processes-standards",
+        "next_section_url_name": "metadata",
+        "summary_page": "links",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=link_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response
+
+
+def summary_event_dates_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Event dates",
+        "template_name": "submissions/event-dates.html",
+        "prev_section_url_name": "documents",
+        "next_section_url_name": "evaluation-types",
+        "summary_url_name": "event-dates",
+        "page_url_name": "event-date-page",
+        "object_name": "event date",
+        "object_name_plural": "event dates",
+    }
+    model_name = "EventDate"
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="")
+
+
+def event_date_page_view(request, evaluation_id, event_date_id):
+    model_name = "EventDate"
+    title = "Event date"
+    template_name = "submissions/event-date-page.html"
+    object_name = "event date"
+    url_names = {
+        "page": "event-date-page",
+        "prev_section_url_name": "documents",
+        "next_section_url_name": "evaluation-types",
+        "summary_page": "event-dates",
+    }
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=event_date_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        object_name=object_name,
+        url_names=url_names,
+    )
+    return response

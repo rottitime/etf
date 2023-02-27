@@ -7,9 +7,12 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      PLACEHOLDER
-      
-      {{macros.buttons(prev_url, id=data.id)}}
+      <p>
+      In this section you can add links to other services where you evaluation is registered.
+      </p>
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
     </fieldset>
   </form>
 {% endblock %}

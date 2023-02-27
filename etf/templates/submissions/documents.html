@@ -7,9 +7,12 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>To add multiple documents (?)</p>
-      <p>Document upload to follow.</p>
-      {{macros.buttons(prev_url, id=data.id)}}
+      <p>
+      In this section you may add documents related to your evaluation eg scoping report, technical report, theory of change, analysis code.   
+      </p>
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
     </fieldset>
   </form>
 {% endblock %}
