@@ -59,6 +59,15 @@ class FullNoPartial(choices.Choices):
     NO = "No"
 
 
+class MeasureType(choices.Choices):
+    CONTINUOUS = "Continuous"
+    DISCRETE = "Discrete"
+    BINARY = "Binary"
+    ORDINAL = "Ordinal"
+    NOMINAL = "Nominal"
+    OTHER = "Other"
+
+
 # TODO - to improve
 class Topic(choices.Choices):
     BREXIT = "Brexit"
@@ -134,6 +143,98 @@ class EconomicEvaluationType(choices.Choices):
     COST_EFFECTIVENESS_ANALYSIS = "Cost-effectiveness analysis"
     COST_BENEFIT_ANALYSIS = "Cost-benefit analysis"
     COST_UTILITY_ANALYSIS = "Cost-utility analysis"
+
+
+# TODO - nested choices
+class ImpactEvalInterpretation(choices.Choices):
+    SUPERIORITY_SUPERIOR = "Superiority framework: Superior"
+    SUPERIORITY_INFERIOR = "Superiority framework: Inferior"
+    SUPERIORITY_INCONCLUSIVE = "Superiority framework: Inconclusive"
+    NON_INFERIORITY_SUPERIOR = "Non-inferiority framework: Superior"
+    NON_INFERIORITY_NON_INFERIOR = "Non-inferiority framework: Non-inferior"
+    NON_INFERIORITY_INFERIOR = "Non-inferiority framework: Inferior"
+    NON_INFERIORITY_INCONCLUSIVE = "Non-inferiority framework: Inconclusive"
+    EQUIVALENCE_EQUIVALENT = "Equivalence framework: Equivalent"
+    EQUIVALENCE_NON_EQUIVALENT = "Equivalence framework: Non-equivalent"
+    EQUIVALENCE_NON_EQUIVALENT_SUPERIOR = "Equivalence framework: Non-equivalent (superior)"
+    EQUIVALENCE_NON_EQUIVALENT_INFERIOR = "Equivalence framework: Non-equivalent (inferior)"
+    EQUIVALENCE_NON_EQUIVALENT_INCONCLUSIVE = "Equivalence framework: Inconclusive"
+    OTHER = "Other"
+
+
+# TODO - nested choices
+class ImpactEvalDesign(choices.Choices):
+    RCT = "Experimental methods for impact evaluation: Randomised controlled trial (RCT)"
+    CLUSTER_RCT = "Experimental methods for impact evaluation: Cluster randomised RCT"
+    STEPPED_WEDGE_RCT = "Experimental methods for impact evaluation: Stepped wedge RCT"
+    WAITLIST_RCT = "Experimental methods for impact evaluation: Wait-list RCT"
+    PROPENSITY_SCORE_MATCHING = "Quasi-experimental methods for impact evaluation: Propensity score matching"
+    TIMING_OF_EVENTS = "Quasi-experimental methods for impact evaluation: Timing of events"
+    INTERRUPTED_TIME_SERIES_ANALYSIS = (
+        "Quasi-experimental methods for impact evaluation: Interrupted time series analysis"
+    )
+    INSTRUMENTAL_VARIABLES = "Quasi-experimental methods for impact evaluation: Instrumental variables"
+    SYNTHETIC_CONTROL_METHODS = "Quasi-experimental methods for impact evaluation: Synthetic control methods"
+    DIFF_IN_DIFF = "Quasi-experimental methods for impact evaluation: Difference-in-difference"
+    REGRESSION_DISCONTINUITY = "Quasi-experimental methods for impact evaluation: Regression discontinuity"
+    QCA = "Theory-based methods for impact evaluation: Qualitative comparative analysis (QCA)"
+    REALISE_EVALUATION = "Theory-based methods for impact evaluation: Realist evaluation"
+    PROCESS_TRACING = "Theory-based methods for impact evaluation: Process tracing"
+    CONSTRIBUTION_ANALYSIS = "Theory-based methods for impact evaluation: Contribution analysis"
+    BAYESIAN_UPDATING = "Theory-based methods for impact evaluation: Bayesian updating"
+    CONTRIBUTION_TRACING = "Theory-based methods for impact evaluation: Contribution tracing"
+    MOST_SIGNIFICANT_CHANGE = "Theory-based methods for impact evaluation: Most significant change"
+    OUTCOME_HARVESTING = "Theory-based methods for impact evaluation: Outcome harvesting"
+    SIMULATION_MODELLING = "Theory-based methods for impact evaluation: Simulation modelling"
+    INDIVIDUAL_INTERVIEWS = "Generic research methods used in both process and impact evaluation: Individual interviews"
+    FOCUS_GROUPS = (
+        "Generic research methods used in both process and impact evaluation: Focus groups or group interviews"
+    )
+    CASE_STUDIES = "Generic research methods used in both process and impact evaluation: Case studies"
+    SURVEYS_AND_POLLING = "Generic research methods used in both process and impact evaluation: Surveys and polling"
+    OUTPUT_OR_PERFORMANCE_MONITORING = (
+        "Generic research methods used in both process and impact evaluation: Output or performance modelling"
+    )
+    QUALITATIVE_OBSERVATIONAL_STUDIES = (
+        "Generic research methods used in both process and impact evaluation: Qualitative observational studies"
+    )
+    CONSULTATIVE_METHODS = (
+        "Generic research methods used in both process and impact evaluation: Consultative/deliberative methods"
+    )
+    OTHER = "Other"
+
+
+class ImpactFramework(choices.Choices):
+    SUPERIORITY = "Superiority"
+    NON_INFERIORITY = "Non-inferiority"
+    EQUIVALENCE = "Equivalence"
+    OTHER = "Other"
+
+
+class ImpactAnalysisBasis(choices.Choices):
+    INTENTION_TO_TREAT = "Intention-to-treat"
+    PER_PROTOCOL = "Per-protocol"
+    OTHER = "Other"
+
+
+class ImpactMeasureInterval(choices.Choices):
+    CONFIDENCE = "Confidence interval"
+    BAYESIAN = "Bayesian credible interval"
+    NONE = "None"
+    OTHER = "Other"
+
+
+class ImpactInterpretationType(choices.Choices):
+    INTERVALS = "Interpretation of intervals"
+    HYPOTHESIS = "Hypothesis testing"
+    NONE = "None"
+    OTHER = "Other"
+
+
+class ImpactMeasureType(choices.Choices):
+    ABSOLUTE = "Absolute measure"
+    RELATIVE = "Relative measure"
+    OTHER = "Other"
 
 
 def get_topic_display_name(db_name):
@@ -229,12 +330,24 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     # Impact evaluation analysis
     # TODO - add analysis plan document?
+    impact_eval_framework = models.CharField(max_length=64, choices=ImpactFramework.choices, blank=True, null=True)
+    impact_eval_basis = models.CharField(max_length=64, choices=ImpactAnalysisBasis.choices, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
+    impact_eval_effect_measure_type = models.CharField(
+        max_length=64, choices=ImpactMeasureType.choices, blank=True, null=True
+    )
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
+    impact_eval_effect_measure_interval = models.CharField(
+        max_length=64, choices=ImpactMeasureInterval.choices, blank=True, null=True
+    )
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
+    impact_eval_interpretation_type = models.CharField(
+        max_length=64, choices=ImpactEvalInterpretation.choices, blank=True, null=True
+    )
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
+    impact_eval_fidelity = models.CharField(max_length=10, choices=YesNo.choices, blank=True, null=True)
     impact_eval_desc_planned_analysis = models.TextField(blank=True, null=True)
     # TODO - add more
 
@@ -247,7 +360,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     process_eval_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
-    economic_eval_type = models.CharField(blank=True, null=True, max_length=256, choices=EconomicEvaluationType.choices)
+    economic_eval_type = models.CharField(max_length=256, choices=EconomicEvaluationType.choices, blank=True, null=True)
     perspective_costs = models.TextField(blank=True, null=True)
     perspective_benefits = models.TextField(blank=True, null=True)
     monetisation_approaches = models.TextField(blank=True, null=True)
@@ -268,10 +381,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # Impact evaluation findings
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
+    impact_eval_interpretation = models.CharField(
+        max_length=256, choices=ImpactEvalInterpretation.choices, blank=True, null=True
+    )
     impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
     impact_eval_upper_uncertainty = models.TextField(blank=True, null=True)
-    # TODO - add more
 
     # Economic evaluation findings
     economic_eval_summary_findings = models.TextField(blank=True, null=True)
@@ -330,6 +445,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
     direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
+    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
     timepoint = models.TextField(blank=True, null=True)
@@ -340,6 +456,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
 class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
+    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 

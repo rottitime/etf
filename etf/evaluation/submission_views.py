@@ -90,13 +90,20 @@ def evaluation_view(request, evaluation_id, page_data):
     errors = {}
     statuses = models.EvaluationStatus.choices
     page_statuses = evaluation.page_statuses
-    multiselect_list_vars = ["topics", "organisations", "evaluation_type"]
+    multiselect_list_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
     list_vars = {
         "topics": models.Topic.choices,
         "organisations": enums.Organisation.choices,
         "evaluation_type": models.EvaluationTypeOptions.choices,
         "economic_eval_type": models.EconomicEvaluationType.choices,
+        "impact_eval_design_name": models.ImpactEvalDesign.choices,
+        "impact_eval_interpretation": models.ImpactEvalInterpretation.choices,
+        "impact_eval_framework": models.ImpactFramework.choices,
+        "impact_eval_basis": models.ImpactAnalysisBasis.choices,
+        "impact_eval_effect_measure_type": models.ImpactMeasureType.choices,
+        "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.choices,
+        "impact_eval_interpretation_type": models.ImpactEvalInterpretation.choices,
     }
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
@@ -227,6 +234,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
         "event_date_type": models.EventDateType.choices,
+        "measure_type": models.MeasureType.choices,
     }
     list_vars_multiselect = ["document_types"]
     if request.method == "POST":

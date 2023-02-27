@@ -106,12 +106,18 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_design_approach_limitations = fields.Str()
 
     # Impact evaluation analysis
+    impact_eval_framework = fields.Str(validate=validate.Length(max=64))
+    impact_eval_basis = fields.Str(validate=validate.Length(max=64))
     impact_eval_analysis_set = fields.Str()
+    impact_eval_effect_measure_type = fields.Str(validate=validate.Length(max=64))
     impact_eval_primary_effect_size_measure = fields.Str()
+    impact_eval_effect_measure_interval = fields.Str(validate=validate.Length(max=64))
     impact_eval_primary_effect_size_desc = fields.Str()
+    impact_eval_interpretation_type = fields.Str(validate=validate.Length(max=64))
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
+    impact_eval_fidelity = fields.Str(validate=validate.Length(max=10))
     impact_eval_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
@@ -140,6 +146,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
     impact_eval_outcome = fields.Str()
+    impact_eval_interpretation = fields.Str(validate=validate.Length(max=256))
     impact_eval_point_estimate_diff = fields.Str()
     impact_eval_lower_uncertainty = fields.Str()
     impact_eval_upper_uncertainty = fields.Str()
@@ -181,6 +188,7 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
     direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
     timepoint = fields.Str()
@@ -192,6 +200,7 @@ class OtherMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
+    measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
 
@@ -217,7 +226,7 @@ class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     event_date_name = fields.Str(validate=validate.Length(max=256))
-    date = fields.Date()
+    date = DateAndBlankField()
     event_date_type = fields.Str(validate=validate.Length(max=10))
     reasons_for_change = fields.Str()
 
@@ -235,5 +244,5 @@ class EvaluationCostSchema(TimeStampedModelSchema):
     item_name = fields.Str()
     description = fields.Str()
     item_cost = FloatAndBlankField()
-    earliest_spend_date = fields.Date()
-    latest_spend_date = fields.Date()
+    earliest_spend_date = DateAndBlankField()
+    latest_spend_date = DateAndBlankField()

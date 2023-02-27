@@ -25,6 +25,7 @@
         {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----", short_description=
         "Is this measure intended to directly reflect an outcome of interest or is it a surrogate measure that is 
         intended to act as a proxy for an outcome that is hard to measure directly?")}}
+      {{macros.select_from_list("measure_type", "Measure type", list=list_vars.measure_type)}}
       {{macros.textarea("description", "Description of measure", short_description=
         "Details of what data will be gathered and of any processing that will be applied to raw data in order to create the measure.",
         tooltip=["When defining the measure here, try to provide enough information such that others would be able to 

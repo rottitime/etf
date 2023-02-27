@@ -7,10 +7,8 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macro.input("name", "Measurement name")}}
-      <p>
-        [PLACEHOLDER - measure type - options]
-      </p>
+      {{macros.input("name", "Measurement name")}}
+      {{macros.select_from_list("measure_type", "Measure type", list=list_vars.measure_type)}}
       {{macros.textarea("description", "Description of measurement",
         tooltip=["Details of what data will be gathered and of any processing that will be applied to raw data. This shall completely define the measurement such that others would be able to accurately replicate the measurement process based only on this information, including the format(s) the data will be collected, stored and/or presented in."])}}
       {{macros.textarea("collection_process", "Collection procedures and timing",
