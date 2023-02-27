@@ -45,6 +45,7 @@ def get_page_status_name(db_name):
 
 
 def get_page_progress_icon(progress_status):
+    # TODO: Convert to defaultdict
     if progress_status == pages.EvaluationPageStatus.IN_PROGRESS.name:
         return "bi-fast-forward-circle"
     elif progress_status == pages.EvaluationPageStatus.DONE.name:
