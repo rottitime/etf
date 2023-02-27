@@ -337,7 +337,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
     impact_eval_interpretation = models.CharField(
-        max_length=256, choices=EconomicEvaluationType.choices, blank=True, null=True
+        max_length=256, choices=ImpactEvalInterpretation.choices, blank=True, null=True
     )
     impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
