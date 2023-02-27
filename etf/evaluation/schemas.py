@@ -216,9 +216,9 @@ class DocumentSchema(TimeStampedModelSchema):
 class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    name = fields.Str(validate=validate.Length(max=256))
+    event_date_name = fields.Str(validate=validate.Length(max=256))
     date = fields.Date()
-    type = fields.Str(validate=validate.Length(max=10))
+    event_date_type = fields.Str(validate=validate.Length(max=10))
     reasons_for_change = fields.Str()
 
 

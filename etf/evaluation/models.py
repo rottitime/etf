@@ -353,9 +353,9 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase):
 
 class EventDate(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
+    event_date_name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
-    type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
+    event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
 
 
