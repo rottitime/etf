@@ -217,9 +217,9 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-
+    list_vars = {"document_types": models.DocumentType.choices}
     if request.method == "POST":
-        data = request.POST.dict()
+        data = transform_post_data(request.POST, list_vars.keys())
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
@@ -247,10 +247,14 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "prev_url": prev_url,
             "object_name": object_name,
             "summary_url": summary_url,
+<<<<<<< HEAD
             "page_order": page_name_and_order,
             "current_page": url_names["summary_page"],
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
+=======
+            "list_vars": list_vars,
+>>>>>>> d76d76d (modify view to pass through lists)
         },
     )
 
