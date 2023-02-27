@@ -25,6 +25,14 @@ def random_days_later(start_date, range_start, range_end):
     return random_date
 
 
+def make_random_yes_no():
+    yes_or_no = random.randint(0, 1)
+    if yes_or_no == 0:
+        return "NO"
+    else:
+        return "YES"
+
+
 def make_fake_user():
     first_name = fake.first_name()
     last_name = fake.last_name()
@@ -66,28 +74,29 @@ def make_evaluation():
     organisations = generate_organisations()
     evaluation_type = generate_evaluation_types()
     data = dict(
-        title=fake.sentence(),
-        short_title=fake.sentence(),
+        title=fake.text(256),
+        short_title=fake.text(64),
         brief_description=fake.text(),
         topics=topics,
-        status=random.choice(models.EvaluationStatus.values),
-        page_statuses=get_default_page_statuses(),
         organisations=organisations,
+        status=random.choice(models.EvaluationStatus.values),
+        doi=fake.text(64),
+        page_statuses=get_default_page_statuses(),
         issue_description=fake.text(),
         those_experiencing_issue=fake.text(),
         why_improvements_matter=fake.text(),
         who_improvements_matter_to=fake.text(),
         current_practice=fake.text(),
         issue_relevance=fake.text(),
-        eligibility_criteria=fake.text(),
         evaluation_type=evaluation_type,
         studied_population=fake.text(),
+        eligibility_criteria=fake.text(),
         sample_size=fake.pyint(),
         sample_size_units=fake.text(5),
         sample_size_details=fake.text(),
         process_for_recruitment=fake.sentence(),
         recruitment_schedule=fake.sentence(),
-        ethics_committee_approval=fake.pybool(),
+        ethics_committee_approval=make_random_yes_no(),
         ethics_committee_details=fake.text(),
         ethical_state_given_existing_evidence_base=fake.text(),
         risks_to_participants=fake.text(),
@@ -108,9 +117,9 @@ def make_evaluation():
         impact_eval_design_approach_limitations=fake.text(),
         impact_eval_analysis_set=fake.text(),
         impact_eval_effect_measure=fake.text(),
-        process_eval_methods=fake.text(8),
+        process_eval_methods=fake.text(256),
         process_eval_analysis_description=fake.text(),
-        economic_eval_type=fake.text(8),
+        economic_eval_type=fake.text(256),
         economic_eval_analysis_description=fake.text(),
         other_eval_design_type=fake.text(),
         other_eval_design_details=fake.text(),
