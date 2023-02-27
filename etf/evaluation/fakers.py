@@ -116,7 +116,6 @@ def make_evaluation():
         impact_eval_design_assumptions=fake.text(),
         impact_eval_design_approach_limitations=fake.text(),
         impact_eval_analysis_set=fake.text(),
-        impact_eval_effect_measure=fake.text(),
         process_eval_methods=fake.text(256),
         process_eval_analysis_description=fake.text(),
         economic_eval_type=fake.text(256),
