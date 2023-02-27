@@ -103,6 +103,7 @@ class DocumentType(choices.Choices):
     TECHNICAL_REPORT = "Technical report"
     DATASET = "Data set"
     ANALYSIS_CODE = "Analysis code"
+    OTHER = "Other"
 
 
 class EventDateOption(choices.Choices):
@@ -126,6 +127,13 @@ class EventDateOption(choices.Choices):
 class EventDateType(choices.Choices):
     INTENDED = "Intended"
     ACTUAL = "Actual"
+
+
+class EconomicEvaluationType(choices.Choices):
+    COST_MINIMISATION = "Cost minimisation"
+    COST_EFFECTIVENESS_ANALYSIS = "Cost-effectiveness analysis"
+    COST_BENEFIT_ANALYSIS = "Cost-benefit analysis"
+    COST_UTILITY_ANALYSIS = "Cost-utility analysis"
 
 
 def get_topic_display_name(db_name):
@@ -237,7 +245,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     process_eval_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
-    economic_eval_type = models.CharField(blank=True, null=True, max_length=256)
+    economic_eval_type = models.CharField(blank=True, null=True, max_length=256, choices=EconomicEvaluationType.choices)
     perspective_costs = models.TextField(blank=True, null=True)
     perspective_benefits = models.TextField(blank=True, null=True)
     monetisation_approaches = models.TextField(blank=True, null=True)
@@ -346,14 +354,15 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase):
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    document_types = models.JSONField(default=list)
     # TODO - file upload
 
 
 class EventDate(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
+    event_date_name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
-    type = models.CharField(max_length=10, blank=True, null=True)
+    event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
 
 

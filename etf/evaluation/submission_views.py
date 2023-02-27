@@ -67,9 +67,12 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
-def transform_post_data(post_data, list_vars):
+def transform_post_data(post_data, multiselect_list_vars):
+    """
+    Keep lists of variables from request.POST for multiselect fields.
+    """
     data = post_data.dict()
-    for var_name in list_vars:
+    for var_name in multiselect_list_vars:
         if var_name in post_data:
             data[var_name] = post_data.getlist(var_name)
     return data
@@ -87,16 +90,18 @@ def evaluation_view(request, evaluation_id, page_data):
     errors = {}
     statuses = models.EvaluationStatus.choices
     page_statuses = evaluation.page_statuses
+    multiselect_list_vars = ["topics", "organisations", "evaluation_type"]
     # TODO - add "impact_eval_design_name" when choices have been added
     list_vars = {
         "topics": models.Topic.choices,
         "organisations": enums.Organisation.choices,
         "evaluation_type": models.EvaluationTypeOptions.choices,
+        "economic_eval_type": models.EconomicEvaluationType.choices,
     }
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
-        data = transform_post_data(request.POST, list_vars)
+        data = transform_post_data(request.POST, multiselect_list_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
@@ -217,9 +222,15 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-
+    list_vars = {"document_types": models.DocumentType.choices}
+    list_vars = {
+        "document_types": models.DocumentType.choices,
+        "event_date_name": models.EventDateOption.choices,
+        "event_date_type": models.EventDateType.choices,
+    }
+    list_vars_multiselect = ["document_types"]
     if request.method == "POST":
-        data = request.POST.dict()
+        data = transform_post_data(request.POST, list_vars_multiselect)
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
@@ -251,6 +262,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "current_page": url_names["summary_page"],
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
+            "list_vars": list_vars,
         },
     )
 
