@@ -56,6 +56,11 @@ def get_page_progress_icon(progress_status):
         return "bi-question-circle"
 
 
+def list_to_options(l):
+    result = tuple({"value": item[0], "text": item[1]} for item in l)
+    return result
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -77,6 +82,7 @@ def environment(**options):
             "get_page_display_name": get_page_name,
             "get_page_status_display_name": get_page_status_name,
             "get_page_progress_icon": get_page_progress_icon,
+            "list_to_options": list_to_options,
         }
     )
     return env
