@@ -10,7 +10,7 @@
       
       <p>Only display if one of the evaluation types is "Impact evaluation"</p>
 
-      {{macros.select_many_from_list("impact_eval_design_name", "Design name", short_description="Descriptive name for the design/method. You may select more than one.")}}
+      {{macros.select_many_from_list("impact_eval_design_name", "Design name", list=list_vars.impact_eval_design_name, short_description="Descriptive name for the design/method. You may select more than one.")}}
       {{macros.textarea("impact_eval_design_justification", "Justification for design", tooltip=[
         "If an RCT design is specified, it is sufficient to note that it is appropriate, practical and ethical.", 
         "If a design other than an RCT is specified, provide details of why an RCT was not appropriate."])}}
