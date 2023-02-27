@@ -7,8 +7,14 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>PLACEHOLDER</p>
-      <p>Add one or more evaluation types...</p>
+      {{macros.select_many_from_list("evaluation_type", "Evaluation type", list_vars.evaluation_type,
+        tooltip=["Please specify what type or types of evaluation this is.",
+        "Do not use this field to specify the methods used; those are collected separately.",
+        "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, please select all types of evaluation that are included.",
+        "Impact evaluations are any evaluations that are intended to identify the effectiveness of interventions, including comparing different interventions against each other, or comparing a novel intervention against business-as-usual.",
+        "Process evaluations are undertaken with the intention of increasing understanding of how an intervention is implemented, why it seems to work or not, and what contextual factors are affecting it, as distinct from whether an outcome was achieved.",
+        "Economic evaluations (sometimes called value-for-money evaluations) are comparative analyses of alternative courses of action in terms of both their costs and consequences.",
+        "If the evaluation includes types of evaluation not listed, please select Other and specify the additional type(s)."])}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

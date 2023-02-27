@@ -74,17 +74,6 @@ def make_evaluation():
     return data
 
 
-def make_evaluation_type(evaluation):
-    evaluation = evaluation
-    type = random.choice(models.EvaluationTypeOptions.values)
-    if type == "Other":
-        other_description = fake.text()
-    else:
-        other_description = ""
-    data = dict(evaluation=evaluation, type=type, other_description=other_description)
-    return data
-
-
 def add_evals_to_users(user, allow_empty=True):
     num_evals = random.randint(0 if allow_empty is True else 1, 3)
     for j in range(num_evals):
@@ -92,10 +81,6 @@ def add_evals_to_users(user, allow_empty=True):
         evaluation = models.Evaluation.objects.create(**eval_data)
         evaluation.users.set([user])
         evaluation.save()
-        for k in range(random.randint(0, 3)):
-            eval_type_data = make_evaluation_type(evaluation)
-            eval_type = models.EvaluationType(**eval_type_data)
-            eval_type.save()
         # TODO - add other models to evaluation
 
 

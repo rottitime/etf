@@ -25,14 +25,10 @@ class User(BaseUser, UUIDPrimaryKeyBase):
         super().save(*args, **kwargs)
 
 
-# TODO - is there a better way to nest choices? (ie for economic evaluation)
 class EvaluationTypeOptions(choices.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
-    ECONOMIC_COST_MINIMISATION = "Economic evaluation: Cost-minimisation analysis"
-    ECONOMIC_COST_EFFECTIVENESS = "Economic evaluation: Cost-effectiveness analysis"
-    ECONOMIC_COST_BENEFIT = "Economic evaluation: Cost-benefit analysis"
-    ECONOMIC_COST_UTILITY = "Economic evaluation: Cost-utility"
+    ECONOMIC = "Economic evaluation"
     OTHER = "Other"
 
 
@@ -44,6 +40,11 @@ class OutcomeType(choices.Choices):
 class OutcomeMeasure(choices.Choices):
     DIRECT = "Direct"
     SURROGATE = "Surrogate"
+
+
+class YesNo(choices.Choices):
+    YES = "Yes"
+    NO = "No"
 
 
 class YesNoPartial(choices.Choices):
@@ -194,7 +195,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # TODO - what happens with dates?
 
     # Ethical considerations
-    ethics_committee_approval = models.BooleanField(blank=True, null=True)
+    ethics_committee_approval = models.CharField(max_length=3, blank=True, null=True, choices=YesNo.choices)
     ethics_committee_details = models.TextField(blank=True, null=True)
     ethical_state_given_existing_evidence_base = models.TextField(blank=True, null=True)
     risks_to_participants = models.TextField(blank=True, null=True)
@@ -284,12 +285,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     def __str__(self):
         return f"{self.id} : {self.title}"
-
-
-class EvaluationType(TimeStampedModel, UUIDPrimaryKeyBase):
-    evaluation = models.ForeignKey(Evaluation, related_name="evaluation_types", on_delete=models.CASCADE)
-    type = models.CharField(max_length=256, blank=True, null=True, choices=EvaluationTypeOptions.choices)
-    other_description = models.CharField(max_length=256, blank=True, null=True)
 
 
 class Intervention(TimeStampedModel, UUIDPrimaryKeyBase):

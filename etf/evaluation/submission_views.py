@@ -58,6 +58,14 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
+def transform_post_data(post_data, list_vars):
+    data = post_data.dict()
+    for var_name in list_vars:
+        if var_name in post_data:
+            data[var_name] = post_data.getlist(var_name)
+    return data
+
+
 @login_required
 def evaluation_view(request, evaluation_id, page_data):
     title = page_data["title"]
@@ -68,24 +76,23 @@ def evaluation_view(request, evaluation_id, page_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
-    topics = models.Topic.choices
-    organisations = enums.Organisation.choices
     statuses = models.EvaluationStatus.choices
+    list_vars = ["topics", "organisations", "evaluation_type"]
+    # TODO - add "impact_eval_design_name" when choices have been added
+    list_vars = {
+        "topics": models.Topic.choices,
+        "organisations": enums.Organisation.choices,
+        "evaluation_type": models.EvaluationTypeOptions.choices,
+    }
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
-        data = request.POST
-        data = {k: v for (k, v) in data.items() if v}
+        data = transform_post_data(request.POST, list_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
                 setattr(evaluation, field_name, serialized_evaluation[field_name])
-            if "topics" in data.keys():
-                topic_list = data.getlist("topics") or None
-                setattr(evaluation, "topics", topic_list)
-            if "organisations" in data.keys():
-                organisation_list = data.getlist("organisations") or None
-                setattr(evaluation, "organisations", organisation_list)
+            evaluation.save()
             evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
             return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
@@ -98,8 +105,7 @@ def evaluation_view(request, evaluation_id, page_data):
         template_name,
         {
             "errors": errors,
-            "topics": topics,
-            "organisations": organisations,
+            "list_vars": list_vars,
             "statuses": statuses,
             "data": data,
             "next_url": next_url,

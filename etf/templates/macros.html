@@ -1,7 +1,7 @@
 {% macro input(name, label, placeholder='', short_description='', tooltip=[], type='text', min='') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   {{reveal(tooltip, name)}}
-  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}" min="{{min}}">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
@@ -105,7 +105,7 @@
 {%- endmacro %}
 
 {% macro yes_no(name, label, tooltip=[], short_description='') -%}
-  {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), tooltip=tooltip, short_description=short_description, empty_option="Please select...")}}
+  {{select(name, label, options=({'text': '------', 'value': None}, {'text': 'Yes', 'value': 'YES'}, {'text': 'No', 'value': 'NO'}), tooltip=tooltip, short_description=short_description)}}
 {%- endmacro %}
 
 
