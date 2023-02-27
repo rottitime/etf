@@ -8,7 +8,26 @@
         <h3>{{title}}</h3>
       </legend>
       <p>PLACEHOLDER</p>
-      <p>Only display if one of the evaluation types is "Economic evaluation"</p>
+      <p>Only display if one of the evaluation types is 'economic evaluation'</p>
+      {{macros.input("economic_eval_type", "Economic evaluation type [PLACEHOLDER - options]",
+        short_description="Type of economic evaluation to be conducted.", tooltip=[
+        "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
+        "In cost-minimisation analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+        "In cost-effectiveness analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+        "In cost-benefit analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+        "In cost-utility analysis, various outcomes are converted to a measure of ‘utility’, allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+        "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s)."])}}
+      {{macros.textarea("perspective_costs", "Perspective: costs",
+        short_description="Which costs are to be included in the economic evaluation?",
+        tooltip=["The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."])}}
+      {{macros.textarea("perspective_benefits", "Perspective: benefits",
+        short_description="Which benefits are to be included in the economic evaluation?",
+        tooltip=["The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."])}}
+      {{macros.textarea("monetisation_approaches", "Monetisation approach(es)",
+        short_description="Approaches used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.", tooltip=[
+        "Some costs and benefits are naturally expressed in monetary terms. The natural measures for some others will not be in monetary terms, but may need to be monetised to fully include them in an economic evaluation. Provide details of any approaches used to monetise values that are not inherently expressed in monetary terms.",
+        "You can also use this box to provide information on any costs or benefits that cannot be converted to monetary values."])}}
+      {{macros.textarea("economic_eval_design_details", "Design details", short_description="Details of the design of the economic evaluation.")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

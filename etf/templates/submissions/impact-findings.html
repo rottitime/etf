@@ -7,8 +7,15 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>PLACEHOLDER</p>
+      <p>[PLACEHOLDER - document upload for findings report]</p>
       <p>Only display if one of the evaluation types is "Impact evaluation"</p>
+      {{macros.textarea("impact_eval_comparison", "Comparison", short_description="Which intervention is being compared to which other?",
+        tooltip=["If the evaluation has more than 2 interventions, will need to pick a pair; even if the evaluation only has 2 interventions, need to specify which is the base case and which is the 'tested' case"])}}
+      {{macros.textarea("impact_eval_outcome", "Outcome", short_description="Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.")}}
+      {{macros.textarea("impact_eval_point_estimate_diff", "Point estimate of difference")}}
+      {{macros.textarea("impact_eval_lower_uncertainty", "Lower uncertainty bound")}}
+      {{macros.textarea("impact_eval_lower_uncertainty", "Upper uncertainty bound")}}
+      <p>[PLACEHOLDER - more fields to follow]</p>
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

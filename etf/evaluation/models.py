@@ -220,7 +220,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # Impact evaluation analysis
     # TODO - add analysis plan document?
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
-    impact_eval_effect_measure = models.TextField(blank=True, null=True)
+    impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
+    impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
+    impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
+    impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
+    impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
+    impact_eval_desc_planned_analysis = models.TextField(blank=True, null=True)
     # TODO - add more
 
     # Process evaluation design
@@ -233,7 +238,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     # Economic evaluation design
     economic_eval_type = models.CharField(blank=True, null=True, max_length=256)
-    # TODO - add more details
+    perspective_costs = models.TextField(blank=True, null=True)
+    perspective_benefits = models.TextField(blank=True, null=True)
+    monetisation_approaches = models.TextField(blank=True, null=True)
+    economic_eval_design_details = models.TextField(blank=True, null=True)
 
     # Economic evaluation analysis
     economic_eval_analysis_description = models.TextField(blank=True, null=True)
@@ -250,6 +258,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # Impact evaluation findings
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
+    impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
+    impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
+    impact_eval_upper_uncertainty = models.TextField(blank=True, null=True)
     # TODO - add more
 
     # Economic evaluation findings

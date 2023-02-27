@@ -7,8 +7,24 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      <p>PLACEHOLDER</p>
+      
       <p>Only display if one of the evaluation types is "Impact evaluation"</p>
+      <p>[PLACEHOLDER - multiselect design name field]</p>
+      {{macros.textarea("impact_eval_design_justification", "Justification for design", tooltip=[
+        "If an RCT design is specified, it is sufficient to note that it is appropriate, practical and ethical.", 
+        "If a design other than an RCT is specified, provide details of why an RCT was not appropriate."])}}
+      {{macros.textarea("impact_eval_design_description", "Description of planned design", tooltip=[
+        "Description providing sufficient detail that a suitably experienced person would be able to duplicate the study based on the information provided."])}}
+      {{macros.textarea("impact_eval_design_features", "Features to reflect real-world implementation",
+        short_description="Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
+        tooltip=["Evaluation studies can be designed to have more focus on reflecting (potential) practice in the 'real world' or having more focus on identifying outcomes in 'perfect' (tightly controlled) conditions. These are called 'pragmatic attitude' and 'explanatory attitude', respectively. Studies normally sit somewhere on a spectrum between the two ends. For interventions that might be deployed in real practice, it is invariably more useful to have information from an evaluation that is more pragmatic in attitude rather than explanatory.",
+        "Record design decisions taken to make the study more pragmatic in attitude. Detail any respects in which it was necessary to adopt an approach that is more explanatory in attitude.",
+        "Studies should be designed to be pragmatic (as opposed to ‘explanatory’) in attitude. The intention with a pragmatic study is to establish whether the intervention is likely to work in real practice, whereas explanatory studies seek to identify whether an intervention can work in perfect conditions. Consequently, pragmatic studies are designed to resemble the situation in normal practice as closely as possible, rather than being delivered under tight controls. They would typically also be characterised by not having extremes of resources, training, or specialist staff conducting the intervention."])}}
+      {{macros.textarea("impact_eval_design_equity", "Equity", short_description="Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+        tooltip=["Description of any design features, including data collection and analysis plans, that support the assessment of equity issues in the study.",
+        "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions. The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation."])}}
+      {{macros.textarea("impact_eval_design_assumptions", "Assumptions", tooltip=["Any assumptions made as part of the design."])}}
+      {{macros.textarea("impact_eval_design_approach_limitations", "Limitations of approach", tooltip=["Any limitations associated with the approach that are relevant to this study. For non-RCT designs this should include a description of any limitations of the approach’s ability to support robust causal inference."])}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
