@@ -61,7 +61,7 @@ def simple_page_view(request, evaluation_id, page_data):
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
         "page_order": page_name_and_order,
-        "current_page": page_name
+        "current_page": page_name,
     }
     evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
     return render(request, template_name, form_data)
