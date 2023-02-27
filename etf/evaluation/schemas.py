@@ -220,7 +220,7 @@ class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     event_date_name = fields.Str(validate=validate.Length(max=256))
-    date = fields.Date()
+    date = DateAndBlankField()
     event_date_type = fields.Str(validate=validate.Length(max=10))
     reasons_for_change = fields.Str()
 
@@ -238,5 +238,5 @@ class EvaluationCostSchema(TimeStampedModelSchema):
     item_name = fields.Str()
     description = fields.Str()
     item_cost = FloatAndBlankField()
-    earliest_spend_date = fields.Date()
-    latest_spend_date = fields.Date()
+    earliest_spend_date = DateAndBlankField()
+    latest_spend_date = DateAndBlankField()
