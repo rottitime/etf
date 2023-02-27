@@ -301,7 +301,7 @@ body {
 nav.sidebar:before {
   height: 20px;
   content: "";
-  background-color: #006157;
+  background-color: #b41a83;
   display: block;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
