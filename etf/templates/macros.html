@@ -13,7 +13,7 @@
 {% macro textarea(name, label, placeholder='', tooltip=[], short_description='') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   {{reveal(tooltip, name)}}
-  <textarea placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
+  <textarea rows="3" placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
   {% for error in errors.get(name, []) %}
     <span class="form-error">{{error}}</span>
   {% endfor %}
