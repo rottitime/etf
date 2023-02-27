@@ -204,6 +204,39 @@ class ImpactEvalDesign(choices.Choices):
     OTHER = "Other"
 
 
+class ImpactFramework(choices.Choices):
+    SUPERIORITY = "Superiority"
+    NON_INFERIORITY = "Non-inferiority"
+    EQUIVALENCE = "Equivalence"
+    OTHER = "Other"
+
+
+class ImpactAnalysisBasis(choices.Choices):
+    INTENTION_TO_TREAT = "Intention-to-treat"
+    PER_PROTOCOL = "Per-protocol"
+    OTHER = "Other"
+
+
+class ImpactMeasureInterval(choices.Choices):
+    CONFIDENCE = "Confidence interval"
+    BAYESIAN = "Bayesian credible interval"
+    NONE = "None"
+    OTHER = "Other"
+
+
+class ImpactInterpretationType(choices.Choices):
+    INTERVALS = "Interpretation of intervals"
+    HYPOTHESIS = "Hypothesis testing"
+    NONE = "None"
+    OTHER = "Other"
+
+
+class ImpactMeasureType(choices.Choices):
+    ABSOLUTE = "Absolute measure"
+    RELATIVE = "Relative measure"
+    OTHER = "Other"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -297,12 +330,24 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
 
     # Impact evaluation analysis
     # TODO - add analysis plan document?
+    impact_eval_framework = models.CharField(max_length=64, choices=ImpactFramework.choices, blank=True, null=True)
+    impact_eval_basis = models.CharField(max_length=64, choices=ImpactAnalysisBasis.choices, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
+    impact_eval_effect_measure_type = models.CharField(
+        max_length=64, choices=ImpactMeasureType.choices, blank=True, null=True
+    )
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
+    impact_eval_effect_measure_interval = models.CharField(
+        max_length=64, choices=ImpactMeasureInterval.choices, blank=True, null=True
+    )
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
+    impact_eval_interpretation_type = models.CharField(
+        max_length=64, choices=ImpactEvalInterpretation.choices, blank=True, null=True
+    )
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
+    impact_eval_fidelity = models.CharField(max_length=10, choices=YesNo.choices, blank=True, null=True)
     impact_eval_desc_planned_analysis = models.TextField(blank=True, null=True)
     # TODO - add more
 
