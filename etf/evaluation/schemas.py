@@ -140,6 +140,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
     impact_eval_outcome = fields.Str()
+    impact_eval_interpretation = fields.Str(validate=validate.Length(max=256))
     impact_eval_point_estimate_diff = fields.Str()
     impact_eval_lower_uncertainty = fields.Str()
     impact_eval_upper_uncertainty = fields.Str()
@@ -181,6 +182,7 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
     direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
     timepoint = fields.Str()
@@ -192,6 +194,7 @@ class OtherMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
+    measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
 

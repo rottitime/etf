@@ -59,6 +59,15 @@ class FullNoPartial(choices.Choices):
     NO = "No"
 
 
+class MeasureType(choices.Choices):
+    CONTINUOUS = "Continuous"
+    DISCRETE = "Discrete"
+    BINARY = "Binary"
+    ORDINAL = "Ordinal"
+    NOMINAL = "Nominal"
+    OTHER = "Other"
+
+
 # TODO - to improve
 class Topic(choices.Choices):
     BREXIT = "Brexit"
@@ -134,6 +143,23 @@ class EconomicEvaluationType(choices.Choices):
     COST_EFFECTIVENESS_ANALYSIS = "Cost-effectiveness analysis"
     COST_BENEFIT_ANALYSIS = "Cost-benefit analysis"
     COST_UTILITY_ANALYSIS = "Cost-utility analysis"
+
+
+# TODO - nested choices
+class ImpactEvalInterpretation(choices.Choices):
+    SUPERIORITY_SUPERIOR = "Superiority framework: Superior"
+    SUPERIORITY_INFERIOR = "Superiority framework: Inferior"
+    SUPERIORITY_INCONCLUSIVE = "Superiority framework: Inconclusive"
+    NON_INFERIORITY_SUPERIOR = "Non-inferiority framework: Superior"
+    NON_INFERIORITY_NON_INFERIOR = "Non-inferiority framework: Non-inferior"
+    NON_INFERIORITY_INFERIOR = "Non-inferiority framework: Inferior"
+    NON_INFERIORITY_INCONCLUSIVE = "Non-inferiority framework: Inconclusive"
+    EQUIVALENCE_EQUIVALENT = "Equivalence framework: Equivalent"
+    EQUIVALENCE_NON_EQUIVALENT = "Equivalence framework: Non-equivalent"
+    EQUIVALENCE_NON_EQUIVALENT_SUPERIOR = "Equivalence framework: Non-equivalent (superior)"
+    EQUIVALENCE_NON_EQUIVALENT_INFERIOR = "Equivalence framework: Non-equivalent (inferior)"
+    EQUIVALENCE_NON_EQUIVALENT_INCONCLUSIVE = "Equivalence framework: Inconclusive"
+    OTHER = "Other"
 
 
 def get_topic_display_name(db_name):
@@ -247,7 +273,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     process_eval_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
-    economic_eval_type = models.CharField(blank=True, null=True, max_length=256, choices=EconomicEvaluationType.choices)
+    economic_eval_type = models.CharField(max_length=256, choices=EconomicEvaluationType.choices, blank=True, null=True)
     perspective_costs = models.TextField(blank=True, null=True)
     perspective_benefits = models.TextField(blank=True, null=True)
     monetisation_approaches = models.TextField(blank=True, null=True)
@@ -268,10 +294,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     # Impact evaluation findings
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
+    impact_eval_interpretation = models.CharField(
+        max_length=256, choices=EconomicEvaluationType.choices, blank=True, null=True
+    )
     impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
     impact_eval_upper_uncertainty = models.TextField(blank=True, null=True)
-    # TODO - add more
 
     # Economic evaluation findings
     economic_eval_summary_findings = models.TextField(blank=True, null=True)
@@ -330,6 +358,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
     direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
+    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
     timepoint = models.TextField(blank=True, null=True)
@@ -340,6 +369,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
 class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
+    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
