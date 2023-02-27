@@ -162,6 +162,48 @@ class ImpactEvalInterpretation(choices.Choices):
     OTHER = "Other"
 
 
+# TODO - nested choices
+class ImpactEvalDesign(choices.Choices):
+    RCT = "Experimental methods for impact evaluation: Randomised controlled trial (RCT)"
+    CLUSTER_RCT = "Experimental methods for impact evaluation: Cluster randomised RCT"
+    STEPPED_WEDGE_RCT = "Experimental methods for impact evaluation: Stepped wedge RCT"
+    WAITLIST_RCT = "Experimental methods for impact evaluation: Wait-list RCT"
+    PROPENSITY_SCORE_MATCHING = "Quasi-experimental methods for impact evaluation: Propensity score matching"
+    TIMING_OF_EVENTS = "Quasi-experimental methods for impact evaluation: Timing of events"
+    INTERRUPTED_TIME_SERIES_ANALYSIS = (
+        "Quasi-experimental methods for impact evaluation: Interrupted time series analysis"
+    )
+    INSTRUMENTAL_VARIABLES = "Quasi-experimental methods for impact evaluation: Instrumental variables"
+    SYNTHETIC_CONTROL_METHODS = "Quasi-experimental methods for impact evaluation: Synthetic control methods"
+    DIFF_IN_DIFF = "Quasi-experimental methods for impact evaluation: Difference-in-difference"
+    REGRESSION_DISCONTINUITY = "Quasi-experimental methods for impact evaluation: Regression discontinuity"
+    QCA = "Theory-based methods for impact evaluation: Qualitative comparative analysis (QCA)"
+    REALISE_EVALUATION = "Theory-based methods for impact evaluation: Realist evaluation"
+    PROCESS_TRACING = "Theory-based methods for impact evaluation: Process tracing"
+    CONSTRIBUTION_ANALYSIS = "Theory-based methods for impact evaluation: Contribution analysis"
+    BAYESIAN_UPDATING = "Theory-based methods for impact evaluation: Bayesian updating"
+    CONTRIBUTION_TRACING = "Theory-based methods for impact evaluation: Contribution tracing"
+    MOST_SIGNIFICANT_CHANGE = "Theory-based methods for impact evaluation: Most significant change"
+    OUTCOME_HARVESTING = "Theory-based methods for impact evaluation: Outcome harvesting"
+    SIMULATION_MODELLING = "Theory-based methods for impact evaluation: Simulation modelling"
+    INDIVIDUAL_INTERVIEWS = "Generic research methods used in both process and impact evaluation: Individual interviews"
+    FOCUS_GROUPS = (
+        "Generic research methods used in both process and impact evaluation: Focus groups or group interviews"
+    )
+    CASE_STUDIES = "Generic research methods used in both process and impact evaluation: Case studies"
+    SURVEYS_AND_POLLING = "Generic research methods used in both process and impact evaluation: Surveys and polling"
+    OUTPUT_OR_PERFORMANCE_MONITORING = (
+        "Generic research methods used in both process and impact evaluation: Output or performance modelling"
+    )
+    QUALITATIVE_OBSERVATIONAL_STUDIES = (
+        "Generic research methods used in both process and impact evaluation: Qualitative observational studies"
+    )
+    CONSULTATIVE_METHODS = (
+        "Generic research methods used in both process and impact evaluation: Consultative/deliberative methods"
+    )
+    OTHER = "Other"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
