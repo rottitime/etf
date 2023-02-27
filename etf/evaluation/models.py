@@ -103,6 +103,7 @@ class DocumentType(choices.Choices):
     TECHNICAL_REPORT = "Technical report"
     DATASET = "Data set"
     ANALYSIS_CODE = "Analysis code"
+    OTHER = "Other"
 
 
 class EventDateOption(choices.Choices):
@@ -346,6 +347,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase):
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    document_type = models.JSONField(default=list)
     # TODO - file upload
 
 
@@ -353,7 +355,7 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
-    type = models.CharField(max_length=10, blank=True, null=True)
+    type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
 
 
