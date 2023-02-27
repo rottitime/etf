@@ -22,8 +22,9 @@ def is_empty_selected(data, name):
         return ""
 
 
+# TODO: Add tests for this
 def is_selected(data, name, value):
-    if data.get(name) is value:
+    if str(data.get(name)) == str(value):
         return "selected"
     else:
         return ""
