@@ -106,12 +106,18 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_design_approach_limitations = fields.Str()
 
     # Impact evaluation analysis
+    impact_eval_framework = fields.Str(validate=validate.Length(max=64))
+    impact_eval_basis = fields.Str(validate=validate.Length(max=64))
     impact_eval_analysis_set = fields.Str()
+    impact_eval_effect_measure_type = fields.Str(validate=validate.Length(max=64))
     impact_eval_primary_effect_size_measure = fields.Str()
+    impact_eval_effect_measure_interval = fields.Str(validate=validate.Length(max=64))
     impact_eval_primary_effect_size_desc = fields.Str()
+    impact_eval_interpretation_type = fields.Str(validate=validate.Length(max=64))
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
+    impact_eval_fidelity = fields.Str(validate=validate.Length(max=10))
     impact_eval_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
