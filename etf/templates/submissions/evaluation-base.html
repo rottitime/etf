@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="grid-x">
+    <div class="cell small-3">
+      <nav class="sidebar">
+        <ul class="vertical menu tabs accordion-menu" data-accordion-menu>
+          <hr>
+          {% for page, order in page_order|dictsort(false, 'value') %}
+            <li>
+              {% if current_page == page %}
+                <i class="bi-arrow-right-circle"></i><span class="current-page-name">{{ get_page_display_name(page) }}</span>
+              {% else %}
+                <div>
+                  <a href="{{ url(page, args=[evaluation_id])}}">{{ get_page_display_name(page) }}</a>
+                  <i class="{{get_page_progress_icon(page_statuses[page])}}"></i>
+                </div>
+              {% endif %}
+            </li>
+            <hr>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+    <div class="cell small-6">
+      {% block eval_content %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
