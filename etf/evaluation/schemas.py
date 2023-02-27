@@ -210,6 +210,7 @@ class DocumentSchema(TimeStampedModelSchema):
     title = fields.Str(validate=validate.Length(max=256))
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
+    document_type = fields.Raw()
 
 
 class EventDateSchema(TimeStampedModelSchema):
