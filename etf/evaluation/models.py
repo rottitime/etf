@@ -347,7 +347,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase):
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    document_type = models.JSONField(default=list)
+    document_types = models.JSONField(default=list)
     # TODO - file upload
 
 
