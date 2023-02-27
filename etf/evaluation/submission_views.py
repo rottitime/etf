@@ -99,6 +99,11 @@ def evaluation_view(request, evaluation_id, page_data):
         "economic_eval_type": models.EconomicEvaluationType.choices,
         "impact_eval_design_name": models.ImpactEvalDesign.choices,
         "impact_eval_interpretation": models.ImpactEvalInterpretation.choices,
+        "impact_eval_framework": models.ImpactFramework.choices,
+        "impact_eval_basis": models.ImpactAnalysisBasis.choices,
+        "impact_eval_effect_measure_type": models.ImpactMeasureType.choices,
+        "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.choices,
+        "impact_eval_interpretation_type": models.ImpactEvalInterpretation.choices,
     }
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)

@@ -10,17 +10,23 @@
       <p>Only display if one of the evaluation types is "Impact evaluation"</p>
       <p>[PLACEHOLDER - analysis plan document upload]</p>
       <p>[PLACEHOLDER - options fields]</p>
+      {{macros.select_from_list("impact_eval_framework", "Framework", list=list_vars.impact_eval_framework, short_description="Framework of comparisons between interventions.")}}
+      {{macros.select_from_list("impact_eval_basis", "Analysis basis", list=list_vars.impact_eval_basis, short_description="Approach to identifying data to include in the analysis.")}}
       {{macros.textarea("impact_eval_analysis_set", "Analysis set", short_description="Details of any inclusion / exclusion criteria determining data to be used in the analysis.")}}
+      {{macros.select_from_list("impact_eval_effect_measure_type", "Primary effect size measure type", list=list_vars.impact_eval_effect_measure_type)}}
       {{macros.textarea("impact_eval_primary_effect_size_measure", "Primary effect size measure", tooltip=[
         "For binary outcomes, a suitable absolute measure is often the 'prevalence difference': the difference between the proportions of people achieving the outcome in the intervention group and the control group. A relative measure for binary outcomes would be the 'prevalence ratio'.",
         "For numerical outcomes, suitable absolute measures often include differences in mean levels of the outcome between the groups. If the outcome is measured as a quantity that is meaningful in practice, the differences between mean levels of this quantity will also typically be something meaningful. (Eg, if the outcome if each person's income in £ per week, then it will be meaningful and interpretable to see that weekly incomes are on average £x higher in the intervention group than the control group.)"])}}
+      {{macros.select_from_list("impact_eval_effect_measure_interval", "Primary effect size measure interval", list=list_vars.impact_eval_effect_measure_interval, short_description="Interval calculation for the effect size")}}
       {{macros.textarea("impact_eval_primary_effect_size_desc", "Primary effect size measure description",
         short_description="Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.")}}
+      {{macros.select_from_list("impact_eval_interpretation_type", "Interpretation type", list=list_vars.impact_eval_interpretation_type)}}
       {{macros.textarea("impact_eval_sensitivity_analysis", "Sensitivity analysis", short_description="Description of any sensitivity analysis")}}
       {{macros.textarea("impact_eval_subgroup_analysis", "Subgroup analysis", short_description="Description of any subgroup analysis", tooltip=[
         "Subgroup analyses involve examining the results for a specified subset of the participants in a study. These should normally be specified before the study starts. If you are intending to conduct a subgroup analysis, it will normally be necessary to ensure that the sample size for that subgroup is large enough.",
         "Particular caution should be exercised over subgroup analyses that are specified after the data have been seen. A common mistake in studies is that if an intervention appears unsuccessful for the population as a whole, researchers can go 'fishing' through the data to find any subset of people it does work for. This is invariably a mistake because there will typically be some way of slicing the population that shows a positive outcome just by random variation."])}}
       {{macros.textarea("impact_eval_missing_data_handling", "Missing data handling", short_description="Description of handling of missing data")}}
+      {{macros.yes_no("impact_eval_fidelity", "Fidelity reporting", short_description="Report to include information on the extent to which tradment was as protocol"}}
       {{macros.textarea("impact_eval_desc_planned_analysis", "Description of planned analysis", tooltip=["Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."])}}
 
       {{macros.buttons(prev_url, id=data.id)}}
