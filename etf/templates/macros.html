@@ -108,9 +108,6 @@
   {{select(name, label, options=({'text': 'Yes', 'value': True}, {'text': 'No', 'value': False}), tooltip=tooltip, short_description=short_description, empty_option="Please select...")}}
 {%- endmacro %}
 
-{% macro yes_no_partial(name, label, tooltip=[], short_description='') -%}
-  {{select(name, label, tooltip=tooltip, short_description=short_description, options=({'text': '', 'value': None}, {'text': 'Yes', 'value': 'Yes'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option="No")}}
-{%- endmacro %}
 
 {% macro full_no_partial(name, label, tooltip=[], short_description='') -%}
   {{select(name, label, tooltip=tooltip, short_description=short_description, options=({'text': 'Full', 'value': 'Full'}, {'text': 'No', 'value': 'No'}, {'text': 'Partial', 'value': 'Partial'}), empty_option='No')}}
