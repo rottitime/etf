@@ -152,8 +152,10 @@ def get_status_display_name(db_name):
 
 
 def get_page_status_display_name(db_name):
-    result = [status[1] for status in EvaluationPageStatus.choices if status[0] == db_name]
-    return result[0]
+    if db_name in EvaluationPageStatus:
+        return EvaluationPageStatus[db_name].label
+    else:
+        return None
 
 
 class TimeStampedModel(models.Model):
