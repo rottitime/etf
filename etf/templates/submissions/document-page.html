@@ -10,9 +10,9 @@
       {{macros.input("title", "Title", short_description="Full title as it appears at the start of the document.", tooltip=[
         "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, eg 'Analysis plan for the evaluation of XYZ interventions'."])}}
       {{macros.input("url", "Link to document", short_description=" A link to a canonical version of the document somewhere on the web.")}}
-      <p>
-      [PLACEHOLDER - field on document type - options]
-      </p>
+      {{macros.select_many_from_list("document_types", "Document type", list_vars.document_types, short_description="Select all types of information covered in this document.",
+        tooltip=["Information on an evaluation might be contained in one document or split across several. For example, in the planning stage a single document might contain both a study protocol and the analysis plan. And in reporting findings, technical details could be included in a separate document, but they could equally be included as appendices in a main report document.",
+        "If a document contains elements that spans several of the document type options listed here, please select all that apply."])}}
       {{macros.textarea("description", "Description", short_description="Brief description of the document, if needed.")}}
       [PLACEHOLDER - document upload]
       {% include "submissions/multiple-objects-page.html" %}
