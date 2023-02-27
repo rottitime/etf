@@ -9,7 +9,7 @@
       </legend>
       <p>PLACEHOLDER</p>
       <p>Only display if one of the evaluation types is 'economic evaluation'</p>
-      {{macros.input("economic_eval_type", "Economic evaluation type [PLACEHOLDER - options]",
+      {{macros.select_from_list("economic_eval_type", "Economic evaluation type", list=list_vars.economic_eval_type,
         short_description="Type of economic evaluation to be conducted.", tooltip=[
         "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
         "In cost-minimisation analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",

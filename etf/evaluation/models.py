@@ -129,6 +129,13 @@ class EventDateType(choices.Choices):
     ACTUAL = "Actual"
 
 
+class EconomicEvaluationType(choices.Choices):
+    COST_MINIMISATION = "Cost minimisation"
+    COST_EFFECTIVENESS_ANALYSIS = "Cost-effectiveness analysis"
+    COST_BENEFIT_ANALYSIS = "Cost-benefit analysis"
+    COST_UTILITY_ANALYSIS = "Cost-utility analysis"
+
+
 def get_topic_display_name(db_name):
     result = [topic[1] for topic in Topic.choices if topic[0] == db_name]
     return result[0]
@@ -238,7 +245,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
     process_eval_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
-    economic_eval_type = models.CharField(blank=True, null=True, max_length=256)
+    economic_eval_type = models.CharField(blank=True, null=True, max_length=256, choices=EconomicEvaluationType.choices)
     perspective_costs = models.TextField(blank=True, null=True)
     perspective_benefits = models.TextField(blank=True, null=True)
     monetisation_approaches = models.TextField(blank=True, null=True)
