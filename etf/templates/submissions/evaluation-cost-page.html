@@ -6,10 +6,16 @@
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
-      </legend>
-      PLACEHOLDER
-      
-      {{macros.textarea("", "")}}
+      </legend>      
+      {{macros.input("item_name", "Item name")}}
+      {{macros.textarea("description", "Description")}}
+      {{macros.input("item_cost", "Item cost (£)")}}
+      {{macros.input("earliest_spend_date", "Earliest spend date", type="date", 
+        short_description="Earliest date on which this cost item might incur expenditure",
+        tooltip=["If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."])}}
+      {{macros.input("latest_spend_date", "Latest spend date", type="date",
+        short_description="Latest date on which this cost item might incur expenditure",
+        tooltip=["If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."])}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
