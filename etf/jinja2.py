@@ -9,11 +9,14 @@ from etf.evaluation import models, pages
 
 DEFAULT = object()
 
-page_progress_icon_dict = defaultdict(lambda: "bi-question-circle", {
-    pages.EvaluationPageStatus.IN_PROGRESS.name: "bi-fast-forward-circle",
-    pages.EvaluationPageStatus.DONE.name: "bi-check-circle",
-    pages.EvaluationPageStatus.NOT_STARTED.name: "bi-dash-circle"
-})
+page_progress_icon_dict = defaultdict(
+    lambda: "bi-question-circle",
+    {
+        pages.EvaluationPageStatus.IN_PROGRESS.name: "bi-fast-forward-circle",
+        pages.EvaluationPageStatus.DONE.name: "bi-check-circle",
+        pages.EvaluationPageStatus.NOT_STARTED.name: "bi-dash-circle",
+    },
+)
 
 
 def finalize(thing):
