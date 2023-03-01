@@ -152,7 +152,6 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     page_statuses = evaluation.page_statuses
 
     if request.GET.get("completed"):
-        print(request.GET.get("completed"))
         evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
 
     related_model = getattr(models, model_name)
