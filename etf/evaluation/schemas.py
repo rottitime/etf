@@ -208,9 +208,9 @@ class OtherMeasureSchema(TimeStampedModelSchema):
 class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    process_standard_name = fields.Str(validate=validate.Length(max=256))
-    process_standard_conformity = fields.Str(validate=validate.Length(max=10))
-    process_standard_description = fields.Str()
+    processes_standard_name = fields.Str(validate=validate.Length(max=256))
+    processes_standard_conformity = fields.Str(validate=validate.Length(max=10))
+    processes_standard_description = fields.Str()
 
 
 class DocumentSchema(TimeStampedModelSchema):
