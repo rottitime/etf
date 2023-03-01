@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 
-from etf.evaluation import models, pages
+from etf.evaluation import models, pages, fields
 
 DEFAULT = object()
 
@@ -60,6 +60,14 @@ def get_page_progress_icon(progress_status):
     return page_progress_icon_dict[progress_status]
 
 
+def get_field_help_text(field_name):
+    return fields.get_field_help_text(field_name)
+
+
+def get_field_tooltip_text(field_name):
+    return fields.get_field_tooltip_text(field_name)
+
+
 def list_to_options(iterable):
     result = tuple({"value": item[0], "text": item[1]} for item in iterable)
     return result
@@ -87,6 +95,8 @@ def environment(**options):
             "get_page_status_display_name": get_page_status_name,
             "get_page_progress_icon": get_page_progress_icon,
             "list_to_options": list_to_options,
+            "get_field_help_text": get_field_help_text,
+            "get_field_tooltip_text": get_field_tooltip_text,
         }
     )
     return env
