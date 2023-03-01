@@ -1,21 +1,17 @@
-{% extends "base.html" %}
+{% extends "submissions/evaluation-base.html" %}
 {% import 'macros.html' as macros with context %}
 
-{% block content %}
+{% block eval_content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
       </legend>      
-      {{macros.input("item_name", "Item name")}}
-      {{macros.textarea("description", "Description")}}
-      {{macros.input("item_cost", "Item cost (£)")}}
-      {{macros.input("earliest_spend_date", "Earliest spend date", type="date", 
-        short_description="Earliest date on which this cost item might incur expenditure",
-        tooltip=["If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."])}}
-      {{macros.input("latest_spend_date", "Latest spend date", type="date",
-        short_description="Latest date on which this cost item might incur expenditure",
-        tooltip=["If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."])}}
+      {{macros.input("evaluation_cost_item_name", "Item name")}}
+      {{macros.textarea("evaluation_cost_description", "Description")}}
+      {{macros.input("evaluation_cost_item_cost", "Item cost (£)")}}
+      {{macros.input("evaluation_cost_earliest_spend_date", "Earliest spend date", type="date")}}
+      {{macros.input("evaluation_cost_latest_spend_date", "Latest spend date", type="date")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>

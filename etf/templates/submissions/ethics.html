@@ -8,60 +8,18 @@
         <h3>{{title}}</h3>
       </legend>
       </ul>
-      {{macros.yes_no("ethics_committee_approval", "Ethics committee approval",
-        short_description="Will the study be submitted to an ethics committee for approval?",
-        tooltip=["Not all studies need approval by an ethics committee.",
-        "Ethics committee reviews are sometimes an obligation where a study could be considered health research; 
-        where a funder demands it; or where organisational processes require it."])}}
-      {{macros.textarea("ethics_committee_details", "Ethics committee details",
-        short_description="If the study will be submitted to an ethics committee, which one?")}}
-      {{macros.textarea("ethical_state_given_existing_evidence_base",
-        "Ethical state of study given existing evidence base", short_description="Is the study ethically justified 
-        because there is uncertainty over which option is most beneficial? Or are there other reasons why 
-        conducting this study is ethical?", tooltip=[
-        "Is there a state of uncertainty over which of the options being investigated is most beneficial (equipoise)? 
-        If not, are there other grounds making it ethical to offer a known-effective intervention to some and not others (eg natural delay)?",
-        "Is there an intervention that is already known to work for the issue being studied in this context? 
-        If so, is this being used as the comparison intervention for any new intervention being studied, 
-        rather than using a no-service comparison group?",
-        "One of the main justifications for it being ethical to undertake a study is that there exists a state of 
-        ‘equipoise’ – ie that there is a degree of uncertainty about which of the options being compared is superior. 
-        If an intervention has already conclusively been shown to be effective then it would normally be ethically 
-        problematic to compare it to a control group receiving nothing. It would, however, still be acceptable to 
-        test it against another intervention of unknown effectiveness, or to compare it against ‘no treatment’ in a 
-        new context where it is not yet known whether the intervention would be effective.",
-        "One exception to the requirement for equipoise can be a situation where there is a natural delay: where 
-        the intervention would be rolled out in a phased way to different beneficiaries anyway, then it can be 
-        ethical to conduct a study comparing those who get the intervention early against those who have not yet 
-        received it because they are due to get it later."])}}
-      {{macros.textarea("risks_to_participants", "Risks to participants", tooltip=[
-        "Have you considered the risk of harm for participants, including any discomfort or inconvenience that they might experience through participation?"])}}
-      {{macros.textarea("risks_to_study_team", "Risks to study team", tooltip=[
-        "Have you considered risk of harm to those conducting the study?"])}}
-      {{macros.textarea("participant_involvement", "Participant involvement",
-        tooltip=["Have participants / potential participants been involved in the design of the study?"])}}
-      {{macros.textarea("participant_consent", "Participant consent", tooltip=[
-        "Will consent be obtained? If not, why not?",
-        "When will consent be obtained? Who will obtain consent?",
-        "How will consent be given (eg verbal, written)? If not written, how will records be kept?",
-        "What steps will be taken to ensure that consent is informed and freely given?",
-        "If using secondary data, does the primary consent cover the proposed usage (eg further analysis)?",
-        "Attach a copy of the participant consent form, if being used."])}}
-      {{macros.textarea("participant_information", "Participant information", tooltip=[
-        "What information will be provided to the participants about the study, its aims and procedures? Will any information be withheld? If so, why?",
-        "Attach a copy of the participant information sheet, if being used."])}}
-      {{macros.textarea("participant_payment", "Participant payment", tooltip=["Will participants be paid? If so, how much? 
-        Has consideration been given to whether this creates a conflict of interest? 
-        How is the potential for that being mitigated in the design?"])}}
-      {{macros.textarea("confidentiality_and_personal_data", "Confidentiality and personal data", tooltip=[
-        "What steps will you take to protect the confidentiality of data of participants?",
-        "Who will personally identifiable information be shared with?",
-        "How will consent be obtained for use of personal data?",
-        "How long will personal data be held for and how will it be disposed of?"])}}
-      {{macros.textarea("breaking_confidentiality", "Breaking confidentiality", tooltip=[
-        "Are there circumstances under which confidentiality might be broken to prevent harm? If so, under what 
-        circumstances would this be done and what procedures would be used?"])}}
-      {{macros.textarea("other_ethical_information", "Other ethical information", short_description="The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.")}}
+      {{macros.yes_no("ethics_committee_approval", "Ethics committee approval")}}
+      {{macros.textarea("ethics_committee_details", "Ethics committee details")}}
+      {{macros.textarea("ethical_state_given_existing_evidence_base", "Ethical state of study given existing evidence base")}}
+      {{macros.textarea("risks_to_participants", "Risks to participants")}}
+      {{macros.textarea("risks_to_study_team", "Risks to study team")}}
+      {{macros.textarea("participant_involvement", "Participant involvement")}}
+      {{macros.textarea("participant_consent", "Participant consent")}}
+      {{macros.textarea("participant_information", "Participant information")}}
+      {{macros.textarea("participant_payment", "Participant payment")}}
+      {{macros.textarea("confidentiality_and_personal_data", "Confidentiality and personal data")}}
+      {{macros.textarea("breaking_confidentiality", "Breaking confidentiality")}}
+      {{macros.textarea("other_ethical_information", "Other ethical information")}}
 
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>

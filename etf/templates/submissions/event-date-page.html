@@ -1,18 +1,16 @@
-{% extends "base.html" %}
+{% extends "submissions/evaluation-base.html" %}
 {% import 'macros.html' as macros with context %}
 
-{% block content %}
+{% block eval_content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.select_from_list("event_date_name", "Event name", list=dropdown_choices.event_date_name, short_description="Select all types of information covered in this document.")}}
-      {{macros.input("date", "Event date", type="date")}}
-      {{macros.select_from_list("type", "Intended or actual date", list=dropdown_choices.event_date_type)}}
-      {{macros.textarea("reasons_for_change", "Reasons for change",
-        short_description="Only requested when amending an existing entry.",
-        tooltip=["Please enter a reason why the date is changing eg 'Targeted number of participants recruited quicker than expected so evaluation now scheduled to finish sooner'."])}}
+      {{macros.select_from_list("event_date_name", "Event name", list=dropdown_choices.event_date_name)}}
+      {{macros.input("event_date_date", "Event date", type="date")}}
+      {{macros.select_from_list("event_date_type", "Intended or actual date", list=dropdown_choices.event_date_type)}}
+      {{macros.textarea("event_date_reasons_for_change", "Reasons for change")}}
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>

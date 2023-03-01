@@ -8,10 +8,8 @@
         <h3>{{title}}</h3>
       </legend>
       <p>Only display when evaluation type is 'other'.</p>
-      {{macros.textarea("other_eval_design_type", "Design type", short_description="Type of other evaluation to be conducted.")}}
-      {{macros.textarea("other_eval_design_details", "Design details", short_description="Details of the design of the evaluation.", tooltip=[
-        "Use this box to describe your evaluation and how it will be conducted.",
-        "Omit information about any impact evaluation, economic evaluation, or process evaluation aspects of the design. For those, make sure you have specified that you are undertaking that type of evaluation too, and then enter details about them on their respective pages."])}}
+      {{macros.textarea("other_eval_design_type", "Design type")}}
+      {{macros.textarea("other_eval_design_details", "Design details")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
