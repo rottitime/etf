@@ -1,149 +1,254 @@
 from collections import defaultdict
 
 description_help_text = {
-    "brief_description": "Please provide one or two sentences to describe the evaluation.",
-    "topics": "Please select one or more topics to associate with this evaluation.",
-    "organisations": "Please select the organisations responsible for this evaluation.",
+    "description": defaultdict(
+        lambda: "",
+        {
+            "brief_description": "Please provide one or two sentences to describe the evaluation.",
+            "topics": "Please select one or more topics to associate with this evaluation.",
+            "organisations": "Please select the organisations responsible for this evaluation.",
+        },
+    )
 }
 
 document_page_help_text = {
-    "document_title": "Full title as it appears at the start of the document.",
-    "document_types": "Select all types of information covered in this document.",
-    "document_description": "Brief description of the document, if needed.",
-    "document_url": "A link to a canonical version of the document somewhere on the web.",
+    "document": defaultdict(
+        lambda: "",
+        {
+            "document_title": "Full title as it appears at the start of the document.",
+            "document_types": "Select all types of information covered in this document.",
+            "document_description": "Brief description of the document, if needed.",
+            "document_url": "A link to a canonical version of the document somewhere on the web.",
+        },
+    )
 }
 
 economic_design_help_text = {
-    "economic_eval_type": "Type of economic evaluation to be conducted.",
-    "perspective_costs": "Which costs are to be included in the economic evaluation?",
-    "perspective_benefits": "Which benefits are to be included in the economic evaluation?",
-    "monetisation_approaches": "Approaches used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
-    "economic_eval_design_details": "Details of the design of the economic evaluation.",
+    "economic-design": defaultdict(
+        lambda: "",
+        {
+            "economic_eval_type": "Type of economic evaluation to be conducted.",
+            "perspective_costs": "Which costs are to be included in the economic evaluation?",
+            "perspective_benefits": "Which benefits are to be included in the economic evaluation?",
+            "monetisation_approaches": "Approaches used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
+            "economic_eval_design_details": "Details of the design of the economic evaluation.",
+        },
+    )
 }
 
 economic_findings_help_text = {
-    "economic_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
-    "economic_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+    "economic-findings": defaultdict(
+        lambda: "",
+        {
+            "economic_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
+            "economic_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+        },
+    )
 }
 
 ethics_help_text = {
-    "ethics_committee_approval": "Will the study be submitted to an ethics committee for approval?",
-    "ethics_committee_details": "If the study will be submitted to an ethics committee, which one?",
-    "ethical_state_given_existing_evidence_base": "Is the study ethically justified because there is uncertainty over which option is most beneficial? Or are there other reasons why conducting this study is ethical?",
-    "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.",
+    "ethics": defaultdict(
+        lambda: "",
+        {
+            "ethics_committee_approval": "Will the study be submitted to an ethics committee for approval?",
+            "ethics_committee_details": "If the study will be submitted to an ethics committee, which one?",
+            "ethical_state_given_existing_evidence_base": "Is the study ethically justified because there is uncertainty over which option is most beneficial? Or are there other reasons why conducting this study is ethical?",
+            "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.",
+        },
+    )
 }
 
 evaluation_cost_help_text = {
-    "evaluation_cost_earliest_spend_date": "Earliest date on which this cost item might incur expenditure",
-    "evaluation_cost_latest_spend_date": "Latest date on which this cost item might incur expenditure",
+    "evaluation cost": defaultdict(
+        lambda: "",
+        {
+            "evaluation_cost_earliest_spend_date": "Earliest date on which this cost item might incur expenditure",
+            "evaluation_cost_latest_spend_date": "Latest date on which this cost item might incur expenditure",
+        },
+    )
 }
 
 event_date_help_text = {
-    "event_date_name": "Select all types of information covered in this document.",
-    "event_date_reasons_for_change": "Only requested when amending an existing entry.",
+    "event date": defaultdict(
+        lambda: "",
+        {
+            "event_date_name": "Select all types of information covered in this document.",
+            "event_date_reasons_for_change": "Only requested when amending an existing entry.",
+        },
+    )
 }
 
 impact_analysis_help_text = {
-    "impact_eval_framework": "Framework of comparisons between interventions.",
-    "impact_eval_basis": "Approach to identifying data to include in the analysis.",
-    "impact_eval_analysis_set": "Details of any inclusion / exclusion criteria determining data to be used in the analysis.",
-    "impact_eval_effect_measure_interval": "Interval calculation for the effect size.",
-    "impact_eval_primary_effect_size_desc": "Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.",
-    "impact_eval_sensitivity_analysis": "Description of any sensitivity analysis",
-    "impact_eval_subgroup_analysis": "Description of any subgroup analysis",
-    "impact_eval_missing_data_handling": "Description of handling of missing data",
-    "impact_eval_fidelity": "Report to include information on the extent to which treatment was as protocol",
+    "impact-analysis": defaultdict(
+        lambda: "",
+        {
+            "impact_eval_framework": "Framework of comparisons between interventions.",
+            "impact_eval_basis": "Approach to identifying data to include in the analysis.",
+            "impact_eval_analysis_set": "Details of any inclusion / exclusion criteria determining data to be used in the analysis.",
+            "impact_eval_effect_measure_interval": "Interval calculation for the effect size.",
+            "impact_eval_primary_effect_size_desc": "Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.",
+            "impact_eval_sensitivity_analysis": "Description of any sensitivity analysis",
+            "impact_eval_subgroup_analysis": "Description of any subgroup analysis",
+            "impact_eval_missing_data_handling": "Description of handling of missing data",
+            "impact_eval_fidelity": "Report to include information on the extent to which treatment was as protocol",
+        },
+    )
 }
 
 impact_design_help_text = {
-    "impact_eval_design_name": "Descriptive name for the design/method. You may select more than one.",
-    "impact_eval_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
-    "impact_eval_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+    "impact-design": defaultdict(
+        lambda: "",
+        {
+            "impact_eval_design_name": "Descriptive name for the design/method. You may select more than one.",
+            "impact_eval_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
+            "impact_eval_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+        },
+    )
 }
 
 impact_findings_help_text = {
-    "impact_eval_comparison": "Which intervention is being compared to which other?",
-    "impact_eval_outcome": "Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.",
+    "impact-findings": defaultdict(
+        lambda: "",
+        {
+            "impact_eval_comparison": "Which intervention is being compared to which other?",
+            "impact_eval_outcome": "Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.",
+        },
+    )
 }
 
 intervention_help_text = {
-    "intervention_brief_description": "Brief description of intervention",
-    "intervention_rationale": "Rationale, theory or goals of intervention elements.",
-    "intervention_materials_used": "Description of physical or informational materials used in the intervention, including those used in intervention delivery or in training of intervention providers.",
-    "intervention_procedures": "Description of each of the procedures, activities and/or processes used in the intervention, including enabling or supporting activities.",
-    "intervention_provider_description": "Types of providers involved in providing the intervention, plus their skills, training, etc",
-    "intervention_modes_of_delivery": "Description of modes of delivery (eg face-to-face, telephone) of the intervention and whether it will be provided individually or in a group.",
-    "intervention_location": "Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features.",
-    "intervention_frequency_of_delivery": "Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.",
-    "intervention_tailoring": "If the intervention will be personalised or adapted for different participants, description of what, why, when and how.",
-    "intervention_fidelity": "Describe any strategies used to maintain the extent to which implementation is as-planned, including efforts to improve consistency.",
-    "intervention_resource_requirements": "Describe extra resources added to (or resources removed from) usual settings in order to implement intervention.",
-    "intervention_geographical_information": "In which actual locations (eg, towns, cities, or regions) will the intervention take place during the evaluation?",
+    "intervention": defaultdict(
+        lambda: "",
+        {
+            "intervention_brief_description": "Brief description of intervention",
+            "intervention_rationale": "Rationale, theory or goals of intervention elements.",
+            "intervention_materials_used": "Description of physical or informational materials used in the intervention, including those used in intervention delivery or in training of intervention providers.",
+            "intervention_procedures": "Description of each of the procedures, activities and/or processes used in the intervention, including enabling or supporting activities.",
+            "intervention_provider_description": "Types of providers involved in providing the intervention, plus their skills, training, etc",
+            "intervention_modes_of_delivery": "Description of modes of delivery (eg face-to-face, telephone) of the intervention and whether it will be provided individually or in a group.",
+            "intervention_location": "Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features.",
+            "intervention_frequency_of_delivery": "Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.",
+            "intervention_tailoring": "If the intervention will be personalised or adapted for different participants, description of what, why, when and how.",
+            "intervention_fidelity": "Describe any strategies used to maintain the extent to which implementation is as-planned, including efforts to improve consistency.",
+            "intervention_resource_requirements": "Describe extra resources added to (or resources removed from) usual settings in order to implement intervention.",
+            "intervention_geographical_information": "In which actual locations (eg, towns, cities, or regions) will the intervention take place during the evaluation?",
+        },
+    )
 }
 
 issue_description_help_text = {
-    "issue_description": "The problem, circumstance or situation that it is intended that an intervention should respond to.",
-    "those_experiencing_issue": "Those directly experiencing the issue.",
-    "why_improvements_matter": "Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?",
-    "who_improvements_matter_to": "May be wider than those experiencing the issue directly.",
-    "current_practice": "How is the issue currently typically attended to (if at all)?",
-    "issue_relevance": "How will the results of the evaluation ultimately contribute to practice?",
+    "issue-description": defaultdict(
+        lambda: "",
+        {
+            "issue_description": "The problem, circumstance or situation that it is intended that an intervention should respond to.",
+            "those_experiencing_issue": "Those directly experiencing the issue.",
+            "why_improvements_matter": "Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?",
+            "who_improvements_matter_to": "May be wider than those experiencing the issue directly.",
+            "current_practice": "How is the issue currently typically attended to (if at all)?",
+            "issue_relevance": "How will the results of the evaluation ultimately contribute to practice?",
+        },
+    )
 }
 
 links_help_text = {
-    "links_name_of_service": "Which service is this an identifier for?",
-    "links_link_or_identifier": "What is the link/identifier?",
+    "link": defaultdict(
+        lambda: "",
+        {
+            "links_name_of_service": "Which service is this an identifier for?",
+            "links_link_or_identifier": "What is the link/identifier?",
+        },
+    )
 }
 
 other_design_help_text = {
-    "other_eval_design_type": "Type of other evaluation to be conducted.",
-    "other_eval_design_details": "Details of the design of the evaluation.",
+    "other-design": defaultdict(
+        lambda: "",
+        {
+            "other_eval_design_type": "Type of other evaluation to be conducted.",
+            "other_eval_design_details": "Details of the design of the evaluation.",
+        },
+    )
 }
 
 other_findings_help_text = {
-    "other_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
-    "other_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+    "other-findings": defaultdict(
+        lambda: "",
+        {
+            "other_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
+            "other_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+        },
+    )
 }
 
 outcome_measure_help_text = {
-    "outcome_measure_name": "Please provide a name or brief phrase that describes the outcome.",
-    "outcome_measure_primary_or_secondary": "Will this outcome be treated as a primary or secondary outcome in this study?",
-    "outcome_measure_direct_or_surrogate": "Is this measure intended to directly reflect an outcome of interest or is it a surrogate measure that is intended to act as a proxy for an outcome that is hard to measure directly?",
-    "outcome_measure_description": "Details of what data will be gathered and of any processing that will be applied to raw data in order to create the measure.",
-    "outcome_measure_collection_process": "How will data be collected and by whom?",
-    "outcome_measure_timepoint": "When will data be collected?",
-    "outcome_measure_minimum_difference": "A difference or change in this outcome measure below this level would be considered negligible, unimportant or irrelevant.",
-    "outcome_measure_relevance": "Explain why the outcome and timepoint for measurement are considered important to evidence users.",
+    "outcome measure": defaultdict(
+        lambda: "",
+        {
+            "outcome_measure_name": "Please provide a name or brief phrase that describes the outcome.",
+            "outcome_measure_primary_or_secondary": "Will this outcome be treated as a primary or secondary outcome in this study?",
+            "outcome_measure_direct_or_surrogate": "Is this measure intended to directly reflect an outcome of interest or is it a surrogate measure that is intended to act as a proxy for an outcome that is hard to measure directly?",
+            "outcome_measure_description": "Details of what data will be gathered and of any processing that will be applied to raw data in order to create the measure.",
+            "outcome_measure_collection_process": "How will data be collected and by whom?",
+            "outcome_measure_timepoint": "When will data be collected?",
+            "outcome_measure_minimum_difference": "A difference or change in this outcome measure below this level would be considered negligible, unimportant or irrelevant.",
+            "outcome_measure_relevance": "Explain why the outcome and timepoint for measurement are considered important to evidence users.",
+        },
+    )
 }
 
 participant_recruitment_help_text = {
-    "process_for_recruitment": "Method of recruitment into the study, such as by referral, self-selection, or automatic inclusion of everyone in a category.",
+    "participant-recruitment": defaultdict(
+        lambda: "",
+        {
+            "process_for_recruitment": "Method of recruitment into the study, such as by referral, self-selection, or automatic inclusion of everyone in a category.",
+        },
+    )
 }
 
 process_findings_help_text = {
-    "process_eval_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
-    "process_eval_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
+    "process-findings": defaultdict(
+        lambda: "",
+        {
+            "process_eval_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
+            "process_eval_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
+        },
+    )
 }
 
 processes_standard_help_text = {
-    "processes_standard_description": "Provide any information needed to describe the evaluation's conformity with the standard.",
+    "process or standard": defaultdict(
+        lambda: "",
+        {
+            "processes_standard_description": "Provide any information needed to describe the evaluation's conformity with the standard.",
+        },
+    )
 }
 
 studied_population_help_text = {
-    "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
-    "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
-    "sample_size": "The overall sample size of the evaluation",
-    "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
+    "studied-population": defaultdict(
+        lambda: "",
+        {
+            "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
+            "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
+            "sample_size": "The overall sample size of the evaluation",
+            "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
+        },
+    )
 }
 
 title_help_text = {
-    "title": "Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
-    "short_title": "Please provide a short/abbreviated title for the evaluation, if you would like.",
+    "title": defaultdict(
+        lambda: "",
+        {
+            "title": "Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
+            "short_title": "Please provide a short/abbreviated title for the evaluation, if you would like.",
+        },
+    )
 }
 
 
 field_help_text = defaultdict(
-    lambda: "",
+    lambda: defaultdict(lambda: ""),
     {
         **description_help_text,
         **document_page_help_text,
@@ -511,8 +616,8 @@ field_tooltip_text = defaultdict(
 )
 
 
-def get_field_help_text(field_name):
-    return field_help_text[field_name]
+def get_field_help_text(object_name, field_name):
+    return field_help_text[object_name][field_name]
 
 
 def get_field_tooltip_text(field_name):

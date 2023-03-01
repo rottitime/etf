@@ -225,7 +225,7 @@
 {%- endmacro %}
 
 {%- macro field_help_text(name)  %}
-  {% set short_description = get_field_help_text(name) %}
+  {% set short_description = get_field_help_text(object_name, name) %}
   {% if short_description %}
     <p class="subheader">{{short_description}}</p>
   {% endif %}

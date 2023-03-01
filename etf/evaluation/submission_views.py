@@ -118,6 +118,7 @@ def evaluation_view(request, evaluation_id, page_data):
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
+            "object_name": page_name,
         },
     )
 
