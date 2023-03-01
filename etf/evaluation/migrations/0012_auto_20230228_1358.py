@@ -156,17 +156,17 @@ class Migration(migrations.Migration):
         ),
         migrations.RenameField(
             model_name="processstandard",
-            old_name="process_standard_conformity",
+            old_name="conformity",
             new_name="processes_standard_conformity",
         ),
         migrations.RenameField(
             model_name="processstandard",
-            old_name="process_standard_description",
+            old_name="description",
             new_name="processes_standard_description",
         ),
         migrations.RenameField(
             model_name="processstandard",
-            old_name="process_standard_name",
+            old_name="name",
             new_name="processes_standard_name",
         ),
         migrations.RenameField(
