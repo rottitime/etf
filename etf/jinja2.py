@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 
-from etf.evaluation import models, pages, fields
+from etf.evaluation import fields, models, pages
 
 DEFAULT = object()
 
