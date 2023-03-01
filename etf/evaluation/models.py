@@ -435,54 +435,54 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True)
-    brief_description = models.TextField(blank=True, null=True)
-    rationale = models.TextField(blank=True, null=True)
-    materials_used = models.TextField(blank=True, null=True)
-    procedures = models.TextField(blank=True, null=True)
-    provider_description = models.TextField(blank=True, null=True)
-    modes_of_delivery = models.TextField(blank=True, null=True)
-    location = models.TextField(blank=True, null=True)
-    frequency_of_delivery = models.TextField(blank=True, null=True)
-    tailoring = models.TextField(blank=True, null=True)
-    fidelity = models.TextField(blank=True, null=True)
-    resource_requirements = models.TextField(blank=True, null=True)
-    geographical_information = models.TextField(blank=True, null=True)
+    intervention_name = models.CharField(max_length=256, blank=True, null=True)
+    intervention_brief_description = models.TextField(blank=True, null=True)
+    intervention_rationale = models.TextField(blank=True, null=True)
+    intervention_materials_used = models.TextField(blank=True, null=True)
+    intervention_procedures = models.TextField(blank=True, null=True)
+    intervention_provider_description = models.TextField(blank=True, null=True)
+    intervention_modes_of_delivery = models.TextField(blank=True, null=True)
+    intervention_location = models.TextField(blank=True, null=True)
+    intervention_frequency_of_delivery = models.TextField(blank=True, null=True)
+    intervention_tailoring = models.TextField(blank=True, null=True)
+    intervention_fidelity = models.TextField(blank=True, null=True)
+    intervention_resource_requirements = models.TextField(blank=True, null=True)
+    intervention_geographical_information = models.TextField(blank=True, null=True)
 
 
 class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True)
-    primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
-    direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
-    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
-    description = models.TextField(blank=True, null=True)
-    collection_process = models.TextField(blank=True, null=True)
-    timepoint = models.TextField(blank=True, null=True)
-    minimum_difference = models.TextField(blank=True, null=True)
-    relevance = models.TextField(blank=True, null=True)
+    outcome_measure_name = models.CharField(max_length=256, blank=True, null=True)
+    outcome_measure_primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
+    outcome_measure_direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
+    outcome_measure_measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
+    outcome_measure_description = models.TextField(blank=True, null=True)
+    outcome_measure_collection_process = models.TextField(blank=True, null=True)
+    outcome_measure_timepoint = models.TextField(blank=True, null=True)
+    outcome_measure_minimum_difference = models.TextField(blank=True, null=True)
+    outcome_measure_relevance = models.TextField(blank=True, null=True)
 
 
 class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True)
-    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
-    description = models.TextField(blank=True, null=True)
-    collection_process = models.TextField(blank=True, null=True)
+    other_measures_name = models.CharField(max_length=256, blank=True, null=True)
+    other_measures_measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
+    other_measures_description = models.TextField(blank=True, null=True)
+    other_measures_collection_process = models.TextField(blank=True, null=True)
 
 
 class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256)
-    conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
-    description = models.TextField(blank=True, null=True)
+    processes_standard_name = models.CharField(max_length=256)
+    processes_standard_conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
+    processes_standard_description = models.TextField(blank=True, null=True)
 
 
 class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
-    title = models.CharField(max_length=256)
-    url = models.URLField(max_length=512, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    document_title = models.CharField(max_length=256)
+    document_url = models.URLField(max_length=512, blank=True, null=True)
+    document_description = models.TextField(blank=True, null=True)
     document_types = models.JSONField(default=list)
     # TODO - file upload
 
@@ -492,28 +492,28 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     event_date_name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
-    date = models.DateField(blank=True, null=True)
+    event_date_date = models.DateField(blank=True, null=True)
     event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
-    reasons_for_change = models.TextField(blank=True, null=True)
+    event_date_reasons_for_change = models.TextField(blank=True, null=True)
 
     _name_field = ""
 
 
 class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
-    name_of_service = models.CharField(max_length=256, blank=True, null=True)
-    link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
+    links_name_of_service = models.CharField(max_length=256, blank=True, null=True)
+    links_link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
 
     _name_field = "name_of_service"
 
 
 class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
-    item_name = models.TextField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    item_cost = models.FloatField(blank=True, null=True)
-    earliest_spend_date = models.DateField(blank=True, null=True)
-    latest_spend_date = models.DateField(blank=True, null=True)
+    evaluation_cost_item_name = models.TextField(blank=True, null=True)
+    evaluation_cost_description = models.TextField(blank=True, null=True)
+    evaluation_cost_item_cost = models.FloatField(blank=True, null=True)
+    evaluation_cost_earliest_spend_date = models.DateField(blank=True, null=True)
+    evaluation_cost_latest_spend_date = models.DateField(blank=True, null=True)
     # TODO - add a total cost for eval
     # TODO - add column for notes on evaluation costs
 
