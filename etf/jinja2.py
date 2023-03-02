@@ -64,8 +64,8 @@ def get_field_help_text(object_name, field_name):
     return fields.get_field_help_text(object_name, field_name)
 
 
-def get_field_tooltip_text(field_name):
-    return fields.get_field_tooltip_text(field_name)
+def get_field_tooltip_text(object_name, field_name):
+    return fields.get_field_tooltip_text(object_name, field_name)
 
 
 def list_to_options(iterable):
