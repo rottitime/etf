@@ -509,17 +509,23 @@ def summary_interventions_page_view(request, evaluation_id):
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
+def get_related_object_page_url_names(summary_page_name):
+    next_section_url_name, prev_section_url_name = pages.get_next_prev_page_name(summary_page_name)
+    url_names = {
+        "page": pages.object_page_url_names[summary_page_name],
+        "prev_section_url_name": prev_section_url_name,
+        "next_section_url_name": next_section_url_name,
+        "summary_page": summary_page_name,
+    }
+    return url_names
+
+
 def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
     template_name = "submissions/intervention-page.html"
     object_name = "intervention"
-    url_names = {
-        "page": "intervention-page",
-        "prev_section_url_name": "other-analysis",
-        "next_section_url_name": "outcome-measures",
-        "summary_page": "interventions",
-    }
+    url_names = get_related_object_page_url_names("interventions")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -554,12 +560,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     template_name = "submissions/outcome-measure-page.html"
 
     object_name = "outcome measure"
-    url_names = {
-        "page": "outcome-measure-page",
-        "prev_section_url_name": "interventions",
-        "next_section_url_name": "other-measures",
-        "summary_page": "outcome-measures",
-    }
+    url_names = get_related_object_page_url_names("outcome-measures")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -593,12 +594,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     title = "Other measures"
     template_name = "submissions/other-measure-page.html"
     object_name = "other measure"
-    url_names = {
-        "page": "other-measure-page",
-        "prev_section_url_name": "outcome-measures",
-        "next_section_url_name": "ethics",
-        "summary_page": "other-measures",
-    }
+    url_names = get_related_object_page_url_names("other-measures")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -632,12 +628,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     title = "Processes and standards"
     template_name = "submissions/processes-standard-page.html"
     object_name = "process or standard"
-    url_names = {
-        "page": "processes-standard-page",
-        "prev_section_url_name": "other-findings",
-        "next_section_url_name": "links",
-        "summary_page": "processes-standards",
-    }
+    url_names = get_related_object_page_url_names("processes-standards")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -671,12 +662,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
     object_name = "evaluation cost"
-    url_names = {
-        "page": "evaluation-cost-page",
-        "prev_section_url_name": "participant-recruitment",
-        "next_section_url_name": "policy-costs",
-        "summary_page": "evaluation-costs",
-    }
+    url_names = get_related_object_page_url_names("evaluation-costs")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -722,12 +708,7 @@ def document_page_view(request, evaluation_id, document_id):
     title = "Document"
     template_name = "submissions/document-page.html"
     object_name = "document"
-    url_names = {
-        "page": "document-page",
-        "prev_section_url_name": "publication-intention",
-        "next_section_url_name": "event-dates",
-        "summary_page": "documents",
-    }
+    url_names = get_related_object_page_url_names("documents")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -761,12 +742,7 @@ def links_page_view(request, evaluation_id, link_id):
     title = "Link to other service"
     template_name = "submissions/links-page.html"
     object_name = "link"
-    url_names = {
-        "page": "link-page",
-        "prev_section_url_name": "processes-standards",
-        "next_section_url_name": "metadata",
-        "summary_page": "links",
-    }
+    url_names = get_related_object_page_url_names("links")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -800,12 +776,7 @@ def event_date_page_view(request, evaluation_id, event_date_id):
     title = "Event date"
     template_name = "submissions/event-date-page.html"
     object_name = "event date"
-    url_names = {
-        "page": "event-date-page",
-        "prev_section_url_name": "documents",
-        "next_section_url_name": "evaluation-types",
-        "summary_page": "event-dates",
-    }
+    url_names = get_related_object_page_url_names("event-dates")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
