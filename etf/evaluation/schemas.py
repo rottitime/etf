@@ -167,58 +167,58 @@ class EvaluationSchema(TimeStampedModelSchema):
 class InterventionSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema())
     id = fields.UUID(dump_only=True)
-    intervention_name = fields.Str(validate=validate.Length(max=256))
-    intervention_brief_description = fields.Str()
-    intervention_rationale = fields.Str()
-    intervention_materials_used = fields.Str()
-    intervention_procedures = fields.Str()
-    intervention_provider_description = fields.Str()
-    intervention_modes_of_delivery = fields.Str()
-    intervention_location = fields.Str()
-    intervention_frequency_of_delivery = fields.Str()
-    intervention_tailoring = fields.Str()
-    intervention_fidelity = fields.Str()
-    intervention_resource_requirements = fields.Str()
-    intervention_geographical_information = fields.Str()
+    name = fields.Str(validate=validate.Length(max=256))
+    brief_description = fields.Str()
+    rationale = fields.Str()
+    materials_used = fields.Str()
+    procedures = fields.Str()
+    provider_description = fields.Str()
+    modes_of_delivery = fields.Str()
+    location = fields.Str()
+    frequency_of_delivery = fields.Str()
+    tailoring = fields.Str()
+    fidelity = fields.Str()
+    resource_requirements = fields.Str()
+    geographical_information = fields.Str()
 
 
 class OutcomeMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    outcome_measure_name = fields.Str(validate=validate.Length(max=256))
-    outcome_measure_primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
-    outcome_measure_direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
-    outcome_measure_measure_type = fields.Str(validate=validate.Length(max=256))
-    outcome_measure_description = fields.Str()
-    outcome_measure_collection_process = fields.Str()
-    outcome_measure_timepoint = fields.Str()
-    outcome_measure_minimum_difference = fields.Str()
-    outcome_measure_relevance = fields.Str()
+    name = fields.Str(validate=validate.Length(max=256))
+    primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    measure_type = fields.Str(validate=validate.Length(max=256))
+    description = fields.Str()
+    collection_process = fields.Str()
+    timepoint = fields.Str()
+    minimum_difference = fields.Str()
+    relevance = fields.Str()
 
 
 class OtherMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    other_measures_name = fields.Str(validate=validate.Length(max=256))
-    other_measures_measure_type = fields.Str(validate=validate.Length(max=256))
-    other_measures_description = fields.Str()
-    other_measures_collection_process = fields.Str()
+    name = fields.Str(validate=validate.Length(max=256))
+    measure_type = fields.Str(validate=validate.Length(max=256))
+    description = fields.Str()
+    collection_process = fields.Str()
 
 
 class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    processes_standard_name = fields.Str(validate=validate.Length(max=256))
-    processes_standard_conformity = fields.Str(validate=validate.Length(max=10))
-    processes_standard_description = fields.Str()
+    name = fields.Str(validate=validate.Length(max=256))
+    conformity = fields.Str(validate=validate.Length(max=10))
+    description = fields.Str()
 
 
 class DocumentSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    document_title = fields.Str(validate=validate.Length(max=256))
-    document_url = fields.Url(validate=validate.Length(max=512))
-    document_description = fields.Str()
+    title = fields.Str(validate=validate.Length(max=256))
+    url = fields.Url(validate=validate.Length(max=512))
+    description = fields.Str()
     document_types = fields.Raw()
 
 
@@ -226,23 +226,23 @@ class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     event_date_name = fields.Str(validate=validate.Length(max=256))
-    event_date_date = DateAndBlankField()
+    date = DateAndBlankField()
     event_date_type = fields.Str(validate=validate.Length(max=10))
-    event_date_reasons_for_change = fields.Str()
+    reasons_for_change = fields.Str()
 
 
 class LinkOtherServiceSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    links_name_of_service = fields.Str(validate=validate.Length(max=256))
-    links_link_or_identifier = fields.Str(validate=validate.Length(max=256))
+    name_of_service = fields.Str(validate=validate.Length(max=256))
+    link_or_identifier = fields.Str(validate=validate.Length(max=256))
 
 
 class EvaluationCostSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    evaluation_cost_item_name = fields.Str()
-    evaluation_cost_description = fields.Str()
-    evaluation_cost_item_cost = FloatAndBlankField()
-    evaluation_cost_earliest_spend_date = DateAndBlankField()
-    evaluation_cost_latest_spend_date = DateAndBlankField()
+    item_name = fields.Str()
+    description = fields.Str()
+    item_cost = FloatAndBlankField()
+    earliest_spend_date = DateAndBlankField()
+    latest_spend_date = DateAndBlankField()
