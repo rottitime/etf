@@ -60,14 +60,6 @@ def get_page_progress_icon(progress_status):
     return page_progress_icon_dict[progress_status]
 
 
-def get_field_help_text(object_name, field_name):
-    return fields.get_field_help_text(object_name, field_name)
-
-
-def get_field_tooltip_text(object_name, field_name):
-    return fields.get_field_tooltip_text(object_name, field_name)
-
-
 def list_to_options(iterable):
     result = tuple({"value": item[0], "text": item[1]} for item in iterable)
     return result
@@ -95,8 +87,8 @@ def environment(**options):
             "get_page_status_display_name": get_page_status_name,
             "get_page_progress_icon": get_page_progress_icon,
             "list_to_options": list_to_options,
-            "get_field_help_text": get_field_help_text,
-            "get_field_tooltip_text": get_field_tooltip_text,
+            "get_field_help_text": fields.get_field_help_text,
+            "get_field_tooltip_text": fields.get_field_tooltip_text,
         }
     )
     return env
