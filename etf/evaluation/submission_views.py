@@ -135,26 +135,21 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
     return response
 
 
-@login_required
-def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    errors = {}
+def make_summary_related_object_context(evaluation, model_name, form_data):
+    evaluation_id = evaluation.id
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
+    page_statuses = evaluation.page_statuses
     object_name = form_data["object_name"]
     object_name_plural = form_data["object_name_plural"]
-    template_name = form_data["template_name"]
+    summary_url_name = form_data["summary_url_name"]
+    page_url_name = form_data["page_url_name"]
     prev_url_name = form_data["prev_section_url_name"]
     next_url_name = form_data["next_section_url_name"]
-    page_url_name = form_data["page_url_name"]
-    summary_url_name = form_data["summary_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-
-    if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
-
+    errors = {}
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
     data["objects_url_mapping"] = {
@@ -163,6 +158,28 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_url_name
+    return {
+        "title": title,
+        "errors": errors,
+        "data": data,
+        "prev_url": prev_url,
+        "next_url": next_url,
+        "page_order": page_name_and_order,
+        "current_page": summary_url_name,
+        "evaluation_id": evaluation_id,
+        "page_statuses": page_statuses,
+    }
+
+
+@login_required
+def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    template_name = form_data["template_name"]
+    summary_url_name = form_data["summary_url_name"]
+    object_name = form_data["object_name"]
+
+    if request.GET.get("completed"):
+        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
@@ -174,21 +191,8 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
         )
     else:
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
-        response = render(
-            request,
-            template_name,
-            {
-                "title": title,
-                "errors": errors,
-                "data": data,
-                "prev_url": prev_url,
-                "next_url": next_url,
-                "page_order": page_name_and_order,
-                "current_page": summary_url_name,
-                "evaluation_id": evaluation_id,
-                "page_statuses": page_statuses,
-            },
-        )
+        context = make_summary_related_object_context(evaluation, model_name, form_data)
+        response = render(request, template_name, context)
     return response
 
 
