@@ -8,17 +8,17 @@
         <h3>{{title}}</h3>
       </legend>
       </ul>
-      {{macros.input("outcome_measure_name", "Outcome name")}}
-      {{macros.select("outcome_measure_primary_or_secondary", "Primary or secondary",
+      {{macros.input("name", "Outcome name")}}
+      {{macros.select("primary_or_secondary", "Primary or secondary",
         options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
-      {{macros.select("outcome_measure_direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'},
+      {{macros.select("direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'},
         {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----")}}
       {{macros.select_from_list("outcome_measure_measure_type", "Measure type", list=dropdown_choices.measure_type)}}
-      {{macros.textarea("outcome_measure_description", "Description of measure")}}
-      {{macros.textarea("outcome_measure_collection_process", "Collection process")}}
-      {{macros.textarea("outcome_measure_timepoint", "Timepoint(s) of interest")}}
-      {{macros.textarea("outcome_measure_minimum_difference", "Minimum practically important difference")}}
-      {{macros.textarea("outcome_measure_relevance", "Relevance of outcome")}}
+      {{macros.textarea("description", "Description of measure")}}
+      {{macros.textarea("collection_process", "Collection process")}}
+      {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
+      {{macros.textarea("minimum_difference", "Minimum practically important difference")}}
+      {{macros.textarea("relevance", "Relevance of outcome")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>

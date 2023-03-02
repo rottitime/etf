@@ -10,9 +10,9 @@
       <p>
       Enter details of where the evaluation is conforming to a particular standard or where you have adopted a given set of principles.
       </p>
-      {{macros.input("processes_standard_name", "Name of standard")}}
-      {{macros.select_from_list("processes_standard_conformity", "Conformity", list=[("FULL", "Full"), ("PARTIAL", "Partial"), ("NO", "No")])}}
-      {{macros.textarea("processes_standard_description", "Description")}}
+      {{macros.input("name", "Name of standard")}}
+      {{macros.select_from_list("conformity", "Conformity", list=[("FULL", "Full"), ("PARTIAL", "Partial"), ("NO", "No")])}}
+      {{macros.textarea("description", "Description")}}
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
   </form>

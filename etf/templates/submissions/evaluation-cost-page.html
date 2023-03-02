@@ -7,11 +7,11 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>      
-      {{macros.input("evaluation_cost_item_name", "Item name")}}
-      {{macros.textarea("evaluation_cost_description", "Description")}}
-      {{macros.input("evaluation_cost_item_cost", "Item cost (£)")}}
-      {{macros.input("evaluation_cost_earliest_spend_date", "Earliest spend date", type="date")}}
-      {{macros.input("evaluation_cost_latest_spend_date", "Latest spend date", type="date")}}
+      {{macros.input("item_name", "Item name")}}
+      {{macros.textarea("description", "Description")}}
+      {{macros.input("item_cost", "Item cost (£)")}}
+      {{macros.input("earliest_spend_date", "Earliest spend date", type="date")}}
+      {{macros.input("latest_spend_date", "Latest spend date", type="date")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>

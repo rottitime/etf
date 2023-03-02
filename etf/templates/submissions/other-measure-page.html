@@ -7,10 +7,10 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.input("other_measures_name", "Measurement name")}}
-      {{macros.select_from_list("other_measures_measure_type", "Measure type", list=dropdown_choices.measure_type)}}
-      {{macros.textarea("other_measures_description", "Description of measurement")}}
-      {{macros.textarea("other_measures_collection_process", "Collection procedures and timing")}}
+      {{macros.input("name", "Measurement name")}}
+      {{macros.select_from_list("measure_type", "Measure type", list=dropdown_choices.measure_type)}}
+      {{macros.textarea("description", "Description of measurement")}}
+      {{macros.textarea("collection_process", "Collection procedures and timing")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>
