@@ -453,12 +453,8 @@ class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
-    primary_or_secondary = models.CharField(
-        max_length=10, blank=True, null=True, choices=OutcomeType.choices
-    )
-    direct_or_surrogate = models.CharField(
-        max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices
-    )
+    primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
+    direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
     measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
@@ -478,9 +474,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
-    conformity = models.CharField(
-        max_length=10, blank=True, null=True, choices=FullNoPartial.choices
-    )
+    conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
 
 
