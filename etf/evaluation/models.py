@@ -25,6 +25,16 @@ class User(BaseUser, UUIDPrimaryKeyBase):
         super().save(*args, **kwargs)
 
 
+class NamedModel:
+    _name_field = "name"
+
+    def set_name(self, value):
+        setattr(self, self._name_field, value)
+
+    def get_name(self):
+        return getattr(self, self._name_field)
+
+
 class EvaluationTypeOptions(choices.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
@@ -268,7 +278,7 @@ class TimeStampedModel(models.Model):
 
 
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
-class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
+class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     users = models.ManyToManyField(User, related_name="evaluations")
 
     title = models.CharField(max_length=256, blank=True, null=True)
@@ -423,7 +433,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase):
         return f"{self.id} : {self.title}"
 
 
-class Intervention(TimeStampedModel, UUIDPrimaryKeyBase):
+class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
@@ -440,7 +450,7 @@ class Intervention(TimeStampedModel, UUIDPrimaryKeyBase):
     geographical_information = models.TextField(blank=True, null=True)
 
 
-class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
+class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
@@ -453,7 +463,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     relevance = models.TextField(blank=True, null=True)
 
 
-class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
+class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
@@ -461,14 +471,14 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase):
     collection_process = models.TextField(blank=True, null=True)
 
 
-class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase):
+class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
     description = models.TextField(blank=True, null=True)
 
 
-class Document(TimeStampedModel, UUIDPrimaryKeyBase):
+class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
@@ -476,22 +486,28 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase):
     document_types = models.JSONField(default=list)
     # TODO - file upload
 
+    _name_field = "title"
 
-class EventDate(TimeStampedModel, UUIDPrimaryKeyBase):
+
+class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     event_date_name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
     date = models.DateField(blank=True, null=True)
     event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
 
+    _name_field = ""
 
-class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase):
+
+class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
     name_of_service = models.CharField(max_length=256, blank=True, null=True)
     link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
 
+    _name_field = "name_of_service"
 
-class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase):
+
+class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
     item_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -500,3 +516,5 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase):
     latest_spend_date = models.DateField(blank=True, null=True)
     # TODO - add a total cost for eval
     # TODO - add column for notes on evaluation costs
+
+    _name_field = "item_name"
