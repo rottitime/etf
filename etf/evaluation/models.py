@@ -25,6 +25,16 @@ class User(BaseUser, UUIDPrimaryKeyBase):
         super().save(*args, **kwargs)
 
 
+class NamedModel:
+    _name_field = "name"
+
+    def set_name(self, value):
+        setattr(self, self._name_field, value)
+
+    def get_name(self):
+        return getattr(self, self._name_field)
+
+
 class EvaluationTypeOptions(choices.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
