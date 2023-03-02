@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from . import enums, models, schemas
-from .pages import page_name_and_order
+from . import enums, models, pages, schemas
 
 
 @login_required
@@ -42,7 +41,7 @@ def simple_page_view(request, evaluation_id, page_data):
         "next_url": next_url,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "page_order": page_name_and_order,
+        "page_order": pages.page_name_and_order,
         "current_page": page_name,
     }
     evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
@@ -114,7 +113,7 @@ def evaluation_view(request, evaluation_id, page_data):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
-            "page_order": page_name_and_order,
+            "page_order": pages.page_name_and_order,
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
@@ -164,7 +163,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
         "data": data,
         "prev_url": prev_url,
         "next_url": next_url,
-        "page_order": page_name_and_order,
+        "page_order": pages.page_name_and_order,
         "current_page": summary_url_name,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
@@ -696,7 +695,7 @@ def evaluation_overview_view(request, evaluation_id):
     statuses = evaluation.page_statuses
     data = {
         "statuses": statuses,
-        "page_order": page_name_and_order,
+        "page_order": pages.page_name_and_order,
         "evaluation_id": evaluation_id,
     }
     errors = {}
