@@ -7,7 +7,7 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.select_many_from_list("evaluation_type", "Evaluation type", list_vars.evaluation_type,
+      {{macros.select_many_from_list("evaluation_type", "Evaluation type", dropdown_choices.evaluation_type,
         tooltip=["Please specify what type or types of evaluation this is.",
         "Do not use this field to specify the methods used; those are collected separately.",
         "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, please select all types of evaluation that are included.",
