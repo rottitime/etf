@@ -27,24 +27,6 @@ def make_evaluation_url(evaluation_id, page_name):
     return reverse(page_name, args=(evaluation_id,))
 
 
-def get_adjacent_id_for_model(evaluation_id, id, model_name, next_or_prev="next"):
-    """
-    For models with evaluation as foreign key, find the adjacent object
-    sorted by created_at.
-    """
-    model = getattr(models, model_name)
-    adjacent_id = None
-    direction_map = {"next": 1, "prev": -1}
-    related_objects_for_eval = model.objects.filter(evaluation__id=evaluation_id).order_by("created_at")
-    ids = list(related_objects_for_eval.values_list("id", flat=True))
-    num_objects = len(ids)
-    current_index = ids.index(id)
-    adjacent_index = current_index + direction_map[next_or_prev]
-    if 0 <= adjacent_index < num_objects:
-        adjacent_id = ids[adjacent_index]
-    return adjacent_id
-
-
 @login_required
 def simple_page_view(request, evaluation_id, page_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
@@ -67,12 +49,12 @@ def simple_page_view(request, evaluation_id, page_data):
     return render(request, template_name, form_data)
 
 
-def transform_post_data(post_data, multiselect_list_vars):
+def transform_post_data(post_data, multiselect_dropdown_choices):
     """
     Keep lists of variables from request.POST for multiselect fields.
     """
     data = post_data.dict()
-    for var_name in multiselect_list_vars:
+    for var_name in multiselect_dropdown_choices:
         if var_name in post_data:
             data[var_name] = post_data.getlist(var_name)
     return data
@@ -90,9 +72,9 @@ def evaluation_view(request, evaluation_id, page_data):
     errors = {}
     statuses = models.EvaluationStatus.choices
     page_statuses = evaluation.page_statuses
-    multiselect_list_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
+    multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
-    list_vars = {
+    dropdown_choices = {
         "topics": models.Topic.choices,
         "organisations": enums.Organisation.choices,
         "evaluation_type": models.EvaluationTypeOptions.choices,
@@ -108,7 +90,7 @@ def evaluation_view(request, evaluation_id, page_data):
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
-        data = transform_post_data(request.POST, multiselect_list_vars)
+        data = transform_post_data(request.POST, multiple_value_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
@@ -126,7 +108,7 @@ def evaluation_view(request, evaluation_id, page_data):
         template_name,
         {
             "errors": errors,
-            "list_vars": list_vars,
+            "dropdown_choices": dropdown_choices,
             "statuses": statuses,
             "data": data,
             "next_url": next_url,
@@ -229,16 +211,15 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-    list_vars = {"document_types": models.DocumentType.choices}
-    list_vars = {
+    dropdown_choices = {
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
         "event_date_type": models.EventDateType.choices,
         "measure_type": models.MeasureType.choices,
     }
-    list_vars_multiselect = ["document_types"]
+    multiple_value_vars = ["document_types"]
     if request.method == "POST":
-        data = transform_post_data(request.POST, list_vars_multiselect)
+        data = transform_post_data(request.POST, multiple_value_vars)
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
@@ -270,7 +251,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             "current_page": url_names["summary_page"],
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
-            "list_vars": list_vars,
+            "dropdown_choices": dropdown_choices,
         },
     )
 
