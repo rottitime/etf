@@ -174,9 +174,8 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 @login_required
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    template_name = form_data["template_name"]
-    summary_url_name = form_data["summary_url_name"]
     object_name = form_data["object_name"]
+    summary_url_name = form_data["summary_url_name"]
 
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
@@ -190,6 +189,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
             object_name=object_name,
         )
     else:
+        template_name = form_data["template_name"]
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
         context = make_summary_related_object_context(evaluation, model_name, form_data)
         response = render(request, template_name, context)
