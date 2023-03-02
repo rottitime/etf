@@ -195,26 +195,45 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     return response
 
 
-@login_required
-def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
+def make_related_object_context(evaluation_id, title, object_name, summary_url, url_names):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    model = getattr(models, model_name)
-    schema = getattr(schemas, f"{model_name}Schema")
-    obj = model.objects.get(id=id)
-    model_schema = schema(unknown=marshmallow.EXCLUDE)
-    errors = {}
-    data = {}
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
-    data["completed_page"] = url_names["summary_page"]
     page_statuses = evaluation.page_statuses
+    url_names = get_related_object_page_url_names()
     dropdown_choices = {
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
         "event_date_type": models.EventDateType.choices,
         "measure_type": models.MeasureType.choices,
     }
+
+    return {
+        "title": title,
+        "next_url": next_url,
+        "prev_url": prev_url,
+        "object_name": object_name,
+        "summary_url": summary_url,
+        "page_order": pages.page_name_and_order,
+        "current_page": url_names["summary_page"],
+        "evaluation_id": evaluation_id,
+        "page_statuses": page_statuses,
+        "dropdown_choices": dropdown_choices,
+    }
+
+
+@login_required
+def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
+    model = getattr(models, model_name)
+    schema = getattr(schemas, f"{model_name}Schema")
+    obj = model.objects.get(id=id)
+    data = {"evaluation_id": evaluation_id}
+    data["completed_page"] = url_names["summary_page"]
+    errors = {}
+    model_schema = schema(unknown=marshmallow.EXCLUDE)
+    next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
+    summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     multiple_value_vars = ["document_types"]
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
@@ -233,25 +252,9 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    data["evaluation_id"] = evaluation_id
-    return render(
-        request,
-        template_name,
-        {
-            "title": title,
-            "errors": errors,
-            "data": data,
-            "next_url": next_url,
-            "prev_url": prev_url,
-            "object_name": object_name,
-            "summary_url": summary_url,
-            "page_order": page_name_and_order,
-            "current_page": url_names["summary_page"],
-            "evaluation_id": evaluation_id,
-            "page_statuses": page_statuses,
-            "dropdown_choices": dropdown_choices,
-        },
-    )
+    context = make_related_object_context(evaluation_id, title, summary_url, url_names)
+    context = {"errors": errors, "data": data, **context}
+    return render(request, template_name, context)
 
 
 def intro_page_view(request, evaluation_id):
