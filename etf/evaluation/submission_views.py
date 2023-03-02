@@ -72,7 +72,7 @@ def evaluation_view(request, evaluation_id, page_data):
     errors = {}
     statuses = models.EvaluationStatus.choices
     page_statuses = evaluation.page_statuses
-    multiselect_dropdown_choices = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
+    multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
     dropdown_choices = {
         "topics": models.Topic.choices,
@@ -90,7 +90,7 @@ def evaluation_view(request, evaluation_id, page_data):
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
-        data = transform_post_data(request.POST, multiselect_dropdown_choices)
+        data = transform_post_data(request.POST, multiple_value_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
             for field_name in serialized_evaluation:
@@ -211,16 +211,15 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-    dropdown_choices = {"document_types": models.DocumentType.choices}
     dropdown_choices = {
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
         "event_date_type": models.EventDateType.choices,
         "measure_type": models.MeasureType.choices,
     }
-    dropdown_choices_multiselect = ["document_types"]
+    multiple_value_vars = ["document_types"]
     if request.method == "POST":
-        data = transform_post_data(request.POST, dropdown_choices_multiselect)
+        data = transform_post_data(request.POST, multiple_value_vars)
         if "delete" in request.POST:
             obj.delete()
             return redirect(summary_url)
