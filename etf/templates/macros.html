@@ -210,7 +210,7 @@
 {%- endmacro %}
 
 {%- macro field_tooltip_reveal(name) %}
-  {% set tooltip = get_field_tooltip_text(name) %}
+  {% set tooltip = get_field_tooltip_text(object_name, name) %}
   {% if tooltip %}
     <div class="reveal" id="tooltip-modal-{{name}}" data-reveal>
     <button class="close-button" data-close aria-label="Close reveal" type="button">
