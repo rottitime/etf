@@ -1,15 +1,15 @@
-{% extends "base.html" %}
+{% extends "submissions/evaluation-base.html" %}
 {% import 'macros.html' as macros with context %}
 
-{% block content %}
+{% block evaluation_content %}
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
         <h3>{{title}}</h3>
       </legend>
 
-      {{macros.input("name_of_service", "Name of service", short_description="Which service is this an identifier for?")}}
-      {{macros.input("link_or_identifier", "Link or identifier", short_description="What is the link/identifier?")}}
+      {{macros.input("links_name_of_service", "Name of service")}}
+      {{macros.input("links_link_or_identifier", "Link or identifier")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>

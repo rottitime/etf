@@ -7,35 +7,11 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.textarea("studied_population", "Studied population including location(s)",
-        short_description="Description of the population studied including settings and locations where the data are 
-        planned to be collected.", tooltip=[
-        "Enter information on the population studied for the evaluation.",
-        "In the case of some evaluations, this will be an identified group of people who will be allocated to receive 
-        (say) either a novel intervention or business-as-usual.",
-        "In other cases, such as when you are evaluating a policy intervention that has been rolled out to a wide 
-        population and you aim to access administrative data on their outcomes, the studied population of the 
-        evaluation might be all the people whose data is included in the analysis."])}}
-      {{macros.textarea("eligibility_criteria", "Eligibility criteria", short_description="A comprehensive description 
-        of the eligibility criteria used to select the study participants.", tooltip=[
-        "The criteria should be justified and information provided on the degree to which they reflect the typical 
-        population that the intervention would be intended to be offered to if proven effective.",
-        "The results of an evaluation are typically more useful if the participants included in the evaluation are 
-        as similar as possible to the population who would be intended to receive the tested intervention(s) 
-        outside of the evaluation, eg, the people who would receive the intervention if a policy were rolled out.",
-        "Potential participants at substantially elevated risk of adverse outcomes from the intervention being 
-        studied should typically be excluded."])}}
-      {{macros.input("sample_size", "Sample size", short_description="The overall sample size of the evaluation",
-        tooltip=["This will typically be the total number of people included in the evaluation. Provide any 
-        details below."], type="text")}}
-      {{macros.input("sample_size_units", "Sample size units", tooltip=["This will normally be 'people' as each unit 
-        within an evaluation is a person. It can, however, be another unit if the population is of some other type,
-        eg if the results are per-school or similar."])}}
-      {{macros.textarea("sample_size_details", "Sample size details", short_description="Details of the sample size, 
-        including number per arm of the study, and how the sample size was determined.", tooltip=[
-        "If a calculation was used to determine the sample size, identify the primary outcome on which the calculation 
-        was based, all the quantities used in the calculation, and the resulting target sample size per arm.",
-        "Details should be given of any allowance made for attrition or non-compliance during the study."])}}
+      {{macros.textarea("studied_population", "Studied population including location(s)")}}
+      {{macros.textarea("eligibility_criteria", "Eligibility criteria")}}
+      {{macros.input("sample_size", "Sample size")}}
+      {{macros.input("sample_size_units", "Sample size units")}}
+      {{macros.textarea("sample_size_details", "Sample size details")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

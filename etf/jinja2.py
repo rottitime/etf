@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
 
-from etf.evaluation import models, pages
+from etf.evaluation import fields, models, pages
 
 DEFAULT = object()
 
@@ -87,6 +87,8 @@ def environment(**options):
             "get_page_status_display_name": get_page_status_name,
             "get_page_progress_icon": get_page_progress_icon,
             "list_to_options": list_to_options,
+            "get_field_help_text": fields.get_field_help_text,
+            "get_field_tooltip_text": fields.get_field_tooltip_text,
         }
     )
     return env

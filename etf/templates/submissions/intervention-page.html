@@ -7,42 +7,19 @@
       <legend>
         <h3>{{title}}</h3>
       </legend>
-      {{macros.textarea("name", "Intervention name", short_description="",
-        tooltip=["Please provide a name or brief phrase that describes the intervention."])}}
-      {{macros.textarea("brief_description", "Intervention brief descruption",
-        short_description="Brief description of intervention", tooltip=[
-        "Please provide one or two sentences to describe the intervention. 
-        This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."])}}
-      {{macros.textarea("rationale", "Intervention rationale", short_description="Rationale, theory or goals of intervention elements.")}}
-      {{macros.textarea("materials_used", "What: Materials",
-        short_description="Description of physical or informational materials used in the intervention, 
-        including those used in intervention delivery or in training of intervention providers.")}}
-      {{macros.textarea("procedures", "What: Procedures",
-        short_description="Description of each of the procedures, activities and/or processes used in the intervention, 
-        including enabling or supporting activities.")}}
-      {{macros.textarea("provider_description", "Who providing",
-        short_description="Types of providers involved in providing the intervention, plus their skills, training, etc",
-        tooltip=["For each category of intervention provider (e.g. housing officer) description of their expertise, background and any specific training they will receive."])}}
-      {{macros.textarea("modes_of_delivery", "How", short_description="
-        Description of modes of delivery (eg face-to-face, telephone) of the intervention and whether it will be provided individually or in a group.")}}
-      {{macros.textarea("location", "Where", 
-        short_description="Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features.")}}
-      {{macros.textarea("frequency_of_delivery", "When and how much", short_description=
-        "Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, 
-        and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.")}}
-      {{macros.textarea("tailoring", "Tailoring", short_description="
-
-      If the intervention will be personalised or adapted for different participants, description of what, why, when and how.")}}
-      {{macros.textarea("fidelity", "How well (fidelity)", short_description="
-        Describe any strategies used to maintain the extent to which implementation is as-planned, including efforts to improve consistency.",
-        tooltip=["Description of how and by whom intervention fidelity (extent to which implementation is consistent with plan) 
-        will be assessed (if at all), and description of strategies that will be used to maintain or improve fidelity (if any).",
-        "Indicate if efforts will be made to standardise the intervention or if the intervention and its delivery will be 
-        allowed to vary between participants, intervention providers, or study sites."])}}
-      {{macros.textarea("resource_requirements", "Resource requirements", 
-        short_description="Describe extra resources added to (or resources removed from) usual settings in order to implement intervention.")}}
-      {{macros.textarea("geograaphical_information", "Geographical information",
-        short_description="In which actual locations (eg, towns, cities, or regions) will the intervention take place during the evaluation?")}}
+      {{macros.textarea("name", "Intervention name")}}
+      {{macros.textarea("brief_description", "Intervention brief description")}}
+      {{macros.textarea("rationale", "Intervention rationale")}}
+      {{macros.textarea("materials_used", "What: Materials")}}
+      {{macros.textarea("procedures", "What: Procedures")}}
+      {{macros.textarea("provider_description", "Who providing")}}
+      {{macros.textarea("modes_of_delivery", "How")}}
+      {{macros.textarea("location", "Where")}}
+      {{macros.textarea("frequency_of_delivery", "When and how much")}}
+      {{macros.textarea("tailoring", "Tailoring")}}
+      {{macros.textarea("fidelity", "How well (fidelity)")}}
+      {{macros.textarea("resource_requirements", "Resource requirements")}}
+      {{macros.textarea("geographical_information", "Geographical information")}}
 
       {% include "submissions/multiple-objects-page.html" %}
     </fieldset>

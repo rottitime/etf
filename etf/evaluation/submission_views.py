@@ -88,7 +88,7 @@ def evaluation_view(request, evaluation_id, page_data):
         "impact_eval_interpretation_type": models.ImpactEvalInterpretation.choices,
     }
     if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
+        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
         try:
@@ -118,6 +118,7 @@ def evaluation_view(request, evaluation_id, page_data):
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
+            "object_name": page_name,
         },
     )
 
@@ -152,7 +153,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     page_statuses = evaluation.page_statuses
 
     if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("Completed"), models.EvaluationPageStatus.DONE)
+        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
@@ -203,6 +204,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
+    data["completed_page"] = url_names["summary_page"]
     page_statuses = evaluation.page_statuses
     dropdown_choices = {
         "document_types": models.DocumentType.choices,
