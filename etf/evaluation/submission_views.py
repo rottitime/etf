@@ -156,7 +156,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    data["objects"] = {
+    data["objects_url_mapping"] = {
         reverse(page_url_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
     }
     data["object_name"] = object_name
