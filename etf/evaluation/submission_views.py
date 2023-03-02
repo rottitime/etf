@@ -122,12 +122,12 @@ def evaluation_view(request, evaluation_id, page_data):
     )
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, name_field="name", object_name=""):
+def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_name=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     new_object = model(evaluation=evaluation)
     if object_name:
-        setattr(new_object, name_field, f"New {object_name}")
+        new_object.set_name(f"New {object_name}")
     new_object.save()
     response = redirect(reverse(redirect_url_name, args=(evaluation_id,)))
 
@@ -135,7 +135,7 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, na
 
 
 @login_required
-def summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name"):
+def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     errors = {}
     data = {"evaluation_id": evaluation_id}
@@ -156,15 +156,9 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
-    if name_field:
-        all_objects_dictionary = {
-            reverse(page_url_name, args=(evaluation_id, obj.id)): getattr(obj, name_field) for obj in all_objects
-        }
-    else:
-        all_objects_dictionary = {
-            reverse(page_url_name, args=(evaluation_id, obj.id)): object_name for obj in all_objects
-        }
-    data["objects"] = all_objects_dictionary
+    data["objects"] = {
+        reverse(page_url_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
+    }
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_url_name
@@ -176,7 +170,6 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
             model_name=model_name,
             redirect_url_name=summary_url_name,
             object_name=object_name,
-            name_field=name_field,
         )
     else:
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
@@ -665,7 +658,7 @@ def summary_evaluation_costs_page_view(request, evaluation_id):
         "object_name_plural": "evaluation costs",
     }
     model_name = "EvaluationCost"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="item_name")
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
 def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
@@ -716,7 +709,7 @@ def summary_documents_page_view(request, evaluation_id):
         "object_name_plural": "documents",
     }
     model_name = "Document"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="title")
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
 def document_page_view(request, evaluation_id, document_id):
@@ -755,7 +748,7 @@ def summary_links_page_view(request, evaluation_id):
         "object_name_plural": "links",
     }
     model_name = "LinkOtherService"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="name_of_service")
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
 def links_page_view(request, evaluation_id, link_id):
@@ -794,7 +787,7 @@ def summary_event_dates_page_view(request, evaluation_id):
         "object_name_plural": "event dates",
     }
     model_name = "EventDate"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data, name_field="")
+    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
 def event_date_page_view(request, evaluation_id, event_date_id):
