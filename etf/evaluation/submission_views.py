@@ -224,7 +224,7 @@ def make_related_object_context(evaluation_id, title, object_name, summary_url, 
 
 
 @login_required
-def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
+def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
@@ -527,7 +527,6 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
     template_name = "submissions/intervention-page.html"
-    object_name = "intervention"
     url_names = get_related_object_page_url_names("interventions")
     response = related_object_page_view(
         request,
@@ -536,7 +535,6 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -561,8 +559,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
     title = "Outcome measures"
     template_name = "submissions/outcome-measure-page.html"
-
-    object_name = "outcome measure"
     url_names = get_related_object_page_url_names("outcome-measures")
     response = related_object_page_view(
         request,
@@ -571,7 +567,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -596,7 +591,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     model_name = "OtherMeasure"
     title = "Other measures"
     template_name = "submissions/other-measure-page.html"
-    object_name = "other measure"
     url_names = get_related_object_page_url_names("other-measures")
     response = related_object_page_view(
         request,
@@ -605,7 +599,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -630,7 +623,6 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     model_name = "ProcessStandard"
     title = "Processes and standards"
     template_name = "submissions/processes-standard-page.html"
-    object_name = "process or standard"
     url_names = get_related_object_page_url_names("processes-standards")
     response = related_object_page_view(
         request,
@@ -639,7 +631,6 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -664,7 +655,6 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     model_name = "EvaluationCost"
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
-    object_name = "evaluation cost"
     url_names = get_related_object_page_url_names("evaluation-costs")
     response = related_object_page_view(
         request,
@@ -673,7 +663,6 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -710,7 +699,6 @@ def document_page_view(request, evaluation_id, document_id):
     model_name = "Document"
     title = "Document"
     template_name = "submissions/document-page.html"
-    object_name = "document"
     url_names = get_related_object_page_url_names("documents")
     response = related_object_page_view(
         request,
@@ -719,7 +707,6 @@ def document_page_view(request, evaluation_id, document_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -744,7 +731,6 @@ def links_page_view(request, evaluation_id, link_id):
     model_name = "LinkOtherService"
     title = "Link to other service"
     template_name = "submissions/links-page.html"
-    object_name = "link"
     url_names = get_related_object_page_url_names("links")
     response = related_object_page_view(
         request,
@@ -753,7 +739,6 @@ def links_page_view(request, evaluation_id, link_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -778,7 +763,6 @@ def event_date_page_view(request, evaluation_id, event_date_id):
     model_name = "EventDate"
     title = "Event date"
     template_name = "submissions/event-date-page.html"
-    object_name = "event date"
     url_names = get_related_object_page_url_names("event-dates")
     response = related_object_page_view(
         request,
@@ -787,7 +771,6 @@ def event_date_page_view(request, evaluation_id, event_date_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
