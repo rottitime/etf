@@ -90,18 +90,18 @@ object_page_url_names = {
 }
 
 
-def get_next_prev_page_name(page_name):
+def get_prev_next_page_name(page_name):
     assert page_name in page_url_names
     page_index = page_url_names.index(page_name)
     if page_index == 0:
-        next_url_name = None
-    else:
-        next_url_name = page_url_names[page_index - 1]
-    if page_index + 1 == len(page_url_names):
         prev_url_name = None
     else:
-        prev_url_name = page_url_names[page_index + 1]
-    return next_url_name, prev_url_name
+        prev_url_name = page_url_names[page_index - 1]
+    if page_index + 1 == len(page_url_names):
+        next_url_name = None
+    else:
+        next_url_name = page_url_names[page_index + 1]
+    return prev_url_name, next_url_name
 
 
 page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}

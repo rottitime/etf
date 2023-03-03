@@ -513,7 +513,7 @@ def summary_interventions_page_view(request, evaluation_id):
 
 
 def get_related_object_page_url_names(summary_page_name):
-    next_section_url_name, prev_section_url_name = pages.get_next_prev_page_name(summary_page_name)
+    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name)
     url_names = {
         "page": pages.object_page_url_names[summary_page_name],
         "prev_section_url_name": prev_section_url_name,
