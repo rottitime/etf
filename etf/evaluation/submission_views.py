@@ -252,7 +252,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    context = make_related_object_context(evaluation_id, title, summary_url, url_names)
+    context = make_related_object_context(evaluation_id, title, summary_url, template_name, url_names)
     context = {"errors": errors, "data": data, **context}
     return render(request, template_name, context)
 
