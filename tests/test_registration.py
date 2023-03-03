@@ -1,4 +1,5 @@
 from etf.evaluation import models
+
 from . import utils
 
 VALID_USER_EMAIL = "test@example.com"
