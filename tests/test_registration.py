@@ -74,7 +74,7 @@ def test_email_is_invalid_only_domain():
     assert page.has_text("Enter a valid email address.")
 
 
-def test_email_is_invalid_only_domain():
+def test_email_is_invalid_no_domain():
     page = enter_form_data("john.doe@", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
