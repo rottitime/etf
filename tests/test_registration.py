@@ -47,31 +47,38 @@ def test_invalid_password_does_not_match():
 
     assert page.has_text("You must type the same password each time.")
 
-def test_email_is_valid():    
+
+def test_email_is_valid():
     page = enter_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1, True)
 
     assert page.has_text(f"Successfully signed in as {VALID_USER_EMAIL}.")
 
-def test_email_is_invalid_domain_extension():    
+
+def test_email_is_invalid_domain_extension():
     page = enter_form_data("jane.doe@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
-    assert page.has_text("This email domain is not yet supported. Please contact the site admin team if you think this is incorrect.")
+    assert page.has_text(
+        "This email domain is not yet supported. Please contact the site admin team if you think this is incorrect."
+    )
 
 
-def test_email_is_invalid_no_extension():    
+def test_email_is_invalid_no_extension():
     page = enter_form_data("jane.doe@example", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
 
-def test_email_is_invalid_only_domain():    
+
+def test_email_is_invalid_only_domain():
     page = enter_form_data("@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
 
-def test_email_is_invalid_only_domain():    
+
+def test_email_is_invalid_only_domain():
     page = enter_form_data("john.doe@", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
+
 
 def test_user_already_registered():
     user, _ = models.User.objects.get_or_create(email=VALID_USER_EMAIL)
