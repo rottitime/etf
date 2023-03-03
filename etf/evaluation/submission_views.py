@@ -201,7 +201,7 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-    url_names = get_related_object_page_url_names()
+    url_names = get_related_object_page_url_names(url_names["summary_page"])
     dropdown_choices = {
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
