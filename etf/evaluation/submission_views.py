@@ -228,8 +228,6 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
-    data = {"evaluation_id": evaluation_id}
-    data["completed_page"] = url_names["summary_page"]
     errors = {}
     model_schema = schema(unknown=marshmallow.EXCLUDE)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
