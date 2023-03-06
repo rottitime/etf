@@ -156,7 +156,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     }
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
-    data["object_summary_page_name"] = summary_url_name
+    data["object_summary_page_name"] = summary_page_name
     return {
         "title": title,
         "errors": errors,
@@ -164,7 +164,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
         "prev_url": prev_url,
         "next_url": next_url,
         "page_order": pages.page_name_and_order,
-        "current_page": summary_url_name,
+        "current_page": summary_page_name,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
     }
@@ -174,7 +174,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     object_name = form_data["object_name"]
-    summary_url_name = form_data["summary_url_name"]
+    summary_page_name = form_data["summary_page_name"]
 
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
@@ -184,12 +184,12 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
         return add_related_object_for_eval(
             evaluation_id=evaluation_id,
             model_name=model_name,
-            redirect_url_name=summary_url_name,
+            redirect_url_name=summary_page_name,
             object_name=object_name,
         )
     else:
         template_name = form_data["template_name"]
-        evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
+        evaluation.update_evaluation_page_status(summary_page_name, models.EvaluationPageStatus.IN_PROGRESS)
         context = make_summary_related_object_context(evaluation, model_name, form_data)
         response = render(request, template_name, context)
     return response
