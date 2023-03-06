@@ -64,6 +64,7 @@ jobs:
           ROUTE_SERVICE_NAME: ${{ matrix.app }}-route-${{ github.ref_name }}
           PROTECTED_APP_NAME: ${{ matrix.app }}-${{ github.ref_name }}
           ALLOWED_IPS: ${{ steps.get_ips.outputs.ips }}
+          HTPASSWD: ${{ secrets.HTPASSWD }}
         working-directory: ./proxy
         run: |
             ./proxy-deploy.sh
@@ -77,6 +78,7 @@ jobs:
           ROUTE_SERVICE_NAME: ${{ matrix.app }}-route
           PROTECTED_APP_NAME: ${{ matrix.app }}
           ALLOWED_IPS: ${{ steps.get_ips.outputs.ips }}
+          HTPASSWD: ${{ secrets.HTPASSWD }}
         working-directory: ./proxy
         run: |
             ./proxy-deploy.sh
