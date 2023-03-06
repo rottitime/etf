@@ -28,9 +28,11 @@ def make_evaluation_url(evaluation_id, page_name):
 
 @login_required
 def simple_page_view(request, evaluation_id, page_data):
+    page_name = page_data["page_name"]
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
-    next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
+    prev_url = make_evaluation_url(evaluation_id, prev_url_name)
+    next_url = make_evaluation_url(evaluation_id, next_url_name)
     page_name = page_data["page_name"]
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
@@ -60,11 +62,10 @@ def transform_post_data(post_data, multiselect_dropdown_choices):
 
 
 @login_required
-def evaluation_view(request, evaluation_id, page_data):
-    title = page_data["title"]
-    page_name = page_data["page_name"]
-    next_url = make_evaluation_url(evaluation_id, page_data["next_page"])
-    prev_url = make_evaluation_url(evaluation_id, page_data["prev_page"])
+def evaluation_view(request, evaluation_id, page_name, title):
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
+    next_url = make_evaluation_url(evaluation_id, next_url_name)
+    prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = f"submissions/{page_name}.html"
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
@@ -141,7 +142,6 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     object_name_plural = form_data["object_name_plural"]
     summary_page_name = form_data["summary_page_name"]
     url_names = get_related_object_page_url_names(summary_page_name)
-    page_url_name = url_names["page_url_name"]
     prev_url_name = url_names["prev_section_url_name"]
     next_url_name = url_names["next_section_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
@@ -151,7 +151,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
     data["objects_url_mapping"] = {
-        reverse(page_url_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
+        reverse(summary_page_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
     }
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
@@ -248,242 +248,198 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
 
 
 def intro_page_view(request, evaluation_id):
-    page_data = {"title": "Introduction", "page_name": "intro", "prev_page": None, "next_page": "title"}
+    page_data = {"title": "Introduction", "page_name": "intro"}
     return simple_page_view(request, evaluation_id, page_data)
 
 
 def evaluation_title_view(request, evaluation_id):
-    page_data = {"title": "Title", "page_name": "title", "prev_page": "intro", "next_page": "description"}
-    return evaluation_view(request, evaluation_id, page_data)
+    page_data = {"title": "Title", "page_name": "title"}
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_description_view(request, evaluation_id):
     page_data = {
         "title": "Description",
         "page_name": "description",
-        "prev_page": "title",
-        "next_page": "issue-description",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_issue_description_view(request, evaluation_id):
     page_data = {
         "title": "Issue description",
         "page_name": "issue-description",
-        "prev_page": "description",
-        "next_page": "studied-population",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_studied_population_view(request, evaluation_id):
     page_data = {
         "title": "Studied population",
         "page_name": "studied-population",
-        "prev_page": "issue-description",
-        "next_page": "participant-recruitment",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_participant_recruitment(request, evaluation_id):
     page_data = {
         "title": "Participant recruitment",
         "page_name": "participant-recruitment",
-        "prev_page": "studied-population",
-        "next_page": "evaluation-costs",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_costs_view(request, evaluation_id):
     page_data = {
         "title": "Evaluation costs and budget",
         "page_name": "evaluation-costs",
-        "prev_page": "participant-recruitment",
-        "next_page": "policy-costs",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_policy_costs_view(request, evaluation_id):
     page_data = {
         "title": "Policy costs and budget",
         "page_name": "policy-costs",
-        "prev_page": "evaluation-costs",
-        "next_page": "publication-intention",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_publication_intention_view(request, evaluation_id):
     page_data = {
         "title": "Publication intention",
         "page_name": "publication-intention",
-        "prev_page": "policy-costs",
-        "next_page": "documents",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_types_view(request, evaluation_id):
     page_data = {
         "title": "Evaluation types",
         "page_name": "evaluation-types",
-        "prev_page": "event-dates",
-        "next_page": "impact-design",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_impact_eval_design_view(request, evaluation_id):
     page_data = {
         "title": "Impact evaluation design",
         "page_name": "impact-design",
-        "prev_page": "evaluation-types",
-        "next_page": "impact-analysis",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_impact_eval_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Impact evaluation analysis",
         "page_name": "impact-analysis",
-        "prev_page": "impact-design",
-        "next_page": "process-design",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_process_eval_design_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation design",
         "page_name": "process-design",
-        "prev_page": "impact-analysis",
-        "next_page": "process-analysis",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_process_eval_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation analysis",
         "page_name": "process-analysis",
-        "prev_page": "process-design",
-        "next_page": "economic-design",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_economic_eval_design_view(request, evaluation_id):
     page_data = {
         "title": "Economic evaluation design",
         "page_name": "economic-design",
-        "prev_page": "process-analysis",
-        "next_page": "economic-analysis",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_economic_eval_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Economic evaluation analysis",
         "page_name": "economic-analysis",
-        "prev_page": "economic-design",
-        "next_page": "other-design",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_other_eval_design_view(request, evaluation_id):
     page_data = {
         "title": "Other evaluation design",
         "page_name": "other-design",
-        "prev_page": "economic-analysis",
-        "next_page": "other-analysis",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_other_eval_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",
-        "prev_page": "other-design",
-        "next_page": "interventions",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_ethics_view(request, evaluation_id):
     page_data = {
         "title": "Ethical considerations",
         "page_name": "ethics",
-        "prev_page": "other-measures",
-        "next_page": "impact-findings",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_impact_findings_view(request, evaluation_id):
     page_data = {
         "title": "Impact evaluation findings",
         "page_name": "impact-findings",
-        "prev_page": "ethics",
-        "next_page": "economic-findings",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_economic_findings_view(request, evaluation_id):
     page_data = {
         "title": "Economic evaluation findings",
         "page_name": "economic-findings",
-        "prev_page": "impact-findings",
-        "next_page": "process-findings",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_process_findings_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation findings",
         "page_name": "process-findings",
-        "prev_page": "economic-findings",
-        "next_page": "other-findings",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_other_findings_view(request, evaluation_id):
     page_data = {
         "title": "Other evaluation findings",
         "page_name": "other-findings",
-        "prev_page": "process-findings",
-        "next_page": "processes-standards",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_metadata_view(request, evaluation_id):
     page_data = {
         "title": "Metadata",
         "page_name": "metadata",
-        "prev_page": "links",
-        "next_page": "status",
     }
-    return evaluation_view(request, evaluation_id, page_data)
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def evaluation_status_view(request, evaluation_id):
-    page_data = {"title": "Evaluation status", "page_name": "status", "prev_page": "metadata", "next_page": "end"}
-    return evaluation_view(request, evaluation_id, page_data)
+    page_data = {"title": "Evaluation status", "page_name": "status"}
+    return evaluation_view(request, evaluation_id, **page_data)
 
 
 def end_page_view(request, evaluation_id):
-    page_data = {"title": "End", "page_name": "end", "prev_page": "status", "next_page": None}
+    page_data = {"title": "End", "page_name": "end"}
     return simple_page_view(request, evaluation_id, page_data)
 
 
@@ -494,7 +450,7 @@ def summary_interventions_page_view(request, evaluation_id):
         "prev_section_url_name": "other-analysis",
         "next_section_url_name": "outcome-measures",
         "page_url_name": "intervention-page",
-        "summary_url_name": "interventions",
+        "summary_page_name": "interventions",
         "object_name": "intervention",
         "object_name_plural": "interventions",
     }
