@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
@@ -275,6 +276,11 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Event(TimeStampedModel):
+    name = models.CharField(max_length=256)
+    data = models.JSONField(encoder=DjangoJSONEncoder)
 
 
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
