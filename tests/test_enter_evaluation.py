@@ -106,13 +106,36 @@ def test_processes_standards_measure_urls(client):
 
 
 def test_step_through_evaluation():
+    # Setup evaluation
     authenticated_user = {"email": "mr_evaluation_test@example.com", "password": "1-h4t3-p455w0rd-c0mpl3xity-53tt1ng5"}
+    evaluation = models.Evaluation()
+    evaluation.save()
     client = utils.make_testino_client()
     utils.register(client, **authenticated_user)
-    page = client.get("/")
-    print(page)
-    assert page.status_code == 200, page.status_code
-    form = page.get_form("""form[action="/"]""")
-    page = form.submit().follow()
-    assert page.has_text("Enter your evaluation")
-    assert page.status_code == 200, page.status_code
+    intro_page = client.get(f"/evaluation/{evaluation.id}/")
+
+    # Intro page
+    assert intro_page.status_code == 200, intro_page.status_code
+    assert intro_page.has_text("Enter your evaluation")
+    assert intro_page.has_text("Next")
+    # selector = testino.XPath('//a[contains(text(), "Next")]')
+    # Add once figured out how to circumvent `one` having a warning
+    # page.one(selector)
+    title_page = intro_page.click(contains="Next")
+
+    # Title page
+    assert title_page.status_code == 200, title_page.status_code
+    assert title_page.has_text("Title")
+    form = title_page.get_form("""form[action="/"]""")
+    form.set("title", "Test evaluation title")
+    form.set("short_title", "Test evaluation")
+    description_page = form.submit().follow()
+
+    # Description page
+    assert description_page.status_code == 200, description_page.status_code
+    assert description_page.has_text("Description")
+    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
+    assert evaluation.title == "Test evaluation title"
+    assert evaluation.short_title == "Test evaluation"
+
+
