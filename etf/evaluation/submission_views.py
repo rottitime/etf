@@ -141,6 +141,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     object_name = form_data["object_name"]
     object_name_plural = form_data["object_name_plural"]
     summary_page_name = form_data["summary_page_name"]
+    object_page_name = pages.object_page_url_names[summary_page_name]
     url_names = get_related_object_page_url_names(summary_page_name)
     prev_url_name = url_names["prev_section_url_name"]
     next_url_name = url_names["next_section_url_name"]
@@ -151,7 +152,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
     data["objects_url_mapping"] = {
-        reverse(summary_page_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
+        reverse(object_page_name, args=(evaluation_id, obj.id)): obj.get_name() for obj in all_objects
     }
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
