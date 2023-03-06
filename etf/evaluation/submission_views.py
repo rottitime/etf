@@ -134,6 +134,17 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
     return response
 
 
+def get_related_object_page_url_names(summary_page_name):
+    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name)
+    url_names = {
+        "page": pages.object_page_url_names[summary_page_name],
+        "prev_section_url_name": prev_section_url_name,
+        "next_section_url_name": next_section_url_name,
+        "summary_page": summary_page_name,
+    }
+    return url_names
+
+
 def make_summary_related_object_context(evaluation, model_name, form_data):
     evaluation_id = evaluation.id
     data = {"evaluation_id": evaluation_id}
@@ -141,10 +152,11 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     page_statuses = evaluation.page_statuses
     object_name = form_data["object_name"]
     object_name_plural = form_data["object_name_plural"]
-    summary_url_name = form_data["summary_url_name"]
-    page_url_name = form_data["page_url_name"]
-    prev_url_name = form_data["prev_section_url_name"]
-    next_url_name = form_data["next_section_url_name"]
+    summary_page_name = form_data["summary_page_name"]
+    url_names = get_related_object_page_url_names(summary_page_name)
+    page_url_name = url_names["page_url_name"]
+    prev_url_name = url_names["prev_section_url_name"]
+    next_url_name = url_names["next_section_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
@@ -510,17 +522,6 @@ def summary_interventions_page_view(request, evaluation_id):
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
-def get_related_object_page_url_names(summary_page_name):
-    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name)
-    url_names = {
-        "page": pages.object_page_url_names[summary_page_name],
-        "prev_section_url_name": prev_section_url_name,
-        "next_section_url_name": next_section_url_name,
-        "summary_page": summary_page_name,
-    }
-    return url_names
-
-
 def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
@@ -542,10 +543,7 @@ def summary_outcome_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
-        "prev_section_url_name": "interventions",
-        "next_section_url_name": "other-measures",
-        "summary_url_name": "outcome-measures",
-        "page_url_name": "outcome-measure-page",
+        "summary_page_name": "outcome-measures",
         "object_name": "outcome measure",
         "object_name_plural": "outcome measures",
     }
@@ -574,10 +572,7 @@ def summary_other_measure_page_view(request, evaluation_id):
     form_data = {
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
-        "prev_section_url_name": "outcome-measures",
-        "next_section_url_name": "ethics",
-        "summary_url_name": "other-measures",
-        "page_url_name": "other-measure-page",
+        "summary_page_name": "other-measures",
         "object_name": "other measure",
         "object_name_plural": "other measures",
     }
@@ -606,10 +601,7 @@ def summary_processes_standards_page_view(request, evaluation_id):
     form_data = {
         "title": "Processes and standards",
         "template_name": "submissions/processes-standards.html",
-        "prev_section_url_name": "other-findings",
-        "next_section_url_name": "links",
-        "summary_url_name": "processes-standards",
-        "page_url_name": "processes-standard-page",
+        "summary_page_name": "processes-standards",
         "object_name": "process or standard",
         "object_name_plural": "processes and standards",
     }
@@ -638,10 +630,7 @@ def summary_evaluation_costs_page_view(request, evaluation_id):
     form_data = {
         "title": "Evaluation costs and budget",
         "template_name": "submissions/evaluation-costs.html",
-        "prev_section_url_name": "participant-recruitment",
-        "next_section_url_name": "policy-costs",
-        "summary_url_name": "evaluation-costs",
-        "page_url_name": "evaluation-cost-page",
+        "summary_page_name": "evaluation-costs",
         "object_name": "evaluation cost",
         "object_name_plural": "evaluation costs",
     }
@@ -682,10 +671,7 @@ def summary_documents_page_view(request, evaluation_id):
     form_data = {
         "title": "Documents",
         "template_name": "submissions/documents.html",
-        "prev_section_url_name": "publication-intention",
-        "next_section_url_name": "event-dates",
-        "summary_url_name": "documents",
-        "page_url_name": "document-page",
+        "summary_page_name": "documents",
         "object_name": "document",
         "object_name_plural": "documents",
     }
@@ -714,10 +700,7 @@ def summary_links_page_view(request, evaluation_id):
     form_data = {
         "title": "Links to other services",
         "template_name": "submissions/links.html",
-        "prev_section_url_name": "processes-standards",
-        "next_section_url_name": "metadata",
-        "summary_url_name": "links",
-        "page_url_name": "link-page",
+        "summary_page_name": "links",
         "object_name": "link",
         "object_name_plural": "links",
     }
@@ -746,10 +729,7 @@ def summary_event_dates_page_view(request, evaluation_id):
     form_data = {
         "title": "Event dates",
         "template_name": "submissions/event-dates.html",
-        "prev_section_url_name": "documents",
-        "next_section_url_name": "evaluation-types",
-        "summary_url_name": "event-dates",
-        "page_url_name": "event-date-page",
+        "summary_page_name": "event-dates",
         "object_name": "event date",
         "object_name_plural": "event dates",
     }
