@@ -18,7 +18,8 @@ urlpatterns = [
         submission_views.evaluation_overview_view,
         name="evaluation-overview",
     ),
-    path("download-data/", download_views.download_data_view, name="download-data"),
+    path("data-download/", download_views.download_data_view, name="data-download"),
+    path("data-download/json/", download_views.download_json_view, name="data-download-json"),
 ]
 
 api_urlpatterns = [

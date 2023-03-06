@@ -5,18 +5,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def download_json(evaluations_qs):
+@login_required
+def download_json_view(request):
+    visible_qs = Evaluation.objects.exclude(status=EvaluationStatus.DRAFT)
     eval_schema = EvaluationSchema()
-    # TODO - remove this once have figured out how to serialize evals
+    # TODO - remove this once have figured out how to serialize multiple evals
+    evaluations_qs = Evaluation.objects.all()
     x = evaluations_qs.first()
+    print(x)
     data = eval_schema.dumps(x)
-    return data
+    headers = {
+        "Content-Type": "application/json",
+        "Content-Disposition": "attachment; filename='data.json'",
+    }
+    response = HttpResponse(data, headers=headers)
+    return response
 
 
 @login_required
 def download_data_view(request):
     visible_qs = Evaluation.objects.exclude(status=EvaluationStatus.DRAFT)
-    data = download_json(visible_qs)
-    content_type = "application/force-download"
-    response = HttpResponse(data, content_type)
-    return response
+    return render(request, "data-download.html", {})

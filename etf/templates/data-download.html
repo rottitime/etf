@@ -3,7 +3,7 @@
 {% block content %}
   Download all evaluations that are visible to civil servants.
   Note that this is for internal Civil Service use only.
+  [Options for Civil Service and public?]
 
-  <a href="{{ url('data-download')}}" class="button float-right">Download data <i class="bi-caret-right"></i></a>
-
+  <a class="button" type="submit" href="{{url('data-download-json')}}">Download as JSON</a>
 {% endblock %}
