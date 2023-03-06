@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  Download all evaluations that are visible to civil servants.
+  Note that this is for internal Civil Service use only.
+
+  <a href="{{ url('data-download')}}" class="button float-right">Download data <i class="bi-caret-right"></i></a>
+
+{% endblock %}
