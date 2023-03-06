@@ -13,6 +13,12 @@ class GetEvaluationSchema(marshmallow.Schema):
     evaluation_id = marshmallow.fields.UUID()
 
 
+class UpdateEvaluationSchema(marshmallow.Schema):
+    user_id = marshmallow.fields.UUID()
+    evaluation_id = marshmallow.fields.UUID()
+    data = marshmallow.fields.Nested(schemas.EvaluationSchema)
+
+
 class Evaluation(Entity):
     @with_schema(load=CreateEvaluationSchema, dump=schemas.EvaluationSchema)
     @register_event("Evaluation created")
@@ -27,6 +33,15 @@ class Evaluation(Entity):
     @with_schema(load=GetEvaluationSchema, dump=schemas.EvaluationSchema)
     def get(self, user_id, evaluation_id):
         evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
+        return evaluation
+
+    @with_schema(load=UpdateEvaluationSchema, dump=schemas.EvaluationSchema)
+    @register_event("Evaluation updated")
+    def update(self, user_id, evaluation_id, data):
+        evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
+        for key, value in data.items():
+            setattr(evaluation, key, value)
+        evaluation.save()
         return evaluation
 
 

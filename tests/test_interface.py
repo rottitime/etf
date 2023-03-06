@@ -13,3 +13,8 @@ def test_evaluation_facade():
     result = interface.facade.evaluation.get(user_id=user.id, evaluation_id=evaluation_id)
 
     assert result["users"] == expected
+
+    data = {"title": "Flibble", "monetisation_approaches": "Sell, sell, sell"}
+    result = interface.facade.evaluation.update(user_id=user.id, evaluation_id=evaluation_id, data=data)
+    assert result["title"] == "Flibble"
+    assert result["monetisation_approaches"] == "Sell, sell, sell"
