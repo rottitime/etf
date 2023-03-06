@@ -109,7 +109,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
     )
 
 
-def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, object_name=""):
+def add_related_object_for_evaluation(evaluation_id, model_name, redirect_url_name, object_name=""):
     model = getattr(models, model_name)
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     new_object = model(evaluation=evaluation)
@@ -180,7 +180,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
-        return add_related_object_for_eval(
+        return add_related_object_for_evaluation(
             evaluation_id=evaluation_id,
             model_name=model_name,
             redirect_url_name=summary_page_name,
