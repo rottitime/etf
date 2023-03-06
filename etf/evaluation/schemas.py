@@ -49,7 +49,7 @@ class TimeStampedModelSchema(Schema):
 
 class EvaluationSchema(TimeStampedModelSchema):
     # TODO - add more validation esp. for choice fields, around dates
-    users = fields.Function(lambda o: UserSchema(many=True).dump(o.users.all()))
+    users = fields.Nested(UserSchema)
     id = fields.UUID()
     title = fields.Str(required=True, validate=validate.Length(max=256))
     short_title = fields.Str(validate=validate.Length(max=64))
