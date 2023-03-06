@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from etf.evaluation import submission_views, views, download_views
+from etf.evaluation import download_views, submission_views, views
 
 urlpatterns = [
     path("", submission_views.index_view, name="index"),

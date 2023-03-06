@@ -1,8 +1,9 @@
-from etf.evaluation.schemas import EvaluationSchema
-from etf.evaluation.models import Evaluation, EvaluationStatus
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
+
+from etf.evaluation.models import Evaluation, EvaluationStatus
+from etf.evaluation.schemas import EvaluationSchema
 
 
 @login_required
