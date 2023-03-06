@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from . import enums, models, schemas
-from .pages import page_name_and_order
+from . import enums, models, pages, schemas
 
 
 @login_required
@@ -42,7 +41,7 @@ def simple_page_view(request, evaluation_id, page_data):
         "next_url": next_url,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "page_order": page_name_and_order,
+        "page_order": pages.page_name_and_order,
         "current_page": page_name,
     }
     evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
@@ -114,7 +113,7 @@ def evaluation_view(request, evaluation_id, page_data):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
-            "page_order": page_name_and_order,
+            "page_order": pages.page_name_and_order,
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
@@ -135,26 +134,21 @@ def add_related_object_for_eval(evaluation_id, model_name, redirect_url_name, ob
     return response
 
 
-@login_required
-def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    errors = {}
+def make_summary_related_object_context(evaluation, model_name, form_data):
+    evaluation_id = evaluation.id
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
+    page_statuses = evaluation.page_statuses
     object_name = form_data["object_name"]
     object_name_plural = form_data["object_name_plural"]
-    template_name = form_data["template_name"]
+    summary_url_name = form_data["summary_url_name"]
+    page_url_name = form_data["page_url_name"]
     prev_url_name = form_data["prev_section_url_name"]
     next_url_name = form_data["next_section_url_name"]
-    page_url_name = form_data["page_url_name"]
-    summary_url_name = form_data["summary_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
-
-    if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
-
+    errors = {}
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
     data["objects_url_mapping"] = {
@@ -163,6 +157,27 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     data["object_name"] = object_name
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_url_name
+    return {
+        "title": title,
+        "errors": errors,
+        "data": data,
+        "prev_url": prev_url,
+        "next_url": next_url,
+        "page_order": pages.page_name_and_order,
+        "current_page": summary_url_name,
+        "evaluation_id": evaluation_id,
+        "page_statuses": page_statuses,
+    }
+
+
+@login_required
+def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    object_name = form_data["object_name"]
+    summary_url_name = form_data["summary_url_name"]
+
+    if request.GET.get("completed"):
+        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
@@ -173,45 +188,50 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
             object_name=object_name,
         )
     else:
+        template_name = form_data["template_name"]
         evaluation.update_evaluation_page_status(summary_url_name, models.EvaluationPageStatus.IN_PROGRESS)
-        response = render(
-            request,
-            template_name,
-            {
-                "title": title,
-                "errors": errors,
-                "data": data,
-                "prev_url": prev_url,
-                "next_url": next_url,
-                "page_order": page_name_and_order,
-                "current_page": summary_url_name,
-                "evaluation_id": evaluation_id,
-                "page_statuses": page_statuses,
-            },
-        )
+        context = make_summary_related_object_context(evaluation, model_name, form_data)
+        response = render(request, template_name, context)
     return response
 
 
-@login_required
-def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, object_name, url_names):
+def make_related_object_context(evaluation_id, title, object_name, url_names):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    model = getattr(models, model_name)
-    schema = getattr(schemas, f"{model_name}Schema")
-    obj = model.objects.get(id=id)
-    model_schema = schema(unknown=marshmallow.EXCLUDE)
-    errors = {}
-    data = {}
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
-    data["completed_page"] = url_names["summary_page"]
     page_statuses = evaluation.page_statuses
+    url_names = get_related_object_page_url_names(url_names["summary_page"])
     dropdown_choices = {
         "document_types": models.DocumentType.choices,
         "event_date_name": models.EventDateOption.choices,
         "event_date_type": models.EventDateType.choices,
         "measure_type": models.MeasureType.choices,
     }
+
+    return {
+        "title": title,
+        "next_url": next_url,
+        "prev_url": prev_url,
+        "object_name": object_name,
+        "summary_url": summary_url,
+        "page_order": pages.page_name_and_order,
+        "current_page": url_names["summary_page"],
+        "evaluation_id": evaluation_id,
+        "page_statuses": page_statuses,
+        "dropdown_choices": dropdown_choices,
+    }
+
+
+@login_required
+def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
+    model = getattr(models, model_name)
+    schema = getattr(schemas, f"{model_name}Schema")
+    obj = model.objects.get(id=id)
+    errors = {}
+    model_schema = schema(unknown=marshmallow.EXCLUDE)
+    next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
+    summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     multiple_value_vars = ["document_types"]
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
@@ -230,25 +250,9 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    data["evaluation_id"] = evaluation_id
-    return render(
-        request,
-        template_name,
-        {
-            "title": title,
-            "errors": errors,
-            "data": data,
-            "next_url": next_url,
-            "prev_url": prev_url,
-            "object_name": object_name,
-            "summary_url": summary_url,
-            "page_order": page_name_and_order,
-            "current_page": url_names["summary_page"],
-            "evaluation_id": evaluation_id,
-            "page_statuses": page_statuses,
-            "dropdown_choices": dropdown_choices,
-        },
-    )
+    context = make_related_object_context(evaluation_id, title, template_name, url_names)
+    context = {"errors": errors, "data": data, **context}
+    return render(request, template_name, context)
 
 
 def intro_page_view(request, evaluation_id):
@@ -506,17 +510,22 @@ def summary_interventions_page_view(request, evaluation_id):
     return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
 
 
+def get_related_object_page_url_names(summary_page_name):
+    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name)
+    url_names = {
+        "page": pages.object_page_url_names[summary_page_name],
+        "prev_section_url_name": prev_section_url_name,
+        "next_section_url_name": next_section_url_name,
+        "summary_page": summary_page_name,
+    }
+    return url_names
+
+
 def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
     template_name = "submissions/intervention-page.html"
-    object_name = "intervention"
-    url_names = {
-        "page": "intervention-page",
-        "prev_section_url_name": "other-analysis",
-        "next_section_url_name": "outcome-measures",
-        "summary_page": "interventions",
-    }
+    url_names = get_related_object_page_url_names("interventions")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -524,7 +533,6 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -549,14 +557,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
     title = "Outcome measures"
     template_name = "submissions/outcome-measure-page.html"
-
-    object_name = "outcome measure"
-    url_names = {
-        "page": "outcome-measure-page",
-        "prev_section_url_name": "interventions",
-        "next_section_url_name": "other-measures",
-        "summary_page": "outcome-measures",
-    }
+    url_names = get_related_object_page_url_names("outcome-measures")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -564,7 +565,6 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -589,13 +589,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     model_name = "OtherMeasure"
     title = "Other measures"
     template_name = "submissions/other-measure-page.html"
-    object_name = "other measure"
-    url_names = {
-        "page": "other-measure-page",
-        "prev_section_url_name": "outcome-measures",
-        "next_section_url_name": "ethics",
-        "summary_page": "other-measures",
-    }
+    url_names = get_related_object_page_url_names("other-measures")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -603,7 +597,6 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -628,13 +621,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     model_name = "ProcessStandard"
     title = "Processes and standards"
     template_name = "submissions/processes-standard-page.html"
-    object_name = "process or standard"
-    url_names = {
-        "page": "processes-standard-page",
-        "prev_section_url_name": "other-findings",
-        "next_section_url_name": "links",
-        "summary_page": "processes-standards",
-    }
+    url_names = get_related_object_page_url_names("processes-standards")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -642,7 +629,6 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -667,13 +653,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     model_name = "EvaluationCost"
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
-    object_name = "evaluation cost"
-    url_names = {
-        "page": "evaluation-cost-page",
-        "prev_section_url_name": "participant-recruitment",
-        "next_section_url_name": "policy-costs",
-        "summary_page": "evaluation-costs",
-    }
+    url_names = get_related_object_page_url_names("evaluation-costs")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -681,7 +661,6 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -692,7 +671,7 @@ def evaluation_overview_view(request, evaluation_id):
     statuses = evaluation.page_statuses
     data = {
         "statuses": statuses,
-        "page_order": page_name_and_order,
+        "page_order": pages.page_name_and_order,
         "evaluation_id": evaluation_id,
     }
     errors = {}
@@ -718,13 +697,7 @@ def document_page_view(request, evaluation_id, document_id):
     model_name = "Document"
     title = "Document"
     template_name = "submissions/document-page.html"
-    object_name = "document"
-    url_names = {
-        "page": "document-page",
-        "prev_section_url_name": "publication-intention",
-        "next_section_url_name": "event-dates",
-        "summary_page": "documents",
-    }
+    url_names = get_related_object_page_url_names("documents")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -732,7 +705,6 @@ def document_page_view(request, evaluation_id, document_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -757,13 +729,7 @@ def links_page_view(request, evaluation_id, link_id):
     model_name = "LinkOtherService"
     title = "Link to other service"
     template_name = "submissions/links-page.html"
-    object_name = "link"
-    url_names = {
-        "page": "link-page",
-        "prev_section_url_name": "processes-standards",
-        "next_section_url_name": "metadata",
-        "summary_page": "links",
-    }
+    url_names = get_related_object_page_url_names("links")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -771,7 +737,6 @@ def links_page_view(request, evaluation_id, link_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
@@ -796,13 +761,7 @@ def event_date_page_view(request, evaluation_id, event_date_id):
     model_name = "EventDate"
     title = "Event date"
     template_name = "submissions/event-date-page.html"
-    object_name = "event date"
-    url_names = {
-        "page": "event-date-page",
-        "prev_section_url_name": "documents",
-        "next_section_url_name": "evaluation-types",
-        "summary_page": "event-dates",
-    }
+    url_names = get_related_object_page_url_names("event-dates")
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -810,7 +769,6 @@ def event_date_page_view(request, evaluation_id, event_date_id):
         model_name=model_name,
         title=title,
         template_name=template_name,
-        object_name=object_name,
         url_names=url_names,
     )
     return response
