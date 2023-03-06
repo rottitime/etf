@@ -1,8 +1,7 @@
 from nose.tools import with_setup
 
 from etf.evaluation import models
-
-from .utils import with_authenticated_client
+from . import utils
 
 
 def setup_eval():
@@ -30,7 +29,7 @@ def teardown_eval():
     user.delete()
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
 def test_evaluation_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
@@ -46,7 +45,7 @@ def test_evaluation_urls(client):
         assert response.status_code == 200
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
 def test_outcome_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
@@ -61,7 +60,7 @@ def test_outcome_measure_urls(client):
         assert response.status_code == 200
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
 def test_other_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
@@ -76,7 +75,7 @@ def test_other_measure_urls(client):
         assert response.status_code == 200
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
 def test_intervention_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
@@ -91,7 +90,7 @@ def test_intervention_measure_urls(client):
         assert response.status_code == 200
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_eval, teardown_eval)
 def test_processes_standards_measure_urls(client):
     user = models.User.objects.get(email="peter.rabbit@example.com")
@@ -104,3 +103,16 @@ def test_processes_standards_measure_urls(client):
     for url in urls_to_test:
         response = client.get(url)
         assert response.status_code == 200
+
+
+def test_step_through_evaluation():
+    authenticated_user = {"email": "mr_evaluation_test@example.com", "password": "1-h4t3-p455w0rd-c0mpl3xity-53tt1ng5"}
+    client = utils.make_testino_client()
+    utils.register(client, **authenticated_user)
+    page = client.get("/")
+    print(page)
+    assert page.status_code == 200, page.status_code
+    form = page.get_form("""form[action="/"]""")
+    page = form.submit().follow()
+    assert page.has_text("Enter your evaluation")
+    assert page.status_code == 200, page.status_code
