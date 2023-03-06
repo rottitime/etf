@@ -125,15 +125,14 @@
       <div class="cell small-6">
         <a href="{{ prev_url }}" class="button"><i class="bi-caret-left"></i> Back</a>
         {% if id %}
-          <a href="{{ url('evaluation-overview', args=[id]) }}" class="button"><i class="bi-house"></i>
-          Back to evaluation progress</a>
-        {% endif %}
+          <a href="{{ url('evaluation-overview', args=[id]) }}" class="button"><i class="bi-house"></i>Back to evaluation progress</a>
+      {% endif %}
       </div>
       <div class="cell small-6">
         {% if next_url and completed_page %}
-          <a href="{{next_url}}?completed={{completed_page}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
+          <a href="{{next_url}}?completed={{completed_page}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
         {% elif next_url and not completed_page %}
-          <a href="{{next_url}}" class="button float-right">Save and next <i class="bi-caret-right"></i></a>
+          <a href="{{next_url}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
         {% else %}
           <button type="submit" class="button float-right">Save and next <i class="bi-caret-right"></i></button>
         {% endif %}
