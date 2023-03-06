@@ -3,19 +3,18 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from . import models, pages, schemas
+from . import models, pages, schemas, interface
 
 
 @login_required
 def index_view(request):
     if request.method == "POST":
         user = request.user
-        evaluation = models.Evaluation.objects.create()
-        evaluation.users.add(user)
-        evaluation.save()
+        evaluation_data = interface.facade.evaluation.create(user_id=user.id)
+        evaluation_id = evaluation_data['id']
         return redirect(
             intro_page_view,
-            evaluation_id=str(evaluation.id),
+            evaluation_id=evaluation_id,
         )
     return render(request, "index.html")
 
