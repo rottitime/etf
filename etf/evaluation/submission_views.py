@@ -73,19 +73,6 @@ def evaluation_view(request, evaluation_id, page_data):
     page_statuses = evaluation.page_statuses
     multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
-    dropdown_choices = {
-        "topics": models.Topic.choices,
-        "organisations": enums.Organisation.choices,
-        "evaluation_type": models.EvaluationTypeOptions.choices,
-        "economic_eval_type": models.EconomicEvaluationType.choices,
-        "impact_eval_design_name": models.ImpactEvalDesign.choices,
-        "impact_eval_interpretation": models.ImpactEvalInterpretation.choices,
-        "impact_eval_framework": models.ImpactFramework.choices,
-        "impact_eval_basis": models.ImpactAnalysisBasis.choices,
-        "impact_eval_effect_measure_type": models.ImpactMeasureType.choices,
-        "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.choices,
-        "impact_eval_interpretation_type": models.ImpactEvalInterpretation.choices,
-    }
     if request.GET.get("completed"):
         evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
     if request.method == "POST":
@@ -107,7 +94,7 @@ def evaluation_view(request, evaluation_id, page_data):
         template_name,
         {
             "errors": errors,
-            "dropdown_choices": dropdown_choices,
+            "dropdown_choices": models.dropdown_choices,
             "statuses": statuses,
             "data": data,
             "next_url": next_url,
@@ -214,13 +201,6 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation.page_statuses
     url_names = get_related_object_page_url_names(url_names["summary_page"])
-    dropdown_choices = {
-        "document_types": models.DocumentType.choices,
-        "event_date_name": models.EventDateOption.choices,
-        "event_date_type": models.EventDateType.choices,
-        "measure_type": models.MeasureType.choices,
-    }
-
     return {
         "title": title,
         "next_url": next_url,
@@ -231,7 +211,7 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
         "current_page": url_names["summary_page"],
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "dropdown_choices": dropdown_choices,
+        "dropdown_choices": models.dropdown_choices,
     }
 
 

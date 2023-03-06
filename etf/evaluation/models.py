@@ -518,3 +518,22 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # TODO - add column for notes on evaluation costs
 
     _name_field = "item_name"
+
+
+dropdown_choices = {
+        "document_types": models.DocumentType.choices,
+        "economic_eval_type": models.EconomicEvaluationType.choices,
+        "evaluation_type": models.EvaluationTypeOptions.choices,
+        "event_date_name": models.EventDateOption.choices,
+        "event_date_type": models.EventDateType.choices,
+        "impact_eval_basis": models.ImpactAnalysisBasis.choices,
+        "impact_eval_design_name": models.ImpactEvalDesign.choices,
+        "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.choices,
+        "impact_eval_effect_measure_type": models.ImpactMeasureType.choices,
+        "impact_eval_framework": models.ImpactFramework.choices,
+        "impact_eval_interpretation": models.ImpactEvalInterpretation.choices,
+        "impact_eval_interpretation_type": models.ImpactEvalInterpretation.choices,
+        "measure_type": models.MeasureType.choices,
+        "organisations": enums.Organisation.choices,
+        "topics": models.Topic.choices,
+    }
