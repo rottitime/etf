@@ -41,6 +41,7 @@ page_display_names = {
     "links": "Links and IDs",
     "metadata": "Metadata",
     "status": "Evaluation status",
+    "end": "End",
 }
 
 page_url_names = (
@@ -76,6 +77,7 @@ page_url_names = (
     "links",
     "metadata",
     "status",
+    "end",
 )
 
 object_page_url_names = {

@@ -23,3 +23,6 @@ def test_intervention():
 
     form = page.get_form("""#intervention-add-form""")
     page = form.submit().follow()
+
+    assert page.status_code == 200, page.status_code
+    assert page.url.endswith("/interventions/")
