@@ -42,7 +42,7 @@ def is_selected(data, name, value):
 
 
 def is_in(data, name, value):
-    if value in data.get(name):
+    if value in data.get(name, ()):
         return "selected"
     else:
         return ""
