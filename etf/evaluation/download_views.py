@@ -11,16 +11,29 @@ from etf.evaluation.models import Evaluation, EvaluationStatus
 from etf.evaluation.schemas import EvaluationSchema
 
 
+def filter_evaluations_to_download(request):
+    output_evaluations_qs = Evaluation.objects.none()
+    if "civil_service_only" in request.GET:
+        civil_service_evals = Evaluation.objects.filter(status=EvaluationStatus.CIVIL_SERVICE)
+        output_evaluations_qs = output_evaluations_qs | civil_service_evals
+    if "public" in request.GET:
+        public_evals = Evaluation.objects.filter(status=EvaluationStatus.PUBLIC)
+        output_evaluations_qs = output_evaluations_qs | public_evals
+    if "my_evaluations" in request.GET:
+        user = request.user
+        user_evals = user.evaluations.all()
+        output_evaluations_qs = output_evaluations_qs | user_evals
+    return output_evaluations_qs
+
+
 @login_required
 def download_json_view(request):
-    print(request.GET.get("my_evaluations"))
-    print(request.POST.dict())
-    visible_qs = Evaluation.objects.exclude(status=EvaluationStatus.DRAFT)
-    eval_schema = EvaluationSchema()
-    data = eval_schema.dumps(visible_qs, many=True)
+    evaluations_qs = filter_evaluations_to_download(request)
+    evaluation_schema = EvaluationSchema()
+    data = evaluation_schema.dumps(evaluations_qs, many=True)
     headers = {
         "Content-Type": "application/json",
-        "Content-Disposition": "attachment; filename=data.json",
+        "Content-Disposition": "attachment; filename=evaluation-data.json",
     }
     response = HttpResponse(data, headers=headers)
     return response
@@ -28,17 +41,15 @@ def download_json_view(request):
 
 @login_required
 def download_csv_view(request):
-    visible_qs = Evaluation.objects.exclude(status=EvaluationStatus.DRAFT)
-    eval_schema = EvaluationSchema()
-
-    data = eval_schema.dump(visible_qs, many=True)
+    evaluations_qs = filter_evaluations_to_download(request)
+    evaluation_schema = EvaluationSchema()
+    data = evaluation_schema.dump(evaluations_qs, many=True)
     flattened_dict = [flatten(d) for d in data]
     # TODO - this doesn't get data in the format that we want it
     # Also need headers for rows
-
     headers = {
         "Content-Type": "text/csv",
-        "Content-Disposition": "attachment; filename=data.csv",
+        "Content-Disposition": "attachment; filename=evaluation-data.csv",
     }
     response = HttpResponse(headers=headers)
     writer = csv.writer(response)
@@ -48,35 +59,10 @@ def download_csv_view(request):
 
 
 @login_required
-def download_data_view(request, include_my_evals, include_cs_only, include_public, type):
-    visible_statuses_to_include = []
-    if include_cs_only:
-        visible_statuses_to_include.append(EvaluationStatus.CIVIL_SERVICE)
-    elif include_public:
-        visible_statuses_to_include.append(EvaluationStatus.PUBLIC)
-    if include_my_evals:
-        user = request.user
-
-
-@login_required
 def download_page_view(request):
     # TODO - errors, data?
-    type = None
     if "json" in request.GET:
-        type = "json"
+        return redirect(reverse("data-download-json"))
     elif "csv" in request.GET:
-        type = "csv"
-
-    if not type:
-        return render(request, "data-download.html", {"errors": {}, "data": {}})
-
-    include_my_evals = False
-    include_cs = False
-    include_public = False
-    if "my_evaluations" in request.GET:
-        include_my_evals = True
-    if "civil_service_only" in request.GET:
-        include_cs = True
-    if "public" in request.GET:
-        include_public = True
-    return download_data_view(request, include_my_evals, include_cs, include_public, type)
+        return redirect(reverse("data-download-json"))
+    return render(request, "data-download.html", {"errors": {}, "data": {}})
