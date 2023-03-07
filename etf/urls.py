@@ -18,7 +18,7 @@ urlpatterns = [
         submission_views.evaluation_overview_view,
         name="evaluation-overview",
     ),
-    path("data-download/", download_views.download_data_view, name="data-download"),
+    path("data-download/", download_views.download_page_view, name="data-download"),
     path("data-download/json/", download_views.download_json_view, name="data-download-json"),
 ]
 
