@@ -1,6 +1,6 @@
 from nose.tools import with_setup
 
-from etf.evaluation import models, enums
+from etf.evaluation import enums, models
 from . import utils
 
 
@@ -118,334 +118,436 @@ def test_step_through_evaluation():
     assert intro_page.status_code == 200, intro_page.status_code
     assert intro_page.has_text("Enter your evaluation")
     assert intro_page.has_text("Next")
-    # selector = testino.XPath('//a[contains(text(), "Next")]')
-    # Add once figured out how to circumvent `one` having a warning
-    # page.one(selector)
     title_page = intro_page.click(contains="Next")
 
     # Title page
-    assert title_page.status_code == 200, title_page.status_code
-    assert title_page.has_text("Title")
-    title_form = title_page.get_form("""form:not([action])""")
-    title_form["title"] = "Test evaluation title"
-    title_form["short_title"] = "Test evaluation"
-    description_page = title_form.submit().follow()
+    description_page = complete_verify_simple_page(
+        title_page, "Title", {"title": "Test evaluation title", "short_title": "Test evaluation"}, evaluation.id
+    )
 
     # Description page
-    assert description_page.status_code == 200, description_page.status_code
-    assert description_page.has_text("Description")
-    assert description_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.title == "Test evaluation title"
-    assert evaluation.short_title == "Test evaluation"
-    description_form = description_page.get_form("""form:not([action])""")
-    description_form["brief_description"] = "A brief description of the evaluation"
-    description_form["topics"] = [models.Topic.BREXIT.value]
-    description_form["organisations"] = [enums.Organisation.choices[0][0]]
-    issue_description_page = description_form.submit().follow()
+    issue_description_page = complete_verify_simple_page(
+        description_page,
+        "Description",
+        {
+            "brief_description": "A brief description of the evaluation",
+            "topics": [models.Topic.BREXIT.value],
+            "organisations": [enums.Organisation.choices[0][0]],
+        },
+        evaluation.id,
+    )
 
     # Issue description page
-    assert issue_description_page.status_code == 200, issue_description_page.status_code
-    assert issue_description_page.has_text("Issue description")
-    assert issue_description_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.brief_description == "A brief description of the evaluation"
-    assert evaluation.topics == [models.Topic.BREXIT.value]
-    assert evaluation.organisations == [enums.Organisation.choices[0][0]]
-    issue_description_form = issue_description_page.get_form("""form:not([action])""")
-    issue_description_form["issue_description"] = "A brief description of the evaluation issue"
-    issue_description_form["those_experiencing_issue"] = "The people who are experiencing this issue"
-    issue_description_form["why_improvements_matter"] = "A statement about why the improvements matter"
-    issue_description_form["who_improvements_matter_to"] = "A summary of the peoples the improvements matter to"
-    issue_description_form["current_practice"] = "What the current practice is in relation to the issue"
-    issue_description_form["issue_relevance"] = "How relevant is the issue to society"
-    studied_population_page = issue_description_form.submit().follow()
+    studied_population_page = complete_verify_simple_page(
+        issue_description_page,
+        "Issue description",
+        {
+            "issue_description": "A brief description of the evaluation issue",
+            "those_experiencing_issue": "The people who are experiencing this issue",
+            "why_improvements_matter": "A statement about why the improvements matter",
+            "who_improvements_matter_to": "A summary of the peoples the improvements matter to",
+            "current_practice": "What the current practice is in relation to the issue",
+            "issue_relevance": "How relevant is the issue to society",
+        },
+        evaluation.id,
+    )
 
     # Studied population page
-    assert studied_population_page.status_code == 200, studied_population_page.status_code
-    assert studied_population_page.has_text("Issue description")
-    assert studied_population_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.issue_description == "A brief description of the evaluation issue"
-    assert evaluation.those_experiencing_issue == "The people who are experiencing this issue"
-    assert evaluation.why_improvements_matter == "A statement about why the improvements matter"
-    assert evaluation.who_improvements_matter_to == "A summary of the peoples the improvements matter to"
-    assert evaluation.current_practice == "What the current practice is in relation to the issue"
-    assert evaluation.issue_relevance == "How relevant is the issue to society"
-    studied_population_form = studied_population_page.get_form("""form:not([action])""")
-    studied_population_form["studied_population"] = "A brief description of the target population"
-    studied_population_form["eligibility_criteria"] = "The criteria the population have to meet to be included"
-    studied_population_form["sample_size"] = 1000
-    studied_population_form["sample_size_units"] = "A unit of measurement"
-    studied_population_form["sample_size_details"] = "Any details about the same size"
-    participant_recruitment_page = studied_population_form.submit().follow()
+    participant_recruitment_page = complete_verify_simple_page(
+        studied_population_page,
+        "Studied population",
+        {
+            "studied_population": "A brief description of the target population",
+            "eligibility_criteria": "The criteria the population have to meet to be included",
+            "sample_size": 1000,
+            "sample_size_units": "A unit of measurement",
+            "sample_size_details": "Any details about the same size",
+        },
+        evaluation.id,
+    )
 
-    # Studied population page
-    assert participant_recruitment_page.status_code == 200, participant_recruitment_page.status_code
-    assert participant_recruitment_page.has_text("Participant recruitment")
-    assert participant_recruitment_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.studied_population == "A brief description of the target population"
-    assert evaluation.eligibility_criteria == "The criteria the population have to meet to be included"
-    assert evaluation.sample_size == 1000
-    assert evaluation.sample_size_units == "A unit of measurement"
-    assert evaluation.sample_size_details == "Any details about the same size"
-    participant_recruitment_form = participant_recruitment_page.get_form("""form:not([action])""")
-    participant_recruitment_form["process_for_recruitment"] = "A summary of the process for recruitment"
-    participant_recruitment_form["recruitment_schedule"] = "A recruitment schedule"
-    evaluation_cost_page = participant_recruitment_form.submit().follow()
+    # Participant recruitment page
+    evaluation_cost_page = complete_verify_simple_page(
+        participant_recruitment_page,
+        "Participant recruitment",
+        {
+            "process_for_recruitment": "A summary of the process for recruitment",
+            "recruitment_schedule": "A recruitment schedule",
+        },
+        evaluation.id,
+    )
 
-    # Evaluation cost page
-    assert evaluation_cost_page.status_code == 200, evaluation_cost_page.status_code
-    assert evaluation_cost_page.has_text("Evaluation costs and budget")
-    assert evaluation_cost_page.has_text("Next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.process_for_recruitment == "A summary of the process for recruitment"
-    assert evaluation.recruitment_schedule == "A recruitment schedule"
-    add_cost_evaluation_form = evaluation_cost_page.get_form("""form:not([action])""")
-    added_cost_evaluation_page = add_cost_evaluation_form.submit().follow()
-    assert added_cost_evaluation_page.has_text("New evaluation cost")
-    adding_cost_evaluation_page = added_cost_evaluation_page.click(contains="New evaluation cost")
-    assert adding_cost_evaluation_page.has_text("Evaluation costs and budget")
-    assert adding_cost_evaluation_page.has_text("Item cost (£)")
-    adding_cost_evaluation_form = adding_cost_evaluation_page.get_form("""form:not([action])""")
-    adding_cost_evaluation_form["item_name"] = "An example item cost"
-    adding_cost_evaluation_form["description"] = "A description of the expense item"
-    adding_cost_evaluation_form["item_cost"] = 1000
-    adding_cost_evaluation_form["earliest_spend_date"] = "2022-03-07"
-    adding_cost_evaluation_form["latest_spend_date"] = "2022-03-07"
-    evaluation_cost_page = adding_cost_evaluation_form.submit(extra={"return": ""}).follow()
-    assert evaluation_cost_page.has_text("An example item cost")
-    deleting_cost_evaluation_page = evaluation_cost_page.click(contains="An example item cost")
-    deleting_cost_evaluation_form = deleting_cost_evaluation_page.get_form("""form:not([action])""")
-    assert deleting_cost_evaluation_form["item_name"] == "An example item cost"
-    evaluation_cost_page = deleting_cost_evaluation_form.submit(extra={"delete": ""}).follow()
-    assert evaluation_cost_page.has_text("Evaluation costs and budget")
-    assert not evaluation_cost_page.has_text("An example item cost")
-    assert not evaluation_cost_page.has_text("New evaluation cost")
-    policy_costs_page = evaluation_cost_page.click(contains="Next")
+    # Evaluation costs page
+    policy_costs_page = complete_verify_multiple_object_page(
+        evaluation_cost_page,
+        "Evaluation costs and budget",
+        "New evaluation cost",
+        "An example evaluation cost",
+        {
+            "item_name": "An example evaluation cost",
+            "description": "A description of the expense item",
+            "item_cost": str(1000.0),
+            "earliest_spend_date": "2022-03-07",
+            "latest_spend_date": "2022-03-07",
+        },
+        evaluation.id,
+    )
 
-    # Policy costs and budget page
-    assert policy_costs_page.status_code == 200, policy_costs_page.status_code
-    assert policy_costs_page.has_text("Policy costs and budget")
-    assert policy_costs_page.has_text("Save and next")
-    policy_costs_form = policy_costs_page.get_form("""form:not([action])""")
-    publication_intention_page = policy_costs_form.submit().follow()
+    # Policy costs page
+    publication_intention_page = complete_verify_simple_page(
+        policy_costs_page, "Policy costs and budget", {}, evaluation.id
+    )
 
     # Publication intention page
-    assert publication_intention_page.status_code == 200, publication_intention_page.status_code
-    assert publication_intention_page.has_text("Publication intention")
-    assert publication_intention_page.has_text("Save and next")
-    publication_intention_form = publication_intention_page.get_form("""form:not([action])""")
-    documents_page = publication_intention_form.submit().follow()
+    documents_page = complete_verify_simple_page(publication_intention_page, "Publication intention", {}, evaluation.id)
 
     # Documents page
-    assert documents_page.status_code == 200, documents_page.status_code
-    assert documents_page.has_text("Documents")
-    assert documents_page.has_text("Next")
-    add_document_form = documents_page.get_form("""form:not([action])""")
-    added_document_page = add_document_form.submit().follow()
-    assert added_document_page.has_text("New document")
-    adding_document_page = added_document_page.click(contains="New document")
-    assert adding_document_page.has_text("Link to document")
-    assert adding_document_page.has_text("Document type")
-    adding_document_form = adding_document_page.get_form("""form:not([action])""")
-    adding_document_form["title"] = "An example document"
-    adding_document_form["url"] = "https://example.com"
-    adding_document_form["document_types"] = [models.DocumentType.ANALYSIS_CODE.value]
-    adding_document_form["description"] = "A description of an example document"
-    document_page = adding_document_form.submit(extra={"return": ""}).follow()
-    assert document_page.has_text("An example document")
-    deleting_document_page = document_page.click(contains="An example document")
-    deleting_document_page = deleting_document_page.get_form("""form:not([action])""")
-    assert deleting_document_page["title"] == "An example document"
-    document_page = deleting_document_page.submit(extra={"delete": ""}).follow()
-    assert document_page.has_text("Documents")
-    assert not document_page.has_text("An example document")
-    assert not document_page.has_text("New document")
-    event_dates_page = document_page.click(contains="Next")
+    event_dates_page = complete_verify_multiple_object_page(
+        documents_page,
+        "Documents",
+        "New document",
+        "An example document",
+        {
+            "title": "An example document",
+            "url": "https://example.com",
+            "document_types": [models.DocumentType.ANALYSIS_CODE.value],
+            "description": "A description of an example document",
+        },
+        evaluation.id,
+    )
 
     # Event dates page
-    assert event_dates_page.status_code == 200, event_dates_page.status_code
-    assert event_dates_page.has_text("Event dates")
-    assert event_dates_page.has_text("Next")
-    add_event_dates_form = event_dates_page.get_form("""form:not([action])""")
-    added_event_dates_page = add_event_dates_form.submit().follow()
-    assert added_event_dates_page.has_text("New event date")
-    adding_event_dates_page = added_event_dates_page.click(contains="New event date")
-    assert adding_event_dates_page.has_text("Event name")
-    assert adding_event_dates_page.has_text("Intended or actual date")
-    adding_event_dates_form = adding_event_dates_page.get_form("""form:not([action])""")
-    adding_event_dates_form["event_date_name"] = models.EventDateOption.INTERVENTION_END_DATE.value
-    adding_event_dates_form["date"] = "2022-03-07"
-    adding_event_dates_form["event_date_type"] = models.EventDateType.ACTUAL.value
-    adding_event_dates_form["reasons_for_change"] = "A description of the reason for this change"
-    event_dates_page = adding_event_dates_form.submit(extra={"return": ""}).follow()
-    assert event_dates_page.has_text(models.EventDateOption.INTERVENTION_END_DATE.name)
-    deleting_event_dates_page = event_dates_page.click(contains=models.EventDateOption.INTERVENTION_END_DATE.name)
-    deleting_event_dates_page = deleting_event_dates_page.get_form("""form:not([action])""")
-    assert deleting_event_dates_page["event_date_name"] == models.EventDateOption.INTERVENTION_END_DATE.value
-    event_dates_page = deleting_event_dates_page.submit(extra={"delete": ""}).follow()
-    assert event_dates_page.has_text("Event dates")
-    assert not event_dates_page.has_text(models.EventDateOption.INTERVENTION_END_DATE.name)
-    assert not event_dates_page.has_text("New event date")
-    evaluation_types_page = event_dates_page.click(contains="Next")
+    evaluation_types_page = complete_verify_multiple_object_page(
+        event_dates_page,
+        "Event dates",
+        "New event date",
+        models.EventDateOption.INTERVENTION_END_DATE.value,
+        {
+            "event_date_name": models.EventDateOption.INTERVENTION_END_DATE.value,
+            "date": "2022-03-07",
+            "event_date_type": models.EventDateType.ACTUAL.value,
+            "reasons_for_change": "A description of the reason for this change",
+        },
+        evaluation.id,
+    )
 
     # Evaluation types page
-    assert evaluation_types_page.status_code == 200, evaluation_types_page.status_code
-    assert evaluation_types_page.has_text("Evaluation types")
-    assert evaluation_types_page.has_text("Save and next")
-    evaluation_types_form = evaluation_types_page.get_form("""form:not([action])""")
-    evaluation_types_form["evaluation_type"] = [models.EvaluationTypeOptions.ECONOMIC.value]
-    impact_evaluation_design_page = evaluation_types_form.submit().follow()
+    impact_evaluation_design_page = complete_verify_simple_page(
+        evaluation_types_page,
+        "Evaluation types",
+        {
+            "evaluation_type": [models.EvaluationTypeOptions.ECONOMIC.value],
+        },
+        evaluation.id,
+    )
 
     # Impact evaluation design page
-    assert impact_evaluation_design_page.status_code == 200, impact_evaluation_design_page.status_code
-    assert impact_evaluation_design_page.has_text("Impact evaluation design")
-    assert impact_evaluation_design_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.evaluation_type == [models.EvaluationTypeOptions.ECONOMIC.value]
-    impact_evaluation_design_form = impact_evaluation_design_page.get_form("""form:not([action])""")
-    impact_evaluation_design_form["impact_eval_design_name"] = [models.ImpactEvalDesign.REALISE_EVALUATION.value]
-    impact_evaluation_design_form["impact_eval_design_justification"] = "A justification for the design"
-    impact_evaluation_design_form["impact_eval_design_description"] = "A description of the design used"
-    impact_evaluation_design_form["impact_eval_design_features"] = "The main features that the design offers"
-    impact_evaluation_design_form["impact_eval_design_equity"] = "The equity of the design"
-    impact_evaluation_design_form["impact_eval_design_assumptions"] = "The assumptions made based on this design"
-    impact_evaluation_design_form["impact_eval_design_approach_limitations"] = "The limitations of this design approach"
-    impact_evaluation_analysis_page = impact_evaluation_design_form.submit().follow()
+    impact_evaluation_analysis_page = complete_verify_simple_page(
+        impact_evaluation_design_page,
+        "Impact evaluation design",
+        {
+            "impact_eval_design_name": [models.ImpactEvalDesign.REALISE_EVALUATION.value],
+            "impact_eval_design_justification": "A justification for the design",
+            "impact_eval_design_description": "A description of the design used",
+            "impact_eval_design_features": "The main features that the design offers",
+            "impact_eval_design_equity": "The equity of the design",
+            "impact_eval_design_assumptions": "The assumptions made based on this design",
+            "impact_eval_design_approach_limitations": "The limitations of this design approach",
+        },
+        evaluation.id,
+    )
 
-    # Impact analysis page
-    assert impact_evaluation_analysis_page.status_code == 200, impact_evaluation_analysis_page.status_code
-    assert impact_evaluation_analysis_page.has_text("Impact evaluation analysis")
-    assert impact_evaluation_analysis_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.impact_eval_design_name == [models.ImpactEvalDesign.REALISE_EVALUATION.value]
-    assert evaluation.impact_eval_design_justification == "A justification for the design"
-    assert evaluation.impact_eval_design_description == "A description of the design used"
-    assert evaluation.impact_eval_design_features == "The main features that the design offers"
-    assert evaluation.impact_eval_design_equity == "The equity of the design"
-    assert evaluation.impact_eval_design_assumptions == "The assumptions made based on this design"
-    assert evaluation.impact_eval_design_approach_limitations == "The limitations of this design approach"
-    impact_evaluation_analysis_form = impact_evaluation_analysis_page.get_form("""form:not([action])""")
-    impact_evaluation_analysis_form["impact_eval_framework"] = models.ImpactFramework.EQUIVALENCE.value
-    impact_evaluation_analysis_form["impact_eval_basis"] = models.ImpactAnalysisBasis.INTENTION_TO_TREAT.value
-    impact_evaluation_analysis_form["impact_eval_analysis_set"] = "Analysis set"
-    impact_evaluation_analysis_form["impact_eval_effect_measure_type"] = models.ImpactMeasureType.ABSOLUTE.value
-    impact_evaluation_analysis_form["impact_eval_primary_effect_size_measure"] = "Primary effect size measure"
-    impact_evaluation_analysis_form["impact_eval_effect_measure_interval"] = models.ImpactMeasureInterval.BAYESIAN.value
-    impact_evaluation_analysis_form["impact_eval_primary_effect_size_desc"] = "A description of the primary effect size measure"
-    impact_evaluation_analysis_form["impact_eval_interpretation_type"] = models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value
-    impact_evaluation_analysis_form["impact_eval_sensitivity_analysis"] = "The sensitivity analysis"
-    impact_evaluation_analysis_form["impact_eval_subgroup_analysis"] = "A subgroup analysis"
-    impact_evaluation_analysis_form["impact_eval_missing_data_handling"] = "A summary of missing data handling"
-    impact_evaluation_analysis_form["impact_eval_fidelity"] = "YES"
-    impact_evaluation_analysis_form["impact_eval_desc_planned_analysis"] = "The planned analysis of the impact"
-    process_evaluation_design_page = impact_evaluation_analysis_form.submit().follow()
+    # Impact evaluation analysis page
+    process_evaluation_design_page = complete_verify_simple_page(
+        impact_evaluation_analysis_page,
+        "Impact evaluation analysis",
+        {
+            "impact_eval_framework": models.ImpactFramework.EQUIVALENCE.value,
+            "impact_eval_basis": models.ImpactAnalysisBasis.INTENTION_TO_TREAT.value,
+            "impact_eval_analysis_set": "Analysis set",
+            "impact_eval_effect_measure_type": models.ImpactMeasureType.ABSOLUTE.value,
+            "impact_eval_primary_effect_size_measure": "Primary effect size measure",
+            "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.BAYESIAN.value,
+            "impact_eval_primary_effect_size_desc": "A description of the primary effect size measure",
+            "impact_eval_interpretation_type": models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+            "impact_eval_sensitivity_analysis": "The sensitivity analysis",
+            "impact_eval_subgroup_analysis": "A subgroup analysis",
+            "impact_eval_missing_data_handling": "A summary of missing data handling",
+            "impact_eval_fidelity": "YES",
+            "impact_eval_desc_planned_analysis": "The planned analysis of the impact",
+        },
+        evaluation.id,
+    )
 
     # Process evaluation design page
-    assert process_evaluation_design_page.status_code == 200, process_evaluation_design_page.status_code
-    assert process_evaluation_design_page.has_text("Process evaluation design")
-    assert process_evaluation_design_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.impact_eval_framework == models.ImpactFramework.EQUIVALENCE.value
-    assert evaluation.impact_eval_basis == models.ImpactAnalysisBasis.INTENTION_TO_TREAT.value
-    assert evaluation.impact_eval_analysis_set == "Analysis set"
-    assert evaluation.impact_eval_effect_measure_type == models.ImpactMeasureType.ABSOLUTE.value
-    assert evaluation.impact_eval_primary_effect_size_measure == "Primary effect size measure"
-    assert evaluation.impact_eval_effect_measure_interval == models.ImpactMeasureInterval.BAYESIAN.value
-    assert evaluation.impact_eval_primary_effect_size_desc == "A description of the primary effect size measure"
-    assert evaluation.impact_eval_interpretation_type == models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value
-    assert evaluation.impact_eval_sensitivity_analysis == "The sensitivity analysis"
-    assert evaluation.impact_eval_subgroup_analysis == "A subgroup analysis"
-    assert evaluation.impact_eval_missing_data_handling == "A summary of missing data handling"
-    assert evaluation.impact_eval_fidelity == "YES"
-    assert evaluation.impact_eval_desc_planned_analysis == "The planned analysis of the impact"
-    process_evaluation_design_form = process_evaluation_design_page.get_form("""form:not([action])""")
-    process_evaluation_analysis_page = process_evaluation_design_form.submit().follow()
+    process_evaluation_analysis_page = complete_verify_simple_page(
+        process_evaluation_design_page, "Process evaluation design", {}, evaluation.id
+    )
 
     # Process evaluation analysis page
-    assert process_evaluation_analysis_page.status_code == 200, process_evaluation_analysis_page.status_code
-    assert process_evaluation_analysis_page.has_text("Process evaluation analysis")
-    assert process_evaluation_analysis_page.has_text("Save and next")
-    process_evaluation_analysis_form = process_evaluation_analysis_page.get_form("""form:not([action])""")
-    process_evaluation_analysis_form["process_eval_analysis_description"] = "A description about the process evaluation description"
-    economic_design_page = process_evaluation_analysis_form.submit().follow()
+    economic_design_page = complete_verify_simple_page(
+        process_evaluation_analysis_page,
+        "Process evaluation analysis",
+        {
+            "process_eval_analysis_description": "A description about the process evaluation description",
+        },
+        evaluation.id,
+    )
 
     # Economic design page
-    assert economic_design_page.status_code == 200, economic_design_page.status_code
-    assert economic_design_page.has_text("Economic evaluation design")
-    assert economic_design_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.process_eval_analysis_description == "A description about the process evaluation description"
-    economic_design_form = economic_design_page.get_form("""form:not([action])""")
-    economic_design_form["economic_eval_type"] = models.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value
-    economic_design_form["perspective_costs"] = "The perspective costs of the evaluation"
-    economic_design_form["perspective_benefits"] = "The benefits associated with the evaluation"
-    economic_design_form["monetisation_approaches"] = "The approach to monetisation"
-    economic_design_form["economic_eval_design_details"] = "Any details about the economic evaluation design"
-    economic_analysis_page = economic_design_form.submit().follow()
+    economic_analysis_page = complete_verify_simple_page(
+        economic_design_page,
+        "Economic evaluation design",
+        {
+            "economic_eval_type": models.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value,
+            "perspective_costs": "The perspective costs of the evaluation",
+            "perspective_benefits": "The benefits associated with the evaluation",
+            "monetisation_approaches": "The approach to monetisation",
+            "economic_eval_design_details": "Any details about the economic evaluation design",
+        },
+        evaluation.id,
+    )
 
     # Economic analysis page
-    assert economic_analysis_page.status_code == 200, economic_analysis_page.status_code
-    assert economic_analysis_page.has_text("Economic evaluation analysis")
-    assert economic_analysis_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.economic_eval_type == models.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value
-    assert evaluation.perspective_costs == "The perspective costs of the evaluation"
-    assert evaluation.perspective_benefits == "The benefits associated with the evaluation"
-    assert evaluation.monetisation_approaches == "The approach to monetisation"
-    assert evaluation.economic_eval_design_details == "Any details about the economic evaluation design"
-    economic_analysis_form = economic_analysis_page.get_form("""form:not([action])""")
-    economic_analysis_form["economic_eval_analysis_description"] = "Description of the economic analysis"
-    other_design_page = economic_analysis_form.submit().follow()
+    other_design_page = complete_verify_simple_page(
+        economic_analysis_page,
+        "Economic evaluation design",
+        {"economic_eval_analysis_description": "Description of the economic analysis"},
+        evaluation.id,
+    )
 
     # Other design page
-    assert other_design_page.status_code == 200, other_design_page.status_code
-    assert other_design_page.has_text("Economic evaluation analysis")
-    assert other_design_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.economic_eval_analysis_description == "Description of the economic analysis"
-    other_design_form = other_design_page.get_form("""form:not([action])""")
-    other_design_form["other_eval_design_type"] = "The other evaluation design type"
-    other_design_form["other_eval_design_details"] = "A description of the other design type"
-    other_analysis_page = other_design_form.submit().follow()
+    other_analysis_page = complete_verify_simple_page(
+        other_design_page,
+        "Other evaluation design",
+        {
+            "other_eval_design_type": "The other evaluation design type",
+            "other_eval_design_details": "A description of the other design type",
+        },
+        evaluation.id,
+    )
 
     # Other analysis page
-    assert other_analysis_page.status_code == 200, other_analysis_page.status_code
-    assert other_analysis_page.has_text("Economic evaluation analysis")
-    assert other_analysis_page.has_text("Save and next")
-    evaluation = models.Evaluation.objects.get(pk=evaluation.id)
-    assert evaluation.other_eval_design_type == "The other evaluation design type"
-    assert evaluation.other_eval_design_details == "A description of the other design type"
-    other_analysis_form = other_analysis_page.get_form("""form:not([action])""")
-    other_analysis_form["other_eval_analysis_description"] = "A description of the other analysis"
-    interventions_page = other_analysis_form.submit().follow()
+    interventions_page = complete_verify_simple_page(
+        other_analysis_page,
+        "Other evaluation analysis",
+        {
+            "other_eval_analysis_description": "A description of the other analysis",
+        },
+        evaluation.id,
+    )
 
     # Interventions page
-    assert interventions_page.status_code == 200, interventions_page.status_code
-    assert interventions_page.has_text("Interventions")
-    assert interventions_page.has_text("Next")
-    add_interventions_form = interventions_page.get_form("""form:not([action])""")
-    added_intervention_page = add_interventions_form.submit().follow()
-    assert added_intervention_page.has_text("New intervention")
-    
-    adding_event_dates_page = added_event_dates_page.click(contains="New event date")
-    assert adding_event_dates_page.has_text("Event name")
-    assert adding_event_dates_page.has_text("Intended or actual date")
-    adding_event_dates_form = adding_event_dates_page.get_form("""form:not([action])""")
-    adding_event_dates_form["event_date_name"] = models.EventDateOption.INTERVENTION_END_DATE.value
-    adding_event_dates_form["date"] = "2022-03-07"
-    adding_event_dates_form["event_date_type"] = models.EventDateType.ACTUAL.value
-    adding_event_dates_form["reasons_for_change"] = "A description of the reason for this change"
-    event_dates_page = adding_event_dates_form.submit(extra={"return": ""}).follow()
-    assert event_dates_page.has_text(models.EventDateOption.INTERVENTION_END_DATE.name)
-    deleting_event_dates_page = event_dates_page.click(contains=models.EventDateOption.INTERVENTION_END_DATE.name)
-    deleting_event_dates_page = deleting_event_dates_page.get_form("""form:not([action])""")
-    assert deleting_event_dates_page["event_date_name"] == models.EventDateOption.INTERVENTION_END_DATE.value
-    event_dates_page = deleting_event_dates_page.submit(extra={"delete": ""}).follow()
-    assert event_dates_page.has_text("Event dates")
-    assert not event_dates_page.has_text(models.EventDateOption.INTERVENTION_END_DATE.name)
-    assert not event_dates_page.has_text("New event date")
-    evaluation_types_page = event_dates_page.click(contains="Next")
+    outcome_measure_page = complete_verify_multiple_object_page(
+        interventions_page,
+        "Interventions",
+        "New intervention",
+        "Intervention name",
+        {
+            "name": "Intervention name",
+            "brief_description": "A brief description of the intervention",
+            "rationale": "The rationale behind the intervention",
+            "materials_used": "The materials to be used in the intervention",
+            "procedures": "The procedures to be used in the intervention",
+            "provider_description": "A description of the provider of the intervention",
+            "modes_of_delivery": "The modes of delivery used in the intervention",
+            "location": "The location to be used for the intervention",
+            "frequency_of_delivery": "The frequency of delivery for the intervention",
+            "tailoring": "How is the intervention tailored to suit the needs",
+            "fidelity": "The fidelity of the intervention",
+            "resource_requirements": "The requirements for this intervention in resource costs",
+            "geographical_information": "Any geographical information relevant to this intervention",
+        },
+        evaluation.id,
+    )
 
+    # Outcome measures page
+    other_measure_page = complete_verify_multiple_object_page(
+        outcome_measure_page,
+        "Outcome measures",
+        "New outcome measure",
+        "Outcome measure name",
+        {
+            "name": "Outcome measure name",
+            "primary_or_secondary": "PRIMARY",
+            "direct_or_surrogate": "DIRECT",
+            "measure_type": models.MeasureType.BINARY.value,
+            "description": "The description of the outcome measure",
+            "collection_process": "The collection process for this outcome measure",
+            "timepoint": "The process timings of interest",
+            "minimum_difference": "The minimum practically important difference",
+            "relevance": "The relevance of this outcome measure",
+        },
+        evaluation.id,
+    )
+
+    # Other measures page
+    ethics_page = complete_verify_multiple_object_page(
+        other_measure_page,
+        "Other measures",
+        "New other measure",
+        "Other measure name",
+        {
+            "name": "Other measure name",
+            "measure_type": models.MeasureType.BINARY.value,
+            "description": "A description of the other measure",
+            "collection_process": "The process of collection and timings",
+        },
+        evaluation.id,
+    )
+
+    # Ethics page
+    impact_evaluation_findings_page = complete_verify_simple_page(
+        ethics_page,
+        "Ethics",
+        {
+            "ethics_committee_approval": "YES",
+            "ethics_committee_details": "Details about the ethical committee",
+            "ethical_state_given_existing_evidence_base": "Ethical state of study given existing evidence base",
+            "risks_to_participants": "The risks to participants of the evaluation",
+            "risks_to_study_team": "The risks to the team carrying out the evaluation",
+            "participant_involvement": "The involvement of those taking part in the evaluation",
+            "participant_consent": "What consent has obtained from the participants",
+            "participant_information": "Information about the participants of this evaluation",
+            "participant_payment": "Any payment the participants are receiving for taking part in the evaluation",
+            "confidentiality_and_personal_data": "Details about the confidentiality of participant data",
+            "breaking_confidentiality": "Information on what happens if confidentiality is broken",
+            "other_ethical_information": "Any other notes about ethical topics relating to this evaluation",
+        },
+        evaluation.id,
+    )
+
+    # Impact evaluation findings page
+    economic_evaluation_findings_page = complete_verify_simple_page(
+        impact_evaluation_findings_page,
+        "Impact evaluation findings",
+        {
+            "impact_eval_comparison": "An evaluation comparison",
+            "impact_eval_outcome": "The outcome of the evaluation findings",
+            "impact_eval_interpretation": models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+            "impact_eval_point_estimate_diff": "The point estimate difference of the evaluation findings",
+            "impact_eval_lower_uncertainty": "The lower uncertainty of the evaluation findings",
+            "impact_eval_upper_uncertainty": "The upper uncertainty of the evaluation findings",
+        },
+        evaluation.id,
+    )
+
+    # Economic evaluation findings page
+    process_evaluation_findings_page = complete_verify_simple_page(
+        economic_evaluation_findings_page,
+        "Economic evaluation findings",
+        {
+            "economic_eval_summary_findings": "A summary of the economic findings of the evaluation",
+            "economic_eval_findings": "The findings of the evaluation",
+        },
+        evaluation.id,
+    )
+
+    # Process evaluation findings page
+    other_evaluation_findings_page = complete_verify_simple_page(
+        process_evaluation_findings_page,
+        "Process evaluation findings",
+        {
+            "process_eval_summary_findings": "The summary process findings of the evaluation",
+            "process_eval_findings": "The process findings of the evaluation",
+        },
+        evaluation.id,
+    )
+
+    # Other evaluation findings page
+    process_and_standards_page = complete_verify_simple_page(
+        other_evaluation_findings_page,
+        "Other evaluation findings",
+        {
+            "other_eval_summary_findings": "The summary other findings of the evaluation",
+            "other_eval_findings": "The other findings of the evaluation",
+        },
+        evaluation.id,
+    )
+
+    # Processes standards page
+    link_page = complete_verify_multiple_object_page(
+        process_and_standards_page,
+        "Processes and standards",
+        "New process or standard",
+        "New example process standard",
+        {
+            "name": "New example process standard",
+            "conformity": "FULL",
+            "description": "A description of the process or standard",
+        },
+        evaluation.id,
+    )
+
+    # Links page
+    metadata_page = complete_verify_multiple_object_page(
+        link_page,
+        "Links to other service",
+        "New link",
+        "New example link",
+        {
+            "name_of_service": "New example link",
+            "link_or_identifier": "https://example.com",
+        },
+        evaluation.id,
+    )
+
+    # Metadata page
+    status_page = complete_verify_simple_page(metadata_page, "Metadata", {}, evaluation.id)
+
+    # Status page
+    end_page = complete_verify_simple_page(
+        status_page,
+        "Evaluation status",
+        {
+            "status": models.EvaluationStatus.CIVIL_SERVICE.value,
+        },
+        evaluation.id,
+    )
+
+    # End page
+    assert end_page.status_code == 200, end_page.status_code
+    assert end_page.has_text("End")
+    assert not end_page.has_text("Save and next")
+    assert not end_page.has_text("Next")
+
+
+def complete_verify_simple_page(page, title, fields, evaluation_id):
+    assert page.status_code == 200, page.status_code
+    assert page.has_text(title)
+    assert page.has_text("Save and next")
+    form = page.get_form("""form:not([action])""")
+    for field in fields:
+        form[field] = fields[field]
+    next_page = form.submit().follow()
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    for field in fields:
+        assert evaluation.__getattribute__(field) == fields[field]
+    return next_page
+
+
+def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields, evaluation_id):
+    assert page.status_code == 200, page.status_code
+    assert page.has_text(title)
+    assert page.has_text("Next")
+    add_item_form = page.get_form("""form:not([action])""")
+    object_added_to_records_page = add_item_form.submit().follow()
+    assert object_added_to_records_page.has_text(new_item_name)
+    editing_new_object_page = object_added_to_records_page.click(contains=new_item_name)
+    adding_new_item_form = editing_new_object_page.get_form("""form:not([action])""")
+    for field in fields:
+        adding_new_item_form[field] = fields[field]
+    object_added_summary_page = adding_new_item_form.submit(extra={"return": ""}).follow()
+    assert object_added_summary_page.has_text(added_item_name)
+    deleting_object_page = object_added_summary_page.click(contains=added_item_name)
+    deleting_object_form = deleting_object_page.get_form("""form:not([action])""")
+    for field in fields:
+        if isinstance(fields[field], list):
+            assert deleting_object_form[field].__eq__(fields[field])
+        else:
+            assert deleting_object_form[field] == fields[field]
+    object_deleted_summary_page = deleting_object_form.submit(extra={"delete": ""}).follow()
+    assert object_deleted_summary_page.has_text(title)
+    assert not object_deleted_summary_page.has_text(new_item_name)
+    assert not object_deleted_summary_page.has_text(added_item_name)
+    return object_deleted_summary_page.click(contains="Next")
