@@ -1,6 +1,7 @@
 from nose.tools import with_setup
 
 from etf.evaluation import enums, models
+
 from . import utils
 
 
