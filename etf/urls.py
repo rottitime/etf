@@ -19,8 +19,6 @@ urlpatterns = [
         name="evaluation-overview",
     ),
     path("data-download/", download_views.download_page_view, name="data-download"),
-    path("data-download/json/", download_views.download_json_view, name="data-download-json"),
-    path("data-download/csv/", download_views.download_csv_view, name="data-download-csv"),
 ]
 
 api_urlpatterns = [
