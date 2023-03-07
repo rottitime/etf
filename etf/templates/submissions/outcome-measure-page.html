@@ -13,7 +13,7 @@
         options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
       {{macros.select("direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'},
         {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----")}}
-      {{macros.select_from_list("outcome_measure_measure_type", "Measure type", list=dropdown_choices.measure_type)}}
+      {{macros.select_from_list("measure_type", "Measure type", list=dropdown_choices.measure_type)}}
       {{macros.textarea("description", "Description of measure")}}
       {{macros.textarea("collection_process", "Collection process")}}
       {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
