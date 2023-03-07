@@ -1,3 +1,4 @@
+dicttoxml
 django<3.3
 django-allauth
 django-environ
