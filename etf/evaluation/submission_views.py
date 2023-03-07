@@ -29,13 +29,14 @@ def make_evaluation_url(evaluation_id, page_name):
 def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    user = request.user
+    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     page_name = page_data["page_name"]
     template_name = f"submissions/{page_name}.html"
     title = page_data["title"]
-    page_statuses = evaluation.page_statuses
+    page_statuses = evaluation["page_statuses"]
     form_data = {
         "title": title,
         "prev_url": prev_url,
@@ -45,7 +46,9 @@ def simple_page_view(request, evaluation_id, page_data):
         "page_order": pages.page_name_and_order,
         "current_page": page_name,
     }
-    evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
+    interface.facade.evaluation.update_page_status(
+        user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+    )
     return render(request, template_name, form_data)
 
 
@@ -66,29 +69,37 @@ def evaluation_view(request, evaluation_id, page_name, title):
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = f"submissions/{page_name}.html"
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    user = request.user
+    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     statuses = models.EvaluationStatus.choices
-    page_statuses = evaluation.page_statuses
+    page_statuses = evaluation["page_statuses"]
     multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
     if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+        )
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
-            for field_name in serialized_evaluation:
-                setattr(evaluation, field_name, serialized_evaluation[field_name])
-            evaluation.save()
-            evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.DONE)
-            return redirect(next_url)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
+        else:
+            interface.facade.evaluation.update(user.id, evaluation_id, serialized_evaluation)
+            interface.facade.evaluation.update_page_status(
+                user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+            )
+            return redirect(next_url)
+
     else:
-        evaluation.update_evaluation_page_status(page_name, models.EvaluationPageStatus.IN_PROGRESS)
-        data = eval_schema.dump(evaluation)
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.IN_PROGRESS.name
+        )
+        data = evaluation
+    print(f"{data=}")
     return render(
         request,
         template_name,
@@ -111,8 +122,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
 
 def add_related_object_for_evaluation(evaluation_id, model_name, redirect_url_name, object_name=""):
     model = getattr(models, model_name)
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    new_object = model(evaluation=evaluation)
+    new_object = model(evaluation_id=evaluation_id)
     if object_name:
         new_object.set_name(f"New {object_name}")
     new_object.save()
@@ -133,10 +143,10 @@ def get_related_object_page_url_names(summary_page_name):
 
 
 def make_summary_related_object_context(evaluation, model_name, form_data):
-    evaluation_id = evaluation.id
+    evaluation_id = evaluation["id"]
     data = {"evaluation_id": evaluation_id}
     title = form_data["title"]
-    page_statuses = evaluation.page_statuses
+    page_statuses = evaluation["page_statuses"]
     object_name = form_data["object_name"]
     object_name_plural = form_data["object_name_plural"]
     summary_page_name = form_data["summary_page_name"]
@@ -146,7 +156,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     next_url_name = url_names["next_section_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
     next_url = reverse(next_url_name, args=(evaluation_id,))
-    page_statuses = evaluation.page_statuses
+    page_statuses = evaluation["page_statuses"]
     errors = {}
     related_model = getattr(models, model_name)
     all_objects = related_model.objects.filter(evaluation__id=evaluation_id)
@@ -171,12 +181,16 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 
 @login_required
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    user = request.user
+    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     object_name = form_data["object_name"]
     summary_page_name = form_data["summary_page_name"]
 
     if request.GET.get("completed"):
-        evaluation.update_evaluation_page_status(request.GET.get("completed"), models.EvaluationPageStatus.DONE)
+        completed_page_name = request.GET.get("completed")
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, completed_page_name, models.EvaluationPageStatus.DONE.name
+        )
 
     if request.method == "POST":
         # TODO - figure out logic for evaluation status
@@ -188,18 +202,20 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
         )
     else:
         template_name = form_data["template_name"]
-        evaluation.update_evaluation_page_status(summary_page_name, models.EvaluationPageStatus.IN_PROGRESS)
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, summary_page_name, models.EvaluationPageStatus.IN_PROGRESS.name
+        )
         context = make_summary_related_object_context(evaluation, model_name, form_data)
         response = render(request, template_name, context)
     return response
 
 
-def make_related_object_context(evaluation_id, title, object_name, url_names):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+def make_related_object_context(user_id, evaluation_id, title, object_name, url_names):
+    evaluation = interface.facade.evaluation.get(user_id, evaluation_id)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
-    page_statuses = evaluation.page_statuses
+    page_statuses = evaluation["page_statuses"]
     url_names = get_related_object_page_url_names(url_names["summary_page"])
     return {
         "title": title,
@@ -242,7 +258,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    context = make_related_object_context(evaluation_id, title, template_name, url_names)
+    context = make_related_object_context(request.user.id, evaluation_id, title, template_name, url_names)
     context = {"errors": errors, "data": data, **context}
     return render(request, template_name, context)
 
@@ -592,7 +608,8 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
 
 
 def evaluation_overview_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    user = request.user
+    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     statuses = evaluation.page_statuses
     data = {
         "statuses": statuses,
