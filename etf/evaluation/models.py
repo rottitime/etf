@@ -496,7 +496,7 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
 
-    _name_field = ""
+    _name_field = "event_date_name"
 
 
 class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
