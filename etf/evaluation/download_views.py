@@ -2,11 +2,10 @@ import csv
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.shortcuts import render
 from flatten_json import flatten
 
-from etf.evaluation.models import Evaluation, EvaluationStatus
+from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
 
 

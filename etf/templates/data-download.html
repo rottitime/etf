@@ -5,9 +5,9 @@
   <p>Choose which evaluations to include in the data download.</p>
   <p>Note that data on non-public evaluations is for internal Civil Service use only.</p>
   <form>
-    {{macros.checkbox("my_evaluations", "Include my evaluations")}}
-    {{macros.checkbox("civil_service_only", "Include internal Civil Service evaluations")}}
-    {{macros.checkbox("public", "Include public evaluations")}}
+    {{macros.checkbox("my_evaluations", "My evaluations")}}
+    {{macros.checkbox("civil_service_only", "Evaluations visible to civil service only")}}
+    {{macros.checkbox("public", "Public evaluations")}}
 
     <div class="evaluation-button-row">
       <button class="button" type="submit" name="json">Download as JSON</button>

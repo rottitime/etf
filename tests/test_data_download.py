@@ -1,4 +1,4 @@
-from .utils import with_client, with_authenticated_client
+from .utils import with_authenticated_client, with_client
 
 
 @with_client
