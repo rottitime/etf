@@ -2,10 +2,9 @@ import csv
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
-from flatten_json import flatten
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from flatten_json import flatten
 
 from etf.evaluation.models import Evaluation, EvaluationStatus
 from etf.evaluation.schemas import EvaluationSchema
@@ -60,7 +59,6 @@ def download_csv_view(request):
 
 @login_required
 def download_page_view(request):
-    # TODO - errors, data?
     if "json" in request.GET:
         return redirect(reverse("data-download-json"))
     elif "csv" in request.GET:

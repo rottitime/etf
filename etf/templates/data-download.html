@@ -2,19 +2,16 @@
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-  Download all evaluations that are visible to all civil servants.
-  Note that this is for internal Civil Service use only.
-  [Options for Civil Service and public?]
+  <p>Choose which evaluations to download.</p>
+  <p>Note that data on non-public evaluations is for internal Civil Service use only.</p>
   <form>
     {{macros.checkbox("my_evaluations", "Include my evaluations")}}
     {{macros.checkbox("civil_service_only", "Include internal Civil Service evaluations")}}
     {{macros.checkbox("public", "Include public evaluations")}}
 
-
     <div class="evaluation-button-row">
-  <!-- <a class="button" type="submit" href="{{url('data-download-json')}}">Download as JSON</a> -->
       <button class="button" type="submit" name="json">Download as JSON</button>
-      <button class="button" type="submit" href="{{url('data-download-csv')}}">Download as CSV</button>
+      <button class="button" type="submit" name="csv">Download as CSV</button>
     </div>
   </form>
 {% endblock %}
