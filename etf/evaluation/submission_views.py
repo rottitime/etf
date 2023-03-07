@@ -99,7 +99,6 @@ def evaluation_view(request, evaluation_id, page_name, title):
             user.id, evaluation_id, page_name, models.EvaluationPageStatus.IN_PROGRESS.name
         )
         data = evaluation
-    print(f"{data=}")
     return render(
         request,
         template_name,
