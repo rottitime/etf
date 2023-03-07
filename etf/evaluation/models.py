@@ -419,11 +419,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # TODO - add fields on evaluation design, analysis and findings
 
     def update_evaluation_page_status(self, page_name, status):
+        # TODO: Fix ignoring unknown pages
         if page_name not in self.page_statuses:
             return
         if self.page_statuses[page_name] == EvaluationPageStatus.DONE.name:
             return
-        self.page_statuses[page_name] = status.name
+        self.page_statuses[page_name] = status
         self.save()
 
     def get_list_topics_display_names(self):
