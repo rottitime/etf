@@ -42,7 +42,7 @@ class Evaluation(Entity):
         evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
         return evaluation
 
-    @with_schema(load=UpdateEvaluationSchema, dump=schemas.EvaluationSchema)
+    @with_schema(load=UpdateEvaluationSchema(partial=True), dump=schemas.EvaluationSchema)
     @register_event("Evaluation updated")
     def update(self, user_id, evaluation_id, data):
         evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
