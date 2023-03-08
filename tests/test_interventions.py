@@ -16,9 +16,9 @@ def test_intervention():
 
     page = page.click(contains="Next")
     assert page.status_code == 200, page.status_code
-    assert page.url.endswith("/title")
+    assert page.url.endswith("/title/")
 
-    intervention_url = "/".join(page.url.split("/")[:-1] + ["interventions/"])
+    intervention_url = "/".join(page.url.split("/")[:-2] + ["interventions/"])
     page = client.get(intervention_url)
 
     form = page.get_form("""#intervention-add-form""")
