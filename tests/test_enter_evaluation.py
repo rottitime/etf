@@ -191,7 +191,6 @@ def test_step_through_evaluation():
             "earliest_spend_date": "2022-03-07",
             "latest_spend_date": "2022-03-07",
         },
-        evaluation.id,
     )
 
     # Policy costs page
@@ -214,7 +213,6 @@ def test_step_through_evaluation():
             "document_types": [models.DocumentType.ANALYSIS_CODE.value],
             "description": "A description of an example document",
         },
-        evaluation.id,
     )
 
     # Event dates page
@@ -229,7 +227,6 @@ def test_step_through_evaluation():
             "event_date_type": models.EventDateType.ACTUAL.value,
             "reasons_for_change": "A description of the reason for this change",
         },
-        evaluation.id,
     )
 
     # Evaluation types page
@@ -359,7 +356,6 @@ def test_step_through_evaluation():
             "resource_requirements": "The requirements for this intervention in resource costs",
             "geographical_information": "Any geographical information relevant to this intervention",
         },
-        evaluation.id,
     )
 
     # Outcome measures page
@@ -379,7 +375,6 @@ def test_step_through_evaluation():
             "minimum_difference": "The minimum practically important difference",
             "relevance": "The relevance of this outcome measure",
         },
-        evaluation.id,
     )
 
     # Other measures page
@@ -394,7 +389,6 @@ def test_step_through_evaluation():
             "description": "A description of the other measure",
             "collection_process": "The process of collection and timings",
         },
-        evaluation.id,
     )
 
     # Ethics page
@@ -477,7 +471,6 @@ def test_step_through_evaluation():
             "conformity": "FULL",
             "description": "A description of the process or standard",
         },
-        evaluation.id,
     )
 
     # Links page
@@ -490,7 +483,6 @@ def test_step_through_evaluation():
             "name_of_service": "New example link",
             "link_or_identifier": "https://example.com",
         },
-        evaluation.id,
     )
 
     # Metadata page
