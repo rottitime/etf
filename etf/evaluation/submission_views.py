@@ -647,7 +647,7 @@ def summary_links_page_view(request, evaluation_id):
 
 def links_page_view(request, evaluation_id, link_id):
     model_name = "LinkOtherService"
-    title = "Link to other service"
+    title = "Links to other service"
     template_name = "submissions/links-page.html"
     url_names = get_related_object_page_url_names("links")
     response = related_object_page_view(

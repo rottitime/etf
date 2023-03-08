@@ -20,6 +20,8 @@ DEBUG = env.bool("DEBUG", default=False)
 
 BASE_URL = env.str("BASE_URL")
 
+APPEND_SLASH = True
+
 ALLOWED_HOSTS = [
     "etf-develop.london.cloudapps.digital",
     "etf-sandbox.london.cloudapps.digital",
