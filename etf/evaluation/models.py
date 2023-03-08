@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
@@ -277,6 +278,11 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
+class Event(TimeStampedModel):
+    name = models.CharField(max_length=256)
+    data = models.JSONField(encoder=DjangoJSONEncoder)
+
+
 # TODO - throughout have used TextField (where spec was for 10,000 chars - is limit actually necessary?)
 class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     users = models.ManyToManyField(User, related_name="evaluations")
@@ -413,11 +419,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # TODO - add fields on evaluation design, analysis and findings
 
     def update_evaluation_page_status(self, page_name, status):
+        # TODO: Fix ignoring unknown pages
         if page_name not in self.page_statuses:
             return
         if self.page_statuses[page_name] == EvaluationPageStatus.DONE.name:
             return
-        self.page_statuses[page_name] = status.name
+        self.page_statuses[page_name] = status
         self.save()
 
     def get_list_topics_display_names(self):
