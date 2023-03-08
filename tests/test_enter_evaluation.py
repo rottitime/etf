@@ -1,7 +1,6 @@
 from nose.tools import with_setup
 
 from etf.evaluation import enums, models
-
 from . import utils
 
 
@@ -527,7 +526,7 @@ def complete_verify_simple_page(page, title, fields, evaluation_id):
     return next_page
 
 
-def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields, evaluation_id):
+def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields):
     assert page.status_code == 200, page.status_code
     assert page.has_text(title)
     assert page.has_text("Next")
