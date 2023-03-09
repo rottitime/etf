@@ -1,14 +1,14 @@
 from allauth.account.views import SignupView
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from etf import settings
-from etf.evaluation import email_handler, restrict_email, models
+from etf.evaluation import email_handler, models, restrict_email
 from etf.evaluation.views import MethodDispatcher
 
 
@@ -69,10 +69,19 @@ class CustomSignupView(SignupView):
             user.save()
             if settings.SEND_VERIFICATION_EMAIL:
                 email_handler.send_verification_email(user)
-                return render(request, "account/signup_complete.html", {"signup_message": "A verification email has been sent to your email address. Please click on the link in this email to verify your account and then try to sign in."})
+                return render(
+                    request,
+                    "account/signup_complete.html",
+                    {
+                        "signup_message": "A verification email has been sent to your email address. Please click on the link in this email to verify your account and then try to sign in."
+                    },
+                )
             login_url = reverse("account_login")
-            return render(request, "account/signup_complete.html", {
-                "signup_message": f"Your account has been created, please <a href=\"{login_url}\">login</a>."})
+            return render(
+                request,
+                "account/signup_complete.html",
+                {"signup_message": f'Your account has been created, please <a href="{login_url}">login</a>.'},
+            )
         response = super().dispatch(request, *args, **kwargs)
         return response
 
