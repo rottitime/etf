@@ -6,9 +6,8 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 
+from etf.evaluation import email_handler, restrict_email, models
 from etf.evaluation.views import MethodDispatcher
-from . import models
-from .email_handler import send_password_reset_email, verify_token, send_verification_email
 
 
 @require_http_methods(["GET", "POST"])
@@ -44,6 +43,13 @@ class CustomSignupView(SignupView):
             password1 = request.POST.get("password1")
             password2 = request.POST.get("password2")
             try:
+                restrict_email.clean_email(email=email)
+            except ValidationError as exc:
+                for errors in exc.error_list:
+                    for error in errors:
+                        messages.error(request, error)
+                return render(request, self.template_name)
+            try:
                 validate_password(password1)
             except ValidationError as exc:
                 for errors in exc.error_list:
@@ -58,7 +64,7 @@ class CustomSignupView(SignupView):
                 return render(request, self.template_name)
             user = models.User.objects.create_user(email=email, password=password1)
             user.save()
-            send_verification_email(user)
+            email_handler.send_verification_email(user)
             response = render(request, "account/verify_email_sent.html", {})
             return response
         response = super().dispatch(request, *args, **kwargs)
@@ -72,7 +78,7 @@ class CustomVerifyUserEmail(MethodDispatcher):
         token = request.GET.get("code")
         if not models.User.objects.filter(pk=user_id).exists():
             return render(request, "account/verify_email_from_token.html", {"verify_result": False})
-        verify_result = verify_token(user_id, token, "email-verification")
+        verify_result = email_handler.verify_token(user_id, token, "email-verification")
         if verify_result:
             user = models.User.objects.get(pk=user_id)
             user.verified = True
@@ -91,7 +97,7 @@ class PasswordReset(MethodDispatcher):
             user = models.User.objects.get(email=email)
         except models.User.DoesNotExist:
             return render(request, "account/password_reset_done.html", {})
-        send_password_reset_email(user)
+        email_handler.send_password_reset_email(user)
         return render(request, "account/password_reset_done.html", {})
 
 
@@ -108,7 +114,7 @@ class PasswordChange(MethodDispatcher):
         if not user_id or not token:
             messages.error(request, self.password_reset_error_message)
         else:
-            result = verify_token(user_id, token, "password_reset")
+            result = email_handler.verify_token(user_id, token, "password_reset")
             if not result:
                 messages.error(request, self.password_reset_error_message)
             else:

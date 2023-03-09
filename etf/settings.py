@@ -102,7 +102,6 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    # "etf.evaluation.custom_authentication.CustomAuthentication",
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
@@ -165,8 +164,6 @@ if ALLOW_EXAMPLE_EMAILS:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS.union({"example.com"})
 else:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS
-
-ACCOUNT_ADAPTER = "etf.evaluation.restrict_email_adapter.RestrictEmailAdapter"
 
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
 
