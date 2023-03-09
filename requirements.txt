@@ -4,7 +4,6 @@ django-environ
 django-gov-notify
 django_use_email_as_username
 faker
-flatten_json
 furl
 jinja2
 marshmallow

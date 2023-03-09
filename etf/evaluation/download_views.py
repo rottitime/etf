@@ -3,7 +3,6 @@ import csv
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
-from flatten_json import flatten
 
 from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
@@ -37,7 +36,6 @@ def download_json_view(request):
 
 
 def download_csv_view(request):
-    print("here")
     evaluations_qs = filter_evaluations_to_download(request)
     evaluation_schema = EvaluationSchema()
     data = evaluation_schema.dump(evaluations_qs, many=True)
