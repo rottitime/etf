@@ -23,6 +23,8 @@ def with_authenticated_client(func):
     def _inner(*args, **kwargs):
         user, _ = User.objects.get_or_create(email="peter.rabbit@example.com")
         user.set_password("P455W0rd")
+        user.verified = True
+        user.save()
         with httpx.Client(app=etf.wsgi.application, base_url=TEST_SERVER_URL, follow_redirects=True) as client:
             response = client.get("/accounts/login/")
             csrf = response.cookies["csrftoken"]

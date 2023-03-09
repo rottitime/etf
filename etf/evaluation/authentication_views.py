@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from etf import settings
@@ -46,6 +46,13 @@ class CustomSignupView(SignupView):
             password1 = request.POST.get("password1")
             password2 = request.POST.get("password2")
             try:
+                validate_email(email)
+            except ValidationError as exc:
+                for errors in exc.error_list:
+                    for error in errors:
+                        messages.error(request, error)
+                return render(request, self.template_name)
+            try:
                 restrict_email.clean_email(email=email)
             except ValidationError as exc:
                 for errors in exc.error_list:
@@ -60,10 +67,10 @@ class CustomSignupView(SignupView):
                         messages.error(request, error)
                 return render(request, self.template_name)
             if password1 != password2:
-                messages.error(request, "Passwords must match.")
+                messages.error(request, "You must type the same password each time.")
                 return render(request, self.template_name)
             if models.User.objects.filter(email=email).exists():
-                messages.error(request, "Registration was unsuccessful.")
+                messages.error(request, "Registration was unsuccessful, please try again.")
                 return render(request, self.template_name)
             user = models.User.objects.create_user(email=email, password=password1)
             user.save()
@@ -72,16 +79,12 @@ class CustomSignupView(SignupView):
                 return render(
                     request,
                     "account/signup_complete.html",
-                    {
-                        "signup_message": "A verification email has been sent to your email address. Please click on the link in this email to verify your account and then try to sign in."
-                    },
+                    {},
                 )
-            login_url = reverse("account_login")
-            return render(
-                request,
-                "account/signup_complete.html",
-                {"signup_message": f'Your account has been created, please <a href="{login_url}">login</a>.'},
-            )
+            user = authenticate(request, email=email, password=password1)
+            login(request, user)
+            messages.success(request, f"Successfully signed in as {user.email}.")
+            return redirect("index")
         response = super().dispatch(request, *args, **kwargs)
         return response
 
