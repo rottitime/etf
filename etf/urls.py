@@ -10,7 +10,7 @@ urlpatterns = [
     path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
     path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
     path("accounts/login/", authentication_views.CustomLoginView, name="account_login"),
-    path("accounts/signup/", authentication_views.CustomSignupView, name="account_signup"),
+    path("accounts/signup/", authentication_views.CustomSignupView.as_view(), name="account_signup"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),

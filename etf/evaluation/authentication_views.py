@@ -37,14 +37,26 @@ class CustomLoginView(MethodDispatcher):
                 return render(request, "account/login.html", {})
 
 
-@require_http_methods(["POST"])
 class CustomSignupView(SignupView):
     def dispatch(self, request, *args, **kwargs):
         if request.method == "POST":
-            if models.User.objects.filter(email=request.POST.get("email")).exists():
-                messages.error(request, "Registration was unsuccessful, please try again.")
+            email = request.POST.get("email")
+            password1 = request.POST.get("password1")
+            password2 = request.POST.get("password2")
+            try:
+                validate_password(password1)
+            except ValidationError as exc:
+                for errors in exc.error_list:
+                    for error in errors:
+                        messages.error(request, error)
                 return render(request, self.template_name)
-            user = models.User.objects.create_user(email=request.POST.get("email"), password=request.POST.get("password1"))
+            if password1 != password2:
+                messages.error(request, "Passwords must match.")
+                return render(request, self.template_name)
+            if models.User.objects.filter(email=email).exists():
+                messages.error(request, "Registration was unsuccessful.")
+                return render(request, self.template_name)
+            user = models.User.objects.create_user(email=email, password=password1)
             user.save()
             send_verification_email(user)
             response = render(request, "account/verify_email_sent.html", {})
@@ -58,13 +70,14 @@ class CustomVerifyUserEmail(MethodDispatcher):
     def get(self, request):
         user_id = request.GET.get("user_id")
         token = request.GET.get("code")
-        # TODO: verify that the user is not already verified
-        response = verify_token(user_id, token, "email-verification")
-        if response:
+        if not models.User.objects.filter(pk=user_id).exists():
+            return render(request, "account/verify_email_from_token.html", {"verify_result": False})
+        verify_result = verify_token(user_id, token, "email-verification")
+        if verify_result:
             user = models.User.objects.get(pk=user_id)
             user.verified = True
             user.save()
-        return render(request, "account/verify_email_from_token.html", {"verify_result": response})
+        return render(request, "account/verify_email_from_token.html", {"verify_result": verify_result})
 
 
 @require_http_methods(["GET", "POST"])
