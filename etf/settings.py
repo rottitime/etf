@@ -102,6 +102,7 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = [
+    # "etf.evaluation.custom_authentication.CustomAuthentication",
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]

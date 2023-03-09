@@ -9,9 +9,9 @@
   <section class="wrapper">
     <h1>Log in</h1>
 
-    <p>If you have not created an account yet, then please <a href="{{signup_url}}">register</a> first.</p>
+    <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">register</a> first.</p>
 
-    <form class="login" method="POST" action="{% url 'account_login' %}">
+    <form class="login" method="POST">
       {% csrf_token %}
       <p>
         <label for="id_login">Email:</label>

@@ -14,6 +14,13 @@ def _strip_microseconds(dt):
     return dt.replace(microsecond=0, tzinfo=None)
 
 
+class EmailVerifyTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        email = user.email or ""
+        token_timestamp = _strip_microseconds(user.last_token_sent_at)
+        return f"{user.pk}{user.password}{timestamp}{email}{token_timestamp}"
+
+
 class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         login_timestamp = _strip_microseconds(user.last_login)
@@ -22,15 +29,23 @@ class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
         return f"{user.pk}{user.password}{login_timestamp}{timestamp}{email}{token_timestamp}"
 
 
+EMAIL_VERIFY_TOKEN_GENERATOR = EmailVerifyTokenGenerator()
 PASSWORD_RESET_TOKEN_GENERATOR = PasswordResetTokenGenerator()
 
 
 EMAIL_MAPPING = {
+    "email-verification": {
+        "from_address": "etf@cabinetoffice.gov.uk",
+        "subject": "Evaluation Registry: confirm your email address",
+        "template_name": "email/verification.txt",
+        "url_path": "/accounts/verify/",
+        "token_generator": EMAIL_VERIFY_TOKEN_GENERATOR,
+    },
     "password-reset": {
         "from_address": "etf@cabinetoffice.gov.uk",
         "subject": "Evaluation Registry: password reset",
         "template_name": "email/password-reset.txt",
-        "url_path": "/accounts/change-password/reset",
+        "url_path": "/accounts/change-password/reset/",
         "token_generator": PASSWORD_RESET_TOKEN_GENERATOR,
     },
 }
@@ -64,12 +79,17 @@ def _send_normal_email(subject, template_name, from_address, to_address, context
     return response
 
 
+def send_verification_email(user):
+    data = EMAIL_MAPPING["email-verification"]
+    return _send_token_email(user, **data)
+
+
 def send_password_reset_email(user):
     data = EMAIL_MAPPING["password-reset"]
     return _send_token_email(user, **data)
 
 
-def verify_reset_token(user_id, token):
+def verify_token(user_id, token, token_type):
     user = models.User.objects.get(id=user_id)
-    result = PASSWORD_RESET_TOKEN_GENERATOR.check_token(user, token)
+    result = EMAIL_MAPPING[token_type]["token_generator"].check_token(user, token)
     return result

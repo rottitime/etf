@@ -1,16 +1,18 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from etf.evaluation import download_views, submission_views, views
+from etf.evaluation import download_views, submission_views, views, authentication_views
 
 urlpatterns = [
     path("", submission_views.index_view, name="index"),
     path("admin/", admin.site.urls),
-    path("accounts/signup/", views.CustomSignupView.as_view(), name="account_signup"),
+    path("accounts/verify/", authentication_views.CustomVerifyUserEmail, name="verify-email"),
+    path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
+    path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
+    path("accounts/login/", authentication_views.CustomLoginView, name="account_login"),
+    path("accounts/signup/", authentication_views.CustomSignupView, name="account_signup"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.search_evaluations_view, name="search"),
-    path("accounts/password-reset/", views.PasswordReset, name="password-reset"),
-    path("accounts/change-password/reset/", views.PasswordChange, name="password-set"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
     path(
