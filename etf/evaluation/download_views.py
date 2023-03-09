@@ -41,20 +41,18 @@ def download_csv_view(request):
     evaluations_qs = filter_evaluations_to_download(request)
     evaluation_schema = EvaluationSchema()
     data = evaluation_schema.dump(evaluations_qs, many=True)
-    print("data")
-    print(data)
-    flattened_dict = [flatten(d) for d in data]
-    print("flattened_dict")
-    print(flattened_dict)
-    # TODO - this doesn't get data in the format that we want it
-    # Also need headers for rows
     headers = {
         "Content-Type": "text/csv",
         "Content-Disposition": "attachment; filename=evaluation-data.csv",
     }
     response = HttpResponse(headers=headers)
-    writer = csv.writer(response)
-    for row in flattened_dict:
+    # TODO - do we want only selected fields, and in what order?
+    fieldnames = []
+    if data:
+        fieldnames = list(data[0].keys())
+    writer = csv.DictWriter(response, fieldnames=fieldnames)
+    writer.writeheader()
+    for row in data:
         writer.writerow(row)
     return response
 
