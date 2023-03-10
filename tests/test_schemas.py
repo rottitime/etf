@@ -1,10 +1,11 @@
 from datetime import date
-from nose.tools import with_setup
 
 from marshmallow import Schema
+from nose.tools import with_setup
 
 from etf.evaluation import models, schemas
 from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
+
 from .utils import with_authenticated_client
 
 
