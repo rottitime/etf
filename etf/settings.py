@@ -1,5 +1,6 @@
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from django.urls import include
 
 from .settings_base import (
     BASE_DIR,
@@ -188,3 +189,12 @@ SEND_VERIFICATION_EMAIL = env.bool("SEND_VERIFICATION_EMAIL", default=False)
 
 if DEBUG:
     ACCOUNT_RATE_LIMITS = {}
+
+
+PUBLIC_PATHS = [
+    "",
+    "accounts/signup/",
+    "accounts/login/",
+    "accounts/password-reset/",
+    "accounts/change-password/reset/",
+]
