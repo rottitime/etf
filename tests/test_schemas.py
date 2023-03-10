@@ -1,9 +1,11 @@
 from datetime import date
+from nose.tools import with_setup
 
 from marshmallow import Schema
 
 from etf.evaluation import models, schemas
-from etf.evaluation.schemas import DateAndBlankField
+from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
+from .utils import with_authenticated_client
 
 
 class MadeUpSchema(Schema):
@@ -48,4 +50,33 @@ def test_other_measure_schema_has_relevant_fields():
     check_schema_model_match_fields(model_name="OtherMeasure", schema_name="OtherMeasureSchema")
 
 
-# TODO - add more tests for schemas, esp after validation added
+def setup_evaluation():
+    user, _ = models.User.objects.get_or_create(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
+    user.save()
+    new_eval = models.Evaluation(title="Test evaluation schemas")
+    new_eval.save()
+    # TODO - add more fields
+    new_eval.users.add(user)
+    new_eval.save()
+    model_names = ["OutcomeMeasure", "OtherMeasure", "Intervention"]
+    for name in model_names:
+        model = getattr(models, name)
+        for i in range(3):
+            new_obj = model(name=f"New obj {i}", evaluation=new_eval)
+            new_obj.save()
+
+
+def teardown_evaluation():
+    evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
+    evaluation.delete()
+    user = models.User.objects.get(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
+    user.delete()
+
+
+@with_setup(setup_evaluation, teardown_evaluation)
+@with_authenticated_client
+def test_evaluation_schema_dump(client):
+    evaluation_schema = EvaluationSchema()
+    evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
+    serialized_evaluation = evaluation_schema.dump(evaluation)
+    assert serialized_evaluation
