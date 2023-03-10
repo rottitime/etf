@@ -7,7 +7,7 @@ def test_evaluation_facade():
     user, _ = models.User.objects.get_or_create(email=USER_DATA["email"])
     result = interface.facade.evaluation.create(user_id=user.id)
     expected = [{"email": "mr_interface_test@example.com"}]
-    assert result["users"] == expected
+    assert result["users"] == expected, result["users"]
 
     evaluation_id = result["id"]
     result = interface.facade.evaluation.get(user_id=user.id, evaluation_id=evaluation_id)
