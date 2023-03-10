@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
-    SearchVector
+    SearchVector,
 )
 from django.db.models import Q
 from django.http import HttpResponseNotAllowed
