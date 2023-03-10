@@ -68,6 +68,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     current_practice = fields.Str()
     issue_relevance = fields.Str()
 
+    # Evaluation costs and budget
+    costs = fields.Function(lambda e: EvaluationCostSchema(many=True, exclude=("evaluation",)).dump(e.costs.all()))
+
     # Evaluation type
     evaluation_type = fields.Raw()
 
@@ -142,6 +145,14 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Other evaluation analysis
     other_eval_analysis_description = fields.Str()
+
+    # https://github.com/marshmallow-code/marshmallow/issues/787
+    # Interventions
+    # interventions = fields.List(fields.Nested(lambda: InterventionSchema(exclude=("evaluation",))))
+
+    # Outcome measures
+
+    # Other measurement
 
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
