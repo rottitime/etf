@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import include, path
-from global_login_required import login_not_required
 
 from etf.evaluation import download_views, submission_views, views
 
