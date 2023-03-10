@@ -20,8 +20,6 @@ class CustomLoginView(MethodDispatcher):
     def post(self, request):
         password = request.POST.get("password", None)
         email = request.POST.get("login", None)
-        print(password)
-        print(email)
         if not password or not email:
             messages.error(request, "Please enter an email and password.")
             return render(request, "account/login.html", {})
