@@ -113,6 +113,8 @@ def test_step_through_evaluation():
     utils.register(client, **authenticated_user)
     evaluation = models.Evaluation()
     evaluation.save()
+    user = models.User.objects.get(email="test-evaluation-data-entry@example.com")
+    evaluation.users.add(user)
     intro_page = client.get(f"/evaluation/{evaluation.id}/")
 
     # Intro page
