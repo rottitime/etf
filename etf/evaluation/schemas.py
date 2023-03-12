@@ -134,7 +134,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
-    impact_eval_fidelity = fields.Str(validate=validate.Length(max=10))
+    impact_eval_fidelity = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.YesNo.choices))
+    )
     impact_eval_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
@@ -144,7 +146,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     process_eval_analysis_description = fields.Str()
 
     # Economic evaluation design
-    economic_eval_type = fields.Str(validate=validate.Length(max=256))
+    economic_eval_type = fields.Str(
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.EconomicEvaluationType.choices))
+    )
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
     monetisation_approaches = fields.Str()
@@ -228,8 +232,12 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
-    direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    primary_or_secondary = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeType.choices))
+    )
+    direct_or_surrogate = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeMeasure.choices))
+    )  # TODO - choices
     measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
@@ -251,7 +259,7 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    conformity = fields.Str(validate=validate.Length(max=10))
+    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(choices.MeasureType.choices)))
     description = fields.Str()
 
 
@@ -269,7 +277,9 @@ class EventDateSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     event_date_name = fields.Str(validate=validate.Length(max=256))
     date = DateAndBlankField()
-    event_date_type = fields.Str(validate=validate.Length(max=10))
+    event_date_type = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.EventDateType.choices))
+    )
     reasons_for_change = fields.Str()
 
 
