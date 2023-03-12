@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
-from . import choices, enums
+from . import enums, utils
 from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
@@ -36,41 +36,41 @@ class NamedModel:
         return getattr(self, self._name_field)
 
 
-class EvaluationTypeOptions(choices.Choices):
+class EvaluationTypeOptions(utils.Choices):
     IMPACT = "Impact evaluation"
     PROCESS = "Process evaluation"
     ECONOMIC = "Economic evaluation"
     OTHER = "Other"
 
 
-class OutcomeType(choices.Choices):
+class OutcomeType(utils.Choices):
     PRIMARY = "Primary"
     SECONDARY = "Secondary"
 
 
-class OutcomeMeasure(choices.Choices):
+class OutcomeMeasure(utils.Choices):
     DIRECT = "Direct"
     SURROGATE = "Surrogate"
 
 
-class YesNo(choices.Choices):
+class YesNo(utils.Choices):
     YES = "Yes"
     NO = "No"
 
 
-class YesNoPartial(choices.Choices):
+class YesNoPartial(utils.Choices):
     YES = "Yes"
     NO = "No"
     PARTIAL = "Partial"
 
 
-class FullNoPartial(choices.Choices):
+class FullNoPartial(utils.Choices):
     FULL = "Full"
     PARTIAL = "Partial"
     NO = "No"
 
 
-class MeasureType(choices.Choices):
+class MeasureType(utils.Choices):
     CONTINUOUS = "Continuous"
     DISCRETE = "Discrete"
     BINARY = "Binary"
@@ -80,7 +80,7 @@ class MeasureType(choices.Choices):
 
 
 # TODO - to improve
-class Topic(choices.Choices):
+class Topic(utils.Choices):
     BREXIT = "Brexit"
     BUSINESS_AND_INDUSTRY = "Business and industry"
     CORONAVIRUS = "Coronavirus"
@@ -104,13 +104,13 @@ class Topic(choices.Choices):
     WELFARE = "Welfare"
 
 
-class EvaluationStatus(choices.Choices):
+class EvaluationStatus(utils.Choices):
     DRAFT = "Draft"
     CIVIL_SERVICE = "Civil Service"
     PUBLIC = "Public"
 
 
-class DocumentType(choices.Choices):
+class DocumentType(utils.Choices):
     SCOPING_REPORT = "Scoping report"
     FEASIBILITY_STUDY_REPORT = "Feasibility study report"
     STUDY_PROTOCOL = "Study protocol"
@@ -126,7 +126,7 @@ class DocumentType(choices.Choices):
     OTHER = "Other"
 
 
-class EventDateOption(choices.Choices):
+class EventDateOption(utils.Choices):
     EVALUATION_START = "Evaluation start"
     EVALUATION_END = "Evaluation end"
     FIRST_PARTICIPANT_RECRUITED = "First participant recruited"
@@ -144,12 +144,12 @@ class EventDateOption(choices.Choices):
     OTHER = "Other"
 
 
-class EventDateType(choices.Choices):
+class EventDateType(utils.Choices):
     INTENDED = "Intended"
     ACTUAL = "Actual"
 
 
-class EconomicEvaluationType(choices.Choices):
+class EconomicEvaluationType(utils.Choices):
     COST_MINIMISATION = "Cost minimisation"
     COST_EFFECTIVENESS_ANALYSIS = "Cost-effectiveness analysis"
     COST_BENEFIT_ANALYSIS = "Cost-benefit analysis"
@@ -157,7 +157,7 @@ class EconomicEvaluationType(choices.Choices):
 
 
 # TODO - nested choices
-class ImpactEvalInterpretation(choices.Choices):
+class ImpactEvalInterpretation(utils.Choices):
     SUPERIORITY_SUPERIOR = "Superiority framework: Superior"
     SUPERIORITY_INFERIOR = "Superiority framework: Inferior"
     SUPERIORITY_INCONCLUSIVE = "Superiority framework: Inconclusive"
@@ -174,7 +174,7 @@ class ImpactEvalInterpretation(choices.Choices):
 
 
 # TODO - nested choices
-class ImpactEvalDesign(choices.Choices):
+class ImpactEvalDesign(utils.Choices):
     RCT = "Experimental methods for impact evaluation: Randomised controlled trial (RCT)"
     CLUSTER_RCT = "Experimental methods for impact evaluation: Cluster randomised RCT"
     STEPPED_WEDGE_RCT = "Experimental methods for impact evaluation: Stepped wedge RCT"
@@ -215,34 +215,34 @@ class ImpactEvalDesign(choices.Choices):
     OTHER = "Other"
 
 
-class ImpactFramework(choices.Choices):
+class ImpactFramework(utils.Choices):
     SUPERIORITY = "Superiority"
     NON_INFERIORITY = "Non-inferiority"
     EQUIVALENCE = "Equivalence"
     OTHER = "Other"
 
 
-class ImpactAnalysisBasis(choices.Choices):
+class ImpactAnalysisBasis(utils.Choices):
     INTENTION_TO_TREAT = "Intention-to-treat"
     PER_PROTOCOL = "Per-protocol"
     OTHER = "Other"
 
 
-class ImpactMeasureInterval(choices.Choices):
+class ImpactMeasureInterval(utils.Choices):
     CONFIDENCE = "Confidence interval"
     BAYESIAN = "Bayesian credible interval"
     NONE = "None"
     OTHER = "Other"
 
 
-class ImpactInterpretationType(choices.Choices):
+class ImpactInterpretationType(utils.Choices):
     INTERVALS = "Interpretation of intervals"
     HYPOTHESIS = "Hypothesis testing"
     NONE = "None"
     OTHER = "Other"
 
 
-class ImpactMeasureType(choices.Choices):
+class ImpactMeasureType(utils.Choices):
     ABSOLUTE = "Absolute measure"
     RELATIVE = "Relative measure"
     OTHER = "Other"
@@ -353,13 +353,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         max_length=64, choices=ImpactMeasureType.choices, blank=True, null=True
     )
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
-    impact_eval_effect_measure_interval = models.CharField(
-        max_length=64, blank=True, null=True
-    )
+    impact_eval_effect_measure_interval = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
-    impact_eval_interpretation_type = models.CharField(
-        max_length=64, blank=True, null=True
-    )
+    impact_eval_interpretation_type = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
@@ -397,9 +393,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Impact evaluation findings
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
-    impact_eval_interpretation = models.CharField(
-        max_length=256, blank=True, null=True
-    )
+    impact_eval_interpretation = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
     impact_eval_upper_uncertainty = models.TextField(blank=True, null=True)
