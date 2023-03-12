@@ -292,9 +292,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     brief_description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)  # TODO - do we use these?
     organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
-    status = models.CharField(
-        max_length=256, blank=False, null=False, choices=EvaluationStatus.choices, default=EvaluationStatus.DRAFT.value
-    )
+    status = models.CharField(max_length=256, blank=False, null=False, default=EvaluationStatus.DRAFT.value)
     doi = models.CharField(max_length=64, blank=True, null=True)
     page_statuses = models.JSONField(default=get_default_page_statuses)
 
@@ -322,7 +320,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # TODO - what happens with dates?
 
     # Ethical considerations
-    ethics_committee_approval = models.CharField(max_length=3, blank=True, null=True, choices=YesNo.choices)
+    ethics_committee_approval = models.CharField(max_length=3, blank=True, null=True)
     ethics_committee_details = models.TextField(blank=True, null=True)
     ethical_state_given_existing_evidence_base = models.TextField(blank=True, null=True)
     risks_to_participants = models.TextField(blank=True, null=True)
@@ -349,9 +347,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_eval_framework = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_basis = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
-    impact_eval_effect_measure_type = models.CharField(
-        max_length=64, choices=ImpactMeasureType.choices, blank=True, null=True
-    )
+    impact_eval_effect_measure_type = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_interval = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
@@ -359,7 +355,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
-    impact_eval_fidelity = models.CharField(max_length=10, choices=YesNo.choices, blank=True, null=True)
+    impact_eval_fidelity = models.CharField(max_length=10, blank=True, null=True)
     impact_eval_desc_planned_analysis = models.TextField(blank=True, null=True)
     # TODO - add more
 
@@ -372,7 +368,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     process_eval_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
-    economic_eval_type = models.CharField(max_length=256, choices=EconomicEvaluationType.choices, blank=True, null=True)
+    economic_eval_type = models.CharField(max_length=256, blank=True, null=True)
     perspective_costs = models.TextField(blank=True, null=True)
     perspective_benefits = models.TextField(blank=True, null=True)
     monetisation_approaches = models.TextField(blank=True, null=True)
@@ -454,8 +450,8 @@ class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
-    primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
-    direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
+    primary_or_secondary = models.CharField(max_length=10, blank=True, null=True)
+    direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
@@ -475,7 +471,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
-    conformity = models.CharField(max_length=10, blank=True, null=True, choices=FullNoPartial.choices)
+    conformity = models.CharField(max_length=10, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
 
@@ -494,7 +490,7 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     event_date_name = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
-    event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
+    event_date_type = models.CharField(max_length=10, blank=True, null=True)
     reasons_for_change = models.TextField(blank=True, null=True)
 
     _name_field = "event_date_name"
