@@ -56,7 +56,10 @@ class EvaluationSchema(TimeStampedModelSchema):
     brief_description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
-    status = fields.Str(validate=validate.And(validate.OneOf(choices.EvaluationStatus.choices), validate.Length(max=256)), default=choices.EvaluationStatus.DRAFT.value)
+    status = fields.Str(
+        validate=validate.And(validate.OneOf(choices.EvaluationStatus.choices), validate.Length(max=256)),
+        default=choices.EvaluationStatus.DRAFT.value,
+    )
 
     doi = fields.Str(validate=validate.Length(max=64))
     page_statuses = fields.Raw()
@@ -95,7 +98,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     recruitment_schedule = fields.Str()
 
     # Ethical considerations
-    ethics_committee_approval = fields.Str()
+    ethics_committee_approval = fields.Str(
+        validate=validate.And(validate.OneOf(choices.YesNo.choices), validate.Length(max=3))
+    )
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
     risks_to_participants = fields.Str()
