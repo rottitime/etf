@@ -4,50 +4,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0012_event'),
+        ("evaluation", "0012_event"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='evaluation',
-            name='impact_eval_basis',
+            model_name="evaluation",
+            name="impact_eval_basis",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='evaluation',
-            name='impact_eval_effect_measure_interval',
+            model_name="evaluation",
+            name="impact_eval_effect_measure_interval",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='evaluation',
-            name='impact_eval_framework',
+            model_name="evaluation",
+            name="impact_eval_framework",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='evaluation',
-            name='impact_eval_interpretation',
+            model_name="evaluation",
+            name="impact_eval_interpretation",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
         migrations.AlterField(
-            model_name='evaluation',
-            name='impact_eval_interpretation_type',
+            model_name="evaluation",
+            name="impact_eval_interpretation_type",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='eventdate',
-            name='event_date_name',
+            model_name="eventdate",
+            name="event_date_name",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
         migrations.AlterField(
-            model_name='othermeasure',
-            name='measure_type',
+            model_name="othermeasure",
+            name="measure_type",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
         migrations.AlterField(
-            model_name='outcomemeasure',
-            name='measure_type',
+            model_name="outcomemeasure",
+            name="measure_type",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
     ]
