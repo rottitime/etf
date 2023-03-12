@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, validate
 
-from . import models
+from . import choices
 
 
 class DateAndBlankField(fields.Date):
@@ -56,7 +56,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     brief_description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
-    status = fields.Str(validate=validate.Length(max=256), default=models.EvaluationStatus.DRAFT.value)
+    status = fields.Str(validate=validate.Length(max=256), default=choices.EvaluationStatus.DRAFT.value)
     doi = fields.Str(validate=validate.Length(max=64))
     page_statuses = fields.Raw()
 

@@ -15,7 +15,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from . import enums, models
+from . import choices, enums, models
 from .email_handler import send_password_reset_email, verify_reset_token
 
 
@@ -121,9 +121,9 @@ class EvaluationSearchForm(forms.Form):
     id = forms.UUIDField(required=False)
     title = forms.CharField(max_length=100, required=False)
     description = forms.CharField(max_length=100, required=False)
-    topics = forms.MultipleChoiceField(choices=models.Topic.choices, required=False)
+    topics = forms.MultipleChoiceField(choices=choices.Topic.choices, required=False)
     organisations = forms.MultipleChoiceField(choices=enums.Organisation.choices, required=False)
-    status = forms.ChoiceField(choices=(("", "-----"), *models.EvaluationStatus.choices), required=False)
+    status = forms.ChoiceField(choices=(("", "-----"), *choices.EvaluationStatus.choices), required=False)
     search_phrase = forms.CharField(max_length=100, required=False)
     mine_only = forms.BooleanField(required=False)
     is_search = forms.CharField(max_length=6, required=True)
@@ -152,20 +152,22 @@ def search_evaluations_view(request):
                 qs = organisations_qs
             if not status:
                 qs = qs.filter(
-                    Q(status=models.EvaluationStatus.DRAFT.value, users__in=[request.user])
-                    | Q(status__in=[models.EvaluationStatus.PUBLIC.value, models.EvaluationStatus.CIVIL_SERVICE.value])
+                    Q(status=choices.EvaluationStatus.DRAFT.value, users__in=[request.user])
+                    | Q(
+                        status__in=[choices.EvaluationStatus.PUBLIC.value, choices.EvaluationStatus.CIVIL_SERVICE.value]
+                    )
                 )
             else:
-                if status == models.EvaluationStatus.DRAFT:
+                if status == choices.EvaluationStatus.DRAFT:
                     qs = qs.filter(status=status)
                     qs = qs.filter(user=request.user)
                 # TODO: make civil service and public filter more sophisticated once roles are in
-                if status == models.EvaluationStatus.PUBLIC:
+                if status == choices.EvaluationStatus.PUBLIC:
                     qs = qs.filter(status=status)
-                if status == models.EvaluationStatus.CIVIL_SERVICE:
+                if status == choices.EvaluationStatus.CIVIL_SERVICE:
                     qs = qs.filter(status=status)
             if topics:
-                topics_qs = models.Evaluation.objects.none()
+                topics_qs = choices.Evaluation.objects.none()
                 for topic in topics:
                     topic_qs = qs.filter(topics__contains=topic)
                     topics_qs = topics_qs | topic_qs

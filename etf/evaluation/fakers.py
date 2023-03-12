@@ -7,7 +7,7 @@ import random
 
 import faker
 
-from . import enums, models
+from . import choices, enums, models
 from .pages import get_default_page_statuses
 
 fake = faker.Faker()
@@ -49,7 +49,7 @@ def generate_topics():
     num_topics = random.randint(0, 4)
     set_topics = set()
     for i in range(num_topics):
-        set_topics.add(random.choice(models.Topic.values))
+        set_topics.add(random.choice(choices.Topic.values))
     return list(set_topics)
 
 
@@ -65,7 +65,7 @@ def generate_evaluation_types():
     num_types = random.randint(0, 2)
     set_types = set()
     for i in range(num_types):
-        set_types.add(random.choice(models.EvaluationTypeOptions.values))
+        set_types.add(random.choice(choices.EvaluationTypeOptions.values))
     return list(set_types)
 
 
@@ -79,7 +79,7 @@ def make_evaluation():
         brief_description=fake.text(),
         topics=topics,
         organisations=organisations,
-        status=random.choice(models.EvaluationStatus.values),
+        status=random.choice(choices.EvaluationStatus.values),
         doi=fake.text(64),
         page_statuses=get_default_page_statuses(),
         issue_description=fake.text(),

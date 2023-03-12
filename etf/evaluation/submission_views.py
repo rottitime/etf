@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from . import interface, models, pages, schemas
+from . import choices, interface, models, pages, schemas
 
 
 @login_required
@@ -73,7 +73,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
-    statuses = models.EvaluationStatus.choices
+    statuses = choices.EvaluationStatus.choices
     page_statuses = evaluation["page_statuses"]
     multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
     # TODO - add "impact_eval_design_name" when choices have been added
@@ -104,7 +104,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
         template_name,
         {
             "errors": errors,
-            "dropdown_choices": models.dropdown_choices,
+            "dropdown_choices": choices.dropdown_choices,
             "statuses": statuses,
             "data": data,
             "next_url": next_url,
@@ -226,7 +226,7 @@ def make_related_object_context(user_id, evaluation_id, title, object_name, url_
         "current_page": url_names["summary_page"],
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "dropdown_choices": models.dropdown_choices,
+        "dropdown_choices": choices.dropdown_choices,
     }
 
 
