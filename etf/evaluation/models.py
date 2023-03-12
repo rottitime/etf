@@ -346,19 +346,19 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Impact evaluation analysis
     # TODO - add analysis plan document?
-    impact_eval_framework = models.CharField(max_length=64, choices=ImpactFramework.choices, blank=True, null=True)
-    impact_eval_basis = models.CharField(max_length=64, choices=ImpactAnalysisBasis.choices, blank=True, null=True)
+    impact_eval_framework = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_basis = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_type = models.CharField(
         max_length=64, choices=ImpactMeasureType.choices, blank=True, null=True
     )
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_interval = models.CharField(
-        max_length=64, choices=ImpactMeasureInterval.choices, blank=True, null=True
+        max_length=64, blank=True, null=True
     )
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
     impact_eval_interpretation_type = models.CharField(
-        max_length=64, choices=ImpactEvalInterpretation.choices, blank=True, null=True
+        max_length=64, blank=True, null=True
     )
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
@@ -398,7 +398,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_eval_comparison = models.TextField(blank=True, null=True)
     impact_eval_outcome = models.TextField(blank=True, null=True)
     impact_eval_interpretation = models.CharField(
-        max_length=256, choices=ImpactEvalInterpretation.choices, blank=True, null=True
+        max_length=256, blank=True, null=True
     )
     impact_eval_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_eval_lower_uncertainty = models.TextField(blank=True, null=True)
@@ -462,7 +462,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeType.choices)
     direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True, choices=OutcomeMeasure.choices)
-    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
+    measure_type = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
     timepoint = models.TextField(blank=True, null=True)
@@ -473,7 +473,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
-    measure_type = models.CharField(max_length=256, blank=True, null=True, choices=MeasureType.choices)
+    measure_type = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
@@ -498,7 +498,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
-    event_date_name = models.CharField(max_length=256, blank=True, null=True, choices=EventDateOption.choices)
+    event_date_name = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     event_date_type = models.CharField(max_length=10, blank=True, null=True, choices=EventDateType.choices)
     reasons_for_change = models.TextField(blank=True, null=True)
