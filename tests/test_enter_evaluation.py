@@ -1,3 +1,4 @@
+from etf.evaluation.utils import Choices
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
@@ -213,7 +214,7 @@ def test_step_through_evaluation():
         {
             "title": "An example document",
             "url": "https://example.com",
-            "document_types": [models.DocumentType.ANALYSIS_CODE.value],
+            "document_types": [choices.DocumentType.ANALYSIS_CODE.value],
             "description": "A description of an example document",
         },
     )
@@ -223,11 +224,11 @@ def test_step_through_evaluation():
         event_dates_page,
         "Event dates",
         "New event date",
-        models.EventDateOption.INTERVENTION_END_DATE.value,
+        choices.EventDateOption.INTERVENTION_END_DATE.value,
         {
-            "event_date_name": models.EventDateOption.INTERVENTION_END_DATE.value,
+            "event_date_name": choices.EventDateOption.INTERVENTION_END_DATE.value,
             "date": "2022-03-07",
-            "event_date_type": models.EventDateType.ACTUAL.value,
+            "event_date_type": choices.EventDateType.ACTUAL.value,
             "reasons_for_change": "A description of the reason for this change",
         },
     )
@@ -237,7 +238,7 @@ def test_step_through_evaluation():
         evaluation_types_page,
         "Evaluation types",
         {
-            "evaluation_type": [models.EvaluationTypeOptions.ECONOMIC.value],
+            "evaluation_type": [choices.EvaluationTypeOptions.ECONOMIC.value],
         },
         evaluation.id,
     )
@@ -247,7 +248,7 @@ def test_step_through_evaluation():
         impact_evaluation_design_page,
         "Impact evaluation design",
         {
-            "impact_eval_design_name": [models.ImpactEvalDesign.REALISE_EVALUATION.value],
+            "impact_eval_design_name": [choices.ImpactEvalDesign.REALISE_EVALUATION.value],
             "impact_eval_design_justification": "A justification for the design",
             "impact_eval_design_description": "A description of the design used",
             "impact_eval_design_features": "The main features that the design offers",
@@ -263,14 +264,14 @@ def test_step_through_evaluation():
         impact_evaluation_analysis_page,
         "Impact evaluation analysis",
         {
-            "impact_eval_framework": models.ImpactFramework.EQUIVALENCE.value,
-            "impact_eval_basis": models.ImpactAnalysisBasis.INTENTION_TO_TREAT.value,
+            "impact_eval_framework": choices.ImpactFramework.EQUIVALENCE.value,
+            "impact_eval_basis": choices.ImpactAnalysisBasis.INTENTION_TO_TREAT.value,
             "impact_eval_analysis_set": "Analysis set",
-            "impact_eval_effect_measure_type": models.ImpactMeasureType.ABSOLUTE.value,
+            "impact_eval_effect_measure_type": choices.ImpactMeasureType.ABSOLUTE.value,
             "impact_eval_primary_effect_size_measure": "Primary effect size measure",
-            "impact_eval_effect_measure_interval": models.ImpactMeasureInterval.BAYESIAN.value,
+            "impact_eval_effect_measure_interval": choices.ImpactMeasureInterval.BAYESIAN.value,
             "impact_eval_primary_effect_size_desc": "A description of the primary effect size measure",
-            "impact_eval_interpretation_type": models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+            "impact_eval_interpretation_type": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
             "impact_eval_sensitivity_analysis": "The sensitivity analysis",
             "impact_eval_subgroup_analysis": "A subgroup analysis",
             "impact_eval_missing_data_handling": "A summary of missing data handling",
@@ -300,7 +301,7 @@ def test_step_through_evaluation():
         economic_design_page,
         "Economic evaluation design",
         {
-            "economic_eval_type": models.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value,
+            "economic_eval_type": choices.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value,
             "perspective_costs": "The perspective costs of the evaluation",
             "perspective_benefits": "The benefits associated with the evaluation",
             "monetisation_approaches": "The approach to monetisation",
@@ -371,7 +372,7 @@ def test_step_through_evaluation():
             "name": "Outcome measure name",
             "primary_or_secondary": "PRIMARY",
             "direct_or_surrogate": "DIRECT",
-            "measure_type": models.MeasureType.BINARY.value,
+            "measure_type": choices.MeasureType.BINARY.value,
             "description": "The description of the outcome measure",
             "collection_process": "The collection process for this outcome measure",
             "timepoint": "The process timings of interest",
@@ -388,7 +389,7 @@ def test_step_through_evaluation():
         "Other measure name",
         {
             "name": "Other measure name",
-            "measure_type": models.MeasureType.BINARY.value,
+            "measure_type": choices.MeasureType.BINARY.value,
             "description": "A description of the other measure",
             "collection_process": "The process of collection and timings",
         },
@@ -422,7 +423,7 @@ def test_step_through_evaluation():
         {
             "impact_eval_comparison": "An evaluation comparison",
             "impact_eval_outcome": "The outcome of the evaluation findings",
-            "impact_eval_interpretation": models.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+            "impact_eval_interpretation": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
             "impact_eval_point_estimate_diff": "The point estimate difference of the evaluation findings",
             "impact_eval_lower_uncertainty": "The lower uncertainty of the evaluation findings",
             "impact_eval_upper_uncertainty": "The upper uncertainty of the evaluation findings",
@@ -496,7 +497,7 @@ def test_step_through_evaluation():
         status_page,
         "Evaluation status",
         {
-            "status": models.EvaluationStatus.CIVIL_SERVICE.value,
+            "status": choices.EvaluationStatus.CIVIL_SERVICE.value,
         },
         evaluation.id,
     )
