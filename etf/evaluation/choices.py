@@ -230,3 +230,8 @@ dropdown_choices = {
     "organisations": enums.Organisation.choices,
     "topics": Topic.choices,
 }
+
+
+def get_db_values_from_choices(choices):
+    output = [x[0] for x in choices]
+    return output
