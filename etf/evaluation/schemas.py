@@ -1,6 +1,7 @@
 from marshmallow import Schema, fields, validate
 
 from . import choices
+from .choices import get_db_values
 
 
 class DateAndBlankField(fields.Date):
@@ -57,7 +58,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     topics = fields.Raw()
     organisations = fields.Raw()
     status = fields.Str(
-        validate=validate.And(validate.OneOf(choices.EvaluationStatus.choices), validate.Length(max=256)),
+        validate=validate.And(validate.OneOf(get_db_values(choices.EvaluationStatus.choices)), validate.Length(max=256)),
         default=choices.EvaluationStatus.DRAFT.value,
     )
 
@@ -99,7 +100,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Ethical considerations
     ethics_committee_approval = fields.Str(
-        validate=validate.And(validate.OneOf(choices.YesNo.choices), validate.Length(max=3))
+        validate=validate.And(validate.OneOf(get_db_values(choices.YesNo.choices)), validate.Length(max=3))
     )
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
@@ -135,7 +136,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
     impact_eval_fidelity = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.YesNo.choices))
+        validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.YesNo.choices)))
     )
     impact_eval_desc_planned_analysis = fields.Str()
 
@@ -147,7 +148,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Economic evaluation design
     economic_eval_type = fields.Str(
-        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.EconomicEvaluationType.choices))
+        validate=validate.And(validate.Length(max=256), validate.OneOf(get_db_values(choices.EconomicEvaluationType.choices)))
     )
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
@@ -233,11 +234,11 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeType.choices))
+        validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.OutcomeType.choices)))
     )
     direct_or_surrogate = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeMeasure.choices))
-    )  # TODO - choices
+        validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.OutcomeMeasure.choices)))
+    )
     measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
@@ -259,7 +260,7 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(choices.MeasureType.choices)))
+    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.MeasureType.choices))))
     description = fields.Str()
 
 
@@ -278,7 +279,7 @@ class EventDateSchema(TimeStampedModelSchema):
     event_date_name = fields.Str(validate=validate.Length(max=256))
     date = DateAndBlankField()
     event_date_type = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.EventDateType.choices))
+        validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.EventDateType.choices)))
     )
     reasons_for_change = fields.Str()
 

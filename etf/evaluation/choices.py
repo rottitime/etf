@@ -232,6 +232,6 @@ dropdown_choices = {
 }
 
 
-def get_db_values_from_choices(choices):
+def get_db_values(choices):
     output = [x[0] for x in choices]
     return output
