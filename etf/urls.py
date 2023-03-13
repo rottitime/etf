@@ -5,7 +5,7 @@ from etf.evaluation import (
     authentication_views,
     download_views,
     submission_views,
-    views
+    views,
 )
 
 urlpatterns = [
