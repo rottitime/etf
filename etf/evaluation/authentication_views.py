@@ -28,12 +28,14 @@ class CustomLoginView(MethodDispatcher):
             if user is not None:
                 if settings.SEND_VERIFICATION_EMAIL:
                     if not user.verified:
-                        messages.error(request, "Please check your emails for a verification email, then try again.")
+                        messages.error(
+                            request, "The email address or password you entered is incorrect. Please try again."
+                        )
                         return render(request, "account/login.html", {})
                 login(request, user)
                 return redirect("index")
             else:
-                messages.error(request, "The email address or password you entered is incorrect.")
+                messages.error(request, "The email address or password you entered is incorrect. Please try again.")
                 return render(request, "account/login.html", {})
 
 
@@ -130,7 +132,7 @@ class PasswordChange(MethodDispatcher):
         if not user_id or not token:
             messages.error(request, self.password_reset_error_message)
         else:
-            result = email_handler.verify_token(user_id, token, "password_reset")
+            result = email_handler.verify_token(user_id, token, "password-reset")
             if not result:
                 messages.error(request, self.password_reset_error_message)
             else:
