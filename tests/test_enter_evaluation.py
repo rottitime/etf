@@ -218,8 +218,6 @@ def test_step_through_evaluation():
         },
     )
 
-    print("documents page")
-
     # Event dates page
     evaluation_types_page = complete_verify_multiple_object_page(
         event_dates_page,
@@ -234,8 +232,6 @@ def test_step_through_evaluation():
         },
     )
 
-    print("evaluation dates")
-
     # Evaluation types page
     impact_evaluation_design_page = complete_verify_simple_page(
         evaluation_types_page,
@@ -245,8 +241,6 @@ def test_step_through_evaluation():
         },
         evaluation.id,
     )
-
-    print("evaluation types")
 
     # Impact evaluation design page
     impact_evaluation_analysis_page = complete_verify_simple_page(
@@ -263,8 +257,6 @@ def test_step_through_evaluation():
         },
         evaluation.id,
     )
-
-    print("impact eval")
 
     # Impact evaluation analysis page
     process_evaluation_design_page = complete_verify_simple_page(
@@ -471,8 +463,6 @@ def test_step_through_evaluation():
         evaluation.id,
     )
 
-    print("other_evaluation_findings")
-
     # Processes standards page
     link_page = complete_verify_multiple_object_page(
         process_and_standards_page,
@@ -485,7 +475,6 @@ def test_step_through_evaluation():
             "description": "A description of the process or standard",
         },
     )
-    print("added processes standards")
 
     # Links page
     metadata_page = complete_verify_multiple_object_page(
@@ -498,8 +487,6 @@ def test_step_through_evaluation():
             "link_or_identifier": "https://example.com",
         },
     )
-
-    print("add links")
 
     # Metadata page
     status_page = complete_verify_simple_page(metadata_page, "Metadata", {}, evaluation.id)

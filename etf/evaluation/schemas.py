@@ -58,7 +58,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     topics = fields.Raw()
     organisations = fields.Raw()
     status = fields.Str(
-        validate=validate.And(validate.OneOf(get_db_values(choices.EvaluationStatus.choices)), validate.Length(max=256)),
+        validate=validate.And(
+            validate.OneOf(get_db_values(choices.EvaluationStatus.choices)), validate.Length(max=256)
+        ),
         default=choices.EvaluationStatus.DRAFT.value,
     )
 
@@ -148,7 +150,9 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Economic evaluation design
     economic_eval_type = fields.Str(
-        validate=validate.And(validate.Length(max=256), validate.OneOf(get_db_values(choices.EconomicEvaluationType.choices)))
+        validate=validate.And(
+            validate.Length(max=256), validate.OneOf(get_db_values(choices.EconomicEvaluationType.choices))
+        )
     )
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
@@ -260,7 +264,9 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.FullNoPartial.choices))))
+    conformity = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.FullNoPartial.choices)))
+    )
     description = fields.Str()
 
 
