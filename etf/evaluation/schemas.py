@@ -49,7 +49,7 @@ class TimeStampedModelSchema(Schema):
 
 class EvaluationSchema(TimeStampedModelSchema):
     # TODO - add more validation esp. for choice fields, around dates
-    users = fields.Function(lambda o: UserSchema(many=True).dump(o.users.all()))
+    users = fields.Function(lambda e: UserSchema(many=True).dump(e.users.all()))
     id = fields.UUID()
     title = fields.Str(required=True, validate=validate.Length(max=256))
     short_title = fields.Str(validate=validate.Length(max=64))
@@ -67,6 +67,17 @@ class EvaluationSchema(TimeStampedModelSchema):
     who_improvements_matter_to = fields.Str()
     current_practice = fields.Str()
     issue_relevance = fields.Str()
+
+    # Evaluation costs and budget
+    costs = fields.Function(lambda e: EvaluationCostSchema(many=True, exclude=("evaluation",)).dump(e.costs.all()))
+
+    # Documents
+    documents = fields.Function(lambda e: DocumentSchema(many=True, exclude=("evaluation",)).dump(e.documents.all()))
+
+    # Event dates
+    event_dates = fields.Function(
+        lambda e: EventDateSchema(many=True, exclude=("evaluation",)).dump(e.event_dates.all())
+    )
 
     # Evaluation type
     evaluation_type = fields.Raw()
@@ -143,6 +154,21 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Other evaluation analysis
     other_eval_analysis_description = fields.Str()
 
+    # Interventions
+    interventions = fields.Function(
+        lambda e: InterventionSchema(many=True, exclude=("evaluation",)).dump(e.interventions.all())
+    )
+
+    # Outcome measures
+    outcome_measures = fields.Function(
+        lambda e: OutcomeMeasureSchema(many=True, exclude=("evaluation",)).dump(e.outcome_measures.all())
+    )
+
+    # Other measurement
+    other_measures = fields.Function(
+        lambda e: OtherMeasureSchema(many=True, exclude=("evaluation",)).dump(e.other_measures.all())
+    )
+
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
     impact_eval_outcome = fields.Str()
@@ -162,6 +188,16 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Other evaluation findings
     other_eval_summary_findings = fields.Str()
     other_eval_findings = fields.Str()
+
+    # Processes and standards
+    process_standards = fields.Function(
+        lambda e: ProcessStandardSchema(many=True, exclude=("evaluation",)).dump(e.process_standards.all())
+    )
+
+    # Links and IDs
+    link_other_services = fields.Function(
+        lambda e: LinkOtherServiceSchema(many=True, exclude=("evaluation",)).dump(e.link_other_services.all())
+    )
 
 
 class InterventionSchema(TimeStampedModelSchema):

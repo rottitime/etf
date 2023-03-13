@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
 ROOT_URLCONF = "etf.urls"
@@ -187,3 +188,12 @@ SEND_VERIFICATION_EMAIL = env.bool("SEND_VERIFICATION_EMAIL", default=False)
 
 if DEBUG:
     ACCOUNT_RATE_LIMITS = {}
+
+
+PUBLIC_PATHS = [
+    "",
+    "accounts/signup/",
+    "accounts/login/",
+    "accounts/password-reset/",
+    "accounts/change-password/reset/",
+]

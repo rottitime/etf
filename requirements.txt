@@ -1,6 +1,7 @@
 django<3.3
 django-allauth
 django-environ
+django-glrm
 django-gov-notify
 django_use_email_as_username
 faker

@@ -1,9 +1,12 @@
 from datetime import date
 
 from marshmallow import Schema
+from nose.tools import with_setup
 
 from etf.evaluation import models, schemas
-from etf.evaluation.schemas import DateAndBlankField
+from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
+
+from .utils import with_authenticated_client
 
 
 class MadeUpSchema(Schema):
@@ -20,6 +23,7 @@ def test_date_and_blank_field():
     assert deserialized_obj["date"] is None
 
 
+# Might not always want schemas to match, but we do for now
 def check_schema_model_match_fields(model_name, schema_name, related_fields_to_ignore={}):
     model = getattr(models, model_name)
     schema = getattr(schemas, schema_name)
@@ -32,20 +36,7 @@ def check_schema_model_match_fields(model_name, schema_name, related_fields_to_i
 
 
 def test_evaluation_schema_has_relevant_fields():
-    related_fields_to_ignore = {
-        "interventions",
-        "outcome_measures",
-        "evaluation_types",
-        "other_measures",
-        "process_standards",
-        "documents",
-        "event_dates",
-        "link_other_services",
-        "costs",
-    }
-    check_schema_model_match_fields(
-        model_name="Evaluation", schema_name="EvaluationSchema", related_fields_to_ignore=related_fields_to_ignore
-    )
+    check_schema_model_match_fields(model_name="Evaluation", schema_name="EvaluationSchema")
 
 
 def test_intervention_schema_has_relevant_fields():
@@ -60,4 +51,33 @@ def test_other_measure_schema_has_relevant_fields():
     check_schema_model_match_fields(model_name="OtherMeasure", schema_name="OtherMeasureSchema")
 
 
-# TODO - add more tests for schemas, esp after validation added
+def setup_evaluation():
+    user, _ = models.User.objects.get_or_create(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
+    user.save()
+    new_eval = models.Evaluation(title="Test evaluation schemas")
+    new_eval.save()
+    # TODO - add more fields
+    new_eval.users.add(user)
+    new_eval.save()
+    model_names = ["OutcomeMeasure", "OtherMeasure", "Intervention"]
+    for name in model_names:
+        model = getattr(models, name)
+        for i in range(3):
+            new_obj = model(name=f"New obj {i}", evaluation=new_eval)
+            new_obj.save()
+
+
+def teardown_evaluation():
+    evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
+    evaluation.delete()
+    user = models.User.objects.get(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
+    user.delete()
+
+
+@with_setup(setup_evaluation, teardown_evaluation)
+@with_authenticated_client
+def test_evaluation_schema_dump(client):
+    evaluation_schema = EvaluationSchema()
+    evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
+    serialized_evaluation = evaluation_schema.dump(evaluation)
+    assert serialized_evaluation

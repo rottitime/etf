@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <form>
+    <fieldset class="fieldset">
+    <p>Choose which evaluations to include in the data download</p>
+      {{macros.checkbox("my_evaluations", "My evaluations")}}
+      {{macros.checkbox("civil_service_only", "Evaluations visible to civil servants only")}}
+      {{macros.checkbox("public", "Public evaluations")}}
+    <p>Data on non-public evaluations is for internal Civil Service use only</p>
+ 
+    <div class="evaluation-button-row">
+      <button class="button" type="submit" name="json">Download as JSON</button>
+      <button class="button" type="submit" name="csv">Download as CSV</button>
+    </div>
+
+  </fieldset>
+  </form>
+{% endblock %}

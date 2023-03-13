@@ -108,11 +108,14 @@ def test_processes_standards_measure_urls(client):
 
 def test_step_through_evaluation():
     # Setup evaluation
-    authenticated_user = {"email": "test-evaluation-data-entry@example.com", "password": "giraffe47"}
+    test_email = "test-evaluation-data-entry@example.com"
+    authenticated_user = {"email": test_email, "password": "giraffe47"}
     client = utils.make_testino_client()
     utils.register(client, **authenticated_user)
-    evaluation = models.Evaluation()
+    user = models.User.objects.get(email=test_email)
+    evaluation = models.Evaluation(title="Test evaluation")
     evaluation.save()
+    evaluation.users.add(user)
     intro_page = client.get(f"/evaluation/{evaluation.id}/")
 
     # Intro page

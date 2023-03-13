@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from etf.evaluation import submission_views, views
+from etf.evaluation import download_views, submission_views, views
 
 urlpatterns = [
     path("", submission_views.index_view, name="index"),
@@ -18,6 +18,7 @@ urlpatterns = [
         submission_views.evaluation_overview_view,
         name="evaluation-overview",
     ),
+    path("data-download/", download_views.download_page_view, name="data-download"),
 ]
 
 api_urlpatterns = [
