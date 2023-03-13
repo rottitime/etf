@@ -260,7 +260,7 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.MeasureType.choices))))
+    conformity = fields.Str(validate=validate.And(validate.Length(max=10), validate.OneOf(get_db_values(choices.FullNoPartial.choices))))
     description = fields.Str()
 
 
