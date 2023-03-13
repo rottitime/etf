@@ -1,4 +1,3 @@
-from etf.evaluation.utils import Choices
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
