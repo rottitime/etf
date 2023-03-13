@@ -10,7 +10,7 @@ VALID_USER_PASSWORD1 = "elephant99"
 VALID_USER_PASSWORD2 = "giraffe47"
 
 
-def enter_form_data(email, password1, password2, follow=False):
+def enter_signup_form_data(email, password1, password2, follow=False):
     client = utils.make_testino_client()
 
     page = client.get("/accounts/signup/")
@@ -27,38 +27,38 @@ def enter_form_data(email, password1, password2, follow=False):
 
 
 def test_invalid_password_too_short():
-    page = enter_form_data(VALID_USER_EMAIL, "abc123!", "abc123!")
+    page = enter_signup_form_data(VALID_USER_EMAIL, "abc123!", "abc123!")
 
     assert page.has_text("This password is too short. It must contain at least 8 characters.")
     assert page.has_text("This password is too common.")
 
 
 def test_invalid_password_all_numeric():
-    page = enter_form_data(VALID_USER_EMAIL, "1234567890", "1234567890")
+    page = enter_signup_form_data(VALID_USER_EMAIL, "1234567890", "1234567890")
 
     assert page.has_text("This password is entirely numeric.")
 
 
 def test_invalid_password_too_common():
-    page = enter_form_data(VALID_USER_EMAIL, "asdfghjkl", "asdfghjkl")
+    page = enter_signup_form_data(VALID_USER_EMAIL, "asdfghjkl", "asdfghjkl")
 
     assert page.has_text("This password is too common.")
 
 
 def test_invalid_password_does_not_match():
-    page = enter_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD2)
+    page = enter_signup_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD2)
 
     assert page.has_text("You must type the same password each time.")
 
 
 def test_email_is_valid():
-    page = enter_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1, True)
+    page = enter_signup_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1, True)
 
     assert page.has_text(f"Successfully signed in as {VALID_USER_EMAIL}.")
 
 
 def test_email_is_invalid_domain_extension():
-    page = enter_form_data("jane.doe@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
+    page = enter_signup_form_data("jane.doe@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text(
         "This email domain is not yet supported. Please contact the site admin team if you think this is incorrect."
@@ -66,19 +66,19 @@ def test_email_is_invalid_domain_extension():
 
 
 def test_email_is_invalid_no_extension():
-    page = enter_form_data("jane.doe@example", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
+    page = enter_signup_form_data("jane.doe@example", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
 
 
 def test_email_is_invalid_only_domain():
-    page = enter_form_data("@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
+    page = enter_signup_form_data("@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
 
 
 def test_email_is_invalid_no_domain():
-    page = enter_form_data("john.doe@", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
+    page = enter_signup_form_data("john.doe@", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Enter a valid email address.")
 
@@ -87,7 +87,7 @@ def test_user_already_registered():
     user, _ = models.User.objects.get_or_create(email=VALID_USER_EMAIL)
     user.save()
 
-    page = enter_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
+    page = enter_signup_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Registration was unsuccessful, please try again.")
 
@@ -125,3 +125,48 @@ def test_verify_email():
     home_page = form.submit().follow()
 
     assert home_page.has_text("Create evaluation")
+
+
+def test_password_reset():
+    user, _ = models.User.objects.get_or_create(email=VALID_USER_EMAIL)
+    user.set_password(VALID_USER_PASSWORD1)
+    client = utils.make_testino_client()
+
+    page = client.get("/accounts/password-reset/")
+    form = page.get_form()
+    form["email"] = VALID_USER_EMAIL
+    page = form.submit()
+
+    assert page.has_text("Please check your email for a link to reset your password.")
+
+    url = utils._get_latest_email_url()
+
+    page = client.get(url)
+
+    form = page.get_form()
+    form["password1"] = VALID_USER_PASSWORD2
+    form["password2"] = VALID_USER_PASSWORD2
+
+    page = form.submit()
+
+    assert page.has_text("Your password has been successfully updated, please login again.")
+
+    page = client.get("/accounts/login/")
+
+    form = page.get_form()
+
+    form["login"] = VALID_USER_EMAIL
+    form["password"] = VALID_USER_PASSWORD2
+
+    page = form.submit().follow()
+
+    assert page.has_text(f"Successfully signed in as {VALID_USER_EMAIL}.")
+
+
+def test_incorrect_token_caught():
+    client = utils.make_testino_client()
+    empty_uuid = "00000000-0000-0000-0000-000000000000"
+    page = client.get(f"/accounts/change-password/reset/?code=test&user_id={empty_uuid}")
+
+    assert page.has_text("Something went wrong with this request. Please try entering your email again or login instead.")
+    assert page.has_text("Enter another email")
