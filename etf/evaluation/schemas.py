@@ -1,7 +1,6 @@
 from marshmallow import Schema, fields, validate
 
 from . import choices
-from .choices import get_db_values
 
 
 class DateAndBlankField(fields.Date):
