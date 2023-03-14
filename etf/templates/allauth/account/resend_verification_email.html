@@ -1,0 +1,28 @@
+{% extends "account/base.html" %}
+
+{% block head_title %}Resend verification email{% endblock %}
+
+{% block content %}
+
+
+  <div class="card">
+    <div class="card-divider">
+      Resend verification email
+    </div>
+    <div class="card-section">
+
+      <p>Don't have an account? Then please <a href="{{signup_url}}">sign up</a>.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <p>
+          <label for="id_email">Email:</label>
+          <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off">
+        </p>
+        <button class="button float-right" type="submit">Submit</button>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

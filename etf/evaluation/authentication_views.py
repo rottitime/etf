@@ -28,15 +28,56 @@ class CustomLoginView(MethodDispatcher):
             if user is not None:
                 if settings.SEND_VERIFICATION_EMAIL:
                     if not user.verified:
-                        messages.error(
-                            request, "The email address or password you entered is incorrect. Please try again."
+                        return render(
+                            request, "account/login.html", {"resend_verification": True, "resend_email": user.email}
                         )
-                        return render(request, "account/login.html", {})
                 login(request, user)
                 return redirect("index")
             else:
                 messages.error(request, "The email address or password you entered is incorrect. Please try again.")
                 return render(request, "account/login.html", {})
+
+
+@require_http_methods(["GET", "POST"])
+class CustomResendVerificationView(MethodDispatcher):
+    def get(self, request):
+        email = request.GET.get("email")
+        if not email:
+            return render(request, "account/resend_verification_email.html", {})
+        else:
+            user = models.User.objects.get(email=email)
+            if not user:
+                return render(request, "account/resend_verification_email.html", {})
+            email_handler.send_verification_email(user)
+            return render(
+                request,
+                "account/signup_complete.html",
+                {},
+            )
+
+    def post(self, request):
+        email = request.POST.get("email")
+        if not email:
+            messages.error(request, "Please enter a valid email address.")
+            return render(request, "account/resend_verification_email.html", {})
+        try:
+            validate_email(email)
+        except ValidationError as exc:
+            for errors in exc.error_list:
+                for error in errors:
+                    messages.error(request, error)
+            return render(request, "account/resend_verification_email.html", {})
+        try:
+            restrict_email.clean_email(email=email)
+        except ValidationError as exc:
+            for errors in exc.error_list:
+                for error in errors:
+                    messages.error(request, error)
+            return render(request, "account/resend_verification_email.html", {})
+        user = models.User.objects.get(email=email)
+        if user:
+            email_handler.send_verification_email(user)
+        return render(request, "account/signup_complete.html", {})
 
 
 class CustomSignupView(SignupView):

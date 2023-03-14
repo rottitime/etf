@@ -31,6 +31,9 @@
       {% endif %}
 
       <button class="button" type="submit">Log in</button>
+      {% if resend_verification is True and resend_email is not None %}
+        <p>Your account is not verified. <a href="{% url 'resend-verify-email' %}?email={{resend_email|urlencode}}">Request a new verification link</a>.</p>
+      {% endif %}
     </form>
   </section>
 
