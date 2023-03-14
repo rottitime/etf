@@ -238,10 +238,14 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeType.choices)))
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeType.choices))
+        )
     )
     direct_or_surrogate = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeMeasure.choices)))
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeMeasure.choices))
+        )
     )
     measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
@@ -265,7 +269,9 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     conformity = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.FullNoPartial.choices)))
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.FullNoPartial.choices))
+        )
     )
     description = fields.Str()
 
@@ -285,7 +291,9 @@ class EventDateSchema(TimeStampedModelSchema):
     event_date_name = fields.Str(validate=validate.Length(max=256))
     date = DateAndBlankField()
     event_date_type = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.EventDateType.choices)))
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.EventDateType.choices))
+        )
     )
     reasons_for_change = fields.Str()
 
