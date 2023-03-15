@@ -45,12 +45,12 @@ def get_name(item):
 
 def dump_python(data):
     python_template = """
-from . import choices
+from . import utils
 
 org_tuples = (
 {org_tuples}
 )
-Organisation = choices.Choices("Organisation", org_tuples)
+Organisation = utils.Choices("Organisation", org_tuples)
 """
     org_tuples = tuple((item["details"]["slug"], get_name(item)) for item in data)
     org_tuples = sorted(org_tuples, key=lambda x: x[1].lower())

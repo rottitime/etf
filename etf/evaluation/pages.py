@@ -1,7 +1,7 @@
-from etf.evaluation import choices
+from etf.evaluation import utils
 
 
-class EvaluationPageStatus(choices.Choices):
+class EvaluationPageStatus(utils.Choices):
     DONE = "Done"
     IN_PROGRESS = "In progress"
     INCOMPLETE = "Incomplete"

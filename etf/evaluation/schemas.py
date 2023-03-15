@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, validate
 
-from . import models
+from . import choices
 
 
 class DateAndBlankField(fields.Date):
@@ -56,7 +56,13 @@ class EvaluationSchema(TimeStampedModelSchema):
     brief_description = fields.Str()
     topics = fields.Raw()
     organisations = fields.Raw()
-    status = fields.Str(validate=validate.Length(max=256), default=models.EvaluationStatus.DRAFT.value)
+    status = fields.Str(
+        validate=validate.And(
+            validate.OneOf(choices.get_db_values(choices.EvaluationStatus.choices)), validate.Length(max=256)
+        ),
+        default=choices.EvaluationStatus.DRAFT.value,
+    )
+
     doi = fields.Str(validate=validate.Length(max=64))
     page_statuses = fields.Raw()
 
@@ -94,7 +100,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     recruitment_schedule = fields.Str()
 
     # Ethical considerations
-    ethics_committee_approval = fields.Str()
+    ethics_committee_approval = fields.Str(
+        validate=validate.And(validate.OneOf(choices.get_db_values(choices.YesNo.choices)), validate.Length(max=3))
+    )
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
     risks_to_participants = fields.Str()
@@ -128,7 +136,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
-    impact_eval_fidelity = fields.Str(validate=validate.Length(max=10))
+    impact_eval_fidelity = fields.Str(
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.YesNo.choices)))
+    )
     impact_eval_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
@@ -138,7 +148,11 @@ class EvaluationSchema(TimeStampedModelSchema):
     process_eval_analysis_description = fields.Str()
 
     # Economic evaluation design
-    economic_eval_type = fields.Str(validate=validate.Length(max=256))
+    economic_eval_type = fields.Str(
+        validate=validate.And(
+            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.EconomicEvaluationType.choices))
+        )
+    )
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
     monetisation_approaches = fields.Str()
@@ -222,8 +236,16 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    primary_or_secondary = fields.Str(validate=validate.Length(max=10))  # TODO - choices
-    direct_or_surrogate = fields.Str(validate=validate.Length(max=10))  # TODO - choices
+    primary_or_secondary = fields.Str(
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeType.choices))
+        )
+    )
+    direct_or_surrogate = fields.Str(
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeMeasure.choices))
+        )
+    )
     measure_type = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
@@ -245,7 +267,11 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    conformity = fields.Str(validate=validate.Length(max=10))
+    conformity = fields.Str(
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.FullNoPartial.choices))
+        )
+    )
     description = fields.Str()
 
 
@@ -263,7 +289,11 @@ class EventDateSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     event_date_name = fields.Str(validate=validate.Length(max=256))
     date = DateAndBlankField()
-    event_date_type = fields.Str(validate=validate.Length(max=10))
+    event_date_type = fields.Str(
+        validate=validate.And(
+            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.EventDateType.choices))
+        )
+    )
     reasons_for_change = fields.Str()
 
 

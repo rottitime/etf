@@ -1,4 +1,4 @@
-from . import choices
+from . import utils
 
 org_tuples = (
     ("academy-for-justice-commissioning", "Academy for Justice Commissioning"),
@@ -1372,4 +1372,4 @@ org_tuples = (
     ("youth-justice-board-for-england-and-wales", "Youth Justice Board for England and Wales (YJB)"),
     ("zahid-mubarek-inquiry", "Zahid Mubarek Inquiry"),
 )
-Organisation = choices.Choices("Organisation", org_tuples)
+Organisation = utils.Choices("Organisation", org_tuples)
