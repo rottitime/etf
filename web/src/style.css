@@ -1,6 +1,5 @@
 @custom-media --small-viewport (min-width: 1500px);
 
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,7 +14,6 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-
   --min-width: 1000px;
   --smallscreen: 480px;
 }
@@ -23,17 +21,15 @@
 body {
   background-color: #666;
   & td {
-    border:10px solid red;
+    border: 10px solid red;
   }
 
   @media (--small-viewport) {
     background-color: purple;
     & td {
-      border:10px solid green;
+      border: 10px solid green;
     }
   }
-
-
 }
 
 a {
