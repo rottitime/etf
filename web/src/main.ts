@@ -1,6 +1,6 @@
 import './style.css'
 
-if (!!document.getElementById('dev-js')) {
+if (document.getElementById('dev-js')) {
   ;['main-script', 'main-css'].forEach((id) =>
     document.getElementById(id)?.remove()
   )
