@@ -1,9 +1,8 @@
-import './style.css'
+import './style/style.css'
+import './style/template.css'
 
 if (document.getElementById('dev-js')) {
-  ;['main-script', 'main-css'].forEach((id) =>
-    document.getElementById(id)?.remove()
-  )
+  ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
 }
 
 // import typescriptLogo from './typescript.svg'

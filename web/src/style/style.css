@@ -3,6 +3,7 @@
 @custom-media --viewport-xl (min-width: 1399px);
 
 :root {
+  --color-white: #fff;
   --color-green: #065c53;
   --color-green-light: #b4cecb;
   --color-purple: #693695;
@@ -17,6 +18,11 @@
   --color-grey-dark: #333333;
   --color-grey-light: #666666;
   --color-grey-light2: #cccccc;
+
+  --color-disabled: #e6e6e6;
+
+  --width-container: 960px;
+  --text-color: var(--color-black);
 }
 
 h1,
@@ -59,7 +65,8 @@ h5,
 }
 
 body,
-p {
+p,
+.body-text {
   font-size: 18px;
   line-height: 24px;
 }
@@ -73,4 +80,36 @@ small,
 .small {
   font-size: 14px;
   line-height: 24px;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+button,
+.bttn-primary {
+  color: var(--color-white);
+  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+  border-radius: 20px;
+  padding: 8px 16px;
+  border: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
+  }
+  &:focus {
+    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
+  }
+  &:active {
+    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
+    outline: 2px solid #002864;
+  }
+  &:disabled {
+    background: #e6e6e6;
+    color: var(--color-grey-light2);
+  }
 }
