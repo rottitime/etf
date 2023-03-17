@@ -1,3 +1,4 @@
+@custom-media --small-viewport (min-width: 1500px);
 
 
 :root {
@@ -7,21 +8,32 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  background-color: green;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+
+  --min-width: 1000px;
+  --smallscreen: 480px;
 }
 
 body {
-  background-color: purple;
+  background-color: #666;
   & td {
     border:10px solid red;
   }
+
+  @media (--small-viewport) {
+    background-color: purple;
+    & td {
+      border:10px solid green;
+    }
+  }
+
+
 }
 
 a {
@@ -92,7 +104,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
+/* 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -104,4 +116,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
