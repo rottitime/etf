@@ -8,5 +8,52 @@
   --color-purple: #693695;
   --color-pink: #970254;
   --color-orange: #8f4000;
-  --color-blue
+  --color-blue: #0050c7;
+  --color-blue2: #002864;
+  --color-blue-light: #80a8e3;
+  --color-blue-light2: #ccdcf4;
+  --color-red: #ce2d1e;
+  --color-black: #1a1a1a;
+  --color-grey-dark: #333333;
+  --color-grey-light: #666666;
+  --color-grey-light2: #cccccc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 700;
+  font-style: normal;
+}
+
+h1,
+.header1 {
+  font-size: 36px;
+  line-height: 48px;
+}
+
+h2,
+.header2 {
+  font-size: 30px;
+  line-height: 40px;
+}
+
+h3,
+.header3 {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+h4,
+.header4 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h5,
+.header5 {
+  font-size: 18px;
+  line-height: 24px;
 }
