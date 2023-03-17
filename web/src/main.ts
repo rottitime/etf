@@ -1,7 +1,7 @@
 import './style/style.css'
 import './style/template.css'
 
-if (document.getElementById('dev-js')) {
+if (import.meta.env.MODE === 'development') {
   ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
 }
 
