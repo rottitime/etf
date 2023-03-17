@@ -1,0 +1,102 @@
+{% import 'macros.html' as macros with context %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Evaluation Registry</title>
+    <!-- <link rel="stylesheet" href="{{static('foundation/css/foundation.css')}}"/>
+    <link rel="stylesheet" href="{{static('bootstrap-icons/bootstrap-icons.css')}}"/>
+    <link rel="stylesheet" href="{{static('i-dot-ai/base.css')}}"/>
+    <script src="{{static('jquery/jquery.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.core.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.box.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.mediaQuery.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.triggers.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.keyboard.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.motion.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.touch.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.reveal.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.tooltip.min.js')}}"></script>
+    <script src="{{static('i-dot-ai/js/utils.js')}}"></script>
+    <script src="{{static('htmx/htmx-1-8-4.min.js')}}"></script>
+    <script src="{{static('accessible-autocomplete/accessible-autocomplete.min.js')}}"></script>
+    <link rel="stylesheet" href="{{static('accessible-autocomplete/accessible-autocomplete.min.css')}}"/> -->
+    <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
+    <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
+    <style></style>
+  </head>
+  <body id="etf">
+
+    <header class="main-header">
+
+      <div class="container">
+        <a href="/" class="logo">
+          <img src="{{static('i-dot-ai/images/crest.svg')}}" alt="logo"  />
+          <h2 class="body-text">Evaluation Registry</h2>
+        </a>
+
+        {% if request.user.is_authenticated %}
+        <nav>
+          <a href="/html/">Evaluation SEARCH</a> 
+          <a href="/css/">My Evaluations</a>
+          <form action="{{url('index')}}" method="POST">{{csrf_input}}
+            <button class="bttn-primary" type="submit" disabled="disabled">New evaluation</button>
+          </form>
+        </nav>
+        {% endif %}
+      </div>
+
+    </header>
+
+
+    <nav class="top-bar">
+      <div class="top-bar-left">
+        <h2><a href="/">Evaluation Registry</a></h2>
+
+        
+      </div>
+      <div class="top-bar-right">
+        {% if request.user.is_authenticated %}
+          <form action="{{url('search')}}" method="GET" id="search-form">{{csrf_input}}
+            <input type="hidden" value="False" name="is_search" id="is_search">
+            <div class="global--search">
+              <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
+              <button type="submit" class="button float-right">Go <i class="fi-arrow-right"></i></button>
+            </div>
+          </form>
+          <a class="no-margin-bottom button" href="{{url('search')}}">Advanced search</a>
+          <form action="{{url('index')}}" method="POST">{{csrf_input}}
+            <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
+          </form>
+          <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
+          <a class="no-margin-bottom button" href="{{url('account_logout')}}">
+            Logout <i class="bi-box-arrow-right"></i>
+          </a>
+        {% endif %}
+      </div>
+    </nav>
+    <div id="main" class="grid-x">
+
+      <div class="cell medium-4 large-2"></div>
+      <div class="cell medium-8 large-8">
+        {% set messages = get_messages(request) %}
+        {% if messages %}
+          <section>
+            {% for message in messages %} {% call macros.callout(message.tags) %}
+              <p>{{message}}</p>
+            {% endcall %} {% endfor %}
+          </section>
+        {% endif %}
+        <section class="inner">{% block content %} {% endblock %}</section>
+      </div>
+      <div class="cell medium-0 large-2"></div>
+    </div>
+
+    
+    <script type="module" src="http://127.0.0.1:5173/src/main.ts" id="dev-js"></script>
+  </body>
+</html>
