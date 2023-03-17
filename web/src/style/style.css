@@ -19,10 +19,13 @@
   --color-grey-light: #666666;
   --color-grey-light2: #cccccc;
 
-  --color-disabled: #e6e6e6;
+  --color-bg-disabled: #e6e6e6;
+
+  --color-link: var(--color-blue);
 
   --width-container: 960px;
   --text-color: var(--color-black);
+  --text-disabled: var(--color-grey-light2);
 }
 
 h1,
@@ -87,6 +90,25 @@ a {
   cursor: pointer;
 }
 
+a,
+txt-link {
+  color: var(--color-blue);
+  text-decoration: none;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    text-decoration-line: underline;
+  }
+  &:focused {
+    filter: drop-shadow(0px 0px 10px rgba(0, 80, 199, 0.8));
+  }
+  &:active {
+    color: var(--color-blue2);
+  }
+  &:disabled {
+    color: var(--text-disabled);
+  }
+}
+
 button,
 .bttn-primary {
   color: var(--color-white);
@@ -109,7 +131,7 @@ button,
     outline: 2px solid #002864;
   }
   &:disabled {
-    background: #e6e6e6;
-    color: var(--color-grey-light2);
+    background: var(--color-bg-disabled);
+    color: var(--text-disabled);
   }
 }
