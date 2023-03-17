@@ -3,4 +3,10 @@
 @custom-media --viewport-xl (min-width: 1399px);
 
 :root {
+  --color-green: #065c53;
+  --color-green-light: #b4cecb;
+  --color-purple: #693695;
+  --color-pink: #970254;
+  --color-orange: #8f4000;
+  --color-blue
 }

@@ -57,6 +57,13 @@
       </div>
     </nav>
     <div id="main" class="grid-x">
+
+---
+      {% if space_name == 'local' %}
+      <p>I am localhost</p>
+      {% endif %}
+      ***
+
       <div class="cell medium-4 large-2"></div>
       <div class="cell medium-8 large-8">
         {% set messages = get_messages(request) %}
@@ -71,6 +78,8 @@
       </div>
       <div class="cell medium-0 large-2"></div>
     </div>
+
+    
     <script type="module" src="http://127.0.0.1:5173/src/main.ts" id="dev-js"></script>
   </body>
 </html>
