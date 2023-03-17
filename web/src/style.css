@@ -57,3 +57,20 @@ h5,
   font-size: 18px;
   line-height: 24px;
 }
+
+body,
+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+caption,
+.caption {
+  font-size: 16px;
+}
+
+small,
+.small {
+  font-size: 14px;
+  line-height: 24px;
+}
