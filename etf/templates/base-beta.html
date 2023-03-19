@@ -96,7 +96,9 @@
       <div class="cell medium-0 large-2"></div>
     </div>
 
-    <!-- TODO: condition here to load only if in localhost mode -->
+    {% if space_name == 'local' %}
+    <!-- Dev script for local development -->
     <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
+    {% endif %}
   </body>
 </html>
