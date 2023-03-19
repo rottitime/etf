@@ -1,4 +1,4 @@
-import './style/style.css'
+import './style/base.css'
 import './style/template.css'
 
 if (import.meta.env.MODE === 'development') {

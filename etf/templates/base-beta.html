@@ -25,8 +25,10 @@
     <script src="{{static('htmx/htmx-1-8-4.min.js')}}"></script>
     <script src="{{static('accessible-autocomplete/accessible-autocomplete.min.js')}}"></script>
     <link rel="stylesheet" href="{{static('accessible-autocomplete/accessible-autocomplete.min.css')}}"/> -->
-    <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
-    <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
+    <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
+    <!-- <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
+    <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/> -->
+    <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
     <style></style>
   </head>
   <body id="etf">
@@ -100,5 +102,6 @@
     <!-- Dev script for local development -->
     <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
     {% endif %}
+    <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
   </body>
 </html>
