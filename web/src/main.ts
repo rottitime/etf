@@ -1,3 +1,4 @@
+import './style/vars.css'
 import './style/base.css'
 import './style/template.css'
 import './style/forms.css'
