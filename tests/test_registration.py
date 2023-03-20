@@ -168,5 +168,7 @@ def test_incorrect_user_id_and_code_caught():
     empty_uuid = "00000000-0000-0000-0000-000000000000"
     page = client.get(f"/accounts/change-password/reset/?code=test&user_id={empty_uuid}")
 
-    assert page.has_text("Something went wrong with this request. Please try entering your email again or login instead.")
+    assert page.has_text(
+        "Something went wrong with this request. Please try entering your email again or login instead."
+    )
     assert page.has_text("Enter another email")
