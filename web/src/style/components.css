@@ -32,16 +32,25 @@
       align-items: center;
       justify-content: space-between;
 
-      &.active {
-        & + .accordion-content-wrapper {
-          max-height: 5000px;
-        }
-      }
-
       & .icon {
         display: flex;
         align-items: center;
         gap: 10px;
+        & svg {
+          color: var(--color-blue);
+          transition: transform ease-in-out var(--animaiton-speed);
+          transform: rotate(180deg);
+        }
+      }
+
+      &.active {
+        & + .accordion-content-wrapper {
+          max-height: 5000px;
+        }
+
+        & .icon svg {
+          transform: rotate(0);
+        }
       }
     }
   }
