@@ -1,10 +1,19 @@
 input {
   background-color: var(--color-bg-white);
   border: 1px solid var(--input-stroke-light);
-  padding: 13px 16px;
   border-radius: 8px;
   font-weight: 300;
   font-size: 18px;
+  padding: 8px 16px;
+
+  &.large {
+    padding: 13px 16px;
+  }
+
+  &.small {
+    padding: 4px 12px 4px 12px;
+    font-size: 14px;
+  }
 
   &[type='search'] {
     background-image: url(/static/i-dot-ai/images/search.svg);
