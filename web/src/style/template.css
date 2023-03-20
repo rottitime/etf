@@ -75,3 +75,26 @@
     }
   }
 }
+
+.searchbox {
+  display: flex;
+  gap: var(--spacing-16);
+  align-items: center;
+}
+
+.searchbox-intro {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 64px 0;
+}
+
+.search-status {
+  display: flex;
+  gap: var(--spacing-16);
+  align-items: center;
+  margin-bottom: var(--spacing-24);
+  & div:last-child {
+    margin-left: auto;
+  }
+}

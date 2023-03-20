@@ -134,3 +134,7 @@ a,
 .mb-24 {
   margin-bottom: var(--spacing-24);
 }
+
+.center {
+  text-align: center;
+}

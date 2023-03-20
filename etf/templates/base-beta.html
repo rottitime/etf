@@ -63,7 +63,7 @@
 
     </header>
 
-    <div class="container">
+    <main class="container">
 
       <div class="sidebarcolumn">
         <div class="col">
@@ -416,24 +416,35 @@
         </div>
         <div class="col">
 
-          <div class="searchbox">
-            <input type="search" placeholder="Search keywords..." />
-            <button class="bttn-primary" type="submit">Search</button>
+          <form class="searchbox mb-16">
+            <input type="search" placeholder="Search keywords..." class="large full-width" />
+            <div><button class="bttn-primary" type="submit">Search</button></div>
+          </form>
+
+          <div class="searchbox-intro">
+            <p>Search through <b class="highlight">12,345 evaluations</b></p>
+            <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
           </div>
 
-          <p>Search through <b class="highlight">12,345 evaluations</b></p>
-          <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
+
+          <form class="searchbox mb-16">
+            <input type="search" placeholder="Search keywords..." class="large full-width" />
+          </form>
 
 
-          <div class="status">
+          <div class="search-status">
             <div><b>4</b> results found</div>
             <div>
               <div class="chip">
                 Accelerated Access Review (AAR)
-                <a href="#" title="close" class="close">svg</a>
+                <a href="#" title="close" class="close">
+                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
+                  </svg>
+                </a>
               </div>
             </div>
-            <div><a href="#">Clear All</a></div>
+            <div><a href="#" class="small">Clear All</a></div>
           </div>
 
           <div class="results">
@@ -474,53 +485,12 @@
 
 
 
-      <nav class="top-bar">
-        <div class="top-bar-left">
-          <h2><a href="/">Evaluation Registry</a></h2>
-  
-          
-        </div>
-        <div class="top-bar-right">
-          {% if request.user.is_authenticated %}
-            <form action="{{url('search')}}" method="GET" id="search-form">{{csrf_input}}
-              <input type="hidden" value="False" name="is_search" id="is_search">
-              <div class="global--search">
-                <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
-                <button type="submit" class="button float-right">Go <i class="fi-arrow-right"></i></button>
-              </div>
-            </form>
-            <a class="no-margin-bottom button" href="{{url('search')}}">Advanced search</a>
-            <form action="{{url('index')}}" method="POST">{{csrf_input}}
-              <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
-            </form>
-            <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
-            <a class="no-margin-bottom button" href="{{url('account_logout')}}">
-              Logout <i class="bi-box-arrow-right"></i>
-            </a>
-          {% endif %}
-        </div>
-      </nav>
 
-    </div>
+
+    </ma>
 
 
 
-    <div id="main" class="grid-x">
-
-      <div class="cell medium-4 large-2"></div>
-      <div class="cell medium-8 large-8">
-        {% set messages = get_messages(request) %}
-        {% if messages %}
-          <section>
-            {% for message in messages %} {% call macros.callout(message.tags) %}
-              <p>{{message}}</p>
-            {% endcall %} {% endfor %}
-          </section>
-        {% endif %}
-        <section class="inner">{% block content %} {% endblock %}</section>
-      </div>
-      <div class="cell medium-0 large-2"></div>
-    </div>
 
     {% if space_name == 'local' %}
     <!-- Dev script for local development -->
