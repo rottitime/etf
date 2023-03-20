@@ -1,6 +1,7 @@
+from nose import with_setup
+
 from etf import settings as etf_settings
 from etf.evaluation import models
-
 from . import utils
 
 VALID_USER_EMAIL = "test@example.com"
@@ -90,8 +91,9 @@ def test_user_already_registered():
     assert page.has_text("Registration was unsuccessful, please try again.")
 
 
+@with_setup(lambda: setattr(etf_settings, 'SEND_VERIFICATION_EMAIL', True),
+            lambda: setattr(etf_settings, 'SEND_VERIFICATION_EMAIL', False))
 def test_verify_email():
-    etf_settings.SEND_VERIFICATION_EMAIL = True
     client = utils.make_testino_client()
 
     page = client.get("/accounts/signup/")
@@ -120,5 +122,3 @@ def test_verify_email():
     home_page = form.submit().follow()
 
     assert home_page.has_text("Create evaluation")
-
-    etf_settings.SEND_VERIFICATION_EMAIL = False
