@@ -163,7 +163,7 @@ def test_password_reset():
     assert page.has_text(f"Successfully signed in as {VALID_USER_EMAIL}.")
 
 
-def test_incorrect_token_caught():
+def test_incorrect_user_id_and_code_caught():
     client = utils.make_testino_client()
     empty_uuid = "00000000-0000-0000-0000-000000000000"
     page = client.get(f"/accounts/change-password/reset/?code=test&user_id={empty_uuid}")
