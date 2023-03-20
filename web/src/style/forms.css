@@ -36,3 +36,50 @@ input {
     outline: 2px solid var(--input-stroke-dark);
   }
 }
+
+.checkbox {
+  font-weight: 400;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  & .checkmark {
+    display: block;
+    flex: 0 0 24px;
+    height: 24px;
+    border: 2px solid var(--input-stroke-light);
+    border-radius: 4px;
+    transition: border-color var(--animaiton-speed),
+      background-color var(--animaiton-speed);
+    &:before {
+      content: '';
+      background-image: url(/static/i-dot-ai/images/tick-white.svg);
+      height: 24px;
+      width: 24px;
+      position: absolute;
+      transition-delay: var(--animaiton-speed);
+      transition: all var(--animaiton-speed);
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+
+  & input[type='checkbox'] {
+    display: none;
+    &:checked + .checkmark {
+      border-color: var(--color-input-active);
+      background-color: var(--color-input-active);
+      display: flex;
+      align-items: center;
+      &:before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.row {
+  margin-bottom: var(--spacing-8);
+}

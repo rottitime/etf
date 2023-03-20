@@ -33,7 +33,11 @@
   --text-color: var(--color-black);
   --text-disabled: var(--color-grey-light2);
 
+  --color-input-active: var(--color-blue);
+
   --spacing-8: 8px;
   --spacing-16: 16px;
   --spacing-24: 24px;
+
+  --animaiton-speed: 0.3s;
 }
