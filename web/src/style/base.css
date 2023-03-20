@@ -19,7 +19,11 @@
   --color-grey-light: #666666;
   --color-grey-light2: #cccccc;
 
+  --color-bg-white: #fff;
   --color-bg-disabled: #e6e6e6;
+
+  --input-stroke-light: var(--color-grey-light2);
+  --input-stroke-dark: var(--color-blue2);
 
   --color-link: var(--color-blue);
 
@@ -68,7 +72,7 @@ h5,
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body,

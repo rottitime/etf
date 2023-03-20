@@ -1,0 +1,17 @@
+input {
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--input-stroke-light);
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: 300;
+  font-size: 18px;
+
+  &::placeholder {
+    color: var(--color-grey-light);
+    font-style: italic;
+  }
+  &::focus {
+    /* outline:  */
+    outline: 2px solid var(--input-stroke-dark);
+  }
+}
