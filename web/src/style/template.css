@@ -2,6 +2,7 @@
   background-color: #fff;
   border-bottom: 4px solid var(--color-pink);
   padding: 16px 0;
+  margin-bottom: 24px;
 
   & .container {
     display: flex;
@@ -41,4 +42,23 @@
 .container {
   max-width: var(--width-container);
   margin: 0 auto;
+}
+
+/* //TODO: Replace with light grid system */
+.sidebarcolumn {
+  display: flex;
+  gap: 24px;
+  & .col:first-child {
+    width: 304px;
+  }
+}
+
+.sidebar {
+  background-color: var(--color-bg-white);
+  & header {
+    padding: 16px;
+    & h3 {
+      margin: 0;
+    }
+  }
 }

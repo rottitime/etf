@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>Evaluation Registry</title>
+    <!-- <link rel="stylesheet" href="{{static('foundation/css/foundation.css')}}"/> -->
     <!-- <link rel="stylesheet" href="{{static('foundation/css/foundation.css')}}"/>
     <link rel="stylesheet" href="{{static('bootstrap-icons/bootstrap-icons.css')}}"/>
     <link rel="stylesheet" href="{{static('i-dot-ai/base.css')}}"/>
@@ -55,33 +56,212 @@
 
     </header>
 
+    <div class="container">
 
-    <nav class="top-bar">
-      <div class="top-bar-left">
-        <h2><a href="/">Evaluation Registry</a></h2>
+      <div class="sidebarcolumn">
+        <div class="col">
 
-        
-      </div>
-      <div class="top-bar-right">
-        {% if request.user.is_authenticated %}
-          <form action="{{url('search')}}" method="GET" id="search-form">{{csrf_input}}
-            <input type="hidden" value="False" name="is_search" id="is_search">
-            <div class="global--search">
-              <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
-              <button type="submit" class="button float-right">Go <i class="fi-arrow-right"></i></button>
+
+          <div class="sidebar">
+            <header>
+              <h3 class="highlight header5">Filters</h3>
+            </header>
+
+            <ul class="accordion" >
+              <li>
+                <button>
+                  
+                  
+                  <span class="title">Organisations <div class="badge">1</div></span>
+
+
+                  <span class="icon">
+                  
+                    <button class="txt-link small">Clear</button>
+                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0843 0.38361L2.41691 9.05086C2.1695 9.29827 2.03369 9.62802 2.03369 9.97963C2.03369 10.3316 2.16969 10.6612 2.41691 10.9086L3.20402 11.6955C3.45105 11.9427 3.78099 12.0789 4.1328 12.0789C4.4844 12.0789 4.82547 11.9427 5.0725 11.6955L10.14 6.63917L10.14 22.7034C10.14 23.4277 10.707 24 11.4315 24H12.5442C13.2687 24 13.8929 23.4277 13.8929 22.7034L13.8929 6.5818L18.9887 11.6953C19.2361 11.9425 19.5571 12.0787 19.9089 12.0787C20.2603 12.0787 20.5859 11.9425 20.8331 11.6953L21.6177 10.9084C21.8651 10.661 22 10.3314 22 9.97943C22 9.62783 21.8634 9.29807 21.616 9.05066L12.9487 0.383415C12.7005 0.135416 12.3692 -0.00097084 12.017 3.8147e-06C11.6637 -0.000776291 11.3322 0.135416 11.0843 0.38361Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                    
+
+                </button>
+                <div class="accordion-content">
+                  <input type="search" placeholder="Filter..." />
+
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Academy for Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Academy for Social Justice</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Academy for Social Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Accelerated Access Review (AAR)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Accelerated Capability Environment (ACE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Active Travel England (ATE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Administrative Court</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label>
+                    <input type="checkbox" />
+                    <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                  </label>
+                </div>
+
+
+                </div>
+              </li>
+              <li>
+                <button>Topics</button>
+                <div class="accordion-content"></div>
+              </li>
+              <li>
+                <button>Evaluation type</button>
+                <div class="accordion-content"></div>
+              </li>
+              <li>
+                <button>Stage</button>
+                <div class="accordion-content"></div>
+                
+              </li>
+            </ul>
+
+
+          </div>
+
+        </div>
+        <div class="col">
+
+          <div class="searchbox">
+            <input type="search" placeholder="Search keywords..." />
+            <button class="bttn-primary" type="submit">Search</button>
+          </div>
+
+          <p>Search through <b class="highlight">12,345 evaluations</b></p>
+          <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
+
+
+          <div class="status">
+            <div><b>4</b> results found</div>
+            <div>
+              <div class="chip">
+                Accelerated Access Review (AAR)
+                <a href="#" title="close" class="close">svg</a>
+              </div>
             </div>
-          </form>
-          <a class="no-margin-bottom button" href="{{url('search')}}">Advanced search</a>
-          <form action="{{url('index')}}" method="POST">{{csrf_input}}
-            <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
-          </form>
-          <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
-          <a class="no-margin-bottom button" href="{{url('account_logout')}}">
-            Logout <i class="bi-box-arrow-right"></i>
-          </a>
-        {% endif %}
+            <div><a href="#">Clear All</a></div>
+          </div>
+
+          <div class="results">
+            <div class="card">
+              <h2>STP Assessment: Sustainable Transport Performance</h2>
+              <p>An evaluation that assesses the performance of a transportation system in terms of sustainability, including factors such as emissions, energy efficiency, and the use of alternative fuels.</p>
+
+              <table>
+                <tr>
+                  <th>Stage</th>
+                  <td>Planning</td>
+                </tr>
+                <tr>
+                  <th>Organisation(s)</th>
+                  <td>Accelerated Access Review (AAR) </td>
+                </tr>
+                <tr>
+                  <th>Evaluation type</th>
+                  <td>Impact Evaluation</td>
+                </tr>
+
+                <tr>
+                  <th>Title of Interventions</th>
+                  <td>Giving children homework<br/>
+                    Not giving children homework</td>
+                </tr>
+                <tr>
+                  <th>Title of Outcome measures</th>
+                  <td>Children doing better in their exams<br/>
+                    Teachers find it easier to teach stuff</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </nav>
+
+
+
+      <nav class="top-bar">
+        <div class="top-bar-left">
+          <h2><a href="/">Evaluation Registry</a></h2>
+  
+          
+        </div>
+        <div class="top-bar-right">
+          {% if request.user.is_authenticated %}
+            <form action="{{url('search')}}" method="GET" id="search-form">{{csrf_input}}
+              <input type="hidden" value="False" name="is_search" id="is_search">
+              <div class="global--search">
+                <input placeholder="Enter a search term..." type="text" id="search_phrase" name="search_phrase">
+                <button type="submit" class="button float-right">Go <i class="fi-arrow-right"></i></button>
+              </div>
+            </form>
+            <a class="no-margin-bottom button" href="{{url('search')}}">Advanced search</a>
+            <form action="{{url('index')}}" method="POST">{{csrf_input}}
+              <button class="no-margin-bottom button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
+            </form>
+            <a class="no-margin-bottom button" href="{{url('my-evaluations')}}">My evaluations</a>
+            <a class="no-margin-bottom button" href="{{url('account_logout')}}">
+              Logout <i class="bi-box-arrow-right"></i>
+            </a>
+          {% endif %}
+        </div>
+      </nav>
+
+    </div>
+
+
+
     <div id="main" class="grid-x">
 
       <div class="cell medium-4 large-2"></div>

@@ -2,6 +2,7 @@ import './style/vars.css'
 import './style/base.css'
 import './style/template.css'
 import './style/forms.css'
+import './style/components.css'
 
 if (import.meta.env.MODE === 'development') {
   ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())

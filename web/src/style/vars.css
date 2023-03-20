@@ -22,6 +22,8 @@
   --color-bg-white: #fff;
   --color-bg-disabled: #e6e6e6;
 
+  --color-highlight1: var(--color-pink);
+
   --input-stroke-light: var(--color-grey-light2);
   --input-stroke-dark: var(--color-blue2);
 

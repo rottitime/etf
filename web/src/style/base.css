@@ -71,7 +71,7 @@ a {
 }
 
 a,
-txt-link {
+.txt-link {
   color: var(--color-blue);
   text-decoration: none;
   transition: all ease-in-out 0.3s;
@@ -89,7 +89,6 @@ txt-link {
   }
 }
 
-button,
 .bttn-primary {
   color: var(--color-white);
   background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
@@ -114,4 +113,8 @@ button,
     background: var(--color-bg-disabled);
     color: var(--text-disabled);
   }
+}
+
+.highlight {
+  color: var(--color-highlight1);
 }
