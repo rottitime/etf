@@ -16,14 +16,24 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 24px;
+      width: 100%;
       border: none;
       background-color: transparent;
       padding: var(--accordion-spacing);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      & .icon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
     }
   }
 
   & .accordion-content {
-    padding: var(--accordion-spacing);
+    padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
   }
 }
 

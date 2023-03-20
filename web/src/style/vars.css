@@ -32,4 +32,8 @@
   --width-container: 960px;
   --text-color: var(--color-black);
   --text-disabled: var(--color-grey-light2);
+
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
 }

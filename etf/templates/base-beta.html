@@ -45,8 +45,15 @@
         {% if request.user.is_authenticated %}
         <nav>
           
-          <input type="search" placeholder="Hint..." />
-          <a href="/css/">My Evaluations</a>
+          <a href="/css/" class="active">
+            
+            <svg width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21.5264 18.9713L16.9282 14.3728C17.7095 13.129 18.1629 11.659 18.1629 10.0813C18.1629 5.61786 14.5446 2 10.0813 2C5.61803 2 2 5.61786 2 10.0813C2 14.5449 5.61786 18.1624 10.0813 18.1624C11.7982 18.1624 13.3885 17.6257 14.6971 16.7136L19.2405 21.2573C19.5562 21.5727 19.9701 21.7298 20.3835 21.7298C20.7973 21.7298 21.2107 21.5727 21.5269 21.2573C22.1578 20.6257 22.1578 19.6027 21.5264 18.9713ZM10.0813 15.5442C7.06453 15.5442 4.61873 13.0986 4.61873 10.0816C4.61873 7.0647 7.06453 4.6189 10.0813 4.6189C13.0982 4.6189 15.5439 7.0647 15.5439 10.0816C15.5439 13.0986 13.0982 15.5442 10.0813 15.5442Z" fill="currentColor"/>
+              </svg>
+              
+            
+            EVALUATION SEARCH</a>
+          <a href="/css/">MY EVALUATIONS</a>
           <form action="{{url('index')}}" method="POST">{{csrf_input}}
             <button class="bttn-primary" type="submit">New evaluation</button>
           </form>
@@ -72,26 +79,26 @@
                 <button>
                   
                   
-                  <span class="title">Organisations <div class="badge">1</div></span>
+                  <div class="title">Organisations <div class="badge">1</div></div>
 
 
-                  <span class="icon">
+                  <div class="icon">
                   
-                    <button class="txt-link small">Clear</button>
+                    <a href="#" class="txt-link small">Clear</a>
                   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.0843 0.38361L2.41691 9.05086C2.1695 9.29827 2.03369 9.62802 2.03369 9.97963C2.03369 10.3316 2.16969 10.6612 2.41691 10.9086L3.20402 11.6955C3.45105 11.9427 3.78099 12.0789 4.1328 12.0789C4.4844 12.0789 4.82547 11.9427 5.0725 11.6955L10.14 6.63917L10.14 22.7034C10.14 23.4277 10.707 24 11.4315 24H12.5442C13.2687 24 13.8929 23.4277 13.8929 22.7034L13.8929 6.5818L18.9887 11.6953C19.2361 11.9425 19.5571 12.0787 19.9089 12.0787C20.2603 12.0787 20.5859 11.9425 20.8331 11.6953L21.6177 10.9084C21.8651 10.661 22 10.3314 22 9.97943C22 9.62783 21.8634 9.29807 21.616 9.05066L12.9487 0.383415C12.7005 0.135416 12.3692 -0.00097084 12.017 3.8147e-06C11.6637 -0.000776291 11.3322 0.135416 11.0843 0.38361Z" fill="currentColor"/>
                     </svg>
-                  </span>
+                  </div>
                     
 
                 </button>
                 <div class="accordion-content">
-                  <input type="text" placeholder="Filter..." class="small" />
+                  <input type="text" placeholder="Filter..." class="small full-width" />
 
                   <div class="row">
                     <label>
-                    <input type="checkbox" />
-                    <span>Academy for Justice Commissioning</span>
+                      <input type="checkbox" />
+                      <span>Academy for Justice Commissioning</span>
                   </label>
                 </div>
                   <div class="row">

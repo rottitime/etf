@@ -5,6 +5,11 @@ input {
   font-weight: 300;
   font-size: 18px;
   padding: 8px 16px;
+  box-sizing: border-box;
+
+  &.full-width {
+    width: 100%;
+  }
 
   &.large {
     padding: 13px 16px;
