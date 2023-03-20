@@ -80,7 +80,7 @@ def search_evaluations_view(request):
                 if status == choices.EvaluationStatus.CIVIL_SERVICE:
                     qs = qs.filter(status=status)
             if topics:
-                topics_qs = choices.Evaluation.objects.none()
+                topics_qs = models.Evaluation.objects.none()
                 for topic in topics:
                     topic_qs = qs.filter(topics__contains=topic)
                     topics_qs = topics_qs | topic_qs
