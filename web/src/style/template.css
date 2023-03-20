@@ -98,3 +98,12 @@
     margin-left: auto;
   }
 }
+
+.search-results .card {
+  margin-bottom: var(--spacing-16);
+  & th {
+    text-align: left;
+    vertical-align: top;
+    padding-right: var(--spacing-16);
+  }
+}
