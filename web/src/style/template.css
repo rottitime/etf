@@ -62,7 +62,7 @@
   display: flex;
   gap: 24px;
   & .col:first-child {
-    flex: 0 0 304px;
+    flex: 0 0 276px;
   }
 }
 

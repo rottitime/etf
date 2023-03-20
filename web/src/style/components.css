@@ -1,5 +1,6 @@
 .card {
   background-color: var(--color-bg-white);
+  padding: var(--spacing-24);
 }
 
 .accordion {

@@ -9,6 +9,7 @@ h2,
 h3,
 h4,
 h5 {
+  margin-top: 0;
   font-weight: 700;
   font-style: normal;
 }
@@ -48,10 +49,13 @@ body {
 }
 
 body,
-p,
 .body-text {
   font-size: 18px;
   line-height: 24px;
+}
+
+p {
+  margin-top: 0;
 }
 
 caption,
