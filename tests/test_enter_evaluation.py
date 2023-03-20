@@ -1,6 +1,6 @@
 from nose.tools import with_setup
 
-from etf.evaluation import choices, enums, interface, models
+from etf.evaluation import choices, enums, models
 
 from . import utils
 
@@ -113,7 +113,10 @@ def test_step_through_evaluation():
     client = utils.make_testino_client()
     utils.register(client, **authenticated_user)
     user = models.User.objects.get(email=test_email)
-    evaluation = interface.facade.evaluation.create(user.id)
+    evaluation = models.Evaluation.objects.create(title="Test evaluation")
+    evaluation.save()
+    user.evaluations.add(evaluation)
+    user.save()
     intro_page = client.get(f"/evaluation/{evaluation.id}/")
 
     # Intro page
