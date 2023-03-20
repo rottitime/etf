@@ -118,3 +118,15 @@ a,
 .highlight {
   color: var(--color-highlight1);
 }
+
+/* Spacings */
+.mb-8 {
+  margin-bottom: var(--spacing-8);
+}
+
+.mb-16 {
+  margin-bottom: var(--spacing-16);
+}
+.mb-24 {
+  margin-bottom: var(--spacing-24);
+}
