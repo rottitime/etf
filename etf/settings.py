@@ -70,6 +70,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.jinja2.Jinja2",
         "DIRS": [
             BASE_DIR / "etf" / "templates",
+            BASE_DIR / "static" / "i-dot-ai" / "images",
         ],
         "OPTIONS": {
             "environment": "etf.jinja2.environment",
