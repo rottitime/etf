@@ -19,15 +19,21 @@ const setupAccordions = () => {
   //create wrapper
   document.querySelectorAll('.accordion-content').forEach((content) => {
     const id = `wrapper-${shortUUID.generate()}`
+    const buttonid = `button-${shortUUID.generate()}`
     const wrapper = document.createElement('div')
     const parent = content.parentNode
+    const parentButton = parent?.querySelector('button')
 
     wrapper.classList.add('accordion-content-wrapper')
     wrapper.setAttribute('id', id)
     wrapper.setAttribute('role', 'region')
+    wrapper.setAttribute('aria-labelledby', buttonid)
+
     wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
     parent?.insertBefore(wrapper, content)
-    parent?.querySelector('button')?.setAttribute('aria-controls', id)
+    parentButton?.setAttribute('aria-controls', id)
+    parentButton?.setAttribute('id', buttonid)
+
     wrapper.appendChild(content)
   })
 
