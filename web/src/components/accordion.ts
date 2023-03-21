@@ -1,5 +1,4 @@
-import { wrap } from 'module'
-import typescriptLogo from '../svg/arrow-down.svg'
+import iconRaw from '../svg/arrow-down.svg'
 
 const setupAccordions = () => {
   const accordionItems = document.querySelectorAll('.accordion li')
@@ -11,6 +10,11 @@ const setupAccordions = () => {
       .forEach((active) => active.classList.remove('active'))
   }
 
+  //icons
+  document.querySelectorAll('.accordion .icon').forEach((icon) => {
+    icon.insertAdjacentHTML('beforeend', iconRaw)
+  })
+
   //create wrapper
   document.querySelectorAll('.accordion-content').forEach((content) => {
     const wrapper = document.createElement('div')
@@ -18,9 +22,7 @@ const setupAccordions = () => {
     wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
     content.parentNode?.insertBefore(wrapper, content)
     wrapper.appendChild(content)
-    wrapper.innerHTML = `
-    <img src="${typescriptLogo}" />
-    `
+    wrapper.innerHTML = iconRaw
   })
 
   //click behaviour
