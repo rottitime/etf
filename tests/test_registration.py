@@ -1,3 +1,6 @@
+from nose import with_setup
+
+from etf import settings as etf_settings
 from etf.evaluation import models
 
 from . import utils
@@ -87,3 +90,38 @@ def test_user_already_registered():
     page = enter_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
     assert page.has_text("Registration was unsuccessful, please try again.")
+
+
+@with_setup(
+    lambda: setattr(etf_settings, "SEND_VERIFICATION_EMAIL", True),
+    lambda: setattr(etf_settings, "SEND_VERIFICATION_EMAIL", False),
+)
+def test_verify_email():
+    client = utils.make_testino_client()
+
+    page = client.get("/accounts/signup/")
+    assert page.has_text("Register")
+    form = page.get_form()
+    form["email"] = "test-verification@example.com"
+    form["password1"] = VALID_USER_PASSWORD1
+    form["password2"] = VALID_USER_PASSWORD1
+
+    signed_up_page = form.submit()
+    assert signed_up_page.has_text("Sign up complete")
+    assert signed_up_page.has_text("A verification email has been sent to your email address.")
+
+    verify_url = utils._get_latest_email_url()
+
+    verify_page = client.get(verify_url)
+
+    assert verify_page.has_text("Your account has been successfully verified.")
+
+    login_page = client.get("/accounts/login/")
+
+    form = login_page.get_form()
+    form["login"] = "test-verification@example.com"
+    form["password"] = VALID_USER_PASSWORD1
+
+    home_page = form.submit().follow()
+
+    assert home_page.has_text("Create evaluation")
