@@ -181,8 +181,11 @@ class PasswordChange(MethodDispatcher):
         return user_id, token, valid_request
 
     def get(self, request):
-        user_id, token, valid_request = self.get_token_request_args(request)
-        return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        try:
+            _, _, valid_request = self.get_token_request_args(request)
+            return render(request, "account/password_reset_from_key.html", {"valid": valid_request})
+        except models.User.DoesNotExist:
+            return render(request, "account/password_reset_from_key.html", {"valid": False})
 
     def post(self, request):
         user_id, token, valid_request = self.get_token_request_args(request)
