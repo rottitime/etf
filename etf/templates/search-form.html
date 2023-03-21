@@ -1,10 +1,7 @@
 {% extends "beta/beta-base.html" %}
 {% import "macros.html" as macros with context %}
 
-
-
 {% block content %}
-
   <form method="get">
     <input type="hidden" value="False" name="is_search" id="is_search">
     {{macros.textarea("search_phrase", "Search phrase")}}
