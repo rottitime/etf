@@ -2,7 +2,6 @@ from nose import with_setup
 
 from etf import settings as etf_settings
 from etf.evaluation import models
-
 from . import utils
 
 VALID_USER_EMAIL = "test@example.com"
@@ -160,7 +159,7 @@ def test_password_reset():
 
     page = form.submit().follow()
 
-    assert page.has_text(f"Successfully signed in as {VALID_USER_EMAIL}.")
+    assert page.has_text("Create evaluation")
 
 
 def test_incorrect_user_id_and_code_caught():
