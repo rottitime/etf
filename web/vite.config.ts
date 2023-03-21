@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import postcssNesting from 'postcss-nesting'
 import postcssCustomMedia from 'postcss-custom-media'
+import svgLoader from 'vite-svg-loader'
 
 export default defineConfig({
+  plugins: [svgLoader({ defaultImport: 'raw' })],
   css: {
     postcss: {
-      plugins: [postcssNesting, postcssCustomMedia],
-    },
+      plugins: [postcssNesting, postcssCustomMedia]
+    }
   },
   build: {
     outDir: '../static/dist',
@@ -14,8 +16,8 @@ export default defineConfig({
       output: {
         entryFileNames: `assets/[name].js`,
         chunkFileNames: `assets/[name].js`,
-        assetFileNames: `assets/[name].[ext]`,
-      },
-    },
-  },
+        assetFileNames: `assets/[name].[ext]`
+      }
+    }
+  }
 })
