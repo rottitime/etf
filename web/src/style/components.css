@@ -21,36 +21,41 @@
     padding: 0;
     list-style: none;
     border-top: 1px solid var(--input-stroke-light);
-    & > button {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 24px;
-      width: 100%;
-      border: none;
-      background-color: transparent;
-      padding: var(--accordion-spacing);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
 
-      & .icon {
+    & > h3 {
+      margin: 0;
+
+      & button {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 24px;
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        padding: var(--accordion-spacing);
         display: flex;
         align-items: center;
-        gap: 10px;
-        & svg {
-          color: var(--color-blue);
-          transition: transform ease-in-out var(--animaiton-speed);
-          transform: rotate(180deg);
-        }
-      }
+        justify-content: space-between;
 
-      &.active {
-        & + .accordion-content-wrapper {
-          max-height: 5000px;
+        & .icon {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          & svg {
+            color: var(--color-blue);
+            transition: transform ease-in-out var(--animaiton-speed);
+            transform: rotate(180deg);
+          }
         }
 
-        & .icon svg {
-          transform: rotate(0);
+        &.active {
+          & + .accordion-content-wrapper {
+            max-height: 5000px;
+          }
+
+          & .icon svg {
+            transform: rotate(0);
+          }
         }
       }
     }
