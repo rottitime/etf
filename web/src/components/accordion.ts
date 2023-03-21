@@ -1,4 +1,5 @@
 import iconRaw from '../svg/arrow-down.svg'
+import shortUUID from 'short-uuid'
 
 const setupAccordions = () => {
   const accordionItems = document.querySelectorAll('.accordion li')
@@ -17,10 +18,16 @@ const setupAccordions = () => {
 
   //create wrapper
   document.querySelectorAll('.accordion-content').forEach((content) => {
+    const id = `wrapper-${shortUUID.generate()}`
     const wrapper = document.createElement('div')
+    const parent = content.parentNode
+
     wrapper.classList.add('accordion-content-wrapper')
+    wrapper.setAttribute('id', id)
+    wrapper.setAttribute('role', 'region')
     wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
-    content.parentNode?.insertBefore(wrapper, content)
+    parent?.insertBefore(wrapper, content)
+    parent?.querySelector('button')?.setAttribute('aria-controls', id)
     wrapper.appendChild(content)
   })
 
