@@ -47,15 +47,15 @@
             transform: rotate(180deg);
           }
         }
+      }
 
-        &.active {
-          & + .accordion-content-wrapper {
-            max-height: 5000px;
-          }
+      &.active {
+        & + .accordion-content-wrapper {
+          max-height: 5000px;
+        }
 
-          & .icon svg {
-            transform: rotate(0);
-          }
+        & .icon svg {
+          transform: rotate(0);
         }
       }
     }

@@ -22,7 +22,6 @@ const setupAccordions = () => {
     wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
     content.parentNode?.insertBefore(wrapper, content)
     wrapper.appendChild(content)
-    wrapper.innerHTML = iconRaw
   })
 
   //click behaviour
@@ -35,13 +34,14 @@ const setupAccordions = () => {
 
     button?.addEventListener('click', () => {
       // debugger
+      const parent = button.parentNode as Element
 
-      if (button.classList.contains('active')) {
+      if (parent?.classList.contains('active')) {
         removeAllActive(accordion)
       } else {
         const height = content?.clientHeight
         removeAllActive(accordion)
-        button.classList.add('active')
+        parent.classList.add('active')
         wrapper?.setAttribute('style', `max-height:${height}px`)
       }
     })
