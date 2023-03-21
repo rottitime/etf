@@ -1,6 +1,4 @@
 {% import 'macros.html' as macros with context %}
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,6 +25,7 @@
     <script src="{{static('htmx/htmx-1-8-4.min.js')}}"></script>
     <script src="{{static('accessible-autocomplete/accessible-autocomplete.min.js')}}"></script>
     <link rel="stylesheet" href="{{static('accessible-autocomplete/accessible-autocomplete.min.css')}}"/>
+
     <style></style>
   </head>
   <body id="etf">
@@ -69,5 +68,6 @@
       </div>
       <div class="cell medium-0 large-2"></div>
     </div>
+    <script type="module" src="http://127.0.0.1:5173/src/main.ts" id="dev-js"></script>
   </body>
 </html>

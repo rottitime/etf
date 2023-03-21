@@ -6,6 +6,8 @@ To run this project:
 
     docker-compose up --build --force-recreate web
 
+open http://localhost:8010/
+
 To populate the database with fake data:
 
     docker-compose run web python manage.py add_fake_data
@@ -37,3 +39,22 @@ To update organisations data:
     python scripts/scrape_organisations.py
 
 And move the formatted data to the `enums.py` file.
+
+# Frontend development
+
+Open the `web` folder for all the following
+
+## How to run the project
+
+```
+npm ci
+npm run dev
+```
+
+> Note: You will still need the previous steps to have ETF running on docker (http://localhost:8010/) to preview the site as you update any CSS and JS
+
+## How to generate the static build
+
+```
+npm run build
+```

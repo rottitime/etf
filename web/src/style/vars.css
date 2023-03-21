@@ -1,0 +1,43 @@
+@custom-media --viewport-medium (min-width: 767px);
+@custom-media --viewport-large (min-width: 1023px);
+@custom-media --viewport-xl (min-width: 1399px);
+
+:root {
+  --color-white: #fff;
+  --color-green: #065c53;
+  --color-green-light: #b4cecb;
+  --color-purple: #693695;
+  --color-pink: #970254;
+  --color-orange: #8f4000;
+  --color-blue: #0050c7;
+  --color-blue2: #002864;
+  --color-blue-light: #80a8e3;
+  --color-blue-light2: #ccdcf4;
+  --color-red: #ce2d1e;
+  --color-black: #1a1a1a;
+  --color-grey-dark: #333;
+  --color-grey-light: #666;
+  --color-grey-light2: #ccc;
+
+  --color-bg-white: #fff;
+  --color-bg-disabled: #e6e6e6;
+
+  --color-highlight1: var(--color-pink);
+
+  --input-stroke-light: var(--color-grey-light2);
+  --input-stroke-dark: var(--color-blue2);
+
+  --color-link: var(--color-blue);
+
+  --width-container: 960px;
+  --text-color: var(--color-black);
+  --text-disabled: var(--color-grey-light2);
+
+  --color-input-active: var(--color-blue);
+
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+
+  --animaiton-speed: 0.3s;
+}

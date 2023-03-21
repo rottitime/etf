@@ -1,0 +1,573 @@
+{% import 'macros.html' as macros with context %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Evaluation Registry</title>
+    <!-- <link rel="stylesheet" href="{{static('foundation/css/foundation.css')}}"/> -->
+    <!-- <link rel="stylesheet" href="{{static('foundation/css/foundation.css')}}"/>
+    <link rel="stylesheet" href="{{static('bootstrap-icons/bootstrap-icons.css')}}"/>
+    <link rel="stylesheet" href="{{static('i-dot-ai/base.css')}}"/>
+    <script src="{{static('jquery/jquery.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.core.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.box.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.mediaQuery.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.triggers.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.keyboard.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.motion.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.util.touch.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.reveal.min.js')}}"></script>
+    <script src="{{static('foundation/js/vendor/foundation.tooltip.min.js')}}"></script>
+    <script src="{{static('i-dot-ai/js/utils.js')}}"></script>
+    <script src="{{static('htmx/htmx-1-8-4.min.js')}}"></script>
+    <script src="{{static('accessible-autocomplete/accessible-autocomplete.min.js')}}"></script>
+    <link rel="stylesheet" href="{{static('accessible-autocomplete/accessible-autocomplete.min.css')}}"/> -->
+    <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
+    <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
+
+
+    {% if space_name == 'local' %}
+    <!-- Dev script for local development -->
+    <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+    {% endif %}
+    <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
+  
+  </head>
+  <body id="etf">
+
+    <header class="main-header">
+
+      <div class="container">
+        <a href="/" class="logo">
+          <img src="{{static('i-dot-ai/images/crest.svg')}}" alt="logo"  />
+          <h2 class="body-text">Evaluation Registry</h2>
+        </a>
+
+        {% if request.user.is_authenticated %}
+        <nav>
+          
+          <a href="/css/" class="active">
+            
+            <svg width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21.5264 18.9713L16.9282 14.3728C17.7095 13.129 18.1629 11.659 18.1629 10.0813C18.1629 5.61786 14.5446 2 10.0813 2C5.61803 2 2 5.61786 2 10.0813C2 14.5449 5.61786 18.1624 10.0813 18.1624C11.7982 18.1624 13.3885 17.6257 14.6971 16.7136L19.2405 21.2573C19.5562 21.5727 19.9701 21.7298 20.3835 21.7298C20.7973 21.7298 21.2107 21.5727 21.5269 21.2573C22.1578 20.6257 22.1578 19.6027 21.5264 18.9713ZM10.0813 15.5442C7.06453 15.5442 4.61873 13.0986 4.61873 10.0816C4.61873 7.0647 7.06453 4.6189 10.0813 4.6189C13.0982 4.6189 15.5439 7.0647 15.5439 10.0816C15.5439 13.0986 13.0982 15.5442 10.0813 15.5442Z" fill="currentColor"/>
+              </svg>
+              
+            
+            EVALUATION SEARCH</a>
+          <a href="/css/">MY EVALUATIONS</a>
+          <form action="{{url('index')}}" method="POST">{{csrf_input}}
+            <button class="bttn-primary" type="submit">New evaluation</button>
+          </form>
+        </n>
+        {% endif %}
+      </div>
+
+    </header>
+
+    <main class="container">
+
+      <div class="sidebarcolumn">
+        <div class="col">
+
+
+          <div class="sidebar">
+            <header>
+              <h3 class="highlight header5">Filters</h3>
+            </header>
+
+            <ul class="accordion" >
+              <li>
+                <button>
+                  <div class="title">Organisations <div class="badge">1</div></div>
+                  <div class="icon">
+                    <a href="#" class="txt-link small">Clear</a>
+
+         
+
+
+
+
+
+
+                    
+                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.0843 0.38361L2.41691 9.05086C2.1695 9.29827 2.03369 9.62802 2.03369 9.97963C2.03369 10.3316 2.16969 10.6612 2.41691 10.9086L3.20402 11.6955C3.45105 11.9427 3.78099 12.0789 4.1328 12.0789C4.4844 12.0789 4.82547 11.9427 5.0725 11.6955L10.14 6.63917L10.14 22.7034C10.14 23.4277 10.707 24 11.4315 24H12.5442C13.2687 24 13.8929 23.4277 13.8929 22.7034L13.8929 6.5818L18.9887 11.6953C19.2361 11.9425 19.5571 12.0787 19.9089 12.0787C20.2603 12.0787 20.5859 11.9425 20.8331 11.6953L21.6177 10.9084C21.8651 10.661 22 10.3314 22 9.97943C22 9.62783 21.8634 9.29807 21.616 9.05066L12.9487 0.383415C12.7005 0.135416 12.3692 -0.00097084 12.017 3.8147e-06C11.6637 -0.000776291 11.3322 0.135416 11.0843 0.38361Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </button>
+                <div class="accordion-content">
+                  
+                  
+                  <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+                  <div class="row">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      <div class="checkmark"></div>
+                      <span>Academy for Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Access Review (AAR)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Capability Environment (ACE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Active Travel England (ATE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Court</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                  </label>
+                </div>
+
+
+                </div>
+              </li>
+              <li>
+                <button>Topics</button>
+                <div class="accordion-content">
+                  
+                  
+                  <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+                  <div class="row">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      <div class="checkmark"></div>
+                      <span>Academy for Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Access Review (AAR)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Capability Environment (ACE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Active Travel England (ATE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Court</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                  </label>
+                </div>
+
+
+                </div>
+              </li>
+              <li>
+                <button>Evaluation type</button>
+                <div class="accordion-content">
+                  
+                  
+                  <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+                  <div class="row">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      <div class="checkmark"></div>
+                      <span>Academy for Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Access Review (AAR)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Capability Environment (ACE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Active Travel England (ATE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Court</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                  </label>
+                </div>
+
+
+                </div>
+              </li>
+              <li>
+                <button>Stage</button>
+                <div class="accordion-content">
+                  
+                  
+                  <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+                  <div class="row">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      <div class="checkmark"></div>
+                      <span>Academy for Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Academy for Social Justice Commissioning</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Access Review (AAR)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Accelerated Capability Environment (ACE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Active Travel England (ATE)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Court</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                  </label>
+                </div>
+                  <div class="row">
+                    <label class="checkbox">
+                    <input type="checkbox" />
+                    <div class="checkmark"></div>
+                    <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                  </label>
+                </div>
+
+
+                </div>
+                
+              </li>
+            </ul>
+
+
+          </div>
+
+        </div>
+        <div class="col">
+
+          <form class="searchbox mb-16">
+            <input type="search" placeholder="Search keywords..." class="large full-width" />
+            <div><button class="bttn-primary" type="submit">Search</button></div>
+          </form>
+
+          <div class="searchbox-intro">
+            <p>Search through <b class="highlight">12,345 evaluations</b></p>
+            <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
+          </div>
+
+
+          <form class="searchbox mb-16">
+            <input type="search" placeholder="Search keywords..." class="large full-width" />
+          </form>
+
+
+          <div class="search-status">
+            <div><b>4</b> results found</div>
+            <div>
+              <div class="chip">
+                Accelerated Access Review (AAR)
+                <a href="#" title="close" class="close">
+                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div><a href="#" class="small">Clear All</a></div>
+          </div>
+
+          <div class="search-results">
+            <div class="card small">
+              <h2 class="header4">STP Assessment: Sustainable Transport Performance</h2>
+              <p>An evaluation that assesses the performance of a transportation system in terms of sustainability, including factors such as emissions, energy efficiency, and the use of alternative fuels.</p>
+
+              <table>
+                <tr>
+                  <th>Stage</th>
+                  <td>Planning</td>
+                </tr>
+                <tr>
+                  <th>Organisation(s)</th>
+                  <td>Accelerated Access Review (AAR) </td>
+                </tr>
+                <tr>
+                  <th>Evaluation type</th>
+                  <td>Impact Evaluation</td>
+                </tr>
+
+                <tr>
+                  <th>Title of Interventions</th>
+                  <td>Giving children homework<br/>
+                    Not giving children homework</td>
+                </tr>
+                <tr>
+                  <th>Title of Outcome measures</th>
+                  <td>Children doing better in their exams<br/>
+                    Teachers find it easier to teach stuff</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="card small">
+              <h2 class="header4">STP Assessment: Sustainable Transport Performance</h2>
+              <p>An evaluation that assesses the performance of a transportation system in terms of sustainability, including factors such as emissions, energy efficiency, and the use of alternative fuels.</p>
+
+              <table>
+                <tr>
+                  <th>Stage</th>
+                  <td>Planning</td>
+                </tr>
+                <tr>
+                  <th>Organisation(s)</th>
+                  <td>Accelerated Access Review (AAR) </td>
+                </tr>
+                <tr>
+                  <th>Evaluation type</th>
+                  <td>Impact Evaluation</td>
+                </tr>
+
+                <tr>
+                  <th>Title of Interventions</th>
+                  <td>Giving children homework<br/>
+                    Not giving children homework</td>
+                </tr>
+                <tr>
+                  <th>Title of Outcome measures</th>
+                  <td>Children doing better in their exams<br/>
+                    Teachers find it easier to teach stuff</td>
+                </tr>
+              </table>
+            </div>
+          
+          
+          
+            <div class="card small">
+              <h2 class="header4">STP Assessment: Sustainable Transport Performance</h2>
+              <p>An evaluation that assesses the performance of a transportation system in terms of sustainability, including factors such as emissions, energy efficiency, and the use of alternative fuels.</p>
+
+              <table>
+                <tr>
+                  <th>Stage</th>
+                  <td>Planning</td>
+                </tr>
+                <tr>
+                  <th>Organisation(s)</th>
+                  <td>Accelerated Access Review (AAR) </td>
+                </tr>
+                <tr>
+                  <th>Evaluation type</th>
+                  <td>Impact Evaluation</td>
+                </tr>
+
+                <tr>
+                  <th>Title of Interventions</th>
+                  <td>Giving children homework<br/>
+                    Not giving children homework</td>
+                </tr>
+                <tr>
+                  <th>Title of Outcome measures</th>
+                  <td>Children doing better in their exams<br/>
+                    Teachers find it easier to teach stuff</td>
+                </tr>
+              </table>
+            </div>
+          
+          </div>
+
+        </div>
+      </div>
+
+      {% include "beta/beta-extra.html" %}
+
+
+
+    </main>
+
+
+  </body>
+</html>
