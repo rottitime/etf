@@ -92,8 +92,10 @@ def test_user_already_registered():
     assert page.has_text("Registration was unsuccessful, please try again.")
 
 
-@with_setup(lambda: setattr(etf_settings, 'SEND_VERIFICATION_EMAIL', True),
-            lambda: setattr(etf_settings, 'SEND_VERIFICATION_EMAIL', False))
+@with_setup(
+    lambda: setattr(etf_settings, "SEND_VERIFICATION_EMAIL", True),
+    lambda: setattr(etf_settings, "SEND_VERIFICATION_EMAIL", False),
+)
 def test_verify_email():
     client = utils.make_testino_client()
 
