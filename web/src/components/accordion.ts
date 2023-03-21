@@ -2,6 +2,9 @@ import iconRaw from '../svg/arrow-down.svg'
 import shortUUID from 'short-uuid'
 
 const setupAccordions = () => {
+  const accordionItems = document.querySelectorAll('.accordion li')
+
+  //remove all active classname
   const removeAllActive = (el: Element) => {
     el.parentNode
       ?.querySelectorAll('.active')
@@ -39,25 +42,26 @@ const setupAccordions = () => {
   })
 
   //click behaviour
-  document.querySelectorAll('.accordion li').forEach((accordion) => {
+  accordionItems.forEach((accordion) => {
+    const button = accordion.querySelector('button')
     const wrapper = accordion.querySelector(
       '.accordion-content-wrapper'
     ) as HTMLDivElement
     const content = wrapper?.querySelector('.accordion-content')
 
-    accordion.querySelector('button')?.addEventListener('click', (e) => {
-      const el = e?.target as HTMLButtonElement
-      const parent = el?.parentNode as Element
+    button?.addEventListener('click', () => {
+      // debugger
+      const parent = button.parentNode as Element
 
       if (parent?.classList.contains('active')) {
         removeAllActive(accordion)
-        el.setAttribute('aria-expanded', 'false')
+        button.setAttribute('aria-expanded', 'false')
       } else {
         const height = content?.clientHeight
         removeAllActive(accordion)
         parent.classList.add('active')
         wrapper?.setAttribute('style', `max-height:${height}px`)
-        el.setAttribute('aria-expanded', 'true')
+        button.setAttribute('aria-expanded', 'true')
       }
     })
   })
