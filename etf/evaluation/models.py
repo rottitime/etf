@@ -530,7 +530,7 @@ class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     description = models.TextField(blank=True, null=True)
 
     def get_search_text(self):
-        conformity = [value[1] for value in choices.YesNoPartial.choices if value[0] in self.conformity]
+        conformity = [value[1] for value in choices.YesNoPartial.choices if value[0] == self.conformity]
 
         searchable_fields = [
             str(self.name),
