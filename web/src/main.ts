@@ -5,7 +5,14 @@ import './style/forms.css'
 import './style/components.css'
 
 //local development purposes only. to replace prod assets with dev
+declare global {
+  function myFunction(): boolean
+  // eslint-disable-next-line no-var
+  var devMode: boolean
+}
+
 if (import.meta.env.MODE === 'development') {
+  globalThis.devMode = true
   ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
 }
 
@@ -37,6 +44,8 @@ const initAccordions = () => {
     const content = wrapper?.querySelector('.accordion-content')
 
     button?.addEventListener('click', () => {
+      // debugger
+
       if (button.classList.contains('active')) {
         removeAllActive(accordion)
       } else {
@@ -50,6 +59,8 @@ const initAccordions = () => {
 }
 
 window.addEventListener('load', () => {
+  if (globalThis.devMode && import.meta.env.MODE === 'production') return
+
   initAccordions()
 })
 

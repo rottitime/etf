@@ -27,10 +27,15 @@
     <script src="{{static('accessible-autocomplete/accessible-autocomplete.min.js')}}"></script>
     <link rel="stylesheet" href="{{static('accessible-autocomplete/accessible-autocomplete.min.css')}}"/> -->
     <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
-    <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
     <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
-    
-    <style></style>
+
+
+    {% if space_name == 'local' %}
+    <!-- Dev script for local development -->
+    <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+    {% endif %}
+    <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
+  
   </head>
   <body id="etf">
 
@@ -555,12 +560,5 @@
     </ma>
 
 
-
-
-    {% if space_name == 'local' %}
-    <!-- Dev script for local development -->
-    <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
-    {% endif %}
-  
   </body>
 </html>
