@@ -33,6 +33,10 @@ const setupAccordions = () => {
     parent?.insertBefore(wrapper, content)
     parentButton?.setAttribute('aria-controls', id)
     parentButton?.setAttribute('id', buttonid)
+    parentButton?.setAttribute(
+      'aria-expanded',
+      new Boolean(parentButton?.classList.contains('active')).toString()
+    )
 
     wrapper.appendChild(content)
   })
@@ -51,11 +55,13 @@ const setupAccordions = () => {
 
       if (parent?.classList.contains('active')) {
         removeAllActive(accordion)
+        button.setAttribute('aria-expanded', 'false')
       } else {
         const height = content?.clientHeight
         removeAllActive(accordion)
         parent.classList.add('active')
         wrapper?.setAttribute('style', `max-height:${height}px`)
+        button.setAttribute('aria-expanded', 'true')
       }
     })
   })
