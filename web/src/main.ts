@@ -3,7 +3,8 @@ import './style/base.css'
 import './style/template.css'
 import './style/forms.css'
 import './style/components.css'
-import setupAccordions from './components/accordion'
+import accordion from './components/accordion'
+import icon from './components/icon'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -19,5 +20,6 @@ if (import.meta.env.MODE === 'development') {
 
 window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
-  setupAccordions()
+  accordion()
+  icon()
 })
