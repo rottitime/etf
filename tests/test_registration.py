@@ -2,6 +2,7 @@ from nose import with_setup
 
 from etf import settings as etf_settings
 from etf.evaluation import models
+
 from . import utils
 
 VALID_USER_EMAIL = "test@example.com"
