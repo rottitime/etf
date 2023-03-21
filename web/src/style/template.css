@@ -40,8 +40,8 @@
     display: inline-flex;
     align-items: center;
 
-    & img {
-      font-size: 20px;
+    & svg {
+      font-size: 40px;
       margin-right: 8px;
     }
 
@@ -49,6 +49,48 @@
       font-weight: normal;
       margin: 0;
     }
+  }
+}
+
+.main-footer {
+  background-color: #fff;
+  padding: var(--spacing-24) 0;
+  position: relative;
+  font-weight: 400;
+  font-size: 12px;
+
+  & .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .disclaimer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-16);
+  }
+
+  & svg {
+    font-size: 30px;
+  }
+
+  &:after {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+      90deg,
+      #68cd00 0%,
+      #5fbbf4 18.75%,
+      #785bee 38.54%,
+      #e41d7f 60.42%,
+      #ff5951 80.21%,
+      #ffb800 100%
+    );
   }
 }
 
