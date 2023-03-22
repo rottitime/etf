@@ -30,6 +30,9 @@ class MethodDispatcher:
 def view_404(request, exception=None):
     return render(request, "page-not-found.html", {})
 
+def test_view(request, exception=None):
+    return render(request, "beta/beta-test.html", {})
+
 
 class EvaluationSearchForm(forms.Form):
     id = forms.UUIDField(required=False)
