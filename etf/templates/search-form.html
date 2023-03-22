@@ -11,6 +11,6 @@
     {{macros.checkbox("mine_only", "Only my evaluations")}}
     <input type="submit" value="Submit">
   </form>
-  {% set svg_file = "crown.svg" %}
-  {% include svg_file %}
+
+  {{macros.crown_svg("yellow", 54, 54)}}
 {% endblock %}
