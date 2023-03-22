@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from . import choices, enums, models
@@ -40,6 +41,89 @@ class EvaluationSearchForm(forms.Form):
     search_phrase = forms.CharField(max_length=100, required=False)
     mine_only = forms.BooleanField(required=False)
     is_search = forms.CharField(max_length=6, required=True)
+
+
+# @login_required
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+class EvaluationSearchView(MethodDispatcher):
+    def get(self, request):
+        return render(request, "beta/beta-base.html", {
+            "evaluations": [],
+            "statuses": choices.EvaluationStatus.choices,
+            "evaluations_types": choices.EvaluationTypeOptions.choices,
+            "topics": choices.Topic.choices,
+            "organisations": enums.Organisation.choices,
+            "selected_statuses": [],
+            "selected_evaluation_types": [],
+            "selected_topics": [],
+            "selected_organisations": [],
+            "search_text": "",
+        })
+
+    def post(self, request):
+        search_text = request.POST.get("search_text")
+        organisations = request.POST.get("organisations")
+        topics = request.POST.get("topics")
+        evaluation_types = request.POST.get("evaluation_types")
+        status = request.POST.get("status")
+
+        print(search_text)
+        print(organisations)
+        print(topics)
+        print(evaluation_types)
+        print(status)
+
+        qs = models.Evaluation.objects.all()
+
+        if search_text:
+            qs = qs.filter(title__contains=search_text)
+        if organisations:
+            organisations_qs = models.Evaluation.objects.none()
+            for organisation in organisations:
+                organisation_qs = qs.filter(organisations__contains=organisation)
+                organisations_qs = organisations_qs | organisation_qs
+            qs = organisations_qs
+        if topics:
+            topics_qs = models.Evaluation.objects.none()
+            for topic in topics:
+                topic_qs = qs.filter(topics__contains=topic)
+                topics_qs = topics_qs | topic_qs
+            qs = topics_qs
+        if evaluation_types:
+            evaluation_types_qs = models.Evaluation.objects.none()
+            for evaluation_type in evaluation_types:
+                evaluation_type_qs = qs.filter(evaluation_types__contains=evaluation_type)
+                evaluation_types_qs = evaluation_types | evaluation_type_qs
+            qs = evaluation_types_qs
+        if not status:
+            qs = qs.filter(
+                Q(status=choices.EvaluationStatus.DRAFT.value, users__in=[request.user])
+                | Q(
+                    status__in=[choices.EvaluationStatus.PUBLIC.value, choices.EvaluationStatus.CIVIL_SERVICE.value]
+                )
+            )
+        else:
+            if status == choices.EvaluationStatus.DRAFT:
+                qs = qs.filter(status=status)
+                qs = qs.filter(user=request.user)
+            # TODO: make civil service and public filter more sophisticated once roles are in
+            if status == choices.EvaluationStatus.PUBLIC:
+                qs = qs.filter(status=status)
+            if status == choices.EvaluationStatus.CIVIL_SERVICE:
+                qs = qs.filter(status=status)
+        return render(request, "beta/beta-base.html", {
+            "evaluations": qs,
+            "statuses": choices.EvaluationStatus.choices,
+            "evaluations_types": choices.EvaluationTypeOptions.choices,
+            "topics": choices.Topic.choices,
+            "organisations": enums.Organisation.choices,
+            "selected_statuses": status,
+            "selected_evaluation_types": evaluation_types,
+            "selected_topics": topics,
+            "selected_organisations": organisations,
+            "search_text": search_text,
+        })
 
 
 @login_required
