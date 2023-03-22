@@ -1,0 +1,54 @@
+{% import 'macros.html' as macros with context %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8"/>
+      <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+      <title>Evaluation Registry</title>
+      <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
+      <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
+      {% if space_name == 'local' %}
+      <!-- Dev script for local development -->
+      <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+      {% endif %}
+      <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
+   </head>
+   <body>
+      <header class="main-header">
+         <div class="container">
+            <a href="/" class="logo">
+              {{macros.crest_svg()}}
+               <h2 class="body-text">Evaluation Registry</h2>
+            </a>
+            {% if request.user.is_authenticated %}
+            <nav>
+            <a href="{{url('search')}}">
+              {{macros.search_svg()}}
+               EVALUATION SEARCH
+            </a>
+            <a href="{{url('my-evaluations')}}">MY EVALUATIONS</a>
+            <form action="{{url('index')}}" method="POST">{{csrf_input}}
+               <button class="bttn-primary" type="submit">New evaluation</button>
+            </form>
+            </n>
+            {% endif %}
+         </div>
+      </header>
+      <main class="container">
+            {% block content %} {% endblock %}
+      </main>
+      <footer class="main-footer">
+         <div class="container">
+            <nav>
+               <a href="#">Privacy</a>
+               <a href="#">Feedback</a>
+            </nav>
+            <div class="disclaimer">
+               &#169; Crown copyright {{macros.crest_svg()}}
+            </div>
+         </div>
+      </footer>
+   </body>
+</html>

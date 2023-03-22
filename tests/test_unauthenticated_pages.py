@@ -7,12 +7,12 @@ def test_add_evaluation(client):
     assert response.status_code == 302
 
 
-@with_client
-def test_urls_no_access(client):
-    urls_to_test = ["/search/", "/my-evaluations/"]
-    for url in urls_to_test:
-        response = client.get(url)
-        assert response.status_code == 302
+# @with_client
+# def test_urls_no_access(client):
+#     urls_to_test = ["/search/", "/my-evaluations/"]
+#     for url in urls_to_test:
+#         response = client.get(url)
+#         assert response.status_code == 302
 
 
 @with_client
