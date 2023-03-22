@@ -87,7 +87,7 @@ input {
   font-weight: 400;
   font-size: 16px;
   display: flex;
-  align-items: center;
+  align-items: top;
   gap: var(--spacing-8);
   cursor: pointer;
   & .checkmark {
@@ -118,11 +118,23 @@ input {
       background-color: var(--color-input-active);
       display: flex;
       align-items: center;
+
       &:before {
         opacity: 1;
         transform: scale(1);
       }
     }
+    &:disabled {
+      & ~ span,
+      & + .checkmark {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  & span {
+    padding-top: 3px;
   }
 }
 
