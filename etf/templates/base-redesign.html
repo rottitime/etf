@@ -24,11 +24,11 @@
             </a>
             {% if request.user.is_authenticated %}
             <nav>
-            <a href="/css/" class="active">
+            <a href="{{url('search')}}">
               {{macros.search_svg()}}
                EVALUATION SEARCH
             </a>
-            <a href="/css/">MY EVALUATIONS</a>
+            <a href="{{url('my-evaluations')}}">MY EVALUATIONS</a>
             <form action="{{url('index')}}" method="POST">{{csrf_input}}
                <button class="bttn-primary" type="submit">New evaluation</button>
             </form>
