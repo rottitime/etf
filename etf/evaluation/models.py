@@ -46,6 +46,11 @@ def get_organisation_display_name(db_name):
     return result[0]
 
 
+def get_list_evaluation_types_display_name(db_name):
+    result = [evaluation_type[1] for evaluation_type in choices.EvaluationTypeOptions.choices if evaluation_type[0] == db_name]
+    return result[0]
+
+
 def get_status_display_name(db_name):
     result = [status[1] for status in choices.EvaluationStatus.choices if status[0] == db_name]
     return result[0]
@@ -210,6 +215,19 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     def get_list_organisations_display_names(self):
         return [get_organisation_display_name(x) for x in self.organisations]
+
+    def get_list_evaluation_types_display_names(self):
+        return [get_list_evaluation_types_display_name(x) for x in self.evaluation_type]
+
+    def get_related_intervention_names(self):
+        related_interventions = self.interventions.all()
+        names = [i.name for i in related_interventions]
+        return names
+
+    def get_related_outcome_measure_names(self):
+        related_outcome_measures = self.outcome_measures.all()
+        names = [i.name for i in related_outcome_measures]
+        return names
 
     def get_status_display_name(self):
         return get_status_display_name(self.status)

@@ -51,8 +51,9 @@ class EvaluationSearchForm(forms.Form):
 @require_http_methods(["GET", "POST"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
+        evaluations = models.Evaluation.objects.all()
         return render(request, "search-form.html", {
-            "evaluations": [],
+            "evaluations": evaluations,
             "statuses": choices.EvaluationStatus.choices,
             "evaluation_types": choices.EvaluationTypeOptions.choices,
             "topics": choices.Topic.choices,
