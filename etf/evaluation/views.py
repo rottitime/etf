@@ -30,6 +30,7 @@ class MethodDispatcher:
 def view_404(request, exception=None):
     return render(request, "page-not-found.html", {})
 
+
 def test_view(request, exception=None):
     return render(request, "beta/beta-test.html", {})
 
@@ -52,18 +53,22 @@ class EvaluationSearchForm(forms.Form):
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
         evaluations = models.Evaluation.objects.all()
-        return render(request, "search-form.html", {
-            "evaluations": evaluations,
-            "statuses": choices.EvaluationStatus.choices,
-            "evaluation_types": choices.EvaluationTypeOptions.choices,
-            "topics": choices.Topic.choices,
-            "organisations": enums.Organisation.choices,
-            "selected_statuses": [],
-            "selected_evaluation_types": [],
-            "selected_topics": [],
-            "selected_organisations": [],
-            "search_text": "",
-        })
+        return render(
+            request,
+            "search-form.html",
+            {
+                "evaluations": evaluations,
+                "statuses": choices.EvaluationStatus.choices,
+                "evaluation_types": choices.EvaluationTypeOptions.choices,
+                "topics": choices.Topic.choices,
+                "organisations": enums.Organisation.choices,
+                "selected_statuses": [],
+                "selected_evaluation_types": [],
+                "selected_topics": [],
+                "selected_organisations": [],
+                "search_text": "",
+            },
+        )
 
     def post(self, request):
         search_text = request.POST.get("search_text")
@@ -103,9 +108,7 @@ class EvaluationSearchView(MethodDispatcher):
         if not status:
             qs = qs.filter(
                 Q(status=choices.EvaluationStatus.DRAFT.value, users__in=[request.user])
-                | Q(
-                    status__in=[choices.EvaluationStatus.PUBLIC.value, choices.EvaluationStatus.CIVIL_SERVICE.value]
-                )
+                | Q(status__in=[choices.EvaluationStatus.PUBLIC.value, choices.EvaluationStatus.CIVIL_SERVICE.value])
             )
         else:
             if status == choices.EvaluationStatus.DRAFT:
@@ -116,18 +119,22 @@ class EvaluationSearchView(MethodDispatcher):
                 qs = qs.filter(status=status)
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
-        return render(request, "search-form.html", {
-            "evaluations": qs,
-            "statuses": choices.EvaluationStatus.choices,
-            "evaluation_types": choices.EvaluationTypeOptions.choices,
-            "topics": choices.Topic.choices,
-            "organisations": enums.Organisation.choices,
-            "selected_statuses": status,
-            "selected_evaluation_types": evaluation_types,
-            "selected_topics": topics,
-            "selected_organisations": organisations,
-            "search_text": search_text,
-        })
+        return render(
+            request,
+            "search-form.html",
+            {
+                "evaluations": qs,
+                "statuses": choices.EvaluationStatus.choices,
+                "evaluation_types": choices.EvaluationTypeOptions.choices,
+                "topics": choices.Topic.choices,
+                "organisations": enums.Organisation.choices,
+                "selected_statuses": status,
+                "selected_evaluation_types": evaluation_types,
+                "selected_topics": topics,
+                "selected_organisations": organisations,
+                "search_text": search_text,
+            },
+        )
 
 
 @login_required

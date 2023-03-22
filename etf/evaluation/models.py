@@ -47,7 +47,9 @@ def get_organisation_display_name(db_name):
 
 
 def get_list_evaluation_types_display_name(db_name):
-    result = [evaluation_type[1] for evaluation_type in choices.EvaluationTypeOptions.choices if evaluation_type[0] == db_name]
+    result = [
+        evaluation_type[1] for evaluation_type in choices.EvaluationTypeOptions.choices if evaluation_type[0] == db_name
+    ]
     return result[0]
 
 
