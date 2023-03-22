@@ -51,10 +51,10 @@ class EvaluationSearchForm(forms.Form):
 @require_http_methods(["GET", "POST"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
-        return render(request, "beta/beta-base.html", {
+        return render(request, "search-form.html", {
             "evaluations": [],
             "statuses": choices.EvaluationStatus.choices,
-            "evaluations_types": choices.EvaluationTypeOptions.choices,
+            "evaluation_types": choices.EvaluationTypeOptions.choices,
             "topics": choices.Topic.choices,
             "organisations": enums.Organisation.choices,
             "selected_statuses": [],
@@ -115,10 +115,10 @@ class EvaluationSearchView(MethodDispatcher):
                 qs = qs.filter(status=status)
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
-        return render(request, "beta/beta-base.html", {
+        return render(request, "search-form.html", {
             "evaluations": qs,
             "statuses": choices.EvaluationStatus.choices,
-            "evaluations_types": choices.EvaluationTypeOptions.choices,
+            "evaluation_types": choices.EvaluationTypeOptions.choices,
             "topics": choices.Topic.choices,
             "organisations": enums.Organisation.choices,
             "selected_statuses": status,
