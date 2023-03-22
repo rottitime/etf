@@ -5,6 +5,7 @@ import './style/forms.css'
 import './style/components.css'
 import accordion from './components/accordion'
 import icon from './components/icon'
+import setupSelect from './components/dropdown'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -22,4 +23,5 @@ window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
   accordion()
   icon()
+  setupSelect()
 })
