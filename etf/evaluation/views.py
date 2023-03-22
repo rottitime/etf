@@ -77,12 +77,6 @@ class EvaluationSearchView(MethodDispatcher):
         evaluation_types = request.POST.get("evaluation_types")
         status = request.POST.get("status")
 
-        print(search_text)
-        print(organisations)
-        print(topics)
-        print(evaluation_types)
-        print(status)
-
         qs = models.Evaluation.objects.all()
 
         if search_text:
