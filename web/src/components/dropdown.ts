@@ -7,7 +7,7 @@ const setHasValue = (target: HTMLSelectElement) => {
 }
 
 const setupSelect = () => {
-  document.querySelectorAll('.select select').forEach((select) => {
+  document.querySelectorAll<HTMLSelectElement>('.select select').forEach((select) => {
     setHasValue(select)
     select.addEventListener('change', (e) => setHasValue(e.target as HTMLSelectElement))
   })
