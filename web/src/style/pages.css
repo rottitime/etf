@@ -1,0 +1,7 @@
+/* unique page styles */
+
+.sidebar.search-filters .accordion .scroll {
+  overflow-y: visible;
+  overflow-x: hidden;
+  max-height: 530px;
+}

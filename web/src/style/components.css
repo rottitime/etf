@@ -10,12 +10,13 @@
   padding: 0;
 
   & .accordion-content {
+    position: absolute;
     padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
   }
 
   & .accordion-content-wrapper {
     max-height: 0;
-
+    position: relative;
     overflow: hidden;
     transition: max-height ease-in-out var(--animaiton-speed);
   }
@@ -58,6 +59,7 @@
           max-height: 5000px;
           & .accordion-content {
             display: block;
+            position: static;
           }
         }
 
