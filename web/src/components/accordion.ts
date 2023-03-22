@@ -50,16 +50,17 @@ const setupAccordions = () => {
     const content = wrapper?.querySelector('.accordion-content')
 
     button?.addEventListener('click', () => {
-      // debugger
       const parent = button.parentNode as Element
 
       if (parent?.classList.contains('active')) {
+        const height = content?.clientHeight
+        wrapper?.setAttribute('style', `height:${height}px`)
         removeAllActive(accordion)
         button.setAttribute('aria-expanded', 'false')
       } else {
-        const height = content?.clientHeight
         removeAllActive(accordion)
         parent.classList.add('active')
+        const height = content?.clientHeight
         wrapper?.setAttribute('style', `max-height:${height}px`)
         button.setAttribute('aria-expanded', 'true')
       }
