@@ -13,93 +13,101 @@
           <li>
            <h3>
              <button>
-              <div class="title">Organisations <div class="badge">{{data.selected_organisations|length}}</div></div>
+              <div class="title">Organisations <div class="badge filter-control-total" data-name="organisation">{{data.selected_organisations|length}}</div></div>
               <div class="icon"></div>
             </button>
            </h3>
             <div class="accordion-content">
+              <fieldset class="filter-control">
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
               <div class="scroll">
                 {% for organisation in data.organisations %}
                 <div class="row">
                   <label class="checkbox">
-                    <input {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" />
+                    <input {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" name="organisation" />
                     <div class="checkmark"></div>
                     <span>{{organisation[1]}}</span>
                   </label>
                 </div>
               {% endfor %}
               </div>
+            </fieldset>
             </div>
           </li>
           <li>
             <h3>
               <button>
-                <div class="title">Topics <div class="badge">{{data.selected_topics|length}}</div></div>
+                <div class="title">Topics <div class="badge filter-control-total" data-name="topics">{{data.selected_topics|length}}</div></div>
                 <div class="icon"></div>
               </button>
             </h3>
             <div class="accordion-content">
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+              <fieldset class="filter-control">
               <div class="scroll">
                 {% for topic in data.topics %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" {% if is_in(data, "selected_topics", topic[0]) %}checked{% endif %} value="{{ topic[0] }}" />
+                    <input type="checkbox" {% if is_in(data, "selected_topics", topic[0]) %}checked{% endif %} name="topics" value="{{ topic[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{topic[1]}}</span>
                   </label>
                 </div>
               {% endfor %}
               </div>
+              </fieldset>
             </div>
           </li>
           <li>
             <h3>
               <button>
-                <div class="title">Evaluation types <div class="badge">{{data.selected_evaluation_types|length}}</div></div>
+                <div class="title">Evaluation types <div class="badge filter-control-total" data-name="evaluation_type">{{data.selected_evaluation_types|length}}</div></div>
                 <div class="icon"></div>
               </button>
             </h3>
             <div class="accordion-content">
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
+              <fieldset class="filter-control">
               <div class="scroll">
               {% for evaluation_type in data.evaluation_types %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
+                    <input type="checkbox" name="evaluation_type" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
                 </div>
               {% endfor %}
              </div>
+            </fieldset>
 
             </div>
           </li>
           <li>
             <h3>
               <button>
-                <div class="title">Status <div class="badge">{{data.selected_statuses|length}}</div></div>
+                <div class="title">Status <div class="badge filter-control-total" data-name="statuses">{{data.selected_statuses|length}}</div></div>
                 <div class="icon"></div>
               </button>
             </h3>
             <div class="accordion-content">
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
+              <fieldset class="filter-control">
               <div class="scroll">
                 {% for status in data.statuses %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
+                    <input type="checkbox" name="statuses" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{status[1]}}</span>
                   </label>
                 </div>
               {% endfor %}
               </div>
+            </fieldset>
             </div>
           </li>
         </ul>
