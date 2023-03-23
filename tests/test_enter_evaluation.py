@@ -113,9 +113,10 @@ def test_step_through_evaluation():
     client = utils.make_testino_client()
     utils.register(client, **authenticated_user)
     user = models.User.objects.get(email=test_email)
-    evaluation = models.Evaluation(title="Test evaluation")
+    evaluation = models.Evaluation.objects.create(title="Test evaluation")
     evaluation.save()
-    evaluation.users.add(user)
+    user.evaluations.add(evaluation)
+    user.save()
     intro_page = client.get(f"/evaluation/{evaluation.id}/")
 
     # Intro page
