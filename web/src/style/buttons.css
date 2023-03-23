@@ -3,95 +3,94 @@ a {
   cursor: pointer;
 }
 
-
 .bttn-primary {
-    color: var(--color-white);
-    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    border-radius: 20px;
-    padding: 8px 16px;
-    border: 0;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: normal;
-    transition: all ease-in-out 0.3s;
-    &:hover {
-      background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-    }
-    &:focus {
-      box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-    }
-    &:active {
-      background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-      outline: 2px solid #002864;
-    }
-    &:disabled {
-      background: var(--color-bg-disabled);
-      color: var(--text-disabled);
-    }
+  color: var(--color-white);
+  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+  border-radius: 20px;
+  padding: 8px 16px;
+  border: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: normal;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
+  }
+  &:focus {
+    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
+  }
+  &:active {
+    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
+    outline: 2px solid #002864;
+  }
+  &:disabled {
+    background: var(--color-bg-disabled);
+    color: var(--text-disabled);
+  }
 }
 
 .bttn-secondary {
-    color: var(--color-blue);
-    background: linear-gradient(180deg, #FFFFFF 100%);
-    border-radius: 20px;
-    padding: 8px 16px;
-    border: 1px solid #0050c7;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: normal;
-    transition: all ease-in-out 0.3s;
-    &:hover {
-      background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
-      color: var(--color-white);
-    }
-    &:focus {
-      box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-    }
-    &:active {
-      background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
-      outline: 2px solid #002864;
-    }
-    &:disabled {
-      background: var(--color-bg-white);
-      color: var(--text-disabled);
-    }
+  color: var(--color-blue);
+  background: linear-gradient(180deg, #ffffff 100%);
+  border-radius: 20px;
+  padding: 8px 16px;
+  border: 1px solid #0050c7;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: normal;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+    color: var(--color-white);
+  }
+  &:focus {
+    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
+  }
+  &:active {
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+    outline: 2px solid #002864;
+  }
+  &:disabled {
+    background: var(--color-bg-white);
+    color: var(--text-disabled);
+  }
 }
 
 .bttn-tertiary {
-    color: var(--color-blue);
-    background: linear-gradient(180deg, #FFFFFF 100%);
+  color: var(--color-blue);
+  background: linear-gradient(180deg, #ffffff 100%);
+  border-radius: 20px;
+  padding: 8px 16px;
+  border: 1px solid #cccccc;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: normal;
+  transition: all ease-in-out 0.3s;
+  &:hover {
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+    color: var(--color-white);
+  }
+  &:focus {
+    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
+  }
+  &:active {
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+    outline: 2px solid #002864;
     border-radius: 20px;
-    padding: 8px 16px;
-    border: 1px solid #CCCCCC;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: normal;
-    transition: all ease-in-out 0.3s;
-    &:hover {
-      background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
-      color: var(--color-white);
-    }
-    &:focus {
-      box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-    }
-    &:active {
-      background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
-      outline: 2px solid #002864;
-      border-radius: 20px;
-      border: 2px #002864;
-    }
-    &:disabled {
-      background: var(--color-bg-disabled);
-      color: var(--text-disabled);
-    }
+    border: 2px #002864;
+  }
+  &:disabled {
+    background: var(--color-bg-disabled);
+    color: var(--text-disabled);
+  }
 }
 
 .bttn-quaternary {
   color: var(--color-grey);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 8px 16px;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
@@ -114,24 +113,24 @@ a {
 }
 .bttn-negative {
   color: var(--color-red);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 8px 16px;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #FF3825 0%, #C72B1D 100%);
+    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
     color: var(--color-white);
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
   }
   &:active {
-    background: linear-gradient(180deg, #FF3825 0%, #C72B1D 100%);
-    outline: 2px solid #67170F;
+    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
+    outline: 2px solid #67170f;
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -150,18 +149,17 @@ a {
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #0050C7 0%);
+    background: linear-gradient(180deg, #0050c7 0%);
     text-decoration-line: underline;
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 1);
-    
   }
   &:active {
     /*background: linear-gradient(180deg, #0047b0 0%, #003077 100%)*/
     outline: 2px solid #002864;
     text-decoration-line: underline;
-    color: var(--color-blue2 #002864); 
+    color: var(--color-blue2 #002864);
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -169,9 +167,8 @@ a {
   }
 }
 
-
 /*small buttons */
-.bttn-primary{
+.bttn-primary {
   color: var(--color-white);
   background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
   border-radius: 20px;
@@ -199,7 +196,7 @@ a {
 
 .bttn-secondary-sm {
   color: var(--color-blue);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 4px 16px;
   border: 1px solid #0050c7;
@@ -208,14 +205,14 @@ a {
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     color: var(--color-white);
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
   }
   &:active {
-    background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     outline: 2px solid #002864;
   }
   &:disabled {
@@ -226,23 +223,23 @@ a {
 
 .bttn-tertiary-sm {
   color: var(--color-blue);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 4px 16px;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   font-weight: 600;
   font-size: 14px;
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     color: var(--color-white);
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
   }
   &:active {
-    background: linear-gradient(180deg, #0067FF 0%, #0050C7 100%);
+    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     outline: 2px solid #002864;
     border-radius: 20px;
     border: 2px #002864;
@@ -255,10 +252,10 @@ a {
 
 .bttn-quaternary-sm {
   color: var(--color-grey);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 4px 16px;
-        border: 1px solid #CCCCCC
+  border: 1px solid #cccccc;
   font-weight: 600;
   font-size: 14px;
   line-height: normal;
@@ -281,24 +278,24 @@ a {
 }
 .bttn-negative-sm {
   color: var(--color-red);
-  background: linear-gradient(180deg, #FFFFFF 100%);
+  background: linear-gradient(180deg, #ffffff 100%);
   border-radius: 20px;
   padding: 4px 16px;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   font-weight: 600;
   font-size: 14px;
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #FF3825 0%, #C72B1D 100%);
+    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
     color: var(--color-white);
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
   }
   &:active {
-    background: linear-gradient(180deg, #FF3825 0%, #C72B1D 100%);
-    outline: 2px solid #67170F;
+    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
+    outline: 2px solid #67170f;
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -317,23 +314,20 @@ a {
   line-height: normal;
   transition: all ease-in-out 0.3s;
   &:hover {
-    background: linear-gradient(180deg, #0050C7 0%);
+    background: linear-gradient(180deg, #0050c7 0%);
     text-decoration-line: underline;
   }
   &:focus {
     box-shadow: 0px 0px 10px rgba(0, 80, 199, 1);
-    
   }
   &:active {
     /*background: linear-gradient(180deg, #0047b0 0%, #003077 100%)*/
     outline: 2px solid #002864;
     text-decoration-line: underline;
-    color: var(--color-blue2 #002864); 
+    color: var(--color-blue2 #002864);
   }
   &:disabled {
     background: var(--color-bg-disabled);
     color: var(--text-disabled);
   }
 }
-
-
