@@ -2,34 +2,22 @@
 {% import "macros.html" as macros with context %}
 
 {% block content %}
-{#  <form method="get">#}
-{#    <input type="hidden" value="False" name="is_search" id="is_search">#}
-{#    {{macros.textarea("search_phrase", "Search phrase")}}#}
-{#    {{macros.select_many_from_formfield("topics", "Topics", field=form.topics)}}#}
-{#    {{macros.select_many_from_formfield("organisations", "Organisations", field=form.organisations)}}#}
-{#    {{macros.select_from_formfield("status", "Evaluation status", field=form.status)}}#}
-{#    {{macros.checkbox("mine_only", "Only my evaluations")}}#}
-{#    <input type="submit" value="Submit">#}
-{#  </form>#}
 
   <div class="sidebarcolumn">
     <div class="col">
-
-
       <div class="sidebar search-filters ">
         <header>
           <h3 class="highlight header5">Filters</h3>
         </header>
-
         <ul class="accordion" >
           <li>
-           <h3> <button>
-            <div class="title">Organisations <div class="badge">1</div></div>
-            <div class="icon"></div>
-          </button></h3>
+           <h3>
+             <button>
+              <div class="title">Organisations <div class="badge">{{data.selected_organisations|length}}</div></div>
+              <div class="icon"></div>
+            </button>
+           </h3>
             <div class="accordion-content">
-              
-              
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
               <div class="scroll">
@@ -46,17 +34,14 @@
             </div>
           </li>
           <li>
-            <h3><button>
-
-<div class="title">Topics</div>
-<div class="icon"></div>
-
-            </button></h3>
+            <h3>
+              <button>
+                <div class="title">Topics <div class="badge">{{data.selected_topics|length}}</div></div>
+                <div class="icon"></div>
+              </button>
+            </h3>
             <div class="accordion-content">
-              
-              
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
-
               <div class="scroll">
                 {% for topic in data.topics %}
                 <div class="row">
@@ -71,18 +56,16 @@
             </div>
           </li>
           <li>
-            <h3><button>
-
-<div class="title">Evaluation type</div>
-<div class="icon"></div>
-
-            </button></h3>
+            <h3>
+              <button>
+                <div class="title">Evaluation types <div class="badge">{{data.selected_evaluation_types|length}}</div></div>
+                <div class="icon"></div>
+              </button>
+            </h3>
             <div class="accordion-content">
-              
-              
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
-             <div class="scroll">
+              <div class="scroll">
               {% for evaluation_type in data.evaluation_types %}
                 <div class="row">
                   <label class="checkbox">
@@ -97,15 +80,13 @@
             </div>
           </li>
           <li>
-            <h3><button>
-
-<div class="title">Status</div>
-<div class="icon"></div>
-
-            </button></h3>
+            <h3>
+              <button>
+                <div class="title">Status <div class="badge">{{data.selected_statuses|length}}</div></div>
+                <div class="icon"></div>
+              </button>
+            </h3>
             <div class="accordion-content">
-              
-              
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
               <div class="scroll">
@@ -119,19 +100,12 @@
                 </div>
               {% endfor %}
               </div>
-
-
             </div>
-            
           </li>
         </ul>
-
-
       </div>
-
     </div>
     <div class="col">
-
       {% if not data.evaluations or data.evaluations|length == 0 %}
         <form class="searchbox mb-16">
           <input type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
@@ -144,68 +118,62 @@
         </div>
       {% else %}
 
+        <form class="searchbox mb-16">
+          <input type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
+        </form>
 
-      <form class="searchbox mb-16">
-        <input type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
-      </form>
-
-
-      <div class="search-status">
-        <div><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
-        <div>
-          <div class="chip">
-            Accelerated Access Review (AAR)
-            <a href="#" title="close" class="close">
-              <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
-              </svg>
-            </a>
+        <div class="search-status">
+          <div><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
+          <div>
+            <div class="chip">
+              Accelerated Access Review (AAR)
+              <a href="#" title="close" class="close">
+                <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
           </div>
+          <div><a href="{{url('search')}}" class="small">Clear all filters</a></div>
         </div>
-        <div><a href="#" class="small">Clear All</a></div>
-      </div>
 
-      <div class="search-results">
+        <div class="search-results">
+          {% for evaluation in data.evaluations %}
+            <div class="card small">
+            <h2 class="header4">{% if evaluation.title %}{{evaluation.title}}{% else %}No title provided{% endif %}</h2>
+            <p>{{evaluation.brief_description}}</p>
 
-        {% for evaluation in data.evaluations %}
-          <div class="card small">
-          <h2 class="header4">{% if evaluation.title %}{{evaluation.title}}{% else %}No title provided{% endif %}</h2>
-          <p>{{evaluation.brief_description}}</p>
+            <table>
+              <tr>
+                <th>Status</th>
+                <td>{{evaluation.get_status_display_name()}}</td>
+              </tr>
+              <tr>
+                <th>Organisation(s)</th>
+                <td>{{evaluation.get_list_organisations_display_names()|join(', ')}}</td>
+              </tr>
+              <tr>
+                <th>Evaluation type</th>
+                <td>{{evaluation.get_list_evaluation_types_display_names()|join(', ')}}</td>
+              </tr>
 
-          <table>
-            <tr>
-              <th>Status</th>
-              <td>{{evaluation.get_status_display_name()}}</td>
-            </tr>
-            <tr>
-              <th>Organisation(s)</th>
-              <td>{{evaluation.get_list_organisations_display_names()|join(', ')}}</td>
-            </tr>
-            <tr>
-              <th>Evaluation type</th>
-              <td>{{evaluation.get_list_evaluation_types_display_names()|join(', ')}}</td>
-            </tr>
-
-            <tr>
-              <th>Title of Interventions</th>
-              <td>{% for intervention in evaluation.get_related_intervention_names() %}
-                  {{ intervention }}<br>
-                {% endfor %}</td>
-            </tr>
-            <tr>
-              <th>Title of Outcome measures</th>
-              <td>{% for outcome_measure in evaluation.get_related_outcome_measure_names() %}
-                  {{ outcome_measure }}<br>
-                {% endfor %}</td>
-            </tr>
-          </table>
+              <tr>
+                <th>Title of Interventions</th>
+                <td>{% for intervention in evaluation.get_related_intervention_names() %}
+                    {{ intervention }}<br>
+                  {% endfor %}</td>
+              </tr>
+              <tr>
+                <th>Title of Outcome measures</th>
+                <td>{% for outcome_measure in evaluation.get_related_outcome_measure_names() %}
+                    {{ outcome_measure }}<br>
+                  {% endfor %}</td>
+              </tr>
+            </table>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      
-      </div>
-
       {% endif %}
-
     </div>
   </div>
 {% endblock %}
