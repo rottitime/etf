@@ -2,7 +2,7 @@
   background-color: #fff;
   border-bottom: 4px solid var(--color-pink);
   padding: 16px 0;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-24);
 
   & .container {
     display: flex;
@@ -84,6 +84,10 @@
 .container {
   max-width: var(--width-container);
   margin: 0 auto;
+}
+
+main.container {
+  margin-bottom: var(--spacing-24);
 }
 
 /* //TODO: Replace with light grid system */

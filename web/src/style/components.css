@@ -10,7 +10,8 @@
   padding: 0;
 
   & .accordion-content {
-    display: none;
+    /* display: none; */
+    position: relative;
     padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
   }
 
