@@ -38,6 +38,7 @@ input {
 }
 
 .select {
+  cursor: pointer;
   transition: color ease-in-out var(--animaiton-speed),
     background-color ease-in-out var(--animaiton-speed);
   border-radius: 8px;
@@ -60,6 +61,11 @@ input {
       filter: invert(13%) sepia(99%) saturate(6294%) hue-rotate(210deg) brightness(93%)
         contrast(102%);
     }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
   }
 
   &.has-value select {
