@@ -52,11 +52,11 @@ class EvaluationSearchForm(forms.Form):
 @require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
-        search_text = request.POST.get("search_text")
-        organisations = request.POST.get("organisations")
-        topics = request.POST.get("topics")
-        evaluation_types = request.POST.get("evaluation_types")
-        status = request.POST.get("status")
+        search_text = request.GET.get("search_text")
+        organisations = request.GET.getlist("organisations")
+        topics = request.GET.getlist("topics")
+        evaluation_types = request.GET.getlist("evaluation_types")
+        status = request.GET.getlist("status")
 
         qs = models.Evaluation.objects.all()
 
@@ -88,7 +88,7 @@ class EvaluationSearchView(MethodDispatcher):
         else:
             if status == choices.EvaluationStatus.DRAFT:
                 qs = qs.filter(status=status)
-                qs = qs.filter(user=request.user)
+                qs = qs.filter(users__in=[request.user])
             # TODO: make civil service and public filter more sophisticated once roles are in
             if status == choices.EvaluationStatus.PUBLIC:
                 qs = qs.filter(status=status)
