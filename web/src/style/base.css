@@ -89,8 +89,13 @@ a {
 a,
 .txt-link {
   color: var(--color-blue);
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  font-weight: inherit;
   text-decoration: none;
   transition: all ease-in-out 0.3s;
+  padding: 0;
   &:hover {
     text-decoration-line: underline;
   }
@@ -101,32 +106,6 @@ a,
     color: var(--color-blue2);
   }
   &:disabled {
-    color: var(--text-disabled);
-  }
-}
-
-.bttn-primary {
-  color: var(--color-white);
-  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-  border-radius: 20px;
-  padding: 8px 16px;
-  border: 0;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-    outline: 2px solid #002864;
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
     color: var(--text-disabled);
   }
 }
