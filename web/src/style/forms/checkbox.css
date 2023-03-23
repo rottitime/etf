@@ -32,14 +32,21 @@
 
   & input[type='checkbox'] {
     display: none;
-    &:checked + .checkmark {
-      border-color: var(--color-input-active);
-      background-color: var(--color-input-active);
-      &:before {
-        opacity: 1;
-        transform: scale(1);
+
+    &:checked {
+      & + .checkmark {
+        border-color: var(--color-input-active);
+        background-color: var(--color-input-active);
+        &:before {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      & ~ span {
+        font-weight: 600;
       }
     }
+
     &:disabled {
       & ~ span,
       & + .checkmark {

@@ -9,7 +9,7 @@
   gap: var(--spacing-8);
   cursor: pointer;
 
-  & .icon {
+  & .checkmark {
     border: 2px solid var(--input-stroke-light);
     width: var(--size-small);
     height: var(--size-small);
@@ -42,7 +42,7 @@
   & input[type='radio'] {
     display: none;
     &:checked {
-      & + .icon {
+      & + .checkmark {
         background-color: var(--color-blue);
         border-color: var(--color-black);
         &:before {
@@ -56,7 +56,7 @@
     }
 
     &:disabled {
-      & + .icon,
+      & + .checkmark,
       & ~ span {
         opacity: 0.3;
         cursor: not-allowed;
@@ -65,7 +65,7 @@
   }
 
   &.large {
-    & .icon {
+    & .checkmark {
       width: var(--size-large);
       height: var(--size-large);
     }
