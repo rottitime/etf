@@ -49,28 +49,9 @@ class EvaluationSearchForm(forms.Form):
 
 # @login_required
 @csrf_exempt
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
-        evaluations = models.Evaluation.objects.all()
-        return render(
-            request,
-            "search-form.html",
-            {
-                "evaluations": evaluations,
-                "statuses": choices.EvaluationStatus.choices,
-                "evaluation_types": choices.EvaluationTypeOptions.choices,
-                "topics": choices.Topic.choices,
-                "organisations": enums.Organisation.choices,
-                "selected_statuses": [],
-                "selected_evaluation_types": [],
-                "selected_topics": [],
-                "selected_organisations": [],
-                "search_text": "",
-            },
-        )
-
-    def post(self, request):
         search_text = request.POST.get("search_text")
         organisations = request.POST.get("organisations")
         topics = request.POST.get("topics")
@@ -113,20 +94,23 @@ class EvaluationSearchView(MethodDispatcher):
                 qs = qs.filter(status=status)
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
+
         return render(
             request,
             "search-form.html",
             {
-                "evaluations": qs,
-                "statuses": choices.EvaluationStatus.choices,
-                "evaluation_types": choices.EvaluationTypeOptions.choices,
-                "topics": choices.Topic.choices,
-                "organisations": enums.Organisation.choices,
-                "selected_statuses": status,
-                "selected_evaluation_types": evaluation_types,
-                "selected_topics": topics,
-                "selected_organisations": organisations,
-                "search_text": search_text,
+                "data": {
+                    "evaluations": qs,
+                    "statuses": choices.EvaluationStatus.choices,
+                    "evaluation_types": choices.EvaluationTypeOptions.choices,
+                    "topics": choices.Topic.choices,
+                    "organisations": enums.Organisation.choices,
+                    "selected_statuses": status or [],
+                    "selected_evaluation_types": evaluation_types or [],
+                    "selected_topics": topics or [],
+                    "selected_organisations": organisations or [],
+                    "search_text": search_text or "",
+                }
             },
         )
 
