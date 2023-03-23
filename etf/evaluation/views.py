@@ -9,7 +9,6 @@ from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from . import choices, enums, models
@@ -47,8 +46,7 @@ class EvaluationSearchForm(forms.Form):
     is_search = forms.CharField(max_length=6, required=True)
 
 
-# @login_required
-@csrf_exempt
+@login_required
 @require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
