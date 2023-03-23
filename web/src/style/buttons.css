@@ -1,13 +1,23 @@
-.bttn-primary {
-  color: var(--color-white);
-  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+[class^='bttn-'] {
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: var(--spacing-8) var(--spacing-16);
   border: 0;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
   transition: all ease-in-out 0.3s;
+  min-height: 40px;
+  &.small {
+    padding: 4px 16px;
+    font-size: 14px;
+    min-height: 32px;
+  }
+}
+
+.bttn-primary {
+  color: var(--color-white);
+  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
+
   &:hover {
     background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
   }
@@ -16,7 +26,7 @@
   }
   &:active {
     background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-    outline: 2px solid #002864;
+    outline: 2px solid var(--input-stroke-dark);
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -27,13 +37,7 @@
 .bttn-secondary {
   color: var(--color-blue);
   background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 8px 16px;
   border: 1px solid #0050c7;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
   &:hover {
     background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     color: var(--color-white);
@@ -43,7 +47,7 @@
   }
   &:active {
     background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    outline: 2px solid #002864;
+    outline: 2px solid var(--input-stroke-dark);
   }
   &:disabled {
     background: var(--color-bg-white);
@@ -54,13 +58,7 @@
 .bttn-tertiary {
   color: var(--color-blue);
   background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 8px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
+  border: 1px solid var(--input-stroke-light);
   &:hover {
     background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     color: var(--color-white);
@@ -70,9 +68,9 @@
   }
   &:active {
     background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    outline: 2px solid #002864;
+    outline: 2px solid var(--input-stroke-dark);
     border-radius: 20px;
-    border: 2px #002864;
+    border: 2px var(--input-stroke-dark);
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -83,13 +81,7 @@
 .bttn-quaternary {
   color: var(--color-grey);
   background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 8px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
+  border: 1px solid var(--input-stroke-light);
   &:hover {
     background: linear-gradient(180deg, #002761 100%, #001028 100%);
     color: var(--color-white);
@@ -99,7 +91,7 @@
   }
   &:active {
     background: linear-gradient(180deg, #002761 0%, #001028 100%);
-    outline: 2px solid #001028;
+    outline: 2px solid var(--input-stroke-dark);
   }
   &:disabled {
     background: var(--color-bg-disabled);
@@ -109,13 +101,7 @@
 .bttn-negative {
   color: var(--color-red);
   background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 8px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
+  border: 1px solid var(--input-stroke-light);
   &:hover {
     background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
     color: var(--color-white);
@@ -125,201 +111,10 @@
   }
   &:active {
     background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
-    outline: 2px solid #67170f;
+    outline: 2px solid var(--input-stroke-dark);
   }
   &:disabled {
     background: var(--color-bg-disabled);
     color: var(--text-disabled);
   }
 }
-
-/* .bttn-flat {
-  color: var(--color-blue);
-  border-radius: 0px;
-  padding: 0px 0px;
-  border: 0;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0050c7 0%);
-    text-decoration-line: underline;
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 1);
-  }
-  &:active {
-    
-    outline: 2px solid #002864;
-    text-decoration-line: underline;
-    color: var(--color-blue2 #002864);
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-} */
-
-/*small buttons */
-/* .bttn-primary {
-  color: var(--color-white);
-  background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-  border-radius: 20px;
-  padding: 4px 16px;
-  border: 0;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
-    outline: 2px solid #002864;
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-} */
-
-.bttn-secondary-sm {
-  color: var(--color-blue);
-  background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 4px 16px;
-  border: 1px solid #0050c7;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    color: var(--color-white);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    outline: 2px solid #002864;
-  }
-  &:disabled {
-    background: var(--color-bg-white);
-    color: var(--text-disabled);
-  }
-}
-
-.bttn-tertiary-sm {
-  color: var(--color-blue);
-  background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 4px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    color: var(--color-white);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
-    outline: 2px solid #002864;
-    border-radius: 20px;
-    border: 2px #002864;
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-}
-
-.bttn-quaternary-sm {
-  color: var(--color-grey);
-  background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 4px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #002761 100%, #001028 100%);
-    color: var(--color-white);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #002761 0%, #001028 100%);
-    outline: 2px solid #001028;
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-}
-.bttn-negative-sm {
-  color: var(--color-red);
-  background: linear-gradient(180deg, #ffffff 100%);
-  border-radius: 20px;
-  padding: 4px 16px;
-  border: 1px solid #cccccc;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
-    color: var(--color-white);
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 0.8);
-  }
-  &:active {
-    background: linear-gradient(180deg, #ff3825 0%, #c72b1d 100%);
-    outline: 2px solid #67170f;
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-}
-
-/* .bttn-flat-sm {
-  color: var(--color-blue);
-  border-radius: 0px;
-  padding: 0px 0px;
-  border: 0;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: normal;
-  transition: all ease-in-out 0.3s;
-  &:hover {
-    background: linear-gradient(180deg, #0050c7 0%);
-    text-decoration-line: underline;
-  }
-  &:focus {
-    box-shadow: 0px 0px 10px rgba(0, 80, 199, 1);
-  }
-  &:active {
-    outline: 2px solid #002864;
-    text-decoration-line: underline;
-    color: var(--color-blue2 #002864);
-  }
-  &:disabled {
-    background: var(--color-bg-disabled);
-    color: var(--text-disabled);
-  }
-} */
