@@ -203,6 +203,7 @@ def upload_data_for_id(all_df, rsm_id):
         print(f"model_field_name: {model_field_name}")
         print(f"value: {value}")
         setattr(evaluation, model_field_name, value)
+        evaluation.save()
 
     # Add number fields
     # Add organisations
