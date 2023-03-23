@@ -68,7 +68,7 @@
   
                     <div class="scroll">
                       <div class="row">
-                        <label class="checkbox">
+                        <label class="checkbox large">
                           <input type="checkbox" />
                           <div class="checkmark"></div>
                           <span>Academy for Justice Commissioning</span>
@@ -82,8 +82,8 @@
                       </label>
                     </div>
                       <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
+                        <label class="checkbox" >
+                        <input type="checkbox" disabled />
                         <div class="checkmark"></div>
                         <span>Academy for Social Justice Commissioning</span>
                       </label>
@@ -561,6 +561,44 @@
             </div>
 
             <hr>
+           <div> <label class="radio">
+            <input type="radio" name="fav_language" />
+            <div class="checkmark"></div>
+            <span>Active Travel England (ATE)</span>
+          </label>
+
+          <label class="radio">
+            <input type="radio" name="fav_language" />
+            <div class="checkmark"></div>
+            <span>Academy for Social Justice</span>
+          </label>
+
+          <label class="radio">
+            <input type="radio" name="fav_language" disabled />
+            <div class="checkmark"></div>
+            <span>Administration of Radioactive</span>
+          </label></div>
+
+          <div>
+            <label class="radio large">
+              <input type="radio" name="fav_language" />
+              <div class="checkmark"></div>
+              <span>Active Travel England (ATE)</span>
+            </label>
+
+            <label class="radio large">
+              <input type="radio" name="fav_language" />
+              <div class="checkmark"></div>
+              <span>Academy for Social Justice</span>
+            </label>
+
+            <label class="radio large">
+              <input type="radio" name="fav_language" disabled />
+              <div class="checkmark"></div>
+              <span>Administration of Radioactive</span>
+            </label>
+          </div>
+            <hr>
 
             <div class="select">
               <select name="sort" >
@@ -581,6 +619,16 @@
       <option value="views">Most views</option>
       <option value="comments">Most comments</option>
   </select>
+</div>
+
+<div class="select disabled">
+  <select name="sort" disabled >
+    <option value="">Please select</option>
+<option value="published" selected>Recently published</option>
+<option value="updated" >Recently updated</option>
+<option value="views">Most views</option>
+<option value="comments">Most comments</option>
+</select>
 </div>
 
   <hr>
