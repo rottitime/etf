@@ -67,11 +67,6 @@
       }
     }
   }
-
-  & .accordion-content {
-    display: block;
-    padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
-  }
 }
 
 .badge {
