@@ -16,7 +16,7 @@
     <div class="col">
 
 
-      <div class="sidebar">
+      <div class="sidebar search-filters ">
         <header>
           <h3 class="highlight header5">Filters</h3>
         </header>
@@ -32,7 +32,8 @@
               
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
-              {% for organisation in organisations %}
+              <div class="scroll">
+                {% for organisation in organisations %}
                 <div class="row">
                   <label class="checkbox">
                     <input type="checkbox" value="{{ organisation[0] }}" />
@@ -41,6 +42,7 @@
                   </label>
                 </div>
               {% endfor %}
+              </div>
             </div>
           </li>
           <li>
@@ -55,7 +57,8 @@
               
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
-              {% for topic in topics %}
+              <div class="scroll">
+                {% for topic in topics %}
                 <div class="row">
                   <label class="checkbox">
                     <input type="checkbox" value="{{ topic[0] }}" />
@@ -64,6 +67,7 @@
                   </label>
                 </div>
               {% endfor %}
+              </div>
             </div>
           </li>
           <li>
@@ -78,7 +82,8 @@
               
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
-             {% for evaluation_type in evaluation_types %}
+             <div class="scroll">
+              {% for evaluation_type in evaluation_types %}
                 <div class="row">
                   <label class="checkbox">
                     <input type="checkbox" value="{{ evaluation_type[0] }}" />
@@ -87,6 +92,7 @@
                   </label>
                 </div>
               {% endfor %}
+             </div>
 
             </div>
           </li>
@@ -102,7 +108,8 @@
               
               <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
-              {% for status in statuses %}
+              <div class="scroll">
+                {% for status in statuses %}
                 <div class="row">
                   <label class="checkbox">
                     <input type="checkbox" value="{{ status[0] }}" />
@@ -111,6 +118,7 @@
                   </label>
                 </div>
               {% endfor %}
+              </div>
 
 
             </div>
