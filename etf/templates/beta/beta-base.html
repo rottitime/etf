@@ -23,32 +23,27 @@
     {% endfor %}
 
     
-      <header class="main-header">
-
-        <div class="container">
-          <a href="/" class="logo">
-            {{macros.crest_svg()}}
+    <header class="main-header">
+      <div class="container">
+         <a href="/" class="logo">
+           {{macros.crest_svg()}}
             <h2 class="body-text">Evaluation Registry</h2>
-          </a>
-  
-          {% if request.user.is_authenticated %}
-          <nav>
-            
-            <a href="/search/">
-              
-              {{macros.search_svg()}}
-              
-              EVALUATION SEARCH</a>
-            <a href="/css/">MY EVALUATIONS</a>
-            <form action="{{url('index')}}" method="POST">{{csrf_input}}
-              <button class="bttn-primary" type="submit">New evaluation</button>
-            </form>
-          </n>
-          {% endif %}
-        </div>
-  
-      </header>
-  
+         </a>
+         {% if request.user.is_authenticated %}
+         <nav>
+         <a href="{{url('search')}}">
+           {{macros.search_svg()}}
+           Evaluation search
+         </a>
+         <a href="{{url('my-evaluations')}}">My evaluations</a>
+         <form action="{{url('index')}}" method="POST">{{csrf_input}}
+            <button class="bttn-primary" type="submit">New evaluation</button>
+         </form>
+         <a href="{{url('account_logout')}}">Logout</a>
+         </nav>
+         {% endif %}
+      </div>
+   </header>
       <main class="container ">
   
         <div class="sidebarcolumn">

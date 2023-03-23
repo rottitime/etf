@@ -26,13 +26,14 @@
             <nav>
             <a href="{{url('search')}}">
               {{macros.search_svg()}}
-               EVALUATION SEARCH
+              Evaluation search
             </a>
-            <a href="{{url('my-evaluations')}}">MY EVALUATIONS</a>
+            <a href="{{url('my-evaluations')}}">My evaluations</a>
             <form action="{{url('index')}}" method="POST">{{csrf_input}}
                <button class="bttn-primary" type="submit">New evaluation</button>
             </form>
-            </n>
+            <a href="{{url('account_logout')}}">Logout</a>
+            </nav>
             {% endif %}
          </div>
       </header>
