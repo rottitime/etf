@@ -1,5 +1,6 @@
 import './style/vars.css'
 import './style/base.css'
+import './style/buttons.css'
 import './style/template.css'
 import './style/forms/index.css'
 import './style/forms/checkbox.css'
