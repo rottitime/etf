@@ -81,6 +81,11 @@ small,
   line-height: 24px;
 }
 
+button,
+a {
+  cursor: pointer;
+}
+
 a,
 .txt-link {
   color: var(--color-blue);
