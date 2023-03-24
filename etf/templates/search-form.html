@@ -145,7 +145,7 @@
     </form>
       {% if not data.evaluations or data.evaluations|length == 0 %}
         <div class="searchbox-intro">
-          <p>Search through <b class="highlight">12,345 evaluations</b></p>
+          <p>Search through <b class="highlight">{{data.total_evaluations}} evaluations</b></p>
           <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
         </div>
       {% else %}

@@ -49,6 +49,7 @@ class EvaluationSearchForm(forms.Form):
 @login_required
 @require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
+
     def get(self, request):
         search_term = request.GET.get("search_text")
         organisations = request.GET.getlist("organisations")
@@ -56,8 +57,9 @@ class EvaluationSearchView(MethodDispatcher):
         evaluation_types = request.GET.getlist("evaluation_types")
         status = request.GET.getlist("status")
         current_url = request.get_full_path()
-
+      
         qs = models.Evaluation.objects.all()
+        total_evaluations = qs.count()
 
         if search_term:
             qs = qs.filter(title__contains=search_term)
@@ -78,6 +80,7 @@ class EvaluationSearchView(MethodDispatcher):
             for evaluation_type in evaluation_types:
                 evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
                 evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
+            # TODO - what about "other" type?    
             qs = evaluation_types_qs
         if not status:
             qs = qs.filter(
