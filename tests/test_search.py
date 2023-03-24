@@ -19,10 +19,3 @@
 #     page = form.submit()
 
 #     assert page.has_text("0 evaluations found")
-
-
-# def test_search_text():
-#     test_eval = models.Evaluation(title="Test search eval", brief_description="Dancing elephants")
-#     test_eval.save()
-#     outcome_measure = models.OutcomeMeasure(evaluation=test_eval, name="My new outcome measure")
-#     outcome_measure.save()
