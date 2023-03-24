@@ -23,7 +23,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="organisations" />
                   <button type="reset" class="txt-link small" {% if data.selected_organisations|length < 1 or data.organisations|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
@@ -54,7 +54,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="topics" />
                   <button type="reset" class="txt-link small" {% if data.selected_topics|length < 1 or data.topics|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
   
@@ -85,7 +85,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="evaluation_types" />
                   <button type="reset" class="txt-link small" {% if data.selected_evaluation_types|length < 1 or data.evaluation_types|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
@@ -116,7 +116,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="status" />
                   <button type="reset" class="txt-link small" {% if data.selected_statuses|length < 1 or data.statuses|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
