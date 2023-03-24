@@ -1,4 +1,3 @@
-import imp
 import uuid
 
 from django.core.serializers.json import DjangoJSONEncoder

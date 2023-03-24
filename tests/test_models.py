@@ -1,4 +1,3 @@
-from re import search
 from nose.tools import with_setup
 
 from etf.evaluation import choices, models
@@ -52,6 +51,7 @@ def setup_search_eval():
         brief_description="Dancing elephants",
         organisations=["uk-health-security-agency", "department-for-education"],
     )
+    test_eval.save()
     outcome_measure = models.OutcomeMeasure(evaluation=test_eval, name="My new outcome measure")
     outcome_measure.save()
     test_eval.save()
@@ -59,7 +59,7 @@ def setup_search_eval():
 
 def teardown_search_eval():
     title = "Test search evaluation"
-    models.Evaluation.filter(title=title).delete()
+    models.Evaluation.objects.filter(title=title).delete()
 
 
 @with_setup(setup_search_eval, teardown_search_eval)
@@ -73,7 +73,7 @@ def test_search_text():
     test_eval.save()
     outcome_measure = models.OutcomeMeasure(evaluation=test_eval, name="My new outcome measure")
     outcome_measure.save()
-    search_text = test_eval["search_text"]
+    search_text = test_eval.search_text
     assert "elephants" in search_text, search_text
     assert "DfE" in search_text, search_text
     assert "My new outcome measure" in search_text
