@@ -25,7 +25,7 @@
                 {% for organisation in data.organisations %}
                 <div class="row">
                   <label class="checkbox">
-                    <input {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" name="organisation" />
+                    <input {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" name="organisations" />
                     <div class="checkmark"></div>
                     <span>{{organisation[1]}}</span>
                   </label>
@@ -74,7 +74,7 @@
               {% for evaluation_type in data.evaluation_types %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" name="evaluation_type" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
+                    <input type="checkbox" name="evaluation_types" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
@@ -100,7 +100,7 @@
                 {% for status in data.statuses %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" name="statuses" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
+                    <input type="checkbox" name="status" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{status[1]}}</span>
                   </label>
@@ -116,7 +116,7 @@
     <div class="col">
       {% if not data.evaluations or data.evaluations|length == 0 %}
         <form class="searchbox mb-16">
-          <input type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
+          <input type="search" name="search_text" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
           <div><button class="bttn-primary" type="submit">Search</button></div>
         </form>
 
@@ -127,7 +127,7 @@
       {% else %}
 
         <form class="searchbox mb-16">
-          <input type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
+          <input type="search" name="search_text" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
         </form>
 
         <div class="search-status">
