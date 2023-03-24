@@ -78,8 +78,13 @@ class EvaluationSearchView(MethodDispatcher):
         if evaluation_types:
             evaluation_types_qs = models.Evaluation.objects.none()
             for evaluation_type in evaluation_types:
-                evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
-                evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
+                not_other_types = [choices.EvaluationTypeOptions.IMPACT, choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.ECONOMIC]
+                if evaluation_type in not_other_types:
+                    evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
+                    evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
+                # else:
+
+                  
             # TODO - what about "other" type?    
             qs = evaluation_types_qs
         if not status:
@@ -147,6 +152,7 @@ class EvaluationSearchView(MethodDispatcher):
                     "selected_organisations": organisations or [],
                     "search_term": search_term or "",
                     "current_url": current_url,
+                    "total_evaluations": total_evaluations
                 },
             },
         )
