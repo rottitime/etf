@@ -374,35 +374,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         )
         combined_field_data += impact_eval_effect_measure_type_text
 
-        # if self.impact_eval_effect_measure_type:
-        #     impact_eval_effect_measure_type = [
-        #         value[1]
-        #         for value in choices.ImpactMeasureType.choices
-        #         if value[0] in self.impact_eval_effect_measure_type
-        #     ]
-        #     if impact_eval_effect_measure_type:
-        #         impact_eval_effect_measure_type_text = "|".join(impact_eval_effect_measure_type)
-        #         combined_field_data += f"{impact_eval_effect_measure_type_text}|"
-
-        if self.impact_eval_interpretation_type:
-            impact_eval_interpretation_type = [
-                value[1]
-                for value in choices.ImpactEvalInterpretation.choices
-                if value[0] in self.impact_eval_interpretation_type
-            ]
-            if impact_eval_interpretation_type:
-                impact_eval_interpretation_type_text = "|".join(impact_eval_interpretation_type)
-                combined_field_data += f"{impact_eval_interpretation_type_text}|"
-
-        if self.impact_eval_interpretation:
-            impact_eval_interpretation = [
-                value[1]
-                for value in choices.ImpactEvalInterpretation.choices
-                if value[0] in self.impact_eval_interpretation
-            ]
-            if impact_eval_interpretation:
-                impact_eval_interpretation_text = "|".join(impact_eval_interpretation)
-                combined_field_data += f"{impact_eval_interpretation_text}|"
+        impact_eval_interpretation_type_text = choices.map_choice_or_other(
+            self.impact_eval_interpretation_type, choices.ImpactEvalInterpretation.options, append_separator=True
+        )
+        combined_field_data += impact_eval_interpretation_type_text
 
         combined_field_data = combined_field_data.strip("|")
         self.search_text = combined_field_data
