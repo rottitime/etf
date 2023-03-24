@@ -655,10 +655,17 @@ def get_values_other_evaluation_types():
     """
     The specified value for another evaluation type is stored in the same
     field as the evaluation types. Get the actual values that correspond
-    to 'Other'. 
+    to 'Other', and all evaluations that have an other value.
     """
-    qs = Evaluation.objects.all().values_list("evaluation_type", flat=True)
-    all_types = {type for types_list in qs for type in types_list}
-    non_other = {choices.EvaluationTypeOptions.IMPACT, choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.ECONOMIC}
-    other_values = all_types.difference(non_other)
-    return other_values
+    all_qs = Evaluation.objects.all()
+    standard_eval_types = [
+        choices.EvaluationTypeOptions.IMPACT,
+        choices.EvaluationTypeOptions.PROCESS,
+        choices.EvaluationTypeOptions.ECONOMIC,
+    ]
+    # ie not other
+    other_qs = all_qs.exclude(evaluation_type__contained_by=standard_eval_types)
+    types = other_qs.values_list("evaluation_type", flat=True)
+    other_types = {type for types_list in types for type in types_list}
+    other_values = other_types.difference(standard_eval_types)
+    return other_values, other_qs

@@ -19,7 +19,6 @@ USER_DATA = {"email": "mr_search_test@example.com", "password": "1-h4t3-p455w0rd
 #     assert page.has_text("0 evaluations found")
 
 
-
 # def test_search_text():
 #     test_eval = models.Evaluation(title="Test search eval", brief_description="Dancing elephants")
 #     test_eval.save()
