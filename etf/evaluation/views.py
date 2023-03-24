@@ -50,7 +50,7 @@ class EvaluationSearchForm(forms.Form):
 @require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
-        search_text = request.GET.get("search_text")
+        search_term = request.GET.get("search_text")
         organisations = request.GET.getlist("organisations")
         topics = request.GET.getlist("topics")
         evaluation_types = request.GET.getlist("evaluation_types")
@@ -59,8 +59,8 @@ class EvaluationSearchView(MethodDispatcher):
 
         qs = models.Evaluation.objects.all()
 
-        if search_text:
-            qs = qs.filter(title__contains=search_text)
+        if search_term:
+            qs = qs.filter(title__contains=search_term)
         if organisations:
             organisations_qs = models.Evaluation.objects.none()
             for organisation in organisations:
@@ -136,7 +136,7 @@ class EvaluationSearchView(MethodDispatcher):
                     "selected_evaluation_types": evaluation_types or [],
                     "selected_topics": topics or [],
                     "selected_organisations": organisations or [],
-                    "search_text": search_text or "",
+                    "search_term": search_term or "",
                     "current_url": current_url,
                 },
             },
