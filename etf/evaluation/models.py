@@ -331,6 +331,11 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         )
         combined_field_data += evaluation_type_text
 
+        impact_eval_design_name_text = choices.turn_choices_list_to_string(
+            self.impact_eval_design_name, choices.ImpactEvalDesign.options
+        )
+        combined_field_data += impact_eval_design_name_text
+
         topics_text = choices.turn_choices_list_to_string(self.topics, choices.Topic.options)
         combined_field_data += topics_text
 
@@ -345,47 +350,39 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         combined_field_data += economic_eval_types_text
 
         impact_eval_design_name_text = choices.map_choice_or_other(
-            self.impact_eval_design_name, choices.ImpactEvalDesign.options, append_separator=True)
+            self.impact_eval_design_name, choices.ImpactEvalDesign.options, append_separator=True
+        )
         combined_field_data += impact_eval_design_name_text
 
+        impact_eval_effect_measure_interval_text = choices.map_choice_or_other(
+            self.impact_eval_effect_measure_interval, choices.ImpactMeasureInterval.options, append_separator=True
+        )
+        combined_field_data += impact_eval_effect_measure_interval_text
 
+        impact_eval_framework_text = choices.map_choice_or_other(
+            self.impact_eval_framework, choices.ImpactFramework.options, append_separator=True
+        )
+        combined_field_data += impact_eval_framework_text
 
+        impact_eval_basis_text = choices.map_choice_or_other(
+            self.impact_eval_basis, choices.ImpactAnalysisBasis.options, append_separator=True
+        )
+        combined_field_data += impact_eval_basis_text
 
-        if self.impact_eval_effect_measure_interval:
-            impact_eval_effect_measure_interval = [
-                value[1]
-                for value in choices.ImpactMeasureInterval.choices
-                if value[0] in self.impact_eval_effect_measure_interval
-            ]
-            if impact_eval_effect_measure_interval:
-                impact_eval_effect_measure_interval_text = "|".join(impact_eval_effect_measure_interval)
-                combined_field_data += f"{impact_eval_effect_measure_interval_text}|"
+        impact_eval_effect_measure_type_text = choices.map_choice_or_other(
+            self.impact_eval_effect_measure_type, choices.ImpactMeasureType.options, append_separator=True
+        )
+        combined_field_data += impact_eval_effect_measure_type_text
 
-        if self.impact_eval_framework:
-            impact_eval_framework = [
-                value[1] for value in choices.ImpactFramework.choices if value[0] in self.impact_eval_framework
-            ]
-            if impact_eval_framework:
-                impact_eval_framework_text = "|".join(impact_eval_framework)
-                combined_field_data += f"{impact_eval_framework_text}|"
-
-        if self.impact_eval_basis:
-            impact_eval_basis = [
-                value[1] for value in choices.ImpactAnalysisBasis.choices if value[0] in self.impact_eval_basis
-            ]
-            if impact_eval_basis:
-                impact_eval_basis_text = "|".join(impact_eval_basis)
-                combined_field_data += f"{impact_eval_basis_text}|"
-
-        if self.impact_eval_effect_measure_type:
-            impact_eval_effect_measure_type = [
-                value[1]
-                for value in choices.ImpactMeasureType.choices
-                if value[0] in self.impact_eval_effect_measure_type
-            ]
-            if impact_eval_effect_measure_type:
-                impact_eval_effect_measure_type_text = "|".join(impact_eval_effect_measure_type)
-                combined_field_data += f"{impact_eval_effect_measure_type_text}|"
+        # if self.impact_eval_effect_measure_type:
+        #     impact_eval_effect_measure_type = [
+        #         value[1]
+        #         for value in choices.ImpactMeasureType.choices
+        #         if value[0] in self.impact_eval_effect_measure_type
+        #     ]
+        #     if impact_eval_effect_measure_type:
+        #         impact_eval_effect_measure_type_text = "|".join(impact_eval_effect_measure_type)
+        #         combined_field_data += f"{impact_eval_effect_measure_type_text}|"
 
         if self.impact_eval_interpretation_type:
             impact_eval_interpretation_type = [
