@@ -3,9 +3,12 @@ import '../style/filters.css'
 const setTotal = (filterControl: HTMLElement, name: string) => {
   const total = filterControl.querySelectorAll(`[name=${name}]:checked`).length
 
+  console.log({ total, name })
+
   document
     .querySelectorAll(`.filter-control-total[data-name=${name}]`)
     .forEach((control) => {
+      console.log({ control })
       control.innerHTML = total.toString()
     })
 }
