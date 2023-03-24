@@ -1,5 +1,6 @@
-from . import utils
 from etf.evaluation import models
+
+from . import utils
 
 USER_DATA = {"email": "mr_search_test@example.com", "password": "1-h4t3-p455w0rd-c0mpl3xity-53tt1ng5"}
 

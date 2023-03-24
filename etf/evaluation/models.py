@@ -659,9 +659,9 @@ def get_values_other_evaluation_types():
     """
     all_qs = Evaluation.objects.all()
     standard_eval_types = [
-        choices.EvaluationTypeOptions.IMPACT,
-        choices.EvaluationTypeOptions.PROCESS,
-        choices.EvaluationTypeOptions.ECONOMIC,
+        choices.EvaluationTypeOptions.IMPACT.value,
+        choices.EvaluationTypeOptions.PROCESS.value,
+        choices.EvaluationTypeOptions.ECONOMIC.value,
     ]
     # ie not other
     other_qs = all_qs.exclude(evaluation_type__contained_by=standard_eval_types)
