@@ -111,7 +111,6 @@ class EvaluationSearchView(MethodDispatcher):
                     "search_text": search_text or "",
                     "current_url": current_url,
                 },
-                "page": "search",
             },
         )
 
@@ -196,7 +195,7 @@ def my_evaluations_view(request):
         qs = models.Evaluation.objects.filter(users__in=[request.user])
         data = request.GET
     return render(
-        request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data, "page": "my-evaluations"}
+        request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data}
     )
 
 
