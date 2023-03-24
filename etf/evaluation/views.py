@@ -94,16 +94,44 @@ class EvaluationSearchView(MethodDispatcher):
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
 
+        organisation_filters = enums.Organisation.choices
+        filtered_organisation_filters = [
+            organisation_filter
+            for organisation_filter in organisation_filters
+            if organisation_filter[0] in organisations or any(organisation_filter[0] in i.organisations for i in qs)
+        ]
+
+        topic_filters = choices.Topic.choices
+        filtered_topics_filters = [
+            topic_filter
+            for topic_filter in topic_filters
+            if topic_filter[0] in topics or any(topic_filter[0] in i.topics for i in qs)
+        ]
+
+        status_filters = choices.EvaluationStatus.choices
+        filtered_status_filters = [
+            status_filter
+            for status_filter in status_filters
+            if status_filter[0] in status or any(status_filter[0] in i.status for i in qs)
+        ]
+
+        evaluation_types_filters = choices.EvaluationTypeOptions.choices
+        filtered_evaluation_types_filters = [
+            evaluation_types_filter
+            for evaluation_types_filter in evaluation_types_filters
+            if evaluation_types_filter[0] in evaluation_types or any(evaluation_types_filter[0] in i.status for i in qs)
+        ]
+
         return render(
             request,
             "search-form.html",
             {
                 "data": {
                     "evaluations": qs,
-                    "statuses": choices.EvaluationStatus.choices,
-                    "evaluation_types": choices.EvaluationTypeOptions.choices,
-                    "topics": choices.Topic.choices,
-                    "organisations": enums.Organisation.choices,
+                    "statuses": filtered_status_filters,
+                    "evaluation_types": filtered_evaluation_types_filters,
+                    "topics": filtered_topics_filters,
+                    "organisations": filtered_organisation_filters,
                     "selected_statuses": status or [],
                     "selected_evaluation_types": evaluation_types or [],
                     "selected_topics": topics or [],
