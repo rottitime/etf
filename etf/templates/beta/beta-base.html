@@ -57,89 +57,99 @@
   
               <ul class="accordion" >
                 <li>
+                  
                  <h3> <button>
-                  <div class="title">Organisations <div class="badge">1</div></div>
-                  <div class="icon"></div>
+                  <div class="title">Organisations <div class="badge filter-control-total" data-name="organisation"></div></div>
+                  <div class="icon">
+
+                  </div>
                 </button></h3>
                   <div class="accordion-content">
+                    <form action="{{url('search')}}">
                     
                     
-                    <input type="text" placeholder="Filter..." class="small full-width mb-16" />
-  
-                    <div class="scroll">
-                      <div class="row">
-                        <label class="checkbox large">
-                          <input type="checkbox" />
+                    <fieldset class="filter-control">
+                      <input type="reset" value="Reset" class="txt-link small">
+                      <input type="submit" value="Submit" class="txt-link small">
+
+                      <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+            
+                      <div class="scroll">
+                        <div class="row">
+                          <label class="checkbox large">
+                            <input type="checkbox" name="organisation"  value="Academy for Justice Commissioning" />
+                            <div class="checkmark"></div>
+                            <span>Academy for Justice Commissioning</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Academy for Social Justice" />
                           <div class="checkmark"></div>
-                          <span>Academy for Justice Commissioning</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Academy for Social Justice</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox" >
-                        <input type="checkbox" disabled />
-                        <div class="checkmark"></div>
-                        <span>Academy for Social Justice Commissioning</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Accelerated Access Review (AAR)</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Accelerated Capability Environment (ACE)</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Active Travel England (ATE)</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Administrative Court</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Administrative Justice and Tribunals Council (AJTC)</span>
-                      </label>
-                    </div>
-                      <div class="row">
-                        <label class="checkbox">
-                        <input type="checkbox" />
-                        <div class="checkmark"></div>
-                        <span>Administrative Justice and Tribunals Council Welsh Committee</span>
-                      </label>
-                    </div>
-                    </div>
+                          <span>Academy for Social Justice</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox" >
+                          <input type="checkbox" name="organisation" disabled value="Academy for Social Justice Commissioning" />
+                          <div class="checkmark"></div>
+                          <span>Academy for Social Justice Commissioning</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Accelerated Access Review (AAR)" />
+                          <div class="checkmark"></div>
+                          <span>Accelerated Access Review (AAR)</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Accelerated Capability Environment (ACE)" />
+                          <div class="checkmark"></div>
+                          <span>Accelerated Capability Environment (ACE)</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Active Travel England (ATE)" />
+                          <div class="checkmark"></div>
+                          <span>Active Travel England (ATE)</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Administration of Radioactive Substances Advisory Committee (ARSAC)" />
+                          <div class="checkmark"></div>
+                          <span>Administration of Radioactive Substances Advisory Committee (ARSAC)</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Administrative Court" />
+                          <div class="checkmark"></div>
+                          <span>Administrative Court</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Administrative Justice and Tribunals Council (AJTC)" />
+                          <div class="checkmark"></div>
+                          <span>Administrative Justice and Tribunals Council (AJTC)</span>
+                        </label>
+                      </div>
+                        <div class="row">
+                          <label class="checkbox">
+                          <input type="checkbox" name="organisation" value="Administrative Justice and Tribunals Council Welsh Committee" />
+                          <div class="checkmark"></div>
+                          <span>Administrative Justice and Tribunals Council Welsh Committee</span>
+                        </label>
+                      </div>
+                      </div>
+          
+                     </fieldset>
   
-  
+                    </form>
                   </div>
                 </li>
                 <li>

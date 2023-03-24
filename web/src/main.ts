@@ -10,6 +10,7 @@ import './style/pages.css'
 import accordion from './components/accordion'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
+import setupFilters from './components/filters'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -28,4 +29,5 @@ window.addEventListener('load', () => {
   accordion()
   icon()
   setupSelect()
+  setupFilters()
 })
