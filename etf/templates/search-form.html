@@ -5,11 +5,10 @@
 
   <div class="sidebarcolumn">
     <div class="col">
-    <form method="GET">
+    <form method="GET" action="/search/">
       <div class="sidebar search-filters ">
         <header>
           <h3 class="highlight header5">Filters</h3>
-          <button class="bttn-primary" type="submit">Apply filters</button>
         </header>
         <ul class="accordion" >
           <li>
@@ -25,7 +24,13 @@
 
                 <div class="mb-16">
                   <input type="text" placeholder="Filter..." class="small full-width mb-8" />
-                  <button type="reset" class="txt-link small">Reset</button>
+
+                  <!-- //TODO set disabled if no filter -->
+                  <button type="reset" class="txt-link small"
+                  {% if data.selected_organisations|length < 1 %}disabled{% endif %}
+
+                  
+                  >Reset</button>
                 </div>
 
               <div class="scroll">
