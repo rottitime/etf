@@ -88,7 +88,7 @@ a,
   font-size: inherit;
   font-weight: inherit;
   text-decoration: none;
-  transition: all ease-in-out 0.3s;
+  transition: color ease-in-out 0.3s;
   padding: 0;
   &:hover {
     text-decoration-line: underline;
