@@ -213,6 +213,8 @@ class EvaluationSchema(TimeStampedModelSchema):
         lambda e: LinkOtherServiceSchema(many=True, exclude=("evaluation",)).dump(e.link_other_services.all())
     )
 
+    search_text = fields.Str()
+
 
 class InterventionSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema())
