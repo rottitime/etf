@@ -260,6 +260,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         # Ignore fields
         search_text_field = "search_text"
         page_statuses_field = "page_statuses"
+        status_field = "status"
 
         # Foreign key fields
         foreign_key_fields = [
@@ -295,6 +296,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             + single_choice_fields
             + [search_text_field]
             + [page_statuses_field]
+            + [status_field]
             + list_fields
             + unique_fields
         )
