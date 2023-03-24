@@ -88,11 +88,17 @@ class EvaluationSearchView(MethodDispatcher):
             if status == choices.EvaluationStatus.DRAFT:
                 qs = qs.filter(status=status)
                 qs = qs.filter(users__in=[request.user])
-            # TODO: make civil service and public filter more sophisticated once roles are in
             if status == choices.EvaluationStatus.PUBLIC:
                 qs = qs.filter(status=status)
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
+        # For now, place highest weight on title and description
+        search_vector = SearchVector("title", weight="A")
+        search_vector = search_vector + SearchVector("brief_description", weight="A")
+        search_vector = search_vector + SearchVector("search_text")
+        search_query = SearchQuery(search_term)
+        rank = SearchRank(search_vector, search_query)
+        qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
 
         organisation_filters = enums.Organisation.choices
         filtered_organisation_filters = [
