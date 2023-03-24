@@ -15,7 +15,7 @@
       {% endif %}
       <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
    </head>
-   <body>
+   <body {% if request.path==url('search') %}id="search"{% endif %}>
       <header class="main-header">
          <div class="container">
             <a href="/" class="logo">
@@ -24,11 +24,14 @@
             </a>
             {% if request.user.is_authenticated %}
             <nav>
-            <a href="{{url('search')}}">
+            <a href="{{url('search')}}" class={% if request.path==url('search') %}active{% endif %}>
               {{macros.search_svg()}}
               Evaluation search
             </a>
-            <a href="{{url('my-evaluations')}}">My evaluations</a>
+            <a href="{{url('my-evaluations')}}" class={% if request.path==url('my-evaluations') %}active{% endif %}>
+              My evaluations
+            </a>
+
             <form action="{{url('index')}}" method="POST">{{csrf_input}}
                <button class="bttn-primary" type="submit">New evaluation</button>
             </form>
