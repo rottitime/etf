@@ -24,11 +24,21 @@
             </a>
             {% if request.user.is_authenticated %}
             <nav>
-            <a href="{{url('search')}}">
-              {{macros.search_svg()}}
-              Evaluation search
-            </a>
-            <a href="{{url('my-evaluations')}}">My evaluations</a>
+            {% if page is defined and page=='search' %}
+              <a href="{{url('search')}}" class="active">
+            {% else %}
+              <a href="{{url('search')}}">
+            {% endif %}
+                {{macros.search_svg()}}
+                Evaluation search
+              </a>
+            {% if page is defined and page=='my-evaluations' %}
+              <a href="{{url('my-evaluations')}}" class="active">
+            {% else %}
+              <a href="{{url('my-evaluations')}}">
+            {% endif %}
+                My evaluations
+              </a>
             <form action="{{url('index')}}" method="POST">{{csrf_input}}
                <button class="bttn-primary" type="submit">New evaluation</button>
             </form>
