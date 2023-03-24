@@ -180,7 +180,6 @@ def search_evaluations_view(request):
                 rank = SearchRank(search_vector, search_query)
 
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-                print("here")
             return render(request, "search-results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
