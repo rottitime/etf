@@ -15,7 +15,7 @@
       {% endif %}
       <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
    </head>
-   <body>
+   <body {% if request.path==url('search') %}id="search"{% endif %}>
       <header class="main-header">
          <div class="container">
             <a href="/" class="logo">
