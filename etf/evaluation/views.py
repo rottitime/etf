@@ -55,6 +55,7 @@ class EvaluationSearchView(MethodDispatcher):
         topics = request.GET.getlist("topics")
         evaluation_types = request.GET.getlist("evaluation_types")
         status = request.GET.getlist("status")
+        current_url = request.get_full_path()
 
         qs = models.Evaluation.objects.all()
 
@@ -108,6 +109,7 @@ class EvaluationSearchView(MethodDispatcher):
                     "selected_topics": topics or [],
                     "selected_organisations": organisations or [],
                     "search_text": search_text or "",
+                    "current_url": current_url,
                 }
             },
         )
