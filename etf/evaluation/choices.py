@@ -235,3 +235,27 @@ dropdown_choices = {
 def get_db_values(choices):
     output = [x[0] for x in choices]
     return output
+
+
+def get_topic_display_name(db_name, choices_options):
+    result = [choice["text"] for choice in choices_options if choice["value"] == db_name]
+    if not result:
+        return None
+    return result[0]
+
+
+def map_choice_or_other(input, choices_options):
+    """
+    If value is from the list of choices, return the display value.
+    Otherwise this is the specified value for the 'other' choice,
+    and return this.
+    """
+    mapped_value = get_topic_display_name(input, choices_options)
+    if not mapped_value:
+        mapped_value = input
+    return mapped_value
+
+
+def turn_list_to_display_values(db_list, choices_options):
+    output_list = [map_choice_or_other(x, choices_options) for x in db_list]
+    return output_list
