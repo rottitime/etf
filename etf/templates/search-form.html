@@ -15,13 +15,18 @@
           <li>
            <h3>
              <button type="button">
-              <div class="title">Organisations <div class="badge filter-control-total" data-name="organisation">{{data.selected_organisations|length}}</div></div>
+              <div class="title">Organisations <div class="badge filter-control-total" data-name="organisations">{{data.selected_organisations|length}}</div></div>
               <div class="icon"></div>
             </button>
            </h3>
             <div class="accordion-content">
+
               <fieldset class="filter-control">
-              <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+                <div class="mb-16">
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <button type="reset" class="txt-link small">Reset</button>
+                </div>
 
               <div class="scroll">
                 {% for organisation in data.organisations %}
@@ -45,8 +50,15 @@
               </button>
             </h3>
             <div class="accordion-content">
-              <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
+
               <fieldset class="filter-control">
+
+                <div class="mb-16">
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <button type="reset" class="txt-link small">Reset</button>
+                </div>
+  
               <div class="scroll">
                 {% for topic in data.topics %}
                 <div class="row">
@@ -64,14 +76,20 @@
           <li>
             <h3>
               <button type="button">
-                <div class="title">Evaluation types <div class="badge filter-control-total" data-name="evaluation_type">{{data.selected_evaluation_types|length}}</div></div>
+                <div class="title">Evaluation types <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div></div>
                 <div class="icon"></div>
               </button>
             </h3>
             <div class="accordion-content">
-              <input type="text" placeholder="Filter..." class="small full-width mb-16" />
+
 
               <fieldset class="filter-control">
+
+                <div class="mb-16">
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <button type="reset" class="txt-link small">Reset</button>
+                </div>
+
               <div class="scroll">
               {% for evaluation_type in data.evaluation_types %}
                 <div class="row">
@@ -90,14 +108,19 @@
           <li>
             <h3>
               <button type="button">
-                <div class="title">Status <div class="badge filter-control-total" data-name="statuses">{{data.selected_statuses|length}}</div></div>
+                <div class="title">Status <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div></div>
                 <div class="icon"></div>
               </button>
             </h3>
             <div class="accordion-content">
-              <input type="text" placeholder="Filter..." class="small full-width mb-16" />
 
               <fieldset class="filter-control">
+
+                <div class="mb-16">
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" />
+                  <button type="reset" class="txt-link small">Reset</button>
+                </div>
+
               <div class="scroll">
                 {% for status in data.statuses %}
                 <div class="row">

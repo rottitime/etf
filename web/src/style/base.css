@@ -75,12 +75,6 @@ caption,
   font-size: 16px;
 }
 
-small,
-.small {
-  font-size: 14px;
-  line-height: 24px;
-}
-
 button,
 a {
   cursor: pointer;
@@ -128,4 +122,10 @@ a,
 
 .center {
   text-align: center;
+}
+
+small,
+.small {
+  font-size: 14px;
+  line-height: 24px;
 }
