@@ -194,9 +194,7 @@ def my_evaluations_view(request):
     if request.method == "GET":
         qs = models.Evaluation.objects.filter(users__in=[request.user])
         data = request.GET
-    return render(
-        request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data}
-    )
+    return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
 
 
 @login_required
