@@ -36,6 +36,29 @@ const onReset = (filterControl: HTMLElement) => {
   })
 }
 
+const setupSearch = (filterControl: HTMLElement) => {
+  filterControl
+    .querySelectorAll<HTMLInputElement>('input[data-controls]')
+    .forEach((search) => {
+      search.addEventListener('keyup', () => {
+        const value = search.value.toLowerCase()
+        const { controls } = search.dataset
+        filterControl
+          .querySelectorAll<HTMLInputElement>(
+            `input[type=checkbox][name=${controls}][value]`
+          )
+          .forEach((checkbox) => {
+            const parent = checkbox.closest<HTMLDivElement>('.row')
+            if (parent) {
+              parent?.textContent?.toLowerCase().includes(value)
+                ? (parent.style.display = 'block')
+                : (parent.style.display = 'none')
+            }
+          })
+      })
+    })
+}
+
 const onFilterClick = (filterControl: HTMLElement) => {
   // let checked = false
   filterControl
@@ -58,6 +81,7 @@ const setupFilters = () => {
   document.querySelectorAll<HTMLElement>('.filter-control').forEach((filterControl) => {
     onReset(filterControl)
     onFilterClick(filterControl)
+    setupSearch(filterControl)
   })
 }
 
