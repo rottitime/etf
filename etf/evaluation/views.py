@@ -76,8 +76,8 @@ class EvaluationSearchView(MethodDispatcher):
         if evaluation_types:
             evaluation_types_qs = models.Evaluation.objects.none()
             for evaluation_type in evaluation_types:
-                evaluation_type_qs = qs.filter(evaluation_types__contains=evaluation_type)
-                evaluation_types_qs = evaluation_types | evaluation_type_qs
+                evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
+                evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
             qs = evaluation_types_qs
         if not status:
             qs = qs.filter(
