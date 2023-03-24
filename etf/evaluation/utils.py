@@ -183,3 +183,6 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
     def __hash__(self):
         return hash(self._name_)
+
+
+SEPARATOR = "|"

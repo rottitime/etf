@@ -7,9 +7,9 @@ def test_get_db_values():
     assert actual_values == expected_values
 
 
-def test_get_topic_display_name():
-    start = choices.get_topic_display_name("EVALUATION_START", choices.EventDateOption.options)
-    other = choices.get_topic_display_name("A N other", choices.EventDateOption.options)
+def test_get_display_name():
+    start = choices.get_display_name("EVALUATION_START", choices.EventDateOption.options)
+    other = choices.get_display_name("A N other", choices.EventDateOption.options)
     assert start == "Evaluation start", start
     assert not other, other
 

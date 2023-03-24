@@ -275,7 +275,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         ]
 
         # Multiple choice fields
-        multiple_choice_fields = ["evaluation_type", "economic_eval_type", "status", "impact_eval_design_name"]
+        multiple_choice_fields = ["evaluation_type"]
 
         # Single choice fields
         single_choice_fields = [
@@ -287,6 +287,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             "impact_eval_effect_measure_type",
             "impact_eval_interpretation_type",
             "impact_eval_interpretation",
+            "economic_eval_type",
         ]
 
         # Simple fields
@@ -317,27 +318,27 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
                     if related_object_search_text:
                         combined_field_data += f"{related_object_search_text}|"
 
-        if self.evaluation_type:
-            evaluation_types = [
-                value[1] for value in choices.EvaluationTypeOptions.choices if value[0] in self.evaluation_type
-            ]
-            if evaluation_types:
-                evaluation_type_text = "|".join(evaluation_types)
-                combined_field_data += f"{evaluation_type_text}|"
+        # Multiple choice fields & list fields
 
-        if self.economic_eval_type:
-            economic_eval_types = [
-                value[1] for value in choices.EconomicEvaluationType.choices if value[0] in self.economic_eval_type
-            ]
-            if economic_eval_types:
-                economic_eval_types_text = "|".join(economic_eval_types)
-                combined_field_data += f"{economic_eval_types_text}|"
+        evaluation_type_text = choices.turn_choices_list_to_string(
+            self.evaluation_type, choices.EvaluationTypeOptions.options
+        )
+        combined_field_data += evaluation_type_text
 
-        if self.status:
-            status = [value[1] for value in choices.EvaluationStatus.choices if value[0] in self.status]
-            if status:
-                status_text = "|".join(status)
-                combined_field_data += f"{status_text}|"
+        topics_text = choices.turn_choices_list_to_string(self.topics, choices.Topic.options)
+        combined_field_data += topics_text
+
+        organisations_text = choices.turn_choices_list_to_string(self.organisations, enums.Organisation.options)
+        combined_field_data += organisations_text
+
+        # Single choice fields
+
+        economic_eval_types_text = choices.turn_choices_list_to_string(
+            self.economic_eval_type, choices.EconomicEvaluationType.options
+        )
+        combined_field_data += economic_eval_types_text
+
+
 
         if self.impact_eval_design_name:
             impact_eval_design_name = [
@@ -418,16 +419,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             if impact_eval_interpretation:
                 impact_eval_interpretation_text = "|".join(impact_eval_interpretation)
                 combined_field_data += f"{impact_eval_interpretation_text}|"
-
-        if self.topics:
-            for topic in choices.Topic.choices:
-                if topic[0] in self.topics:
-                    combined_field_data += f"{topic[1]}|"
-
-            if self.organisations:
-                for organisation in enums.Organisation.choices:
-                    if organisation[0] in self.organisations:
-                        combined_field_data += f"{organisation[1]}|"
 
         combined_field_data = combined_field_data.strip("|")
         self.search_text = combined_field_data
