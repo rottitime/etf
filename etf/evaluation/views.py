@@ -35,18 +35,6 @@ def test_view(request, exception=None):
     return render(request, "beta/beta-test.html", {})
 
 
-class EvaluationSearchForm(forms.Form):
-    id = forms.UUIDField(required=False)
-    title = forms.CharField(max_length=100, required=False)
-    description = forms.CharField(max_length=100, required=False)
-    topics = forms.MultipleChoiceField(choices=choices.Topic.choices, required=False)
-    organisations = forms.MultipleChoiceField(choices=enums.Organisation.choices, required=False)
-    status = forms.ChoiceField(choices=(("", "-----"), *choices.EvaluationStatus.choices), required=False)
-    search_phrase = forms.CharField(max_length=100, required=False)
-    mine_only = forms.BooleanField(required=False)
-    is_search = forms.CharField(max_length=6, required=True)
-
-
 def get_search_filters(qs, organisations, topics, status, evaluation_types):
     organisation_filters = enums.Organisation.choices
     filtered_organisation_filters = [
