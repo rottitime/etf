@@ -5,14 +5,16 @@
 
   <div class="sidebarcolumn">
     <div class="col">
+    <form method="GET">
       <div class="sidebar search-filters ">
         <header>
           <h3 class="highlight header5">Filters</h3>
+          <button class="bttn-primary" type="submit">Apply filters</button>
         </header>
         <ul class="accordion" >
           <li>
            <h3>
-             <button>
+             <button type="button">
               <div class="title">Organisations <div class="badge filter-control-total" data-name="organisation">{{data.selected_organisations|length}}</div></div>
               <div class="icon"></div>
             </button>
@@ -25,7 +27,7 @@
                 {% for organisation in data.organisations %}
                 <div class="row">
                   <label class="checkbox">
-                    <input {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" name="organisations" />
+                    <input name="organisations" {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{organisation[1]}}</span>
                   </label>
@@ -37,7 +39,7 @@
           </li>
           <li>
             <h3>
-              <button>
+              <button type="button">
                 <div class="title">Topics <div class="badge filter-control-total" data-name="topics">{{data.selected_topics|length}}</div></div>
                 <div class="icon"></div>
               </button>
@@ -49,7 +51,7 @@
                 {% for topic in data.topics %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" {% if is_in(data, "selected_topics", topic[0]) %}checked{% endif %} name="topics" value="{{ topic[0] }}" />
+                    <input name="topics" type="checkbox" {% if is_in(data, "selected_topics", topic[0]) %}checked{% endif %} value="{{ topic[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{topic[1]}}</span>
                   </label>
@@ -61,7 +63,7 @@
           </li>
           <li>
             <h3>
-              <button>
+              <button type="button">
                 <div class="title">Evaluation types <div class="badge filter-control-total" data-name="evaluation_type">{{data.selected_evaluation_types|length}}</div></div>
                 <div class="icon"></div>
               </button>
@@ -74,7 +76,7 @@
               {% for evaluation_type in data.evaluation_types %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" name="evaluation_types" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
+                    <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
@@ -87,7 +89,7 @@
           </li>
           <li>
             <h3>
-              <button>
+              <button type="button">
                 <div class="title">Status <div class="badge filter-control-total" data-name="statuses">{{data.selected_statuses|length}}</div></div>
                 <div class="icon"></div>
               </button>
@@ -100,7 +102,7 @@
                 {% for status in data.statuses %}
                 <div class="row">
                   <label class="checkbox">
-                    <input type="checkbox" name="status" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
+                    <input name="status" type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
                     <div class="checkmark"></div>
                     <span>{{status[1]}}</span>
                   </label>
@@ -114,22 +116,17 @@
       </div>
     </div>
     <div class="col">
+      <div class="searchbox mb-16">
+        <input name="search_text" type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
+        <button class="bttn-primary" type="submit">Search</button>
+      </div>
+    </form>
       {% if not data.evaluations or data.evaluations|length == 0 %}
-        <form class="searchbox mb-16">
-          <input type="search" name="search_text" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
-          <div><button class="bttn-primary" type="submit">Search</button></div>
-        </form>
-
         <div class="searchbox-intro">
           <p>Search through <b class="highlight">12,345 evaluations</b></p>
           <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
         </div>
       {% else %}
-
-        <form class="searchbox mb-16">
-          <input type="search" name="search_text" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
-        </form>
-
         <div class="search-status">
           <div><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
           <div>
