@@ -110,11 +110,13 @@ class EvaluationSearchView(MethodDispatcher):
                     "selected_organisations": organisations or [],
                     "search_text": search_text or "",
                     "current_url": current_url,
-                }
+                },
+                "page": "search",
             },
         )
 
 
+# TODO - remove the old search views once the new stuff is up and running
 @login_required
 def search_evaluations_view(request):
     qs = models.Evaluation.objects.all()
@@ -176,7 +178,9 @@ def search_evaluations_view(request):
                     search_vector = search_vector + SearchVector(field, weight="B")
                 search_query = SearchQuery(search_phrase)
                 rank = SearchRank(search_vector, search_query)
+
                 qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
+                print("here")
             return render(request, "search-results.html", {"evaluations": qs, "errors": errors, "data": data})
 
         else:
@@ -192,7 +196,9 @@ def my_evaluations_view(request):
     if request.method == "GET":
         qs = models.Evaluation.objects.filter(users__in=[request.user])
         data = request.GET
-    return render(request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data})
+    return render(
+        request, "my-evaluations.html", {"evaluations": qs, "errors": errors, "data": data, "page": "my-evaluations"}
+    )
 
 
 @login_required
