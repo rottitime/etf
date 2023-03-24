@@ -1,3 +1,4 @@
+import imp
 import uuid
 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -277,10 +278,14 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         # Multiple choice fields
         multiple_choice_fields = ["evaluation_type"]
 
-        # Single choice fields
-        single_choice_fields = [
+        # YesNo and similar fields - can be ignored
+        yes_no_fields = [
             "ethics_committee_approval",
             "impact_eval_fidelity",
+        ]
+
+        # Single choice fields
+        single_choice_fields = [
             "impact_eval_framework",
             "impact_eval_effect_measure_interval",
             "impact_eval_basis",
@@ -300,6 +305,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             + [status_field]
             + list_fields
             + unique_fields
+            + yes_no_fields
         )
         simple_fields = [field for field in all_fields if field.name not in exclusion_fields]
 
@@ -333,36 +339,17 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
         # Single choice fields
 
-        economic_eval_types_text = choices.turn_choices_list_to_string(
-            self.economic_eval_type, choices.EconomicEvaluationType.options
+        economic_eval_types_text = choices.map_choice_or_other(
+            self.economic_eval_type, choices.EconomicEvaluationType.options, append_separator=True
         )
         combined_field_data += economic_eval_types_text
 
+        impact_eval_design_name_text = choices.map_choice_or_other(
+            self.impact_eval_design_name, choices.ImpactEvalDesign.options, append_separator=True)
+        combined_field_data += impact_eval_design_name_text
 
 
-        if self.impact_eval_design_name:
-            impact_eval_design_name = [
-                value[1] for value in choices.ImpactEvalDesign.choices if value[0] in self.impact_eval_design_name
-            ]
-            if impact_eval_design_name:
-                impact_eval_design_name_text = "|".join(impact_eval_design_name)
-                combined_field_data += f"{impact_eval_design_name_text}|"
 
-        if self.ethics_committee_approval:
-            ethics_committee_approval = [
-                value[1] for value in choices.YesNo.choices if value[0] in self.ethics_committee_approval
-            ]
-            if ethics_committee_approval:
-                ethics_committee_approval_text = "|".join(ethics_committee_approval)
-                combined_field_data += f"{ethics_committee_approval_text}|"
-
-        if self.impact_eval_fidelity:
-            impact_eval_fidelity = [
-                value[1] for value in choices.YesNo.choices if value[0] in self.impact_eval_fidelity
-            ]
-            if impact_eval_fidelity:
-                impact_eval_fidelity_text = "|".join(impact_eval_fidelity)
-                combined_field_data += f"{impact_eval_fidelity_text}|"
 
         if self.impact_eval_effect_measure_interval:
             impact_eval_effect_measure_interval = [

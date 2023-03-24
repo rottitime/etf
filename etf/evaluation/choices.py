@@ -250,6 +250,8 @@ def map_choice_or_other(input, choices_options, append_separator=False):
     Otherwise this is the specified value for the 'other' choice,
     and return this.
     """
+    if not input:
+        mapped_value = ""
     mapped_value = get_display_name(input, choices_options)
     if not mapped_value:
         mapped_value = input
