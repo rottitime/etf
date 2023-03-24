@@ -31,14 +31,22 @@ const onReset = (filterControl: HTMLElement) => {
   })
 }
 
-const onFilterClick = (filterControl: HTMLElement) =>
-  filterControl.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-    checkbox.addEventListener('change', (e) => {
-      const checkbox = e.target as HTMLInputElement
-      const { name } = checkbox
-      setTotal(filterControl, name)
+const onFilterClick = (filterControl: HTMLElement) => {
+  let checked = false
+  filterControl
+    .querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
+    .forEach((checkbox) => {
+      if (checkbox.checked) checked = true
+      checkbox.addEventListener('change', (e) => {
+        const checkbox = e.target as HTMLInputElement
+        const { name } = checkbox
+        setTotal(filterControl, name)
+      })
     })
-  })
+
+  if (!checked)
+    filterControl.querySelector('button[type="reset"]')?.setAttribute('disabled', 'true')
+}
 
 const setupFilters = () => {
   document.querySelectorAll<HTMLElement>('.filter-control').forEach((filterControl) => {
