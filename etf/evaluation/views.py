@@ -122,9 +122,8 @@ class EvaluationSearchView(MethodDispatcher):
 
         # For now, place highest weight on title and description
         if search_term:
-            search_vector = (
-                SearchVector("title", "brief_description", weight="A")
-                + SearchVector("search_text", weight="B")
+            search_vector = SearchVector("title", "brief_description", weight="A") + SearchVector(
+                "search_text", weight="B"
             )
             search_query = SearchQuery(search_term)
             rank = SearchRank(search_vector, search_query)
