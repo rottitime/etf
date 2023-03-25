@@ -60,7 +60,8 @@ def get_search_filters(qs, organisations, topics, status, evaluation_types):
     filtered_evaluation_types_filters = [
         evaluation_types_filter
         for evaluation_types_filter in evaluation_types_filters
-        if evaluation_types_filter[0] in evaluation_types or any(evaluation_types_filter[0] in i.evaluation_type for i in qs)
+        if evaluation_types_filter[0] in evaluation_types
+        or any(evaluation_types_filter[0] in i.evaluation_type for i in qs)
     ]
 
     output = {
@@ -76,7 +77,7 @@ def get_search_filters(qs, organisations, topics, status, evaluation_types):
 @require_http_methods(["GET"])
 class EvaluationSearchView(MethodDispatcher):
     def get(self, request):
-        search_term = request.GET.get("search_text")
+        search_term = request.GET.get("search_term")
         organisations = request.GET.getlist("organisations")
         topics = request.GET.getlist("topics")
         evaluation_types = request.GET.getlist("evaluation_types")
@@ -86,8 +87,6 @@ class EvaluationSearchView(MethodDispatcher):
         qs = models.Evaluation.objects.all()
         total_evaluations = qs.count()
 
-        if search_term:
-            qs = qs.filter(title__contains=search_term)
         if organisations:
             organisations_qs = models.Evaluation.objects.none()
             for organisation in organisations:
@@ -120,16 +119,16 @@ class EvaluationSearchView(MethodDispatcher):
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
         filters = get_search_filters(qs, organisations, topics, status, evaluation_types)
-    
+
         # For now, place highest weight on title and description
         if search_term:
-            search_vector = SearchVector("title", weight="A")
-            search_vector = search_vector + SearchVector("brief_description", weight="A")
-            search_vector = search_vector + SearchVector("search_text")
+            search_vector = (
+                SearchVector("title", "brief_description", weight="A")
+                + SearchVector("search_text", weight="B")
+            )
             search_query = SearchQuery(search_term)
             rank = SearchRank(search_vector, search_query)
             qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
-            
 
         data = {
             "evaluations": qs,
