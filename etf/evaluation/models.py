@@ -83,7 +83,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     users = models.ManyToManyField(User, related_name="evaluations")
 
     title = models.CharField(max_length=256, blank=True, null=True)
-    short_title = models.CharField(max_length=64, blank=True, null=True)
+    short_title = models.CharField(max_length=128, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)  # TODO - do we use these?
     organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
