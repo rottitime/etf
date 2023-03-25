@@ -127,12 +127,12 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_design_approach_limitations = fields.Str()
 
     # Impact evaluation analysis
-    impact_eval_framework = fields.Str(validate=validate.Length(max=64))
-    impact_eval_framework_other = fields.Str(
+    impact_eval_framework = fields.Str(
         validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactFramework.choices)), validate.Length(max=3)
+            validate.OneOf(choices.get_db_values(choices.ImpactFramework.choices)), validate.Length(max=64)
         )
     )
+    impact_eval_framework_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_basis = fields.Str(
         validate=validate.And(
             validate.OneOf(choices.get_db_values(choices.ImpactAnalysisBasis.choices)), validate.Length(max=64)
@@ -151,7 +151,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_primary_effect_size_desc = fields.Str()
     impact_eval_interpretation_type = fields.Str(
         validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactInterpretationType.choices)), validate.Length(max=64)
+            validate.OneOf(choices.get_db_values(choices.ImpactEvalInterpretation.choices)), validate.Length(max=64)
         )
     )
     impact_eval_interpretation_type_other = fields.Str(validate=validate.Length(max=256))
