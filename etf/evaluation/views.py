@@ -60,8 +60,9 @@ def get_search_filters(qs, organisations, topics, status, evaluation_types):
     filtered_evaluation_types_filters = [
         evaluation_types_filter
         for evaluation_types_filter in evaluation_types_filters
-        if evaluation_types_filter[0] in evaluation_types or any(evaluation_types_filter[0] in i.status for i in qs)
+        if evaluation_types_filter[0] in evaluation_types or any(evaluation_types_filter[0] in i.evaluation_type for i in qs)
     ]
+
     output = {
         "statuses": filtered_status_filters,
         "evaluation_types": filtered_evaluation_types_filters,
@@ -118,33 +119,36 @@ class EvaluationSearchView(MethodDispatcher):
                 qs = qs.filter(status=status)
             if status == choices.EvaluationStatus.CIVIL_SERVICE:
                 qs = qs.filter(status=status)
-        # For now, place highest weight on title and description
-        search_vector = SearchVector("title", weight="A")
-        search_vector = search_vector + SearchVector("brief_description", weight="A")
-        search_vector = search_vector + SearchVector("search_text")
-        search_query = SearchQuery(search_term)
-        rank = SearchRank(search_vector, search_query)
-        qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
         filters = get_search_filters(qs, organisations, topics, status, evaluation_types)
+    
+        # For now, place highest weight on title and description
+        if search_term:
+            search_vector = SearchVector("title", weight="A")
+            search_vector = search_vector + SearchVector("brief_description", weight="A")
+            search_vector = search_vector + SearchVector("search_text")
+            search_query = SearchQuery(search_term)
+            rank = SearchRank(search_vector, search_query)
+            qs = qs.annotate(search=search_vector).annotate(rank=rank).filter(search=search_query).order_by("-rank")
+            
+
+        data = {
+            "evaluations": qs,
+            "statuses": filters["statuses"],
+            "evaluation_types": filters["evaluation_types"],
+            "topics": filters["topics"],
+            "organisations": filters["organisations"],
+            "selected_statuses": status or [],
+            "selected_evaluation_types": evaluation_types or [],
+            "selected_topics": topics or [],
+            "selected_organisations": organisations or [],
+            "search_term": search_term or "",
+            "current_url": current_url,
+            "total_evaluations": total_evaluations,
+        }
         return render(
             request,
             "search-form.html",
-            {
-                "data": {
-                    "evaluations": qs,
-                    "statuses": filters["statuses"],
-                    "evaluation_types": filters["evaluation_types"],
-                    "topics": filters["topics"],
-                    "organisations": filters["organisations"],
-                    "selected_statuses": status or [],
-                    "selected_evaluation_types": evaluation_types or [],
-                    "selected_topics": topics or [],
-                    "selected_organisations": organisations or [],
-                    "search_term": search_term or "",
-                    "current_url": current_url,
-                    "total_evaluations": total_evaluations,
-                },
-            },
+            {"data": data},
         )
 
 
