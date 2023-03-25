@@ -101,6 +101,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Evaluation type (multiselect)
     evaluation_type = models.JSONField(default=list)
+    evaluation_type_other = models.CharField(max_length=256, blank=True, null=True)
 
     # Studied population
     studied_population = models.TextField(blank=True, null=True)
@@ -130,6 +131,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Impact evaluation design
     impact_eval_design_name = models.JSONField(default=list)
+    impact_eval_design_name_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_design_justification = models.TextField(blank=True, null=True)
     impact_eval_design_description = models.TextField(blank=True, null=True)
     impact_eval_design_features = models.TextField(blank=True, null=True)
@@ -140,13 +142,17 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Impact evaluation analysis
     # TODO - add analysis plan document?
     impact_eval_framework = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_framework_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_basis = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_basis_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_type = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_interval = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_effect_measure_interval_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
     impact_eval_interpretation_type = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_interpretation_type_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
@@ -469,6 +475,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True)
     direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
+    measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
     timepoint = models.TextField(blank=True, null=True)
@@ -486,6 +493,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
         searchable_fields = [
             str(self.name),
+            str(self.measure_type_other),
             str(self.description),
             str(self.collection_process),
             str(self.timepoint),
@@ -505,6 +513,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
+    measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
@@ -513,6 +522,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
         searchable_fields = [
             str(self.name),
+            str(self.measure_type_other),
             str(self.description),
             str(self.collection_process),
             "|".join(measure_type),
@@ -549,6 +559,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     document_types = models.JSONField(default=list)
+    document_type_other = models.CharField(max_length=256, blank=True, null=True)
     # TODO - file upload
 
     _name_field = "title"
@@ -560,6 +571,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             str(self.title),
             str(self.description),
             str(self.url),
+            str(self.document_type_other),
             "|".join(document_types),
         ]
 
