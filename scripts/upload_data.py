@@ -20,23 +20,13 @@ INFO_NOT_IDENTIFIED = "Information not identified within the report"
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "title": "evaluation_information_evaluation_title",
     "short_title": "evaluation_information_short_title_for_evaluation",
-    # "brief_description":
+    "brief_description": "evaluation_information_evaluation_summary", #TODO - many of these?
     # "issue_description":
     # "those_experiencing_issue":
     # "why_improvements_matter":
     # "who_improvements_matter_to":
     # "current_practice":
     # "issue_relevance":
-    # "studied_population":
-    # "eligibility_criteria":
-    # "sample_size_units":
-    # "sample_size_details":
-    # "process_for_recruitment":
-    # "recruitment_schedule":
-    # "ethics_committee_approval":
-    # "ethics_committee_details":
-    # "ethical_state_given_existing_evidence_base":
-    # brief_description = models.TextField(blank=True, null=True)
     # topics = models.JSONField(default=list)  # TODO - do we use these?
     # organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
     "issue_description": "issue_issue_to_be_addressed",
@@ -47,10 +37,10 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "issue_relevance": "issue_what_difference_the_intervention_intends_to_make",
 
     # TODO - Studied population - should there be many rows? (There are in Excel)
-    "studied_population": "study_population_studied_population_including_location"
+    "studied_population": "study_population_studied_population_including_location(s)",
     "eligibility_criteria": 'study_population_eligibility_criteria',
     # "sample_size": 'study_population_total_number_of_people_(or_other_unit)_included_in_the_evaluation' TODO - pos int field
-    "sample_size_units": 'study_population_type_of_unit'
+    "sample_size_units": 'study_population_type_of_unit',
     # "sample_size_details" TODO - no match-up
     # Participant recruitment approach
     "process_for_recruitment": 'evaluation_recruitment_referral__recruitment_route',
@@ -69,26 +59,29 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "breaking_confidentiality": "ethical_considerations_breaking_confidentiality",
     "other_ethical_information": "ethical_considerations_other_ethical_information",
     # Impact evaluation design
-    # "impact_eval_design_name": "impact_evaluation_design_design" TODO - shouldn't be a JSON field
+    # "impact_eval_design_name": "impact_evaluation_design_design" TODO - JSON field/list
     "impact_eval_design_justification": "impact_evaluation_design_justification_for_design",
     "impact_eval_design_description": "impact_evaluation_design_description",
     "impact_eval_design_features": "impact_evaluation_design_features_to_reflect_real-world_implementation",
     "impact_eval_design_equity": "impact_evaluation_design_equity",
     "impact_eval_design_assumptions": "impact_evaluation_design_assumptions",
     "impact_eval_design_approach_limitations": "impact_evaluation_design_limitations_of_approach",
-    # "impact_eval_framework"
-    # "impact_eval_basis"
-    # "impact_eval_analysis_set"
-    # "impact_eval_effect_measure_type"
-    # "impact_eval_primary_effect_size_measure"
-    # "impact_eval_effect_measure_interval"
-    # "impact_eval_primary_effect_size_desc"
-    # "impact_eval_interpretation_type"
-    # "impact_eval_sensitivity_analysis"
-    # "impact_eval_subgroup_analysis"
-    # "impact_eval_missing_data_handling"
-    # "impact_eval_fidelity" # choices field
-    # "impact_eval_desc_planned_analysis"
+    # TODO - most of these are choice fields
+    # "impact_eval_framework": "impact_evaluation_analysis_analysis_framework" TODO - choice field
+    # "impact_eval_framework_other"
+    # "impact_eval_basis": "impact_evaluation_analysis_analysis_basis",
+    # "impact_eval_basis_other"
+    # "impact_eval_analysis_set": "impact_evaluation_analysis_analysis_set"
+    # "impact_eval_effect_measure_type": "impact_evaluation_analysis_primary_effect_size_measure_type"
+    # "impact_eval_primary_effect_size_measure": "impact_evaluation_analysis_primary_effect_size_measure"
+    # "impact_eval_effect_measure_interval": "impact_evaluation_analysis_primary_effect_size_measure_interval"
+    # "impact_eval_primary_effect_size_desc": "impact_evaluation_analysis_primary_effect_size_measure_description"
+    # "impact_eval_interpretation_type": "impact_evaluation_analysis_interpretation_type"
+    # "impact_eval_sensitivity_analysis": "impact_evaluation_analysis_sensitivity_analysis"
+    # "impact_eval_subgroup_analysis": "impact_evaluation_analysis_subgroup_analysis"
+    # "impact_eval_missing_data_handling": "impact_evaluation_analysis_missing_data_handling"
+    # "impact_eval_fidelity"?? # choices field
+    # "impact_eval_desc_planned_analysis" ??
     # Process evaluation design
     # "process_eval_methods":
     # TODO - fields don't match
@@ -101,14 +94,10 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     # "economic_eval_design_details"
     # Economic evaluation analysis
     # "economic_eval_analysis_description"
-    # TODO - add more details
-    # Other evaluation design
-    # other_eval_design_type
-    # other_eval_design_details
-    # Other evaluation analysis
-    # other_eval_analysis_description
-    # TODO - add more
-    # Impact evaluation findings
+    "other_eval_design_type":"other_evaluation_design_other_evaluation_design",
+    "other_eval_design_details": "other_evaluation_design_summary_of_methods",
+    "other_eval_analysis_description": "other_evaluation_design_description_of_analysis",
+    # Impact evaluation findings - TODO - how dow these match?
     # impact_eval_comparison
     # impact_eval_outcome
     # impact_eval_interpretation
@@ -116,14 +105,14 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     # impact_eval_lower_uncertainty
     # impact_eval_upper_uncertainty
     # # Economic evaluation findings
-    # economic_eval_summary_findings
-    # economic_eval_findings
+    "economic_eval_summary_findings": "economic_evaluation_findings_summary_findings",
+    "economic_eval_findings":"economic_evaluation_findings_findings",
     # # Process evaluation findings
     # process_eval_summary_findings
     # process_eval_findings
     # # Other evaluation findings
-    # other_eval_summary_findings
-    # other_eval_findings
+    "other_eval_summary_findings": "other_evaluation_findings_summary_findings",
+    "other_eval_findings": "other_evaluation_findings_findings"
 }
 
 INTERVENTION_MAPPING = {
@@ -150,6 +139,11 @@ DOCUMENTS_MAPPING = {
     # document_type_other"
 }
 
+PROCESSES_STANDARDS_MAPPING = {
+    "name": "processes_and_standards_name_of_standard_or_process",
+    #"conformity": "processes_and_standards_conformity", TODO - choices field
+    "description": "processes_and_standards_description"
+}
 
 # TODO - check these
 EXISTING_ORGANISATION_MAPPING = {v: k for k, v in dict(enums.org_tuples).items()}
@@ -200,56 +194,75 @@ def get_all_upload_data_df():
     return evaluation_ids, df
 
 
-def get_data_for_field(data_for_eval, fieldname_in_rsm):
+def get_data_for_field(eval_df, fieldname_in_rsm):
     """Standard field in evaluation ie one field, may need to aggregate data,
     though in most cases there will only be one value."""
-    all_non_null_data = data_for_eval[data_for_eval[fieldname_in_rsm].notnull()][fieldname_in_rsm].unique()
+    data_for_field = eval_df[fieldname_in_rsm]
+    all_non_null_data = data_for_field.dropna(how="all")
+    all_non_null_data = all_non_null_data.unique()
     string_summary = "/n".join(all_non_null_data)
     return string_summary
 
 
-def get_evaluation_types(data_for_eval):
+def get_evaluation_types(eval_df):
     evaluation_types = []
     other_detail = ""
-    if "Y" in data_for_eval["evaluation_information_process"].unique():
+    if "Y" in eval_df["evaluation_information_process"].unique():
         evaluation_types.append(choices.EvaluationTypeOptions.PROCESS.value)
-    if "Y" in data_for_eval["evaluation_information_impact"].unique():
+    if "Y" in eval_df["evaluation_information_impact"].unique():
         evaluation_types.append(choices.EvaluationTypeOptions.IMPACT.value)
-    if "Y" in data_for_eval["evaluation_information_economic"].unique():
+    if "Y" in eval_df["evaluation_information_economic"].unique():
         evaluation_types.append(choices.EvaluationTypeOptions.ECONOMIC.value)
 
-    others = data_for_eval["evaluation_information_other_evaluation_type_(please_state)"].unique()
+    others = eval_df["evaluation_information_other_evaluation_type_(please_state)"].dropna()
+    others = others.unique()
     others = set(others).difference({"N", "N/A"})
     if others:
         evaluation_types.append(choices.EvaluationTypeOptions.OTHER.value)
         if len(others) > 1:
-            print(f"More than one other evaluation type: {others}")
+            print(f"More than one other evaluation type: {others}") # noqa
         # TODO - can there be more than one? Unlikely
-        evaluation_types.append(choices.EvaluationTypeOptions.OTHERS.value)
+        evaluation_types.append(choices.EvaluationTypeOptions.OTHER.value)
         other_detail = ";".join(others)
     return evaluation_types, other_detail
 
+def get_organisations(eval_df):
+    all_vals = eval_df["metadata_orgs_titles"].unique()
+    try:
+        converted_vals = [ALL_ORG_MAPPING[org] for org in all_vals]
+    except KeyError:
+        print(f"Non-matching org: {all_vals}") # noqa
+        converted_vals = []
+    return converted_vals
 
 
-# def get_intervention_data(eval_df):
-    
+def save_intervention_data(evaluation, eval_df):
+    intervention_df = eval_df[list(INTERVENTION_MAPPING.values())]
+    intervention_df = intervention_df.dropna(how='all')
+    for _, row in intervention_df.iterrows():
+        intervention = models.Intervention(evaluation=evaluation)
+        intervention.save()
+        for k, v in INTERVENTION_MAPPING.items():
+            setattr(intervention, k, row[v])
+            intervention.save()
+
 
 def upload_data_for_id(all_df, rsm_id):
     eval_df = all_df[all_df["metadata_evaluation_id"] == rsm_id]
     evaluation, _ = models.Evaluation.objects.get_or_create(rsm_eval_id=rsm_id)
-    evaluation.status = choices.EvaluationStatus.PUBLIC
+    evaluation.status = choices.EvaluationStatus.PUBLIC.value
     # Add standard fields
     for model_field_name, rsm_field_name in EVALUATION_STANDARD_FIELDS_LOOKUP.items():
         value = get_data_for_field(eval_df, rsm_field_name)
         setattr(evaluation, model_field_name, value)
         evaluation.save()
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
-    evaluation.save()
-
+    evaluation.organisations = get_organisations(eval_df)
+    save_intervention_data(evaluation, eval_df)
     # Add number fields
-    # Add organisations
-    # Add one-to-many objects
     # Add choice fields
+    # Add one-to-many objects
+    evaluation.page_statuses = {}
     evaluation.save()
 
 
@@ -257,23 +270,16 @@ def upload_all_rsm_data():
     evaluation_ids, df = get_all_upload_data_df()
     for id in evaluation_ids:
         upload_data_for_id(df, id)
-        print(f"Imported evaluation with id: {id}")
-
-
-if __name__ == "__main__":
-    upload_all_rsm_data()
-    print("Done import!")
+        print(f"Imported evaluation with id: {id}") # noqa
+    print("Done import!") # noqa
 
 
 
 
 
-
-# COLUMNS from Excel - this section to be removed - for comparison 
-
+# COLUMNS from Excel - as yet, unmatched fields
 # Index(['metadata_evaluation_id', 'metadata_report_id',
 #        'metadata_evaluation_name',
-
 
 #        'metadata_display_type', 
 #    'metadata_format',
@@ -281,13 +287,11 @@ if __name__ == "__main__":
 #        'metadata_orgs_titles', 'metadata_final_categorisation',
 #        'evaluation_information_evaluation_id',
 #        'evaluation_information_report_id',
-#        'evaluation_information_evaluation_title',
-#        'evaluation_information_short_title_for_evaluation',
 
 #        'evaluation_information_report_type',
 #        'evaluation_information_government_department__client',
 #        'evaluation_information_author(s)',
-#        'evaluation_information_evaluation_summary',
+
 #        'evaluation_information_intervention_start_date_(month)',
 #        'evaluation_information_intervention_start_date_(year)',
 #        'evaluation_information_intervention_end_date_(month)',
@@ -301,16 +305,6 @@ if __name__ == "__main__":
 #        'evaluation_event_dates_event_start_date_(year)',
 #        'evaluation_event_dates_event_end_date_(month)',
 #        'evaluation_event_dates_event_end_date_(year)',
-#        'issue_issue_to_be_addressed', 'issue_who_is_experiencing_the_issue'],
-#       dtype='object')
-# Index(['issue_current_practice',
-#        'issue_why_the_issue_is_important__why_are_improvements_needed',
-#        'issue_who_does_it_matter_to',
-#        'issue_what_difference_the_intervention_intends_to_make',
-
-
-
-
 
 #        'intervention_intervention_costs_(£)',
 
@@ -319,54 +313,20 @@ if __name__ == "__main__":
 #        'process_evaluation_design_method_sample_size_process',
 #        'process_evaluation_design_description',
 #        'process_evaluation_design_rationale_for_chosen_methods',
-#        'impact_evaluation_design_design',
-#        'impact_evaluation_design_justification_for_design',
-#        'impact_evaluation_design_features_to_reflect_real-world_implementation',
-#        'impact_evaluation_design_description',
-#        'impact_evaluation_design_equity',
+
 #        'impact_evaluation_design_method_sample_size',
 #        'impact_evaluation_design_method_sample_size_process',
-#        'impact_evaluation_design_assumptions',
-#        'impact_evaluation_design_limitations_of_approach',
+
 #        'economic_evaluation_design_methods'],
-#       dtype='object')
+
 # Index(['economic_evaluation_design_method_sample_size',
 #        'economic_evaluation_design_method_sample_size_process',
 #        'economic_evaluation_design_costs_included',
 #        'economic_evaluation_design_benefits_included',
 #        'economic_evaluation_design_monetisation_approach(es)',
 #        'economic_evaluation_design_description_of_economic_evaluation_design',
-#        'other_evaluation_design_other_evaluation_design',
-#        'other_evaluation_design_summary_of_methods',
-#        'other_evaluation_design_description_of_analysis',
-#        'impact_evaluation_analysis_analysis_framework',
-#        'impact_evaluation_analysis_analysis_basis',
-#        'impact_evaluation_analysis_analysis_set',
-#        'impact_evaluation_analysis_primary_effect_size_measure_type',
-#        'impact_evaluation_analysis_primary_effect_size_measure',
-#        'impact_evaluation_analysis_primary_effect_size_measure_interval',
-#        'impact_evaluation_analysis_primary_effect_size_measure_description',
-#        'impact_evaluation_analysis_interpretation_type',
-#        'impact_evaluation_analysis_sensitivity_analysis',
-#        'impact_evaluation_analysis_subgroup_analysis',
-#        'impact_evaluation_analysis_missing_data_handling'],
-#       dtype='object')
-# Index(['impact_evaluation_findings_summary_findings',
+
+#       'impact_evaluation_findings_summary_findings',
 #        'impact_evaluation_findings_findings',
-#        'economic_evaluation_findings_summary_findings',
-#        'economic_evaluation_findings_findings',
-#        'other_evaluation_findings_summary_findings',
-#        'other_evaluation_findings_findings',
 
 #        'ethical_considerations_ethics_approval_applied_for',
-
-
-
-
-
-
-
-#        'processes_and_standards_name_of_standard_or_process',
-#        'processes_and_standards_conformity',
-#        'processes_and_standards_description'],
-#       dtype='object')
