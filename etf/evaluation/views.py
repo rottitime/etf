@@ -102,13 +102,8 @@ class EvaluationSearchView(MethodDispatcher):
         if evaluation_types:
             evaluation_types_qs = models.Evaluation.objects.none()
             for evaluation_type in evaluation_types:
-                if evaluation_type == choices.EvaluationTypeOptions.OTHER:
-                    # Other types could have any value in DB
-                    _, other_qs = models.get_values_other_evaluation_types()
-                    evaluation_types_qs = evaluation_types & other_qs
-                else:
-                    evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
-                    evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
+                evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
+                evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
             qs = evaluation_types_qs
         if not status:
             qs = qs.filter(
