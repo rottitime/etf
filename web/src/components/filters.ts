@@ -1,7 +1,13 @@
 import '../style/filters.css'
 
-const submit = (filterControl: HTMLElement) => {
-  const form = filterControl.closest('form')
+const submit = (filterControl: HTMLElement, category?: string) => {
+  const form = filterControl.closest('form') as HTMLFormElement
+
+  //set active filter
+  form
+    .querySelector('input[type="hidden"][name="active_filter"]')
+    ?.setAttribute('value', category ? category : '')
+
   !!form && form.submit()
 }
 
@@ -31,7 +37,7 @@ const onReset = (filterControl: HTMLElement) => {
 
       // !!checkboxes.length && setTotal(filterControl, checkboxes[0].name)
 
-      submit(filterControl)
+      submit(filterControl, checkboxes[0]?.name)
     })
   })
 }
@@ -69,7 +75,9 @@ const onFilterClick = (filterControl: HTMLElement) => {
         // const checkbox = e.target as HTMLInputElement
         // const { name } = checkbox
         // setTotal(filterControl, name)
-        submit(filterControl)
+        const { name } = checkbox
+
+        submit(filterControl, name)
       })
     })
 
