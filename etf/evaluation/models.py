@@ -598,23 +598,3 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
 
         return "|".join(searchable_fields)
-
-
-def get_values_other_evaluation_types():
-    """
-    The specified value for another evaluation type is stored in the same
-    field as the evaluation types. Get the actual values that correspond
-    to 'Other', and all evaluations that have an other value.
-    """
-    all_qs = Evaluation.objects.all()
-    standard_eval_types = [
-        choices.EvaluationTypeOptions.IMPACT.value,
-        choices.EvaluationTypeOptions.PROCESS.value,
-        choices.EvaluationTypeOptions.ECONOMIC.value,
-    ]
-    # ie not other
-    other_qs = all_qs.exclude(evaluation_type__contained_by=standard_eval_types)
-    types = other_qs.values_list("evaluation_type", flat=True)
-    other_types = {type for types_list in types for type in types_list}
-    other_values = other_types.difference(standard_eval_types)
-    return other_values, other_qs
