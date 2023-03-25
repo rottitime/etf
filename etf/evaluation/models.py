@@ -210,9 +210,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Search
     search_text = models.TextField(blank=True, null=True, max_length=65536)
 
-    # TODO - add fields on evaluation design, analysis and findings
-    # For matching with initial data upload from RSM
-    rsm_eval_id = models.PositiveIntegerField(blank=True, null=True)
+    # For matching with initial data upload from RSM - evaluation id
+    rsm_eval_id = models.FloatField(blank=True, null=True)
 
     def update_evaluation_page_status(self, page_name, status):
         # TODO: Fix ignoring unknown pages
