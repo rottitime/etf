@@ -59,6 +59,7 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "other_ethical_information": "ethical_considerations_other_ethical_information",
     # Impact evaluation design
     # "impact_eval_design_name": "impact_evaluation_design_design" TODO - JSON field/list
+    # other
     "impact_eval_design_justification": "impact_evaluation_design_justification_for_design",
     "impact_eval_design_description": "impact_evaluation_design_description",
     "impact_eval_design_features": "impact_evaluation_design_features_to_reflect_real-world_implementation",
@@ -76,6 +77,7 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     # "impact_eval_effect_measure_interval": "impact_evaluation_analysis_primary_effect_size_measure_interval"
     # "impact_eval_primary_effect_size_desc": "impact_evaluation_analysis_primary_effect_size_measure_description"
     # "impact_eval_interpretation_type": "impact_evaluation_analysis_interpretation_type"
+    # impact_eval_interpretation_type_other
     # "impact_eval_sensitivity_analysis": "impact_evaluation_analysis_sensitivity_analysis"
     # "impact_eval_subgroup_analysis": "impact_evaluation_analysis_subgroup_analysis"
     # "impact_eval_missing_data_handling": "impact_evaluation_analysis_missing_data_handling"
@@ -146,7 +148,11 @@ PROCESSES_STANDARDS_MAPPING = {
 
 # TODO - check these
 EXISTING_ORGANISATION_MAPPING = {v: k for k, v in dict(enums.org_tuples).items()}
-OTHER_ORGANISATION_MAPPING = {"Department for Transport": "department-for-transport"}
+OTHER_ORGANISATION_MAPPING = {
+    "Department for Transport": "department-for-transport",
+    "Closed organisation: Ministry of Housing, Communities & Local Government": "ministry-of-housing-communities-and-local-government",
+    "Department for Levelling Up, Housing and Communities": "department-for-levelling-up-housing-and-communities",
+}
 ALL_ORG_MAPPING = {**EXISTING_ORGANISATION_MAPPING, **OTHER_ORGANISATION_MAPPING}
 
 
@@ -225,7 +231,8 @@ def get_evaluation_types(eval_df):
 
 
 def get_organisations(eval_df):
-    all_vals = eval_df["metadata_orgs_titles"].unique()
+    all_vals = eval_df["metadata_orgs_titles"].dropna(how="all")
+    all_vals = all_vals.unique()
     try:
         converted_vals = [ALL_ORG_MAPPING[org] for org in all_vals]
     except KeyError:
