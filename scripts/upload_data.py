@@ -20,7 +20,7 @@ INFO_NOT_IDENTIFIED = "Information not identified within the report"
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "title": "evaluation_information_evaluation_title",
     "short_title": "evaluation_information_short_title_for_evaluation",
-    "brief_description": "evaluation_information_evaluation_summary", #TODO - many of these?
+    "brief_description": "evaluation_information_evaluation_summary",  # TODO - many of these?
     # "issue_description":
     # "those_experiencing_issue":
     # "why_improvements_matter":
@@ -35,15 +35,14 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "who_improvements_matter_to": "issue_who_does_it_matter_to",
     "current_practice": "issue_current_practice",
     "issue_relevance": "issue_what_difference_the_intervention_intends_to_make",
-
     # TODO - Studied population - should there be many rows? (There are in Excel)
     "studied_population": "study_population_studied_population_including_location(s)",
-    "eligibility_criteria": 'study_population_eligibility_criteria',
+    "eligibility_criteria": "study_population_eligibility_criteria",
     # "sample_size": 'study_population_total_number_of_people_(or_other_unit)_included_in_the_evaluation' TODO - pos int field
-    "sample_size_units": 'study_population_type_of_unit',
+    "sample_size_units": "study_population_type_of_unit",
     # "sample_size_details" TODO - no match-up
     # Participant recruitment approach
-    "process_for_recruitment": 'evaluation_recruitment_referral__recruitment_route',
+    "process_for_recruitment": "evaluation_recruitment_referral__recruitment_route",
     "recruitment_schedule": "evaluation_recruitment_referral__recruitment_schedule",
     # Ethical considerations
     # "ethics_committee_approval": "ethical_considerations_ethics_committee_approval", #TODO - choices field
@@ -94,7 +93,7 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     # "economic_eval_design_details"
     # Economic evaluation analysis
     # "economic_eval_analysis_description"
-    "other_eval_design_type":"other_evaluation_design_other_evaluation_design",
+    "other_eval_design_type": "other_evaluation_design_other_evaluation_design",
     "other_eval_design_details": "other_evaluation_design_summary_of_methods",
     "other_eval_analysis_description": "other_evaluation_design_description_of_analysis",
     # Impact evaluation findings - TODO - how dow these match?
@@ -106,13 +105,13 @@ EVALUATION_STANDARD_FIELDS_LOOKUP = {
     # impact_eval_upper_uncertainty
     # # Economic evaluation findings
     "economic_eval_summary_findings": "economic_evaluation_findings_summary_findings",
-    "economic_eval_findings":"economic_evaluation_findings_findings",
+    "economic_eval_findings": "economic_evaluation_findings_findings",
     # # Process evaluation findings
     # process_eval_summary_findings
     # process_eval_findings
     # # Other evaluation findings
     "other_eval_summary_findings": "other_evaluation_findings_summary_findings",
-    "other_eval_findings": "other_evaluation_findings_findings"
+    "other_eval_findings": "other_evaluation_findings_findings",
 }
 
 INTERVENTION_MAPPING = {
@@ -121,28 +120,28 @@ INTERVENTION_MAPPING = {
     "rationale": "intervention_intervention_rationale",
     "materials_used": "intervention_materials_used",
     "procedures": "intervention_procedures_used",
-    "provider_description": 'intervention_who_delivered_the_intervention',
-    "modes_of_delivery": 'intervention_how_was_the_intervention_delivered',
+    "provider_description": "intervention_who_delivered_the_intervention",
+    "modes_of_delivery": "intervention_how_was_the_intervention_delivered",
     "location": "intervention_where_was_the_intervention_delivered",
     "frequency_of_delivery": "intervention_how_often_the_intervention_was_delivered",
     "tailoring": "intervention_tailoring",
-    "fidelity": 'intervention_how_well_it_was_delivered_(fidelity)',
+    "fidelity": "intervention_how_well_it_was_delivered_(fidelity)",
     "resource_requirements": "intervention_resource_requirements",
-    "geographical_information": "intervention_geographical_information"
+    "geographical_information": "intervention_geographical_information",
 }
 
 DOCUMENTS_MAPPING = {
     "title": "evaluation_information_report_title",
     "url": "metadata_gov_uk_link",
     "description": "metadata_description",
-    #"document_types" - TODO choices field
+    # "document_types" - TODO choices field
     # document_type_other"
 }
 
 PROCESSES_STANDARDS_MAPPING = {
     "name": "processes_and_standards_name_of_standard_or_process",
-    #"conformity": "processes_and_standards_conformity", TODO - choices field
-    "description": "processes_and_standards_description"
+    # "conformity": "processes_and_standards_conformity", TODO - choices field
+    "description": "processes_and_standards_description",
 }
 
 # TODO - check these
@@ -220,25 +219,26 @@ def get_evaluation_types(eval_df):
     if others:
         evaluation_types.append(choices.EvaluationTypeOptions.OTHER.value)
         if len(others) > 1:
-            print(f"More than one other evaluation type: {others}") # noqa
+            print(f"More than one other evaluation type: {others}")  # noqa
         # TODO - can there be more than one? Unlikely
         evaluation_types.append(choices.EvaluationTypeOptions.OTHER.value)
         other_detail = ";".join(others)
     return evaluation_types, other_detail
+
 
 def get_organisations(eval_df):
     all_vals = eval_df["metadata_orgs_titles"].unique()
     try:
         converted_vals = [ALL_ORG_MAPPING[org] for org in all_vals]
     except KeyError:
-        print(f"Non-matching org: {all_vals}") # noqa
+        print(f"Non-matching org: {all_vals}")  # noqa
         converted_vals = []
     return converted_vals
 
 
 def save_intervention_data(evaluation, eval_df):
     intervention_df = eval_df[list(INTERVENTION_MAPPING.values())]
-    intervention_df = intervention_df.dropna(how='all')
+    intervention_df = intervention_df.dropna(how="all")
     for _, row in intervention_df.iterrows():
         intervention = models.Intervention(evaluation=evaluation)
         intervention.save()
@@ -270,18 +270,15 @@ def upload_all_rsm_data():
     evaluation_ids, df = get_all_upload_data_df()
     for id in evaluation_ids:
         upload_data_for_id(df, id)
-        print(f"Imported evaluation with id: {id}") # noqa
-    print("Done import!") # noqa
-
-
-
+        print(f"Imported evaluation with id: {id}")  # noqa
+    print("Done import!")  # noqa
 
 
 # COLUMNS from Excel - as yet, unmatched fields
 # Index(['metadata_evaluation_id', 'metadata_report_id',
 #        'metadata_evaluation_name',
 
-#        'metadata_display_type', 
+#        'metadata_display_type',
 #    'metadata_format',
 #        'metadata_link', 'metadata_public_timestamp', 'metadata_document_type',
 #        'metadata_orgs_titles', 'metadata_final_categorisation',
