@@ -152,9 +152,7 @@ ALL_ORG_MAPPING = {**EXISTING_ORGANISATION_MAPPING, **OTHER_ORGANISATION_MAPPING
 
 # MANY OF THESE:
 # - Evaluation costs and budget
-# - Documents
 # - Event dates
-# - Intervention
 # - Outcome measure
 # - Other measure
 # - Processes and standards
@@ -247,6 +245,28 @@ def save_intervention_data(evaluation, eval_df):
             intervention.save()
 
 
+def save_document_data(evaluation, eval_df):
+    document_df = eval_df[list(DOCUMENTS_MAPPING.values())]
+    document_df = document_df.dropna(how="all")
+    for _, row in document_df.iterrows():
+        document = models.Document(evaluation=evaluation)
+        document.save()
+        for k, v in DOCUMENTS_MAPPING.items():
+            setattr(document, k, row[v])
+            document.save()
+
+
+def save_process_standard_data(evaluation, eval_df):
+    df = eval_df[list(PROCESSES_STANDARDS_MAPPING.values())]
+    df = df.dropna(how="all")
+    for _, row in df.iterrows():
+        process_standard = models.ProcessStandard(evaluation=evaluation)
+        process_standard.save()
+        for k, v in PROCESSES_STANDARDS_MAPPING.items():
+            setattr(process_standard, k, row[v])
+            process_standard.save()
+
+
 def upload_data_for_id(all_df, rsm_id):
     eval_df = all_df[all_df["metadata_evaluation_id"] == rsm_id]
     evaluation, _ = models.Evaluation.objects.get_or_create(rsm_eval_id=rsm_id)
@@ -254,11 +274,15 @@ def upload_data_for_id(all_df, rsm_id):
     # Add standard fields
     for model_field_name, rsm_field_name in EVALUATION_STANDARD_FIELDS_LOOKUP.items():
         value = get_data_for_field(eval_df, rsm_field_name)
+        print(rsm_field_name)
+        print(value)
         setattr(evaluation, model_field_name, value)
         evaluation.save()
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
     evaluation.organisations = get_organisations(eval_df)
     save_intervention_data(evaluation, eval_df)
+    save_document_data(evaluation, eval_df)
+    save_process_standard_data(evaluation, eval_df)
     # Add number fields
     # Add choice fields
     # Add one-to-many objects
