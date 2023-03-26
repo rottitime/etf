@@ -3,7 +3,7 @@ import pathlib
 
 import pandas as pd
 
-from etf.evaluation import choices, models, enums, schemas
+from etf.evaluation import choices, enums, models
 
 # Assumptions
 # Sheets with relevant data to import are precisely the ones whose names are integers
@@ -152,6 +152,8 @@ OTHER_ORGANISATION_MAPPING = {
     "Department for Transport": "department-for-transport",
     "Closed organisation: Ministry of Housing, Communities & Local Government": "ministry-of-housing-communities-and-local-government",
     "Department for Levelling Up, Housing and Communities": "department-for-levelling-up-housing-and-communities",
+    "Department for Business, Energy & Industrial Strategy": "department-for-business-energy-and-industrial-strategy",
+    "Closed organisation: UK Commission for Employment and Skills": "uk-commission-for-employment-and-skills",
 }
 ALL_ORG_MAPPING = {**EXISTING_ORGANISATION_MAPPING, **OTHER_ORGANISATION_MAPPING}
 
@@ -281,10 +283,8 @@ def upload_data_for_id(all_df, rsm_id):
     # Add standard fields
     for model_field_name, rsm_field_name in EVALUATION_STANDARD_FIELDS_LOOKUP.items():
         value = get_data_for_field(eval_df, rsm_field_name)
-        print(rsm_field_name)
-        print(value)
         setattr(evaluation, model_field_name, value)
-        evaluation.save()
+    evaluation.save()
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
     evaluation.organisations = get_organisations(eval_df)
     save_intervention_data(evaluation, eval_df)
