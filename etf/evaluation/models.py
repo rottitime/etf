@@ -82,7 +82,7 @@ class Event(TimeStampedModel):
 class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     users = models.ManyToManyField(User, related_name="evaluations")
 
-    title = models.CharField(max_length=256, blank=True, null=True)
+    title = models.CharField(max_length=1024, blank=True, null=True)
     short_title = models.CharField(max_length=128, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)  # TODO - do we use these?
@@ -499,7 +499,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=1024)
     conformity = models.CharField(max_length=10, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 

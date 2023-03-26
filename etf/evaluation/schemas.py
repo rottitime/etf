@@ -51,7 +51,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     # TODO - add more validation esp. for choice fields, around dates
     users = fields.Function(lambda e: UserSchema(many=True).dump(e.users.all()))
     id = fields.UUID()
-    title = fields.Str(required=True, validate=validate.Length(max=256))
+    title = fields.Str(required=True, validate=validate.Length(max=1024))
     short_title = fields.Str(validate=validate.Length(max=128))
     brief_description = fields.Str()
     topics = fields.Raw()
@@ -300,7 +300,7 @@ class OtherMeasureSchema(TimeStampedModelSchema):
 class ProcessStandardSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    name = fields.Str(validate=validate.Length(max=256))
+    name = fields.Str(validate=validate.Length(max=1024))
     conformity = fields.Str(
         validate=validate.And(
             validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.FullNoPartial.choices))
