@@ -386,7 +386,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True)
+    name = models.CharField(max_length=1024, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
     rationale = models.TextField(blank=True, null=True)
     materials_used = models.TextField(blank=True, null=True)

@@ -241,7 +241,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 class InterventionSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema())
     id = fields.UUID(dump_only=True)
-    name = fields.Str(validate=validate.Length(max=256))
+    name = fields.Str(validate=validate.Length(max=1024))
     brief_description = fields.Str()
     rationale = fields.Str()
     materials_used = fields.Str()
