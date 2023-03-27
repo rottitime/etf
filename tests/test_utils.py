@@ -68,7 +68,7 @@ def test_choices():
         A = "a"
         B = "b"
         C = "c"
-    
+
     expected_choices = (("A", "a"), ("B", "b"), ("C", "c"))
     expected_names = ("A", "B", "C")
     expected_values = ("A", "B", "C")
