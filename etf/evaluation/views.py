@@ -231,7 +231,7 @@ def evaluation_summary_view(request, evaluation_id):
         evaluation_type[1]
         for evaluation_type in choices.EvaluationTypeOptions.choices
         if evaluation_type[0] in evaluation.evaluation_type
-    ][0]
+    ]
     topics = [topic[1] for topic in choices.Topic.choices if topic[0] in evaluation.topics]
     organisations = [
         organisation[1] for organisation in enums.Organisation.choices if organisation[0] in evaluation.organisations
