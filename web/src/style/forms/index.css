@@ -20,7 +20,7 @@ input {
     font-size: 14px;
   }
 
-  &[type='search'] {
+  &.search-icon {
     background-image: url(/static/i-dot-ai/images/search.svg);
     background-position: 12px center;
     background-repeat: no-repeat;
