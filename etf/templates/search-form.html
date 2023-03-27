@@ -164,7 +164,8 @@
 
         <div class="search-results">
           {% for evaluation in data.evaluations %}
-            <div class="card small" onclick='location.href="{{url('evaluation-summary', args=[evaluation.id])}}"'>
+            <a href="{{url('evaluation-summary', args=[evaluation.id])}}">
+            <div class="card small">
             <h2 class="header4">{% if evaluation.title %}{{evaluation.title}}{% else %}No title provided{% endif %}</h2>
             <p>{{evaluation.brief_description}}</p>
 
@@ -196,6 +197,7 @@
               </tr>
             </table>
           </div>
+            </a>
           {% endfor %}
         </div>
       {% endif %}
