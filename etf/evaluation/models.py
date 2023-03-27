@@ -101,6 +101,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Evaluation type (multiselect)
     evaluation_type = models.JSONField(default=list)
+    evaluation_type_other = models.CharField(max_length=256, blank=True, null=True)
 
     # Studied population
     studied_population = models.TextField(blank=True, null=True)
@@ -130,6 +131,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Impact evaluation design
     impact_eval_design_name = models.JSONField(default=list)
+    impact_eval_design_name_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_design_justification = models.TextField(blank=True, null=True)
     impact_eval_design_description = models.TextField(blank=True, null=True)
     impact_eval_design_features = models.TextField(blank=True, null=True)
@@ -140,13 +142,17 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Impact evaluation analysis
     # TODO - add analysis plan document?
     impact_eval_framework = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_framework_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_basis = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_basis_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_analysis_set = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_type = models.CharField(max_length=64, blank=True, null=True)
     impact_eval_primary_effect_size_measure = models.TextField(blank=True, null=True)
     impact_eval_effect_measure_interval = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_effect_measure_interval_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_primary_effect_size_desc = models.TextField(blank=True, null=True)
     impact_eval_interpretation_type = models.CharField(max_length=64, blank=True, null=True)
+    impact_eval_interpretation_type_other = models.CharField(max_length=256, blank=True, null=True)
     impact_eval_sensitivity_analysis = models.TextField(blank=True, null=True)
     impact_eval_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_eval_missing_data_handling = models.TextField(blank=True, null=True)
@@ -254,6 +260,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         # Ignore fields
         search_text_field = "search_text"
         page_statuses_field = "page_statuses"
+        status_field = "status"
 
         # Foreign key fields
         foreign_key_fields = [
@@ -268,18 +275,23 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         ]
 
         # Multiple choice fields
-        multiple_choice_fields = ["evaluation_type", "economic_eval_type", "status", "impact_eval_design_name"]
+        multiple_choice_fields = ["evaluation_type"]
+
+        # YesNo and similar fields - can be ignored
+        yes_no_fields = [
+            "ethics_committee_approval",
+            "impact_eval_fidelity",
+        ]
 
         # Single choice fields
         single_choice_fields = [
-            "ethics_committee_approval",
-            "impact_eval_fidelity",
             "impact_eval_framework",
             "impact_eval_effect_measure_interval",
             "impact_eval_basis",
             "impact_eval_effect_measure_type",
             "impact_eval_interpretation_type",
             "impact_eval_interpretation",
+            "economic_eval_type",
         ]
 
         # Simple fields
@@ -289,8 +301,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             + single_choice_fields
             + [search_text_field]
             + [page_statuses_field]
+            + [status_field]
             + list_fields
             + unique_fields
+            + yes_no_fields
         )
         simple_fields = [field for field in all_fields if field.name not in exclusion_fields]
 
@@ -309,117 +323,60 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
                     if related_object_search_text:
                         combined_field_data += f"{related_object_search_text}|"
 
-        if self.evaluation_type:
-            evaluation_types = [
-                value[1] for value in choices.EvaluationTypeOptions.choices if value[0] in self.evaluation_type
-            ]
-            if evaluation_types:
-                evaluation_type_text = "|".join(evaluation_types)
-                combined_field_data += f"{evaluation_type_text}|"
+        # Multiple choice fields & list fields
 
-        if self.economic_eval_type:
-            economic_eval_types = [
-                value[1] for value in choices.EconomicEvaluationType.choices if value[0] in self.economic_eval_type
-            ]
-            if economic_eval_types:
-                economic_eval_types_text = "|".join(economic_eval_types)
-                combined_field_data += f"{economic_eval_types_text}|"
+        evaluation_type_text = choices.turn_choices_list_to_string(
+            self.evaluation_type, choices.EvaluationTypeOptions.options
+        )
+        combined_field_data += evaluation_type_text
 
-        if self.status:
-            status = [value[1] for value in choices.EvaluationStatus.choices if value[0] in self.status]
-            if status:
-                status_text = "|".join(status)
-                combined_field_data += f"{status_text}|"
+        impact_eval_design_name_text = choices.turn_choices_list_to_string(
+            self.impact_eval_design_name, choices.ImpactEvalDesign.options
+        )
+        combined_field_data += impact_eval_design_name_text
 
-        if self.impact_eval_design_name:
-            impact_eval_design_name = [
-                value[1] for value in choices.ImpactEvalDesign.choices if value[0] in self.impact_eval_design_name
-            ]
-            if impact_eval_design_name:
-                impact_eval_design_name_text = "|".join(impact_eval_design_name)
-                combined_field_data += f"{impact_eval_design_name_text}|"
+        topics_text = choices.turn_choices_list_to_string(self.topics, choices.Topic.options)
+        combined_field_data += topics_text
 
-        if self.ethics_committee_approval:
-            ethics_committee_approval = [
-                value[1] for value in choices.YesNo.choices if value[0] in self.ethics_committee_approval
-            ]
-            if ethics_committee_approval:
-                ethics_committee_approval_text = "|".join(ethics_committee_approval)
-                combined_field_data += f"{ethics_committee_approval_text}|"
+        organisations_text = choices.turn_choices_list_to_string(self.organisations, enums.Organisation.options)
+        combined_field_data += organisations_text
 
-        if self.impact_eval_fidelity:
-            impact_eval_fidelity = [
-                value[1] for value in choices.YesNo.choices if value[0] in self.impact_eval_fidelity
-            ]
-            if impact_eval_fidelity:
-                impact_eval_fidelity_text = "|".join(impact_eval_fidelity)
-                combined_field_data += f"{impact_eval_fidelity_text}|"
+        # Single choice fields
 
-        if self.impact_eval_effect_measure_interval:
-            impact_eval_effect_measure_interval = [
-                value[1]
-                for value in choices.ImpactMeasureInterval.choices
-                if value[0] in self.impact_eval_effect_measure_interval
-            ]
-            if impact_eval_effect_measure_interval:
-                impact_eval_effect_measure_interval_text = "|".join(impact_eval_effect_measure_interval)
-                combined_field_data += f"{impact_eval_effect_measure_interval_text}|"
+        economic_eval_types_text = choices.map_choice_or_other(
+            self.economic_eval_type, choices.EconomicEvaluationType.options, append_separator=True
+        )
+        combined_field_data += economic_eval_types_text
 
-        if self.impact_eval_framework:
-            impact_eval_framework = [
-                value[1] for value in choices.ImpactFramework.choices if value[0] in self.impact_eval_framework
-            ]
-            if impact_eval_framework:
-                impact_eval_framework_text = "|".join(impact_eval_framework)
-                combined_field_data += f"{impact_eval_framework_text}|"
+        impact_eval_design_name_text = choices.map_choice_or_other(
+            self.impact_eval_design_name, choices.ImpactEvalDesign.options, append_separator=True
+        )
+        combined_field_data += impact_eval_design_name_text
 
-        if self.impact_eval_basis:
-            impact_eval_basis = [
-                value[1] for value in choices.ImpactAnalysisBasis.choices if value[0] in self.impact_eval_basis
-            ]
-            if impact_eval_basis:
-                impact_eval_basis_text = "|".join(impact_eval_basis)
-                combined_field_data += f"{impact_eval_basis_text}|"
+        impact_eval_effect_measure_interval_text = choices.map_choice_or_other(
+            self.impact_eval_effect_measure_interval, choices.ImpactMeasureInterval.options, append_separator=True
+        )
+        combined_field_data += impact_eval_effect_measure_interval_text
 
-        if self.impact_eval_effect_measure_type:
-            impact_eval_effect_measure_type = [
-                value[1]
-                for value in choices.ImpactMeasureType.choices
-                if value[0] in self.impact_eval_effect_measure_type
-            ]
-            if impact_eval_effect_measure_type:
-                impact_eval_effect_measure_type_text = "|".join(impact_eval_effect_measure_type)
-                combined_field_data += f"{impact_eval_effect_measure_type_text}|"
+        impact_eval_framework_text = choices.map_choice_or_other(
+            self.impact_eval_framework, choices.ImpactFramework.options, append_separator=True
+        )
+        combined_field_data += impact_eval_framework_text
 
-        if self.impact_eval_interpretation_type:
-            impact_eval_interpretation_type = [
-                value[1]
-                for value in choices.ImpactEvalInterpretation.choices
-                if value[0] in self.impact_eval_interpretation_type
-            ]
-            if impact_eval_interpretation_type:
-                impact_eval_interpretation_type_text = "|".join(impact_eval_interpretation_type)
-                combined_field_data += f"{impact_eval_interpretation_type_text}|"
+        impact_eval_basis_text = choices.map_choice_or_other(
+            self.impact_eval_basis, choices.ImpactAnalysisBasis.options, append_separator=True
+        )
+        combined_field_data += impact_eval_basis_text
 
-        if self.impact_eval_interpretation:
-            impact_eval_interpretation = [
-                value[1]
-                for value in choices.ImpactEvalInterpretation.choices
-                if value[0] in self.impact_eval_interpretation
-            ]
-            if impact_eval_interpretation:
-                impact_eval_interpretation_text = "|".join(impact_eval_interpretation)
-                combined_field_data += f"{impact_eval_interpretation_text}|"
+        impact_eval_effect_measure_type_text = choices.map_choice_or_other(
+            self.impact_eval_effect_measure_type, choices.ImpactMeasureType.options, append_separator=True
+        )
+        combined_field_data += impact_eval_effect_measure_type_text
 
-        if self.topics:
-            for topic in choices.Topic.choices:
-                if topic[0] in self.topics:
-                    combined_field_data += f"{topic[1]}|"
-
-            if self.organisations:
-                for organisation in enums.Organisation.choices:
-                    if organisation[0] in self.organisations:
-                        combined_field_data += f"{organisation[1]}|"
+        impact_eval_interpretation_type_text = choices.map_choice_or_other(
+            self.impact_eval_interpretation_type, choices.ImpactEvalInterpretation.options, append_separator=True
+        )
+        combined_field_data += impact_eval_interpretation_type_text
 
         combined_field_data = combined_field_data.strip("|")
         self.search_text = combined_field_data
@@ -469,6 +426,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True)
     direct_or_surrogate = models.CharField(max_length=10, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
+    measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
     timepoint = models.TextField(blank=True, null=True)
@@ -486,6 +444,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
         searchable_fields = [
             str(self.name),
+            str(self.measure_type_other),
             str(self.description),
             str(self.collection_process),
             str(self.timepoint),
@@ -505,6 +464,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
+    measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
@@ -513,6 +473,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
         searchable_fields = [
             str(self.name),
+            str(self.measure_type_other),
             str(self.description),
             str(self.collection_process),
             "|".join(measure_type),
@@ -549,6 +510,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     url = models.URLField(max_length=512, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     document_types = models.JSONField(default=list)
+    document_type_other = models.CharField(max_length=256, blank=True, null=True)
     # TODO - file upload
 
     _name_field = "title"
@@ -560,6 +522,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             str(self.title),
             str(self.description),
             str(self.url),
+            str(self.document_type_other),
             "|".join(document_types),
         ]
 

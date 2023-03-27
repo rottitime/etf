@@ -139,13 +139,13 @@
     </div>
     <div class="col">
       <div class="searchbox mb-16">
-        <input name="search_text" type="search" value="{{data.search_text}}" placeholder="Search keywords..." class="large full-width" />
+        <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width" />
         <button class="bttn-primary" type="submit">Search</button>
       </div>
     </form>
       {% if not data.evaluations or data.evaluations|length == 0 %}
         <div class="searchbox-intro">
-          <p>Search through <b class="highlight">12,345 evaluations</b></p>
+          <p>Search through <b class="highlight">{{data.total_evaluations}} evaluations</b></p>
           <p><i>Start your evaluation search with keywords or by making a filter selection</i></p>
         </div>
       {% else %}

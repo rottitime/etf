@@ -87,6 +87,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Evaluation type
     evaluation_type = fields.Raw()
+    evaluation_type_other = fields.Str(validate=validate.Length(max=256))
 
     # Studied population
     studied_population = fields.Str()
@@ -117,6 +118,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation design
     impact_eval_design_name = fields.Raw()
+    impact_eval_design_name_other = fields.Str(validate=validate.Length(max=64))
     impact_eval_design_justification = fields.Str()
     impact_eval_design_description = fields.Str()
     impact_eval_design_features = fields.Str()
@@ -125,14 +127,34 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_design_approach_limitations = fields.Str()
 
     # Impact evaluation analysis
-    impact_eval_framework = fields.Str(validate=validate.Length(max=64))
-    impact_eval_basis = fields.Str(validate=validate.Length(max=64))
+    impact_eval_framework = fields.Str(
+        validate=validate.And(
+            validate.OneOf(choices.get_db_values(choices.ImpactFramework.choices)), validate.Length(max=64)
+        )
+    )
+    impact_eval_framework_other = fields.Str(validate=validate.Length(max=256))
+    impact_eval_basis = fields.Str(
+        validate=validate.And(
+            validate.OneOf(choices.get_db_values(choices.ImpactAnalysisBasis.choices)), validate.Length(max=64)
+        )
+    )
+    impact_eval_basis_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_analysis_set = fields.Str()
     impact_eval_effect_measure_type = fields.Str(validate=validate.Length(max=64))
     impact_eval_primary_effect_size_measure = fields.Str()
-    impact_eval_effect_measure_interval = fields.Str(validate=validate.Length(max=64))
+    impact_eval_effect_measure_interval = fields.Str(
+        validate=validate.And(
+            validate.OneOf(choices.get_db_values(choices.ImpactMeasureInterval.choices)), validate.Length(max=64)
+        )
+    )
+    impact_eval_effect_measure_interval_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_primary_effect_size_desc = fields.Str()
-    impact_eval_interpretation_type = fields.Str(validate=validate.Length(max=64))
+    impact_eval_interpretation_type = fields.Str(
+        validate=validate.And(
+            validate.OneOf(choices.get_db_values(choices.ImpactEvalInterpretation.choices)), validate.Length(max=64)
+        )
+    )
+    impact_eval_interpretation_type_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
@@ -248,7 +270,12 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
             validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeMeasure.choices))
         )
     )
-    measure_type = fields.Str(validate=validate.Length(max=256))
+    measure_type = fields.Str(
+        validate=validate.And(
+            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.MeasureType.choices))
+        )
+    )
+    measure_type_other = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
     timepoint = fields.Str()
@@ -260,7 +287,12 @@ class OtherMeasureSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
-    measure_type = fields.Str(validate=validate.Length(max=256))
+    measure_type = fields.Str(
+        validate=validate.And(
+            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.MeasureType.choices))
+        )
+    )
+    measure_type_other = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
     collection_process = fields.Str()
 
@@ -284,6 +316,7 @@ class DocumentSchema(TimeStampedModelSchema):
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
     document_types = fields.Raw()
+    document_type_other = fields.Str(validate=validate.Length(max=256))
 
 
 class EventDateSchema(TimeStampedModelSchema):
