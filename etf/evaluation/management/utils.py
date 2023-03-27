@@ -303,11 +303,14 @@ def upload_data_for_id(all_df, rsm_id):
 
 
 def upload_all_data(filename):
-    evaluation_ids, df = get_all_upload_data_df(filename)
-    for id in evaluation_ids:
-        upload_data_for_id(df, id)
-        print(f"Imported evaluation with id: {id}")  # noqa
-    print("Done import!")  # noqa
+    try:
+        evaluation_ids, df = get_all_upload_data_df(filename)
+        for id in evaluation_ids:
+            upload_data_for_id(df, id)
+            print(f"Imported evaluation with id: {id}")  # noqa
+        print("Done import!")  # noqa
+    except FileNotFoundError:
+        print(f"Import unsuccessful - incorrect filename: {filename} \nEnsure data is in the `data` folder") # noqa
 
 
 # COLUMNS from Excel - as yet, unmatched fields
