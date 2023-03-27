@@ -25,7 +25,7 @@ def test_search():
 
     search_form = search_page.get_form("""form[action="/search/"]""")
 
-    search_form["search_text"] = evaluation["title"]
+    search_form["search_term"] = evaluation["title"]
 
     results = search_form.submit()
 
