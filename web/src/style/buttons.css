@@ -7,6 +7,7 @@
   line-height: normal;
   transition: none;
   text-decoration: none;
+  display: inline-block;
   &:hover {
     text-decoration: none;
   }
