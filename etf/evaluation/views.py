@@ -82,6 +82,7 @@ class EvaluationSearchView(MethodDispatcher):
         topics = request.GET.getlist("topics")
         evaluation_types = request.GET.getlist("evaluation_types")
         status = request.GET.getlist("status")
+        active_filter = request.GET.get("active_filter")
         current_url = request.get_full_path()
 
         qs = models.Evaluation.objects.all()
@@ -142,6 +143,7 @@ class EvaluationSearchView(MethodDispatcher):
             "search_term": search_term or "",
             "current_url": current_url,
             "total_evaluations": total_evaluations,
+            "active_filter": active_filter,
         }
         return render(
             request,
