@@ -84,6 +84,7 @@
 .container {
   max-width: var(--width-container);
   margin: 0 auto;
+  width: 100%;
 }
 
 main.container {
@@ -94,8 +95,11 @@ main.container {
 .sidebarcolumn {
   display: flex;
   gap: 24px;
-  & .col:first-child {
-    flex: 0 0 276px;
+  & .col {
+    flex-grow: 1;
+    &:first-child {
+      flex: 0 0 276px;
+    }
   }
 }
 
