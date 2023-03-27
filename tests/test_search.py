@@ -15,8 +15,6 @@ def test_search():
 
     user = models.User.objects.get(email=USER_DATA["email"])
 
-    print(user.id)
-
     evaluation = interface.facade.evaluation.create(user_id=user.id)
     interface.facade.evaluation.update(
         user_id=user.id, evaluation_id=evaluation["id"], data={"title": "Test evaluation search by title"}
