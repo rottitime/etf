@@ -1,15 +1,146 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 {% import "macros.html" as macros with context %}
 
 {% block content %}
-  <div class="wrapper">
+
+
+  
+
+<div class="back-bar"  >
+  <p class="small mb-0"><a href="#">Back to Search Results</a></p>
+  <div class="right">
+    <form action="#">
+      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
+      <button type="submit" class="bttn-primary small">Search</button>
+    </form>
+    <a href="#" class="bttn-tertiary small">Bookmark</a>
+    <a href="#" class="bttn-tertiary small">Contact</a>
+  </div>
+</div>
+
+<h1 class="header2 highlight">Local Sustainable Transport Fund Evaluation </h1>
+
+  <div class="sidebarcolumn">
+
+
+    <div class="col">
+
+      
+
+      <nav class="menu-list">
+        
+        <ul>
+          <li>
+            <a href="#" class="active">Overview</a>
+            <ul>
+              <li><a href="#">Event Dates</a></li>
+              <li><a href="#">Where else is this evaluation registered?</a></li>
+              <li><a href="#">Issue description</a></li>
+              <li><a href="#">Theory of change</a></li>
+              <li><a href="#">Technical report</a></li>
+            </ul>
+          </li>
+          <li><a href="#">What is measured</a></li>
+          <li><a href="#">Evaluation design</a></li>
+          <li><a href="#">Analysis</a></li>
+          <li><a href="#">Findings</a></li>
+          <li><a href="#">Cost</a></li>
+          
+          
+        </ul>
+
+        </nav>
+
+
+    </div>
+    <div class="col card-results">
+    
+
+
+      <div class="card small">
+        <h3 class="header3 highlight">Overview</h3>
+        <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+
+        <table>
+          <tr>
+            <th>Topic/s</th>
+            <td>
+              <div class="badge">Topic #1</div>
+              <div class="badge">Topic #2</div>
+              <div class="badge">Topic #3</div>
+              <div class="badge">Topic #4</div>
+              <div class="badge">Topic #5</div>
+              
+            </td>
+          </tr>
+          <tr>
+            <th>Organisation(s)</th>
+            <td>     <div class="badge">Accelerated Access Review (AAR)</div>
+              </td>
+          </tr>
+          <tr>
+            <th>Evaluation types</th>
+            <td>Impact</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card small">
+        <h3 class="header3 highlight">Event Dates</h3>
+        <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+
+        <table>
+          <tr>
+            <th>Event Name</th>
+            <td>Name #01</td>
+          </tr>
+          <tr>
+            <th>Event Date</th>
+            <td>     <div class="badge">May 2020 - June 2022</div>
+              </td>
+          </tr>
+        </table>
+        <hr />
+        <table>
+          <tr>
+            <th>Event Name</th>
+            <td>Name #01</td>
+          </tr>
+          <tr>
+            <th>Event Date</th>
+            <td>     <div class="badge">May 2020 - June 2022</div>
+              </td>
+          </tr>
+        </table>
+      </div>
+
+
+      <div class="card small">
+        <h3 class="header3 highlight">Where else is this evaluation registered?</h3>
+        <p class="small"><a href="#">GOV.UK</a><br />
+        <a href="#">The evaluation directory</a></p>
+      </div>
+
+      <div class="card small">
+        <h3 class="header3 highlight">Theory of change</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+      </div>
+      
+
+      <footer class="center">
+        <a href="#" class="bttn-primary">Next: What is measured</a>
+      </footer>
+
+
     <h1>{% if data.title %}{{data.title}}{% else %}No title provided{% endif %}</h1>
     {{macros.display_simple_value("description", "Description")}}
     {{macros.display_simple_value("status", "Status", data.get_status_display_name())}}
     {{macros.display_list_value("topics", "Topics", data.get_list_topics_display_names())}}
     {{macros.display_list_value("organisations", "Organisations", data.get_list_organisations_display_names())}}
+
     {% if user_can_edit %}
       <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
     {% endif %}
+  </div>
   </div>
 {% endblock %}

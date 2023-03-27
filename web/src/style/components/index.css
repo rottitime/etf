@@ -110,3 +110,15 @@
     margin-left: var(--spacing-8);
   }
 }
+
+.back-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-24);
+  & .right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}

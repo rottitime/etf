@@ -1,0 +1,37 @@
+.menu-list {
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    & a {
+      display: inline-flex;
+      align-items: center;
+      line-height: normal;
+    }
+  }
+
+  & a {
+    color: var(--color-blue2);
+    display: inline-block;
+    font-weight: 400;
+    font-size: 14px;
+    padding: var(--spacing-8) var(--spacing-16);
+
+    &.active {
+      background: rgba(0, 80, 199, 0.1);
+      border-radius: 8px;
+    }
+  }
+
+  & ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    & li {
+      /*nested list*/
+      & li:before {
+        content: '\200B';
+      }
+    }
+  }
+}

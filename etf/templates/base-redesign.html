@@ -16,14 +16,14 @@
       <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
    </head>
    <body {% if request.path==url('search') %}id="search"{% endif %}>
-      <header class="main-header">
+      <header id="main-header">
          <div class="container">
             <a href="/" class="logo">
               {{macros.crest_svg()}}
                <h2 class="body-text">Evaluation Registry</h2>
             </a>
             {% if request.user.is_authenticated %}
-            <nav>
+            <nav class="menu-list horizontal">
             <a href="{{url('search')}}" class={% if request.path==url('search') %}active{% endif %}>
               {{macros.search_svg()}}
               Evaluation search

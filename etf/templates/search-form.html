@@ -139,7 +139,7 @@
     </div>
     <div class="col">
       <div class="searchbox mb-16">
-        <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width" />
+        <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width search-icon" />
         <button class="bttn-primary" type="submit">Search</button>
       </div>
       {% if not data.evaluations or data.evaluations|length == 0 %}
@@ -191,8 +191,9 @@
           <div><a href="{{url('search')}}" class="small">Clear all filters</a></div>
         </div>
 
-        <div class="search-results">
+        <div class="card-results">
           {% for evaluation in data.evaluations %}
+          <a href="{{url('evaluation-summary', args=[evaluation.id])}}" class="basic-link">
             <div class="card small">
             <h2 class="header4">{% if evaluation.title %}{{evaluation.title}}{% else %}No title provided{% endif %}</h2>
             <p>{{evaluation.brief_description}}</p>
@@ -225,6 +226,7 @@
               </tr>
             </table>
           </div>
+        </a>
           {% endfor %}
         </div>
       {% endif %}

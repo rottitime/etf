@@ -7,6 +7,7 @@ html {
 
 body {
   background-color: #e3e8ee;
+  color: var(--text-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -66,6 +67,12 @@ body,
   line-height: 24px;
 }
 
+hr {
+  background-color: var(--input-stroke-light);
+  height: 1px;
+  border: 0;
+}
+
 p {
   margin-top: 0;
 }
@@ -104,11 +111,20 @@ a,
   }
 }
 
+:focus-within,
+:focus {
+  outline-color: var(--tab-stroke);
+}
+
 .highlight {
   color: var(--color-highlight1);
 }
 
 /* Spacings */
+.mb-0 {
+  margin-bottom: 0;
+}
+
 .mb-8 {
   margin-bottom: var(--spacing-8);
 }
@@ -128,4 +144,18 @@ small,
 .small {
   font-size: 14px;
   line-height: 24px;
+}
+
+.basic-link {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
