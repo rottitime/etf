@@ -19,7 +19,7 @@
       padding: var(--spacing-8) var(--spacing-16);
       display: inline-flex;
       align-items: center;
-      line-height: 0;
+      line-height: normal;
 
       & svg {
         font-size: inherit;
