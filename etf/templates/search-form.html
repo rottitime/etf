@@ -2,10 +2,9 @@
 {% import "macros.html" as macros with context %}
 
 {% block content %}
-
+<form method="GET" action="{{url('search')}}">
   <div class="sidebarcolumn">
     <div class="col">
-    <form method="GET" action="{{url('search')}}">
       <div class="sidebar search-filters ">
         <header>
           <h3 class="highlight header5">Filters</h3>
@@ -142,7 +141,6 @@
         <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width" />
         <button class="bttn-primary" type="submit">Search</button>
       </div>
-    </form>
       {% if not data.evaluations or data.evaluations|length == 0 %}
         <div class="searchbox-intro">
           <p>Search through <b class="highlight">{{data.total_evaluations}} evaluations</b></p>
@@ -203,4 +201,5 @@
       {% endif %}
     </div>
   </div>
+</form>
 {% endblock %}

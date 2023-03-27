@@ -1,4 +1,5 @@
 from etf.evaluation import interface, models
+
 from . import utils
 
 USER_DATA = {"email": "mr_search_test@example.com", "password": "1-h4t3-p455w0rd-c0mpl3xity-53tt1ng5"}
@@ -17,14 +18,17 @@ def test_search():
     print(user.id)
 
     evaluation = interface.facade.evaluation.create(user_id=user.id)
-    interface.facade.evaluation.update(user_id=user.id, evaluation_id=evaluation["id"], data={"title": "test"})
+    interface.facade.evaluation.update(
+        user_id=user.id, evaluation_id=evaluation["id"], data={"title": "Test evaluation search by title"}
+    )
+    evaluation = interface.facade.evaluation.get(user_id=user.id, evaluation_id=evaluation["id"])
 
     search_page = client.get("/search/")
 
-    search_form = search_page.get_form()
+    search_form = search_page.get_form("""form[action="/search/"]""")
 
     search_form["search_text"] = evaluation["title"]
 
-    results = search_form.submit().follow()
+    results = search_form.submit()
 
     assert results.has_text(evaluation["title"])
