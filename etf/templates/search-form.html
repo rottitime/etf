@@ -155,9 +155,7 @@
               {% set relevant_item = data.organisations | selectattr('0', '==', organisation) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('organisations=' + relevant_item[0], '')}}" title="close" class="close">
-                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
-                  </svg>
+                  {{macros.cross_svg()}}
                 </a>
               </div>
             {% endfor %}
@@ -166,9 +164,7 @@
               {% set relevant_item = data.topics | selectattr('0', '==', topic) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('topics=' + relevant_item[0], '')}}" title="close" class="close">
-                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
-                  </svg>
+                  {{macros.cross_svg()}}
                 </a>
               </div>
             {% endfor %}
@@ -177,9 +173,7 @@
               {% set relevant_item = data.evaluation_types | selectattr('0', '==', evaluation_type) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('evaluation_types=' + relevant_item[0], '')}}" title="close" class="close">
-                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
-                  </svg>
+                  {{macros.cross_svg()}}
                 </a>
               </div>
             {% endfor %}
@@ -188,9 +182,7 @@
               {% set relevant_item = data.statuses | selectattr('0', '==', status) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('status=' + relevant_item[0], '')}}" title="close" class="close">
-                  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22 4.79998L19.2 2L12 9.19999L4.79998 2L2 4.79998L9.19999 12L2 19.2L4.79998 22L12 14.8L19.2 22L22 19.2L14.8 12L22 4.79998Z" fill="currentColor"/>
-                  </svg>
+                  {{macros.cross_svg()}}
                 </a>
               </div>
             {% endfor %}
