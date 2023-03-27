@@ -236,6 +236,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     search_text = fields.Str()
+    rsm_eval_id = fields.Float()
 
 
 class InterventionSchema(TimeStampedModelSchema):
