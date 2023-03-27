@@ -149,7 +149,7 @@
         </div>
       {% else %}
         <div class="search-status">
-          <div><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
+          <div class="nowrap"><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
           <div>
             {% for organisation in data.selected_organisations %}
               <div class="chip">
@@ -188,7 +188,7 @@
               </div>
             {% endfor %}
           </div>
-          <div><a href="{{url('search')}}" class="small">Clear all filters</a></div>
+          <div class="nowrap"><a href="{{url('search')}}" class="small">Clear all filters</a></div>
         </div>
 
         <div class="card-results">

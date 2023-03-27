@@ -113,7 +113,7 @@ main.container {
 .search-status {
   display: flex;
   gap: var(--spacing-16);
-  align-items: center;
+  align-items: top;
   margin-bottom: var(--spacing-24);
   & div:last-child {
     margin-left: auto;
