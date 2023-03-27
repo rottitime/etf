@@ -3,11 +3,21 @@
 
 {% block content %}
   <div class="wrapper">
-    <h1>{% if data.title %}{{data.title}}{% else %}No title provided{% endif %}</h1>
-    {{macros.display_simple_value("description", "Description")}}
-    {{macros.display_simple_value("status", "Status", data.get_status_display_name())}}
-    {{macros.display_list_value("topics", "Topics", data.get_list_topics_display_names())}}
-    {{macros.display_list_value("organisations", "Organisations", data.get_list_organisations_display_names())}}
+    <h1>{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+  <p>Interventions</p>
+    <p>{{ data.interventions }}</p>
+  <p>Outcome measures</p>
+  <p>{{ data.outcome_measures }}</p>
+  <p>Dates</p>
+  <p>{{ data.date }}</p>
+    <p>Links</p>
+  <p>{{ data.links }}</p>
+  <p>Evaluation types</p>
+  <p>{{ data.evaluation_types }}</p>
+  <p>Topics</p>
+  <p>{{ data.topics }}</p>
+  <p>Organisation</p>
+  <p>{{ data.organisations }}</p>
     {% if user_can_edit %}
       <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
     {% endif %}
