@@ -10,7 +10,7 @@
   padding: 0;
 
   & .accordion-content {
-    /* display: none; */
+    display: none;
     position: relative;
     padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
   }
@@ -49,7 +49,7 @@
           & svg {
             color: var(--color-blue);
             transition: transform ease-in-out var(--animaiton-speed);
-            transform: rotate(180deg);
+            transform: rotate(0deg);
           }
         }
       }
@@ -63,7 +63,7 @@
         }
 
         & .icon svg {
-          transform: rotate(0);
+          transform: rotate(180deg);
         }
       }
     }
