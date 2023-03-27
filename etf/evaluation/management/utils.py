@@ -9,8 +9,7 @@ import pandas as pd
 
 from etf.evaluation import choices, enums, models
 
-
-DATA_DIR = pathlib.Path("etf","data")
+DATA_DIR = pathlib.Path("etf", "data")
 INFO_NOT_IDENTIFIED = "Information not identified within the report"
 
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
@@ -284,7 +283,7 @@ def upload_data_for_id(all_df, rsm_id):
     evaluation.save()
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
     evaluation.organisations = get_organisations(eval_df)
-    if not created: # Do this to avoid duplicates, no other way of identifying the related objects
+    if not created:  # Do this to avoid duplicates, no other way of identifying the related objects
         evaluation.interventions.all().delete()
         evaluation.documents.all().delete()
         evaluation.process_standards.all().delete()
@@ -307,7 +306,7 @@ def upload_all_data(filename):
             print(f"Imported evaluation with id: {id}")  # noqa
         print("Done import!")  # noqa
     except FileNotFoundError:
-        print(f"Import unsuccessful - incorrect filename: {filename} \nEnsure data is in the `data` folder") # noqa
+        print(f"Import unsuccessful - incorrect filename: {filename} \nEnsure data is in the `data` folder")  # noqa
 
 
 # COLUMNS from Excel - as yet, unmatched fields
