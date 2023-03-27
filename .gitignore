@@ -5,4 +5,4 @@ db.sqlite3
 .secrets
 */.DS_Store
 .DS_Store
-/data/*
+/etf/data/*

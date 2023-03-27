@@ -1,3 +1,9 @@
+"""
+This is for the upload of the RSM data - to initially populate the Evaluation Registry.
+In theory, should just be done the once.
+"""
+
+
 import math
 import pathlib
 
@@ -10,10 +16,7 @@ from etf.evaluation import choices, enums, models
 # Assume columns and titles are always the same
 
 
-RSM_FILENAME = "test.xlsx"
-__here__ = pathlib.Path(__file__).parent
-DATA_DIR = __here__ / "data"
-FULL_PATH = DATA_DIR / RSM_FILENAME
+DATA_DIR = pathlib.Path("etf","data")
 
 INFO_NOT_IDENTIFIED = "Information not identified within the report"
 
@@ -166,7 +169,8 @@ ALL_ORG_MAPPING = {**EXISTING_ORGANISATION_MAPPING, **OTHER_ORGANISATION_MAPPING
 # - Processes and standards
 
 
-def get_all_upload_data():
+def get_all_upload_data(filename):
+    FULL_PATH = DATA_DIR / filename
     data = pd.read_excel(FULL_PATH, sheet_name=None, header=[0, 1])
     sheet_names = list(data.keys())
     relevant_sheet_names = [i for i in sheet_names if i.isdigit()]
@@ -185,8 +189,8 @@ def tidy_column_titles(df):
     return df
 
 
-def get_all_upload_data_df():
-    data = get_all_upload_data()
+def get_all_upload_data_df(filename):
+    data = get_all_upload_data(filename)
     all_dfs = list(data.values())
     transformed_dfs = [tidy_column_titles(df) for df in all_dfs]
     df = pd.concat(transformed_dfs)
@@ -292,13 +296,14 @@ def upload_data_for_id(all_df, rsm_id):
     save_process_standard_data(evaluation, eval_df)
     # Add number fields
     # Add choice fields
-    # Add one-to-many objects
+    # Add remaining one-to-many objects
+    # TODO - where are the outcome/other measures
     evaluation.page_statuses = {}
     evaluation.save()
 
 
-def upload_all_rsm_data():
-    evaluation_ids, df = get_all_upload_data_df()
+def upload_all_data(filename):
+    evaluation_ids, df = get_all_upload_data_df(filename)
     for id in evaluation_ids:
         upload_data_for_id(df, id)
         print(f"Imported evaluation with id: {id}")  # noqa
