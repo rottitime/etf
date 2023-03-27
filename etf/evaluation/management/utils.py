@@ -285,9 +285,9 @@ def upload_data_for_id(all_df, rsm_id):
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
     evaluation.organisations = get_organisations(eval_df)
     if not created: # Do this to avoid duplicates, no other way of identifying the related objects
-        evaluation.interventions.delete()
-        evaluation.documents.delete()
-        evaluation.process_standards.delete()
+        evaluation.interventions.all().delete()
+        evaluation.documents.all().delete()
+        evaluation.process_standards.all().delete()
     save_intervention_data(evaluation, eval_df)
     save_document_data(evaluation, eval_df)
     save_process_standard_data(evaluation, eval_df)
