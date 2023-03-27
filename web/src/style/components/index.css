@@ -105,6 +105,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  & a {
+    transition: none;
+  }
 
   & .close {
     display: inline-flex;
