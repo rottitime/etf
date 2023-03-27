@@ -1,4 +1,5 @@
 import datetime
+from tkinter.ttk import LabeledScale
 
 import marshmallow
 from nose.tools import assert_raises
@@ -60,3 +61,23 @@ def test_apply_schema():
 
     with assert_raises(ValueError):
         result = utils.apply_schema(MySchema, {"date": datetime.date(2012, 4, 1)}, "wibble")
+
+
+def test_choices():
+    class MadeUp(utils.Choices):
+        A = "a"
+        B = "b"
+        C = "c"
+    
+    expected_choices = (("A", "a"), ("B", "b"), ("C", "c"))
+    expected_names = ("A", "B", "C")
+    expected_values = ("A", "B", "C")
+    expected_labels = ("a", "b", "c")
+    expected_options = ({"value": "A", "text": "a"}, {"value": "B", "text": "b"}, {"value": "C", "text": "c"})
+    expected_mapping = {"A": "a", "B": "b", "C": "c"}
+    assert MadeUp.choices == expected_choices, MadeUp.choices
+    assert MadeUp.names == expected_names, MadeUp.names
+    assert MadeUp.values == expected_values, MadeUp.values
+    assert MadeUp.labels == expected_labels, MadeUp.labels
+    assert MadeUp.options == expected_options, MadeUp.options
+    assert MadeUp.mapping == expected_mapping, MadeUp.mapping
