@@ -20,7 +20,6 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
     path("test/", views.test_view, name="test"),
-    path("evaluation-search/", views.EvaluationSearchView, name="evaluation-search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
     path(
