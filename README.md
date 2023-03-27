@@ -58,3 +58,15 @@ npm run dev
 ```
 npm run build
 ```
+
+## Uploading initial data
+
+Data to initially populate the registry has been provided in a specified Excel format.
+
+Run this locally to find errors before running in the development/testing/live environments.
+
+Save the data file in the folder `etf/data` then run:
+
+```
+docker-compose run web python manage.py upload_rsm_data --filename <name-of-excel-file.xlsx>
+```

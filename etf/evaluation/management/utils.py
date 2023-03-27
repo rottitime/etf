@@ -2,8 +2,6 @@
 This is for the upload of the RSM data - to initially populate the Evaluation Registry.
 In theory, should just be done the once.
 """
-
-
 import math
 import pathlib
 
@@ -11,13 +9,8 @@ import pandas as pd
 
 from etf.evaluation import choices, enums, models
 
-# Assumptions
-# Sheets with relevant data to import are precisely the ones whose names are integers
-# Assume columns and titles are always the same
-
 
 DATA_DIR = pathlib.Path("etf","data")
-
 INFO_NOT_IDENTIFIED = "Information not identified within the report"
 
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
@@ -282,7 +275,7 @@ def save_process_standard_data(evaluation, eval_df):
 
 def upload_data_for_id(all_df, rsm_id):
     eval_df = all_df[all_df["metadata_evaluation_id"] == rsm_id]
-    evaluation, _ = models.Evaluation.objects.get_or_create(rsm_eval_id=rsm_id)
+    evaluation, created = models.Evaluation.objects.get_or_create(rsm_eval_id=rsm_id)
     evaluation.status = choices.EvaluationStatus.PUBLIC.value
     # Add standard fields
     for model_field_name, rsm_field_name in EVALUATION_STANDARD_FIELDS_LOOKUP.items():
@@ -291,6 +284,10 @@ def upload_data_for_id(all_df, rsm_id):
     evaluation.save()
     evaluation.evaluation_type, evaluation.evaluation_type_other = get_evaluation_types(eval_df)
     evaluation.organisations = get_organisations(eval_df)
+    if not created: # Do this to avoid duplicates, no other way of identifying the related objects
+        evaluation.interventions.delete()
+        evaluation.documents.delete()
+        evaluation.process_standards.delete()
     save_intervention_data(evaluation, eval_df)
     save_document_data(evaluation, eval_df)
     save_process_standard_data(evaluation, eval_df)
