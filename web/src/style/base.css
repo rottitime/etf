@@ -115,6 +115,10 @@ a,
 }
 
 /* Spacings */
+.mb-0 {
+  margin-bottom: 0;
+}
+
 .mb-8 {
   margin-bottom: var(--spacing-8);
 }
@@ -142,4 +146,10 @@ small,
   &:hover {
     text-decoration: none;
   }
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

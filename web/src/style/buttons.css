@@ -1,15 +1,18 @@
 [class^='bttn-'] {
   border-radius: 20px;
-  padding: var(--spacing-8) var(--spacing-16);
+  padding: 10px var(--spacing-16);
   border: 0;
   font-weight: 600;
   font-size: 16px;
   line-height: normal;
-  min-height: 40px;
+  transition: none;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
   &.small {
-    padding: 4px 16px;
+    padding: var(--spacing-4) var(--spacing-16);
     font-size: 14px;
-    min-height: 32px;
   }
 }
 
@@ -35,8 +38,9 @@
 
 .bttn-secondary {
   color: var(--color-blue);
-  background: linear-gradient(180deg, #ffffff 100%);
+  background: var(--color-white);
   border: 1px solid #0050c7;
+
   &:hover {
     background: linear-gradient(180deg, #0067ff 0%, #0050c7 100%);
     color: var(--color-white);
@@ -56,7 +60,7 @@
 
 .bttn-tertiary {
   color: var(--color-blue);
-  background: linear-gradient(180deg, #ffffff 100%);
+  background: var(--color-white);
   border: 1px solid var(--input-stroke-light);
 
   &:hover {
