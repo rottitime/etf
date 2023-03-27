@@ -1,5 +1,4 @@
 import datetime
-from tkinter.ttk import LabeledScale
 
 import marshmallow
 from nose.tools import assert_raises
