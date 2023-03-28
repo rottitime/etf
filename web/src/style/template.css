@@ -122,7 +122,13 @@ main.container {
 
 .card-results .card {
   margin-bottom: var(--spacing-16);
+  & td {
+    & .chip {
+      margin: 0 0 var(--spacing-4) var(--spacing-4);
+    }
+  }
   & th {
+    width: 35%;
     text-align: left;
     vertical-align: top;
     padding-right: var(--spacing-16);

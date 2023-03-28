@@ -31,16 +31,17 @@
 
         <ul>
           <li>
-            <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}" class="active">Overview</a>
+            <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}">Overview</a>
+          </li>
+          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}" class="active">What is measured?</a>
             <ul>
-              <li><a href="#">Event Dates</a></li>
-              <li><a href="#">Where else is this evaluation registered?</a></li>
-              <li><a href="#">Issue description</a></li>
-              <li><a href="#">Theory of change</a></li>
-              <li><a href="#">Technical report</a></li>
+              <li><a href="#interventions">Interventions</a></li>
+              <li><a href="#where-else-is-this-evaluation-registered">where else is this evaluation registered?</a></li>
+              <li><a href="#issue-description">Issue description</a></li>
+              <li><a href="#theory-of-change">Theory of change</a></li>
+              <li><a href="#technical-report">Technical report</a></li>
             </ul>
           </li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured?</a></li>
           <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
           <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
           <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
@@ -63,7 +64,7 @@
       </div>
 
       {% if data.interventions|length == 0 %}
-        <div class="card small">
+        <div class="card small" id="interventions">
           <h3 class="header3 highlight">Interventions</h3>
           <p>No interventions found for this evaluation.</p>
         </div>
@@ -208,7 +209,7 @@
       {% endif %}
 
       <footer class="center">
-        <a href="#" class="bttn-primary">Next: What is measured?</a>
+        <a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}" class="bttn-primary">Next: Evaluation design</a>
       </footer>
 
     <div class="wrapper">
