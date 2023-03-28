@@ -247,6 +247,27 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_status_display_name(self):
         return get_status_display_name(self.status)
 
+    def get_impact_eval_framework_display_name(self):
+        return choices.ImpactFramework.mapping[self.impact_eval_framework]
+
+    def get_impact_eval_basis_display_name(self):
+        return choices.ImpactAnalysisBasis.mapping[self.impact_eval_basis]
+
+    def get_impact_eval_effect_measure_type_display_name(self):
+        return choices.ImpactMeasureType.mapping[self.impact_eval_effect_measure_type]
+
+    def get_impact_eval_effect_measure_interval_display_name(self):
+        return choices.ImpactMeasureInterval.mapping[self.impact_eval_effect_measure_interval]
+
+    def get_impact_eval_interpretation_type_display_name(self):
+        return choices.ImpactEvalInterpretation.mapping[self.impact_eval_interpretation_type]
+
+    def get_impact_eval_fidelity_display_name(self):
+        return choices.YesNo.mapping[self.impact_eval_fidelity]
+
+    def get_ethics_committee_approval_display_name(self):
+        return choices.YesNo.mapping[self.ethics_committee_approval]
+
     def __str__(self):
         return f"{self.id} : {self.title}"
 
@@ -505,6 +526,9 @@ class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     name = models.CharField(max_length=1024)
     conformity = models.CharField(max_length=10, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+
+    def get_conformity_display_name(self):
+        return choices.FullNoPartial.mapping[self.conformity]
 
     def get_search_text(self):
         conformity = [value[1] for value in choices.YesNoPartial.choices if value[0] == self.conformity]
