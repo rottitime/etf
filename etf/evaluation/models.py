@@ -230,6 +230,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_list_evaluation_types_display_names(self):
         return [get_list_evaluation_types_display_name(x) for x in self.evaluation_type]
 
+    def get_economic_eval_type_display_name(self):
+        return choices.EconomicEvaluationType.mapping[self.economic_eval_type]
+
     def get_related_intervention_names(self):
         related_interventions = self.interventions.all()
         names = [i.name for i in related_interventions]
@@ -434,13 +437,13 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     relevance = models.TextField(blank=True, null=True)
 
     def get_primary_or_secondary_display_name(self):
-        return [choice[1] for choice in choices.OutcomeType.choices if choice[0] == self.primary_or_secondary][0]
+        return choices.OutcomeType.mapping[self.primary_or_secondary]
 
     def get_direct_or_surrogate_display_name(self):
-        return [choice[1] for choice in choices.OutcomeMeasure.choices if choice[0] == self.direct_or_surrogate][0]
+        return choices.OutcomeMeasure.mapping[self.direct_or_surrogate]
 
     def get_measure_type_display_name(self):
-        return [choice[1] for choice in choices.MeasureType.choices if choice[0] == self.measure_type][0]
+        return choices.MeasureType.mapping[self.measure_type]
 
     def get_search_text(self):
         primary_or_secondary = [
@@ -478,7 +481,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     collection_process = models.TextField(blank=True, null=True)
 
     def get_measure_type_display_name(self):
-        return [choice[1] for choice in choices.MeasureType.choices if choice[0] == self.measure_type][0]
+        return choices.MeasureType.mapping[self.measure_type]
 
     def get_search_text(self):
         measure_type = [value[1] for value in choices.MeasureType.choices if value[0] == self.measure_type]
