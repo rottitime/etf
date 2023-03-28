@@ -219,38 +219,3 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=N
         if user == request.user:
             return redirect(reverse("index"))
         return redirect(reverse("evaluation-contributors", args=(evaluation_id,)))
-
-
-@login_required
-def evaluation_summary_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    user_can_edit = request.user in evaluation.users.all()
-    interventions = models.Intervention.objects.filter(evaluation_id=evaluation.id)
-    outcome_measures = models.OutcomeMeasure.objects.filter(evaluation_id=evaluation.id)
-    evaluation_types = [
-        evaluation_type[1]
-        for evaluation_type in choices.EvaluationTypeOptions.choices
-        if evaluation_type[0] in evaluation.evaluation_type
-    ]
-    topics = [topic[1] for topic in choices.Topic.choices if topic[0] in evaluation.topics]
-    organisations = [
-        organisation[1] for organisation in enums.Organisation.choices if organisation[0] in evaluation.organisations
-    ]
-    dates = models.EventDate.objects.filter(evaluation_id=evaluation.id)
-    links = models.LinkOtherService.objects.filter(evaluation_id=evaluation.id)
-
-    data = {
-        "evaluation": evaluation,
-        "user_can_edit": user_can_edit,
-        "interventions": [intervention.name for intervention in interventions],
-        "outcome_measures": [outcome_measure.name for outcome_measure in outcome_measures],
-        "date": [
-            {"date": event_date.date, "name": event_date.event_date_name, "type": event_date.event_date_type}
-            for event_date in dates
-        ],
-        "links": [{"name": link.name_of_service, "link": link.link_or_identifier} for link in links],
-        "evaluation_types": evaluation_types,
-        "topics": topics,
-        "organisations": organisations,
-    }
-    return render(request, "evaluation-summary.html", {"data": data})
