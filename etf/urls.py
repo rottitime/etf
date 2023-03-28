@@ -286,6 +286,7 @@ evaluation_summary_urlpatterns = [
     path(
         "evaluation-summary/<uuid:evaluation_id>/",
         lambda request, evaluation_id: redirect("evaluation-summary-overview", evaluation_id=evaluation_id),
+        name="evaluation-summary",
     ),
     path(
         "evaluation-summary/<uuid:evaluation_id>/overview/",

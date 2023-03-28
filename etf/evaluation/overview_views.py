@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from etf.evaluation import models, choices, enums
+from etf.evaluation import choices, enums, models
 
 
 def evaluation_summary_overview_view(request, evaluation_id):
