@@ -265,6 +265,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_impact_eval_fidelity_display_name(self):
         return choices.YesNo.mapping[self.impact_eval_fidelity]
 
+    def get_impact_eval_interpretation_display_name(self):
+        return choices.ImpactEvalInterpretation.mapping[self.impact_eval_interpretation]
+
     def get_ethics_committee_approval_display_name(self):
         return choices.YesNo.mapping[self.ethics_committee_approval]
 
