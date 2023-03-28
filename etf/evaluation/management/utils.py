@@ -163,7 +163,7 @@ ALL_ORG_MAPPING = {**EXISTING_ORGANISATION_MAPPING, **OTHER_ORGANISATION_MAPPING
 
 def get_all_upload_data(filename):
     full_path = DATA_DIR / filename
-    data = pd.read_excel(full_path, sheet_name=None, header=[0, 1])
+    data = pd.read_excel(full_path, sheet_name=None, header=[0, 1], engine="openpyxl")
     sheet_names = list(data.keys())
     relevant_sheet_names = [i for i in sheet_names if i.isdigit()]
     relevant_data = {n: df for n, df in data.items() if n in relevant_sheet_names}
