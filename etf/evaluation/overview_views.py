@@ -36,6 +36,7 @@ def evaluation_summary_view(request, evaluation_id, page):
     outcome_measures = models.OutcomeMeasure.objects.filter(evaluation_id=evaluation.id)
     other_measures = models.OtherMeasure.objects.filter(evaluation_id=evaluation.id)
     costs = models.EvaluationCost.objects.filter(evaluation_id=evaluation.id)
+    processes_and_standards = models.ProcessStandard.objects.filter(evaluation_id=evaluation.id)
     evaluation_types = [
         evaluation_type[1]
         for evaluation_type in choices.EvaluationTypeOptions.choices
@@ -55,6 +56,7 @@ def evaluation_summary_view(request, evaluation_id, page):
         "outcome_measures": outcome_measures,
         "other_measures": other_measures,
         "costs": costs,
+        "processes_and_standards": processes_and_standards,
         "date": [
             {"date": event_date.date, "name": event_date.event_date_name, "type": event_date.event_date_type}
             for event_date in dates
