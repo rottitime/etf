@@ -17,7 +17,7 @@
   </div>
 </div>
 
-<h1 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+<h2 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h2>
 
   <div class="sidebarcolumn">
 
@@ -249,13 +249,13 @@
 
     {% if data.processes_and_standards|length == 0 %}
         <div class="card small" id="no-processes">
-          <h3 class="header3 highlight">Processes</h3>
+          <h4 class="header4 highlight">Processes</h4>
           <p>No processes found for this evaluation.</p>
         </div>
       {% else %}
         {% for processes_and_standard in data.processes_and_standards %}
           <div class="card small" id="process-standard-{{loop.index}}">
-            <h3 class="header3 highlight">{{ processes_and_standard.name }}</h3>
+            <h4 class="header4 highlight">{{ processes_and_standard.name }}</h4>
             <table>
               <tr>
                 <th>Conformity</th>

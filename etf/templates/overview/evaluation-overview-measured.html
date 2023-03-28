@@ -13,12 +13,11 @@
       <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
-    <a href="#" class="bttn-tertiary small">Bookmark</a>
     <a href="#" class="bttn-tertiary small">Contact</a>
   </div>
 </div>
 
-<h1 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+<h2 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h2>
 
   <div class="sidebarcolumn">
 
@@ -35,11 +34,27 @@
           </li>
           <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}" class="active">What is measured?</a>
             <ul>
-              <li><a href="#interventions">Interventions</a></li>
-              <li><a href="#where-else-is-this-evaluation-registered">where else is this evaluation registered?</a></li>
-              <li><a href="#issue-description">Issue description</a></li>
-              <li><a href="#theory-of-change">Theory of change</a></li>
-              <li><a href="#technical-report">Technical report</a></li>
+              {% if data.interventions | length == 0 %}
+                <li><a href="#interventions">Interventions</a></li>
+              {% else %}
+                {% for intervention in data.interventions %}
+                  <li><a href="#intervention-{{loop.index}}">{% if intervention.name %}{{intervention.name}}{% else %}Intervention #{{loop.index}}{% endif %}</a></li>
+                {% endfor %}
+              {% endif %}
+              {% if data.outcome_measures | length == 0 %}
+                <li><a href="#outcome-measures">Outcome measures</a></li>
+              {% else %}
+                {% for outcome_measure in data.outcome_measures %}
+                  <li><a href="#outcome-measure-{{loop.index}}">{% if outcome_measure.name %}{{outcome_measure.name}}{% else %}Outcome measure #{{loop.index}}{% endif %}</a></li>
+                {% endfor %}
+              {% endif %}
+              {% if data.other_measures | length == 0 %}
+                <li><a href="#other-measures">Other measures</a></li>
+              {% else %}
+                {% for other_measure in data.other_measures %}
+                  <li><a href="#other-measure-{{loop.index}}">{% if other_measure.name %}{{other_measure.name}}{% else %}Other measure #{{loop.index}}{% endif %}</a></li>
+                {% endfor %}
+              {% endif %}
             </ul>
           </li>
           <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
@@ -65,13 +80,13 @@
 
       {% if data.interventions|length == 0 %}
         <div class="card small" id="interventions">
-          <h3 class="header3 highlight">Interventions</h3>
+          <h4 class="header4 highlight">Interventions</h4>
           <p>No interventions found for this evaluation.</p>
         </div>
       {% else %}
         {% for intervention in data.interventions %}
-          <div class="card small">
-            <h3 class="header3 highlight">{{ intervention.name }}</h3>
+          <div class="card small" id="intervention-{{loop.index}}">
+            <h4 class="header4 highlight">{{ intervention.name }}</h4>
             <table>
               <tr>
                 <th>Description</th>
@@ -127,14 +142,14 @@
       {% endif %}
 
     {% if data.outcome_measures|length == 0 %}
-        <div class="card small">
-          <h3 class="header3 highlight">Outcome measures</h3>
+        <div class="card small" id="outcome-measures">
+          <h4 class="header4 highlight">Outcome measures</h4>
           <p>No outcome measures found for this evaluation.</p>
         </div>
       {% else %}
         {% for outcome_measure in data.outcome_measures %}
-          <div class="card small">
-            <h3 class="header3 highlight">{{ outcome_measure.name }}</h3>
+          <div class="card small" id="outcome-measure-{{loop.index}}">
+            <h4 class="header4 highlight">{{ outcome_measure.name }}</h4>
             <table>
               <tr>
                 <th>Primary or secondary</th>
@@ -178,14 +193,14 @@
       {% endif %}
 
       {% if data.other_measures|length == 0 %}
-        <div class="card small">
-          <h3 class="header3 highlight">Other measures</h3>
+        <div class="card small" id="other-measures">
+          <h4 class="header4 highlight">Other measures</h4>
           <p>No other measures found for this evaluation.</p>
         </div>
       {% else %}
         {% for other_measure in data.other_measures %}
-          <div class="card small">
-            <h3 class="header3 highlight">{{ other_measure.name }}</h3>
+          <div class="card small" id="other-measure-{{loop.index}}">
+            <h4 class="header4 highlight">{{ other_measure.name }}</h4>
             <table>
               <tr>
                 <th>Measure type</th>

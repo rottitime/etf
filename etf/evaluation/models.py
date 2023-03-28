@@ -583,6 +583,9 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     _name_field = "event_date_name"
 
+    def get_event_date_name_display_name(self):
+        return choices.EventDateOption.mapping[self.event_date_name]
+
     def get_search_text(self):
         event_date_type = [value[1] for value in choices.EventDateType.choices if value[0] == self.event_date_type]
         event_date_name = [value[1] for value in choices.EventDateOption.choices if value[0] == self.event_date_name]

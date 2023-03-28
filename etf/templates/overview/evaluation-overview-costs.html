@@ -13,12 +13,11 @@
       <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
-    <a href="#" class="bttn-tertiary small">Bookmark</a>
     <a href="#" class="bttn-tertiary small">Contact</a>
   </div>
 </div>
 
-<h1 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+<h2 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h2>
 
   <div class="sidebarcolumn">
 
@@ -64,13 +63,13 @@
 
     {% if data.costs|length == 0 %}
         <div class="card small" id="evaluation-costs">
-          <h3 class="header3 highlight">Evaluation costs</h3>
+          <h4 class="header4 highlight">Evaluation costs</h4>
           <p>No evaluation costs found for this evaluation.</p>
         </div>
       {% else %}
         {% for cost in data.costs %}
           <div class="card small" id="evaluation-cost-{{loop.index}}">
-            <h3 class="header3 highlight">{{ cost.item_name }}</h3>
+            <h4 class="header4 highlight">{{ cost.item_name }}</h4>
           <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
             <table>
               <tr>
