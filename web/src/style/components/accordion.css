@@ -12,7 +12,7 @@
   & .accordion-content-wrapper {
     max-height: 0;
     overflow: hidden;
-    transition: max-height ease-in-out var(--animaiton-speed);
+    transition: max-height ease-in-out var(--animation-speed);
   }
 
   & > li {
@@ -42,7 +42,7 @@
           gap: 10px;
           & svg {
             color: var(--color-blue);
-            transition: transform ease-in-out var(--animaiton-speed);
+            transition: transform ease-in-out var(--animation-speed);
             transform: rotate(0deg);
           }
         }

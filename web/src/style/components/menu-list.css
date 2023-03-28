@@ -27,10 +27,17 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    & li {
-      /*nested list*/
-      & li:before {
-        content: '\200B';
+
+    /* sub menus */
+    & ul {
+      margin-left: 18px;
+
+      & li {
+        display: inline-flex;
+        align-items: center;
+        &:before {
+          content: '- ';
+        }
       }
     }
   }

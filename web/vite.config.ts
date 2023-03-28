@@ -4,6 +4,9 @@ import postcssCustomMedia from 'postcss-custom-media'
 import svgLoader from 'vite-svg-loader'
 
 export default defineConfig({
+  server: {
+    port: 5173
+  },
   plugins: [svgLoader({ defaultImport: 'raw' })],
   css: {
     postcss: {
