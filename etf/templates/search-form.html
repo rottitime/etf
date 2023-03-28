@@ -213,13 +213,13 @@
               </tr>
 
               <tr>
-                <th>Title of Interventions</th>
+                <th>Interventions</th>
                 <td>{% for intervention in evaluation.get_related_intervention_names() %}
                     {{ intervention }}<br>
                   {% endfor %}</td>
               </tr>
               <tr>
-                <th>Title of Outcome measures</th>
+                <th>Outcome measures</th>
                 <td>{% for outcome_measure in evaluation.get_related_outcome_measure_names() %}
                     {{ outcome_measure }}<br>
                   {% endfor %}</td>
