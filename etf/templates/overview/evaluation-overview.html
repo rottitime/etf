@@ -119,9 +119,15 @@
           {% if data.links|length == 0 %}
             <p>No links found for this evaluation.</p>
           {% endif %}
-        {% for link in data.links %}
-          <p class="small"><a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}">{{link.name}}</a><br />
-        {% endfor %}
+       
+          {% if data.links|length  %}
+          <p class="small">
+          {% for link in data.links %}
+            <a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}" rel="external" target="_blank">{{link.name}}</a><br />
+          {% endfor %}
+          </p>
+          {% endif %}
+        
       </div>
 
       <div class="card small" id="theory-of-change">
