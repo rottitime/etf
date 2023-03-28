@@ -11,6 +11,8 @@ from etf.evaluation import models
 
 
 def _strip_microseconds(dt):
+    if not dt:
+        return None
     return dt.replace(microsecond=0, tzinfo=None)
 
 
