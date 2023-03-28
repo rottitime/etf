@@ -433,6 +433,15 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     minimum_difference = models.TextField(blank=True, null=True)
     relevance = models.TextField(blank=True, null=True)
 
+    def get_primary_or_secondary_display_name(self):
+        return [choice[1] for choice in choices.OutcomeType.choices if choice[0] == self.primary_or_secondary][0]
+
+    def get_direct_or_surrogate_display_name(self):
+        return [choice[1] for choice in choices.OutcomeMeasure.choices if choice[0] == self.direct_or_surrogate][0]
+
+    def get_measure_type_display_name(self):
+        return [choice[1] for choice in choices.MeasureType.choices if choice[0] == self.measure_type][0]
+
     def get_search_text(self):
         primary_or_secondary = [
             value[1] for value in choices.OutcomeType.choices if value[0] == self.primary_or_secondary
@@ -467,6 +476,9 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
+
+    def get_measure_type_display_name(self):
+        return [choice[1] for choice in choices.MeasureType.choices if choice[0] == self.measure_type][0]
 
     def get_search_text(self):
         measure_type = [value[1] for value in choices.MeasureType.choices if value[0] == self.measure_type]
