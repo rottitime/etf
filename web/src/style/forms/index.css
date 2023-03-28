@@ -17,7 +17,7 @@ input {
 
   &.small {
     padding: 4px 12px 4px 12px;
-    font-size: 14px;
+    font-size: var(--text-small);
   }
 
   &.search-icon {
@@ -39,8 +39,8 @@ input {
 
 .select {
   cursor: pointer;
-  transition: color ease-in-out var(--animaiton-speed),
-    background-color ease-in-out var(--animaiton-speed);
+  transition: color ease-in-out var(--animation-speed),
+    background-color ease-in-out var(--animation-speed);
   border-radius: 8px;
   background-color: rgba(204, 204, 204, 0.2);
   display: inline-flex;

@@ -17,8 +17,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color ease-in-out var(--animaiton-speed),
-      border-color ease-in-out var(--animaiton-speed);
+    transition: background-color ease-in-out var(--animation-speed),
+      border-color ease-in-out var(--animation-speed);
 
     &:before {
       content: '';
@@ -27,8 +27,8 @@
       border-radius: 50px;
       height: 60%;
       width: 60%;
-      transition: opacity ease-in-out var(--animaiton-speed),
-        transform ease-in-out var(--animaiton-speed);
+      transition: opacity ease-in-out var(--animation-speed),
+        transform ease-in-out var(--animation-speed);
       opacity: 0;
       transform: scale(0.6);
     }
