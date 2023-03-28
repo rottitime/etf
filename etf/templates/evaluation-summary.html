@@ -65,7 +65,7 @@
             <th>Topic/s</th>
             <td>
               {% for topic in data.topics %}
-                <div class="badge">{{topic}}</div>
+                <div class="chip green">{{topic}}</div>
               {% endfor %}
             </td>
           </tr>
@@ -73,7 +73,7 @@
             <th>Organisation(s)</th>
             <td>
               {% for organisation in data.organisations %}
-                <div class="badge">{{organisation}}</div>
+                <div class="chip orange">{{organisation}}</div>
               {% endfor %}
               </td>
           </tr>
@@ -104,7 +104,7 @@
           <tr>
             <th>Event Date</th>
             <td>
-              <div class="badge">{{date.date.strftime('%b %Y')}}</div>
+              <div class="chip">{{date.date.strftime('%b %Y')}}</div>
             </td>
           </tr>
         </table>
