@@ -152,7 +152,7 @@
           <div class="nowrap"><b>{{data.evaluations|length}}</b> result{% if data.evaluations|length != 1 %}s{%endif%} found</div>
           <div>
             {% for organisation in data.selected_organisations %}
-              <div class="chip">
+              <div class="chip orange">
               {% set relevant_item = data.organisations | selectattr('0', '==', organisation) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('organisations=' + relevant_item[0], '')}}" title="close" class="close">
@@ -161,7 +161,7 @@
               </div>
             {% endfor %}
             {% for topic in data.selected_topics %}
-              <div class="chip">
+              <div class="chip orange">
               {% set relevant_item = data.topics | selectattr('0', '==', topic) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('topics=' + relevant_item[0], '')}}" title="close" class="close">
@@ -170,7 +170,7 @@
               </div>
             {% endfor %}
             {% for evaluation_type in data.selected_evaluation_types %}
-              <div class="chip">
+              <div class="chip orange">
               {% set relevant_item = data.evaluation_types | selectattr('0', '==', evaluation_type) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('evaluation_types=' + relevant_item[0], '')}}" title="close" class="close">
@@ -179,7 +179,7 @@
               </div>
             {% endfor %}
             {% for status in data.selected_statuses %}
-              <div class="chip">
+              <div class="chip orange">
               {% set relevant_item = data.statuses | selectattr('0', '==', status) | first %}
                 {{relevant_item[1]}}
                 <a href="{{data.current_url | replace('status=' + relevant_item[0], '')}}" title="close" class="close">
