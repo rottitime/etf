@@ -82,8 +82,8 @@ class Event(TimeStampedModel):
 class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     users = models.ManyToManyField(User, related_name="evaluations")
 
-    title = models.CharField(max_length=256, blank=True, null=True)
-    short_title = models.CharField(max_length=64, blank=True, null=True)
+    title = models.CharField(max_length=1024, blank=True, null=True)
+    short_title = models.CharField(max_length=128, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)  # TODO - do we use these?
     organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
@@ -210,7 +210,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Search
     search_text = models.TextField(blank=True, null=True, max_length=65536)
 
-    # TODO - add fields on evaluation design, analysis and findings
+    # For matching with initial data upload from RSM - evaluation id
+    rsm_eval_id = models.FloatField(blank=True, null=True)
 
     def update_evaluation_page_status(self, page_name, status):
         # TODO: Fix ignoring unknown pages
@@ -388,7 +389,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256, blank=True, null=True)
+    name = models.CharField(max_length=1024, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
     rationale = models.TextField(blank=True, null=True)
     materials_used = models.TextField(blank=True, null=True)
@@ -501,7 +502,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
 class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=1024)
     conformity = models.CharField(max_length=10, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 

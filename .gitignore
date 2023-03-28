@@ -3,3 +3,6 @@
 db.sqlite3
 /.vscode
 .secrets
+*/.DS_Store
+.DS_Store
+/etf/data/*

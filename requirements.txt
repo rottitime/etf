@@ -8,6 +8,8 @@ faker
 furl
 jinja2
 marshmallow
+openpyxl
+pandas
 pdfkit
 psycopg2-binary
 pytz
