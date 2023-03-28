@@ -34,6 +34,8 @@ def evaluation_summary_view(request, evaluation_id, page):
     user_can_edit = request.user in evaluation.users.all()
     interventions = models.Intervention.objects.filter(evaluation_id=evaluation.id)
     outcome_measures = models.OutcomeMeasure.objects.filter(evaluation_id=evaluation.id)
+    other_measures = models.OtherMeasure.objects.filter(evaluation_id=evaluation.id)
+    costs = models.EvaluationCost.objects.filter(evaluation_id=evaluation.id)
     evaluation_types = [
         evaluation_type[1]
         for evaluation_type in choices.EvaluationTypeOptions.choices
@@ -49,8 +51,10 @@ def evaluation_summary_view(request, evaluation_id, page):
     data = {
         "evaluation": evaluation,
         "user_can_edit": user_can_edit,
-        "interventions": [intervention.name for intervention in interventions],
-        "outcome_measures": [outcome_measure.name for outcome_measure in outcome_measures],
+        "interventions": interventions,
+        "outcome_measures": outcome_measures,
+        "other_measures": other_measures,
+        "costs": costs,
         "date": [
             {"date": event_date.date, "name": event_date.event_date_name, "type": event_date.event_date_type}
             for event_date in dates
