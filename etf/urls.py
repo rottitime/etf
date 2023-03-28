@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import include, path
 
 from etf.evaluation import (
     authentication_views,
     download_views,
+    overview_views,
     submission_views,
     views,
 )
@@ -21,7 +23,6 @@ urlpatterns = [
     path("search/", views.EvaluationSearchView, name="search"),
     path("test/", views.test_view, name="test"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
-    path("evaluation-summary/<uuid:evaluation_id>/", views.evaluation_summary_view, name="evaluation-summary"),
     path(
         "evaluation/<uuid:evaluation_id>/overview/",
         submission_views.evaluation_overview_view,
@@ -281,6 +282,44 @@ event_date_urlpatterns = [
     ),
 ]
 
+evaluation_summary_urlpatterns = [
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/",
+        lambda request, evaluation_id: redirect("evaluation-summary-overview", evaluation_id=evaluation_id),
+        name="evaluation-summary",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/",
+        overview_views.evaluation_summary_overview_view,
+        name="evaluation-summary-overview",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/measured/",
+        overview_views.evaluation_measured_overview_view,
+        name="evaluation-summary-measured",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/design/",
+        overview_views.evaluation_design_overview_view,
+        name="evaluation-summary-design",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/analysis/",
+        overview_views.evaluation_analysis_overview_view,
+        name="evaluation-summary-analysis",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/findings/",
+        overview_views.evaluation_findings_overview_view,
+        name="evaluation-summary-findings",
+    ),
+    path(
+        "evaluation-summary/<uuid:evaluation_id>/overview/cost/",
+        overview_views.evaluation_cost_overview_view,
+        name="evaluation-summary-cost",
+    ),
+]
+
 
 urlpatterns = (
     urlpatterns
@@ -294,6 +333,7 @@ urlpatterns = (
     + documents_urlpatterns
     + links_urlpatterns
     + event_date_urlpatterns
+    + evaluation_summary_urlpatterns
 )
 
 handler404 = "etf.evaluation.views.view_404"

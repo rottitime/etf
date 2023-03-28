@@ -1,0 +1,144 @@
+{% extends "base-redesign.html" %}
+{% import "macros.html" as macros with context %}
+
+{% block content %}
+
+
+
+
+<div class="back-bar"  >
+  <p class="small mb-0"><a href="#">Back to Search Results</a></p>
+  <div class="right">
+    <form action="#">
+      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
+      <button type="submit" class="bttn-primary small">Search</button>
+    </form>
+    <a href="#" class="bttn-tertiary small">Bookmark</a>
+    <a href="#" class="bttn-tertiary small">Contact</a>
+  </div>
+</div>
+
+<h1 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+
+  <div class="sidebarcolumn">
+
+
+    <div class="col">
+
+
+
+      <nav class="menu-list">
+
+        <ul>
+          <li>
+            <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}" class="active">Overview</a>
+            <ul>
+              <li><a href="#">Event Dates</a></li>
+              <li><a href="#">Where else is this evaluation registered?</a></li>
+              <li><a href="#">Issue description</a></li>
+              <li><a href="#">Theory of change</a></li>
+              <li><a href="#">Technical report</a></li>
+            </ul>
+          </li>
+          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured</a></li>
+          <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
+          <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
+          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>
+
+
+        </ul>
+
+        </nav>
+
+
+    </div>
+    <div class="col card-results">
+
+
+
+      <div class="card small">
+        <h3 class="header3 highlight">Analysis</h3>
+        <p class="small">{{data.evaluation.brief_description}}</p>
+
+        <table>
+          <tr>
+            <th>Topic/s</th>
+            <td>
+              {% for topic in data.topics %}
+                <div class="badge">{{topic}}</div>
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <th>Organisation(s)</th>
+            <td>
+              {% for organisation in data.organisations %}
+                <div class="badge">{{organisation}}</div>
+              {% endfor %}
+              </td>
+          </tr>
+          <tr>
+            <th>Evaluation types</th>
+            <td>
+            {% for evaluation_type in data.evaluation_types %}
+              <p>{{evaluation_type}}</p>
+            {% endfor %}
+          </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card small">
+        <h3 class="header3 highlight">Event Dates</h3>
+      {% if data.date|length == 0 %}
+        <p>No dates found for this evaluation.</p>
+      {% endif %}
+        <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+
+        {% for date in data.date %}
+        <table>
+          <tr>
+            <th>Event Name</th>
+            <td>{{date.name}}</td>
+          </tr>
+          <tr>
+            <th>Event Date</th>
+            <td>
+              <div class="badge">{{date.date.strftime('%b %Y')}}</div>
+            </td>
+          </tr>
+        </table>
+        <hr />
+        {% endfor %}
+      </div>
+
+
+      <div class="card small">
+        <h3 class="header3 highlight">Where else is this evaluation registered?</h3>
+          {% if data.links|length == 0 %}
+            <p>No links found for this evaluation.</p>
+          {% endif %}
+        {% for link in data.links %}
+          <p class="small"><a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}">{{link.name}}</a><br />
+        {% endfor %}
+      </div>
+
+      <div class="card small">
+        <h3 class="header3 highlight">Theory of change</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+      </div>
+
+
+      <footer class="center">
+        <a href="#" class="bttn-primary">Next: What is measured</a>
+      </footer>
+
+    <div class="wrapper">
+
+    {% if user_can_edit %}
+      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+    {% endif %}
+  </div>
+  </div>
+{% endblock %}
