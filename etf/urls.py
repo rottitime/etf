@@ -2,13 +2,7 @@ from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import include, path
 
-from etf.evaluation import (
-    authentication_views,
-    download_views,
-    overview_views,
-    submission_views,
-    views
-)
+from etf.evaluation import authentication_views, download_views, overview_views, submission_views, views
 
 urlpatterns = [
     path("", submission_views.index_view, name="index"),
