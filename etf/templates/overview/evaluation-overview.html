@@ -13,12 +13,11 @@
       <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
-    <a href="#" class="bttn-tertiary small">Bookmark</a>
     <a href="#" class="bttn-tertiary small">Contact</a>
   </div>
 </div>
 
-<h1 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h1>
+<h2 class="header2 highlight">{% if data.evaluation.title %}{{data.evaluation.title}}{% else %}No title provided{% endif %}</h2>
 
   <div class="sidebarcolumn">
 
@@ -34,7 +33,7 @@
             <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}" class="active">Overview</a>
             <ul>
               <li><a href="#event-dates">Event Dates</a></li>
-              <li><a href="#where-else-is-this-evaluation-registered">where else is this evaluation registered?</a></li>
+              <li><a href="#where-else-is-this-evaluation-registered">Where else is this evaluation registered?</a></li>
               <li><a href="#issue-description">Issue description</a></li>
               <li><a href="#theory-of-change">Theory of change</a></li>
               <li><a href="#technical-report">Technical report</a></li>
@@ -90,7 +89,7 @@
       </div>
 
       <div class="card small" id="event-dates">
-        <h3 class="header3 highlight">Event Dates</h3>
+        <h4 class="header4 highlight">Event Dates</h4>
       {% if data.date|length == 0 %}
         <p>No dates found for this evaluation.</p>
       {% endif %}
@@ -100,7 +99,7 @@
         <table>
           <tr>
             <th>Event Name</th>
-            <td>{{date.name}}</td>
+            <td>{{date.get_event_date_name_display_name()}}</td>
           </tr>
           <tr>
             <th>Event Date</th>
@@ -115,7 +114,7 @@
 
 
       <div class="card small" id="where-else-is-this-evaluation-registered">
-        <h3 class="header3 highlight">where else is this evaluation registered?</h3>
+        <h4 class="header4 highlight">Where else is this evaluation registered?</h4>
           {% if data.links|length == 0 %}
             <p>No links found for this evaluation.</p>
           {% endif %}
@@ -127,11 +126,38 @@
           {% endfor %}
           </p>
           {% endif %}
-        
+      </div>
+
+      <div class="card small" id="issue-description">
+        <h4 class="header4 highlight">Issue description</h4>
+      <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+        <table>
+          <tr>
+            <th>Why would improvements in relation to this issue matter?</th>
+            <td>{% if data.evaluation.why_improvements_matter %}{{data.evaluation.why_improvements_matter}}{% else %}N/A{% endif %}</td>
+          </tr>
+          <tr>
+            <th>Who does it matter to?</th>
+            <td>{% if data.evaluation.who_improvements_matter_to %}{{data.evaluation.who_improvements_matter_to}}{% else %}N/A{% endif %}</td>
+          </tr>
+          <tr>
+            <th>Current practice</th>
+            <td>{% if data.evaluation.current_practice %}{{data.evaluation.current_practice}}{% else %}N/A{% endif %}</td>
+          </tr>
+          <tr>
+            <th>Relevance of the study</th>
+            <td>{% if data.evaluation.issue_relevance %}{{data.evaluation.issue_relevance}}{% else %}N/A{% endif %}</td>
+          </tr>
+        </table>
       </div>
 
       <div class="card small" id="theory-of-change">
-        <h3 class="header3 highlight">Theory of change</h3>
+        <h4 class="header4 highlight">Theory of change</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+      </div>
+
+      <div class="card small" id="technical-report">
+        <h4 class="header4 highlight">Technical report</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 

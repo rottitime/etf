@@ -57,10 +57,7 @@ def evaluation_summary_view(request, evaluation_id, page):
         "other_measures": other_measures,
         "costs": costs,
         "processes_and_standards": processes_and_standards,
-        "date": [
-            {"date": event_date.date, "name": event_date.event_date_name, "type": event_date.event_date_type}
-            for event_date in dates
-        ],
+        "date": dates,
         "links": [{"name": link.name_of_service, "link": link.link_or_identifier} for link in links],
         "evaluation_types": evaluation_types,
         "topics": topics,
