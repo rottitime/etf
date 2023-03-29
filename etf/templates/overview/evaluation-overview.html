@@ -119,10 +119,14 @@
             <p>No links found for this evaluation.</p>
           {% endif %}
        
-          {% if data.links|length  %}
+          {% if data.links|length > 0  %}
           <p class="small">
           {% for link in data.links %}
-            <a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}" rel="external" target="_blank">{{link.name}}</a><br />
+            {% if link.link %}
+              <a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}" rel="external" target="_blank">{% if link.name %}{{link.name}}{% else %}No name provided for link{% endif %}</a><br />
+            {% else %}
+              <p>{% if link.name %}{{link.name}} (No link address provided){% else %}No name or link address provided for link{% endif %}</p>
+            {% endif %}
           {% endfor %}
           </p>
           {% endif %}
