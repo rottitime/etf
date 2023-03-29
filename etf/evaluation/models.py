@@ -232,7 +232,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         return [get_list_evaluation_types_display_name(x) for x in self.evaluation_type]
 
     def get_economic_eval_type_display_name(self):
-        return choices.EconomicEvaluationType.mapping[self.economic_eval_type]
+        if self.economic_eval_type in choices.EconomicEvaluationType.names:
+            return choices.EconomicEvaluationType.mapping[self.economic_eval_type]
+        else:
+            return ""
 
     def get_related_intervention_names(self):
         related_interventions = self.interventions.all()

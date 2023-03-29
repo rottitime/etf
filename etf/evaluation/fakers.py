@@ -124,7 +124,7 @@ def make_evaluation():
         impact_eval_desc_planned_analysis=fake.text(),
         process_eval_methods=fake.text(256),
         process_eval_analysis_description=fake.text(),
-        economic_eval_type=fake.text(256),
+        economic_eval_type=fake.text(256), # TODO: set this to one of the choices
         perspective_costs=fake.text(),
         perspective_benefits=fake.text(),
         monetisation_approaches=fake.text(),
