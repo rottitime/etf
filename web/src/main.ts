@@ -13,6 +13,7 @@ import accordion from './components/accordion'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
+import setupSmoothScroll from './components/smooth-scroll'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -32,4 +33,5 @@ window.addEventListener('load', () => {
   icon()
   setupSelect()
   setupFilters()
+  setupSmoothScroll()
 })
