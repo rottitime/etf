@@ -9,8 +9,9 @@ const setupSmoothScroll = () => {
 
       if (scollElement) {
         scollElement.classList.remove('scrolled')
-        scrollToElement(scollElement, false, 16)
-        scollElement.classList.add('scrolled')
+        scrollToElement(scollElement, false, 16, () =>
+          scollElement.classList.add('scrolled')
+        )
       }
     })
   })

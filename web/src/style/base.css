@@ -185,17 +185,7 @@ small,
   position: absolute;
   top: 200px;
 }
+
 .scrolled {
-  animation: popout 0.3s ease;
-}
-@keyframes popout {
-  from {
-    transform: scale(1);
-  }
-  80% {
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-  }
+  animation: popout 0.2s ease-in-out;
 }

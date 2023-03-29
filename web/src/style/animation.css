@@ -1,0 +1,14 @@
+@keyframes popout {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
