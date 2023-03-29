@@ -35,24 +35,24 @@
           <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}" class="active">What is measured?</a>
             <ul>
               {% if data.interventions | length == 0 %}
-                <li><a href="#interventions">Interventions</a></li>
+                <li><a href="#interventions" class="smooth-scroll">Interventions</a></li>
               {% else %}
                 {% for intervention in data.interventions %}
-                  <li><a href="#intervention-{{loop.index}}">{% if intervention.name %}{{intervention.name}}{% else %}Intervention #{{loop.index}}{% endif %}</a></li>
+                  <li><a href="#intervention-{{loop.index}}" class="smooth-scroll">{% if intervention.name %}{{intervention.name}}{% else %}Intervention #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
               {% endif %}
               {% if data.outcome_measures | length == 0 %}
-                <li><a href="#outcome-measures">Outcome measures</a></li>
+                <li><a href="#outcome-measures" class="smooth-scroll">Outcome measures</a></li>
               {% else %}
                 {% for outcome_measure in data.outcome_measures %}
-                  <li><a href="#outcome-measure-{{loop.index}}">{% if outcome_measure.name %}{{outcome_measure.name}}{% else %}Outcome measure #{{loop.index}}{% endif %}</a></li>
+                  <li><a href="#outcome-measure-{{loop.index}}" class="smooth-scroll">{% if outcome_measure.name %}{{outcome_measure.name}}{% else %}Outcome measure #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
               {% endif %}
               {% if data.other_measures | length == 0 %}
-                <li><a href="#other-measures">Other measures</a></li>
+                <li><a href="#other-measures" class="smooth-scroll">Other measures</a></li>
               {% else %}
                 {% for other_measure in data.other_measures %}
-                  <li><a href="#other-measure-{{loop.index}}">{% if other_measure.name %}{{other_measure.name}}{% else %}Other measure #{{loop.index}}{% endif %}</a></li>
+                  <li><a href="#other-measure-{{loop.index}}" class="smooth-scroll">{% if other_measure.name %}{{other_measure.name}}{% else %}Other measure #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
               {% endif %}
             </ul>
