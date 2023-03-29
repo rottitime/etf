@@ -5,14 +5,14 @@ const setupSmoothScroll = () => {
     el.addEventListener('click', (e) => {
       e.preventDefault()
       const href = (e.target as HTMLAnchorElement)?.getAttribute('href')
-      const scollElement = href && document.querySelector<HTMLElement>(href)
+      const scrollElement = href && document.querySelector<HTMLElement>(href)
 
-      if (scollElement) {
-        scollElement.classList.remove('scrolled')
-        scollElement.classList.add('scrolling')
-        scrollToElement(scollElement, false, 16, () => {
-          scollElement.classList.remove('scrolling')
-          scollElement.classList.add('scrolled')
+      if (scrollElement) {
+        scrollElement.classList.remove('scrolled')
+        scrollElement.classList.add('scrolling')
+        scrollToElement(scrollElement, false, 16, () => {
+          scrollElement.classList.remove('scrolling')
+          scrollElement.classList.add('scrolled')
         })
       }
     })
