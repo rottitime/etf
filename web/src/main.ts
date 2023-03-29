@@ -1,4 +1,5 @@
 import './style/vars.css'
+import './style/animation.css'
 import './style/base.css'
 import './style/buttons.css'
 import './style/template.css'
