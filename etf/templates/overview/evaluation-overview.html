@@ -119,7 +119,7 @@
             <p>No links found for this evaluation.</p>
           {% endif %}
        
-          {% if data.links|length  %}
+          {% if data.links|length > 0  %}
           <p class="small">
           {% for link in data.links %}
             {% if link.link %}
