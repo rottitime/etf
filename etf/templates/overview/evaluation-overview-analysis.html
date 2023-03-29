@@ -35,18 +35,18 @@
           <li>
             <a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}" class="active">Analysis</a>
             <ul>
-              <li><a href="#impact-evaluation-analysis">Impact evaluation analysis</a></li>
-              <li><a href="#process-evaluation-analysis">Process evaluation analysis</a></li>
-              <li><a href="#economic-evaluation-analysis">Economic evaluation analysis</a></li>
-              <li><a href="#other-evaluation-analysis">Other evaluation analysis</a></li>
+              <li><a href="#impact-evaluation-analysis" class="smooth-scroll">Impact evaluation analysis</a></li>
+              <li><a href="#process-evaluation-analysis" class="smooth-scroll">Process evaluation analysis</a></li>
+              <li><a href="#economic-evaluation-analysis" class="smooth-scroll">Economic evaluation analysis</a></li>
+              <li><a href="#other-evaluation-analysis" class="smooth-scroll">Other evaluation analysis</a></li>
               {% if data.processes_and_standards | length == 0 %}
-                <li><a href="#no-processes">Processes</a></li>
+                <li><a href="#no-processes" class="smooth-scroll">Processes</a></li>
               {% else %}
                 {% for processes_and_standard in data.processes_and_standards %}
-                  <li><a href="#process-standard-{{loop.index}}">{% if processes_and_standard.name %}{{processes_and_standard.name}}{% else %}Process #{{loop.index}}{% endif %}</a></li>
+                  <li><a href="#process-standard-{{loop.index}}" class="smooth-scroll">{% if processes_and_standard.name %}{{processes_and_standard.name}}{% else %}Process #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
               {% endif %}
-              <li><a href="#ethical-considerations">Ethical considerations</a></li>
+              <li><a href="#ethical-considerations" class="smooth-scroll">Ethical considerations</a></li>
             </ul></li>
           <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
           <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>

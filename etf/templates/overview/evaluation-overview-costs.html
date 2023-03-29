@@ -38,13 +38,13 @@
             <a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}" class="active">Cost</a>
             <ul>
               {% if data.costs | length == 0 %}
-                <li><a href="#evaluation-costs">Evaluation costs</a></li>
+                <li><a href="#evaluation-costs" class="smooth-scroll">Evaluation costs</a></li>
               {% else %}
                 {% for cost in data.costs %}
-                  <li><a href="#evaluation-cost-{{loop.index}}">{% if cost.item_name %}{{cost.item_name}}{% else %}Evaluation cost #{{loop.index}}{% endif %}</a></li>
+                  <li><a href="#evaluation-cost-{{loop.index}}" class="smooth-scroll">{% if cost.item_name %}{{cost.item_name}}{% else %}Evaluation cost #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
               {% endif %}
-              <li><a href="#policy-costs-and-budget">Policy costs and budget</a></li>
+              <li><a href="#policy-costs-and-budget" class="smooth-scroll">Policy costs and budget</a></li>
             </ul>
           </li>
 
