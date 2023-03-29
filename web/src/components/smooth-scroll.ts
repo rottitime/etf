@@ -7,7 +7,11 @@ const setupSmoothScroll = () => {
       const href = (e.target as HTMLAnchorElement)?.getAttribute('href')
       const scollElement = href && document.querySelector<HTMLElement>(href)
 
-      !!scollElement && scrollToElement(scollElement, false, 16)
+      if (scollElement) {
+        scollElement.classList.remove('scrolled')
+        scrollToElement(scollElement, false, 16)
+        scollElement.classList.add('scrolled')
+      }
     })
   })
 }
