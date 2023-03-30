@@ -81,7 +81,7 @@ def generate_costs(evaluation):
                 evaluation_id=evaluation.id,
                 description=fake.text(),
                 earliest_spend_date=fake.date(),
-                latest_spend_date=fake.date()
+                latest_spend_date=fake.date(),
             )
         )
     models.EvaluationCost.objects.bulk_create(set_costs)
@@ -139,7 +139,7 @@ def generate_interventions(evaluation):
                 frequency_of_delivery=fake.text(),
                 tailoring=fake.text(),
                 resource_requirements=fake.text(),
-                geographical_information=fake.text()
+                geographical_information=fake.text(),
             )
         )
     models.Intervention.objects.bulk_create(set_interventions)
