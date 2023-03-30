@@ -46,7 +46,7 @@ def make_fake_user():
 
 
 def generate_topics():
-    num_topics = random.randint(1, 4)
+    num_topics = random.randint(0, 4)
     set_topics = set()
     for i in range(num_topics):
         set_topics.add(random.choice(choices.Topic.values))
@@ -54,7 +54,7 @@ def generate_topics():
 
 
 def generate_organisations():
-    num_organisations = random.randint(1, 4)
+    num_organisations = random.randint(0, 4)
     set_organisations = set()
     for i in range(num_organisations):
         set_organisations.add(random.choice(enums.Organisation.values))
@@ -62,7 +62,7 @@ def generate_organisations():
 
 
 def generate_evaluation_types():
-    num_types = random.randint(1, 2)
+    num_types = random.randint(0, 2)
     set_types = set()
     for i in range(num_types):
         set_types.add(random.choice(choices.EvaluationTypeOptions.values))
@@ -70,7 +70,7 @@ def generate_evaluation_types():
 
 
 def generate_costs(evaluation):
-    num_costs = random.randint(1, 4)
+    num_costs = random.randint(0, 4)
     set_costs = set()
     for i in range(num_costs):
         set_costs.add(
@@ -87,22 +87,14 @@ def generate_costs(evaluation):
     models.EvaluationCost.objects.bulk_create(set_costs)
 
 
-def generate_document_types():
-    num_types = random.randint(1, 3)
-    set_types = set()
-    for i in range(num_types):
-        set_types.add(random.choice(choices.DocumentType.values))
-    return list(set_types)
-
-
 def generate_documents(evaluation):
-    num_documents = random.randint(1, 4)
+    num_documents = random.randint(0, 4)
     set_documents = set()
     for i in range(num_documents):
         set_documents.add(
             models.Document(
                 description=fake.text(),
-                document_types=generate_document_types(),
+                document_types=random.choices(choices.DocumentType.values),
                 evaluation_id=evaluation.id,
                 document_type_other=fake.text(256),
                 title=fake.text(),
@@ -113,7 +105,7 @@ def generate_documents(evaluation):
 
 
 def generate_dates(evaluation):
-    num_dates = random.randint(1, 4)
+    num_dates = random.randint(0, 4)
     set_dates = set()
     for i in range(num_dates):
         set_dates.add(
@@ -129,7 +121,7 @@ def generate_dates(evaluation):
 
 
 def generate_interventions(evaluation):
-    num_interventions = random.randint(1, 4)
+    num_interventions = random.randint(0, 4)
     set_interventions = set()
     for i in range(num_interventions):
         set_interventions.add(
@@ -154,7 +146,7 @@ def generate_interventions(evaluation):
 
 
 def generate_outcome_measures(evaluation):
-    num_outcome_measures = random.randint(1, 4)
+    num_outcome_measures = random.randint(0, 4)
     set_outcome_measures = set()
     for i in range(num_outcome_measures):
         set_outcome_measures.add(
@@ -176,7 +168,7 @@ def generate_outcome_measures(evaluation):
 
 
 def generate_other_measures(evaluation):
-    num_other_measures = random.randint(1, 4)
+    num_other_measures = random.randint(0, 4)
     set_other_measures = set()
     for i in range(num_other_measures):
         set_other_measures.add(
@@ -193,7 +185,7 @@ def generate_other_measures(evaluation):
 
 
 def generate_processes_and_standards(evaluation):
-    num_processes_and_standards = random.randint(1, 4)
+    num_processes_and_standards = random.randint(0, 4)
     set_processes_and_standards = set()
     for i in range(num_processes_and_standards):
         set_processes_and_standards.add(
@@ -208,7 +200,7 @@ def generate_processes_and_standards(evaluation):
 
 
 def generate_links(evaluation):
-    num_links = random.randint(1, 4)
+    num_links = random.randint(0, 4)
     set_links = set()
     for i in range(num_links):
         set_links.add(
