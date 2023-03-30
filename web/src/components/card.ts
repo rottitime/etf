@@ -20,7 +20,6 @@ const setupCards = () => {
     header.setAttribute('aria-expanded', Boolean(open).toString())
     header.setAttribute('aria-controls', contentId)
     header.setAttribute('id', buttonId)
-    header.setAttribute('aria-controls', Boolean(open).toString())
 
     content.setAttribute('id', contentId)
     content.setAttribute('aria-labelledby', buttonId)
