@@ -116,7 +116,7 @@
           <tr>
             <th>Event Date</th>
             <td>
-              <div class="badge">{{date.date.strftime('%b %Y')}}</div>
+              <div class="badge">{% if date.date %}{{date.date.strftime('%b %Y')}}{% else %}No date provided{% endif %}</div>
             </td>
           </tr>
         </table>
