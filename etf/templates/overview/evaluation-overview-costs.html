@@ -68,9 +68,12 @@
         </div>
       {% else %}
         {% for cost in data.costs %}
-          <div class="card small" id="evaluation-cost-{{loop.index}}">
-            <h4 class="header4 highlight">{{ cost.item_name }}</h4>
-          <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+          <div class="card small with-accordion" id="evaluation-cost-{{loop.index}}">
+            <header>
+              <h4 class="header4 highlight">{{ cost.item_name }}</h4>
+            </header>
+          <div class="content">
+            <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
             <table>
               <tr>
                 <th>Description</th>
@@ -89,6 +92,7 @@
                 <td>{% if cost.latest_spend_date %}{{cost.latest_spend_date.strftime('%d %b %Y')}}{% else %}N/A{% endif %}</td>
               </tr>
             </table>
+          </div>
           </div>
         {% endfor %}
       {% endif %}
