@@ -11,6 +11,7 @@ import './style/components/menu-list.css'
 import './style/components/accordion.css'
 import './style/pages.css'
 import accordion from './components/accordion'
+import setupCard from './components/card'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
@@ -31,6 +32,7 @@ if (import.meta.env.MODE === 'development') {
 window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
   accordion()
+  setupCard()
   icon()
   setupSelect()
   setupFilters()
