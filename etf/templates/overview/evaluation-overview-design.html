@@ -64,10 +64,11 @@
           <tr>
             <th>Design name</th>
           {% if not data.evaluation.impact_eval_design_name %}
-            <td>N/A</td>
+            <td>Not answered</td>
           {% else %}
             <td>
-            {% for design_name in data.evaluation.impact_eval_design_name %}
+            {% set design_names = data.evaluation.get_impact_eval_design_name_display_name() %}
+            {% for design_name in design_names %}
               <p>{{design_name}}</p>
             {% endfor %}
             </td>
@@ -77,7 +78,7 @@
             <th>Justification for design</th>
             <td>
               {% if not data.evaluation.impact_eval_design_justification %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_justification}}
             {% endif %}
@@ -87,7 +88,7 @@
             <th>Description of planned design</th>
             <td>
               {% if not data.evaluation.impact_eval_design_description %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_description}}
             {% endif %}
@@ -97,7 +98,7 @@
             <th>Features to reflect real-world implementation</th>
             <td>
               {% if not data.evaluation.impact_eval_design_features %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_features}}
             {% endif %}
@@ -107,7 +108,7 @@
             <th>Equity</th>
             <td>
               {% if not data.evaluation.impact_eval_design_equity %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_equity}}
             {% endif %}
@@ -117,7 +118,7 @@
             <th>Assumptions</th>
             <td>
               {% if not data.evaluation.impact_eval_design_assumptions %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_assumptions}}
             {% endif %}
@@ -127,7 +128,7 @@
             <th>Limitations of approach</th>
             <td>
               {% if not data.evaluation.impact_eval_design_approach_limitations %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_design_approach_limitations}}
             {% endif %}
@@ -156,7 +157,7 @@
             <th>Economic evaluation</th>
             <td>
               {% if not data.evaluation.economic_eval_type %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_economic_eval_type_display_name()}}
             {% endif %}
@@ -166,7 +167,7 @@
             <th>Perspective: costs</th>
             <td>
               {% if not data.evaluation.perspective_costs %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.perspective_costs}}
             {% endif %}
@@ -176,7 +177,7 @@
             <th>Perspective: benefits</th>
             <td>
               {% if not data.evaluation.perspective_benefits %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.perspective_benefits}}
             {% endif %}
@@ -186,7 +187,7 @@
             <th>Monetisation approach(es)</th>
             <td>
               {% if not data.evaluation.monetisation_approaches %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.monetisation_approaches}}
             {% endif %}
@@ -196,7 +197,7 @@
             <th>Design details</th>
             <td>
               {% if not data.evaluation.economic_eval_design_details %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.economic_eval_design_details}}
             {% endif %}
@@ -212,7 +213,7 @@
             <th>Design type</th>
             <td>
               {% if not data.evaluation.other_eval_design_type %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_eval_design_type}}
             {% endif %}
@@ -222,7 +223,7 @@
             <th>Design details</th>
             <td>
               {% if not data.evaluation.other_eval_design_details %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_eval_design_details}}
             {% endif %}
@@ -238,7 +239,7 @@
             <th>Studied population including location</th>
             <td>
               {% if not data.evaluation.studied_population %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.studied_population}}
             {% endif %}
@@ -248,7 +249,7 @@
             <th>Eligibility criteria</th>
             <td>
               {% if not data.evaluation.eligibility_criteria %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.eligibility_criteria}}
             {% endif %}
@@ -258,7 +259,7 @@
             <th>Sample size</th>
             <td>
               {% if not data.evaluation.sample_size %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.sample_size}}
             {% endif %}
@@ -268,7 +269,7 @@
             <th>Sample size units</th>
             <td>
               {% if not data.evaluation.sample_size_units %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.sample_size_units}}
             {% endif %}
@@ -278,7 +279,7 @@
             <th>Sample size details</th>
             <td>
               {% if not data.evaluation.sample_size_details %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.sample_size_details}}
             {% endif %}
@@ -294,7 +295,7 @@
             <th>Process for recruitment</th>
             <td>
               {% if not data.evaluation.process_for_recruitment %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.process_for_recruitment}}
             {% endif %}
@@ -304,7 +305,7 @@
             <th>Recruitment schedule including date of first recruitment</th>
             <td>
               {% if not data.evaluation.recruitment_schedule %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.recruitment_schedule}}
             {% endif %}

@@ -84,19 +84,19 @@
             <table>
               <tr>
                 <th>Description</th>
-                <td>{% if cost.description %}{{cost.description}}{% else %}N/A{% endif %}</td>
+                <td>{% if cost.description %}{{cost.description}}{% else %}Not answered{% endif %}</td>
               </tr>
               <tr>
                 <th>Item cost (£)</th>
-                <td>{% if cost.item_cost %}{{cost.item_cost}}{% else %}N/A{% endif %}</td>
+                <td>{% if cost.item_cost %}{{cost.item_cost}}{% else %}Not answered{% endif %}</td>
               </tr>
               <tr>
                 <th>Earliest spend date</th>
-                <td>{% if cost.earliest_spend_date %}{{cost.earliest_spend_date.strftime('%d %b %Y')}}{% else %}N/A{% endif %}</td>
+                <td>{% if cost.earliest_spend_date %}{{cost.earliest_spend_date.strftime('%d %b %Y')}}{% else %}Not answered{% endif %}</td>
               </tr>
               <tr>
                 <th>Latest spend date</th>
-                <td>{% if cost.latest_spend_date %}{{cost.latest_spend_date.strftime('%d %b %Y')}}{% else %}N/A{% endif %}</td>
+                <td>{% if cost.latest_spend_date %}{{cost.latest_spend_date.strftime('%d %b %Y')}}{% else %}Not answered{% endif %}</td>
               </tr>
             </table>
           </div>

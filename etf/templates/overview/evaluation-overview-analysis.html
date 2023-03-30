@@ -73,7 +73,7 @@
             <th>Framework</th>
             <td>
               {% if not data.evaluation.impact_eval_framework %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_framework_display_name()}}
             {% endif %}
@@ -83,7 +83,7 @@
             <th>Analysis basis</th>
             <td>
               {% if not data.evaluation.impact_eval_basis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_basis_display_name()}}
             {% endif %}
@@ -93,7 +93,7 @@
             <th>Analysis set</th>
             <td>
               {% if not data.evaluation.impact_eval_analysis_set %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_analysis_set}}
             {% endif %}
@@ -103,7 +103,7 @@
             <th>Primary effect size measure type</th>
             <td>
               {% if not data.evaluation.impact_eval_effect_measure_type %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_effect_measure_type_display_name()}}
             {% endif %}
@@ -113,7 +113,7 @@
             <th>Primary effect size measure</th>
             <td>
               {% if not data.evaluation.impact_eval_primary_effect_size_measure %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_primary_effect_size_measure}}
             {% endif %}
@@ -123,7 +123,7 @@
             <th>Primary effect size measure interval</th>
             <td>
               {% if not data.evaluation.impact_eval_effect_measure_interval %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_effect_measure_interval_display_name()}}
             {% endif %}
@@ -133,7 +133,7 @@
             <th>Primary effect size measure description</th>
             <td>
               {% if not data.evaluation.impact_eval_primary_effect_size_desc %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_primary_effect_size_desc}}
             {% endif %}
@@ -143,7 +143,7 @@
             <th>Interpretation type</th>
             <td>
               {% if not data.evaluation.impact_eval_interpretation_type %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_interpretation_type_display_name()}}
             {% endif %}
@@ -153,7 +153,7 @@
             <th>Sensitivity analysis</th>
             <td>
               {% if not data.evaluation.impact_eval_sensitivity_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_sensitivity_analysis}}
             {% endif %}
@@ -163,7 +163,7 @@
             <th>Subgroup analysis</th>
             <td>
               {% if not data.evaluation.impact_eval_subgroup_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_subgroup_analysis}}
             {% endif %}
@@ -173,7 +173,7 @@
             <th>Missing data handling</th>
             <td>
               {% if not data.evaluation.impact_eval_missing_data_handling %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_missing_data_handling}}
             {% endif %}
@@ -183,7 +183,7 @@
             <th>Fidelity reporting</th>
             <td>
               {% if not data.evaluation.impact_eval_fidelity %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_fidelity_display_name()}}
             {% endif %}
@@ -193,7 +193,7 @@
             <th>Description of planned analysis</th>
             <td>
               {% if not data.evaluation.impact_eval_desc_planned_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_desc_planned_analysis}}
             {% endif %}
@@ -209,7 +209,7 @@
             <th>Description of planned analysis</th>
             <td>
               {% if not data.evaluation.process_eval_desc_planned_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.process_eval_desc_planned_analysis}}
             {% endif %}
@@ -225,7 +225,7 @@
             <th>Description of planned analysis</th>
             <td>
               {% if not data.evaluation.economic_eval_desc_planned_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.economic_eval_desc_planned_analysis}}
             {% endif %}
@@ -241,7 +241,7 @@
             <th>Description of planned analysis</th>
             <td>
               {% if not data.evaluation.other_eval_desc_planned_analysis %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_eval_desc_planned_analysis}}
             {% endif %}
@@ -264,13 +264,13 @@
             <div class="content">
               <table>
                 <tr>
-                  <th>Conformity</th>
-                  <td>{% if processes_and_standard.conformity %}{{processes_and_standard.get_conformity_display_name()}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Description</th>
-                  <td>{% if processes_and_standard.description %}{{processes_and_standard.description}}{% else %}N/A{% endif %}</td>
-                </tr>
+                <th>Conformity</th>
+                <td>{% if processes_and_standard.conformity %}{{processes_and_standard.get_conformity_display_name()}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td>{% if processes_and_standard.description %}{{processes_and_standard.description}}{% else %}Not answered{% endif %}</td>
+              </tr>
               </table>
             </div>
           </div>
@@ -284,7 +284,7 @@
             <th>Ethical committee approval</th>
             <td>
               {% if not data.evaluation.ethics_committee_approval %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_ethics_committee_approval_display_name()}}
             {% endif %}
@@ -294,7 +294,7 @@
             <th>Ethical committee details</th>
             <td>
               {% if not data.evaluation.ethics_committee_details %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.ethics_committee_details}}
             {% endif %}
@@ -304,7 +304,7 @@
             <th>Ethical state of study given existing evidence base</th>
             <td>
               {% if not data.evaluation.ethical_state_given_existing_evidence_base %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.ethical_state_given_existing_evidence_base}}
             {% endif %}
@@ -314,7 +314,7 @@
             <th>Ethical state of study given existing evidence base</th>
             <td>
               {% if not data.evaluation.ethical_state_given_existing_evidence_base %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.ethical_state_given_existing_evidence_base}}
             {% endif %}
@@ -324,7 +324,7 @@
             <th>Risks to participants</th>
             <td>
               {% if not data.evaluation.risks_to_participants %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.risks_to_participants}}
             {% endif %}
@@ -334,7 +334,7 @@
             <th>Risks to study team</th>
             <td>
               {% if not data.evaluation.risks_to_study_team %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.risks_to_study_team}}
             {% endif %}
@@ -344,7 +344,7 @@
             <th>Participant involvement</th>
             <td>
               {% if not data.evaluation.participant_involvement %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.participant_involvement}}
             {% endif %}
@@ -354,7 +354,7 @@
             <th>Participant consent</th>
             <td>
               {% if not data.evaluation.participant_consent %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.participant_consent}}
             {% endif %}
@@ -364,7 +364,7 @@
             <th>Participant information</th>
             <td>
               {% if not data.evaluation.participant_information %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.participant_information}}
             {% endif %}
@@ -374,7 +374,7 @@
             <th>Participant payment</th>
             <td>
               {% if not data.evaluation.participant_payment %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.participant_payment}}
             {% endif %}
@@ -384,7 +384,7 @@
             <th>Confidentiality and personal data</th>
             <td>
               {% if not data.evaluation.confidentiality_and_personal_data %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.confidentiality_and_personal_data}}
             {% endif %}
@@ -394,7 +394,7 @@
             <th>Breaking confidentiality</th>
             <td>
               {% if not data.evaluation.breaking_confidentiality %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.breaking_confidentiality}}
             {% endif %}
@@ -404,7 +404,7 @@
             <th>Other ethical information</th>
             <td>
               {% if not data.evaluation.other_ethical_information %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_ethical_information}}
             {% endif %}

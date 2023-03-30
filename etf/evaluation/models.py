@@ -274,6 +274,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_ethics_committee_approval_display_name(self):
         return choices.YesNo.mapping[self.ethics_committee_approval]
 
+    def get_impact_eval_design_name_display_name(self):
+        return [name[1] for name in choices.ImpactEvalDesign.choices if name[0] in self.impact_eval_design_name]
+
     def __str__(self):
         return f"{self.id} : {self.title}"
 
@@ -587,7 +590,9 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     _name_field = "event_date_name"
 
     def get_event_date_name_display_name(self):
-        return choices.EventDateOption.mapping[self.event_date_name]
+        if self.event_date_name in choices.EventDateOption.values:
+            return choices.EventDateOption.mapping[self.event_date_name]
+        return self.event_date_name
 
     def get_search_text(self):
         event_date_type = [value[1] for value in choices.EventDateType.choices if value[0] == self.event_date_type]

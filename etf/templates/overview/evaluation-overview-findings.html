@@ -63,7 +63,7 @@
             <th>Comparison</th>
             <td>
               {% if not data.evaluation.impact_eval_comparison %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_comparison}}
             {% endif %}
@@ -73,7 +73,7 @@
             <th>Outcome</th>
             <td>
               {% if not data.evaluation.impact_eval_outcome %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_outcome}}
             {% endif %}
@@ -83,7 +83,7 @@
             <th>Interpretation</th>
             <td>
               {% if not data.evaluation.impact_eval_interpretation %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.get_impact_eval_interpretation_display_name()}}
             {% endif %}
@@ -93,7 +93,7 @@
             <th>Point estimate of difference</th>
             <td>
               {% if not data.evaluation.impact_eval_point_estimate_diff %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_point_estimate_diff}}
             {% endif %}
@@ -103,7 +103,7 @@
             <th>Lower uncertainty bound</th>
             <td>
               {% if not data.evaluation.impact_eval_lower_uncertainty %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_lower_uncertainty}}
             {% endif %}
@@ -113,7 +113,7 @@
             <th>Upper uncertainty bound</th>
             <td>
               {% if not data.evaluation.impact_eval_upper_uncertainty %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.impact_eval_upper_uncertainty}}
             {% endif %}
@@ -129,7 +129,7 @@
             <th>Summary findings</th>
             <td>
               {% if not data.evaluation.process_eval_summary_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.process_eval_summary_findings}}
             {% endif %}
@@ -139,7 +139,7 @@
             <th>Findings</th>
             <td>
               {% if not data.evaluation.process_eval_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.process_eval_findings}}
             {% endif %}
@@ -155,7 +155,7 @@
             <th>Summary findings</th>
             <td>
               {% if not data.evaluation.economic_eval_summary_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.economic_eval_summary_findings}}
             {% endif %}
@@ -165,7 +165,7 @@
             <th>Findings</th>
             <td>
               {% if not data.evaluation.economic_eval_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.economic_eval_findings}}
             {% endif %}
@@ -181,7 +181,7 @@
             <th>Summary findings</th>
             <td>
               {% if not data.evaluation.other_eval_summary_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_eval_summary_findings}}
             {% endif %}
@@ -191,7 +191,7 @@
             <th>Findings</th>
             <td>
               {% if not data.evaluation.other_eval_findings %}
-              N/A
+              Not answered
             {% else %}
               {{data.evaluation.other_eval_findings}}
             {% endif %}
