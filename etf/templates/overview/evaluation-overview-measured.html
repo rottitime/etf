@@ -37,6 +37,9 @@
               {% if data.interventions | length == 0 %}
                 <li><a href="#interventions" class="smooth-scroll">Interventions</a></li>
               {% else %}
+                <ul>
+                  <h3 class="body-text small mb-0">Interventions:</h3>
+                </ul>
                 {% for intervention in data.interventions %}
                   <li><a href="#intervention-{{loop.index}}" class="smooth-scroll">{% if intervention.name %}{{intervention.name}}{% else %}Intervention #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
@@ -44,6 +47,9 @@
               {% if data.outcome_measures | length == 0 %}
                 <li><a href="#outcome-measures" class="smooth-scroll">Outcome measures</a></li>
               {% else %}
+                <ul>
+                  <h3 class="body-text small mb-0">Outcome measures:</h3>
+                </ul>
                 {% for outcome_measure in data.outcome_measures %}
                   <li><a href="#outcome-measure-{{loop.index}}" class="smooth-scroll">{% if outcome_measure.name %}{{outcome_measure.name}}{% else %}Outcome measure #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
@@ -51,6 +57,9 @@
               {% if data.other_measures | length == 0 %}
                 <li><a href="#other-measures" class="smooth-scroll">Other measures</a></li>
               {% else %}
+                <ul>
+                  <h3 class="body-text small mb-0">Other measures:</h3>
+                </ul>
                 {% for other_measure in data.other_measures %}
                   <li><a href="#other-measure-{{loop.index}}" class="smooth-scroll">{% if other_measure.name %}{{other_measure.name}}{% else %}Other measure #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}

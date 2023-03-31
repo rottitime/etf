@@ -42,6 +42,9 @@
               {% if data.processes_and_standards | length == 0 %}
                 <li><a href="#no-processes" class="smooth-scroll">Processes</a></li>
               {% else %}
+                <ul>
+                  <h3 class="body-text small mb-0">Processes and standards:</h3>
+                </ul>
                 {% for processes_and_standard in data.processes_and_standards %}
                   <li><a href="#process-standard-{{loop.index}}" class="smooth-scroll">{% if processes_and_standard.name %}{{processes_and_standard.name}}{% else %}Process #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
