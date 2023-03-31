@@ -40,9 +40,9 @@
               {% if data.costs | length == 0 %}
                 <li><a href="#evaluation-costs" class="smooth-scroll">Evaluation costs</a></li>
               {% else %}
-                <ul>
-                  <h3 class="body-text small mb-0">Evaluation costs:</h3>
                 </ul>
+                  <h3 class="body-text small mb-0">Evaluation costs:</h3>
+                <ul>
                 {% for cost in data.costs %}
                   <li><a href="#evaluation-cost-{{loop.index}}" class="smooth-scroll">{% if cost.item_name %}{{cost.item_name}}{% else %}Evaluation cost #{{loop.index}}{% endif %}</a></li>
                 {% endfor %}
