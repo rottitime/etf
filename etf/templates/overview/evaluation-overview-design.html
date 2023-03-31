@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -30,10 +30,10 @@
       <nav class="menu-list sticky">
 
         <ul>
-          <li><a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}">Overview</a></li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured?</a></li>
+          <li><a href="{{url('evaluation-summary-overview', data.evaluation.id)}}">Overview</a></li>
+          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}">What is measured?</a></li>
           <li>
-            <a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}" class="active">Evaluation design</a>
+            <a href="{{url('evaluation-summary-design', data.evaluation.id)}}" class="active">Evaluation design</a>
             <ul>
               <li><a href="#impact-evaluation-design" class="smooth-scroll">Impact evaluation design</a></li>
               <li><a href="#process-evaluation-design" class="smooth-scroll">Process evaluation design</a></li>
@@ -43,9 +43,9 @@
               <li><a href="#participant-recruitment" class="smooth-scroll">Participant recruitment</a></li>
             </ul>
           </li>
-          <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
-          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
-          <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>
+          <li><a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}">Analysis</a></li>
+          <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-cost', data.evaluation.id)}}">Cost</a></li>
 
 
         </ul>
@@ -68,8 +68,7 @@
             <td>Not answered</td>
           {% else %}
             <td>
-            {% set design_names = data.evaluation.get_impact_eval_design_name_display_name() %}
-            {% for design_name in design_names %}
+            {% for design_name in data.evaluation.get_impact_eval_design_name_display_name() %}
               <p>{{design_name}}</p>
             {% endfor %}
             </td>
@@ -78,61 +77,37 @@
           <tr>
             <th>Justification for design</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_justification %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_justification}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_justification and data.evaluation.impact_eval_design_justification or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Description of planned design</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_description %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_description}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_description and data.evaluation.impact_eval_design_description or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Features to reflect real-world implementation</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_features %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_features}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_features and data.evaluation.impact_eval_design_features or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Equity</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_equity %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_equity}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_equity and data.evaluation.impact_eval_design_equity or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Assumptions</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_assumptions %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_assumptions}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_assumptions and data.evaluation.impact_eval_design_assumptions or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Limitations of approach</th>
             <td>
-              {% if not data.evaluation.impact_eval_design_approach_limitations %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_design_approach_limitations}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_design_approach_limitations and data.evaluation.impact_eval_design_approach_limitations or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -157,51 +132,31 @@
           <tr>
             <th>Economic evaluation</th>
             <td>
-              {% if not data.evaluation.economic_eval_type %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_economic_eval_type_display_name()}}
-            {% endif %}
+              {{ data.evaluation.economic_eval_type and data.evaluation.get_economic_eval_type_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Perspective: costs</th>
             <td>
-              {% if not data.evaluation.perspective_costs %}
-              Not answered
-            {% else %}
-              {{data.evaluation.perspective_costs}}
-            {% endif %}
+              {{ data.evaluation.perspective_costs and data.evaluation.perspective_costs or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Perspective: benefits</th>
             <td>
-              {% if not data.evaluation.perspective_benefits %}
-              Not answered
-            {% else %}
-              {{data.evaluation.perspective_benefits}}
-            {% endif %}
+              {{ data.evaluation.perspective_benefits and data.evaluation.perspective_benefits or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Monetisation approach(es)</th>
             <td>
-              {% if not data.evaluation.monetisation_approaches %}
-              Not answered
-            {% else %}
-              {{data.evaluation.monetisation_approaches}}
-            {% endif %}
+              {{ data.evaluation.monetisation_approaches and data.evaluation.monetisation_approaches or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Design details</th>
             <td>
-              {% if not data.evaluation.economic_eval_design_details %}
-              Not answered
-            {% else %}
-              {{data.evaluation.economic_eval_design_details}}
-            {% endif %}
+              {{ data.evaluation.economic_eval_design_details and data.evaluation.economic_eval_design_details or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -213,21 +168,13 @@
           <tr>
             <th>Design type</th>
             <td>
-              {% if not data.evaluation.other_eval_design_type %}
-              Not answered
-            {% else %}
-              {{data.evaluation.other_eval_design_type}}
-            {% endif %}
+              {{ data.evaluation.other_eval_design_type and data.evaluation.other_eval_design_type or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Design details</th>
             <td>
-              {% if not data.evaluation.other_eval_design_details %}
-              Not answered
-            {% else %}
-              {{data.evaluation.other_eval_design_details}}
-            {% endif %}
+              {{ data.evaluation.other_eval_design_details and data.evaluation.other_eval_design_details or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -239,51 +186,31 @@
           <tr>
             <th>Studied population including location</th>
             <td>
-              {% if not data.evaluation.studied_population %}
-              Not answered
-            {% else %}
-              {{data.evaluation.studied_population}}
-            {% endif %}
+              {{ data.evaluation.studied_population and data.evaluation.studied_population or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Eligibility criteria</th>
             <td>
-              {% if not data.evaluation.eligibility_criteria %}
-              Not answered
-            {% else %}
-              {{data.evaluation.eligibility_criteria}}
-            {% endif %}
+              {{ data.evaluation.eligibility_criteria and data.evaluation.eligibility_criteria or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Sample size</th>
             <td>
-              {% if not data.evaluation.sample_size %}
-              Not answered
-            {% else %}
-              {{data.evaluation.sample_size}}
-            {% endif %}
+              {{ data.evaluation.sample_size and data.evaluation.sample_size or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Sample size units</th>
             <td>
-              {% if not data.evaluation.sample_size_units %}
-              Not answered
-            {% else %}
-              {{data.evaluation.sample_size_units}}
-            {% endif %}
+              {{ data.evaluation.sample_size_units and data.evaluation.sample_size_units or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Sample size details</th>
             <td>
-              {% if not data.evaluation.sample_size_details %}
-              Not answered
-            {% else %}
-              {{data.evaluation.sample_size_details}}
-            {% endif %}
+              {{ data.evaluation.sample_size_details and data.evaluation.sample_size_details or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -295,21 +222,13 @@
           <tr>
             <th>Process for recruitment</th>
             <td>
-              {% if not data.evaluation.process_for_recruitment %}
-              Not answered
-            {% else %}
-              {{data.evaluation.process_for_recruitment}}
-            {% endif %}
+              {{ data.evaluation.process_for_recruitment and data.evaluation.process_for_recruitment or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Recruitment schedule including date of first recruitment</th>
             <td>
-              {% if not data.evaluation.recruitment_schedule %}
-              Not answered
-            {% else %}
-              {{data.evaluation.recruitment_schedule}}
-            {% endif %}
+              {{ data.evaluation.recruitment_schedule and data.evaluation.recruitment_schedule or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -317,13 +236,13 @@
 
 
       <footer class="center">
-        <a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}" class="bttn-primary">Next: Analysis</a>
+        <a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}" class="bttn-primary">Next: Analysis</a>
       </footer>
 
     <div class="wrapper">
 
     {% if user_can_edit %}
-      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", data.id)}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
   </div>

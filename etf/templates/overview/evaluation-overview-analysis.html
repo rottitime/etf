@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -30,11 +30,11 @@
       <nav class="menu-list sticky">
 
         <ul>
-          <li><a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}">Overview</a></li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured?</a></li>
-          <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
+          <li><a href="{{url('evaluation-summary-overview', data.evaluation.id)}}">Overview</a></li>
+          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}">What is measured?</a></li>
+          <li><a href="{{url('evaluation-summary-design', data.evaluation.id)}}">Evaluation design</a></li>
           <li>
-            <a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}" class="active">Analysis</a>
+            <a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}" class="active">Analysis</a>
             <ul>
               <li><a href="#impact-evaluation-analysis" class="smooth-scroll">Impact evaluation analysis</a></li>
               <li><a href="#process-evaluation-analysis" class="smooth-scroll">Process evaluation analysis</a></li>
@@ -52,8 +52,8 @@
               {% endif %}
               <li><a href="#ethical-considerations" class="smooth-scroll">Ethical considerations</a></li>
             </ul></li>
-          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
-          <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>
+          <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-cost', data.evaluation.id)}}">Cost</a></li>
 
 
         </ul>
@@ -73,131 +73,79 @@
           <tr>
             <th>Framework</th>
             <td>
-              {% if not data.evaluation.impact_eval_framework %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_framework_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_framework and data.evaluation.get_impact_eval_framework_display_name() or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Analysis basis</th>
             <td>
-              {% if not data.evaluation.impact_eval_basis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_basis_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_basis and data.evaluation.get_impact_eval_basis_display_name() or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Analysis set</th>
             <td>
-              {% if not data.evaluation.impact_eval_analysis_set %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_analysis_set}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_analysis_set and data.evaluation.impact_eval_analysis_set or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Primary effect size measure type</th>
             <td>
-              {% if not data.evaluation.impact_eval_effect_measure_type %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_effect_measure_type_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_effect_measure_type and data.evaluation.get_impact_eval_effect_measure_type_display_name() or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Primary effect size measure</th>
             <td>
-              {% if not data.evaluation.impact_eval_primary_effect_size_measure %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_primary_effect_size_measure}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_primary_effect_size_measure and data.evaluation.impact_eval_primary_effect_size_measure or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Primary effect size measure interval</th>
             <td>
-              {% if not data.evaluation.impact_eval_effect_measure_interval %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_effect_measure_interval_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_effect_measure_interval and data.evaluation.get_impact_eval_effect_measure_interval_display_name() or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Primary effect size measure description</th>
             <td>
-              {% if not data.evaluation.impact_eval_primary_effect_size_desc %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_primary_effect_size_desc}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_primary_effect_size_desc and data.evaluation.impact_eval_primary_effect_size_desc or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Interpretation type</th>
             <td>
-              {% if not data.evaluation.impact_eval_interpretation_type %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_interpretation_type_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_interpretation_type and data.evaluation.get_impact_eval_interpretation_type_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Sensitivity analysis</th>
             <td>
-              {% if not data.evaluation.impact_eval_sensitivity_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_sensitivity_analysis}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_sensitivity_analysis and data.evaluation.impact_eval_sensitivity_analysis or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Subgroup analysis</th>
             <td>
-              {% if not data.evaluation.impact_eval_subgroup_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_subgroup_analysis}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_subgroup_analysis and data.evaluation.impact_eval_subgroup_analysis or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Missing data handling</th>
             <td>
-              {% if not data.evaluation.impact_eval_missing_data_handling %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_missing_data_handling}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_missing_data_handling and data.evaluation.impact_eval_missing_data_handling or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Fidelity reporting</th>
             <td>
-              {% if not data.evaluation.impact_eval_fidelity %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_impact_eval_fidelity_display_name()}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_fidelity and data.evaluation.get_impact_eval_fidelity_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Description of planned analysis</th>
             <td>
-              {% if not data.evaluation.impact_eval_desc_planned_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.impact_eval_desc_planned_analysis}}
-            {% endif %}
+              {{ data.evaluation.impact_eval_desc_planned_analysis and data.evaluation.impact_eval_desc_planned_analysis or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -209,11 +157,7 @@
           <tr>
             <th>Description of planned analysis</th>
             <td>
-              {% if not data.evaluation.process_eval_desc_planned_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.process_eval_desc_planned_analysis}}
-            {% endif %}
+              {{ data.evaluation.process_eval_desc_planned_analysis and data.evaluation.process_eval_desc_planned_analysis or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -225,11 +169,7 @@
           <tr>
             <th>Description of planned analysis</th>
             <td>
-              {% if not data.evaluation.economic_eval_desc_planned_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.economic_eval_desc_planned_analysis}}
-            {% endif %}
+              {{ data.evaluation.economic_eval_desc_planned_analysis and data.evaluation.economic_eval_desc_planned_analysis or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -241,11 +181,7 @@
           <tr>
             <th>Description of planned analysis</th>
             <td>
-              {% if not data.evaluation.other_eval_desc_planned_analysis %}
-              Not answered
-            {% else %}
-              {{data.evaluation.other_eval_desc_planned_analysis}}
-            {% endif %}
+              {{ data.evaluation.other_eval_desc_planned_analysis and data.evaluation.other_eval_desc_planned_analysis or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -266,11 +202,15 @@
               <table>
                 <tr>
                 <th>Conformity</th>
-                <td>{% if processes_and_standard.conformity %}{{processes_and_standard.get_conformity_display_name()}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ processes_and_standard.confirmity and processes_and_standard.get_conformity_display_name() or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Description</th>
-                <td>{% if processes_and_standard.description %}{{processes_and_standard.description}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ processes_and_standard.description and processes_and_standard.description or "Not answered" }}
+                </td>
               </tr>
               </table>
             </div>
@@ -284,144 +224,86 @@
           <tr>
             <th>Ethical committee approval</th>
             <td>
-              {% if not data.evaluation.ethics_committee_approval %}
-              Not answered
-            {% else %}
-              {{data.evaluation.get_ethics_committee_approval_display_name()}}
-            {% endif %}
+              {{ data.evaluation.ethics_committee_approval and data.evaluation.get_ethics_committee_approval_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Ethical committee details</th>
             <td>
-              {% if not data.evaluation.ethics_committee_details %}
-              Not answered
-            {% else %}
-              {{data.evaluation.ethics_committee_details}}
-            {% endif %}
+              {{ data.evaluation.ethics_committee_details and data.evaluation.ethics_committee_details or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Ethical state of study given existing evidence base</th>
             <td>
-              {% if not data.evaluation.ethical_state_given_existing_evidence_base %}
-              Not answered
-            {% else %}
-              {{data.evaluation.ethical_state_given_existing_evidence_base}}
-            {% endif %}
-            </td>
-          </tr>
-        <tr>
-            <th>Ethical state of study given existing evidence base</th>
-            <td>
-              {% if not data.evaluation.ethical_state_given_existing_evidence_base %}
-              Not answered
-            {% else %}
-              {{data.evaluation.ethical_state_given_existing_evidence_base}}
-            {% endif %}
+              {{ data.evaluation.ethical_state_given_existing_evidence_base and data.evaluation.ethical_state_given_existing_evidence_base or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Risks to participants</th>
             <td>
-              {% if not data.evaluation.risks_to_participants %}
-              Not answered
-            {% else %}
-              {{data.evaluation.risks_to_participants}}
-            {% endif %}
+              {{ data.evaluation.risks_to_participants and data.evaluation.risks_to_participants or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Risks to study team</th>
             <td>
-              {% if not data.evaluation.risks_to_study_team %}
-              Not answered
-            {% else %}
-              {{data.evaluation.risks_to_study_team}}
-            {% endif %}
+              {{ data.evaluation.risks_to_study_team and data.evaluation.risks_to_study_team or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Participant involvement</th>
             <td>
-              {% if not data.evaluation.participant_involvement %}
-              Not answered
-            {% else %}
-              {{data.evaluation.participant_involvement}}
-            {% endif %}
+              {{ data.evaluation.participant_involvement and data.evaluation.participant_involvement or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Participant consent</th>
             <td>
-              {% if not data.evaluation.participant_consent %}
-              Not answered
-            {% else %}
-              {{data.evaluation.participant_consent}}
-            {% endif %}
+              {{ data.evaluation.participant_consent and data.evaluation.participant_consent or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Participant information</th>
             <td>
-              {% if not data.evaluation.participant_information %}
-              Not answered
-            {% else %}
-              {{data.evaluation.participant_information}}
-            {% endif %}
+              {{ data.evaluation.participant_information and data.evaluation.participant_information or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Participant payment</th>
             <td>
-              {% if not data.evaluation.participant_payment %}
-              Not answered
-            {% else %}
-              {{data.evaluation.participant_payment}}
-            {% endif %}
+              {{ data.evaluation.participant_payment and data.evaluation.participant_payment or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Confidentiality and personal data</th>
             <td>
-              {% if not data.evaluation.confidentiality_and_personal_data %}
-              Not answered
-            {% else %}
-              {{data.evaluation.confidentiality_and_personal_data}}
-            {% endif %}
+              {{ data.evaluation.confidentiality_and_personal_data and data.evaluation.confidentiality_and_personal_data or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Breaking confidentiality</th>
             <td>
-              {% if not data.evaluation.breaking_confidentiality %}
-              Not answered
-            {% else %}
-              {{data.evaluation.breaking_confidentiality}}
-            {% endif %}
+              {{ data.evaluation.breaking_confidentiality and data.evaluation.breaking_confidentiality or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Other ethical information</th>
             <td>
-              {% if not data.evaluation.other_ethical_information %}
-              Not answered
-            {% else %}
-              {{data.evaluation.other_ethical_information}}
-            {% endif %}
+              {{ data.evaluation.other_ethical_information and data.evaluation.other_ethical_information or "Not answered" }}
             </td>
           </tr>
         </table>
       </div>
 
       <footer class="center">
-        <a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}" class="bttn-primary">Next: Findings</a>
+        <a href="{{url('evaluation-summary-findings', data.evaluation.id)}}" class="bttn-primary">Next: Findings</a>
       </footer>
 
     <div class="wrapper">
 
     {% if user_can_edit %}
-      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", data.id)}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
   </div>

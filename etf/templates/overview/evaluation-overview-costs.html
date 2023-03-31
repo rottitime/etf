@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -30,13 +30,13 @@
       <nav class="menu-list sticky">
 
         <ul>
-          <li><a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}">Overview</a></li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured?</a></li>
-          <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
-          <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
-          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-overview', data.evaluation.id)}}">Overview</a></li>
+          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}">What is measured?</a></li>
+          <li><a href="{{url('evaluation-summary-design', data.evaluation.id)}}">Evaluation design</a></li>
+          <li><a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}">Analysis</a></li>
+          <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
           <li>
-            <a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}" class="active">Cost</a>
+            <a href="{{url('evaluation-summary-cost', data.evaluation.id)}}" class="active">Cost</a>
             <ul>
               {% if data.costs | length == 0 %}
                 <li><a href="#evaluation-costs" class="smooth-scroll">Evaluation costs</a></li>
@@ -85,19 +85,27 @@
             <table>
               <tr>
                 <th>Description</th>
-                <td>{% if cost.description %}{{cost.description}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ cost.description and cost.description or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Item cost (£)</th>
-                <td>{% if cost.item_cost %}{{cost.item_cost}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ cost.item_cost and cost.item_cost or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Earliest spend date</th>
-                <td>{% if cost.earliest_spend_date %}{{cost.earliest_spend_date.strftime('%d %b %Y')}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ cost.earliest_spend_date and cost.earliest_spend_date.strftime('%d %b %Y') or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Latest spend date</th>
-                <td>{% if cost.latest_spend_date %}{{cost.latest_spend_date.strftime('%d %b %Y')}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ cost.latest_spend_date and cost.latest_spend_date.strftime('%d %b %Y') or "Not answered" }}
+                </td>
               </tr>
             </table>
           </div>
@@ -118,7 +126,7 @@
     <div class="wrapper">
 
     {% if user_can_edit %}
-      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", data.id)}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
   </div>
