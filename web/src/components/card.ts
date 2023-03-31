@@ -12,7 +12,8 @@ const setupCards = () => {
     const id = shortUUID.generate()
     const contentId = `content-${id}`
     const buttonId = `button-${id}`
-    const open = true
+    const ariaExpanded = header?.getAttribute('aria-expanded')
+    const open = ariaExpanded === 'true' || ariaExpanded === null
 
     if (!header || !content) return
 

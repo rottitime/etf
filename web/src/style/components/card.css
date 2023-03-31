@@ -11,7 +11,7 @@
       overflow: hidden;
       opacity: 1;
     }
-    & header {
+    & header[aria-controls] {
       display: flex;
       justify-content: space-between;
       cursor: pointer;
@@ -27,7 +27,8 @@
         transition: transform ease-in-out var(--animation-speed);
       }
 
-      &[aria-expanded='false'] {
+      /* [aria-controls] to minimise .content only if JS enabled */
+      &[aria-expanded='false'][aria-controls] {
         &:after {
           transform: rotate(0deg);
         }
