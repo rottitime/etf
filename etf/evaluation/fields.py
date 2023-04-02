@@ -3,9 +3,9 @@ from collections import defaultdict
 description_help_text = defaultdict(
     lambda: "",
     {
-        "brief_description": "Please provide one or two sentences to describe the evaluation.",
-        "topics": "Please select one or more topics to associate with this evaluation.",
-        "organisations": "Please select the organisations responsible for this evaluation.",
+        "brief_description": "One or two sentences describing the evaluation.",
+        "topics": "One or more topics associated with this evaluation.",
+        "organisations": "The organisation(s) responsible for this evaluation.",
     },
 )
 
@@ -27,7 +27,7 @@ economic_design_help_text = defaultdict(
         "economic_eval_type": "Type of economic evaluation to be conducted.",
         "perspective_costs": "Which costs are to be included in the economic evaluation?",
         "perspective_benefits": "Which benefits are to be included in the economic evaluation?",
-        "monetisation_approaches": "Approaches used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
+        "monetisation_approaches": "Approach(es) used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
         "economic_eval_design_details": "Details of the design of the economic evaluation.",
     },
 )
@@ -36,8 +36,8 @@ economic_design_help_text = defaultdict(
 economic_findings_help_text = defaultdict(
     lambda: "",
     {
-        "economic_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
-        "economic_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+        "economic_eval_summary_findings": "Short description (one to two sentences) of the findings related to the evaluation.",
+        "economic_eval_findings": "Longer description of the findings related to the evaluation, as required.",
     },
 )
 
@@ -210,7 +210,7 @@ studied_population_help_text = defaultdict(
     {
         "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
         "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
-        "sample_size": "The overall sample size of the evaluation",
+        "sample_size": "The overall sample size of the evaluation.",
         "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
     },
 )
@@ -269,7 +269,7 @@ document_page_tooltip_text = defaultdict(
     lambda: [],
     {
         "document_title": [
-            "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, eg 'Analysis plan for the evaluation of XYZ interventions'."
+            "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, e.g., 'Analysis plan for the evaluation of XYZ interventions'."
         ],
         "document_types": [
             "Information on an evaluation might be contained in one document or split across several. For example, in the planning stage a single document might contain both a study protocol and the analysis plan. And in reporting findings, technical details could be included in a separate document, but they could equally be included as appendices in a main report document.",
@@ -294,17 +294,19 @@ economic_design_tooltip_text = defaultdict(
     {
         "economic_eval_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
-            "In cost-minimisation analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
-            "In cost-effectiveness analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
-            "In cost-benefit analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
-            "In cost-utility analysis, various outcomes are converted to a measure of ‘utility’, allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+            "In <strong>cost-minimisation analysis</strong>, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+            "In <strong>cost-effectiveness analysis</strong>, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+            "In <strong>cost-benefit analysis</strong>, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+            "In <strong>cost-utility analysis</strong>, various outcomes are converted to a measure of ‘utility’, allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
             "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s).",
         ],
         "perspective_costs": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions.",
+            "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "perspective_benefits": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions.",
+            "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "monetisation_approaches": [
             "Some costs and benefits are naturally expressed in monetary terms. The natural measures for some others will not be in monetary terms, but may need to be monetised to fully include them in an economic evaluation. Provide details of any approaches used to monetise values that are not inherently expressed in monetary terms.",
