@@ -2,7 +2,8 @@ import './style/vars.css'
 import './style/animation.css'
 import './style/base.css'
 import './style/buttons.css'
-import './style/template.css'
+import './style/template/index.css'
+import './style/template/main-header.css'
 import './style/forms/index.css'
 import './style/forms/checkbox.css'
 import './style/forms/radio.css'
@@ -17,6 +18,7 @@ import icon from './components/icon'
 import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
+import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -32,10 +34,24 @@ if (import.meta.env.MODE === 'development') {
 
 window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
+
   accordion()
   setupCard()
   icon()
   setupSelect()
   setupFilters()
   setupSmoothScroll()
+  setupMobileMenu()
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+  const isTablet = window.matchMedia('(min-width: 800px)')
+
+  const onViewportChange = () => {
+    if (isTablet.matches) {
+      mobileMenuCleanup()
+    }
+  }
+
+  isTablet.addEventListener('change', onViewportChange)
 })

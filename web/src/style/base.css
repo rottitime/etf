@@ -59,6 +59,18 @@ h5,
 
 body {
   font-family: 'Poppins', sans-serif;
+  &.darken {
+    overflow: hidden;
+    &:after {
+      content: '';
+      display: block;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+    }
+  }
 }
 
 body,

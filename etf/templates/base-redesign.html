@@ -4,8 +4,7 @@
    <head>
       <meta charset="UTF-8"/>
       <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Evaluation Registry</title>
       <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
       <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
@@ -22,8 +21,16 @@
               {{macros.crest_svg()}}
                <h2 class="body-text">Evaluation Registry</h2>
             </a>
+
             {% if request.user.is_authenticated %}
-            <nav class="menu-list horizontal">
+
+       
+            <button id="main-header-mobile-menu">
+               <div></div>
+             </button>
+            
+
+            <nav class="menu-list horizontal" id="main-header-menu">
             <a href="{{url('search')}}" class={% if request.path==url('search') %}active{% endif %}>
               {{macros.search_svg()}}
               Evaluation search

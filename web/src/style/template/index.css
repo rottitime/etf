@@ -1,40 +1,4 @@
-#main-header {
-  background-color: #fff;
-  border-bottom: 4px solid var(--color-pink);
-  padding: 16px 0;
-  margin-bottom: var(--spacing-24);
-
-  & .container {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  & .menu-list {
-    gap: 0;
-    & svg {
-      font-size: inherit;
-      margin-right: var(--spacing-8);
-    }
-  }
-
-  & .logo {
-    border-left: 2px solid var(--color-pink);
-    color: var(--text-color);
-    padding-left: 8px;
-    display: inline-flex;
-    align-items: center;
-
-    & svg {
-      font-size: 40px;
-      margin-right: 8px;
-    }
-
-    & h2 {
-      font-weight: normal;
-      margin: 0;
-    }
-  }
-}
+@import '../vars-viewport.css';
 
 .main-footer {
   background-color: var(--color-white);
@@ -66,9 +30,9 @@
 }
 
 .container {
-  max-width: var(--width-container);
+  padding: 0 var(--spacing-16);
   margin: 0 auto;
-  width: 100%;
+  max-width: var(--width-container);
 }
 
 main.container {
@@ -77,12 +41,16 @@ main.container {
 
 /* //TODO: Replace with light grid system */
 .sidebarcolumn {
-  display: flex;
-  gap: 24px;
-  & .col {
-    flex-grow: 1;
-    &:first-child {
-      flex: 0 0 276px;
+  @media (--viewport-medium) {
+    & {
+      display: flex;
+      gap: 24px;
+      & .col {
+        flex-grow: 1;
+        &:first-child {
+          flex: 0 0 276px;
+        }
+      }
     }
   }
 }
