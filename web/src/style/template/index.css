@@ -33,9 +33,6 @@
   padding: 0 var(--spacing-16);
   margin: 0 auto;
   max-width: var(--width-container);
-  /* @media (--viewport-medium) {
-    
-  } */
 }
 
 main.container {
@@ -44,12 +41,16 @@ main.container {
 
 /* //TODO: Replace with light grid system */
 .sidebarcolumn {
-  display: flex;
-  gap: 24px;
-  & .col {
-    flex-grow: 1;
-    &:first-child {
-      flex: 0 0 276px;
+  @media (--viewport-medium) {
+    & {
+      display: flex;
+      gap: 24px;
+      & .col {
+        flex-grow: 1;
+        &:first-child {
+          flex: 0 0 276px;
+        }
+      }
     }
   }
 }
