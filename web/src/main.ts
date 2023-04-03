@@ -18,7 +18,7 @@ import icon from './components/icon'
 import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
-import setupMobileMenu from './components/mobile-menu'
+import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -34,6 +34,7 @@ if (import.meta.env.MODE === 'development') {
 
 window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
+
   accordion()
   setupCard()
   icon()
@@ -41,4 +42,16 @@ window.addEventListener('load', () => {
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+  const isTablet = window.matchMedia('(min-width: 800px)')
+
+  const onViewportChange = () => {
+    if (isTablet.matches) {
+      mobileMenuCleanup()
+    }
+  }
+
+  isTablet.addEventListener('change', onViewportChange)
 })

@@ -1,16 +1,23 @@
-const setupMobileMenu = () => {
-  document.getElementById('main-header-mobile-menu2')?.addEventListener('click', (e) => {
-    const button = e.currentTarget as HTMLButtonElement
-    const isOpen = button.getAttribute('aria-expanded') === 'true'
+const setButtonState = (open: boolean) => {
+  open
+    ? document.querySelector('body')?.classList.add('darken')
+    : document.querySelector('body')?.classList.remove('darken')
+  ;(document.getElementById('main-header-mobile-menu') as HTMLButtonElement).setAttribute(
+    'aria-expanded',
+    Boolean(open).toString()
+  )
+}
 
-    if (isOpen) {
-      document.querySelector('body')?.classList.remove('darken')
-      button.setAttribute('aria-expanded', Boolean(!isOpen).toString())
-    } else {
-      document.querySelector('body')?.classList.add('darken')
-      button.setAttribute('aria-expanded', Boolean(!isOpen).toString())
-    }
-  })
+export const cleanup = () => setButtonState(false)
+
+const setupMobileMenu = () => {
+  document
+    .getElementById('main-header-mobile-menu')
+    ?.addEventListener('click', (e) =>
+      setButtonState(
+        (e.currentTarget as HTMLButtonElement).getAttribute('aria-expanded') === 'false'
+      )
+    )
 }
 
 export default setupMobileMenu

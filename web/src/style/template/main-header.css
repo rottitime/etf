@@ -1,7 +1,7 @@
 @import '../vars-viewport.css';
 
 #main-header {
-  background-color: #fff;
+  background-color: var(--color-bg-white);
   border-bottom: 4px solid var(--color-pink);
   padding: var(--spacing-16) 0;
   margin-bottom: var(--spacing-24);
@@ -53,6 +53,14 @@
         border-bottom: none;
       }
     }
+
+    & a.active {
+      @media (--viewport-medium) {
+        & {
+          border-radius: 8px;
+        }
+      }
+    }
   }
 
   & .logo {
@@ -75,42 +83,20 @@
 }
 
 #main-header-mobile-menu {
-  background-color: transparent;
-  border: none;
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 400;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  & svg {
-    font-size: 20px;
-  }
-
-  @media (--viewport-medium) {
-    & {
-      display: none;
-    }
-  }
-
-  /* active state */
-  &[aria-expanded='true'] {
-    & + .menu-list {
-      left: 0;
-    }
-  }
-}
-
-#main-header-mobile-menu2 {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: all var(--animation-speed) ease-in-out;
+  text-align: left;
+  border: none;
+  background-color: transparent;
+  @media (--viewport-medium) {
+    & {
+      display: none;
+    }
+  }
 
   /* icon */
   & > div,
@@ -146,13 +132,13 @@
     }
 
     & > div {
-      transform: translateX(-50px);
+      transform: translateX(-20px);
       background: transparent;
       &:before {
-        transform: rotate(45deg) translate(35px, -35px);
+        transform: rotate(45deg) translate(14px, -14px);
       }
       &:after {
-        transform: rotate(-45deg) translate(35px, 35px);
+        transform: rotate(-45deg) translate(14px, 14px);
       }
     }
   }
