@@ -55,6 +55,7 @@
     }
 
     & a.active {
+      border-radius: 0;
       @media (--viewport-medium) {
         & {
           border-radius: 8px;

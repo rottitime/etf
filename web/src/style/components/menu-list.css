@@ -19,6 +19,7 @@
 
     &.active {
       background: rgba(0, 80, 199, 0.1);
+      border-radius: 8px;
     }
   }
 
