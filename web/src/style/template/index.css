@@ -97,6 +97,7 @@ main.container {
   }
 }
 
+/* search pages */
 .card-results .card {
   margin-bottom: var(--spacing-16);
   & td {
@@ -104,10 +105,27 @@ main.container {
       margin: 0 0 var(--spacing-4) var(--spacing-4);
     }
   }
+
+  /* responsive table tweaks */
+  & tr,
+  & td {
+    display: block;
+    @media (--viewport-medium) {
+      & {
+        display: table-row;
+      }
+    }
+  }
+
   & th {
-    width: 35%;
-    text-align: left;
-    vertical-align: top;
-    padding-right: var(--spacing-16);
+    @media (--viewport-medium) {
+      & {
+        display: table-cell;
+        width: 35%;
+        text-align: left;
+        vertical-align: top;
+        padding-right: var(--spacing-16);
+      }
+    }
   }
 }
