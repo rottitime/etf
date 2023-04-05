@@ -1,0 +1,11 @@
+---
+applications:
+- name: etf-testing
+  services:
+    - etf-postgres-testing
+  routes:
+  - route: etf-testing.london.cloudapps.digital
+    protocol: http1
+  disk_quota: 4092M
+  memory: 512M
+  health-check-type: port
