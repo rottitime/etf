@@ -9,13 +9,14 @@ sentry_envs=(
     prod
     develop
     staging
-    pentest
+    testing
 )
 
 ### What environments need GOV NOTIFY
 govuk_email_backend=(
     develop
     staging
+    testing
 )
 
 live_notify_api=(

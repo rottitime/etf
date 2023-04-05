@@ -9,6 +9,7 @@ on:
       - sandbox
       - develop
       - staging
+      - testing
 
 jobs:
   add_environment_vars:
@@ -31,7 +32,7 @@ jobs:
               "temp": {"CF_SPACE": "temp"},
               "develop": {"CF_SPACE": "develop"},
               "staging": {"CF_SPACE": "staging"},
-              "pentest": {"CF_SPACE": "pentest"},
+              "testing": {"CF_SPACE": "testing"},
               "feature/deploy-from-main": {"CF_SPACE": "flibble"}
             }
 
