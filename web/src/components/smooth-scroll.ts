@@ -10,7 +10,7 @@ const setupSmoothScroll = () => {
       if (scrollElement) {
         scrollElement.classList.remove('scrolled')
         scrollElement.classList.add('scrolling')
-        scrollToElement(scrollElement, false, 16, () => {
+        scrollToElement(scrollElement, true, 16, () => {
           scrollElement.classList.remove('scrolling')
           scrollElement.classList.add('scrolled')
         })

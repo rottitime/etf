@@ -16,6 +16,7 @@ export function scrollToElement(
 
   // If the onlyIfNotVisibleInView flag is set, only scroll if the element is not visible in the view
   if (onlyIfNotVisibleInView && rect.top >= 0 && rect.bottom <= window.innerHeight) {
+    callback && callback()
     return
   }
 
