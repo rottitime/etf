@@ -46,6 +46,15 @@ main.container {
       display: flex;
       gap: 24px;
       & .col {
+      }
+    }
+  }
+
+  & .col {
+    margin-bottom: var(--spacing-16);
+    @media (--viewport-medium) {
+      & {
+        margin-bottom: 0;
         flex-grow: 1;
         &:first-child {
           flex: 0 0 276px;
