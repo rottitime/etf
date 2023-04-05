@@ -7,7 +7,7 @@
 
 
 <div class="back-bar"  >
-  <p class="small mb-0"><a href="#">Back to Search Results</a></p>
+  <p class="small mb-0"><a href="{{url("search")}}">Back to Search Results</a></p>
   <div class="right">
     <form action="#">
       <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
@@ -65,25 +65,37 @@
           <tr>
             <th>Topic/s</th>
             <td>
-              {% for topic in data.topics %}
-              <div class="chip green">{{topic}}</div>
-              {% endfor %}
+              {% if data.topics | length > 0 %}
+                {% for topic in data.topics %}
+                  <div class="chip green">{{topic}}</div>
+                {% endfor %}
+              {% else %}
+                <p>No topics found</p>
+              {% endif %}
             </td>
           </tr>
           <tr>
             <th>Organisation(s)</th>
             <td>
-              {% for organisation in data.organisations %}
-              <div class="chip orange">{{organisation}}</div>
-              {% endfor %}
+              {% if data.organisations | length > 0 %}
+                {% for organisation in data.organisations %}
+                  <div class="chip orange">{{organisation}}</div>
+                {% endfor %}
+              {% else %}
+                <p>No organisations found</p>
+              {% endif %}
               </td>
           </tr>
           <tr>
             <th>Evaluation types</th>
             <td>
-            {% for evaluation_type in data.evaluation_types %}
-              <p>{{evaluation_type}}</p>
-            {% endfor %}
+            {% if data.evaluation_types | length > 0 %}
+              {% for evaluation_type in data.evaluation_types %}
+                <p>{{evaluation_type}}</p>
+              {% endfor %}
+            {% else %}
+              <p>No evaluation types found</p>
+            {% endif %}
           </td>
           </tr>
         </table>
@@ -105,7 +117,7 @@
           <tr>
             <th>Event Date</th>
             <td>
-              <div class="badge">{{date.date.strftime('%b %Y')}}</div>
+              <div class="badge">{% if date.date %}{{date.date.strftime('%b %Y')}}{% else %}No date provided{% endif %}</div>
             </td>
           </tr>
         </table>
@@ -139,19 +151,19 @@
         <table>
           <tr>
             <th>Why would improvements in relation to this issue matter?</th>
-            <td>{% if data.evaluation.why_improvements_matter %}{{data.evaluation.why_improvements_matter}}{% else %}N/A{% endif %}</td>
+            <td>{% if data.evaluation.why_improvements_matter %}{{data.evaluation.why_improvements_matter}}{% else %}Not answered{% endif %}</td>
           </tr>
           <tr>
             <th>Who does it matter to?</th>
-            <td>{% if data.evaluation.who_improvements_matter_to %}{{data.evaluation.who_improvements_matter_to}}{% else %}N/A{% endif %}</td>
+            <td>{% if data.evaluation.who_improvements_matter_to %}{{data.evaluation.who_improvements_matter_to}}{% else %}Not answered{% endif %}</td>
           </tr>
           <tr>
             <th>Current practice</th>
-            <td>{% if data.evaluation.current_practice %}{{data.evaluation.current_practice}}{% else %}N/A{% endif %}</td>
+            <td>{% if data.evaluation.current_practice %}{{data.evaluation.current_practice}}{% else %}Not answered{% endif %}</td>
           </tr>
           <tr>
             <th>Relevance of the study</th>
-            <td>{% if data.evaluation.issue_relevance %}{{data.evaluation.issue_relevance}}{% else %}N/A{% endif %}</td>
+            <td>{% if data.evaluation.issue_relevance %}{{data.evaluation.issue_relevance}}{% else %}Not answered{% endif %}</td>
           </tr>
         </table>
       </div>

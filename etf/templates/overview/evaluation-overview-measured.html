@@ -7,7 +7,7 @@
 
 
 <div class="back-bar"  >
-  <p class="small mb-0"><a href="#">Back to Search Results</a></p>
+  <p class="small mb-0"><a href="{{url("search")}}">Back to Search Results</a></p>
   <div class="right">
     <form action="#">
       <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
@@ -102,53 +102,53 @@
             <div class="content">
               <table>
                 <tr>
-                  <th>Description</th>
-                  <td>{% if intervention.brief_description %}{{intervention.brief_description}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Rationale</th>
-                  <td>{% if intervention.rationale %}{{intervention.rationale}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Materials used</th>
-                  <td>{% if intervention.materials_used %}{{intervention.materials_used}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Procedures</th>
-                  <td>{% if intervention.procedures %}{{intervention.procedures}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Provider description</th>
-                  <td>{% if intervention.provider_description %}{{intervention.provider_description}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Modes of delivery</th>
-                  <td>{% if intervention.modes_of_delivery %}{{intervention.modes_of_delivery}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Location</th>
-                  <td>{% if intervention.location %}{{intervention.location}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Frequency of delivery</th>
-                  <td>{% if intervention.frequency_of_delivery %}{{intervention.frequency_of_delivery}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Tailoring</th>
-                  <td>{% if intervention.tailoring %}{{intervention.tailoring}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Fidelity</th>
-                  <td>{% if intervention.fidelity %}{{intervention.fidelity}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Resource requirements</th>
-                  <td>{% if intervention.resource_requirements %}{{intervention.resource_requirements}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Geographical information</th>
-                  <td>{% if intervention.geographical_information %}{{intervention.geographical_information}}{% else %}N/A{% endif %}</td>
-                </tr>
+                <th>Description</th>
+                <td>{% if intervention.brief_description %}{{intervention.brief_description}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Rationale</th>
+                <td>{% if intervention.rationale %}{{intervention.rationale}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Materials used</th>
+                <td>{% if intervention.materials_used %}{{intervention.materials_used}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Procedures</th>
+                <td>{% if intervention.procedures %}{{intervention.procedures}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Provider description</th>
+                <td>{% if intervention.provider_description %}{{intervention.provider_description}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Modes of delivery</th>
+                <td>{% if intervention.modes_of_delivery %}{{intervention.modes_of_delivery}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td>{% if intervention.location %}{{intervention.location}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Frequency of delivery</th>
+                <td>{% if intervention.frequency_of_delivery %}{{intervention.frequency_of_delivery}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Tailoring</th>
+                <td>{% if intervention.tailoring %}{{intervention.tailoring}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Fidelity</th>
+                <td>{% if intervention.fidelity %}{{intervention.fidelity}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Resource requirements</th>
+                <td>{% if intervention.resource_requirements %}{{intervention.resource_requirements}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Geographical information</th>
+                <td>{% if intervention.geographical_information %}{{intervention.geographical_information}}{% else %}Not answered{% endif %}</td>
+              </tr>
               </table>
             </div>
           </div>
@@ -169,41 +169,41 @@
             <div class="content">
               <table>
                 <tr>
-                  <th>Primary or secondary</th>
-                  <td>{% if outcome_measure.primary_or_secondary %}{{outcome_measure.get_primary_or_secondary_display_name()}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Direct or surrogate</th>
-                  <td>{% if outcome_measure.direct_or_surrogate %}{{outcome_measure.get_direct_or_surrogate_display_name()}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Measure type</th>
-                  <td>{% if outcome_measure.measure_type %}{{outcome_measure.get_measure_type_display_name()}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Measure type (other)</th>
-                  <td>{% if outcome_measure.measure_type_other %}{{outcome_measure.measure_type_other}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Description</th>
-                  <td>{% if outcome_measure.description %}{{outcome_measure.description}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Collection process</th>
-                  <td>{% if outcome_measure.collection_process %}{{outcome_measure.collection_process}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Timepoint(s) of interest</th>
-                  <td>{% if outcome_measure.timepoint %}{{outcome_measure.timepoint}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Minimum practically important difference</th>
-                  <td>{% if outcome_measure.minimum_difference %}{{outcome_measure.minimum_difference}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Relevance of outcome</th>
-                  <td>{% if outcome_measure.relevance %}{{outcome_measure.relevance}}{% else %}N/A{% endif %}</td>
-                </tr>
+                <th>Primary or secondary</th>
+                <td>{% if outcome_measure.primary_or_secondary %}{{outcome_measure.get_primary_or_secondary_display_name()}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Direct or surrogate</th>
+                <td>{% if outcome_measure.direct_or_surrogate %}{{outcome_measure.get_direct_or_surrogate_display_name()}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Measure type</th>
+                <td>{% if outcome_measure.measure_type %}{{outcome_measure.get_measure_type_display_name()}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Measure type (other)</th>
+                <td>{% if outcome_measure.measure_type_other %}{{outcome_measure.measure_type_other}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td>{% if outcome_measure.description %}{{outcome_measure.description}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Collection process</th>
+                <td>{% if outcome_measure.collection_process %}{{outcome_measure.collection_process}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Timepoint(s) of interest</th>
+                <td>{% if outcome_measure.timepoint %}{{outcome_measure.timepoint}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Minimum practically important difference</th>
+                <td>{% if outcome_measure.minimum_difference %}{{outcome_measure.minimum_difference}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Relevance of outcome</th>
+                <td>{% if outcome_measure.relevance %}{{outcome_measure.relevance}}{% else %}Not answered{% endif %}</td>
+              </tr>
               </table>
             </div>
           </div>
@@ -224,21 +224,21 @@
             <div class="content">
               <table>
                 <tr>
-                  <th>Measure type</th>
-                  <td>{% if other_measure.measure_type %}{{other_measure.get_measure_type_display_name()}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Measure type (other)</th>
-                  <td>{% if other_measure.measure_type_other %}{{other_measure.measure_type_other}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Description</th>
-                  <td>{% if other_measure.description %}{{other_measure.description}}{% else %}N/A{% endif %}</td>
-                </tr>
-                <tr>
-                  <th>Collection process</th>
-                  <td>{% if other_measure.collection_process %}{{other_measure.collection_process}}{% else %}N/A{% endif %}</td>
-                </tr>
+                <th>Measure type</th>
+                <td>{% if other_measure.measure_type %}{{other_measure.get_measure_type_display_name()}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Measure type (other)</th>
+                <td>{% if other_measure.measure_type_other %}{{other_measure.measure_type_other}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Description</th>
+                <td>{% if other_measure.description %}{{other_measure.description}}{% else %}Not answered{% endif %}</td>
+              </tr>
+              <tr>
+                <th>Collection process</th>
+                <td>{% if other_measure.collection_process %}{{other_measure.collection_process}}{% else %}Not answered{% endif %}</td>
+              </tr>
               </table>
             </div>
           </div>
