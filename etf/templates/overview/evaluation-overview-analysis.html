@@ -14,6 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
+    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
