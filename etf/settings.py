@@ -80,6 +80,16 @@ MIDDLEWARE = [
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
+# CSRF settings
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_AGE = 31449600  # 1 year in seconds
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
+SESSION_COOKIE_SECURE = True
+
 CORS_MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
