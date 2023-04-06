@@ -37,6 +37,8 @@
 
 main.container {
   margin-bottom: var(--spacing-24);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* //TODO: Replace with light grid system */
@@ -46,6 +48,15 @@ main.container {
       display: flex;
       gap: 24px;
       & .col {
+      }
+    }
+  }
+
+  & .col {
+    margin-bottom: var(--spacing-16);
+    @media (--viewport-medium) {
+      & {
+        margin-bottom: 0;
         flex-grow: 1;
         &:first-child {
           flex: 0 0 276px;
@@ -88,6 +99,7 @@ main.container {
   }
 }
 
+/* search pages */
 .card-results .card {
   margin-bottom: var(--spacing-16);
   & td {
@@ -95,10 +107,27 @@ main.container {
       margin: 0 0 var(--spacing-4) var(--spacing-4);
     }
   }
+
+  /* responsive table tweaks */
+  & tr,
+  & td {
+    display: block;
+    @media (--viewport-medium) {
+      & {
+        display: table-row;
+      }
+    }
+  }
+
   & th {
-    width: 35%;
-    text-align: left;
-    vertical-align: top;
-    padding-right: var(--spacing-16);
+    @media (--viewport-medium) {
+      & {
+        display: table-cell;
+        width: 35%;
+        text-align: left;
+        vertical-align: top;
+        padding-right: var(--spacing-16);
+      }
+    }
   }
 }

@@ -4,12 +4,12 @@
    <head>
       <meta charset="UTF-8"/>
       <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale = 1.0,maximum-scale=1.0, user-scalable=no" /> 
       <title>Evaluation Registry</title>
       <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
       <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
-      <!-- Dev script for local development -->
         {% if space_name and space_name == "local" %}
+          <!-- Dev script for local development -->
           <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
         {% endif %}
       <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>

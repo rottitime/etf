@@ -15,7 +15,7 @@ const setupMobileMenu = () => {
     .getElementById('main-header-mobile-menu')
     ?.addEventListener('click', (e) =>
       setButtonState(
-        (e.currentTarget as HTMLButtonElement).getAttribute('aria-expanded') === 'false'
+        (e.currentTarget as HTMLButtonElement).getAttribute('aria-expanded') !== 'true'
       )
     )
 }
