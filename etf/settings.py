@@ -34,6 +34,15 @@ ALLOWED_HOSTS = [
     "etf-testserver",
 ]
 
+HOST_MAP = {
+    "http://localhost:8010/": "http://127.0.0.1:8010",
+    "https://etf-develop.london.cloudapps.digital": "https://etf-develop.london.cloudapps.digital",
+    "https://etf-staging.london.cloudapps.digital": "https://etf-staging.london.cloudapps.digital",
+}
+
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [HOST_MAP[BASE_URL]]
+
 
 # Application definition
 
@@ -52,6 +61,13 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
 ]
 
+CORS_APPS = [
+    "corsheaders",
+]
+
+if DEBUG:
+    INSTALLED_APPS = INSTALLED_APPS + CORS_APPS
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -63,6 +79,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
+
+CORS_MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+]
+
+if DEBUG:
+    MIDDLEWARE = MIDDLEWARE + CORS_MIDDLEWARE
 
 ROOT_URLCONF = "etf.urls"
 
