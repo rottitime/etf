@@ -80,6 +80,9 @@ MIDDLEWARE = [
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
+# CSRF settings
+CSRF_COOKIE_HTTPONLY = True
+
 CORS_MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
