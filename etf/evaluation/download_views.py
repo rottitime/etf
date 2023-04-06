@@ -8,6 +8,7 @@ from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
 
 
+@login_required
 def filter_evaluations_to_download(request):
     output_evaluations_qs = Evaluation.objects.none()
     if "civil_service_only" in request.GET:
@@ -23,6 +24,7 @@ def filter_evaluations_to_download(request):
     return output_evaluations_qs
 
 
+@login_required
 def download_json_view(request):
     evaluations_qs = filter_evaluations_to_download(request)
     evaluation_schema = EvaluationSchema()
@@ -35,6 +37,7 @@ def download_json_view(request):
     return response
 
 
+@login_required
 def download_csv_view(request):
     evaluations_qs = filter_evaluations_to_download(request)
     evaluation_schema = EvaluationSchema()
