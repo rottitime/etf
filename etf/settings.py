@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
 ]
 
 HOST_MAP = {
-    "http://localhost:8010/": "http://127.0.0.1",
+    "http://localhost:8010/": "http://127.0.0.1:8010",
     "https://etf-develop.london.cloudapps.digital": "https://etf-develop.london.cloudapps.digital",
     "https://etf-staging.london.cloudapps.digital": "https://etf-staging.london.cloudapps.digital",
 }
