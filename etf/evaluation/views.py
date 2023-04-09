@@ -29,11 +29,6 @@ def view_404(request, exception=None):
     return render(request, "page-not-found.html", {})
 
 
-# TODO - change the name of this to not be `test_`
-def test_view(request, exception=None):
-    return render(request, "beta/beta-test.html", {})
-
-
 def get_search_filters(qs, organisations, topics, status, evaluation_types):
     organisation_filters = enums.Organisation.choices
     filtered_organisation_filters = [

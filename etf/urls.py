@@ -21,7 +21,6 @@ urlpatterns = [
     path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
-    path("test/", views.test_view, name="test"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path(
         "evaluation/<uuid:evaluation_id>/overview/",
