@@ -8,16 +8,14 @@ from . import choices, enums
 from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
-class SaveParentsOnSave(models.Model):
+class SaveEvaluationOnSave(models.Model):
     class Meta:
         abstract = True
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        parents = self._meta.parents
-
-        for parent in parents:
-            parent.save()
+        evaluation = self.evaluation
+        evaluation.save()
 
 
 class UUIDPrimaryKeyBase(models.Model):
@@ -429,7 +427,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         return super().save()
 
 
-class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="interventions", on_delete=models.CASCADE)
     name = models.CharField(max_length=1024, blank=True, null=True)
     brief_description = models.TextField(blank=True, null=True)
@@ -466,7 +464,7 @@ class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParents
         return "|".join(searchable_fields)
 
 
-class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     primary_or_secondary = models.CharField(max_length=10, blank=True, null=True)
@@ -515,7 +513,7 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParen
         return "|".join(searchable_fields)
 
 
-class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="other_measures", on_delete=models.CASCADE)
     name = models.CharField(max_length=256, blank=True, null=True)
     measure_type = models.CharField(max_length=256, blank=True, null=True)
@@ -542,7 +540,7 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParents
         return "|".join(searchable_fields)
 
 
-class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="process_standards", on_delete=models.CASCADE)
     name = models.CharField(max_length=1024)
     conformity = models.CharField(max_length=10, blank=True, null=True)
@@ -565,7 +563,7 @@ class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SavePare
         return "|".join(searchable_fields)
 
 
-class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="documents", on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     url = models.URLField(max_length=512, blank=True, null=True)
@@ -592,7 +590,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSa
         return "|".join(searchable_fields)
 
 
-class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     event_date_name = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
@@ -622,7 +620,7 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnS
         return "|".join(searchable_fields)
 
 
-class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="link_other_services", on_delete=models.CASCADE)
     name_of_service = models.CharField(max_length=256, blank=True, null=True)
     link_or_identifier = models.CharField(max_length=256, blank=True, null=True)
@@ -640,7 +638,7 @@ class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SavePar
         return "|".join(searchable_fields)
 
 
-class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveParentsOnSave):
+class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)
     item_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
