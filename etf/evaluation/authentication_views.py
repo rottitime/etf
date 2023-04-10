@@ -222,8 +222,6 @@ class AcceptInviteSignupView(MethodDispatcher):
     def get_token_request_args(self, request):
         user_id = request.GET.get("user_id", None)
         token = request.GET.get("code", None)
-        print(user_id)
-        print(token)
         valid_request = False
         if not user_id or not token:
             messages.error(request, self.password_signup_error_message)
@@ -246,8 +244,6 @@ class AcceptInviteSignupView(MethodDispatcher):
 
     def post(self, request):
         user_id, token, valid_request = self.get_token_request_args(request)
-        print(user_id)
-        print(token)
         pwd1 = request.POST.get("password1", None)
         pwd2 = request.POST.get("password2", None)
         if pwd1 != pwd2:
