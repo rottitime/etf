@@ -104,6 +104,7 @@ def external_user_can_view(can_view):
         if not user_is_third_party:
             return True
         return can_view
+
     return user_passes_test(user_logged_in and check_group)
 
 
