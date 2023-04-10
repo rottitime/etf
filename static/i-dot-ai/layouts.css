@@ -38,10 +38,7 @@ div.global--search button.button {
 }
 
 div.input-button-pair {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 70%;
+  width: 100%;
 }
 
 div.input-button-pair input.input-button-pair-input {
