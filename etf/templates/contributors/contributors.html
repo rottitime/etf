@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <h3>Contributors</h3>
+      <div class="input-button-pair">
+        <form method="POST">{{csrf_input}}
+         <fieldset class="fieldset">
+          <label class="label" for="add-user-email">Add contributor</label>
+          <input class="input-button-pair-input" placeholder="Enter a contributors email..." type="email" id="add-user-email" name="add-user-email">
+          <button type="submit" class="button input-button-pair-button">Add</button>
+         </fieldset>
+        </form>
+      </div>
+
+      <table class="contributors">
+        <thead>
+          <tr>
+            <th class="contributor-email-header">Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="contributor-table-body">
+        {{ contributors }}
+        {% for c in contributors %}
+          <tr>
+            <td id="td-email-a-{{loop.index}}">{{c.email}}{% if not c.is_signed_up %} (invited){% endif %}</td>
+            <td>
+              <form method="POST" action="{{url("evaluation-contributor-remove", args=[evaluation_id, c.email])}}">{{csrf_input}}
+                 <fieldset class="fieldset">
+                      <button class="button"
+                              type="submit"
+                         {% if contributors | length <= 1 %} disabled {% endif %}
+                         id="delete-a-{{loop.index}}">Remove</button>
+                 </fieldset>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}

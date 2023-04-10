@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+
+{% block head_title %}Invitation accepted{% endblock %}
+
+{% block content %}
+
+
+  <div class="card">
+    <div class="card-divider">
+      Invitation accepted
+    </div>
+    <div class="card-section">
+      <p>You have successfully completed your invitation, please login to continue.</p>
+      <a class="button" href="{% url "index" %}">Return to login</a>
+    </div>
+  </div>
+
+{% endblock %}
