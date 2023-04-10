@@ -170,7 +170,9 @@ class EvaluationContributor(MethodDispatcher):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         users = evaluation.users.all()
         user_map = [{"email": user.email, "is_signed_up": user.has_signed_up()} for user in users]
-        return render(request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id})
+        return render(
+            request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id}
+        )
 
     def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
@@ -193,7 +195,9 @@ class EvaluationContributor(MethodDispatcher):
             send_invite_email(user)
         users = evaluation.users.all()
         user_map = [{"email": user.email, "is_signed_up": user.has_signed_up()} for user in users]
-        return render(request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id})
+        return render(
+            request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id}
+        )
 
 
 @login_required
