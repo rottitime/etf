@@ -18,3 +18,7 @@ table thead tr th.contributor-email-header {
 table.contributors {
   margin-top: 2em;
 }
+
+tbody#contributor-table-body fieldset {
+  background-color: transparent;
+}
