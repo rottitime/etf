@@ -7,7 +7,7 @@ from django.contrib.postgres.search import (
 )
 from django.db.models import Q
 from django.http import HttpResponseNotAllowed
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
 
 from . import choices, enums, models
