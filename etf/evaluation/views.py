@@ -29,8 +29,7 @@ def view_404(request, exception=None):
     return render(request, "page-not-found.html", {})
 
 
-# TODO - change the name of this to not be `test_`
-def test_view(request, exception=None):
+def beta_test_view(request, exception=None):
     return render(request, "beta/beta-test.html", {})
 
 

@@ -338,7 +338,7 @@ urlpatterns = (
 if settings.DEBUG:
     urlpatterns = urlpatterns + [
         path("admin/", admin.site.urls),
-        path("test/", views.test_view, name="test"),
+        path("test/", views.beta_test_view, name="test"),
     ]
 
 
