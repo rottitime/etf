@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 
 import furl as furl
 import pytz
@@ -31,8 +31,17 @@ class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
         return f"{user.pk}{user.password}{login_timestamp}{timestamp}{email}{token_timestamp}"
 
 
+class InviteTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        invited_timestamp = _strip_microseconds(user.invited_at)
+        email = user.email or ""
+        token_timestamp = _strip_microseconds(user.last_token_sent_at)
+        return f"{user.pk}{invited_timestamp}{timestamp}{email}{token_timestamp}"
+
+
 EMAIL_VERIFY_TOKEN_GENERATOR = EmailVerifyTokenGenerator()
 PASSWORD_RESET_TOKEN_GENERATOR = PasswordResetTokenGenerator()
+INVITE_TOKEN_GENERATOR = InviteTokenGenerator()
 
 
 EMAIL_MAPPING = {
@@ -50,11 +59,23 @@ EMAIL_MAPPING = {
         "url_path": "/accounts/change-password/reset/",
         "token_generator": PASSWORD_RESET_TOKEN_GENERATOR,
     },
+    "add-contributor": {
+        "from_address": "etf@cabinetoffice.gov.uk",
+        "subject": "Evaluation Registry: invited to contribute",
+        "template_name": "email/invite-to-evaluation.txt",
+    },
+    "invite-user": {
+        "from_address": "etf@cabinetoffice.gov.uk",
+        "subject": "Evaluation Registry: invited to join",
+        "template_name": "email/invite-user.txt",
+        "url_path": "/accounts/accept-invite/",
+        "token_generator": INVITE_TOKEN_GENERATOR,
+    },
 }
 
 
 def _send_token_email(user, subject, template_name, from_address, url_path, token_generator):
-    user.last_token_sent_at = datetime.datetime.now(tz=pytz.UTC)
+    user.last_token_sent_at = dt.datetime.now(tz=pytz.UTC)
     user.save()
     token = token_generator.make_token(user)
     base_url = settings.BASE_URL
@@ -89,6 +110,23 @@ def send_verification_email(user):
 def send_password_reset_email(user):
     data = EMAIL_MAPPING["password-reset"]
     return _send_token_email(user, **data)
+
+
+def send_invite_email(user):
+    data = EMAIL_MAPPING["invite-user"]
+    user.invited_at = dt.datetime.now()
+    return _send_token_email(user, **data)
+
+
+def send_contributor_added_email(user, evaluation_id):
+    data = EMAIL_MAPPING["add-contributor"]
+    base_url = settings.BASE_URL
+    url = furl.furl(url=base_url)
+    url /= f"/evaluation/{evaluation_id}"
+    url = str(url)
+    context = {"first_name": user.first_name or "user", "url": url}
+    response = _send_normal_email(to_address=user.email, context=context, **data)
+    return response
 
 
 def verify_token(user_id, token, token_type):
