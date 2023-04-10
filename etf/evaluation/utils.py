@@ -4,6 +4,8 @@ import inspect
 import types
 
 import marshmallow
+from django.contrib.auth import user_logged_in
+from django.contrib.auth.decorators import user_passes_test
 
 from . import models
 
@@ -94,6 +96,15 @@ def with_schema(default=None, load=None, dump=None):
         return _inner
 
     return _decorator
+
+
+def external_user_can_view(can_view):
+    def check_group(user):
+        user_is_third_party = user.groups.filter(name="Third party user").exists()
+        if not user_is_third_party:
+            return True
+        return can_view
+    return user_passes_test(user_logged_in and check_group)
 
 
 class Facade:
