@@ -19,6 +19,7 @@ urlpatterns = [
     path("accounts/login/", authentication_views.CustomLoginView, name="account_login"),
     path("accounts/signup/", authentication_views.CustomSignupView.as_view(), name="account_signup"),
     path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
+    path("accounts/accept-invite/", authentication_views.AcceptInviteSignupView, name="accept-invite"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
@@ -30,29 +31,14 @@ urlpatterns = [
     path("data-download/", download_views.download_page_view, name="data-download"),
 ]
 
-api_urlpatterns = [
+evaluation_contributor_urlpatterns = [
     path(
         "evaluation-contributors/<uuid:evaluation_id>/",
         views.EvaluationContributor,
         name="evaluation-contributors",
     ),
     path(
-        "evaluation-contributors/<uuid:evaluation_id>/<str:email_to_remove>/",
-        views.EvaluationContributor,
-        name="evaluation-contributors",
-    ),
-    path(
-        "evaluation-contributor-add/<uuid:evaluation_id>/",
-        views.evaluation_contributor_add_view,
-        name="evaluation-contributor-add",
-    ),
-    path(
-        "evaluation-contributor-remove/<uuid:evaluation_id>/",
-        views.evaluation_contributor_remove_view,
-        name="evaluation-contributor-remove",
-    ),
-    path(
-        "evaluation-contributor-remove/<uuid:evaluation_id>/<str:email_to_remove>/",
+        "evaluation-contributor-remove/<uuid:evaluation_id>/<str:email_to_remove>",
         views.evaluation_contributor_remove_view,
         name="evaluation-contributor-remove",
     ),
@@ -322,7 +308,7 @@ evaluation_summary_urlpatterns = [
 
 urlpatterns = (
     urlpatterns
-    + api_urlpatterns
+    + evaluation_contributor_urlpatterns
     + evaluation_entry_urlpatterns
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
