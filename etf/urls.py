@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import include, path
@@ -12,7 +13,6 @@ from etf.evaluation import (
 
 urlpatterns = [
     path("", submission_views.index_view, name="index"),
-    path("admin/", admin.site.urls),
     path("accounts/verify/", authentication_views.CustomVerifyUserEmail, name="verify-email"),
     path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
     path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
@@ -21,7 +21,6 @@ urlpatterns = [
     path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
     path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
-    path("test/", views.test_view, name="test"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
     path(
         "evaluation/<uuid:evaluation_id>/overview/",
@@ -335,5 +334,12 @@ urlpatterns = (
     + event_date_urlpatterns
     + evaluation_summary_urlpatterns
 )
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + [
+        path("admin/", admin.site.urls),
+        path("test/", views.beta_test_view, name="test"),
+    ]
+
 
 handler404 = "etf.evaluation.views.view_404"
