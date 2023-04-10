@@ -336,7 +336,9 @@ urlpatterns = (
 )
 
 if settings.DEBUG:
-    urlpatterns = urlpatterns + (path("admin/", admin.site.urls),)
+    urlpatterns = urlpatterns + [
+        path("admin/", admin.site.urls),
+    ]
 
 
 handler404 = "etf.evaluation.views.view_404"
