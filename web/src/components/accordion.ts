@@ -7,8 +7,8 @@ const setupAccordions = () => {
   //remove all active classname
   const removeAllActive = (el: Element) => {
     el.parentNode
-      ?.querySelectorAll('.active')
-      .forEach((active) => active.classList.remove('active'))
+      ?.querySelectorAll('[aria-selected]')
+      .forEach((active) => active.removeAttribute('aria-selected'))
   }
 
   //icons
@@ -35,7 +35,7 @@ const setupAccordions = () => {
     parentButton?.setAttribute('id', buttonid)
     parentButton?.setAttribute(
       'aria-expanded',
-      new Boolean(parentButton?.classList.contains('active')).toString()
+      new Boolean(parentButton?.hasAttribute('aria-selected')).toString()
     )
 
     wrapper.appendChild(content)
@@ -52,14 +52,14 @@ const setupAccordions = () => {
     button?.addEventListener('click', () => {
       const parent = button.parentNode as Element
 
-      if (parent?.classList.contains('active')) {
+      if (parent?.hasAttribute('aria-selected')) {
         const height = content?.clientHeight
         wrapper?.setAttribute('style', `height:${height}px`)
         removeAllActive(accordion)
         button.setAttribute('aria-expanded', 'false')
       } else {
         removeAllActive(accordion)
-        parent.classList.add('active')
+        parent.setAttribute('aria-selected', 'true')
         const height = content?.clientHeight
         wrapper?.setAttribute('style', `max-height:${height}px`)
         button.setAttribute('aria-expanded', 'true')
