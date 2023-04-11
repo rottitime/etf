@@ -460,7 +460,7 @@ def evaluation_status_view(request, evaluation_id):
 
 def end_page_view(request, evaluation_id):
     page_data = {"title": "End", "page_name": "end"}
-    return simple_page_view(request, page_data, evaluation_id=evaluation_id)
+    return simple_page_view(request, page_data=page_data, evaluation_id=evaluation_id)
 
 
 def summary_interventions_page_view(request, evaluation_id):
