@@ -4,8 +4,9 @@ import inspect
 import types
 
 import marshmallow
+from django.http import Http404
 
-from . import models
+from . import models, choices
 
 event_names = set()
 
@@ -58,6 +59,21 @@ def process_self(func, arguments):
         func = functools.partial(func, arguments["self"])
         arguments = {k: v for k, v in arguments.items() if k != "self"}
     return func, arguments
+
+
+def check_evaluation_permission(func):
+    def wrapper(request, *args, **kwargs):
+        evaluation_id = kwargs["evaluation_id"]
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        evaluation_users = evaluation.users.all()
+        if evaluation.status is choices.EvaluationStatus.PUBLIC:
+            return func(request, *args, **kwargs)
+        else:  # TODO: Add check for if a user is cabinet office or not
+            if request.user not in evaluation_users:
+                raise Http404("Evaluation not found")
+            return func(request, *args, **kwargs)
+
+    return wrapper
 
 
 def apply_schema(schema, data, load_or_dump):
