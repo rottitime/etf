@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -31,7 +31,7 @@
 
         <ul>
           <li>
-            <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}" class="active">Overview</a>
+            <a href="{{url('evaluation-summary-overview', data.evaluation.id)}}" class="active">Overview</a>
             <ul>
               <li><a href="#event-dates" class="smooth-scroll">Event Dates</a></li>
               <li><a href="#where-else-is-this-evaluation-registered" class="smooth-scroll">Where else is this evaluation registered?</a></li>
@@ -40,11 +40,11 @@
               <li><a href="#technical-report" class="smooth-scroll">Technical report</a></li>
             </ul>
           </li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}">What is measured?</a></li>
-          <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
-          <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
-          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
-          <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>
+          <li><a href="{{url('evaluation-summary-measured', evaluation_id=data.evaluation.id)}}">What is measured?</a></li>
+          <li><a href="{{url('evaluation-summary-design', evaluation_id=data.evaluation.id)}}">Evaluation design</a></li>
+          <li><a href="{{url('evaluation-summary-analysis', evaluation_id=data.evaluation.id)}}">Analysis</a></li>
+          <li><a href="{{url('evaluation-summary-findings', evaluation_id=data.evaluation.id)}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-cost', evaluation_id=data.evaluation.id)}}">Cost</a></li>
 
 
         </ul>
@@ -151,19 +151,27 @@
         <table>
           <tr>
             <th>Why would improvements in relation to this issue matter?</th>
-            <td>{% if data.evaluation.why_improvements_matter %}{{data.evaluation.why_improvements_matter}}{% else %}Not answered{% endif %}</td>
+            <td>
+              {{ data.evaluation.why_improvements_matter and data.evaluation.why_improvements_matter or "Not answered" }}
+            </td>
           </tr>
           <tr>
             <th>Who does it matter to?</th>
-            <td>{% if data.evaluation.who_improvements_matter_to %}{{data.evaluation.who_improvements_matter_to}}{% else %}Not answered{% endif %}</td>
+            <td>
+              {{ data.evaluation.who_improvements_matter_to and data.evaluation.who_improvements_matter_to or "Not answered" }}
+            </td>
           </tr>
           <tr>
             <th>Current practice</th>
-            <td>{% if data.evaluation.current_practice %}{{data.evaluation.current_practice}}{% else %}Not answered{% endif %}</td>
+            <td>
+              {{ data.evaluation.current_practice and data.evaluation.current_practice or "Not answered" }}
+            </td>
           </tr>
           <tr>
             <th>Relevance of the study</th>
-            <td>{% if data.evaluation.issue_relevance %}{{data.evaluation.issue_relevance}}{% else %}Not answered{% endif %}</td>
+            <td>
+              {{ data.evaluation.issue_relevance and data.evaluation.issue_relevance or "Not answered" }}
+            </td>
           </tr>
         </table>
       </div>
@@ -180,13 +188,13 @@
 
 
       <footer class="center">
-        <a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}" class="bttn-primary">Next: What is measured?</a>
+        <a href="{{url('evaluation-summary-measured', data.evaluation.id)}}" class="bttn-primary">Next: What is measured?</a>
       </footer>
 
     <div class="wrapper">
 
     {% if user_can_edit %}
-      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", data.id)}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
   </div>

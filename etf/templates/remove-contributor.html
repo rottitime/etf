@@ -2,7 +2,7 @@
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-  <form method="POST" action="{{url("evaluation-contributor-remove", args=[evaluation_id, email])}}">{{csrf_input}}
+  <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, email)}}">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
         <h3>Remove Contributor</h3>

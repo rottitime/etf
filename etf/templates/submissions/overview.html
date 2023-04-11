@@ -7,7 +7,7 @@
       <h3>Evaluation progress</h3>
       {% for page, order in data.page_order|dictsort(by='value') %}
         <div class="grid-x">
-          <div class="cell small-6 eval-overview-name"><a href="{{url(page, args=[data.evaluation_id])}}">{{ get_page_display_name(page) }}</a></div>
+          <div class="cell small-6 eval-overview-name"><a href="{{url(page, data.evaluation_id)}}">{{ get_page_display_name(page) }}</a></div>
           <div class="cell small-6 eval-overview-status">{{ get_page_status_display_name(data.statuses[page]) }}</div>
         </div>
       {% endfor %}

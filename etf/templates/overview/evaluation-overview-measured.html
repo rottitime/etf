@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', args=[data.evaluation.id])}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -31,9 +31,9 @@
 
         <ul>
           <li>
-            <a href="{{url('evaluation-summary-overview', args=[data.evaluation.id])}}">Overview</a>
+            <a href="{{url('evaluation-summary-overview', data.evaluation.id)}}">Overview</a>
           </li>
-          <li><a href="{{url('evaluation-summary-measured', args=[data.evaluation.id])}}" class="active">What is measured?</a>
+          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}" class="active">What is measured?</a>
             <ul>
               {% if data.interventions | length == 0 %}
                 <li><a href="#interventions" class="smooth-scroll">Interventions</a></li>
@@ -67,10 +67,10 @@
               {% endif %}
             </ul>
           </li>
-          <li><a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}">Evaluation design</a></li>
-          <li><a href="{{url('evaluation-summary-analysis', args=[data.evaluation.id])}}">Analysis</a></li>
-          <li><a href="{{url('evaluation-summary-findings', args=[data.evaluation.id])}}">Findings</a></li>
-          <li><a href="{{url('evaluation-summary-cost', args=[data.evaluation.id])}}">Cost</a></li>
+          <li><a href="{{url('evaluation-summary-design', data.evaluation.id)}}">Evaluation design</a></li>
+          <li><a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}">Analysis</a></li>
+          <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
+          <li><a href="{{url('evaluation-summary-cost', data.evaluation.id)}}">Cost</a></li>
 
 
         </ul>
@@ -103,51 +103,75 @@
               <table>
                 <tr>
                 <th>Description</th>
-                <td>{% if intervention.brief_description %}{{intervention.brief_description}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.brief_description and intervention.brief_description or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Rationale</th>
-                <td>{% if intervention.rationale %}{{intervention.rationale}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.rationale and intervention.rationale or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Materials used</th>
-                <td>{% if intervention.materials_used %}{{intervention.materials_used}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.materials_used and intervention.materials_used or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Procedures</th>
-                <td>{% if intervention.procedures %}{{intervention.procedures}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.procedures and intervention.procedures or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Provider description</th>
-                <td>{% if intervention.provider_description %}{{intervention.provider_description}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.provider_description and intervention.provider_description or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Modes of delivery</th>
-                <td>{% if intervention.modes_of_delivery %}{{intervention.modes_of_delivery}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.modes_of_delivery and intervention.modes_of_delivery or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Location</th>
-                <td>{% if intervention.location %}{{intervention.location}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.location and intervention.location or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Frequency of delivery</th>
-                <td>{% if intervention.frequency_of_delivery %}{{intervention.frequency_of_delivery}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.frequency_of_delivery and intervention.frequency_of_delivery or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Tailoring</th>
-                <td>{% if intervention.tailoring %}{{intervention.tailoring}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.tailoring and intervention.tailoring or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Fidelity</th>
-                <td>{% if intervention.fidelity %}{{intervention.fidelity}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.fidelity and intervention.fidelity or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Resource requirements</th>
-                <td>{% if intervention.resource_requirements %}{{intervention.resource_requirements}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.resource_requirements and intervention.resource_requirements or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Geographical information</th>
-                <td>{% if intervention.geographical_information %}{{intervention.geographical_information}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ intervention.geographical_information and intervention.geographical_information or "Not answered" }}
+                </td>
               </tr>
               </table>
             </div>
@@ -168,41 +192,65 @@
             </header>
             <div class="content">
               <table>
-                <tr>
+                 <tr>
                 <th>Primary or secondary</th>
-                <td>{% if outcome_measure.primary_or_secondary %}{{outcome_measure.get_primary_or_secondary_display_name()}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ outcome_measure.primary_or_secondary and outcome_measure.get_primary_or_secondary_display_name() or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Direct or surrogate</th>
-                <td>{% if outcome_measure.direct_or_surrogate %}{{outcome_measure.get_direct_or_surrogate_display_name()}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ outcome_measure.direct_or_surrogate and outcome_measure.get_direct_or_surrogate_display_name() or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Measure type</th>
-                <td>{% if outcome_measure.measure_type %}{{outcome_measure.get_measure_type_display_name()}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ outcome_measure.measure_type and outcome_measure.get_measure_type_display_name() or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Measure type (other)</th>
-                <td>{% if outcome_measure.measure_type_other %}{{outcome_measure.measure_type_other}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.measure_type_other %}{{outcome_measure.measure_type_other}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.measure_type_other and outcome_measure.measure_type_other or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Description</th>
-                <td>{% if outcome_measure.description %}{{outcome_measure.description}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.description %}{{outcome_measure.description}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.description and outcome_measure.description or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Collection process</th>
-                <td>{% if outcome_measure.collection_process %}{{outcome_measure.collection_process}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.collection_process %}{{outcome_measure.collection_process}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.collection_process and outcome_measure.collection_process or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Timepoint(s) of interest</th>
-                <td>{% if outcome_measure.timepoint %}{{outcome_measure.timepoint}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.timepoint %}{{outcome_measure.timepoint}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.timepoint and outcome_measure.timepoint or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Minimum practically important difference</th>
-                <td>{% if outcome_measure.minimum_difference %}{{outcome_measure.minimum_difference}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.minimum_difference %}{{outcome_measure.minimum_difference}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.minimum_difference and outcome_measure.minimum_difference or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Relevance of outcome</th>
-                <td>{% if outcome_measure.relevance %}{{outcome_measure.relevance}}{% else %}Not answered{% endif %}</td>
+                <td>{% if outcome_measure.relevance %}{{outcome_measure.relevance}}{% else %}N/A{% endif %}</td>
+                <td>
+                  {{ outcome_measure.relevance and outcome_measure.relevance or "Not answered" }}
+                </td>
               </tr>
               </table>
             </div>
@@ -225,19 +273,27 @@
               <table>
                 <tr>
                 <th>Measure type</th>
-                <td>{% if other_measure.measure_type %}{{other_measure.get_measure_type_display_name()}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ other_measure.measure_type and other_measure.get_measure_type_display_name() or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Measure type (other)</th>
-                <td>{% if other_measure.measure_type_other %}{{other_measure.measure_type_other}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ other_measure.measure_type_other and other_measure.measure_type_other or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Description</th>
-                <td>{% if other_measure.description %}{{other_measure.description}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ other_measure.description and other_measure.description or "Not answered" }}
+                </td>
               </tr>
               <tr>
                 <th>Collection process</th>
-                <td>{% if other_measure.collection_process %}{{other_measure.collection_process}}{% else %}Not answered{% endif %}</td>
+                <td>
+                  {{ other_measure.collection_process and other_measure.collection_process or "Not answered" }}
+                </td>
               </tr>
               </table>
             </div>
@@ -246,13 +302,13 @@
       {% endif %}
 
       <footer class="center">
-        <a href="{{url('evaluation-summary-design', args=[data.evaluation.id])}}" class="bttn-primary">Next: Evaluation design</a>
+        <a href="{{url('evaluation-summary-design', data.evaluation.id)}}" class="bttn-primary">Next: Evaluation design</a>
       </footer>
 
     <div class="wrapper">
 
     {% if user_can_edit %}
-      <a href="{{url("intro", args=[data.id])}}" class="button float-right">Edit evaluation</a>
+      <a href="{{url("intro", data.id)}}" class="button float-right">Edit evaluation</a>
     {% endif %}
   </div>
   </div>

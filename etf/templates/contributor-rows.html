@@ -6,7 +6,7 @@
          {% if contributors.count() <= 1 %} disabled hx-disable="true" {% endif %}
          id="delete-b-{{loop.index}}"
          hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'
-         hx-delete="{{url("evaluation-contributors", args=[evaluation_id, contributor.email])}}"
+         hx-delete="{{url("evaluation-contributors", evaluation_id, contributor.email)}}"
          hx-target="#contributor-table-body"
          hx-append="innerHTML">Remove</a>
     </td>

@@ -12,7 +12,7 @@
                 <i class="bi-arrow-right-circle"></i><span class="current-page-name">{{ get_page_display_name(page) }}</span>
               {% else %}
                 <div>
-                  <a href="{{ url(page, args=[evaluation_id])}}">{{ get_page_display_name(page) }}</a>
+                  <a href="{{ url(page, evaluation_id)}}">{{ get_page_display_name(page) }}</a>
                   <i class="{{get_page_progress_icon(page_statuses[page])}}"></i>
                 </div>
               {% endif %}
