@@ -1,9 +1,8 @@
-from nose import with_setup
 from django.core.exceptions import ValidationError
+from nose import with_setup
 
 from etf import settings as etf_settings
-from etf.evaluation import models
-from etf.evaluation import restrict_email
+from etf.evaluation import models, restrict_email
 
 from . import utils
 
