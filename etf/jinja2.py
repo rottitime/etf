@@ -76,7 +76,7 @@ def url(path, *args, **kwargs):
 
 def markdown(text, cls=None):
     html = markdown_converter.render(text).strip()
-    html = html.replace('<p>', f'<p class="{cls or ""}">', 1).replace('</p>', '', 1)
+    html = html.replace("<p>", f'<p class="{cls or ""}">', 1).replace("</p>", "", 1)
     return html
 
 
