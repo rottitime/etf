@@ -217,7 +217,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       {% for tt in tooltip %}
-        <p>{{tt}}</p>
+        {{markdown(tt)|safe}}
       {% endfor %}
     </div>
     <button type="button" class="help-text-button" name="help-text-modal" data-open="tooltip-modal-{{name}}"><i class="bi-question"></i></button>
@@ -227,7 +227,7 @@
 {%- macro field_help_text(name)  %}
   {% set short_description = get_field_help_text(object_name, name) %}
   {% if short_description %}
-    <p class="subheader">{{short_description}}</p>
+    {{markdown(short_description, "subheader")|safe}}
   {% endif %}
 {%- endmacro  %}
 

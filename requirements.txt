@@ -8,6 +8,7 @@ django_use_email_as_username
 faker
 furl
 jinja2
+markdown-it-py
 marshmallow
 openpyxl
 pandas
