@@ -11,7 +11,7 @@
     </div>
     <div class="card-section">
 
-      <p>Don't have an account? Then please <a href="{{signup_url}}">sign up</a>.</p>
+      <p>Don't have an account? Then please <a href="{% url 'account_signup' %}">sign up</a>.</p>
 
       <form method="post">
         {% csrf_token %}
