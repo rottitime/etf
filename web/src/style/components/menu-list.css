@@ -16,6 +16,12 @@
     @media (--viewport-medium) {
       position: sticky;
       top: 10px;
+
+      & ul {
+        max-height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
     }
   }
 
