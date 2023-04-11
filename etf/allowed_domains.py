@@ -1,0 +1,92 @@
+"""
+Add known domains for government departments: https://www.gov.uk/government/organisations.
+
+This is a list of CIVIL SERVICE domains not PUBLIC SERVICE eg NHS is public body but not civil service.
+Arms' Length Bodies can be either - so check before adding.
+
+Domains for ALBs are listed under the corresponding department.
+
+To note - BEIS is also listed.
+"""
+
+# Ministerial departments
+
+ATTORNEY_GENERALS_OFFICE = []
+
+CABINET_OFFICE = []
+
+DEPARTMENT_FOR_BUSINESS_AND_TRADE = []
+
+DEPARMENT_FOR_CULTURE_MEDIA_SPORT = []
+
+DEPARMENT_FOR_EDUCATION = []
+
+DEPARTMENT_FOR_ENERGY_SECURITY_NET_ZERO = []
+
+DEFRA = []
+
+DLUHC = []
+
+DEPT_SCIENCE_INNOVATION_TECHNOLOGY = []
+
+DEPT_TRANSPORT = []
+
+DEPT_WORK_PENSIONS = []
+
+DEPT_HEALTH_SOCIAL_CARE = []
+
+FOREIGN_OFFICE = []
+
+HM_TREASURY = []
+
+HOME_OFFICE = []
+
+MINISTRY_OF_DEFENCE = []
+
+MINISTRY_OF_JUSTICE = []
+
+NI_OFFICE = []
+
+OFFICE_OF_ADVOCAATE_GENERAL_FOR_SCOTLAND = []
+
+OFFICE_OF_LEADER_OF_HOUSE_OF_COMMONS = []
+
+OFFICE_OF_LEADER_HOUSE_OF_LORDS = []
+
+OFFICE_OF_SOS_SCOTLAND = []
+
+OFFICE_OF_SOS_WALES = []
+
+UK_EXPORT_FINANCE = []
+
+
+# Non-ministerial departments
+
+CHARITY_COMMISSION = []
+
+COMPETITION_MARKETS_AUTHORITY = []
+CROWN_PROSECUTION_SERVICE = []
+FOOD_STANDARDS_AGENCY = []
+FORESTRY_COMMISSION = []
+
+GOV_ACTUARY_DEPT = []
+GOV_LEGAL_DEPT = []
+HM_LAND_REGISTRY = []
+HMRC = []
+NS_AND_I = []
+NATIONAL_ARCHIVES = []
+NATIONAL_CRIME_AGENCY = []
+OFFICE_OF_RAIL_AND_ROAD = []
+OFGEM = []
+OFQUAL = []
+OFSTED = []
+SERIOUS_FRAUD_OFFICE = []
+SUPREME_COURT_UK = []
+UK_STATISTICS_AUTHORITY = []
+WATER_SERVICES_REGULATION_AUTHORITY = []
+
+# Devolved administrations
+
+SCOTTISH_GOVERNMENT = []
+WELSH_GOVERNMENT = []
+NI_GOVERNMENT = []  # Note, this is
