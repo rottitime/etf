@@ -54,7 +54,7 @@
       }
     }
 
-    & a.active {
+    & a[aria-selected='true'] {
       border-radius: 0;
       @media (--viewport-medium) {
         & {

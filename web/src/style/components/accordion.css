@@ -48,7 +48,7 @@
         }
       }
 
-      &.active {
+      &[aria-selected='true'] {
         & + .accordion-content-wrapper {
           max-height: 5000px;
           & .accordion-content {
