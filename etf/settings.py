@@ -180,11 +180,7 @@ LOGIN_REDIRECT_URL = "index"
 
 ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 
-DEFAULT_ALLOWED_DOMAINS = frozenset(
-    [
-        "xansium.com",  # Required for user research - to be removed later
-    ]
-)
+DEFAULT_ALLOWED_DOMAINS = frozenset([])  # TODO - more to be added
 
 if ALLOW_EXAMPLE_EMAILS:
     ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS.union({"example.com"})
