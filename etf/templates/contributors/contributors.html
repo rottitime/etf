@@ -23,7 +23,7 @@
         <tbody id="contributor-table-body">
         {% for c in contributors %}
           <tr>
-            <td id="td-email-a-{{loop.index}}">{{c.email}}{% if not c.is_signed_up %} (invited){% endif %}</td>
+            <td id="td-email-a-{{loop.index}}">{{user.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
             <td>
               <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
                  <fieldset class="fieldset">
