@@ -31,11 +31,11 @@
             
 
             <nav class="menu-list horizontal" id="main-header-menu">
-            <a href="{{url('search')}}" {% if request.path==url('search') %}aria-selected="true"{% endif %}>
+            <a href="{{url('search')}}" {% if request.path==url('search') %}aria-current="page"{% endif %}>
               {{macros.search_svg()}}
               Evaluation search
             </a>
-            <a href="{{url('my-evaluations')}}" {% if request.path==url('my-evaluations') %}aria-selected="true"{% endif %}>
+            <a href="{{url('my-evaluations')}}" {% if request.path==url('my-evaluations') %}aria-current="page"{% endif %}>
               My evaluations
             </a>
 

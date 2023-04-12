@@ -54,7 +54,7 @@
       }
     }
 
-    & a[aria-selected='true'] {
+    & a[aria-current='page'] {
       border-radius: 0;
       @media (--viewport-medium) {
         & {
