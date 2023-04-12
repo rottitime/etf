@@ -1,7 +1,8 @@
+from django.core.exceptions import ValidationError
 from nose import with_setup
 
 from etf import settings as etf_settings
-from etf.evaluation import models
+from etf.evaluation import models, restrict_email
 
 from . import utils
 
@@ -172,3 +173,26 @@ def test_incorrect_user_id_and_code_caught():
         "Something went wrong with this request. Please try entering your email again or login instead."
     )
     assert page.has_text("Enter another email")
+
+
+def test_correct_email_domains():
+    correct_emails = [
+        "test@education.gov.uk",
+        "test@no10.gov.uk",
+        "test@justice.gov.uk",
+        "test@beis.gov.uk",
+        "test@levellingup.gov.uk",
+    ]
+    for email in correct_emails:
+        cleaned_email = restrict_email.clean_email(email)
+        assert email == cleaned_email
+
+
+def test_incorrect_email_domains():
+    incorrect_emails = ["test@fake.gov.uk", "test@example.org"]
+    for email in incorrect_emails:
+        try:
+            cleaned_email = restrict_email.clean_email(email)
+            assert not cleaned_email
+        except ValidationError as e:
+            assert e.message.startswith("This email domain is not yet supported")

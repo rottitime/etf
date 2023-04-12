@@ -1,6 +1,7 @@
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from . import allowed_domains
 from .settings_base import (
     BASE_DIR,
     SECRET_KEY,
@@ -183,9 +184,9 @@ ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 DEFAULT_ALLOWED_DOMAINS = frozenset([])  # TODO - more to be added
 
 if ALLOW_EXAMPLE_EMAILS:
-    ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS.union({"example.com"})
+    ALLOWED_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS.union({"example.com"})
 else:
-    ALLOWED_DOMAINS = DEFAULT_ALLOWED_DOMAINS
+    ALLOWED_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS
 
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
 
