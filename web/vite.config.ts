@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import postcssNesting from 'postcss-nesting'
 import postcssCustomMedia from 'postcss-custom-media'
 import svgLoader from 'vite-svg-loader'
+import postcssColorModFunction from 'postcss-color-mod-function'
 // eslint-disable-next-line import/no-named-as-default
 import liveReload from 'vite-plugin-live-reload'
 
@@ -15,7 +16,13 @@ export default defineConfig({
   ],
   css: {
     postcss: {
-      plugins: [postcssNesting, postcssCustomMedia]
+      plugins: [
+        postcssNesting,
+        postcssCustomMedia,
+        postcssColorModFunction({
+          importFrom: 'src/style/vars.css'
+        })
+      ]
     }
   },
   build: {
