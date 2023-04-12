@@ -25,7 +25,7 @@
           <tr>
             <td id="td-email-a-{{loop.index}}">{{c.email}}{% if not c.is_signed_up %} (invited){% endif %}</td>
             <td>
-              <form method="POST" action="{{url("evaluation-contributor-remove", args=[evaluation_id, c.email])}}">{{csrf_input}}
+              <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
                  <fieldset class="fieldset">
                       <button class="button"
                               type="submit"
