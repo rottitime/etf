@@ -1,0 +1,16 @@
+.breadcrumb {
+  font-size: var(--text-small);
+  & ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* list-style-type: disc; */
+  }
+  & li {
+    display: inline-block;
+
+    &::nth-child(n + 2) {
+      content: '\2022';
+    }
+  }
+}
