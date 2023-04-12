@@ -1,5 +1,7 @@
 .breadcrumb {
   font-size: var(--text-small);
+  margin-bottom: var(--spacing-24);
+
   & ol {
     list-style: none;
     padding: 0;
@@ -9,8 +11,9 @@
   & li {
     display: inline-block;
 
-    &::nth-child(n + 2) {
+    &:nth-child(n + 2):before {
       content: '\2022';
+      margin-right: var(--spacing-4);
     }
   }
 }

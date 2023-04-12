@@ -57,10 +57,14 @@
   }
 }
 
-.back-bar {
+.back-bar,
+.space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.back-bar {
   margin-bottom: var(--spacing-24);
   & .right {
     display: flex;
