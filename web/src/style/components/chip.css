@@ -1,7 +1,3 @@
-:root {
-  --color: #fb0000;
-}
-
 .chip {
   background-color: var(--color-highlight1);
   border-radius: 4px;
@@ -38,14 +34,10 @@
   }
 
   &[role='status'] {
-    --color-green: #4ece3d;
-    --color-orange: #fd7b1f;
-    --color-red: #ff151f;
-    --color-default: #545864;
-    --color-blue: #0050c7;
-    --color: #fb0000;
-
-    background-color: rgb(from var(--color) r g b / 0.5);
+    background-color: color-mod(var(--status-color-default) a(var(--status-color-alpha)));
+    display: inline-flex;
+    align-items: center;
+    color: var(--status-color-default);
 
     &:before {
       content: '';
@@ -54,7 +46,42 @@
       height: 6px;
       border-radius: 50%;
       margin-right: var(--spacing-8);
-      background-color: var(--color-default);
+      background-color: var(--status-color-default);
+    }
+
+    &.green {
+      background-color: color-mod(var(--status-color-green) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-green);
+      }
+    }
+
+    &.orange {
+      background-color: color-mod(
+        var(--status-color-orange) a(var(--status-color-alpha))
+      );
+      &:before {
+        background-color: var(--status-color-orange);
+      }
+    }
+
+    &.red {
+      background-color: color-mod(var(--status-color-red) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-red);
+      }
+    }
+
+    &.blue {
+      background-color: color-mod(var(--status-color-blue) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-blue);
+      }
+    }
+
+    & i {
+      font-weight: 300;
+      margin-left: var(--spacing-4);
     }
   }
 }

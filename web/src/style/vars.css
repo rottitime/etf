@@ -42,4 +42,12 @@
   --animation-speed: 0.3s;
 
   --tab-stroke: var(--color-blue2);
+
+  /* components */
+  --status-color-alpha: 15%;
+  --status-color-green: #4ece3d;
+  --status-color-orange: #fd7b1f;
+  --status-color-red: #ff151f;
+  --status-color-default: #545864;
+  --status-color-blue: #0050c7;
 }
