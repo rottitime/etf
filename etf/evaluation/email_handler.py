@@ -1,4 +1,4 @@
-import datetime as dt
+import datetime
 
 import furl as furl
 import pytz
@@ -75,7 +75,7 @@ EMAIL_MAPPING = {
 
 
 def _send_token_email(user, subject, template_name, from_address, url_path, token_generator):
-    user.last_token_sent_at = dt.datetime.now(tz=pytz.UTC)
+    user.last_token_sent_at = datetime.datetime.now(tz=pytz.UTC)
     user.save()
     token = token_generator.make_token(user)
     base_url = settings.BASE_URL
@@ -114,7 +114,7 @@ def send_password_reset_email(user):
 
 def send_invite_email(user):
     data = EMAIL_MAPPING["invite-user"]
-    user.invited_at = dt.datetime.now()
+    user.invited_at = datetime.datetime.now()
     return _send_token_email(user, **data)
 
 
@@ -122,7 +122,7 @@ def send_contributor_added_email(user, evaluation_id):
     data = EMAIL_MAPPING["add-contributor"]
     base_url = settings.BASE_URL
     url = furl.furl(url=base_url)
-    url /= f"/evaluation/{evaluation_id}"
+    url.path.add(f"evaluation/{evaluation_id}")
     url = str(url)
     context = {"first_name": user.first_name or "user", "url": url}
     response = _send_normal_email(to_address=user.email, context=context, **data)
