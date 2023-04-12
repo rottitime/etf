@@ -16,6 +16,9 @@
     font-size: var(--text-small);
     line-height: 15px;
   }
+  &.full-width {
+    width: 100%;
+  }
 }
 
 .bttn-primary {
