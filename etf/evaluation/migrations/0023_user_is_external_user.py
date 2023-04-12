@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0022_auto_20230410_0825'),
+        ("evaluation", "0022_auto_20230410_0825"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='is_external_user',
+            model_name="user",
+            name="is_external_user",
             field=models.BooleanField(default=False),
         ),
     ]
