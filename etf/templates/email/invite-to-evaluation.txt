@@ -3,7 +3,7 @@ Hi,
 You've been invited to contribute to an evaluation. Please use the link below to access it.
 {{url|safe}}
 
-If you have a query about this notification, please email the support team: etf@cabinetoffice.gov.uk
+If you have a query about this notification, please email the support team: {{contact_address}}
 
 Regards
 

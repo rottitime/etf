@@ -236,11 +236,12 @@ class AcceptInviteSignupView(MethodDispatcher):
         return user_id, token, valid_request
 
     def get(self, request):
+        contact_email = settings.CONTACT_EMAIL
         try:
             _, _, valid_request = self.get_token_request_args(request)
-            return render(request, "account/accept_signup_invite.html", {"valid": valid_request})
+            return render(request, "account/accept_signup_invite.html", {"valid": valid_request, "contact_address": contact_email})
         except models.User.DoesNotExist:
-            return render(request, "account/accept_signup_invite.html", {"valid": False})
+            return render(request, "account/accept_signup_invite.html", {"valid": False, "contact_address": contact_email})
 
     def post(self, request):
         user_id, token, valid_request = self.get_token_request_args(request)

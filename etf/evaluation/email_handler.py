@@ -46,26 +46,26 @@ INVITE_TOKEN_GENERATOR = InviteTokenGenerator()
 
 EMAIL_MAPPING = {
     "email-verification": {
-        "from_address": "etf@cabinetoffice.gov.uk",
+        "from_address": settings.FROM_EMAIL,
         "subject": "Evaluation Registry: confirm your email address",
         "template_name": "email/verification.txt",
         "url_path": "/accounts/verify/",
         "token_generator": EMAIL_VERIFY_TOKEN_GENERATOR,
     },
     "password-reset": {
-        "from_address": "etf@cabinetoffice.gov.uk",
+        "from_address": settings.FROM_EMAIL,
         "subject": "Evaluation Registry: password reset",
         "template_name": "email/password-reset.txt",
         "url_path": "/accounts/change-password/reset/",
         "token_generator": PASSWORD_RESET_TOKEN_GENERATOR,
     },
     "add-contributor": {
-        "from_address": "etf@cabinetoffice.gov.uk",
+        "from_address": settings.FROM_EMAIL,
         "subject": "Evaluation Registry: invited to contribute",
         "template_name": "email/invite-to-evaluation.txt",
     },
     "invite-user": {
-        "from_address": "etf@cabinetoffice.gov.uk",
+        "from_address": settings.FROM_EMAIL,
         "subject": "Evaluation Registry: invited to join",
         "template_name": "email/invite-user.txt",
         "url_path": "/accounts/accept-invite/",
@@ -80,7 +80,7 @@ def _send_token_email(user, subject, template_name, from_address, url_path, toke
     token = token_generator.make_token(user)
     base_url = settings.BASE_URL
     url = str(furl.furl(url=base_url, path=url_path, query_params={"code": token, "user_id": str(user.id)}))
-    context = dict(user=user, url=url)
+    context = dict(user=user, url=url, contact_address=settings.CONTACT_EMAIL)
     body = render_to_string(template_name, context)
     response = send_mail(
         subject=subject,

@@ -21,7 +21,6 @@
           </tr>
         </thead>
         <tbody id="contributor-table-body">
-        {{ contributors }}
         {% for c in contributors %}
           <tr>
             <td id="td-email-a-{{loop.index}}">{{c.email}}{% if not c.is_signed_up %} (invited){% endif %}</td>

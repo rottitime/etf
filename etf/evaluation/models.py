@@ -38,7 +38,7 @@ class User(BaseUser, UUIDPrimaryKeyBase):
         super().save(*args, **kwargs)
 
     def has_signed_up(self):
-        return self.last_login is None
+        return self.last_login is not None
 
 
 class NamedModel:
