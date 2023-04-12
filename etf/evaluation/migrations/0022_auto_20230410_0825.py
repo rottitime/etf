@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("evaluation", "0022_create_third_party_user_group"),
+        ("evaluation", "0021_alter_intervention_name"),
     ]
 
     operations = [
