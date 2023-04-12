@@ -13,6 +13,7 @@
 
     &:nth-child(n + 2):before {
       content: '\2022';
+      margin-right: var(--spacing-4);
     }
   }
 }
