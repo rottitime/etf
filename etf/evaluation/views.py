@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
 from django.contrib.postgres.search import (
     SearchQuery,
     SearchRank,
@@ -169,9 +168,8 @@ class EvaluationContributor(MethodDispatcher):
     def get(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         users = evaluation.users.all()
-        user_map = [{"email": user.email, "is_signed_up": user.has_signed_up()} for user in users]
         return render(
-            request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id}
+            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
         )
 
     def post(self, request, evaluation_id):
@@ -188,15 +186,14 @@ class EvaluationContributor(MethodDispatcher):
             user = models.User.objects.create(email=email)
             user.save()
             if is_external_user:
-                external_group, _ = Group.objects.get_or_create(name="Third party user")
-                external_group.user_set.add(user)
+                user.is_external_user = True
+                user.save()
             evaluation.users.add(user)
             evaluation.save()
             send_invite_email(user)
         users = evaluation.users.all()
-        user_map = [{"email": user.email, "is_signed_up": user.has_signed_up()} for user in users]
         return render(
-            request, "contributors/contributors.html", {"contributors": user_map, "evaluation_id": evaluation_id}
+            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
         )
 
 
