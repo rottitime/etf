@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
-from .restrict_email import is_gov_uk
+from .restrict_email import is_civil_service_email
 
 
 class MethodDispatcher:
@@ -184,7 +184,7 @@ class EvaluationContributor(MethodDispatcher):
             evaluation.save()
             send_contributor_added_email(user, evaluation_id)
         else:
-            is_external_user = not is_gov_uk(email)
+            is_external_user = not is_civil_service_email(email)
             user = models.User.objects.create(email=email)
             user.save()
             if is_external_user:
