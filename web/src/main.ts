@@ -15,6 +15,7 @@ import './style/components/hintbox.css'
 import './style/components/menu-list.css'
 import './style/components/progress-list.css'
 import './style/components/accordion.css'
+import './style/components/circular-progress-bar.css'
 import './style/pages.css'
 import './style/components/progress-bar-horizontal.css'
 import './style/components/progress-bar-horizontal-wide.css'
@@ -26,6 +27,7 @@ import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
 import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
 import setupHintbox from './components/hintbox'
+import setupCircularProgressBar from './components/circular-progress-bar'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -50,6 +52,7 @@ window.addEventListener('load', () => {
   setupSmoothScroll()
   setupMobileMenu()
   setupHintbox()
+  setupCircularProgressBar()
 })
 
 window.addEventListener('DOMContentLoaded', () => {

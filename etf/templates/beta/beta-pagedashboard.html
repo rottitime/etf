@@ -11,11 +11,19 @@
 
 <div class="sidebarcolumn">
   <div class="col">
-    <div class="card small mb-24">
-      <h2 class="header3 highlight">Overall progress</h2>
-      <p>
-        It is recommended to complete at least 60% before publishing evaluations
-      </p>
+    <div class="mb-24 card small" style="display: flex; gap: 30px;">
+      <div class="progress-bar-container">
+        <div class="circular-progress-bar"
+          data-segments='[{"color": "var(--status-color-green)", "percentage": 25}, {"color": "var(--status-color-orange)", "percentage": 25}, {"color": "var(--status-color-red)", "percentage": 25}]'>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="header3 highlight">Overall progress</h2>
+        <p>
+          It is recommended to complete at least 60% before publishing evaluations
+        </p>
+      </div>
     </div>
 
     <div class="card small">
