@@ -14,5 +14,5 @@ EMAIL_FILE_PATH='/app/mail'
 BASE_URL=http://localhost:8010/
 ALLOW_EXAMPLE_EMAILS=True
 SEND_VERIFICATION_EMAIL = False
-CONTACT_EMAIL='etf@cabinetoffice.gov.uk'
-FROM_EMAIL='etf@cabinetoffice.gov.uk'
+CONTACT_EMAIL="testexample.com"
+FROM_EMAIL="testexample.com"

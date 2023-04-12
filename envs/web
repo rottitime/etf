@@ -14,5 +14,5 @@ ALLOW_EXAMPLE_EMAILS=True
 BASE_URL=http://localhost:8010/
 SEND_VERIFICATION_EMAIL = True
 VCAP_APPLICATION='{"space_name": "local"}'
-CONTACT_EMAIL="etf@cabinetoffice.gov.uk"
-FROM_EMAIL="etf@cabinetoffice.gov.uk"
+CONTACT_EMAIL="testexample.com"
+FROM_EMAIL="testexample.com"
