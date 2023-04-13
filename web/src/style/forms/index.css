@@ -112,14 +112,20 @@ input {
   & input[type='date'] {
     text-indent: 18px;
     width: 100%;
-    /* -webkit-appearance: textfield;
-    -moz-appearance: textfield; */
+    /* bug fix: safari mobile input alignment */
     -webkit-appearance: none;
 
     &::-webkit-inner-spin-button,
     &::-webkit-calendar-picker-indicator {
-      display: none;
-      -webkit-appearance: none;
+      /* position but hide over svg so clicks work in chrome */
+      opacity: 0;
+      left: 0;
+      position: absolute;
+      width: 45px;
+      height: 100%;
+      border: 1px solid #ccc;
+      z-index: 2;
+      color: red;
     }
   }
 }
