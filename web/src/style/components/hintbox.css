@@ -1,0 +1,16 @@
+.hintbox {
+  & .hintbox-title {
+    color: var(--color-link);
+    font-weight: 400;
+    font-size: 12px;
+  }
+  & .content {
+    background-color: color-mod(var(--color-grey-light2) a(0.2));
+    padding: var(--spacing-8) var(--spacing-16);
+    /* background-color: color-mod(var(--color-grey-light2) a(var(0.2))); */
+
+    & p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
