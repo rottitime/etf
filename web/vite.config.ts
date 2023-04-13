@@ -12,7 +12,7 @@ export default defineConfig({
   },
   plugins: [
     svgLoader({ defaultImport: 'raw' }),
-    liveReload('../etf/templates/**/*.*', { alwaysReload: true })
+    liveReload('../etf/templates/**/*.html', { alwaysReload: true })
   ],
   css: {
     postcss: {
