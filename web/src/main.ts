@@ -23,6 +23,7 @@ import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
 import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
+import setupHintbox from './components/hintbox'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -46,6 +47,7 @@ window.addEventListener('load', () => {
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
+  setupHintbox()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
