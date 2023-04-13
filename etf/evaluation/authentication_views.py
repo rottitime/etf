@@ -216,7 +216,7 @@ class PasswordChange(MethodDispatcher):
 @require_http_methods(["GET", "POST"])
 class AcceptInviteSignupView(MethodDispatcher):
     password_signup_error_message = (
-        "This link is not valid. It may have expired or have already been used. Please try again."
+        "This link is not valid. It may have expired or have already been used. Please request another one."
     )
 
     def get_token_request_args(self, request):
