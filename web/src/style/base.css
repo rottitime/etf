@@ -58,7 +58,7 @@ h5,
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--text-font-family);
   &.darken {
     overflow: hidden;
     &:after {

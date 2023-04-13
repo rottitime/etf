@@ -1,11 +1,13 @@
 input {
+  font-family: var(--text-font-family);
   background-color: var(--color-bg-white);
   border: 1px solid var(--input-stroke-light);
   border-radius: 8px;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   padding: 8px 16px;
   box-sizing: border-box;
+  min-height: 40px;
 
   &.full-width {
     width: 100%;
@@ -86,6 +88,39 @@ input {
     background-color: transparent;
     border: none;
     appearance: none;
+  }
+}
+
+.date-picker {
+  position: relative;
+  display: inline-block;
+  min-width: 190px;
+
+  &:before {
+    content: '';
+    display: block;
+    background: url("data:image/svg+xml,<svg width='24' height='24' viewBox='0 0 24 24' fill='%2343F51' xmlns='http://www.w3.org/2000/svg'><path d='M19.5 4.5H18.6667V2.83328C18.6667 2.37338 18.2933 2 17.8333 2H17C16.5399 2 16.1667 2.37338 16.1667 2.83328V4.5H7.83328V2.83328C7.83328 2.37338 7.46005 2 7 2H6.16672C5.70667 2 5.33328 2.37338 5.33328 2.83328V4.5H4.5C3.12167 4.5 2 5.62167 2 7V19.5C2 20.8783 3.12167 22 4.5 22H19.5C20.8783 22 22 20.8783 22 19.5V7C22 5.62167 20.8783 4.5 19.5 4.5ZM20.3333 19.5C20.3333 19.9591 19.9591 20.3333 19.5 20.3333H4.5C4.04086 20.3333 3.66672 19.9591 3.66672 19.5V10.3667H20.3333V19.5Z' /></svg>")
+      center center no-repeat;
+    width: 24px;
+    height: 100%;
+    border-width: thin;
+    position: absolute;
+    left: 18px;
+    botton: 0;
+  }
+
+  & input[type='date'] {
+    text-indent: 18px;
+    width: 100%;
+    /* -webkit-appearance: textfield;
+    -moz-appearance: textfield; */
+    -webkit-appearance: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
   }
 }
 
