@@ -27,6 +27,8 @@
         }
       }
     }
+
+    & .chip[role='status'],
     & .status {
       margin-left: auto;
     }

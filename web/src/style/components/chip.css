@@ -1,0 +1,87 @@
+.chip {
+  background-color: var(--color-highlight1);
+  border-radius: 4px;
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 12px;
+  display: inline-block;
+  padding: 0px 8px;
+  display: inline-flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  & a {
+    transition: none;
+  }
+
+  & .close {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    margin-left: var(--spacing-8);
+  }
+
+  &.purple {
+    background-color: var(--color-purple);
+  }
+
+  &.green {
+    background-color: var(--color-green);
+  }
+
+  &.orange {
+    background-color: var(--color-orange);
+  }
+
+  &[role='status'] {
+    background-color: color-mod(var(--status-color-default) a(var(--status-color-alpha)));
+    display: inline-flex;
+    align-items: center;
+    color: var(--status-color-default);
+
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: var(--spacing-8);
+      background-color: var(--status-color-default);
+    }
+
+    &.green {
+      background-color: color-mod(var(--status-color-green) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-green);
+      }
+    }
+
+    &.orange {
+      background-color: color-mod(
+        var(--status-color-orange) a(var(--status-color-alpha))
+      );
+      &:before {
+        background-color: var(--status-color-orange);
+      }
+    }
+
+    &.red {
+      background-color: color-mod(var(--status-color-red) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-red);
+      }
+    }
+
+    &.blue {
+      background-color: color-mod(var(--status-color-blue) a(var(--status-color-alpha)));
+      &:before {
+        background-color: var(--status-color-blue);
+      }
+    }
+
+    & i {
+      font-weight: 300;
+      margin-left: var(--spacing-4);
+    }
+  }
+}

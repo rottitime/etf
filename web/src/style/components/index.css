@@ -21,42 +21,6 @@
   border-radius: 21px;
 }
 
-.chip {
-  background-color: var(--color-highlight1);
-  border-radius: 4px;
-  color: var(--color-white);
-  font-weight: 500;
-  font-size: 12px;
-  display: inline-block;
-  padding: 0px 8px;
-  display: inline-flex;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  & a {
-    transition: none;
-  }
-
-  & .close {
-    display: inline-flex;
-    align-items: center;
-    color: inherit;
-    margin-left: var(--spacing-8);
-  }
-
-  &.purple {
-    background-color: var(--color-purple);
-  }
-
-  &.green {
-    background-color: var(--color-green);
-  }
-
-  &.orange {
-    background-color: var(--color-orange);
-  }
-}
-
 .back-bar,
 .space-between {
   display: flex;
