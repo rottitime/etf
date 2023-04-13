@@ -1,5 +1,3 @@
-import shortUUID from 'short-uuid'
-
 // This function adds a click event listener to each card element that contains an accordion.
 // It also adds an aria-expanded attribute to the header element of each card with an accordion.
 // The aria-expanded attribute is set to true if the accordion is initially open, and false otherwise.
@@ -9,7 +7,7 @@ const setupCards = () => {
   document.querySelectorAll<HTMLDivElement>('.card.with-accordion').forEach((card) => {
     const header = card.querySelector('header')
     const content = card.querySelector('.content')
-    const id = shortUUID.generate()
+    const id = crypto.randomUUID()
     const contentId = `content-${id}`
     const buttonId = `button-${id}`
     const ariaExpanded = header?.getAttribute('aria-expanded')
