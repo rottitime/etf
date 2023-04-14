@@ -1,32 +1,53 @@
-{% block evaluations %}
-  <table class="hover unstriped">
-    <thead>
-    <tr>
-      <td>ID</td>
-      <td>Title</td>
-      <td>Description</td>
-      <td>Topics</td>
-      <td>Organisation</td>
-      <td>Status</td>
-    </tr>
-    </thead>
-    <tbody>
-    {% if not evaluations or evaluations.count() == 0 %}
-      <tr>
-        <td colspan="6">No records found</td>
-      </tr>
-    {% elif evaluations.count() > 0 %}
-      {% for e in evaluations %}
-        <tr onclick='location.href="{{url('evaluation-summary', e.id)}}"'>
-          <td>{{e.id}}</td>
-          <td>{{e.title}}</td>
-          <td>{% if not e.description %}N/A{% else %}{{e.description}}{% endif %}</td>
-          <td>{% if not e.topics%}None{% else %}{{e.get_list_topics_display_names()|join(', ')}}{% endif %}</td>
-          <td>{% if not e.organisations%}None{% else %}{{e.get_list_organisations_display_names()|join(', ')}}{% endif %}</td>
-          <td>{% if e.status %}{{e.get_status_display_name()}}{% else %}N/A{% endif %}</td>
-        </tr>
-      {% endfor %}
-    {% endif %}
-    </tbody>
-  </table>
-{% endblock %}
+{% block evaluations %} {% if not evaluations or evaluations.count() == 0 %}
+
+<div class="center">
+  <p><i>You have no evaluations</i></p>
+
+  <form action="{{url('index')}}" method="POST">
+    {{csrf_input}}
+    <button class="bttn-primary" type="submit">New evaluation</button>
+  </form>
+</div>
+
+{% elif evaluations.count() > 0 %}
+<div class="card-results">
+  {% for e in evaluations %}
+
+  <a href="{{url('evaluation-summary', e.id)}}" class="basic-link">
+    <div class="card small">
+      <header class="space-between mb-16" style="align-items: flex-start">
+        <h3 class="header4 mb-0">
+          {{e.title}} STP Assessment: Sustainable Transport Performance
+        </h3>
+        <div class="chip orange" role="status">
+          {% if e.status %} {{e.get_status_display_name()}} {% else %} N/A{%
+          endif %}
+        </div>
+      </header>
+
+      <p>{% if not e.description %}N/A{% else %}{{e.description}}{% endif %}</p>
+
+      <table>
+        <tbody>
+          <tr>
+            <th style="width: 196px">Topics</th>
+            <td>
+              {% if not e.topics%}None{% else
+              %}{{e.get_list_topics_display_names()|join(', ')}}{% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th>Organisations</th>
+            <td>
+              {% if not e.organisations%}None{% else
+              %}{{e.get_list_organisations_display_names()|join(', ')}}{% endif
+              %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endif %} {% endblock %}
