@@ -184,6 +184,10 @@ small,
   line-height: 24px;
 }
 
+.smallest {
+  font-size: var(--text-smallest);
+}
+
 .basic-link {
   text-decoration: none;
   color: inherit;

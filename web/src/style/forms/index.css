@@ -106,7 +106,7 @@ input {
     border-width: thin;
     position: absolute;
     left: 18px;
-    botton: 0;
+    bottom: 0;
   }
 
   & input[type='date'] {

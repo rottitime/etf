@@ -11,6 +11,7 @@ import './style/components/buttons.css'
 import './style/components/breadcrumb.css'
 import './style/components/card.css'
 import './style/components/chip.css'
+import './style/components/hintbox.css'
 import './style/components/menu-list.css'
 import './style/components/progress-list.css'
 import './style/components/accordion.css'
@@ -22,6 +23,7 @@ import setupSelect from './components/dropdown'
 import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
 import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
+import setupHintbox from './components/hintbox'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -45,6 +47,7 @@ window.addEventListener('load', () => {
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
+  setupHintbox()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
