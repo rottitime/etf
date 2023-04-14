@@ -119,14 +119,22 @@ main.container {
     }
   }
 
-  & th {
+  & tr th {
     @media (--viewport-medium) {
       & {
         display: table-cell;
-        width: 35%;
         text-align: left;
         vertical-align: top;
         padding-right: var(--spacing-16);
+      }
+    }
+  }
+
+  /* set width to first child. This allows the width to be overwritten in the html */
+  & tr:first-child th {
+    @media (--viewport-medium) {
+      & {
+        width: 35%;
       }
     }
   }
