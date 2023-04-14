@@ -1,6 +1,13 @@
 {% block evaluations %} {% if not evaluations or evaluations.count() == 0 %}
 
-<p>No records found</p>
+<div class="center">
+  <p><i>You have no evaluations</i></p>
+
+  <form action="{{url('index')}}" method="POST">
+    {{csrf_input}}
+    <button class="bttn-primary" type="submit">New evaluation</button>
+  </form>
+</div>
 
 {% elif evaluations.count() > 0 %}
 <div class="card-results">
