@@ -1,7 +1,9 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
+
 
 {% block content %}
-  {{evaluations.count()}} evaluations found
+   
+  <h3 class="header3 highlight">My evaluations ({{evaluations.count()}})</h3>
 
   {% block evaluations %}
     {% include "evaluation-list.html" %}
