@@ -1,16 +1,16 @@
 {% extends "account/base.html" %}
 
-{% block head_title %}Password changed{% endblock %}
+{% block head_title %}Invitation accepted{% endblock %}
 
 {% block content %}
 
 
   <div class="card">
     <div class="card-divider">
-      Password changed
+      Invitation accepted
     </div>
     <div class="card-section">
-      <p>Your password has been successfully updated, please login again.</p>
+      <p>You have successfully completed your invitation, please login to continue.</p>
       <a class="button" href="{% url "index" %}">Return to login</a>
     </div>
   </div>

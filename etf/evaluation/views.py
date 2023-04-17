@@ -7,10 +7,11 @@ from django.contrib.postgres.search import (
 from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from . import choices, enums, models
+from .email_handler import send_contributor_added_email, send_invite_email
+from .restrict_email import is_civil_service_email
 
 
 class MethodDispatcher:
@@ -165,56 +166,46 @@ def my_evaluations_view(request):
 @require_http_methods(["GET", "POST", "DELETE"])
 class EvaluationContributor(MethodDispatcher):
     def get(self, request, evaluation_id):
-        return render(request, "add-contributor.html", {"evaluation_id": evaluation_id})
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        users = evaluation.users.all()
+        return render(
+            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
+        )
 
     def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         email = request.POST.get("add-user-email")
-        user = models.User.objects.get(email=email)
-        evaluation.users.add(user)
-        evaluation.save()
-        users = evaluation.users.values()
-        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
-
-    def delete(self, request, evaluation_id, email_to_remove=None):
-        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        user_to_remove = models.User.objects.get(email=email_to_remove)
-        evaluation.users.remove(user_to_remove)
-        evaluation.save()
-        users = evaluation.users.values()
-        if user_to_remove == request.user:
-            response = render(
-                request,
-                "contributor-rows.html",
-                {"redirect": True, "contributors": users, "evaluation_id": evaluation_id},
-            )
-            response["HX-Redirect"] = reverse("index")
-            return response
-        return render(request, "contributor-rows.html", {"contributors": users, "evaluation_id": evaluation_id})
-
-
-@login_required
-@require_http_methods(["POST"])
-def evaluation_contributor_add_view(request, evaluation_id):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    email = request.POST.get("add-user-email")
-    user = models.User.objects.get(email=email)
-    evaluation.users.add(user)
-    evaluation.save()
-    return redirect(reverse("evaluation-contributors", args=(evaluation_id,)))
+        is_existing_user = models.User.objects.filter(email=email).exists()
+        if is_existing_user:
+            user = models.User.objects.get(email=email)
+            evaluation.users.add(user)
+            evaluation.save()
+            send_contributor_added_email(user, evaluation_id)
+        else:
+            is_external_user = not is_civil_service_email(email)
+            user = models.User.objects.create(email=email)
+            user.save()
+            if is_external_user:
+                user.is_external_user = True
+                user.save()
+            evaluation.users.add(user)
+            evaluation.save()
+            send_invite_email(user)
+        users = evaluation.users.all()
+        return render(
+            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
+        )
 
 
 @login_required
 @require_http_methods(["POST", "GET"])
-def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove=None):
+def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-    if request.method == "GET":
-        return render(request, "remove-contributor.html", {"evaluation_id": evaluation_id, "email": email_to_remove})
-    elif request.method == "POST":
-        email = request.POST.get("remove-user-email")
+    if request.method == "POST":
+        email = email_to_remove
         user = models.User.objects.get(email=email)
         evaluation.users.remove(user)
         evaluation.save()
-        if user == request.user:
-            return redirect(reverse("index"))
-        return redirect(reverse("evaluation-contributors", args=(evaluation_id,)))
+        if request.user == user:
+            return redirect("index")
+        return redirect("evaluation-contributors", evaluation_id=evaluation_id)

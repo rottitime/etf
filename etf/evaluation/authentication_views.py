@@ -1,3 +1,6 @@
+from datetime import datetime
+from urllib.parse import urlencode
+
 from allauth.account.views import SignupView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -5,6 +8,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from etf import settings
@@ -207,3 +211,73 @@ class PasswordChange(MethodDispatcher):
         user.set_password(pwd1)
         user.save()
         return render(request, "account/password_reset_from_key_done.html", {})
+
+
+@require_http_methods(["GET", "POST"])
+class AcceptInviteSignupView(MethodDispatcher):
+    password_signup_error_message = (
+        "This link is not valid. It may have expired or have already been used. Please request another one."
+    )
+
+    def get_token_request_args(self, request):
+        user_id = request.GET.get("user_id", None)
+        token = request.GET.get("code", None)
+        valid_request = False
+        if not user_id or not token:
+            messages.error(request, self.password_signup_error_message)
+            return user_id, token, valid_request
+        else:
+            result = email_handler.verify_token(user_id, token, "invite-user")
+            if not result:
+                messages.error(request, self.password_signup_error_message)
+                return user_id, token, valid_request
+            else:
+                valid_request = True
+        return user_id, token, valid_request
+
+    def get(self, request):
+        contact_email = settings.CONTACT_EMAIL
+        try:
+            _, _, valid_request = self.get_token_request_args(request)
+            return render(
+                request, "account/accept_signup_invite.html", {"valid": valid_request, "contact_address": contact_email}
+            )
+        except models.User.DoesNotExist:
+            return render(
+                request, "account/accept_signup_invite.html", {"valid": False, "contact_address": contact_email}
+            )
+
+    def post(self, request):
+        user_id, token, valid_request = self.get_token_request_args(request)
+        pwd1 = request.POST.get("password1", None)
+        pwd2 = request.POST.get("password2", None)
+        if pwd1 != pwd2:
+            messages.error(request, "Passwords must match.")
+            query_params = urlencode({"user_id": user_id, "code": token})
+            redirect_url = reverse("accept-invite") + "?" + query_params
+            response = redirect(redirect_url)
+            messages.middleware.MessageMiddleware().process_response(request, response)
+            return response
+        if not valid_request:
+            messages.error(request, self.password_signup_error_message)
+            query_params = urlencode({"user_id": user_id, "code": token})
+            redirect_url = reverse("accept-invite") + "?" + query_params
+            response = redirect(redirect_url)
+            messages.middleware.MessageMiddleware().process_response(request, response)
+            return response
+        user = models.User.objects.get(pk=user_id)
+        try:
+            validate_password(pwd1, user)
+        except ValidationError as e:
+            for msg in e:
+                messages.error(request, str(msg))
+            query_params = urlencode({"user_id": user_id, "code": token})
+            redirect_url = reverse("accept-invite") + "?" + query_params
+            response = redirect(redirect_url)
+            messages.middleware.MessageMiddleware().process_response(request, response)
+            return response
+        user.set_password(pwd1)
+        user.invite_accepted_at = datetime.now()
+        user.verified = True
+        user.save()
+        return render(request, "account/accept_signup_invite_done.html", {})

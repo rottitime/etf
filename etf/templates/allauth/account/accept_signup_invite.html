@@ -1,0 +1,40 @@
+{% extends "account/base.html" %}
+
+{% block head_title %}Accept invitation{% endblock %}
+
+{% block content %}
+
+  <div class="card">
+    <div class="card-divider">
+      Accept invitation
+    </div>
+    <div class="card-section">
+
+      <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
+      <p>If you don't think you should have received this invite, please contact an administrator at {{contact_email}}</p>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <p>
+          <label for="id_password1">Password:</label>
+          <input type="password" name="password1" placeholder="Password" id="id_password1" required autocomplete="off">
+          {% if form.errors.email %}
+            <span class="form-error">{{form.errors.password1}}</span>
+          {% endif %}
+        </p>
+        <p>
+          <label for="id_password2">Password:</label>
+          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
+          {% if form.errors.email %}
+            <span class="form-error">{{form.errors.password2}}</span>
+          {% endif %}
+        </p>
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+        {% endif %}
+        <button class="button float-right" type="submit">Sign up</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

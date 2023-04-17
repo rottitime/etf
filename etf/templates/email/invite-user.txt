@@ -1,6 +1,6 @@
 Hi,
 
-Use the following link to confirm your email address:
+You've been invited to participate in the Evaluation Registry. Please use the link below to access the site and setup your password.
 {{url|safe}}
 
 You can then start using the Evaluation Registry.

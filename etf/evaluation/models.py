@@ -29,11 +29,17 @@ class User(BaseUser, UUIDPrimaryKeyBase):
     objects = BaseUserManager()
     username = None
     verified = models.BooleanField(default=False, blank=True, null=True)
+    invited_at = models.DateTimeField(default=None, blank=True, null=True)
+    invite_accepted_at = models.DateTimeField(default=None, blank=True, null=True)
     last_token_sent_at = models.DateTimeField(editable=False, blank=True, null=True)
+    is_external_user = models.BooleanField(editable=True, default=False)
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
         super().save(*args, **kwargs)
+
+    def has_signed_up(self):
+        return self.last_login is not None
 
 
 class NamedModel:

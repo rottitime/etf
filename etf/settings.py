@@ -19,6 +19,9 @@ STATIC_ROOT = STATIC_ROOT
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
+CONTACT_EMAIL = env.str("CONTACT_EMAIL", default="test@example.com")
+FROM_EMAIL = env.str("FROM_EMAIL", default="test@example.com")
+
 VCAP_APPLICATION = env.json("VCAP_APPLICATION", default={})
 
 BASE_URL = env.str("BASE_URL")
