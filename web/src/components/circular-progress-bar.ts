@@ -36,7 +36,7 @@ function createCircularProgressBar(container: HTMLElement, segments: Segment[]):
   const totalPercentage = segments.reduce((acc, segment) => acc + segment.percentage, 0)
   let totalProgress = 0
 
-  segments.forEach((segment, index) => {
+  segments.forEach((segment) => {
     let startingRotation = -90 - (totalPercentage / 2) * 1.5 - (1 / 6) * 360
 
     const progressCircle = document.createElementNS(
