@@ -50,9 +50,11 @@
       </div>
    </header>
    <main class="container">
+
+      {% include "beta/beta-pagenew.html" %}
+      <hr class="my-24" />
       {% include "beta/beta-pagecreate.html" %}
       <hr class="my-24" />
-
       {% include "beta/beta-pagedashboard.html" %}
       <hr class="my-24" />
       {% include "beta/beta-pagesearch.html" %}
@@ -69,6 +71,7 @@
          <div class="disclaimer">
             &#169; Crown copyright {{macros.crest_svg()}}
          </div>
+<<<<<<< HEAD
       </header>
       <main class="container">
   
@@ -90,6 +93,28 @@
             </nav>
             <div class="disclaimer">
                &#169; Crown copyright {{macros.crest_svg()}}
+=======
+
+
+
+
+         {% include "beta/beta-pagedashboard.html" %}
+         <hr class="my-24" />
+         {% include "beta/beta-pagesearch.html" %}
+         <hr class="my-24" />
+         {% include "beta/beta-extra.html" %}
+
+         </main>
+         <footer class="main-footer">
+            <div class="container">
+               <nav>
+                  <a href="#">Privacy</a>
+                  <a href="#">Feedback</a>
+               </nav>
+               <div class="disclaimer">
+                  &#169; Crown copyright {{macros.crest_svg()}}
+               </div>
+>>>>>>> ace393d (Circular progress bar)
             </div>
          </footer>
 </body>
