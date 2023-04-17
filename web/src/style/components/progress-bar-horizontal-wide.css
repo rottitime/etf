@@ -1,0 +1,19 @@
+.progress-bar-horizontal-wide {
+  display: flex;
+}
+
+.progress-bar-horizontal-wide .square {
+  width: 50px;
+  height: 10px;
+  margin-right: 2px;
+  background-color: #0050c726;
+  border-radius: 2px;
+}
+
+.progress-bar-horizontal-wide .square:last-child {
+  margin-right: 0;
+}
+
+.progress-bar-horizontal-wide .filled {
+  background-color: var(--status-color-green);
+}
