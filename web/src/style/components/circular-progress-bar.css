@@ -1,0 +1,22 @@
+.progress-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar-container .progress-bar {
+  width: 80px;
+  height: 80px;
+}
+
+.progress-bar-container .progress-bar-background {
+  fill: none;
+  stroke: #0050c726;
+  stroke-width: 15;
+}
+
+.progress-bar-container .progress-bar-foreground {
+  fill: none;
+  stroke-width: 15;
+  transform-origin: 50% 50%;
+}

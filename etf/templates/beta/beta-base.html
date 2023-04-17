@@ -1,51 +1,77 @@
 {% import 'macros.html' as macros with context %}
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8"/>
-      <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}"/>
-      <meta name="viewport" content="width=device-width, initial-scale = 1.0,maximum-scale=1.0, user-scalable=no" /> 
-      <title>Evaluation Registry</title>
-      <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}"/>
-      <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css"/>
-        {% if space_name and space_name == "local" %}
-          <!-- Dev script for local development -->
-          <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
-        {% endif %}
-      <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
-   </head>
-   <body {% if request.path==url('search') %}id="search"{% endif %}>
-      <header id="main-header">
-         <div class="container">
-            <a href="/" class="logo">
-              {{macros.crest_svg()}}
-               <h2 class="body-text">Evaluation Registry</h2>
+
+<head>
+   <meta charset="UTF-8" />
+   <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}" />
+   <meta name="viewport" content="width=device-width, initial-scale = 1.0,maximum-scale=1.0, user-scalable=no" />
+   <title>Evaluation Registry</title>
+   <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}" />
+   <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css" />
+   {% if space_name and space_name == "local" %}
+   <!-- Dev script for local development -->
+   <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+   {% endif %}
+   <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
+</head>
+
+<body {% if request.path==url('search') %}id="search" {% endif %}>
+   <header id="main-header">
+      <div class="container">
+         <a href="/" class="logo">
+            {{macros.crest_svg()}}
+            <h2 class="body-text">Evaluation Registry</h2>
+         </a>
+
+         {% if request.user.is_authenticated %}
+
+         <button id="main-header-mobile-menu">
+            <div></div>
+         </button>
+
+
+         <nav class="menu-list horizontal" id="main-header-menu">
+            <a href="{{url('search')}}" {% if request.path==url('search') %}aria-selected="true" {% endif %}>
+               {{macros.search_svg()}}
+               Evaluation search
             </a>
-
-            {% if request.user.is_authenticated %}
-
-       
-            <button id="main-header-mobile-menu">
-               <div></div>
-             </button>
-            
-
-            <nav class="menu-list horizontal" id="main-header-menu">
-            <a href="{{url('search')}}" {% if request.path==url('search') %}aria-selected="true"{% endif %}>
-              {{macros.search_svg()}}
-              Evaluation search
-            </a>
-            <a href="{{url('my-evaluations')}}" {% if request.path==url('my-evaluations') %}aria-selected="true"{% endif %}>
-              My evaluations
+            <a href="{{url('my-evaluations')}}" {% if request.path==url('my-evaluations') %}aria-selected="true" {%
+               endif %}>
+               My evaluations
             </a>
 
             <form action="{{url('index')}}" method="POST">{{csrf_input}}
                <button class="bttn-primary" type="submit">New evaluation</button>
             </form>
             <a href="{{url('account_logout')}}">Logout</a>
-            </nav>
-            {% endif %}
+         </nav>
+         {% endif %}
+      </div>
+   </header>
+   <main class="container">
+
+      {% include "beta/beta-pagenew.html" %}
+      <hr class="my-24" />
+      {% include "beta/beta-pagecreate.html" %}
+      <hr class="my-24" />
+      {% include "beta/beta-pagedashboard.html" %}
+      <hr class="my-24" />
+      {% include "beta/beta-pagesearch.html" %}
+      <hr class="my-24" />
+      {% include "beta/beta-extra.html" %}
+
+   </main>
+   <footer class="main-footer">
+      <div class="container">
+         <nav>
+            <a href="#">Privacy</a>
+            <a href="#">Feedback</a>
+         </nav>
+         <div class="disclaimer">
+            &#169; Crown copyright {{macros.crest_svg()}}
          </div>
+<<<<<<< HEAD
       </header>
       <main class="container">
   
@@ -67,8 +93,30 @@
             </nav>
             <div class="disclaimer">
                &#169; Crown copyright {{macros.crest_svg()}}
+=======
+
+
+
+
+         {% include "beta/beta-pagedashboard.html" %}
+         <hr class="my-24" />
+         {% include "beta/beta-pagesearch.html" %}
+         <hr class="my-24" />
+         {% include "beta/beta-extra.html" %}
+
+         </main>
+         <footer class="main-footer">
+            <div class="container">
+               <nav>
+                  <a href="#">Privacy</a>
+                  <a href="#">Feedback</a>
+               </nav>
+               <div class="disclaimer">
+                  &#169; Crown copyright {{macros.crest_svg()}}
+               </div>
+>>>>>>> ace393d (Circular progress bar)
             </div>
-         </div>
-      </footer>
-   </body>
+         </footer>
+</body>
+
 </html>

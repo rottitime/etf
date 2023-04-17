@@ -11,12 +11,23 @@
 
 <div class="sidebarcolumn">
   <div class="col">
-    <div class="card small mb-24">
-      <h2 class="header3 highlight">Overall progress</h2>
-      <p>
-        It is recommended to complete at least 60% before publishing evaluations
-      </p>
+    <div class="mb-24 card small" style="display: flex; gap: 30px;">
+
+      <div class="progress-bar-container">
+        <div class="circular-progress-bar"
+          data-segments='[{"color": "var(--status-color-green)", "percentage": 25}, {"color": "var(--status-color-orange)", "percentage": 25}, {"color": "var(--status-color-red)", "percentage": 25}]'>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="header3 highlight">Overall progress</h2>
+        <p>
+          It is recommended to complete at least 60% before publishing evaluations
+        </p>
+      </div>
     </div>
+
+
 
     <div class="card small">
       <div class="progress-list">
@@ -85,7 +96,7 @@
 
       <div class="progress-list">
         <header>
-          <h3 class="header5 highlight mb-0">Evaluation design</h3>
+          <h3 class="mb-0 header5 highlight">Evaluation design</h3>
           <button class="bttn-secondary small">Add section</button>
         </header>
       </div>
@@ -94,7 +105,7 @@
 
       <div class="progress-list">
         <header>
-          <h3 class="header5 highlight mb-0">Analysis</h3>
+          <h3 class="mb-0 header5 highlight">Analysis</h3>
           <button class="bttn-secondary small">Add section</button>
         </header>
       </div>
@@ -103,7 +114,7 @@
 
       <div class="progress-list">
         <header>
-          <h3 class="header5 highlight mb-0">Findings</h3>
+          <h3 class="mb-0 header5 highlight">Findings</h3>
           <button class="bttn-secondary small">Add section</button>
         </header>
       </div>
@@ -112,7 +123,7 @@
 
       <div class="progress-list">
         <header>
-          <h3 class="header5 highlight mb-0">Cost</h3>
+          <h3 class="mb-0 header5 highlight">Cost</h3>
           <button class="bttn-secondary small">Add section</button>
         </header>
       </div>
@@ -150,15 +161,15 @@
       <button class="bttn-secondary full-width small">Preview</button>
     </div>
 
-    <div class="card mb-24 small">
-      <h3 class="header5 highlight mb-0">Collaborators</h3>
+    <div class="mb-24 card small">
+      <h3 class="mb-0 header5 highlight">Collaborators</h3>
       <p>Add collaborators to this evaluation, so they can edit and publish</p>
       <button class="bttn-secondary full-width small">
         Manage collaborators
       </button>
       <hr class="my-16" />
 
-      <p class="space-between mb-0">
+      <p class="mb-0 space-between">
         <span>John Smith</span><span>Owner</span>
       </p>
     </div>
