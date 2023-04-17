@@ -115,6 +115,7 @@ def send_password_reset_email(user):
 def send_invite_email(user):
     data = EMAIL_MAPPING["invite-user"]
     user.invited_at = datetime.datetime.now()
+    user.save()
     return _send_token_email(user, **data)
 
 
@@ -124,7 +125,7 @@ def send_contributor_added_email(user, evaluation_id):
     url = furl.furl(url=base_url)
     url.path.add(f"evaluation/{evaluation_id}")
     url = str(url)
-    context = {"first_name": user.first_name or "user", "url": url}
+    context = {"url": url}
     response = _send_normal_email(to_address=user.email, context=context, **data)
     return response
 
