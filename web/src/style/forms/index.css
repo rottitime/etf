@@ -131,8 +131,6 @@ input {
 }
 
 .row {
-  margin-bottom: var(--spacing-8);
-
   & label {
     margin-bottom: var(--spacing-8);
     display: block;

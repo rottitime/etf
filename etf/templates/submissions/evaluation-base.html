@@ -1,31 +1,72 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 
 {% block content %}
-  <a href="{{url('evaluation-contributors', evaluation_id)}}" class="button">Manage contributors</a>
-  <div class="grid-x">
-    <div class="cell small-3">
-      <nav class="sidebar">
-        <ul class="vertical menu tabs accordion-menu" data-accordion-menu>
-          <hr>
-          {% for page, order in page_order|dictsort(by='value') %}
-            <li>
-              {% if current_page == page %}
-                <i class="bi-arrow-right-circle"></i><span class="current-page-name">{{ get_page_display_name(page) }}</span>
-              {% else %}
-                <div>
-                  <a href="{{ url(page, evaluation_id)}}">{{ get_page_display_name(page) }}</a>
-                  <i class="{{get_page_progress_icon(page_statuses[page])}}"></i>
-                </div>
-              {% endif %}
-            </li>
-            <hr>
-          {% endfor %}
-        </ul>
-      </nav>
-    </div>
-    <div class="cell small-6">
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <ol>
+    <li>
+      <a href="{{url('my-evaluations')}}">Back to My evaluations</a>
+    </li>
+    <li aria-current="true">[Current evaluation]</li>
+  </ol>
+</nav>
+
+  <div class="sidebarcolumn">
+
+    <div class="col">
       {% block evaluation_content %}
       {% endblock %}
     </div>
+
+    <div class="col sidebar">
+
+      <div class="card mb-24">
+        <header class="mb-16 space-between">
+          <h3 class="header5 highlight">Section status</h3>
+          <div class="chip orange" role="status">Incomplete</div>
+          <!-- <div class="chip green" role="status">Completed</div> -->
+        </header>
+
+        <hr class="my-24" />
+
+        <!-- TODO: update url on form tag -->
+        <form action="#">
+          <div class="row mb-24">
+            <label class="checkbox">
+              <input name="organisations" type="checkbox" value="academy-for-social-justice">
+              <div class="checkmark"></div>
+              <span>Mark section as complete</span>
+            </label>
+          </div>
+  
+          <button class="bttn-primary full-width mb-24 small" type="submit" name="save" value="save">Save</button>
+          <button class="bttn-secondary small full-width" type="submit" name="save" value="save-next">Save and next</button>
+        </form>
+
+        <hr class="my-24" />
+
+        <a href="{{url('my-evaluations')}}" class="bttn-quaternary full-width small">Back to evaluation</a>
+        <a href="{{url('evaluation-contributors', evaluation_id)}}" class="bttn-quaternary full-width small">Manage contributors</a>
+        
+      </div>
+
+
+      <h3 class="header5">Jump to section</h3>
+      <nav class="menu-list">
+        <ul>
+          {% for page, order in page_order|dictsort(by='value') %}
+          <li>
+            <a href="{{ url(page, evaluation_id)}}" {% if current_page == page %}aria-current="page"{% endif %}>{{ get_page_display_name(page) }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+
+
+    </div>
+
   </div>
+
+
 {% endblock %}

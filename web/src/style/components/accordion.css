@@ -3,6 +3,10 @@
   margin: 0;
   padding: 0;
 
+  & .row {
+    margin-bottom: var(--spacing-8);
+  }
+
   & .accordion-content {
     display: none;
     position: relative;
