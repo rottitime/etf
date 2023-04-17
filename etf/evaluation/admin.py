@@ -61,17 +61,14 @@ class UserAdmin(BaseUserAdmin):
         "is_active",
         "is_staff",
         "is_superuser",
+        "is_external_user",
     )
-    list_filter = (
-        "is_active",
-        "is_staff",
-        "is_superuser",
-    )
+    list_filter = ("is_active", "is_staff", "is_superuser", "is_external_user")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (
             "Permissions",
-            {"fields": ("is_active", "is_staff", "is_superuser")},
+            {"fields": ("is_active", "is_staff", "is_superuser", "is_external_user")},
         ),
     )
     add_fieldsets = (
