@@ -1,12 +1,14 @@
 .progress-bar-horizontal-wide {
   display: flex;
+  justify-content: space-evenly;
 }
 
 .progress-bar-horizontal-wide .square {
-  width: 50px;
+  width: 100%;
   height: 10px;
   margin-right: 2px;
-  background-color: #0050c726;
+  background: linear-gradient(0deg, rgba(0, 80, 199, 0.15), rgba(0, 80, 199, 0.15)),
+    #f3f2f1;
   border-radius: 2px;
 }
 
