@@ -1,0 +1,52 @@
+<div class="card">
+  <form action="#">
+    <h1 class="header2 highlight">New evaluation</h1>
+    <div class="content">
+      <p>
+        The Evaluation Registry is for recording information about government
+        evaluations
+      </p>
+      <p>
+        Each evaluation should be registered, and can be edited as the
+        evaluation progresses.
+      </p>
+      <p>For example, results can be updated when they are known</p>
+
+      <div class="row">
+        <label for="txt-title">Title</label>
+        <input
+          id="txt-title"
+          name="title"
+          type="text"
+          class="full-width"
+          placeholder="Hint..."
+        />
+      </div>
+
+      <div class="row error">
+        <label for="txt-title">Title</label>
+        <input
+          id="txt-title"
+          name="title"
+          type="text"
+          class="full-width"
+          placeholder="Hint..."
+        />
+        <div class="helper">With some error state</div>
+      </div>
+    </div>
+
+    <footer class="actions">
+      <a class="bttn-quaternary small" href="{{url('my-evaluations')}}"
+        >Cancel</a
+      >
+      <button
+        class="bttn-primary"
+        href="{{url('my-evaluations')}}"
+        type="submit"
+      >
+        Create evaluation
+      </button>
+    </footer>
+  </form>
+</div>

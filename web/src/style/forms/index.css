@@ -132,4 +132,23 @@ input {
 
 .row {
   margin-bottom: var(--spacing-8);
+
+  & label {
+    margin-bottom: var(--spacing-8);
+    display: block;
+  }
+
+  & .helper {
+    font-size: var(--text-smallest);
+  }
+
+  &.error {
+    & label,
+    & .helper {
+      color: var(--color-error);
+    }
+    & input {
+      border-color: var(--color-error);
+    }
+  }
 }
