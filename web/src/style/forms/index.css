@@ -154,6 +154,10 @@ input {
     font-size: var(--text-smallest);
   }
 
+  & [is='hint-box'] {
+    margin-top: var(--spacing-8);
+  }
+
   /* &.error {
     & label,
     & .helper {
