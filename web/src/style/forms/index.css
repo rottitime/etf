@@ -47,6 +47,14 @@ input {
   }
 }
 
+.select,
+.date-picker {
+  &.full-width {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 .select {
   cursor: pointer;
   transition: color ease-in-out var(--animation-speed),
