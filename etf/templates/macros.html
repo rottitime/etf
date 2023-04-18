@@ -52,13 +52,15 @@
 {%- endmacro %}
 
 {% macro textarea(name, label, placeholder='') -%}
-  <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  {{field_tooltip_reveal(name)}}
-  <textarea rows="3" placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
+<div class="row">
+  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <textarea placeholder="{{placeholder}}" id="{{name}}" name="{{name}}" class="full-width">{{data.get(name)}}</textarea>
   {% for error in errors.get(name, []) %}
-    <span class="form-error">{{error}}</span>
+    <div class="helper">{{error}}</div>
   {% endfor %}
-  {{field_help_text(name)}}
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+</div>
 {%- endmacro %}
 
 {% macro select(name, label, options, empty_option=DEFAULT) -%}
