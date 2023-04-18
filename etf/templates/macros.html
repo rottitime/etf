@@ -1,4 +1,47 @@
 {% macro input(name, label, placeholder='', type='text', min='') -%}
+<div class="row">
+  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  {% for error in errors.get(name, []) %}
+    <div class="helper">{{error}}</div>
+  {% endfor %}
+
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+  
+</div>
+{%- endmacro %}
+
+
+
+{% macro hintbox(content, label) -%}
+<div is="hint-box" aria-label="{{label}}">
+  <div class="content">
+    {{hintbox_description(content)}}
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro hintbox_description(name) %}
+{% set short_description = get_field_help_text(object_name, name) %}
+{% if short_description %}
+  <p class="subheader">{{short_description}}</p>
+{% endif %}
+{%- endmacro %}
+
+
+{%- macro input_description(name) %}
+  {% set description = get_field_tooltip_text(object_name, name) %}
+  {% if description %}
+      {% for text in description %}
+        <p class="description">{{text}}</p>
+      {% endfor %}
+  {% endif %}
+{%- endmacro %}
+
+
+
+{% macro inpu_oldt(name, label, placeholder='', type='text', min='') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   {{field_tooltip_reveal(name)}}
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
@@ -120,25 +163,24 @@
 
 
 {% macro buttons(prev_url, completed_page=None, next_url=None, id=None) -%}
-  <div class="evaluation-button-row">
-    <div class="grid-x">
-      <div class="cell small-6">
-        <a href="{{ prev_url }}" class="button"><i class="bi-caret-left"></i> Back</a>
-        {% if id %}
-          <a href="{{ url('evaluation-overview', id) }}" class="button"><i class="bi-house"></i>Back to evaluation progress</a>
+  <footer class="actions">
+    <div>
+      <a href="{{ prev_url }}" class="bttn-quaternary small">Back</a>
+      {% if id %}
+          <a href="{{ url('evaluation-overview', id) }}" class="bttn-quaternary small">Cancel</a>
       {% endif %}
-      </div>
-      <div class="cell small-6">
-        {% if next_url and completed_page %}
-          <a href="{{next_url}}?completed={{completed_page}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
-        {% elif next_url and not completed_page %}
-          <a href="{{next_url}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
-        {% else %}
-          <button type="submit" class="button float-right">Save and next <i class="bi-caret-right"></i></button>
-        {% endif %}
-      </div>
     </div>
-  </div>
+
+    {% if next_url and completed_page %}
+    <a href="{{next_url}}?completed={{completed_page}}" class="bttn-primary">Next</a>
+  {% elif next_url and not completed_page %}
+    <a href="{{next_url}}" class="bttn-primary">Next</a>
+  {% else %}
+    <button type="submit" class="bttn-primary">Save and next</button>
+  {% endif %}
+
+
+  </footer>
 {%- endmacro %}
 
 
