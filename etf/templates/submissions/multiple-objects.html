@@ -1,10 +1,10 @@
-<div class="content caption">
+
   <ul >
     {% for url, name in data.objects_url_mapping.items() %}
       <li><a href={{url}}>{{name}}</a></li>
     {% endfor %}
   </ul>
-</div>
+
 <button class="bttn-secondary small" type="submit" name="add">Create {{data.object_name}}</button>
 
 

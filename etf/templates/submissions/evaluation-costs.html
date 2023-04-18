@@ -5,11 +5,12 @@
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend><h1>{{title}}</h1></legend>
-      <p class="caption">Enter the costs associated with the evaluation, broken down however makes sense for your project.</p>
+      <div class="content caption">
+      <p>Enter the costs associated with the evaluation, broken down however makes sense for your project.</p>
 
-      <p class="caption">You can just enter 'Whole evaluation' as the item and then the total cost as the associated cost if you just want to record the total cost of the evaluation.</p>
+      <p>You can just enter 'Whole evaluation' as the item and then the total cost as the associated cost if you just want to record the total cost of the evaluation.</p>
 
-      <p class="caption">Another option would be to break it down by years, eg 'Evaluation costs in year 1', 'Evaluation costs in year 2', etc.</p>
+      <p>Another option would be to break it down by years, eg 'Evaluation costs in year 1', 'Evaluation costs in year 2', etc.</p>
       
       <p>
       PLACEHOLDER [total costs]
@@ -17,6 +18,7 @@
       {% block multipleobjects %}
         {% include "submissions/multiple-objects.html" %}
       {% endblock %}
+    </div>
     </fieldset>
   </form>
 {% endblock %}
