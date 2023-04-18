@@ -1,3 +1,4 @@
+select[multiple],
 textarea,
 input {
   font-family: var(--text-font-family);

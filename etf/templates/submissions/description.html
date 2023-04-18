@@ -3,14 +3,14 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
+    <fieldset>
       <legend>
-        <h3>{{title}}</h3>
+        <h1>{{title}}</h1>
       </legend>
       {{macros.textarea("brief_description", "Brief description")}}
       {{macros.select_many_from_list("topics", "Topics", dropdown_choices.topics)}}
       {{macros.select_many_from_list("organisations", "Organisations", dropdown_choices.organisations)}}
-      {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
+    {{macros.buttons(prev_url, id=data.id)}}
   </form>
 {% endblock %}
