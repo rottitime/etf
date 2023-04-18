@@ -98,22 +98,17 @@
 {%- endmacro %}
 
 {% macro select_many_from_list(name, label, list) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    <select multiple name="{{name}}" id="{{name}}">
-      {% for item in list %}
-        <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
-      {% endfor %}
-    </select>
-    {{field_help_text(name)}}
-  </div>
-  <script>
-    accessibleAutocomplete.enhanceSelectElement({
-      showAllValues: true,
-      selectElement: document.querySelector('#{{name}}')
-    })
-  </script>
+<div class="row">
+  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <select multiple name="{{name}}" id="{{name}}" class="full-width">
+    {% for item in list %}
+      <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
+    {% endfor %}
+  </select>
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+  
+</div>
 {%- endmacro %}
 
 {% macro select_from_list(name, label, list, empty_option=DEFAULT) -%}
