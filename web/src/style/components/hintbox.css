@@ -19,9 +19,9 @@
     align-items: center;
 
     & svg {
-      margin-left: var(--spacing-8);
-      transition: transform ease-in-out var(--animation-speed);
+      margin-right: var(--spacing-8);
       transform: rotate(0deg);
+      font-size: 15px;
     }
 
     & + .content-wrapper .content {
@@ -35,9 +35,6 @@
   }
 
   & button[aria-expanded='true'] {
-    & svg {
-      transform: rotate(180deg);
-    }
     & + .content-wrapper {
       max-height: 5000px;
       & .content {
