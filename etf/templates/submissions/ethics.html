@@ -3,11 +3,11 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
+    <fieldset>
       <legend>
-        <h3>{{title}}</h3>
+        <h1>{{title}}</h1>
       </legend>
-      </ul>
+      
       
       {{macros.yes_no("ethics_committee_approval", "Ethics committee approval")}}
       {{macros.textarea("ethics_committee_details", "Ethics committee details")}}

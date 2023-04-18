@@ -3,13 +3,13 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       <p>Only display if one of the evaluation types is "Process evaluation"</p>
       <p>[PLACEHOLDER - multiselect methods]</p>
       <p>[PLACEHOLDER - more detail fields]</p>
+      </div>
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

@@ -5,9 +5,11 @@
   <form method="POST">{{csrf_input}}
     <fieldset class="fieldset">
       <legend>
-        <h3>{{title}}</h3>
+        <h1>{{title}}</h3>
       </legend>
+      <div class="content caption">
       {{macros.select_from_list("status", "Choose the status of this evaluation", statuses)}}
+      </div>
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

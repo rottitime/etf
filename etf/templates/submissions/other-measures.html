@@ -3,10 +3,9 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       <p>
         These are things you measure in the evaluations other than outcomes. This might be something that you want to include within your analysis, but you are not expecting it to be an outcome of the intervention in any way.
       </p>
@@ -14,6 +13,7 @@
         For example, you might want to record the age of participants, to see whether different age groups respond differently to each of hte intervention options. Age could therefore be something you want a measurement of, even thought it is not an outcome.
       </p>
       {% include "submissions/multiple-objects.html" %}
+      </div>
     </fieldset>
   </form>
 {% endblock %}

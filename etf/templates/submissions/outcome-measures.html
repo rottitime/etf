@@ -3,10 +3,11 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
+    <fieldset>
       <legend>
-        <h3>{{title}}</h3>
+        <h1>{{title}}</h1>
       </legend>
+      <div class="content caption">
       <p>
         Outcome measures are the things that you are measuring because you want to see how they vary between the arms, perhaps becuase you hope that the outcome will be better with a new intervention.
       </p>
@@ -16,6 +17,7 @@
       {% block multipleobjects %}
         {% include "submissions/multiple-objects.html" %}
       {% endblock %}
+      </div>
     </fieldset>
   </form>
   

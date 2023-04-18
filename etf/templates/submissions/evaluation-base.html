@@ -41,11 +41,13 @@
 
         <!-- TODO: update url on form tag -->
         <form action="#">
+        {{csrf_input}}
           <div class="row mb-24">
             <label class="checkbox">
-              <input name="organisations" type="checkbox" value="academy-for-social-justice">
+              <input name="is_complete" type="checkbox" value="true">
               <div class="checkmark"></div>
               <span>Mark section as complete</span>
+              
             </label>
           </div>
   
@@ -56,7 +58,11 @@
         <hr class="my-24" />
 
         <a href="{{url('evaluation-contributors', evaluation_id)}}" class="bttn-quaternary full-width small mb-24">Manage contributors</a>
-        <a href="{{url('my-evaluations')}}" class="bttn-quaternary full-width small">Back to evaluation</a>
+
+        {% if evaluation_id %}
+        <a href="{{ url('evaluation-overview', evaluation_id) }}" class="bttn-quaternary full-width small">Back to evaluation</a>
+        {% endif %}
+        
         
       </div>
 

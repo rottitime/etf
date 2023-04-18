@@ -13,6 +13,23 @@
 {%- endmacro %}
 
 
+{% macro input_date(name, label, placeholder='') -%}
+<div class="row">
+  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+
+  <div class="date-picker full-width">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="date" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  </div>
+  {% for error in errors.get(name, []) %}
+    <div class="helper">{{error}}</div>
+  {% endfor %}
+
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+  
+</div>
+{%- endmacro %}
+
 
 {% macro hintbox(content, label) -%}
 <div is="hint-box" aria-label="{{label}}">
@@ -64,18 +81,23 @@
 {%- endmacro %}
 
 {% macro select(name, label, options, empty_option=DEFAULT) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    <select name="{{name}}" id="{{name}}">
-      {% if not empty_option is sameas DEFAULT %}
-        <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
-      {% endif %}
-      {% for option in options %}
-        <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
-      {% endfor %}
-    </select>
-    {{field_help_text(name)}}
+
+  <div class="row">
+    <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+    
+    {{input_description(name)}}
+
+    <div class="select full-width">
+      <select name="{{name}}" id="{{name}}">
+        {% if not empty_option is sameas DEFAULT %}
+          <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
+        {% endif %}
+        {% for option in options %}
+          <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {{macros.hintbox(content=name, label="Additional guidance")}}
   </div>
 {%- endmacro %}
 

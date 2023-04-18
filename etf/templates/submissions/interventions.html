@@ -3,10 +3,9 @@
 
 {% block evaluation_content %}
   <form method="POST" id="intervention-add-form">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       <p>
       Enter data on each intervention in the evaluation in this section.
       </p>
@@ -16,6 +15,7 @@
       {% block multipleobjects %}
         {% include "submissions/multiple-objects.html" %}
       {% endblock %}
+      </div>
     </fieldset>
   </form>
 {% endblock %}

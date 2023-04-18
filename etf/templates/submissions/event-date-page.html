@@ -3,12 +3,10 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
       {{macros.select_from_list("event_date_name", "Event name", list=dropdown_choices.event_date_name)}}
-      {{macros.input("date", "Event date", type="date")}}
+      {{macros.input_date("date", "Event date")}}
       {{macros.select_from_list("event_date_type", "Intended or actual date", list=dropdown_choices.event_date_type)}}
       {{macros.textarea("reasons_for_change", "Reasons for change")}}
       {% include "submissions/multiple-objects-page.html" %}
