@@ -26,6 +26,7 @@
 
     & + .content-wrapper .content {
       opacity: 0;
+      border-left: 4px solid var(--color-link);
     }
   }
   & .content-wrapper {

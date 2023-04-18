@@ -1,3 +1,4 @@
+textarea,
 input {
   font-family: var(--text-font-family);
   background-color: var(--color-bg-white);
@@ -7,11 +8,26 @@ input {
   font-size: 16px;
   padding: 8px 16px;
   box-sizing: border-box;
-  min-height: 40px;
+  &::placeholder {
+    color: var(--color-grey-light);
+    font-style: italic;
+  }
+
+  &:focus {
+    outline: 2px solid var(--input-stroke-dark);
+  }
 
   &.full-width {
     width: 100%;
   }
+}
+
+textarea {
+  min-height: 120px;
+}
+
+input {
+  min-height: 40px;
 
   &.large {
     padding: 13px 16px;
@@ -27,15 +43,6 @@ input {
     background-position: 12px center;
     background-repeat: no-repeat;
     text-indent: 30px;
-  }
-
-  &::placeholder {
-    color: var(--color-grey-light);
-    font-style: italic;
-  }
-
-  &:focus {
-    outline: 2px solid var(--input-stroke-dark);
   }
 }
 
