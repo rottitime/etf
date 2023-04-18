@@ -3,16 +3,14 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
-      <p>
-      In this section you may add documents related to your evaluation eg scoping report, technical report, theory of change, analysis code.   
-      </p>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
+      <p>In this section you may add documents related to your evaluation eg scoping report, technical report, theory of change, analysis code.</p>
       {% block multipleobjects %}
         {% include "submissions/multiple-objects.html" %}
       {% endblock %}
+    </div>
     </fieldset>
   </form>
 {% endblock %}
