@@ -68,7 +68,7 @@ def check_evaluation_permission(func):
         evaluation_users = evaluation.users.all()
         if evaluation.status is choices.EvaluationStatus.PUBLIC:
             return func(request, *args, **kwargs)
-        else:  # TODO: Add check for if a user is cabinet office or not
+        else:
             if request.user not in evaluation_users:
                 raise Http404("Evaluation not found")
             return func(request, *args, **kwargs)
