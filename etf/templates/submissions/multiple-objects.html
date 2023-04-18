@@ -1,9 +1,11 @@
-<ul>
-  {% for url, name in data.objects_url_mapping.items() %}
-    <li><a href={{url}}>{{name}}</a></li>
-  {% endfor %}
-</ul>
-<button class="button" type="submit" name="add">Create {{data.object_name}}<i class="bi-file-earmark-plus"></i></button>
-<hr>
+<div class="content caption">
+  <ul >
+    {% for url, name in data.objects_url_mapping.items() %}
+      <li><a href={{url}}>{{name}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<button class="bttn-secondary small" type="submit" name="add">Create {{data.object_name}}</button>
+
 
 {{macros.buttons(prev_url, id=data.evaluation_id, next_url=next_url, completed_page=data.object_summary_page_name)}}
