@@ -27,7 +27,7 @@ class MethodDispatcher:
 
 # Unused request and exception arguments are required by django 404 handler function
 def view_404(request, exception=None):
-    return render(request, "page-not-found.html", {})
+    return render(request, "page-not-found.html", {}, status=404)
 
 
 def beta_test_view(request, exception=None):
