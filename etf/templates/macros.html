@@ -8,7 +8,6 @@
   {% endfor %}
 
   {{macros.hintbox(content=name, label="Additional guidance")}}
-  
 </div>
 {%- endmacro %}
 
@@ -32,17 +31,13 @@
 
 
 {% macro hintbox(content, label) -%}
+{% set short_description = get_field_help_text(object_name, content) %}
+{% if short_description %}
 <div is="hint-box" aria-label="{{label}}">
   <div class="content">
-    {{hintbox_description(content)}}
+    {{short_description}}
   </div>
 </div>
-{%- endmacro %}
-
-{%- macro hintbox_description(name) %}
-{% set short_description = get_field_help_text(object_name, name) %}
-{% if short_description %}
-  <p class="subheader">{{short_description}}</p>
 {% endif %}
 {%- endmacro %}
 
