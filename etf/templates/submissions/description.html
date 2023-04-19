@@ -8,7 +8,6 @@
         <h1>{{title}}</h1>
       </legend>
       {{macros.textarea("brief_description", "Brief description")}}
-      {{macros.select_many_from_list("topics", "Topics", dropdown_choices.topics)}}
       {{macros.select_many_from_list("organisations", "Organisations", dropdown_choices.organisations)}}
     </fieldset>
     {{macros.buttons(prev_url, id=data.id)}}
