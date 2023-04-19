@@ -23,8 +23,8 @@ def test_malformed_markdown():
     evaluation = models.Evaluation(title="An Evaluation with markdown helptext")
     evaluation.save()
     evaluation.users.add(user)
-    response = client.get(f"evaluation/{evaluation.id}/description/")
     fields.description_help_text[
         "brief_description"
     ] = "Please provide one or two sentences to describe the evaluation."
+    response = client.get(f"evaluation/{evaluation.id}/description/")
     assert response.has_text("Please provide one or two sentences to describe the evaluation.")
