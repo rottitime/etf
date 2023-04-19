@@ -5,8 +5,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.templatetags.static import static
 from django.urls import reverse
+from markdown_it import MarkdownIt
 
 from etf.evaluation import fields, models, pages
+
+markdown_converter = MarkdownIt()
 
 DEFAULT = object()
 
@@ -71,6 +74,12 @@ def url(path, *args, **kwargs):
     return reverse(path, args=args, kwargs=kwargs)
 
 
+def markdown(text, cls=None):
+    html = markdown_converter.render(text).strip()
+    html = html.replace("<p>", f'<p class="{cls or ""}">', 1).replace("</p>", "", 1)
+    return html
+
+
 def environment(**options):
     extra_options = {"autoescape": True}
     env = jinja2.Environment(
@@ -96,6 +105,7 @@ def environment(**options):
             "get_field_help_text": fields.get_field_help_text,
             "get_field_tooltip_text": fields.get_field_tooltip_text,
             "space_name": settings.VCAP_APPLICATION.get("space_name", "unknown"),
+            "markdown": markdown,
         }
     )
     return env
