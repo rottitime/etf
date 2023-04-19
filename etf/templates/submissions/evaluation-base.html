@@ -39,20 +39,12 @@
 
         <hr class="my-24" />
 
-        <!-- TODO: update url on form tag -->
-        <form action="#">
+        
+        <form method="POST">
         {{csrf_input}}
-          <div class="row mb-24">
-            <label class="checkbox">
-              <input name="is_complete" type="checkbox" value="true">
-              <div class="checkmark"></div>
-              <span>Mark section as complete</span>
-              
-            </label>
-          </div>
-  
-          <button class="bttn-primary full-width mb-24 small" type="submit" name="save" value="save">Save</button>
-          <button class="bttn-secondary small full-width" type="submit" name="save" value="save-next">Save and next</button>
+
+        <button class="bttn-secondary full-width small" type="submit" name="save" value="save" name="set_complete" value="true">Mark as complete</button>
+ 
         </form>
 
         <hr class="my-24" />
