@@ -1,5 +1,6 @@
 
-{% block evaluations %} {% if not evaluations or evaluations.count() == 0 %}
+{% block evaluations %}
+{% if not evaluations %}
 
 <div class="center">
   <p><i>You have no evaluations</i></p>
@@ -10,7 +11,7 @@
   </form>
 </div>
 
-{% elif evaluations.count() > 0 %}
+{% else %}
 <div class="card-results">
   {% for evaluation in evaluations %}
 
