@@ -27,3 +27,13 @@ def test_get_prev_next_page_name_last():
     result = pages.get_prev_next_page_name(page_name)
     expected = ("status", None)
     assert result == expected, result
+
+
+def test_get_page_name_and_order():
+    page_names_and_order = pages.get_page_name_and_order("flibble")
+    assert len(page_names_and_order) == 21, len(page_names_and_order)
+    assert "impact-analysis" not in page_names_and_order
+
+    page_names_and_order = pages.get_page_name_and_order("Impact evaluation")
+    assert len(page_names_and_order) == 24, len(page_names_and_order)
+    assert "impact-analysis" in page_names_and_order

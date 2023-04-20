@@ -1,3 +1,5 @@
+import itertools
+
 from etf.evaluation import utils
 
 
@@ -91,6 +93,15 @@ object_page_url_names = {
     "event-dates": "event-date-page",
 }
 
+_evaluation_type_page_mapping = {
+    "Impact evaluation": set(("impact-analysis", "impact-design", "impact-findings")),
+    "Process evaluation": set(("process-analysis", "process-design", "process-findings")),
+    "Economic evaluation": set(("economic-analysis", "economic-design", "economic-findings")),
+    "Other": set(("other-analysis", "other-design", "other-findings")),
+}
+
+_all_evaluation_type_pages = set().union(*_evaluation_type_page_mapping.values())
+
 
 def get_prev_next_page_name(page_name):
     assert page_name in page_url_names
@@ -108,6 +119,16 @@ def get_prev_next_page_name(page_name):
 
 page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}
 default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}
+
+
+@utils.dictify
+def get_page_name_and_order(evaluation_type):
+    pages_to_remove = _all_evaluation_type_pages - _evaluation_type_page_mapping.get(evaluation_type, set())
+    counter = itertools.count(0)
+
+    for page_name in page_url_names:
+        if page_name not in pages_to_remove:
+            yield page_name, next(counter)
 
 
 def get_default_page_statuses():
