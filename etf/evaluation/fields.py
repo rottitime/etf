@@ -323,7 +323,7 @@ economic_findings_tooltip_text = defaultdict(
     lambda: [],
     {
         "economic_eval_summary_findings": [
-            "If the evaluation was of more than one type (eg, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
+            "If the evaluation was of more than one type (for example, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
         ],
     },
 )
@@ -337,7 +337,7 @@ ethics_tooltip_text = defaultdict(
             "Ethics committee reviews are sometimes an obligation where a study could be considered health research; where a funder demands it; or where organisational processes require it.",
         ],
         "ethical_state_given_existing_evidence_base": [
-            "Is there a state of uncertainty over which of the options being investigated is most beneficial (equipoise)? If not, are there other grounds making it ethical to offer a known-effective intervention to some and not others (eg natural delay)?",
+            "Is there a state of uncertainty over which of the options being investigated is most beneficial (equipoise)? If not, are there other grounds making it ethical to offer a known-effective intervention to some and not others (for example, natural delay)?",
             "Is there an intervention that is already known to work for the issue being studied in this context? If so, is this being used as the comparison intervention for any new intervention being studied, rather than using a no-service comparison group?",
             "One of the main justifications for it being ethical to undertake a study is that there exists a state of ‘equipoise’ – ie that there is a degree of uncertainty about which of the options being compared is superior. If an intervention has already conclusively been shown to be effective then it would normally be ethically problematic to compare it to a control group receiving nothing. It would, however, still be acceptable to test it against another intervention of unknown effectiveness, or to compare it against ‘no treatment’ in a new context where it is not yet known whether the intervention would be effective.",
             "One exception to the requirement for equipoise can be a situation where there is a natural delay: where the intervention would be rolled out in a phased way to different beneficiaries anyway, then it can be ethical to conduct a study comparing those who get the intervention early against those who have not yet received it because they are due to get it later.",
@@ -354,7 +354,7 @@ ethics_tooltip_text = defaultdict(
             "When will consent be obtained? Who will obtain consent?",
             "How will consent be given (eg verbal, written)? If not written, how will records be kept?",
             "What steps will be taken to ensure that consent is informed and freely given?",
-            "If using secondary data, does the primary consent cover the proposed usage (eg further analysis)?",
+            "If using secondary data, does the primary consent cover the proposed usage (for example, further analysis)?",
             "Attach a copy of the participant consent form, if being used.",
         ],
         "participant_information": [
@@ -479,7 +479,7 @@ intervention_tooltip_text = defaultdict(
         ],
         "name": ["Please provide a name or brief phrase that describes the intervention."],
         "provider_description": [
-            "For each category of intervention provider (e.g. housing officer) description of their expertise, background and any specific training they will receive."
+            "For each category of intervention provider (eg housing officer) description of their expertise, background and any specific training they will receive."
         ],
         "fidelity": [
             "Description of how and by whom intervention fidelity (extent to which implementation is consistent with plan) will be assessed (if at all), and description of strategies that will be used to maintain or improve fidelity (if any).",
