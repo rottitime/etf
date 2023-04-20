@@ -1,11 +1,14 @@
+# Note that this helptext supports markdown for formatting
+
+
 from collections import defaultdict
 
 description_help_text = defaultdict(
     lambda: "",
     {
-        "brief_description": "Please provide one or two sentences to describe the evaluation.",
-        "topics": "Please select one or more topics to associate with this evaluation.",
-        "organisations": "Please select the organisations responsible for this evaluation.",
+        "brief_description": "One or two sentences describing the evaluation.",
+        "topics": "One or more topics associated with this evaluation.",
+        "organisations": "The organisation(s) responsible for this evaluation.",
     },
 )
 
@@ -27,7 +30,7 @@ economic_design_help_text = defaultdict(
         "economic_eval_type": "Type of economic evaluation to be conducted.",
         "perspective_costs": "Which costs are to be included in the economic evaluation?",
         "perspective_benefits": "Which benefits are to be included in the economic evaluation?",
-        "monetisation_approaches": "Approaches used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
+        "monetisation_approaches": "Approach(es) used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
         "economic_eval_design_details": "Details of the design of the economic evaluation.",
     },
 )
@@ -36,8 +39,8 @@ economic_design_help_text = defaultdict(
 economic_findings_help_text = defaultdict(
     lambda: "",
     {
-        "economic_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
-        "economic_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+        "economic_eval_summary_findings": "Short description (one to two sentences) of the findings related to the evaluation.",
+        "economic_eval_findings": "Longer description of the findings related to the evaluation, as required.",
     },
 )
 
@@ -210,7 +213,7 @@ studied_population_help_text = defaultdict(
     {
         "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
         "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
-        "sample_size": "The overall sample size of the evaluation",
+        "sample_size": "The overall sample size of the evaluation.",
         "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
     },
 )
@@ -294,17 +297,19 @@ economic_design_tooltip_text = defaultdict(
     {
         "economic_eval_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
-            "In cost-minimisation analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
-            "In cost-effectiveness analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
-            "In cost-benefit analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
-            "In cost-utility analysis, various outcomes are converted to a measure of ‘utility’, allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+            "In **cost-minimisation** analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+            "In **cost-effectiveness** analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+            "In **cost-benefit** analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+            "In **cost-utility** analysis, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
             "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s).",
         ],
         "perspective_costs": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
+            "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "perspective_benefits": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions."
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
+            "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "monetisation_approaches": [
             "Some costs and benefits are naturally expressed in monetary terms. The natural measures for some others will not be in monetary terms, but may need to be monetised to fully include them in an economic evaluation. Provide details of any approaches used to monetise values that are not inherently expressed in monetary terms.",
@@ -318,7 +323,7 @@ economic_findings_tooltip_text = defaultdict(
     lambda: [],
     {
         "economic_eval_summary_findings": [
-            "If the evaluation was of more than one type (eg, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
+            "If the evaluation was of more than one type (for example, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
         ],
     },
 )
@@ -332,7 +337,7 @@ ethics_tooltip_text = defaultdict(
             "Ethics committee reviews are sometimes an obligation where a study could be considered health research; where a funder demands it; or where organisational processes require it.",
         ],
         "ethical_state_given_existing_evidence_base": [
-            "Is there a state of uncertainty over which of the options being investigated is most beneficial (equipoise)? If not, are there other grounds making it ethical to offer a known-effective intervention to some and not others (eg natural delay)?",
+            "Is there a state of uncertainty over which of the options being investigated is most beneficial (equipoise)? If not, are there other grounds making it ethical to offer a known-effective intervention to some and not others (for example, natural delay)?",
             "Is there an intervention that is already known to work for the issue being studied in this context? If so, is this being used as the comparison intervention for any new intervention being studied, rather than using a no-service comparison group?",
             "One of the main justifications for it being ethical to undertake a study is that there exists a state of ‘equipoise’ – ie that there is a degree of uncertainty about which of the options being compared is superior. If an intervention has already conclusively been shown to be effective then it would normally be ethically problematic to compare it to a control group receiving nothing. It would, however, still be acceptable to test it against another intervention of unknown effectiveness, or to compare it against ‘no treatment’ in a new context where it is not yet known whether the intervention would be effective.",
             "One exception to the requirement for equipoise can be a situation where there is a natural delay: where the intervention would be rolled out in a phased way to different beneficiaries anyway, then it can be ethical to conduct a study comparing those who get the intervention early against those who have not yet received it because they are due to get it later.",
@@ -349,7 +354,7 @@ ethics_tooltip_text = defaultdict(
             "When will consent be obtained? Who will obtain consent?",
             "How will consent be given (eg verbal, written)? If not written, how will records be kept?",
             "What steps will be taken to ensure that consent is informed and freely given?",
-            "If using secondary data, does the primary consent cover the proposed usage (eg further analysis)?",
+            "If using secondary data, does the primary consent cover the proposed usage (for example, further analysis)?",
             "Attach a copy of the participant consent form, if being used.",
         ],
         "participant_information": [
@@ -474,7 +479,7 @@ intervention_tooltip_text = defaultdict(
         ],
         "name": ["Please provide a name or brief phrase that describes the intervention."],
         "provider_description": [
-            "For each category of intervention provider (e.g. housing officer) description of their expertise, background and any specific training they will receive."
+            "For each category of intervention provider (eg housing officer) description of their expertise, background and any specific training they will receive."
         ],
         "fidelity": [
             "Description of how and by whom intervention fidelity (extent to which implementation is consistent with plan) will be assessed (if at all), and description of strategies that will be used to maintain or improve fidelity (if any).",
