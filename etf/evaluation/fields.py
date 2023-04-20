@@ -1,3 +1,6 @@
+# Note that this helptext supports markdown for formatting
+
+
 from collections import defaultdict
 
 description_help_text = defaultdict(
@@ -269,7 +272,7 @@ document_page_tooltip_text = defaultdict(
     lambda: [],
     {
         "document_title": [
-            "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, e.g., 'Analysis plan for the evaluation of XYZ interventions'."
+            "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, eg 'Analysis plan for the evaluation of XYZ interventions'."
         ],
         "document_types": [
             "Information on an evaluation might be contained in one document or split across several. For example, in the planning stage a single document might contain both a study protocol and the analysis plan. And in reporting findings, technical details could be included in a separate document, but they could equally be included as appendices in a main report document.",
