@@ -297,18 +297,18 @@ economic_design_tooltip_text = defaultdict(
     {
         "economic_eval_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
-            "In **cost-minimisation analysis**, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
-            "In **cost-effectiveness analysis**, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
-            "In **cost-benefit analysis**, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
-            "In **cost-utility analysis**, various outcomes are converted to a measure of ‘utility’, allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+            "In **cost-minimisation** analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+            "In **cost-effectiveness** analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+            "In **cost-benefit** analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+            "In **cost-utility** analysis, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
             "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s).",
         ],
         "perspective_costs": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions.",
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
             "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "perspective_benefits": [
-            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal’, which reflects a full range of social opportunity costs associated with different interventions.",
+            "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
             "[ SOURCE: Adapted from Perspective, YHEC (2016) https://yhec.co.uk/glossary/perspective/ ]",
         ],
         "monetisation_approaches": [
