@@ -63,18 +63,6 @@
 
         <table>
           <tr>
-            <th>Topic/s</th>
-            <td>
-              {% if data.topics | length > 0 %}
-                {% for topic in data.topics %}
-                  <div class="chip green">{{topic}}</div>
-                {% endfor %}
-              {% else %}
-                <p>No topics found</p>
-              {% endif %}
-            </td>
-          </tr>
-          <tr>
             <th>Organisation(s)</th>
             <td>
               {% if data.organisations | length > 0 %}

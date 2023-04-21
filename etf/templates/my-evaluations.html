@@ -2,8 +2,8 @@
 
 
 {% block content %}
-   
-  <h3 class="header3 highlight">My evaluations ({{evaluations.count()}})</h3>
+
+  <h3 class="header3 highlight">My evaluations ({{evaluations|length}})</h3>
 
   {% block evaluations %}
     {% include "evaluation-list.html" %}

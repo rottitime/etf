@@ -42,37 +42,6 @@
             </div>
           </li>
           <li>
-            <h3 class="{% if data.active_filter == "topics" %}active{% endif %}">
-              <button type="button">
-                <div class="title">Topics{% if data.selected_topics %} <div class="badge filter-control-total" data-name="topics">{{data.selected_topics|length}}</div>{% endif %}</div>
-                <div class="icon"></div>
-              </button>
-            </h3>
-            <div class="accordion-content">
-
-
-              <fieldset class="filter-control">
-
-                <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="topics" />
-                  <button type="reset" class="txt-link small" {% if data.selected_topics|length < 1 or data.topics|length < 1 %}disabled{% endif %}>Reset</button>
-                </div>
-  
-              <div class="scroll">
-                {% for topic in data.topics %}
-                <div class="row">
-                  <label class="checkbox">
-                    <input name="topics" type="checkbox" {% if is_in(data, "selected_topics", topic[0]) %}checked{% endif %} value="{{ topic[0] }}" />
-                    <div class="checkmark"></div>
-                    <span>{{topic[1]}}</span>
-                  </label>
-                </div>
-              {% endfor %}
-              </div>
-              </fieldset>
-            </div>
-          </li>
-          <li>
             <h3{% if data.active_filter == "evaluation_types" %} class="active" {% endif %}>
               <button type="button">
                 <div class="title">Evaluation types{% if data.selected_evaluation_types %} <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div>{% endif %}</div>
@@ -160,15 +129,6 @@
                 </a>
               </div>
             {% endfor %}
-            {% for topic in data.selected_topics %}
-              <div class="chip orange">
-              {% set relevant_item = data.topics | selectattr('0', '==', topic) | first %}
-                {{relevant_item[1]}}
-                <a href="{{data.current_url | replace('topics=' + relevant_item[0], '')}}" title="close" class="close">
-                  {{macros.cross_svg()}}
-                </a>
-              </div>
-            {% endfor %}
             {% for evaluation_type in data.selected_evaluation_types %}
               <div class="chip orange">
               {% set relevant_item = data.evaluation_types | selectattr('0', '==', evaluation_type) | first %}
@@ -206,10 +166,6 @@
               <tr>
                 <th>Organisation(s)</th>
                 <td>{{evaluation.get_list_organisations_display_names()|join(', ')}}</td>
-              </tr>
-              <tr>
-                <th>Topic(s)</th>
-                <td>{{evaluation.get_list_topics_display_names()|join(', ')}}</td>
               </tr>
               <tr>
                 <th>Evaluation type</th>
