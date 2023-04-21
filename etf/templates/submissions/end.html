@@ -2,19 +2,16 @@
 
 {% block evaluation_content %}
   <div class="wrapper">
-    <h1>{{title}}</h1>
-    <ul>
-    Thank you for entering your evaluation
-    </ul>
-    <div class="evaluation-button-row">
+    <h1 class="header3 highlight">{{title}}</h1>
+    <p>Thank you for entering your evaluation</p>
+    <footer class="actions">
       <div class="grid-x">
         <div class="cell small-6">
-          <a href="{{prev_url}}" class="button"><i class="bi-caret-left"></i> Back</a>
+          <a href="{{ prev_url }}" class="bttn-quaternary small">Back</a>
           <a href="
-              {{url('evaluation-overview', evaluation_id)}}" class="button"><i class="bi-house"></i>Back
-            to evaluation progress</a>
+              {{url('evaluation-overview', evaluation_id)}}" class="bttn-quaternary small">Cancel</a>
         </div>
       </div>
-    </div>
+    </footer>
   </div>
 {% endblock %}

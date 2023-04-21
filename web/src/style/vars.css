@@ -53,5 +53,5 @@
   --status-color-orange: #fd7b1f;
   --status-color-red: #ff151f;
   --status-color-default: #545864;
-  --status-color-blue: #0050c7;
+  --status-color-blue: var(--color-blue);
 }

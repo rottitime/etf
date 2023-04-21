@@ -3,13 +3,13 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       <p>Only display if one of the evaluation types is "Other evaluation"</p>
       <p>[PLACEHOLDER - analysis plan document upload]</p>
       {{macros.textarea("other_eval_analysis_description", "Description of planned analysis")}}
+      </div>
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

@@ -64,6 +64,11 @@ main.container {
       }
     }
   }
+
+  /* increase width for right hand side  columns */
+  & .col + .sidebar {
+    flex-basis: 304px;
+  }
 }
 
 .search-filters {

@@ -1,4 +1,4 @@
-import arrowDown from '../svg/arrow-down.svg'
+import help from '../svg/help.svg'
 
 class Hintbox extends HTMLDivElement {
   constructor() {
@@ -17,9 +17,10 @@ class Hintbox extends HTMLDivElement {
     const toggleBtn = document.createElement('button')
     toggleBtn.setAttribute('id', idButton)
     toggleBtn.classList.add('txt-link')
+    toggleBtn.setAttribute('type', 'button')
     toggleBtn.setAttribute('aria-expanded', this.dataset.open || 'false')
     toggleBtn.setAttribute('aria-controls', idContent)
-    toggleBtn.innerHTML = (this.getAttribute('aria-label') || 'Hint') + arrowDown
+    toggleBtn.innerHTML = help + (this.getAttribute('aria-label') || 'Hint')
     toggleBtn.addEventListener('click', () => {
       const opened = toggleBtn.getAttribute('aria-expanded') === 'true'
       toggleBtn.setAttribute('aria-expanded', String(!opened))

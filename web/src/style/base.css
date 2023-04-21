@@ -225,3 +225,24 @@ small,
 .scrolled {
   animation: popout 0.1s ease-in-out;
 }
+
+.content {
+  & p:last-child {
+    margin-bottom: 0;
+  }
+
+  & ul {
+    margin: 0 0 var(--spacing-16) 0;
+    padding-left: 0;
+
+    & li {
+      display: flex;
+      align-items: center;
+      &:before {
+        color: var(--color-blue2);
+        content: '- ';
+        margin-right: var(--spacing-8);
+      }
+    }
+  }
+}

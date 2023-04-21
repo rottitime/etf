@@ -3,16 +3,17 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       {{macros.input("name", "Measurement name")}}
       {{macros.select_from_list("measure_type", "Measure type", list=dropdown_choices.measure_type)}}
       {{macros.textarea("description", "Description of measurement")}}
       {{macros.textarea("collection_process", "Collection procedures and timing")}}
+      
 
       {% include "submissions/multiple-objects-page.html" %}
+    </div>
     </fieldset>
   </form>
 {% endblock %}

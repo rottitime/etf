@@ -3,13 +3,13 @@
 
 {% block evaluation_content %}
   <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      <div class="content caption">
       <p>Only display if one of the evaluation types is "Impact evaluation"</p>
       <p>[PLACEHOLDER - analysis plan document upload]</p>
       {{macros.select_from_list("impact_eval_framework", "Framework", list=dropdown_choices.impact_eval_framework)}}
+      
       {{macros.select_from_list("impact_eval_basis", "Analysis basis", list=dropdown_choices.impact_eval_basis)}}
       {{macros.textarea("impact_eval_analysis_set", "Analysis set")}}
       {{macros.select_from_list("impact_eval_effect_measure_type", "Primary effect size measure type", list=dropdown_choices.impact_eval_effect_measure_type)}}
@@ -22,6 +22,7 @@
       {{macros.textarea("impact_eval_missing_data_handling", "Missing data handling")}}
       {{macros.yes_no("impact_eval_fidelity", "Fidelity reporting")}}
       {{macros.textarea("impact_eval_desc_planned_analysis", "Description of planned analysis")}}
+      </div>
 
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>

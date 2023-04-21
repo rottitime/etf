@@ -136,7 +136,6 @@ def test_step_through_evaluation():
         "Description",
         {
             "brief_description": "A brief description of the evaluation",
-            "topics": [choices.Topic.BREXIT.value],
             "organisations": [enums.Organisation.choices[0][0]],
         },
         evaluation.id,

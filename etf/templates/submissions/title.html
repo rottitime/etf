@@ -2,14 +2,14 @@
 {% import 'macros.html' as macros with context %}
 
 {% block evaluation_content %}
-  <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
-      <legend>
-        <h3>{{title}}</h3>
-      </legend>
+  <form method="POST">
+    {{csrf_input}}
+    <fieldset>
+      <legend><h1>{{title}}</h1></legend>
+      
       {{macros.input(name="title", label="Evaluation title")}}
       {{macros.input(name="short_title", label="Short title for evaluation")}}
-      {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
+    {{macros.buttons(prev_url, id=data.id)}}
   </form>
 {% endblock %}

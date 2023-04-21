@@ -1,4 +1,59 @@
 {% macro input(name, label, placeholder='', type='text', min='') -%}
+<div class="row">
+  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  {% for error in errors.get(name, []) %}
+    <div class="helper">{{error}}</div>
+  {% endfor %}
+
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+</div>
+{%- endmacro %}
+
+
+{% macro input_date(name, label, placeholder='') -%}
+<div class="row">
+  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+
+  <div class="date-picker full-width">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="date" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  </div>
+  {% for error in errors.get(name, []) %}
+    <div class="helper">{{error}}</div>
+  {% endfor %}
+
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+  
+</div>
+{%- endmacro %}
+
+
+{% macro hintbox(content, label) -%}
+{% set short_description = get_field_help_text(object_name, content) %}
+{% if short_description %}
+<div is="hint-box" aria-label="{{label}}">
+  <div class="content">
+    {{short_description}}
+  </div>
+</div>
+{% endif %}
+{%- endmacro %}
+
+
+{%- macro input_description(name) %}
+  {% set description = get_field_tooltip_text(object_name, name) %}
+  {% if description %}
+      {% for text in description %}
+        <p class="description">{{text}}</p>
+      {% endfor %}
+  {% endif %}
+{%- endmacro %}
+
+
+
+{% macro inpu_oldt(name, label, placeholder='', type='text', min='') -%}
   <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
   {{field_tooltip_reveal(name)}}
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
@@ -9,28 +64,35 @@
 {%- endmacro %}
 
 {% macro textarea(name, label, placeholder='') -%}
-  <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  {{field_tooltip_reveal(name)}}
-  <textarea rows="3" placeholder="{{placeholder}}" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}">{{data.get(name)}}</textarea>
+<div class="row">
+  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <textarea placeholder="{{placeholder}}" id="{{name}}" name="{{name}}" class="full-width">{{data.get(name)}}</textarea>
   {% for error in errors.get(name, []) %}
-    <span class="form-error">{{error}}</span>
+    <div class="helper">{{error}}</div>
   {% endfor %}
-  {{field_help_text(name)}}
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+</div>
 {%- endmacro %}
 
 {% macro select(name, label, options, empty_option=DEFAULT) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    <select name="{{name}}" id="{{name}}">
-      {% if not empty_option is sameas DEFAULT %}
-        <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
-      {% endif %}
-      {% for option in options %}
-        <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
-      {% endfor %}
-    </select>
-    {{field_help_text(name)}}
+
+  <div class="row">
+    <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+    
+    {{input_description(name)}}
+
+    <div class="select full-width">
+      <select name="{{name}}" id="{{name}}">
+        {% if not empty_option is sameas DEFAULT %}
+          <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
+        {% endif %}
+        {% for option in options %}
+          <option value="{{option.value}}" {{is_selected(data, name, option.value)}}>{{option.text}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {{macros.hintbox(content=name, label="Additional guidance")}}
   </div>
 {%- endmacro %}
 
@@ -53,22 +115,17 @@
 {%- endmacro %}
 
 {% macro select_many_from_list(name, label, list) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    <select multiple name="{{name}}" id="{{name}}">
-      {% for item in list %}
-        <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
-      {% endfor %}
-    </select>
-    {{field_help_text(name)}}
-  </div>
-  <script>
-    accessibleAutocomplete.enhanceSelectElement({
-      showAllValues: true,
-      selectElement: document.querySelector('#{{name}}')
-    })
-  </script>
+<div class="row">
+  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  {{input_description(name)}}
+  <select multiple name="{{name}}" id="{{name}}" class="full-width">
+    {% for item in list %}
+      <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
+    {% endfor %}
+  </select>
+  {{macros.hintbox(content=name, label="Additional guidance")}}
+  
+</div>
 {%- endmacro %}
 
 {% macro select_from_list(name, label, list, empty_option=DEFAULT) -%}
@@ -120,25 +177,24 @@
 
 
 {% macro buttons(prev_url, completed_page=None, next_url=None, id=None) -%}
-  <div class="evaluation-button-row">
-    <div class="grid-x">
-      <div class="cell small-6">
-        <a href="{{ prev_url }}" class="button"><i class="bi-caret-left"></i> Back</a>
-        {% if id %}
-          <a href="{{ url('evaluation-overview', id) }}" class="button"><i class="bi-house"></i>Back to evaluation progress</a>
+  <footer class="actions">
+    <div>
+      <a href="{{ prev_url }}" class="bttn-quaternary small">Back</a>
+      {% if id %}
+          <a href="{{ url('evaluation-overview', id) }}" class="bttn-quaternary small">Cancel</a>
       {% endif %}
-      </div>
-      <div class="cell small-6">
-        {% if next_url and completed_page %}
-          <a href="{{next_url}}?completed={{completed_page}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
-        {% elif next_url and not completed_page %}
-          <a href="{{next_url}}" class="button float-right">Next <i class="bi-caret-right"></i></a>
-        {% else %}
-          <button type="submit" class="button float-right">Save and next <i class="bi-caret-right"></i></button>
-        {% endif %}
-      </div>
     </div>
-  </div>
+
+    {% if next_url and completed_page %}
+    <a href="{{next_url}}?completed={{completed_page}}" class="bttn-primary">Next</a>
+  {% elif next_url and not completed_page %}
+    <a href="{{next_url}}" class="bttn-primary">Next</a>
+  {% else %}
+    <button type="submit" class="bttn-primary">Save and next</button>
+  {% endif %}
+
+
+  </footer>
 {%- endmacro %}
 
 
@@ -158,16 +214,14 @@
 
 
 {% macro return_summary_button(object_name) -%}
-  <div class="evaluation-button-row">
-    <button type="submit" name="return" class="button float-right">Save <i class="bi-save"></i></button>
-  </div>
+  
+    <button type="submit" name="return" class="bttn-primary">Save</button>
+  
 {%- endmacro %}
 
 
 {% macro delete_button(object_name) -%}
-  <div class="evaluation-button-row">
-    <button type="submit" name="delete" class="button float-left">Delete <i class="bi-trash"></i></button>
-  </div>
+<button type="submit" name="delete" class="bttn-negative small">Delete</button>  
 {%- endmacro %}
 
 {% macro callout(tags) -%}

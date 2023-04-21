@@ -8,6 +8,9 @@
   transition: none;
   text-decoration: none;
   display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+
   &:hover {
     text-decoration: none;
   }
