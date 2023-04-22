@@ -10,6 +10,8 @@ from . import choices, models
 
 event_names = set()
 
+SEPARATOR = "|"
+
 
 class DuplicateEvent(Exception):
     pass
@@ -203,6 +205,3 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
     def __hash__(self):
         return hash(self._name_)
-
-
-SEPARATOR = "|"
