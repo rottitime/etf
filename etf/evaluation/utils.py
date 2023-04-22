@@ -6,7 +6,7 @@ import types
 import marshmallow
 from django.http import Http404
 
-from . import models
+from . import models, choices
 
 event_names = set()
 
@@ -202,3 +202,13 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
     def __hash__(self):
         return hash(self._name_)
+
+
+def restrict_to_permitted_evaluations(user, evaluations_qs):
+    evals_for_user_qs = evaluations_qs.filter(users_in=[user])
+    public_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.PUBLIC)
+    restricted_evaluations_qs = evals_for_user_qs | public_evals_qs
+    if not user.is_external_user:
+        civil_service_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.CIVIL_SERVICE)
+        restricted_evaluations_qs = civil_service_evals_qs | restricted_evaluations_qs
+    return restricted_evaluations_qs
