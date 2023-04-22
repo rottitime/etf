@@ -63,7 +63,7 @@ def process_self(func, arguments):
     return func, arguments
 
 
-def check_evaluation_permission(func):
+def check_edit_evaluation_permission(func):
     def wrapper(request, *args, **kwargs):
         evaluation_id = kwargs["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)

@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import choices, interface, models, pages, schemas
-from .utils import check_evaluation_permission
+from .utils import check_edit_evaluation_permission
 
 
 @login_required
@@ -27,7 +27,7 @@ def make_evaluation_url(evaluation_id, page_name):
 
 
 @login_required
-@check_evaluation_permission
+@check_edit_evaluation_permission
 def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
@@ -66,7 +66,7 @@ def transform_post_data(post_data, multiselect_dropdown_choices):
 
 
 @login_required
-@check_evaluation_permission
+@check_edit_evaluation_permission
 def evaluation_view(request, evaluation_id, page_name, title):
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
@@ -182,7 +182,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 
 
 @login_required
-@check_evaluation_permission
+@check_edit_evaluation_permission
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     user = request.user
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
@@ -235,7 +235,7 @@ def make_related_object_context(user_id, evaluation_id, title, object_name, url_
 
 
 @login_required
-@check_evaluation_permission
+@check_edit_evaluation_permission
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
