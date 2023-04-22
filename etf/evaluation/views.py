@@ -12,6 +12,7 @@ from django.views.decorators.http import require_http_methods
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
 from .restrict_email import is_civil_service_email
+from .utils import check_evaluation_view_permission, restrict_to_permitted_evaluations
 
 
 class MethodDispatcher:
@@ -86,6 +87,7 @@ class EvaluationSearchView(MethodDispatcher):
         current_url = request.get_full_path()
 
         qs = models.Evaluation.objects.all()
+        qs = restrict_to_permitted_evaluations(request.user)
         total_evaluations = qs.count()
 
         if organisations:
@@ -106,19 +108,6 @@ class EvaluationSearchView(MethodDispatcher):
                 evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
                 evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
             qs = evaluation_types_qs
-        if not status:
-            qs = qs.filter(
-                Q(status=choices.EvaluationStatus.DRAFT.value, users__in=[request.user])
-                | Q(status__in=[choices.EvaluationStatus.PUBLIC.value, choices.EvaluationStatus.CIVIL_SERVICE.value])
-            )
-        else:
-            if status == choices.EvaluationStatus.DRAFT:
-                qs = qs.filter(status=status)
-                qs = qs.filter(users__in=[request.user])
-            if status == choices.EvaluationStatus.PUBLIC:
-                qs = qs.filter(status=status)
-            if status == choices.EvaluationStatus.CIVIL_SERVICE:
-                qs = qs.filter(status=status)
         filters = get_search_filters(qs, organisations, topics, status, evaluation_types)
 
         # For now, place highest weight on title and description
