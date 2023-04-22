@@ -68,12 +68,9 @@ def check_edit_evaluation_permission(func):
         evaluation_id = kwargs["evaluation_id"]
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         evaluation_users = evaluation.users.all()
-        if evaluation.status is choices.EvaluationStatus.PUBLIC:
-            return func(request, *args, **kwargs)
-        else:
-            if request.user not in evaluation_users:
-                raise Http404("Evaluation not found")
-            return func(request, *args, **kwargs)
+        if request.user not in evaluation_users:
+            raise Http404("Evaluation not found")
+        return func(request, *args, **kwargs)
 
     return wrapper
 
