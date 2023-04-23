@@ -85,9 +85,9 @@ def test_evaluation_permissions(client):
 
 
 def setup_evaluations():
-    internal_user = models.User(email="internal@example.com")
+    internal_user, _ = models.User.objects.get_or_create(email="internal@example.com")
     internal_user.save()
-    external_user = models.User(email="external@test.com", is_external_user=True)
+    external_user, _ = models.User.objects.get_or_create(email="jemima.puddleduck@example.org", is_external_user=True)
     external_user.save()
     public_evaluation = interface.facade.evaluation.create(user_id=internal_user.id)
     interface.facade.evaluation.update(
@@ -122,7 +122,7 @@ def setup_evaluations():
 
 def teardown_evaluations():
     models.Evaluation.objects.filter(title__in=["Public", "Civil Service", "Draft 1", "Draft 2"]).delete()
-    models.User.objects.filter(email__in=["internal@exampel.com", "external@test.com"]).delete()
+    models.User.objects.filter(email__in=["internal@example.com"]).delete()
 
 
 def get_evaluation_ids():
@@ -146,11 +146,21 @@ def check_overview_urls(client, evaluation_id, expected_status_code):
         assert response.status_code == expected_status_code
 
 
-@with_authenticated_client
+@utils.with_authenticated_client
 @with_setup(setup_evaluations, teardown_evaluations)
 def test_overview_internal_access(client):
     eval_ids = get_evaluation_ids()
     check_overview_urls(client, eval_ids["public"], expected_status_code=200)
     check_overview_urls(client, eval_ids["civil_service"], expected_status_code=200)
+    check_overview_urls(client, eval_ids["draft_not_a_contributor"], expected_status_code=404)
+    check_overview_urls(client, eval_ids["draft_contributor"], expected_status_code=200)
+
+
+@utils.with_authenticated_external_client
+@with_setup(setup_evaluations, teardown_evaluations)
+def test_overview_external_access(client):
+    eval_ids = get_evaluation_ids()
+    check_overview_urls(client, eval_ids["public"], expected_status_code=200)
+    check_overview_urls(client, eval_ids["civil_service"], expected_status_code=404)
     check_overview_urls(client, eval_ids["draft_not_a_contributor"], expected_status_code=404)
     check_overview_urls(client, eval_ids["draft_contributor"], expected_status_code=200)
