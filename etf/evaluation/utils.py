@@ -6,7 +6,7 @@ import types
 import marshmallow
 from django.http import Http404
 
-from . import choices, models
+from . import models
 
 event_names = set()
 
