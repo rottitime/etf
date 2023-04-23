@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
 from .restrict_email import is_civil_service_email
-from .utils import check_evaluation_view_permission, restrict_to_permitted_evaluations
+from .utils import restrict_to_permitted_evaluations
 
 
 class MethodDispatcher:
@@ -87,7 +87,7 @@ class EvaluationSearchView(MethodDispatcher):
         current_url = request.get_full_path()
 
         qs = models.Evaluation.objects.all()
-        qs = restrict_to_permitted_evaluations(request.user)
+        qs = restrict_to_permitted_evaluations(request.user, qs)
         total_evaluations = qs.count()
 
         if organisations:

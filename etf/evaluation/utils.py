@@ -205,7 +205,7 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
 
 def restrict_to_permitted_evaluations(user, evaluations_qs):
-    evals_for_user_qs = evaluations_qs.filter(users_in=[user])
+    evals_for_user_qs = evaluations_qs.filter(users__in=[user])
     public_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.PUBLIC)
     restricted_evaluations_qs = evals_for_user_qs | public_evals_qs
     if not user.is_external_user:
