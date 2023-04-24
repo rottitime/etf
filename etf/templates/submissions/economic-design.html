@@ -6,13 +6,13 @@
     <fieldset>
       <legend><h1>{{title}}</h1></legend>
       <div class="content caption">
-      <p>Only display if one of the evaluation types is 'economic evaluation'</p>
+      </div>
+
       {{macros.select_from_list("economic_eval_type", "Economic evaluation type", list=dropdown_choices.economic_eval_type)}}
       {{macros.textarea("perspective_costs", "Perspective: costs")}}
       {{macros.textarea("perspective_benefits", "Perspective: benefits")}}
       {{macros.textarea("monetisation_approaches", "Monetisation approach(es)")}}
       {{macros.textarea("economic_eval_design_details", "Design details")}}
-      </div>
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
