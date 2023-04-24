@@ -3,37 +3,44 @@ from etf.evaluation import pages
 
 def test_get_prev_next_page_name_first():
     page_name = "intro"
-    result = pages.get_prev_next_page_name(page_name)
+    result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
     expected = (None, "title")
     assert result == expected, result
 
 
 def test_get_prev_next_page_name_middle():
     page_name = "ethics"
-    result = pages.get_prev_next_page_name(page_name)
+    result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
+    expected = ("other-measures", "processes-standards")
+    assert result == expected, result
+
+
+def test_get_prev_next_page_name_middle_impact():
+    page_name = "ethics"
+    result = pages.get_prev_next_page_name(page_name, evaluation_types=["IMPACT"])
     expected = ("other-measures", "impact-findings")
     assert result == expected, result
 
 
 def test_get_prev_next_page_name_penultimate():
     page_name = "status"
-    result = pages.get_prev_next_page_name(page_name)
+    result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
     expected = ("metadata", "end")
     assert result == expected, result
 
 
 def test_get_prev_next_page_name_last():
     page_name = "end"
-    result = pages.get_prev_next_page_name(page_name)
+    result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
     expected = ("status", None)
     assert result == expected, result
 
 
 def test_get_page_name_and_order():
-    page_names_and_order = pages.get_page_name_and_order("flibble")
+    page_names_and_order = pages.get_page_name_and_order(["flibble"])
     assert len(page_names_and_order) == 21, len(page_names_and_order)
     assert "impact-analysis" not in page_names_and_order
 
-    page_names_and_order = pages.get_page_name_and_order("Impact evaluation")
+    page_names_and_order = pages.get_page_name_and_order(["IMPACT"])
     assert len(page_names_and_order) == 24, len(page_names_and_order)
     assert "impact-analysis" in page_names_and_order

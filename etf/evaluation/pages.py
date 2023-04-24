@@ -57,8 +57,8 @@ page_url_names = (
     "policy-costs",
     "publication-intention",
     "documents",
-    "event-dates",
     "evaluation-types",
+    "event-dates",
     "impact-design",
     "impact-analysis",
     "process-design",
@@ -94,36 +94,39 @@ object_page_url_names = {
 }
 
 _evaluation_type_page_mapping = {
-    "Impact evaluation": set(("impact-analysis", "impact-design", "impact-findings")),
-    "Process evaluation": set(("process-analysis", "process-design", "process-findings")),
-    "Economic evaluation": set(("economic-analysis", "economic-design", "economic-findings")),
-    "Other": set(("other-analysis", "other-design", "other-findings")),
+    "IMPACT": set(("impact-analysis", "impact-design", "impact-findings")),
+    "PROCESS": set(("process-analysis", "process-design", "process-findings")),
+    "ECONOMIC": set(("economic-analysis", "economic-design", "economic-findings")),
+    "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }
 
 _all_evaluation_type_pages = set().union(*_evaluation_type_page_mapping.values())
 
 
-def get_prev_next_page_name(page_name):
-    assert page_name in page_url_names
-    page_index = page_url_names.index(page_name)
+def get_prev_next_page_name(page_name, evaluation_types):
+    pages = tuple(get_page_name_and_order(evaluation_types).keys())
+    assert page_name in pages
+    page_index = pages.index(page_name)
     if page_index == 0:
         prev_url_name = None
     else:
-        prev_url_name = page_url_names[page_index - 1]
-    if page_index + 1 == len(page_url_names):
+        prev_url_name = pages[page_index - 1]
+    if page_index + 1 == len(pages):
         next_url_name = None
     else:
-        next_url_name = page_url_names[page_index + 1]
+        next_url_name = pages[page_index + 1]
     return prev_url_name, next_url_name
 
 
-page_name_and_order = {page_name: page_url_names.index(page_name) for page_name in page_url_names}
 default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for page_name in page_url_names}
 
 
 @utils.dictify
-def get_page_name_and_order(evaluation_type):
-    pages_to_remove = _all_evaluation_type_pages - _evaluation_type_page_mapping.get(evaluation_type, set())
+def get_page_name_and_order(evaluation_types):
+    pages_to_keep = set().union(
+        *(_evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
+    )
+    pages_to_remove = _all_evaluation_type_pages - pages_to_keep
     counter = itertools.count(0)
 
     for page_name in page_url_names:
