@@ -71,7 +71,6 @@ def evaluation_view(request, evaluation_id, page_name, title):
     user = request.user
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
-    print(page_name, prev_url_name, next_url_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = f"submissions/{page_name}.html"
@@ -86,7 +85,6 @@ def evaluation_view(request, evaluation_id, page_name, title):
             user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
         )
     if request.method == "POST":
-        print(f"{request.POST=}")
         data = transform_post_data(request.POST, multiple_value_vars)
         try:
             serialized_evaluation = eval_schema.load(data=data, partial=True)
