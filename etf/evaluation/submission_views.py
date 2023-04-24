@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import choices, interface, models, pages, schemas
+from .utils import check_edit_evaluation_permission
 
 
 @login_required
@@ -26,6 +27,7 @@ def make_evaluation_url(evaluation_id, page_name):
 
 
 @login_required
+@check_edit_evaluation_permission
 def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
@@ -64,6 +66,7 @@ def transform_post_data(post_data, multiselect_dropdown_choices):
 
 
 @login_required
+@check_edit_evaluation_permission
 def evaluation_view(request, evaluation_id, page_name, title):
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
@@ -179,6 +182,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 
 
 @login_required
+@check_edit_evaluation_permission
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     user = request.user
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
@@ -231,6 +235,7 @@ def make_related_object_context(user_id, evaluation_id, title, object_name, url_
 
 
 @login_required
+@check_edit_evaluation_permission
 def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
@@ -264,12 +269,12 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
 
 def intro_page_view(request, evaluation_id):
     page_data = {"title": "Introduction", "page_name": "intro"}
-    return simple_page_view(request, evaluation_id, page_data)
+    return simple_page_view(request, page_data=page_data, evaluation_id=evaluation_id)
 
 
 def evaluation_title_view(request, evaluation_id):
     page_data = {"title": "Title", "page_name": "title"}
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_description_view(request, evaluation_id):
@@ -277,7 +282,7 @@ def evaluation_description_view(request, evaluation_id):
         "title": "Description",
         "page_name": "description",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_issue_description_view(request, evaluation_id):
@@ -285,7 +290,7 @@ def evaluation_issue_description_view(request, evaluation_id):
         "title": "Issue description",
         "page_name": "issue-description",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_studied_population_view(request, evaluation_id):
@@ -293,7 +298,7 @@ def evaluation_studied_population_view(request, evaluation_id):
         "title": "Studied population",
         "page_name": "studied-population",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_participant_recruitment(request, evaluation_id):
@@ -301,7 +306,7 @@ def evaluation_participant_recruitment(request, evaluation_id):
         "title": "Participant recruitment",
         "page_name": "participant-recruitment",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_costs_view(request, evaluation_id):
@@ -309,7 +314,7 @@ def evaluation_costs_view(request, evaluation_id):
         "title": "Evaluation costs and budget",
         "page_name": "evaluation-costs",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_policy_costs_view(request, evaluation_id):
@@ -317,7 +322,7 @@ def evaluation_policy_costs_view(request, evaluation_id):
         "title": "Policy costs and budget",
         "page_name": "policy-costs",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_publication_intention_view(request, evaluation_id):
@@ -325,7 +330,7 @@ def evaluation_publication_intention_view(request, evaluation_id):
         "title": "Publication intention",
         "page_name": "publication-intention",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_types_view(request, evaluation_id):
@@ -333,7 +338,7 @@ def evaluation_types_view(request, evaluation_id):
         "title": "Evaluation types",
         "page_name": "evaluation-types",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_impact_eval_design_view(request, evaluation_id):
@@ -341,7 +346,7 @@ def evaluation_impact_eval_design_view(request, evaluation_id):
         "title": "Impact evaluation design",
         "page_name": "impact-design",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_impact_eval_analysis_view(request, evaluation_id):
@@ -349,7 +354,7 @@ def evaluation_impact_eval_analysis_view(request, evaluation_id):
         "title": "Impact evaluation analysis",
         "page_name": "impact-analysis",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_process_eval_design_view(request, evaluation_id):
@@ -357,7 +362,7 @@ def evaluation_process_eval_design_view(request, evaluation_id):
         "title": "Process evaluation design",
         "page_name": "process-design",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_process_eval_analysis_view(request, evaluation_id):
@@ -365,7 +370,7 @@ def evaluation_process_eval_analysis_view(request, evaluation_id):
         "title": "Process evaluation analysis",
         "page_name": "process-analysis",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_economic_eval_design_view(request, evaluation_id):
@@ -373,7 +378,7 @@ def evaluation_economic_eval_design_view(request, evaluation_id):
         "title": "Economic evaluation design",
         "page_name": "economic-design",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_economic_eval_analysis_view(request, evaluation_id):
@@ -381,7 +386,7 @@ def evaluation_economic_eval_analysis_view(request, evaluation_id):
         "title": "Economic evaluation analysis",
         "page_name": "economic-analysis",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_other_eval_design_view(request, evaluation_id):
@@ -389,7 +394,7 @@ def evaluation_other_eval_design_view(request, evaluation_id):
         "title": "Other evaluation design",
         "page_name": "other-design",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_other_eval_analysis_view(request, evaluation_id):
@@ -397,7 +402,7 @@ def evaluation_other_eval_analysis_view(request, evaluation_id):
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_ethics_view(request, evaluation_id):
@@ -405,7 +410,7 @@ def evaluation_ethics_view(request, evaluation_id):
         "title": "Ethical considerations",
         "page_name": "ethics",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_impact_findings_view(request, evaluation_id):
@@ -413,7 +418,7 @@ def evaluation_impact_findings_view(request, evaluation_id):
         "title": "Impact evaluation findings",
         "page_name": "impact-findings",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_economic_findings_view(request, evaluation_id):
@@ -421,7 +426,7 @@ def evaluation_economic_findings_view(request, evaluation_id):
         "title": "Economic evaluation findings",
         "page_name": "economic-findings",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_process_findings_view(request, evaluation_id):
@@ -429,7 +434,7 @@ def evaluation_process_findings_view(request, evaluation_id):
         "title": "Process evaluation findings",
         "page_name": "process-findings",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_other_findings_view(request, evaluation_id):
@@ -437,7 +442,7 @@ def evaluation_other_findings_view(request, evaluation_id):
         "title": "Other evaluation findings",
         "page_name": "other-findings",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_metadata_view(request, evaluation_id):
@@ -445,17 +450,17 @@ def evaluation_metadata_view(request, evaluation_id):
         "title": "Metadata",
         "page_name": "metadata",
     }
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def evaluation_status_view(request, evaluation_id):
     page_data = {"title": "Evaluation status", "page_name": "status"}
-    return evaluation_view(request, evaluation_id, **page_data)
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
 def end_page_view(request, evaluation_id):
     page_data = {"title": "End", "page_name": "end"}
-    return simple_page_view(request, evaluation_id, page_data)
+    return simple_page_view(request, page_data=page_data, evaluation_id=evaluation_id)
 
 
 def summary_interventions_page_view(request, evaluation_id):
@@ -470,7 +475,9 @@ def summary_interventions_page_view(request, evaluation_id):
         "object_name_plural": "interventions",
     }
     model_name = "Intervention"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def intervention_page_view(request, evaluation_id, intervention_id):
@@ -499,7 +506,9 @@ def summary_outcome_measure_page_view(request, evaluation_id):
         "object_name_plural": "outcome measures",
     }
     model_name = "OutcomeMeasure"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
@@ -528,7 +537,9 @@ def summary_other_measure_page_view(request, evaluation_id):
         "object_name_plural": "other measures",
     }
     model_name = "OtherMeasure"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def other_measure_page_view(request, evaluation_id, other_measure_id):
@@ -557,7 +568,9 @@ def summary_processes_standards_page_view(request, evaluation_id):
         "object_name_plural": "processes and standards",
     }
     model_name = "ProcessStandard"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def process_standard_page_view(request, evaluation_id, process_standard_id):
@@ -586,7 +599,9 @@ def summary_evaluation_costs_page_view(request, evaluation_id):
         "object_name_plural": "evaluation costs",
     }
     model_name = "EvaluationCost"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
@@ -628,7 +643,9 @@ def summary_documents_page_view(request, evaluation_id):
         "object_name_plural": "documents",
     }
     model_name = "Document"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def document_page_view(request, evaluation_id, document_id):
@@ -657,7 +674,9 @@ def summary_links_page_view(request, evaluation_id):
         "object_name_plural": "links",
     }
     model_name = "LinkOtherService"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def links_page_view(request, evaluation_id, link_id):
@@ -686,7 +705,9 @@ def summary_event_dates_page_view(request, evaluation_id):
         "object_name_plural": "event dates",
     }
     model_name = "EventDate"
-    return summary_related_object_page_view(request, evaluation_id, model_name, form_data)
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
 
 
 def event_date_page_view(request, evaluation_id, event_date_id):
