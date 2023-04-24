@@ -2,10 +2,10 @@
 {% import 'macros.html' as macros with context %}
 
 {% block evaluation_content %}
-  <form method="POST">{{csrf_input}}
-    <fieldset class="fieldset">
+  <form method="POST" id="create-evaluation">{{csrf_input}}
+    <fieldset>
       <legend>
-        <h3>{{title}}</h3>
+        <h1>{{title}}</h1>
       </legend>
       <p>
       An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption. The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.

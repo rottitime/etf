@@ -21,7 +21,7 @@ def test_intervention():
     intervention_url = "/".join(page.url.split("/")[:-2] + ["interventions/"])
     page = client.get(intervention_url)
 
-    form = page.get_form("""#intervention-add-form""")
+    form = page.get_form(""".intervention-add-form""")
     page = form.submit().follow()
 
     assert page.status_code == 200, page.status_code

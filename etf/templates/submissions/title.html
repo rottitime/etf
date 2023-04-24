@@ -2,8 +2,7 @@
 {% import 'macros.html' as macros with context %}
 
 {% block evaluation_content %}
-  <form method="POST">
-    {{csrf_input}}
+  <form method="POST" id="create-evaluation">{{csrf_input}}
     <fieldset>
       <legend><h1>{{title}}</h1></legend>
       
