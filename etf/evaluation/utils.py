@@ -6,7 +6,7 @@ import types
 import marshmallow
 from django.http import Http404
 
-from . import models
+from . import choices, models
 
 event_names = set()
 
@@ -202,3 +202,33 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
     def __hash__(self):
         return hash(self._name_)
+
+
+def restrict_to_permitted_evaluations(user, evaluations_qs):
+    evals_for_user_qs = evaluations_qs.filter(users__in=[user])
+    public_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.PUBLIC)
+    restricted_evaluations_qs = evals_for_user_qs | public_evals_qs
+    if not user.is_external_user:
+        civil_service_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.CIVIL_SERVICE)
+        restricted_evaluations_qs = civil_service_evals_qs | restricted_evaluations_qs
+    return restricted_evaluations_qs
+
+
+def check_evaluation_view_permission(func):
+    def wrapper(request, *args, **kwargs):
+        evaluation_id = kwargs["evaluation_id"]
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        evaluation_users = evaluation.users.all()
+        civil_service_user = not request.user.is_external_user
+        eval_is_public = evaluation.status == choices.EvaluationStatus.PUBLIC
+        eval_is_civil_service = evaluation.status == choices.EvaluationStatus.CIVIL_SERVICE
+        if eval_is_public:
+            return func(request, *args, **kwargs)
+        elif eval_is_civil_service and civil_service_user:
+            return func(request, *args, **kwargs)
+        else:
+            if request.user not in evaluation_users:
+                raise Http404("Evaluation not found")
+            return func(request, *args, **kwargs)
+
+    return wrapper

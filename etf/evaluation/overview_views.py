@@ -3,27 +3,35 @@ from django.shortcuts import render
 
 from etf.evaluation import choices, enums, models
 
+from .utils import check_evaluation_view_permission
 
+
+@check_evaluation_view_permission
 def evaluation_summary_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview.html")
 
 
+@check_evaluation_view_permission
 def evaluation_measured_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview-measured.html")
 
 
+@check_evaluation_view_permission
 def evaluation_design_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview-design.html")
 
 
+@check_evaluation_view_permission
 def evaluation_analysis_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview-analysis.html")
 
 
+@check_evaluation_view_permission
 def evaluation_findings_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview-findings.html")
 
 
+@check_evaluation_view_permission
 def evaluation_cost_overview_view(request, evaluation_id):
     return evaluation_summary_view(request, evaluation_id, "overview/evaluation-overview-costs.html")
 

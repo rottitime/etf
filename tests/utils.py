@@ -39,6 +39,25 @@ def with_authenticated_client(func):
     return _inner
 
 
+def with_authenticated_external_client(func):
+    @functools.wraps(func)
+    def _inner(*args, **kwargs):
+        user, _ = User.objects.get_or_create(email="jemima.puddleduck@example.org")
+        user.set_password("P455W0rd")
+        user.verified = True
+        user.is_external_user = True
+        user.save()
+        with httpx.Client(app=etf.wsgi.application, base_url=TEST_SERVER_URL, follow_redirects=True) as client:
+            response = client.get("/accounts/login/")
+            csrf = response.cookies["csrftoken"]
+            data = {"login": user.email, "password": "P455W0rd"}
+            headers = {"X-CSRFToken": csrf}
+            client.post("/accounts/login/", data=data, headers=headers)
+            return func(client, *args, **kwargs)
+
+    return _inner
+
+
 def make_testino_client():
     client = testino.WSGIAgent(etf.wsgi.application, TEST_SERVER_URL)
     return client
