@@ -7,4 +7,4 @@ python manage.py migrate --noinput
 echo
 echo '----------------------------------------------------------------------'
 echo
-nosetests -v ./tests
+nosetests -v ./tests --logging-level=ERROR
