@@ -48,7 +48,17 @@
          </div>
       </header>
       <main class="container">
-            {% block content %} {% endblock %}
+
+         {% set messages = get_messages(request) %}
+         {% if messages %}
+           <section>
+             {% for message in messages %} {% call macros.callout(message.tags) %}
+               <p>{{message}}</p>
+             {% endcall %} {% endfor %}
+           </section>
+         {% endif %}
+
+         {% block content %} {% endblock %}
       </main>
       <footer class="main-footer">
          <div class="container">
