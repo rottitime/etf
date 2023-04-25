@@ -5,6 +5,29 @@
 <h1 class="header2 highlight">Manage contributors</h1>
 
 <div class="sidebarcolumn">
+
+  <div class="col sidebar">
+
+    <div class="card">
+
+      <h2 class="header5 highlight" id="add-heading">Add contributor</h3>
+
+      <form method="POST">{{csrf_input}}
+         
+        <div class="row">
+
+        <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Contributors email..." />
+        </div>
+
+         <footer class="actions">
+          <div></div>
+          <button type="submit" class="bttn-primary small">Add</button>
+         </footer>
+       </form>
+    </div>
+
+</div>
+
   <div class="col">
 
     <div class="card small">
@@ -30,24 +53,7 @@
 
 
   </div>
-  <div class="col sidebar">
 
-      <div class="card">
-
-        <h2 class="header5 highlight" id="add-heading">Add contributor</h3>
-
-        <form method="POST">{{csrf_input}}
-           
-          <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Enter a contributors email..." />
-
-           <footer class="actions">
-            <div></div>
-            <button type="submit" class="bttn-primary small">Add</button>
-           </footer>
-         </form>
-      </div>
-
-  </div>
 </div>
   
 
