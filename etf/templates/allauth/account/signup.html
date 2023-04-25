@@ -5,40 +5,44 @@
 {% block content %}
 
   <div class="card">
-    <div class="card-divider">
-      Register
-    </div>
-    <div class="card-section">
+
+    <h1 class="header2 highlight">Register</h1>
+    
+    <div class="content">
 
       <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
 
       <form method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        <p>
-          <label for="id_email">Email:</label>
-          <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off">
+        <div class="row mb-16">
+          <label for="id_email" {% if form.errors.email %}class="error"{% endif %}>Email</label>
+          <input type="email" name="email" id="id_email" required autocomplete="off" class="full-width" />
           {% if form.errors.email %}
-            <span class="form-error">{{form.errors.email}}</span>
+            <div class="helper">{{form.errors.email}}</div>
           {% endif %}
-        </p>
-        <p>
-          <label for="id_password1">Password:</label>
-          <input type="password" name="password1" placeholder="Password" id="id_password1" required autocomplete="off">
-          {% if form.errors.email %}
-            <span class="form-error">{{form.errors.password1}}</span>
+        </div>
+        <div class="row mb-16">
+          <label for="id_password1" {% if form.errors.password1 %}class="error"{% endif %}>Password</label>
+          <input type="password" name="password1" id="id_password1" required autocomplete="off" class="full-width" />
+          {% if form.errors.password1 %}
+            <div class="helper">{{form.errors.password1}}</div>
           {% endif %}
-        </p>
-        <p>
-          <label for="id_password2">Password:</label>
-          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
-          {% if form.errors.email %}
-            <span class="form-error">{{form.errors.password2}}</span>
+        </div>
+        <div class="row mb-16">
+          <label for="id_password2" {% if form.errors.password2 %}class="error"{% endif %}>Password</label>
+          <input type="password" name="password2" id="id_password2" required autocomplete="off" class="full-width" />
+          {% if form.errors.password2 %}
+            <div class="helper">{{form.errors.password2}}</div>
           {% endif %}
-        </p>
+        </div>
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
         {% endif %}
-        <button class="button float-right" type="submit">Sign up</button>
+
+        <footer class="actions">
+          <div></div>
+          <button class="bttn-primary" type="submit">Sign up</button>
+        </footer>
       </form>
     </div>
   </div>
