@@ -28,6 +28,17 @@
          </div>
       </header>
       <main class="container">
+
+         {% if messages %}
+         <section>
+           {% for message in messages %}
+             <div class="callout {{message.tags}}" data-closable>
+               <p>{{message}}</p>
+             </div>
+           {% endfor %}
+         </section>
+       {% endif %}
+
          {% block content %} {% endblock %}
       </main>
       <footer class="main-footer">
