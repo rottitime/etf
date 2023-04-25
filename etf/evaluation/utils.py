@@ -13,6 +13,23 @@ event_names = set()
 SEPARATOR = "|"
 
 
+def dictify(*args, **kwargs):
+    if (len(args) == 1) and callable(args[0]):
+        func = args[0]
+
+        @functools.wraps(func)
+        def _inner(*args, **kwargs):
+            return dict(func(*args, **kwargs))
+
+        return _inner
+    else:
+        d = {}
+        for arg in args:
+            d.update(arg)
+        d.update(kwargs)
+        return d
+
+
 class DuplicateEvent(Exception):
     pass
 

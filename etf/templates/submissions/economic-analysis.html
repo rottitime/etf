@@ -6,10 +6,10 @@
     <fieldset>
       <legend><h1>{{title}}</h1></legend>
       <div class="content caption">
-      <p>Only display if one of the evaluation types is "Economic evaluation"</p>
-      <p>[PLACEHOLDER - analysis plan document upload]</p>
-      {{macros.textarea("economic_eval_analysis_description", "Description of planned analysis")}}
+        <p>[PLACEHOLDER - analysis plan document upload]</p>
       </div>
+
+      {{macros.textarea("economic_eval_analysis_description", "Description of planned analysis")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
