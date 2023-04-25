@@ -1,66 +1,77 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8"/>
+      <link rel="icon" type="image/svg+xml" href="{% static 'i-dot-ai/images/crown.svg' %}"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+      <title>Evaluation Registry</title>
+      <link rel="stylesheet" href="{% static 'i-dot-ai/fonts.css' %}"/>
+      <link rel="stylesheet" href="{% static 'dist/assets/index.css' %}" id="main-css"/>
+        {% if space_name and space_name == "local" %}
+          <!-- Dev script for local development -->
+          <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+        {% endif %}
+      <script src="{% static 'dist/assets/index.js' %}" id="main-script" defer></script>
+   </head>
+   {% url 'search' as search_url %}
+   {% url 'my-evaluations' as my_evaluation_url %}
+   <body {% if request.path == search_url %}id="search"{% endif %}>
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="/static/i-dot-ai/images/crown.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <link rel="stylesheet" href="{% static 'foundation/css/foundation.css' %}">
-  <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'i-dot-ai/base.css' %}">
+{#   {% if request.path == url('search') %}id="search"{% endif %}#}
+      <header id="main-header">
+         <div class="container">
+            <a href="/" class="logo">
+              <img src="{% static 'i-dot-ai/images/crown.svg' %}" style="color: black;" alt="crown" />
+               <h2 class="body-text">Evaluation Registry</h2>
+            </a>
 
-  <title>{% block head_title %}{% endblock %}</title>
-  {% block extra_head %}
-  {% endblock %}
+            {% if request.user.is_authenticated %}
 
-  <style>
-      nav {
-          margin-bottom: 1em;
-      }
-  </style>
-</head>
 
-<body id="etf">
+            <button id="main-header-mobile-menu">
+               <div></div>
+             </button>
 
-<nav class="top-bar">
-  <div class="top-bar-left">
-    <h2><img src="/static/i-dot-ai/images/etf_logo_small.png" alt="etf logo"></h2>
-  </div>
-</nav>
+             ** 
+             {{space_name}}
 
-<div id="main" class="grid-x">
-  <div class="cell small-3"></div>
-  <div class="cell small-6">
+            <nav class="menu-list horizontal" id="main-header-menu">
+            <a href="{% url 'search' %}" {% if request.path == search_url %}aria-current="page"{% endif %}>
+              {% with search_svg as search %}
+                {{ search }}
+              {% endwith %}
+              Evaluation search
+            </a>
+            <a href="{% url 'my-evaluations' %}" {% if request.path == my_evaluation_url %}aria-current="page"{% endif %}>
+              My evaluations
+            </a>
 
-    {% block body %}
-
-      {% if messages %}
-        <section>
-          {% for message in messages %}
-            <div class="callout {{message.tags}}" data-closable>
-              <p>{{message}}</p>
+            <form action="{% url 'index' %}" method="POST">{% csrf_token %}
+               <button class="bttn-primary" type="submit">New evaluation</button>
+            </form>
+            <a href="{% url 'account_logout' %}">Logout</a>
+            </nav>
+            {% endif %}
+         </div>
+      </header>
+      <main class="container">
+         {% block content %} {% endblock %}
+      </main>
+      <footer class="main-footer">
+         <div class="container">
+            <nav>
+               <a href="#">Privacy 111</a>
+               <a href="#">Feedback</a>
+            </nav>
+            <div class="disclaimer">
+               &#169; Crown copyright
+              {% with crest_svg as crest %}
+                {{ crest }}
+              {% endwith %}
             </div>
-          {% endfor %}
-        </section>
-      {% endif %}
-
-      <section>
-        {% block content %}
-        {% endblock %}
-      </section>
-
-      {% block extra_body %}
-      {% endblock %}
-    {% endblock %}
-
-  </div>
-
-  <div class="cell small-3"></div>
-
-</div>
-
-</body>
-
+         </div>
+      </footer>
+   </body>
 </html>
