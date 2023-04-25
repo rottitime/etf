@@ -12,8 +12,6 @@ services:
       - db
     env_file:
       - ./envs/web
-    volumes:
-      - ./:/app/:z
     ports:
       - "8010:8010"
 
