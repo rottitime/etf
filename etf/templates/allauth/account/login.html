@@ -1,26 +1,27 @@
 {% extends "account/base.html" %}
-
 {% load account socialaccount %}
-
 {% block head_title %}Log in{% endblock %}
 
 {% block content %}
 
-  <section class="wrapper">
-    <h1>Log in</h1>
+  <div class="card">
+    <h1 class="header2 highlight">Log in</h1>
 
-    <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">register</a> first.</p>
 
     <form class="login" method="POST">
+    <div class="content">
+    <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">register</a> first.</p>
+
+    
       {% csrf_token %}
-      <p>
+      <div class="row">
         <label for="id_login">Email:</label>
-        <input type="email" placeholder="Email address" name="login" id="id_login" required>
-      </p>
-      <p>
+        <input type="email" placeholder="Email address" name="login" id="id_login" required class="full-width" />
+      </div>
+      <div class="row">
         <label for="id_password">Password:</label>
-        <input type="password" name="password" placeholder="Password" id="id_password" required autocomplete="off">
-      </p>
+        <input type="password" name="password" placeholder="Password" id="id_password" required autocomplete="off" class="full-width" />
+      </div>
       <p><a href="{% url 'password-reset' %}">Forgot password?</a></p>
       <p>
         <label for="id_remember">Remember me:</label>
@@ -34,8 +35,10 @@
       {% if resend_verification is True and resend_email is not None %}
         <p>Your account is not verified. <a href="{% url 'resend-verify-email' %}?email={{resend_email|urlencode}}">Request a new verification link</a>.</p>
       {% endif %}
+    
+      </div>
     </form>
-  </section>
+  </div>
 
 
 {% endblock %}
