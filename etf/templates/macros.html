@@ -51,6 +51,7 @@
   {% endif %}
 {%- endmacro %}
 
+
 {% macro textarea(name, label, placeholder='') -%}
 <div class="form-group {{errors.get(name) and 'error'}}">
   <label for="{{name}}">{{label}}</label>
@@ -83,6 +84,7 @@
     {{macros.hintbox(content=name, label="Additional guidance")}}
   </div>
 {%- endmacro %}
+
 
 {% macro select_many_from_list(name, label, list) -%}
 <div class="form-group {{errors.get(name) and 'error'}}">
@@ -125,6 +127,7 @@
   <span class="helper">{{error}}</span>
   {% endfor %}
 {%- endmacro %}
+
 
 {% macro buttons(prev_url, completed_page=None, next_url=None, id=None) -%}
   <footer class="actions">
@@ -213,20 +216,6 @@
   {% endif %}
 {%- endmacro %}
 
-{%- macro field_tooltip_reveal(name) %}
-  {% set tooltip = get_field_tooltip_text(object_name, name) %}
-  {% if tooltip %}
-    <div class="reveal" id="tooltip-modal-{{name}}" data-reveal>
-    <button class="close-button" data-close aria-label="Close reveal" type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      {% for tt in tooltip %}
-        {{markdown(tt)|safe}}
-      {% endfor %}
-    </div>
-    <button type="button" class="help-text-button" name="help-text-modal" data-open="tooltip-modal-{{name}}"><i class="bi-question"></i></button>
-  {% endif %}
-{%- endmacro %}
 
 {%- macro field_help_text(name)  %}
   {% set short_description = get_field_help_text(object_name, name) %}
