@@ -90,6 +90,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
             serialized_evaluation = eval_schema.load(data=data, partial=True)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
+            print(errors)
         else:
             interface.facade.evaluation.update(user.id, evaluation_id, serialized_evaluation)
             interface.facade.evaluation.update_page_status(

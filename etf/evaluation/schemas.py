@@ -146,8 +146,10 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
     impact_eval_basis_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_analysis_set = fields.Str()
-    impact_eval_effect_measure_type = fields.Str(validate=validate.Length(max=64))
-    impact_eval_primary_effect_size_measure = fields.Str(validate=validate.OneOf(choices.ImpactMeasureType.values))
+    impact_eval_effect_measure_type = fields.Str(
+        validate=validate.And(validate.Length(max=64), validate.OneOf(choices.ImpactMeasureType.values))
+    )
+    impact_eval_primary_effect_size_measure = fields.Str()
     impact_eval_effect_measure_interval = fields.Str(
         validate=validate.And(
             validate.OneOf(choices.get_db_values(choices.ImpactMeasureInterval.choices)), validate.Length(max=64)

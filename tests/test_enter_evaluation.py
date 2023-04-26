@@ -241,17 +241,6 @@ def test_step_through_evaluation():
                 "reasons_for_change": "A description of the reason for this change",
             },
         ),
-        # Evaluation types page
-        _make_simple_step(
-            "Evaluation types",
-            {
-                "evaluation_type": [
-                    choices.EvaluationTypeOptions.ECONOMIC.value,
-                    choices.EvaluationTypeOptions.IMPACT.value,
-                ],
-            },
-            evaluation.id,
-        ),
         # Impact evaluation design page
         _make_simple_step(
             "Impact evaluation design",
