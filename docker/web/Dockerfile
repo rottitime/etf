@@ -48,8 +48,6 @@ COPY --from=build-stage /app .
 # Create a new directory to store the output files
 RUN mkdir -p /output && cp -R /app/static/dist/* /output
 
-RUN cp -R /output/* /app/static/dist/
-
 RUN \
     DJANGO_SETTINGS_MODULE=etf.settings_base \
     DJANGO_SECRET_KEY="temp" \
