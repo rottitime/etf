@@ -241,6 +241,17 @@ def test_step_through_evaluation():
                 "reasons_for_change": "A description of the reason for this change",
             },
         ),
+        # Evaluation types page
+        _make_simple_step(
+            "Evaluation types",
+            {
+                "evaluation_type": [
+                    choices.EvaluationTypeOptions.ECONOMIC.value,
+                    choices.EvaluationTypeOptions.IMPACT.value,
+                ],
+            },
+            evaluation.id,
+        ),
         # Impact evaluation design page
         _make_simple_step(
             "Impact evaluation design",
@@ -266,7 +277,7 @@ def test_step_through_evaluation():
                 "impact_eval_primary_effect_size_measure": "Primary effect size measure",
                 "impact_eval_effect_measure_interval": choices.ImpactMeasureInterval.BAYESIAN.value,
                 "impact_eval_primary_effect_size_desc": "A description of the primary effect size measure",
-                "impact_eval_interpretation_type": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+                "impact_eval_interpretation_type": choices.ImpactInterpretationType.NONE,  # TODO - change
                 "impact_eval_sensitivity_analysis": "The sensitivity analysis",
                 "impact_eval_subgroup_analysis": "A subgroup analysis",
                 "impact_eval_missing_data_handling": "A summary of missing data handling",

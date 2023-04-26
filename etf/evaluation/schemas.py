@@ -1,6 +1,12 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields, validate, ValidationError
 
 from . import choices
+
+
+def values_in_choices(list_values, choices_values):
+    for value in list_values:
+        if not value in choices_values:
+            raise ValidationError(f"All values in list should be one of: {choices_values}")
 
 
 class DateAndBlankField(fields.Date):
@@ -54,7 +60,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     title = fields.Str(required=True, validate=validate.Length(max=1024))
     short_title = fields.Str(validate=validate.Length(max=128))
     brief_description = fields.Str()
-    topics = fields.Raw()
+    topics = fields.Raw(validate=lambda x: values_in_choices(x, choices.Topics.values))
     organisations = fields.Raw()
     status = fields.Str(
         validate=validate.And(
@@ -86,7 +92,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     # Evaluation type
-    evaluation_type = fields.Raw()
+    evaluation_type = fields.Raw(validate=lambda x: values_in_choices(x, choices.EvaluationTypeOptions.values))
     evaluation_type_other = fields.Str(validate=validate.Length(max=256))
 
     # Studied population
@@ -117,7 +123,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     other_ethical_information = fields.Str()
 
     # Impact evaluation design
-    impact_eval_design_name = fields.Raw()
+    impact_eval_design_name = fields.Raw(validate=lambda x: values_in_choices(x, choices.ImpactEvalDesign.values))
     impact_eval_design_name_other = fields.Str(validate=validate.Length(max=64))
     impact_eval_design_justification = fields.Str()
     impact_eval_design_description = fields.Str()
@@ -141,7 +147,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_basis_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_analysis_set = fields.Str()
     impact_eval_effect_measure_type = fields.Str(validate=validate.Length(max=64))
-    impact_eval_primary_effect_size_measure = fields.Str()
+    impact_eval_primary_effect_size_measure = fields.Str(validate=validate.OneOf(choices.ImpactMeasureType.values))
     impact_eval_effect_measure_interval = fields.Str(
         validate=validate.And(
             validate.OneOf(choices.get_db_values(choices.ImpactMeasureInterval.choices)), validate.Length(max=64)
@@ -150,9 +156,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_effect_measure_interval_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_primary_effect_size_desc = fields.Str()
     impact_eval_interpretation_type = fields.Str(
-        validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactEvalInterpretation.choices)), validate.Length(max=64)
-        )
+        validate=validate.And(validate.OneOf(choices.ImpactInterpretationType.values), validate.Length(max=64))
     )
     impact_eval_interpretation_type_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_sensitivity_analysis = fields.Str()
@@ -208,7 +212,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Impact evaluation findings
     impact_eval_comparison = fields.Str()
     impact_eval_outcome = fields.Str()
-    impact_eval_interpretation = fields.Str(validate=validate.Length(max=256))
+    impact_eval_interpretation = fields.Str(
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.ImpactEvalInterpretation.values))
+    )
     impact_eval_point_estimate_diff = fields.Str()
     impact_eval_lower_uncertainty = fields.Str()
     impact_eval_upper_uncertainty = fields.Str()
@@ -316,14 +322,16 @@ class DocumentSchema(TimeStampedModelSchema):
     title = fields.Str(validate=validate.Length(max=256))
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
-    document_types = fields.Raw()
+    document_types = fields.Raw(validate=lambda x: values_in_choices(x, choices.DocumentType.values))
     document_type_other = fields.Str(validate=validate.Length(max=256))
 
 
 class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
-    event_date_name = fields.Str(validate=validate.Length(max=256))
+    event_date_name = fields.Str(
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.EventDateOption.values))
+    )
     date = DateAndBlankField()
     event_date_type = fields.Str(
         validate=validate.And(
