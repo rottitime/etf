@@ -29,6 +29,12 @@ check-python-code:
 	black --check .
 	flake8
 
+.PHONY: check-node-code
+check-node-code:
+	cd ./web && \
+	npm ci && \
+	npm run test:all
+
 .PHONY: check-migrations
 check-migrations:
 	docker-compose build web

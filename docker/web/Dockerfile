@@ -1,3 +1,18 @@
+FROM node:16 as build-stage
+
+ENV TZ=UTC
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+COPY . /app
+
+WORKDIR /app/web
+RUN pwd 
+RUN npm ci
+RUN npm run build
+
+################
+
 FROM python:3.8-buster
 
 
@@ -24,7 +39,14 @@ RUN python3 -m pip install -r /app/requirements.lock --no-cache-dir
 COPY ./docker/web/start.sh /start.sh
 RUN chmod +x /start.sh
 
-COPY . /app
+# Set the working directory
+WORKDIR /app
+
+# Copy the app directory and list.txt from build-stage
+COPY --from=build-stage /app .
+
+# Create a new directory to store the output files
+RUN mkdir -p /output && cp -R /app/static/dist/* /output
 
 RUN \
     DJANGO_SETTINGS_MODULE=etf.settings_base \
