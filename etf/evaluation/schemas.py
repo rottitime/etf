@@ -63,9 +63,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     topics = fields.Raw(validate=lambda x: values_in_choices(x, choices.Topics.values))
     organisations = fields.Raw()
     status = fields.Str(
-        validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.EvaluationStatus.choices)), validate.Length(max=256)
-        ),
+        validate=validate.And(validate.OneOf(choices.EvaluationStatus.values), validate.Length(max=256)),
         default=choices.EvaluationStatus.DRAFT.value,
     )
 
@@ -108,7 +106,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Ethical considerations
     ethics_committee_approval = fields.Str(
-        validate=validate.And(validate.OneOf(choices.get_db_values(choices.YesNo.choices)), validate.Length(max=3))
+        validate=validate.And(validate.OneOf(choices.YesNo.values), validate.Length(max=3))
     )
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
@@ -134,15 +132,11 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation analysis
     impact_eval_framework = fields.Str(
-        validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactFramework.choices)), validate.Length(max=64)
-        )
+        validate=validate.And(validate.OneOf(choices.ImpactFramework.values), validate.Length(max=64))
     )
     impact_eval_framework_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_basis = fields.Str(
-        validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactAnalysisBasis.choices)), validate.Length(max=64)
-        )
+        validate=validate.And(validate.OneOf(choices.ImpactAnalysisBasis.values), validate.Length(max=64))
     )
     impact_eval_basis_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_analysis_set = fields.Str()
@@ -151,9 +145,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
     impact_eval_primary_effect_size_measure = fields.Str()
     impact_eval_effect_measure_interval = fields.Str(
-        validate=validate.And(
-            validate.OneOf(choices.get_db_values(choices.ImpactMeasureInterval.choices)), validate.Length(max=64)
-        )
+        validate=validate.And(validate.OneOf(choices.ImpactMeasureInterval.values), validate.Length(max=64))
     )
     impact_eval_effect_measure_interval_other = fields.Str(validate=validate.Length(max=256))
     impact_eval_primary_effect_size_desc = fields.Str()
@@ -165,7 +157,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_subgroup_analysis = fields.Str()
     impact_eval_missing_data_handling = fields.Str()
     impact_eval_fidelity = fields.Str(
-        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.YesNo.choices)))
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.YesNo.values))
     )
     impact_eval_desc_planned_analysis = fields.Str()
 
@@ -177,9 +169,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Economic evaluation design
     economic_eval_type = fields.Str(
-        validate=validate.And(
-            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.EconomicEvaluationType.choices))
-        )
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.EconomicEvaluationType.values))
     )
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
@@ -270,19 +260,13 @@ class OutcomeMeasureSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     primary_or_secondary = fields.Str(
-        validate=validate.And(
-            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeType.choices))
-        )
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeType.values))
     )
     direct_or_surrogate = fields.Str(
-        validate=validate.And(
-            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.OutcomeMeasure.choices))
-        )
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.OutcomeMeasure.values))
     )
     measure_type = fields.Str(
-        validate=validate.And(
-            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.MeasureType.choices))
-        )
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.MeasureType.values))
     )
     measure_type_other = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
@@ -297,9 +281,7 @@ class OtherMeasureSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=256))
     measure_type = fields.Str(
-        validate=validate.And(
-            validate.Length(max=256), validate.OneOf(choices.get_db_values(choices.MeasureType.choices))
-        )
+        validate=validate.And(validate.Length(max=256), validate.OneOf(choices.MeasureType.values))
     )
     measure_type_other = fields.Str(validate=validate.Length(max=256))
     description = fields.Str()
@@ -311,9 +293,7 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     id = fields.UUID(dump_only=True)
     name = fields.Str(validate=validate.Length(max=1024))
     conformity = fields.Str(
-        validate=validate.And(
-            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.FullNoPartial.choices))
-        )
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.FullNoPartial.values))
     )
     description = fields.Str()
 
@@ -336,9 +316,7 @@ class EventDateSchema(TimeStampedModelSchema):
     )
     date = DateAndBlankField()
     event_date_type = fields.Str(
-        validate=validate.And(
-            validate.Length(max=10), validate.OneOf(choices.get_db_values(choices.EventDateType.choices))
-        )
+        validate=validate.And(validate.Length(max=10), validate.OneOf(choices.EventDateType.values))
     )
     reasons_for_change = fields.Str()
 

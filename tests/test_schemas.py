@@ -1,6 +1,6 @@
 from datetime import date
 
-from marshmallow import Schema
+from marshmallow import Schema, ValidationError
 from nose.tools import with_setup
 
 from etf.evaluation import models, schemas
@@ -81,3 +81,20 @@ def test_evaluation_schema_dump(client):
     evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
     serialized_evaluation = evaluation_schema.dump(evaluation)
     assert serialized_evaluation
+
+
+def test_values_in_choices():
+    acceptable_choices = ["A", "B", "C"]
+    valid_data1 = ["A"]
+    valid_data2 = []
+    invalid_data = ["A", "D"]
+
+    schemas.values_in_choices(valid_data1, acceptable_choices)
+    schemas.values_in_choices(valid_data2, acceptable_choices)
+    error_message = ""
+    expected_error_message = "All values in list should be one of: ['A', 'B', 'C']"
+    try:
+        schemas.values_in_choices(invalid_data, acceptable_choices)
+    except ValidationError as e:
+        error_message = e.messages[0]
+    assert error_message == expected_error_message, error_message
