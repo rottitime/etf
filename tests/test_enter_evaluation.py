@@ -216,6 +216,19 @@ def test_step_through_evaluation():
                 "description": "A description of an example document",
             },
         ),
+        # Evaluation types page
+        _make_simple_step(
+            "Evaluation types",
+            {
+                "evaluation_type": [
+                    choices.EvaluationTypeOptions.ECONOMIC.value,
+                    choices.EvaluationTypeOptions.PROCESS.value,
+                    choices.EvaluationTypeOptions.IMPACT.value,
+                    choices.EvaluationTypeOptions.OTHER.value,
+                ],
+            },
+            evaluation.id,
+        ),
         # Event dates page
         _make_multple_object_step(
             "Event dates",
@@ -227,14 +240,6 @@ def test_step_through_evaluation():
                 "event_date_type": choices.EventDateType.ACTUAL.value,
                 "reasons_for_change": "A description of the reason for this change",
             },
-        ),
-        # Evaluation types page
-        _make_simple_step(
-            "Evaluation types",
-            {
-                "evaluation_type": [choices.EvaluationTypeOptions.ECONOMIC.value],
-            },
-            evaluation.id,
         ),
         # Impact evaluation design page
         _make_simple_step(
@@ -473,17 +478,23 @@ def complete_verify_simple_page(page, title, fields, evaluation_id):
     assert page.has_text(title)
     assert page.has_text("Save and next")
     form = page.get_form("""form:not([action])""")
+
+    extra_data = {}
     for field in fields:
-        form[field] = fields[field]
-    next_page = form.submit().follow()
+        if isinstance(fields[field], (set, tuple, list)):
+            extra_data[field] = fields[field]
+        else:
+            form[field] = fields[field]
+    next_page = form.submit(extra=extra_data).follow()
     evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     for field in fields:
-        assert evaluation.__getattribute__(field) == fields[field]
+        assert evaluation.__getattribute__(field) == fields[field], (getattr(evaluation, field), fields[field])
     return next_page
 
 
 def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields):
     assert page.status_code == 200, page.status_code
+    # TODO: Fix this, all titles are on all pages
     assert page.has_text(title)
     assert page.has_text("Next")
     add_item_form = page.get_form("""form:not([action])""")

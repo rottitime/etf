@@ -7,8 +7,6 @@
       <legend>
         <h1>{{title}}</h1>
       </legend>
-      
-      <p>Only display if one of the evaluation types is "Impact evaluation"</p>
 
       {{macros.select_many_from_list("impact_eval_design_name", "Design name", list=dropdown_choices.impact_eval_design_name)}}
       {{macros.textarea("impact_eval_design_justification", "Justification for design")}}
