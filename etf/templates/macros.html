@@ -146,15 +146,14 @@
 {%- endmacro %}
 
 {% macro checkbox(name, label) -%}
-<div>
-  <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
-  <label class="label" for="{{name}}">{{label}}</label>
-  {{field_tooltip_reveal(name)}}
+  <label class="checkbox {{errors.get(name) and 'error'}}">
+    <input type="checkbox" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
+    <div class="checkmark"></div>
+    <span>{{label}}</span>
+  </label>
   {% for error in errors.get(name, []) %}
-    <span class="form-error">{{error}}</span>
+  <span class="helper">{{error}}</span>
   {% endfor %}
-  {{field_help_text(name)}}
-</div>
 {%- endmacro %}
 
 {% macro checkboxes(name, label, options) -%}
