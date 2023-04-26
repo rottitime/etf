@@ -3,7 +3,7 @@ from datetime import date
 from marshmallow import Schema, ValidationError
 from nose.tools import with_setup
 
-from etf.evaluation import models, schemas
+from etf.evaluation import models, schemas, choices, enums
 from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
 
 from .utils import with_authenticated_client
@@ -97,3 +97,25 @@ def test_values_in_choices():
     except ValidationError as e:
         error_message = e.messages[0]
     assert error_message == expected_error_message, error_message
+
+
+def test_evaluation_schema():
+    evaluation_schema = schemas.EvaluationSchema()
+    # TODO - should really have more fields, and nested fields!
+    valid_data = {
+        "title": "My first evaluation",
+        "brief_description": "Hello, I am a brief description",
+        "status": choices.EvaluationStatus.DRAFT,
+        "evaluation_type": [choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.IMPACT],
+        "ethics_committee_approval": "YES",
+        "impact_eval_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
+    }
+    invalid_evaluation_type = {"title": "Title", "evaluation_type": ["STAR"]}
+
+    # assert evaluation_schema.load(valid_data)
+    error_message = ""
+    try:
+        evaluation_schema.load(invalid_evaluation_type)
+    except ValidationError as e:
+        error_message = e["evaluation_type"][0]
+    assert error_message == "All values in list should be one of: ('IMPACT', 'PROCESS', 'ECONOMIC', 'OTHER')"
