@@ -1,41 +1,61 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-  <h3>Contributors</h3>
-      <div class="input-button-pair">
-        <form method="POST">{{csrf_input}}
-         <fieldset class="fieldset">
-          <label class="label" for="add-user-email">Add contributor</label>
-          <input class="input-button-pair-input" placeholder="Enter a contributors email..." type="email" id="add-user-email" name="add-user-email">
-          <button type="submit" class="button input-button-pair-button">Add</button>
-         </fieldset>
-        </form>
-      </div>
+<h1 class="header2 highlight">Manage contributors</h1>
 
-      <table class="contributors">
-        <thead>
-          <tr>
-            <th class="contributor-email-header">Email</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="contributor-table-body">
+<div class="sidebarcolumn">
+
+  <div class="col sidebar">
+
+    <div class="card">
+
+      <h2 class="header5 highlight" id="add-heading">Add contributor</h3>
+
+      <form method="POST">{{csrf_input}}
+         
+        <div class="row">
+
+        <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Contributors email..." />
+        </div>
+
+         <footer class="actions">
+          <div></div>
+          <button type="submit" class="bttn-primary small">Add</button>
+         </footer>
+       </form>
+    </div>
+
+</div>
+
+  <div class="col">
+
+    <div class="card small">
+      <h3 class="header3 highlight">Manage contributors</h3>
+      
+      <table>
+        <tbody>
         {% for c in contributors %}
           <tr>
-            <td id="td-email-a-{{loop.index}}">{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
+            <td style="width:100%">{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
             <td>
               <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
-                 <fieldset class="fieldset">
-                      <button class="button"
-                              type="submit"
-                         {% if contributors | length <= 1 %} disabled {% endif %}
-                         id="delete-a-{{loop.index}}">Remove</button>
-                 </fieldset>
+                <button class="bttn-secondary small" type="submit"
+                {% if contributors | length <= 1 %} disabled {% endif %}>Remove</button>
               </form>
             </td>
           </tr>
         {% endfor %}
         </tbody>
       </table>
+
+    </div>
+
+
+  </div>
+
+</div>
+  
+
+
 {% endblock %}

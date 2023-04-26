@@ -1,16 +1,30 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-  <div class="card">
-    <div class="card-section">
-      <h3>Evaluation progress</h3>
-      {% for page, order in data.page_order|dictsort(by='value') %}
-        <div class="grid-x">
-          <div class="cell small-6 eval-overview-name"><a href="{{url(page, data.evaluation_id)}}">{{ get_page_display_name(page) }}</a></div>
-          <div class="cell small-6 eval-overview-status">{{ get_page_status_display_name(data.statuses[page]) }}</div>
-        </div>
-      {% endfor %}
-    </div>
+
+  <h3 class="header3 highlight">Evaluation progress</h3>
+
+  <div class="card-results">
+  <div class="card small">
+
+    <table>
+    {% for page, order in data.page_order|dictsort(by='value') %}      
+        <tr>
+          <th style="width:99%"><a href="{{url(page, data.evaluation_id)}}">{{ get_page_display_name(page) }}</a></th>
+          <td>
+            {% set status = get_page_status_display_name(data.statuses[page]) %}
+            {% if status == "Done" %}
+            <div class="chip green" role="status">{{ status }}</div>
+            {%else%}
+            <div class="chip" role="status">{{ status }}</div>
+            {% endif %}
+            
+          </td>
+        </tr>
+    {% endfor %}
+  </table>
+    
   </div>
+</div>
 {% endblock %}

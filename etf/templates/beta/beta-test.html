@@ -1,1 +1,16 @@
-{% extends "beta/beta-base.html" %}
+{% extends "base-redesign.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+
+{% include "beta/beta-pagenew.html" %}
+<hr class="my-24" />
+{% include "beta/beta-pagecreate.html" %}
+<hr class="my-24" />
+{% include "beta/beta-pagedashboard.html" %}
+<hr class="my-24" />
+{% include "beta/beta-pagesearch.html" %}
+<hr class="my-24" />
+{% include "beta/beta-extra.html" %}
+
+{% endblock %}

@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 {% block content %}
-  <div class="wrapper">
-    <h1>Page not found</h1>
+  <div class="card">
+    <h1 class="header3 highlight">Login or register</h1>
     <p>Page not found. Please try again or press the button below to return to the home page.</p>
-    <a href="{{url("index")}}" class="button float-left">Home</a>
+    <p><a href="{{url("index")}}">Home</a></p>
   </div>
 {% endblock %}

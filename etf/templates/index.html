@@ -1,23 +1,28 @@
-{% extends "base.html" %}
+{% extends "base-redesign.html" %}
 
 {% block content %}
   {% if not request.user or not request.user.is_authenticated %}
+
     <div class="card">
-      <div class="card-divider">Login or register</div>
-      <div class="card-section">
-        <div class="button-group align-spaced">
-          <a class="button" href="{{url('account_login')}}">Login <i class="bi-box-arrow-in-right"></i></a>
-          <a class="button" href="{{url('account_signup')}}">Register <i class="bi-clipboard-check"></i></a>
+      <h1 class="header3 highlight">Login or register</h1>
+      <div class="content"></div>
+      <footer class="actions">
+        <div>
+          <a class="bttn-quaternary small" href="{{url('account_login')}}">Login</a>
+          <a class="bttn-quaternary small" href="{{url('account_signup')}}">Register</a>
         </div>
-      </div>
+      </footer>
     </div>
+
   {% endif %}
 
   {% if request.user and request.user.is_authenticated %}
-    <section class="wrapper">
+
+    <div class="card">
       <form method="POST">{{csrf_input}}
-        <button class="button" type="submit">Create evaluation <i class="bi-file-earmark-plus"></i></button>
+        <button class="bttn-primary" type="submit">Create evaluation</button>
       </form>
-    </section>
+    </div>
+  
   {% endif %}
 {% endblock %}
