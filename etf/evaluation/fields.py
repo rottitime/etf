@@ -4,7 +4,7 @@
 from collections import defaultdict
 
 description_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "brief_description": "One or two sentences describing the evaluation.",
         "topics": "One or more topics associated with this evaluation.",
@@ -14,7 +14,7 @@ description_help_text = defaultdict(
 
 
 document_page_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "title": "Full title as it appears at the start of the document.",
         "document_types": "Select all types of information covered in this document.",
@@ -25,7 +25,7 @@ document_page_help_text = defaultdict(
 
 
 economic_design_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "economic_eval_type": "Type of economic evaluation to be conducted.",
         "perspective_costs": "Which costs are to be included in the economic evaluation?",
@@ -37,7 +37,7 @@ economic_design_help_text = defaultdict(
 
 
 economic_findings_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "economic_eval_summary_findings": "Short description (one to two sentences) of the findings related to the evaluation.",
         "economic_eval_findings": "Longer description of the findings related to the evaluation, as required.",
@@ -46,7 +46,7 @@ economic_findings_help_text = defaultdict(
 
 
 ethics_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "ethics_committee_approval": "Will the study be submitted to an ethics committee for approval?",
         "ethics_committee_details": "If the study will be submitted to an ethics committee, which one?",
@@ -57,7 +57,7 @@ ethics_help_text = defaultdict(
 
 
 evaluation_cost_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "earliest_spend_date": "Earliest date on which this cost item might incur expenditure",
         "latest_spend_date": "Latest date on which this cost item might incur expenditure",
@@ -66,7 +66,7 @@ evaluation_cost_help_text = defaultdict(
 
 
 event_date_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "event_date_name": "Select all types of information covered in this document.",
         "reasons_for_change": "Only requested when amending an existing entry.",
@@ -75,7 +75,7 @@ event_date_help_text = defaultdict(
 
 
 impact_analysis_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "impact_eval_framework": "Framework of comparisons between interventions.",
         "impact_eval_basis": "Approach to identifying data to include in the analysis.",
@@ -91,7 +91,7 @@ impact_analysis_help_text = defaultdict(
 
 
 impact_design_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "impact_eval_design_name": "Descriptive name for the design/method. You may select more than one.",
         "impact_eval_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
@@ -101,7 +101,7 @@ impact_design_help_text = defaultdict(
 
 
 impact_findings_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "impact_eval_comparison": "Which intervention is being compared to which other?",
         "impact_eval_outcome": "Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.",
@@ -110,7 +110,7 @@ impact_findings_help_text = defaultdict(
 
 
 intervention_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "brief_description": "Brief description of intervention",
         "rationale": "Rationale, theory or goals of intervention elements.",
@@ -129,7 +129,7 @@ intervention_help_text = defaultdict(
 
 
 issue_description_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "issue_description": "The problem, circumstance or situation that it is intended that an intervention should respond to.",
         "those_experiencing_issue": "Those directly experiencing the issue.",
@@ -142,7 +142,7 @@ issue_description_help_text = defaultdict(
 
 
 links_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "links_name_of_service": "Which service is this an identifier for?",
         "links_link_or_identifier": "What is the link/identifier?",
@@ -151,7 +151,7 @@ links_help_text = defaultdict(
 
 
 other_design_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "other_eval_design_type": "Type of other evaluation to be conducted.",
         "other_eval_design_details": "Details of the design of the evaluation.",
@@ -160,7 +160,7 @@ other_design_help_text = defaultdict(
 
 
 other_findings_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "other_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
         "other_eval_findings": "A longer description of the findings related to the evaluation, as required.",
@@ -169,7 +169,7 @@ other_findings_help_text = defaultdict(
 
 
 outcome_measure_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "name": "Please provide a name or brief phrase that describes the outcome.",
         "primary_or_secondary": "Will this outcome be treated as a primary or secondary outcome in this study?",
@@ -184,7 +184,7 @@ outcome_measure_help_text = defaultdict(
 
 
 participant_recruitment_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "process_for_recruitment": "Method of recruitment into the study, such as by referral, self-selection, or automatic inclusion of everyone in a category.",
     },
@@ -192,7 +192,7 @@ participant_recruitment_help_text = defaultdict(
 
 
 process_findings_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "process_eval_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
         "process_eval_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
@@ -201,7 +201,7 @@ process_findings_help_text = defaultdict(
 
 
 processes_standard_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "description": "Provide any information needed to describe the evaluation's conformity with the standard.",
     },
@@ -209,7 +209,7 @@ processes_standard_help_text = defaultdict(
 
 
 studied_population_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
         "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
@@ -220,7 +220,7 @@ studied_population_help_text = defaultdict(
 
 
 title_help_text = defaultdict(
-    lambda: "",
+    str,
     {
         "title": "Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
         "short_title": "Please provide a short/abbreviated title for the evaluation, if you would like.",
@@ -229,7 +229,7 @@ title_help_text = defaultdict(
 
 
 field_help_text = defaultdict(
-    lambda: defaultdict(lambda: ""),
+    lambda: defaultdict(str),
     {
         "description": description_help_text,
         "document": document_page_help_text,
@@ -256,7 +256,7 @@ field_help_text = defaultdict(
 )
 
 description_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "brief_description": [
             "This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
@@ -269,7 +269,7 @@ description_guidance_text = defaultdict(
 
 
 document_page_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "document_title": [
             "If the document has no title, provide a descriptive title. It would be helpful if this provides an indication of both the type of document and the evaluation it relates to, eg 'Analysis plan for the evaluation of XYZ interventions'."
@@ -283,7 +283,7 @@ document_page_guidance_text = defaultdict(
 
 
 economic_analysis_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "economic_eval_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
@@ -293,7 +293,7 @@ economic_analysis_guidance_text = defaultdict(
 
 
 economic_design_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "economic_eval_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
@@ -320,7 +320,7 @@ economic_design_guidance_text = defaultdict(
 
 
 economic_findings_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "economic_eval_summary_findings": [
             "If the evaluation was of more than one type (for example, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
@@ -330,7 +330,7 @@ economic_findings_guidance_text = defaultdict(
 
 
 ethics_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "ethics_committee_approval": [
             "Not all studies need approval by an ethics committee.",
@@ -378,7 +378,7 @@ ethics_guidance_text = defaultdict(
 
 
 evaluation_cost_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "earliest_spend_date": [
             "If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
@@ -391,7 +391,7 @@ evaluation_cost_guidance_text = defaultdict(
 
 
 evaluation_type_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "evaluation_type": [
             "Please specify what type or types of evaluation this is.",
@@ -407,7 +407,7 @@ evaluation_type_guidance_text = defaultdict(
 
 
 event_date_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "reasons_for_change": [
             "Please enter a reason why the date is changing eg 'Targeted number of participants recruited quicker than expected so evaluation now scheduled to finish sooner'."
@@ -417,7 +417,7 @@ event_date_guidance_text = defaultdict(
 
 
 impact_analysis_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "impact_eval_primary_effect_size_measure": [
             "For binary outcomes, a suitable absolute measure is often the 'prevalence difference': the difference between the proportions of people achieving the outcome in the intervention group and the control group. A relative measure for binary outcomes would be the 'prevalence ratio'.",
@@ -435,7 +435,7 @@ impact_analysis_guidance_text = defaultdict(
 
 
 impact_design_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "impact_eval_design_justification": [
             "If an RCT design is specified, it is sufficient to note that it is appropriate, practical and ethical.",
@@ -462,7 +462,7 @@ impact_design_guidance_text = defaultdict(
 
 
 impact_findings_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "impact_eval_comparison": [
             "If the evaluation has more than 2 interventions, will need to pick a pair; even if the evaluation only has 2 interventions, need to specify which is the base case and which is the 'tested' case"
@@ -472,7 +472,7 @@ impact_findings_guidance_text = defaultdict(
 
 
 intervention_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "brief_description": [
             "Please provide one or two sentences to describe the intervention. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
@@ -490,7 +490,7 @@ intervention_guidance_text = defaultdict(
 
 
 issue_description_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "issue_description": [
             "The problem, circumstance or situation that it is intended that an intervention should respond to.",
@@ -514,7 +514,7 @@ issue_description_guidance_text = defaultdict(
 
 
 other_analysis_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "other_eval_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
@@ -524,7 +524,7 @@ other_analysis_guidance_text = defaultdict(
 
 
 other_design_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "other_eval_design_details": [
             "Use this box to describe your evaluation and how it will be conducted.",
@@ -534,7 +534,7 @@ other_design_guidance_text = defaultdict(
 )
 
 other_findings_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "other_eval_summary_findings": [
             "If the evaluation was of more than one type (eg, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'other evaluation' aspects of the evaluation."
@@ -544,7 +544,7 @@ other_findings_guidance_text = defaultdict(
 
 
 other_measures_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "description": [
             "Details of what data will be gathered and of any processing that will be applied to raw data. This shall completely define the measurement such that others would be able to accurately replicate the measurement process based only on this information, including the format(s) the data will be collected, stored and/or presented in."
@@ -555,7 +555,7 @@ other_measures_guidance_text = defaultdict(
 
 
 outcome_measure_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "primary_or_secondary": [
             "The primary outcome measure will provide the principal assessment of whether the intervention is effective or not.",
@@ -585,7 +585,7 @@ outcome_measure_guidance_text = defaultdict(
 
 
 participant_recruitment_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "process_for_recruitment": [
             "Method of recruitment, such as by referral or self-selection.",
@@ -599,7 +599,7 @@ participant_recruitment_guidance_text = defaultdict(
 
 
 process_analysis_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "process_eval_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
@@ -609,7 +609,7 @@ process_analysis_guidance_text = defaultdict(
 
 
 processes_standard_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "name": [
             "Standards often have edition numbers, typically indicated by a year or a version number. Be sure to include the edition of the standard or process if the standard you are using has one, so it is clear which version of the standard you have followed. You should normally do this even if the version you are using is currently the only version, as there may be new versions in the future."
@@ -619,7 +619,7 @@ processes_standard_guidance_text = defaultdict(
 
 
 status_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "status": [
             "Draft evaluations are only visible to the users assigned to it.",
@@ -631,7 +631,7 @@ status_guidance_text = defaultdict(
 
 
 studied_population_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "studied_population": [
             "Enter information on the population studied for the evaluation.",
@@ -658,7 +658,7 @@ studied_population_guidance_text = defaultdict(
 
 
 title_guidance_text = defaultdict(
-    lambda: [],
+    list,
     {
         "title": [
             "This should be a title for the evaluation as a whole, not for a given report or document associated with it, like 'Evaluation of the relative impact of ABC and DEF on XYZ outcomes' rater than 'Findings from an evaluation of ABC...' or 'Plans for an evaluation of ABC...'.",
@@ -669,7 +669,7 @@ title_guidance_text = defaultdict(
 
 
 field_guidance_text = defaultdict(
-    lambda: defaultdict(lambda: []),
+    lambda: defaultdict(list),
     {
         "description": description_guidance_text,
         "document": document_page_guidance_text,
