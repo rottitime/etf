@@ -1,11 +1,11 @@
-from marshmallow import Schema, fields, validate, ValidationError
+from marshmallow import Schema, ValidationError, fields, validate
 
 from . import choices
 
 
 def values_in_choices(list_values, choices_values):
     for value in list_values:
-        if not value in choices_values:
+        if value not in choices_values:
             raise ValidationError(f"All values in list should be one of: {choices_values}")
 
 

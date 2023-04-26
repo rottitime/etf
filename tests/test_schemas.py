@@ -3,7 +3,7 @@ from datetime import date
 from marshmallow import Schema, ValidationError
 from nose.tools import with_setup
 
-from etf.evaluation import models, schemas, choices, enums
+from etf.evaluation import choices, models, schemas
 from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
 
 from .utils import with_authenticated_client
