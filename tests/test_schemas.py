@@ -112,10 +112,13 @@ def test_evaluation_schema():
     }
     invalid_evaluation_type = {"title": "Title", "evaluation_type": ["STAR"]}
 
-    # assert evaluation_schema.load(valid_data)
+    try:
+        evaluation_schema.load(valid_data)
+    except ValidationError as e:
+        print(e.messages)
     error_message = ""
     try:
         evaluation_schema.load(invalid_evaluation_type)
     except ValidationError as e:
-        error_message = e["evaluation_type"][0]
+        error_message = e.messages["evaluation_type"][0]
     assert error_message == "All values in list should be one of: ('IMPACT', 'PROCESS', 'ECONOMIC', 'OTHER')"
