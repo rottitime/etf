@@ -1,4 +1,4 @@
-from marshmallow import Schema, ValidationError, fields, validate
+from marshmallow import Schema, fields, validate, ValidationError
 
 from . import choices
 
@@ -31,6 +31,15 @@ class IntAndBlankField(fields.Int):
             return super()._deserialize(value, attr, data, **kwargs)
         else:
             return None
+
+
+class SingleLineStr(fields.Str):
+    def _deserialize(self, value, attr, data, **kwargs):
+        if value:
+            single_line_value = " ".join(value.splitlines())
+            if not value == single_line_value:
+                raise ValidationError("Cannot contain linebreaks")
+        return super()._deserialize(value, attr, data, **kwargs)
 
 
 def is_non_neg_int_or_none(value):
