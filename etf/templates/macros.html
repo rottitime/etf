@@ -7,7 +7,7 @@
     <div class="helper">{{error}}</div>
   {% endfor %}
 
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
 </div>
 {%- endmacro %}
 
@@ -24,30 +24,30 @@
     <div class="helper">{{error}}</div>
   {% endfor %}
 
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
 {%- endmacro %}
 
 
-{% macro hintbox(content, label) -%}
-{% set short_description = get_field_help_text(object_name, content) %}
-{% if short_description %}
-<div is="hint-box" aria-label="{{label}}">
-  <div class="content">
-    {{short_description}}
-  </div>
+{% macro guidance(name, label) -%}
+{% set guidance = get_field_guidance_text(object_name, name) %}
+{% if guidance %}
+  <div is="hint-box" aria-label="{{label}}">
+    <div class="content">
+      {% for para in guidance %}
+        <p>{{para}}</p>
+      {% endfor %}
+    </div>
 </div>
 {% endif %}
 {%- endmacro %}
 
 
 {%- macro input_description(name) %}
-  {% set description = get_field_tooltip_text(object_name, name) %}
+  {% set description = get_field_help_text(object_name, name) %}
   {% if description %}
-      {% for text in description %}
-        <p class="description">{{text}}</p>
-      {% endfor %}
+    <p class="description">{{description}}</p>
   {% endif %}
 {%- endmacro %}
 
@@ -60,7 +60,7 @@
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
   {% endfor %}
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
 </div>
 {%- endmacro %}
 
@@ -81,7 +81,7 @@
         {% endfor %}
       </select>
     </div>
-    {{macros.hintbox(content=name, label="Additional guidance")}}
+    {{macros.guidance(name=name, label="Additional guidance")}}
   </div>
 {%- endmacro %}
 
@@ -95,7 +95,7 @@
       <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
     {% endfor %}
   </select>
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
 {%- endmacro %}
