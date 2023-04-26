@@ -3,10 +3,12 @@ from marshmallow import Schema, ValidationError, fields, validate
 from . import choices
 
 
-def values_in_choices(list_values, choices_values):
-    for value in list_values:
-        if value not in choices_values:
-            raise ValidationError(f"All values in list should be one of: {choices_values}")
+def make_values_in_choices(choices_values):
+    def values_in_choices(list_values):
+        for value in list_values:
+            if value not in choices_values:
+                raise ValidationError(f"All values in list should be one of: {choices_values}")
+    return values_in_choices
 
 
 class DateAndBlankField(fields.Date):
@@ -69,7 +71,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     title = SingleLineStr(required=True, validate=validate.Length(max=1024))
     short_title = SingleLineStr(validate=validate.Length(max=128))
     brief_description = fields.Str()
-    topics = fields.Raw(validate=lambda x: values_in_choices(x, choices.Topics.values))
+    topics = fields.Raw(validate=make_values_in_choices(choices.Topics.values))
     organisations = fields.Raw()
     status = fields.Str(
         validate=validate.And(validate.OneOf(choices.EvaluationStatus.values), validate.Length(max=256)),
@@ -99,7 +101,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     # Evaluation type
-    evaluation_type = fields.Raw(validate=lambda x: values_in_choices(x, choices.EvaluationTypeOptions.values))
+    evaluation_type = fields.Raw(validate=make_values_in_choices(choices.EvaluationTypeOptions.values))
     evaluation_type_other = SingleLineStr(validate=validate.Length(max=256))
 
     # Studied population
@@ -131,7 +133,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation design
 
-    impact_eval_design_name = SingleLineStr(validate=lambda x: values_in_choices(x, choices.ImpactEvalDesign.values))
+    impact_eval_design_name = SingleLineStr(validate=make_values_in_choices(choices.ImpactEvalDesign.values))
     impact_eval_design_name_other = SingleLineStr(validate=validate.Length(max=64))
     impact_eval_design_justification = fields.Str()
     impact_eval_design_description = fields.Str()
@@ -314,7 +316,7 @@ class DocumentSchema(TimeStampedModelSchema):
     title = SingleLineStr(validate=validate.Length(max=256))
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
-    document_types = fields.Raw(validate=lambda x: values_in_choices(x, choices.DocumentType.values))
+    document_types = fields.Raw(validate=make_values_in_choices(choices.DocumentType.values))
     document_type_other = SingleLineStr(validate=validate.Length(max=256))
 
 
