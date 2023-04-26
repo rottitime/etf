@@ -88,9 +88,8 @@ def test_values_in_choices():
     valid_data1 = ["A"]
     valid_data2 = []
     invalid_data = ["A", "D"]
-
-    schemas.values_in_choices(valid_data1, acceptable_choices)
-    schemas.values_in_choices(valid_data2, acceptable_choices)
+    assert not schemas.values_in_choices(valid_data1, acceptable_choices)
+    assert not schemas.values_in_choices(valid_data2, acceptable_choices)
     error_message = ""
     expected_error_message = "All values in list should be one of: ['A', 'B', 'C']"
     try:
