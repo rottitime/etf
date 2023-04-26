@@ -110,12 +110,12 @@ def test_evaluation_schema():
         "ethics_committee_approval": "YES",
         "impact_eval_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
     }
-    invalid_evaluation_type = {"title": "Title", "evaluation_type": ["STAR"]}
-
-    try:
-        evaluation_schema.load(valid_data)
-    except ValidationError as e:
-        print(e.messages)
+    invalid_evaluation_type = {
+        "title": "Title",
+        "status": choices.EvaluationStatus.CIVIL_SERVICE,
+        "evaluation_type": ["STAR"],
+    }
+    assert evaluation_schema.load(valid_data)
     error_message = ""
     try:
         evaluation_schema.load(invalid_evaluation_type)
