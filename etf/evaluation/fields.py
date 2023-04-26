@@ -255,7 +255,7 @@ field_help_text = defaultdict(
     },
 )
 
-description_tooltip_text = defaultdict(
+description_guidance_text = defaultdict(
     lambda: [],
     {
         "brief_description": [
@@ -268,7 +268,7 @@ description_tooltip_text = defaultdict(
 )
 
 
-document_page_tooltip_text = defaultdict(
+document_page_guidance_text = defaultdict(
     lambda: [],
     {
         "document_title": [
@@ -282,7 +282,7 @@ document_page_tooltip_text = defaultdict(
 )
 
 
-economic_analysis_tooltip_text = defaultdict(
+economic_analysis_guidance_text = defaultdict(
     lambda: [],
     {
         "economic_eval_analysis_description": [
@@ -292,7 +292,7 @@ economic_analysis_tooltip_text = defaultdict(
 )
 
 
-economic_design_tooltip_text = defaultdict(
+economic_design_guidance_text = defaultdict(
     lambda: [],
     {
         "economic_eval_type": [
@@ -319,7 +319,7 @@ economic_design_tooltip_text = defaultdict(
 )
 
 
-economic_findings_tooltip_text = defaultdict(
+economic_findings_guidance_text = defaultdict(
     lambda: [],
     {
         "economic_eval_summary_findings": [
@@ -329,7 +329,7 @@ economic_findings_tooltip_text = defaultdict(
 )
 
 
-ethics_tooltip_text = defaultdict(
+ethics_guidance_text = defaultdict(
     lambda: [],
     {
         "ethics_committee_approval": [
@@ -377,7 +377,7 @@ ethics_tooltip_text = defaultdict(
 )
 
 
-evaluation_cost_tooltip_text = defaultdict(
+evaluation_cost_guidance_text = defaultdict(
     lambda: [],
     {
         "earliest_spend_date": [
@@ -390,7 +390,7 @@ evaluation_cost_tooltip_text = defaultdict(
 )
 
 
-evaluation_type_tooltip_text = defaultdict(
+evaluation_type_guidance_text = defaultdict(
     lambda: [],
     {
         "evaluation_type": [
@@ -406,7 +406,7 @@ evaluation_type_tooltip_text = defaultdict(
 )
 
 
-event_date_tooltip_text = defaultdict(
+event_date_guidance_text = defaultdict(
     lambda: [],
     {
         "reasons_for_change": [
@@ -416,7 +416,7 @@ event_date_tooltip_text = defaultdict(
 )
 
 
-impact_analysis_tooltip_text = defaultdict(
+impact_analysis_guidance_text = defaultdict(
     lambda: [],
     {
         "impact_eval_primary_effect_size_measure": [
@@ -434,7 +434,7 @@ impact_analysis_tooltip_text = defaultdict(
 )
 
 
-impact_design_tooltip_text = defaultdict(
+impact_design_guidance_text = defaultdict(
     lambda: [],
     {
         "impact_eval_design_justification": [
@@ -461,7 +461,7 @@ impact_design_tooltip_text = defaultdict(
 )
 
 
-impact_findings_tooltip_text = defaultdict(
+impact_findings_guidance_text = defaultdict(
     lambda: [],
     {
         "impact_eval_comparison": [
@@ -471,7 +471,7 @@ impact_findings_tooltip_text = defaultdict(
 )
 
 
-intervention_tooltip_text = defaultdict(
+intervention_guidance_text = defaultdict(
     lambda: [],
     {
         "brief_description": [
@@ -489,7 +489,7 @@ intervention_tooltip_text = defaultdict(
 )
 
 
-issue_description_tooltip_text = defaultdict(
+issue_description_guidance_text = defaultdict(
     lambda: [],
     {
         "issue_description": [
@@ -513,7 +513,7 @@ issue_description_tooltip_text = defaultdict(
 )
 
 
-other_analysis_tooltip_text = defaultdict(
+other_analysis_guidance_text = defaultdict(
     lambda: [],
     {
         "other_eval_analysis_description": [
@@ -523,7 +523,7 @@ other_analysis_tooltip_text = defaultdict(
 )
 
 
-other_design_tooltip_text = defaultdict(
+other_design_guidance_text = defaultdict(
     lambda: [],
     {
         "other_eval_design_details": [
@@ -533,7 +533,7 @@ other_design_tooltip_text = defaultdict(
     },
 )
 
-other_findings_tooltip_text = defaultdict(
+other_findings_guidance_text = defaultdict(
     lambda: [],
     {
         "other_eval_summary_findings": [
@@ -543,7 +543,7 @@ other_findings_tooltip_text = defaultdict(
 )
 
 
-other_measures_tooltip_text = defaultdict(
+other_measures_guidance_text = defaultdict(
     lambda: [],
     {
         "description": [
@@ -554,7 +554,7 @@ other_measures_tooltip_text = defaultdict(
 )
 
 
-outcome_measure_tooltip_text = defaultdict(
+outcome_measure_guidance_text = defaultdict(
     lambda: [],
     {
         "primary_or_secondary": [
@@ -584,7 +584,7 @@ outcome_measure_tooltip_text = defaultdict(
 )
 
 
-participant_recruitment_tooltip_text = defaultdict(
+participant_recruitment_guidance_text = defaultdict(
     lambda: [],
     {
         "process_for_recruitment": [
@@ -598,7 +598,7 @@ participant_recruitment_tooltip_text = defaultdict(
 )
 
 
-process_analysis_tooltip_text = defaultdict(
+process_analysis_guidance_text = defaultdict(
     lambda: [],
     {
         "process_eval_analysis_description": [
@@ -608,7 +608,7 @@ process_analysis_tooltip_text = defaultdict(
 )
 
 
-processes_standard_tooltip_text = defaultdict(
+processes_standard_guidance_text = defaultdict(
     lambda: [],
     {
         "name": [
@@ -618,7 +618,7 @@ processes_standard_tooltip_text = defaultdict(
 )
 
 
-status_tooltip_text = defaultdict(
+status_guidance_text = defaultdict(
     lambda: [],
     {
         "status": [
@@ -630,7 +630,7 @@ status_tooltip_text = defaultdict(
 )
 
 
-studied_population_tooltip_text = defaultdict(
+studied_population_guidance_text = defaultdict(
     lambda: [],
     {
         "studied_population": [
@@ -657,7 +657,7 @@ studied_population_tooltip_text = defaultdict(
 )
 
 
-title_tooltip_text = defaultdict(
+title_guidance_text = defaultdict(
     lambda: [],
     {
         "title": [
@@ -668,34 +668,34 @@ title_tooltip_text = defaultdict(
 )
 
 
-field_tooltip_text = defaultdict(
+field_guidance_text = defaultdict(
     lambda: defaultdict(lambda: []),
     {
-        "description": description_tooltip_text,
-        "document": document_page_tooltip_text,
-        "economic-analysis": economic_analysis_tooltip_text,
-        "economic-design": economic_design_tooltip_text,
-        "economic-findings": economic_findings_tooltip_text,
-        "ethics": ethics_tooltip_text,
-        "evaluation cost": evaluation_cost_tooltip_text,
-        "evaluation-types": evaluation_type_tooltip_text,
-        "event date": event_date_tooltip_text,
-        "impact-analysis": impact_analysis_tooltip_text,
-        "impact-design": impact_design_tooltip_text,
-        "impact-findings": impact_findings_tooltip_text,
-        "intervention": intervention_tooltip_text,
-        "issue-description": issue_description_tooltip_text,
-        "other-analysis": other_analysis_tooltip_text,
-        "other-design": other_design_tooltip_text,
-        "other-findings": other_findings_tooltip_text,
-        "other measure": other_measures_tooltip_text,
-        "outcome measure": outcome_measure_tooltip_text,
-        "participant-recruitment": participant_recruitment_tooltip_text,
-        "process-analysis": process_analysis_tooltip_text,
-        "process or standard": processes_standard_tooltip_text,
-        "status": status_tooltip_text,
-        "studied-population": studied_population_tooltip_text,
-        "title": title_tooltip_text,
+        "description": description_guidance_text,
+        "document": document_page_guidance_text,
+        "economic-analysis": economic_analysis_guidance_text,
+        "economic-design": economic_design_guidance_text,
+        "economic-findings": economic_findings_guidance_text,
+        "ethics": ethics_guidance_text,
+        "evaluation cost": evaluation_cost_guidance_text,
+        "evaluation-types": evaluation_type_guidance_text,
+        "event date": event_date_guidance_text,
+        "impact-analysis": impact_analysis_guidance_text,
+        "impact-design": impact_design_guidance_text,
+        "impact-findings": impact_findings_guidance_text,
+        "intervention": intervention_guidance_text,
+        "issue-description": issue_description_guidance_text,
+        "other-analysis": other_analysis_guidance_text,
+        "other-design": other_design_guidance_text,
+        "other-findings": other_findings_guidance_text,
+        "other measure": other_measures_guidance_text,
+        "outcome measure": outcome_measure_guidance_text,
+        "participant-recruitment": participant_recruitment_guidance_text,
+        "process-analysis": process_analysis_guidance_text,
+        "process or standard": processes_standard_guidance_text,
+        "status": status_guidance_text,
+        "studied-population": studied_population_guidance_text,
+        "title": title_guidance_text,
     },
 )
 
@@ -704,5 +704,5 @@ def get_field_help_text(object_name, field_name):
     return field_help_text[object_name][field_name]
 
 
-def get_field_tooltip_text(object_name, field_name):
-    return field_tooltip_text[object_name][field_name]
+def get_field_guidance_text(object_name, field_name):
+    return field_guidance_text[object_name][field_name]
