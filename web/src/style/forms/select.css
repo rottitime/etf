@@ -1,0 +1,61 @@
+.select {
+  color: var(--color-grey-light);
+  position: relative;
+  display: inline-block;
+
+  /* icon */
+  &:after {
+    content: svg-load('arrow-down.svg', fill=#343F51, width=12, height=12);
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 14px;
+  }
+
+  &:focus-visible select {
+    outline: 2px solid var(--input-stroke-dark);
+  }
+
+  &.has-value select {
+    font-weight: 600;
+  }
+
+  & select {
+    padding: 0 32px 0 16px;
+    background: transparent;
+    height: 40px;
+    border: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    appearance: none;
+    border-radius: 8px;
+    border: 1px solid var(--input-stroke-light);
+    background-color: var(--color-bg-white);
+    transition: outline ease-in-out var(--animation-speed);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    &:focus {
+      outline: 2px solid var(--input-stroke-dark);
+    }
+
+    &:hover {
+      outline: 2px solid var(--input-stroke-dark);
+    }
+  }
+
+  &.error select {
+    outline: 2px solid var(--color-red);
+  }
+}

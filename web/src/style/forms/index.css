@@ -55,58 +55,6 @@ input {
   }
 }
 
-.select {
-  cursor: pointer;
-  transition: color ease-in-out var(--animation-speed),
-    background-color ease-in-out var(--animation-speed);
-  border-radius: 8px;
-  background-color: rgba(204, 204, 204, 0.2);
-  display: inline-flex;
-  align-items: center;
-  padding-right: 16px;
-  color: var(--color-grey-light);
-
-  &:after {
-    content: svg-load('arrow-down.svg', width=12, height=12);
-    filter: invert(38%) sepia(12%) saturate(7%) hue-rotate(336deg) brightness(98%)
-      contrast(83%);
-  }
-
-  &:hover {
-    color: var(--color-link);
-    background-color: rgba(0, 80, 199, 0.2);
-    &:after {
-      filter: invert(13%) sepia(99%) saturate(6294%) hue-rotate(210deg) brightness(93%)
-        contrast(102%);
-    }
-  }
-
-  &.disabled {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  &.has-value select {
-    font-weight: 600;
-  }
-
-  & select {
-    padding: 0 22px 0 16px;
-    background: transparent;
-    height: 40px;
-    border: 0;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    outline: none;
-    width: 100%;
-    color: inherit;
-    background-color: transparent;
-    border: none;
-    appearance: none;
-  }
-}
-
 .date-picker {
   position: relative;
   display: inline-block;
@@ -183,4 +131,16 @@ input {
       border-color: var(--color-error);
     }
   } */
+}
+
+.helper {
+  color: var(--color-error);
+  font-size: var(--text-smallest);
+  display: flex;
+  align-items: center;
+  &:before {
+    content: svg-load('error.svg', fill=#ce2d1e, width=12, height=12);
+    margin-right: var(--spacing-4);
+    line-height: 0;
+  }
 }
