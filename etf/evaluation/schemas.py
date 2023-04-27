@@ -47,6 +47,10 @@ class SingleLineStr(fields.Str):
 def make_choice_field(max_len, values, **kwargs):
     field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
     return field
+
+
+def make_multi_choice_field(max_len, values):
+    field = fields.Raw(validate.And(validate.Length(max=max_len), validate=make_values_in_choices(values)))
     return field
 
 
@@ -77,7 +81,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     title = SingleLineStr(required=True, validate=validate.Length(max=1024))
     short_title = SingleLineStr(validate=validate.Length(max=128))
     brief_description = fields.Str()
-    topics = fields.Raw(validate=make_values_in_choices(choices.Topics.values))
+    topics = make_multi_choice_field(max_len=64, values=choices.Topics.values)
     organisations = fields.Raw()
     status = make_choice_field(
         max_len=256, values=choices.EvaluationStatus.values, default=choices.EvaluationStatus.DRAFT.value
@@ -106,7 +110,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     # Evaluation type
-    evaluation_type = fields.Raw(validate=make_values_in_choices(choices.EvaluationTypeOptions.values))
+    evaluation_type = make_multi_choice_field(max_len=64, values=choices.EvaluationTypeOptions.values)
     evaluation_type_other = SingleLineStr(validate=validate.Length(max=256))
 
     # Studied population
@@ -293,7 +297,7 @@ class DocumentSchema(TimeStampedModelSchema):
     title = SingleLineStr(validate=validate.Length(max=256))
     url = fields.Url(validate=validate.Length(max=512))
     description = fields.Str()
-    document_types = fields.Raw(validate=make_values_in_choices(choices.DocumentType.values))
+    document_types = make_multi_choice_field(max_len=64, values=choices.DocumentType.values)
     document_type_other = SingleLineStr(validate=validate.Length(max=256))
 
 
