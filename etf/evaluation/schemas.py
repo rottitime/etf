@@ -44,8 +44,8 @@ class SingleLineStr(fields.Str):
         return super()._deserialize(value, attr, data, **kwargs)
 
 
-def make_choice_field(max_len, values):
-    field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)))
+def make_choice_field(max_len, values, **kwargs):
+    field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
     return field
     return field
 
@@ -79,9 +79,8 @@ class EvaluationSchema(TimeStampedModelSchema):
     brief_description = fields.Str()
     topics = fields.Raw(validate=make_values_in_choices(choices.Topics.values))
     organisations = fields.Raw()
-    status = fields.Str(
-        validate=validate.And(validate.OneOf(choices.EvaluationStatus.values), validate.Length(max=256)),
-        default=choices.EvaluationStatus.DRAFT.value,
+    status = make_choice_field(
+        max_len=256, values=choices.EvaluationStatus.values, default=choices.EvaluationStatus.DRAFT.value
     )
 
     doi = fields.Str(validate=validate.Length(max=64))
