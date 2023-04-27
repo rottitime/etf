@@ -266,7 +266,7 @@ def test_step_through_evaluation():
                 "impact_eval_primary_effect_size_measure": "Primary effect size measure",
                 "impact_eval_effect_measure_interval": choices.ImpactMeasureInterval.BAYESIAN.value,
                 "impact_eval_primary_effect_size_desc": "A description of the primary effect size measure",
-                "impact_eval_interpretation_type": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+                "impact_eval_interpretation_type": choices.ImpactInterpretationType.NONE,
                 "impact_eval_sensitivity_analysis": "The sensitivity analysis",
                 "impact_eval_subgroup_analysis": "A subgroup analysis",
                 "impact_eval_missing_data_handling": "A summary of missing data handling",
