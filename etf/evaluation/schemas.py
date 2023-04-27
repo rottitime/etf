@@ -8,6 +8,7 @@ def make_values_in_choices(choices_values):
         for value in list_values:
             if value not in choices_values:
                 raise ValidationError(f"All values in list should be one of: {choices_values}")
+
     return values_in_choices
 
 
