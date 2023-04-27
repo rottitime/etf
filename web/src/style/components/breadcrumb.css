@@ -10,9 +10,10 @@
   }
   & li {
     display: inline-block;
+    margin-right: var(--spacing-4);
 
     &:nth-child(n + 2):before {
-      content: '\2022';
+      content: '\203A';
       margin-right: var(--spacing-4);
     }
   }

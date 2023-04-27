@@ -20,6 +20,7 @@
       display: flex;
       align-items: center;
       margin-bottom: var(--spacing-8);
+
       &:before {
         content: '- ';
         margin-right: var(--spacing-8);
