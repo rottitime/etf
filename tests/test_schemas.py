@@ -88,12 +88,13 @@ def test_values_in_choices():
     valid_data1 = ["A"]
     valid_data2 = []
     invalid_data = ["A", "D"]
-    assert not schemas.values_in_choices(valid_data1, acceptable_choices)
-    assert not schemas.values_in_choices(valid_data2, acceptable_choices)
+    values_in_choices = schemas.make_values_in_choices(acceptable_choices)
+    assert not values_in_choices(valid_data1)
+    assert not values_in_choices(valid_data2)
     error_message = ""
     expected_error_message = "All values in list should be one of: ['A', 'B', 'C']"
     try:
-        schemas.values_in_choices(invalid_data, acceptable_choices)
+        values_in_choices(invalid_data)
     except ValidationError as e:
         error_message = e.messages[0]
     assert error_message == expected_error_message, error_message
