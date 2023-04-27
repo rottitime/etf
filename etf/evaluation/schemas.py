@@ -50,7 +50,7 @@ def make_choice_field(max_len, values, **kwargs):
 
 
 def make_multi_choice_field(max_len, values):
-    field = fields.Raw(validate.And(validate.Length(max=max_len), validate=make_values_in_choices(values)))
+    field = fields.Raw(validate=validate.And(validate.Length(max=max_len), make_values_in_choices(values)))
     return field
 
 
@@ -81,7 +81,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     title = SingleLineStr(required=True, validate=validate.Length(max=1024))
     short_title = SingleLineStr(validate=validate.Length(max=128))
     brief_description = fields.Str()
-    topics = make_multi_choice_field(max_len=64, values=choices.Topics.values)
+    topics = make_multi_choice_field(max_len=64, values=choices.Topic.values)
     organisations = fields.Raw()
     status = make_choice_field(
         max_len=256, values=choices.EvaluationStatus.values, default=choices.EvaluationStatus.DRAFT.value
@@ -140,7 +140,7 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation design
 
-    impact_eval_design_name = make_choice_field(max_len=128, values=choices.ImpactEvalDesign.values)
+    impact_eval_design_name = make_multi_choice_field(max_len=128, values=choices.ImpactEvalDesign.values)
     impact_eval_design_name_other = SingleLineStr(validate=validate.Length(max=64))
     impact_eval_design_justification = fields.Str()
     impact_eval_design_description = fields.Str()
@@ -160,7 +160,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_eval_effect_measure_interval = make_choice_field(max_len=64, values=choices.ImpactMeasureInterval.values)
     impact_eval_effect_measure_interval_other = SingleLineStr(validate=validate.Length(max=256))
     impact_eval_primary_effect_size_desc = fields.Str()
-    impact_eval_interpretation_type = make_choice_field(max_len=64, values=choices.ImpactEvalInterpretation.values)
+    impact_eval_interpretation_type = make_choice_field(max_len=64, values=choices.ImpactInterpretationType.values)
     impact_eval_interpretation_type_other = SingleLineStr(validate=validate.Length(max=256))
     impact_eval_sensitivity_analysis = fields.Str()
     impact_eval_subgroup_analysis = fields.Str()
