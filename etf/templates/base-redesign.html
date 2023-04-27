@@ -51,11 +51,9 @@
 
          {% set messages = get_messages(request) %}
          {% if messages %}
-           <section>
              {% for message in messages %} {% call macros.callout(message.tags) %}
-               <p>{{message}}</p>
+             <div class="alert {{message.tags}}"><p>{{message}}</p></div>
              {% endcall %} {% endfor %}
-           </section>
          {% endif %}
 
          {% block content %} {% endblock %}

@@ -5,6 +5,7 @@ import svgLoader from 'vite-svg-loader'
 import postcssColorModFunction from 'postcss-color-mod-function'
 // eslint-disable-next-line import/no-named-as-default
 import liveReload from 'vite-plugin-live-reload'
+import postcssInlineSvg from 'postcss-inline-svg'
 
 export default defineConfig({
   server: {
@@ -21,6 +22,9 @@ export default defineConfig({
         postcssCustomMedia,
         postcssColorModFunction({
           importFrom: 'src/style/vars.css'
+        }),
+        postcssInlineSvg({
+          paths: ['src/svg']
         })
       ]
     }

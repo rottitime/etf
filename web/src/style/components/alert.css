@@ -1,0 +1,32 @@
+.alert {
+  padding: var(--spacing-8);
+  display: flex;
+  background-color: color-mod(var(--status-color-green) a(var(--status-color-alpha)));
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: var(--spacing-16);
+
+  &:before {
+    content: svg-load('success.svg', width=20, height=20);
+    margin-right: var(--spacing-8);
+    line-height: 0;
+  }
+
+  &.error {
+    background-color: color-mod(var(--status-color-red) a(var(--status-color-alpha)));
+    &:before {
+      content: svg-load('error.svg', width=20, height=20);
+    }
+  }
+
+  &.warning {
+    background-color: color-mod(var(--status-color-orange) a(var(--status-color-alpha)));
+    &:before {
+      content: svg-load('warning.svg', width=20, height=20);
+    }
+  }
+
+  & p:last-child {
+    margin-bottom: 0;
+  }
+}
