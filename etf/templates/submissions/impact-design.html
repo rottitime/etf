@@ -8,13 +8,13 @@
         <h1>{{title}}</h1>
       </legend>
 
-      {{macros.select_many_from_list("impact_eval_design_name", "Design name", list=dropdown_choices.impact_eval_design_name)}}
-      {{macros.textarea("impact_eval_design_justification", "Justification for design")}}
-      {{macros.textarea("impact_eval_design_description", "Description of planned design")}}
-      {{macros.textarea("impact_eval_design_features", "Features to reflect real-world implementation")}}
-      {{macros.textarea("impact_eval_design_equity", "Equity")}}
-      {{macros.textarea("impact_eval_design_assumptions", "Assumptions")}}
-      {{macros.textarea("impact_eval_design_approach_limitations", "Limitations of approach")}}
+      {{macros.select_many_from_list("impact_design_name", "Design name", list=dropdown_choices.impact_design_name)}}
+      {{macros.textarea("impact_design_justification", "Justification for design")}}
+      {{macros.textarea("impact_design_description", "Description of planned design")}}
+      {{macros.textarea("impact_design_features", "Features to reflect real-world implementation")}}
+      {{macros.textarea("impact_design_equity", "Equity")}}
+      {{macros.textarea("impact_design_assumptions", "Assumptions")}}
+      {{macros.textarea("impact_design_approach_limitations", "Limitations of approach")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

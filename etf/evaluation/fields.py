@@ -27,11 +27,11 @@ document_page_help_text = defaultdict(
 economic_design_help_text = defaultdict(
     str,
     {
-        "economic_eval_type": "Type of economic evaluation to be conducted.",
+        "economic_type": "Type of economic evaluation to be conducted.",
         "perspective_costs": "Which costs are to be included in the economic evaluation?",
         "perspective_benefits": "Which benefits are to be included in the economic evaluation?",
         "monetisation_approaches": "Approach(es) used to place monetary values on any costs or benefits that are not inherently expressed in monetary terms.",
-        "economic_eval_design_details": "Details of the design of the economic evaluation.",
+        "economic_design_details": "Details of the design of the economic evaluation.",
     },
 )
 
@@ -39,8 +39,8 @@ economic_design_help_text = defaultdict(
 economic_findings_help_text = defaultdict(
     str,
     {
-        "economic_eval_summary_findings": "Short description (one to two sentences) of the findings related to the evaluation.",
-        "economic_eval_findings": "Longer description of the findings related to the evaluation, as required.",
+        "economic_summary_findings": "Short description (one to two sentences) of the findings related to the evaluation.",
+        "economic_findings": "Longer description of the findings related to the evaluation, as required.",
     },
 )
 
@@ -77,15 +77,15 @@ event_date_help_text = defaultdict(
 impact_analysis_help_text = defaultdict(
     str,
     {
-        "impact_eval_framework": "Framework of comparisons between interventions.",
-        "impact_eval_basis": "Approach to identifying data to include in the analysis.",
-        "impact_eval_analysis_set": "Details of any inclusion / exclusion criteria determining data to be used in the analysis.",
-        "impact_eval_effect_measure_interval": "Interval calculation for the effect size.",
-        "impact_eval_primary_effect_size_desc": "Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.",
-        "impact_eval_sensitivity_analysis": "Description of any sensitivity analysis",
-        "impact_eval_subgroup_analysis": "Description of any subgroup analysis",
-        "impact_eval_missing_data_handling": "Description of handling of missing data",
-        "impact_eval_fidelity": "Report to include information on the extent to which treatment was as protocol",
+        "impact_framework": "Framework of comparisons between interventions.",
+        "impact_basis": "Approach to identifying data to include in the analysis.",
+        "impact_analysis_set": "Details of any inclusion / exclusion criteria determining data to be used in the analysis.",
+        "impact_effect_measure_interval": "Interval calculation for the effect size.",
+        "impact_primary_effect_size_desc": "Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.",
+        "impact_sensitivity_analysis": "Description of any sensitivity analysis",
+        "impact_subgroup_analysis": "Description of any subgroup analysis",
+        "impact_missing_data_handling": "Description of handling of missing data",
+        "impact_fidelity": "Report to include information on the extent to which treatment was as protocol",
     },
 )
 
@@ -93,9 +93,9 @@ impact_analysis_help_text = defaultdict(
 impact_design_help_text = defaultdict(
     str,
     {
-        "impact_eval_design_name": "Descriptive name for the design/method. You may select more than one.",
-        "impact_eval_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
-        "impact_eval_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+        "impact_design_name": "Descriptive name for the design/method. You may select more than one.",
+        "impact_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
+        "impact_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
     },
 )
 
@@ -103,8 +103,8 @@ impact_design_help_text = defaultdict(
 impact_findings_help_text = defaultdict(
     str,
     {
-        "impact_eval_comparison": "Which intervention is being compared to which other?",
-        "impact_eval_outcome": "Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.",
+        "impact_comparison": "Which intervention is being compared to which other?",
+        "impact_outcome": "Which outcome measure is this comparison for? Should be one of the ones specified under outcome measures.",
     },
 )
 
@@ -153,8 +153,8 @@ links_help_text = defaultdict(
 other_design_help_text = defaultdict(
     str,
     {
-        "other_eval_design_type": "Type of other evaluation to be conducted.",
-        "other_eval_design_details": "Details of the design of the evaluation.",
+        "other_design_type": "Type of other evaluation to be conducted.",
+        "other_design_details": "Details of the design of the evaluation.",
     },
 )
 
@@ -162,8 +162,8 @@ other_design_help_text = defaultdict(
 other_findings_help_text = defaultdict(
     str,
     {
-        "other_eval_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
-        "other_eval_findings": "A longer description of the findings related to the evaluation, as required.",
+        "other_summary_findings": "A short description (one to two sentences) of the findings related to the evaluation.",
+        "other_findings": "A longer description of the findings related to the evaluation, as required.",
     },
 )
 
@@ -194,8 +194,8 @@ participant_recruitment_help_text = defaultdict(
 process_findings_help_text = defaultdict(
     str,
     {
-        "process_eval_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
-        "process_eval_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
+        "process_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
+        "process_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
     },
 )
 
@@ -285,7 +285,7 @@ document_page_guidance_text = defaultdict(
 economic_analysis_guidance_text = defaultdict(
     list,
     {
-        "economic_eval_analysis_description": [
+        "economic_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
         ],
     },
@@ -295,7 +295,7 @@ economic_analysis_guidance_text = defaultdict(
 economic_design_guidance_text = defaultdict(
     list,
     {
-        "economic_eval_type": [
+        "economic_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
             "In **cost-minimisation** analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
             "In **cost-effectiveness** analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
@@ -322,7 +322,7 @@ economic_design_guidance_text = defaultdict(
 economic_findings_guidance_text = defaultdict(
     list,
     {
-        "economic_eval_summary_findings": [
+        "economic_summary_findings": [
             "If the evaluation was of more than one type (for example, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'economic evaluation' aspects of the evaluation."
         ],
     },
@@ -419,15 +419,15 @@ event_date_guidance_text = defaultdict(
 impact_analysis_guidance_text = defaultdict(
     list,
     {
-        "impact_eval_primary_effect_size_measure": [
+        "impact_primary_effect_size_measure": [
             "For binary outcomes, a suitable absolute measure is often the 'prevalence difference': the difference between the proportions of people achieving the outcome in the intervention group and the control group. A relative measure for binary outcomes would be the 'prevalence ratio'.",
             "For numerical outcomes, suitable absolute measures often include differences in mean levels of the outcome between the groups. If the outcome is measured as a quantity that is meaningful in practice, the differences between mean levels of this quantity will also typically be something meaningful. (Eg, if the outcome if each person's income in £ per week, then it will be meaningful and interpretable to see that weekly incomes are on average £x higher in the intervention group than the control group.)",
         ],
-        "impact_eval_subgroup_analysis": [
+        "impact_subgroup_analysis": [
             "Subgroup analyses involve examining the results for a specified subset of the participants in a study. These should normally be specified before the study starts. If you are intending to conduct a subgroup analysis, it will normally be necessary to ensure that the sample size for that subgroup is large enough.",
             "Particular caution should be exercised over subgroup analyses that are specified after the data have been seen. A common mistake in studies is that if an intervention appears unsuccessful for the population as a whole, researchers can go 'fishing' through the data to find any subset of people it does work for. This is invariably a mistake because there will typically be some way of slicing the population that shows a positive outcome just by random variation.",
         ],
-        "impact_eval_desc_planned_analysis": [
+        "impact_desc_planned_analysis": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
         ],
     },
@@ -437,24 +437,24 @@ impact_analysis_guidance_text = defaultdict(
 impact_design_guidance_text = defaultdict(
     list,
     {
-        "impact_eval_design_justification": [
+        "impact_design_justification": [
             "If an RCT design is specified, it is sufficient to note that it is appropriate, practical and ethical.",
             "If a design other than an RCT is specified, provide details of why an RCT was not appropriate.",
         ],
-        "impact_eval_design_description": [
+        "impact_design_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the study based on the information provided."
         ],
-        "impact_eval_design_features": [
+        "impact_design_features": [
             "Evaluation studies can be designed to have more focus on reflecting (potential) practice in the 'real world' or having more focus on identifying outcomes in 'perfect' (tightly controlled) conditions. These are called 'pragmatic attitude' and 'explanatory attitude', respectively. Studies normally sit somewhere on a spectrum between the two ends. For interventions that might be deployed in real practice, it is invariably more useful to have information from an evaluation that is more pragmatic in attitude rather than explanatory.",
             "Record design decisions taken to make the study more pragmatic in attitude. Detail any respects in which it was necessary to adopt an approach that is more explanatory in attitude.",
             "Studies should be designed to be pragmatic (as opposed to ‘explanatory’) in attitude. The intention with a pragmatic study is to establish whether the intervention is likely to work in real practice, whereas explanatory studies seek to identify whether an intervention can work in perfect conditions. Consequently, pragmatic studies are designed to resemble the situation in normal practice as closely as possible, rather than being delivered under tight controls. They would typically also be characterised by not having extremes of resources, training, or specialist staff conducting the intervention.",
         ],
-        "impact_eval_design_equity": [
+        "impact_design_equity": [
             "Description of any design features, including data collection and analysis plans, that support the assessment of equity issues in the study.",
             "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions. The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation.",
         ],
-        "impact_eval_design_assumptions": ["Any assumptions made as part of the design."],
-        "impact_eval_design_approach_limitations": [
+        "impact_design_assumptions": ["Any assumptions made as part of the design."],
+        "impact_design_approach_limitations": [
             "Any limitations associated with the approach that are relevant to this study. For non-RCT designs this should include a description of any limitations of the approach’s ability to support robust causal inference."
         ],
     },
@@ -464,7 +464,7 @@ impact_design_guidance_text = defaultdict(
 impact_findings_guidance_text = defaultdict(
     list,
     {
-        "impact_eval_comparison": [
+        "impact_comparison": [
             "If the evaluation has more than 2 interventions, will need to pick a pair; even if the evaluation only has 2 interventions, need to specify which is the base case and which is the 'tested' case"
         ],
     },
@@ -516,7 +516,7 @@ issue_description_guidance_text = defaultdict(
 other_analysis_guidance_text = defaultdict(
     list,
     {
-        "other_eval_analysis_description": [
+        "other_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
         ],
     },
@@ -526,7 +526,7 @@ other_analysis_guidance_text = defaultdict(
 other_design_guidance_text = defaultdict(
     list,
     {
-        "other_eval_design_details": [
+        "other_design_details": [
             "Use this box to describe your evaluation and how it will be conducted.",
             "Omit information about any impact evaluation, economic evaluation, or process evaluation aspects of the design. For those, make sure you have specified that you are undertaking that type of evaluation too, and then enter details about them on their respective pages.",
         ],
@@ -536,7 +536,7 @@ other_design_guidance_text = defaultdict(
 other_findings_guidance_text = defaultdict(
     list,
     {
-        "other_eval_summary_findings": [
+        "other_summary_findings": [
             "If the evaluation was of more than one type (eg, also an impact evaluation), record those findings in the relevant section and only use this section for the findings related to the 'other evaluation' aspects of the evaluation."
         ],
     },
@@ -601,7 +601,7 @@ participant_recruitment_guidance_text = defaultdict(
 process_analysis_guidance_text = defaultdict(
     list,
     {
-        "process_eval_analysis_description": [
+        "process_analysis_description": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
         ],
     },

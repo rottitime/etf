@@ -82,42 +82,42 @@ evaluation_entry_urlpatterns = [
     ),
     path(
         "evaluation/<uuid:evaluation_id>/impact-design/",
-        submission_views.evaluation_impact_eval_design_view,
+        submission_views.evaluation_impact_design_view,
         name="impact-design",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/impact-analysis/",
-        submission_views.evaluation_impact_eval_analysis_view,
+        submission_views.evaluation_impact_analysis_view,
         name="impact-analysis",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/process-design/",
-        submission_views.evaluation_process_eval_design_view,
+        submission_views.evaluation_process_design_view,
         name="process-design",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/process-analysis/",
-        submission_views.evaluation_process_eval_analysis_view,
+        submission_views.evaluation_process_analysis_view,
         name="process-analysis",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/economic-design/",
-        submission_views.evaluation_economic_eval_design_view,
+        submission_views.evaluation_economic_design_view,
         name="economic-design",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/economic-analysis/",
-        submission_views.evaluation_economic_eval_analysis_view,
+        submission_views.evaluation_economic_analysis_view,
         name="economic-analysis",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/other-design/",
-        submission_views.evaluation_other_eval_design_view,
+        submission_views.evaluation_other_design_view,
         name="other-design",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/other-analysis/",
-        submission_views.evaluation_other_eval_analysis_view,
+        submission_views.evaluation_other_analysis_view,
         name="other-analysis",
     ),
     path(

@@ -141,56 +141,56 @@ class EvaluationSchema(TimeStampedModelSchema):
 
     # Impact evaluation design
 
-    impact_eval_design_name = make_multi_choice_field(max_len=128, values=choices.ImpactEvalDesign.values)
-    impact_eval_design_name_other = SingleLineStr(validate=validate.Length(max=64))
-    impact_eval_design_justification = fields.Str()
-    impact_eval_design_description = fields.Str()
-    impact_eval_design_features = fields.Str()
-    impact_eval_design_equity = fields.Str()
-    impact_eval_design_assumptions = fields.Str()
-    impact_eval_design_approach_limitations = fields.Str()
+    impact_design_name = make_multi_choice_field(max_len=128, values=choices.ImpactEvalDesign.values)
+    impact_design_name_other = SingleLineStr(validate=validate.Length(max=64))
+    impact_design_justification = fields.Str()
+    impact_design_description = fields.Str()
+    impact_design_features = fields.Str()
+    impact_design_equity = fields.Str()
+    impact_design_assumptions = fields.Str()
+    impact_design_approach_limitations = fields.Str()
 
     # Impact evaluation analysis
-    impact_eval_framework = make_choice_field(max_len=64, values=choices.ImpactFramework.values)
-    impact_eval_framework_other = SingleLineStr(validate=validate.Length(max=256))
-    impact_eval_basis = make_choice_field(max_len=64, values=choices.ImpactAnalysisBasis.values)
-    impact_eval_basis_other = SingleLineStr(validate=validate.Length(max=256))
-    impact_eval_analysis_set = fields.Str()
-    impact_eval_effect_measure_type = make_choice_field(max_len=64, values=choices.ImpactMeasureType.values)
-    impact_eval_primary_effect_size_measure = fields.Str()
-    impact_eval_effect_measure_interval = make_choice_field(max_len=64, values=choices.ImpactMeasureInterval.values)
-    impact_eval_effect_measure_interval_other = SingleLineStr(validate=validate.Length(max=256))
-    impact_eval_primary_effect_size_desc = fields.Str()
-    impact_eval_interpretation_type = make_choice_field(max_len=64, values=choices.ImpactInterpretationType.values)
-    impact_eval_interpretation_type_other = SingleLineStr(validate=validate.Length(max=256))
-    impact_eval_sensitivity_analysis = fields.Str()
-    impact_eval_subgroup_analysis = fields.Str()
-    impact_eval_missing_data_handling = fields.Str()
-    impact_eval_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
-    impact_eval_desc_planned_analysis = fields.Str()
+    impact_framework = make_choice_field(max_len=64, values=choices.ImpactFramework.values)
+    impact_framework_other = SingleLineStr(validate=validate.Length(max=256))
+    impact_basis = make_choice_field(max_len=64, values=choices.ImpactAnalysisBasis.values)
+    impact_basis_other = SingleLineStr(validate=validate.Length(max=256))
+    impact_analysis_set = fields.Str()
+    impact_effect_measure_type = make_choice_field(max_len=64, values=choices.ImpactMeasureType.values)
+    impact_primary_effect_size_measure = fields.Str()
+    impact_effect_measure_interval = make_choice_field(max_len=64, values=choices.ImpactMeasureInterval.values)
+    impact_effect_measure_interval_other = SingleLineStr(validate=validate.Length(max=256))
+    impact_primary_effect_size_desc = fields.Str()
+    impact_interpretation_type = make_choice_field(max_len=64, values=choices.ImpactInterpretationType.values)
+    impact_interpretation_type_other = SingleLineStr(validate=validate.Length(max=256))
+    impact_sensitivity_analysis = fields.Str()
+    impact_subgroup_analysis = fields.Str()
+    impact_missing_data_handling = fields.Str()
+    impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
+    impact_desc_planned_analysis = fields.Str()
 
     # Process evaluation design
-    process_eval_methods = fields.Str(validate=validate.Length(max=256))
+    process_methods = fields.Str(validate=validate.Length(max=256))
 
     # Process evaluation analysis
-    process_eval_analysis_description = fields.Str()
+    process_analysis_description = fields.Str()
 
     # Economic evaluation design
-    economic_eval_type = make_choice_field(max_len=256, values=choices.EconomicEvaluationType.values)
+    economic_type = make_choice_field(max_len=256, values=choices.EconomicEvaluationType.values)
     perspective_costs = fields.Str()
     perspective_benefits = fields.Str()
     monetisation_approaches = fields.Str()
-    economic_eval_design_details = fields.Str()
+    economic_design_details = fields.Str()
 
     # Economic evaluation analysis
-    economic_eval_analysis_description = fields.Str()
+    economic_analysis_description = fields.Str()
 
     # Other evaluation design
-    other_eval_design_type = fields.Str()
-    other_eval_design_details = fields.Str()
+    other_design_type = fields.Str()
+    other_design_details = fields.Str()
 
     # Other evaluation analysis
-    other_eval_analysis_description = fields.Str()
+    other_analysis_description = fields.Str()
 
     # Interventions
     interventions = fields.Function(
@@ -208,24 +208,24 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     # Impact evaluation findings
-    impact_eval_comparison = fields.Str()
-    impact_eval_outcome = fields.Str()
-    impact_eval_interpretation = make_choice_field(max_len=256, values=choices.ImpactEvalInterpretation.values)
-    impact_eval_point_estimate_diff = fields.Str()
-    impact_eval_lower_uncertainty = fields.Str()
-    impact_eval_upper_uncertainty = fields.Str()
+    impact_comparison = fields.Str()
+    impact_outcome = fields.Str()
+    impact_interpretation = make_choice_field(max_len=256, values=choices.ImpactEvalInterpretation.values)
+    impact_point_estimate_diff = fields.Str()
+    impact_lower_uncertainty = fields.Str()
+    impact_upper_uncertainty = fields.Str()
 
     # Economic evaluation findings
-    economic_eval_summary_findings = fields.Str()
-    economic_eval_findings = fields.Str()
+    economic_summary_findings = fields.Str()
+    economic_findings = fields.Str()
 
     # Process evaluation findings
-    process_eval_summary_findings = fields.Str()
-    process_eval_findings = fields.Str()
+    process_summary_findings = fields.Str()
+    process_findings = fields.Str()
 
     # Other evaluation findings
-    other_eval_summary_findings = fields.Str()
-    other_eval_findings = fields.Str()
+    other_summary_findings = fields.Str()
+    other_findings = fields.Str()
 
     # Processes and standards
     process_standards = fields.Function(
@@ -238,7 +238,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     search_text = fields.Str()
-    rsm_eval_id = fields.Float()
+    rsm_id = fields.Float()
 
 
 class InterventionSchema(TimeStampedModelSchema):
