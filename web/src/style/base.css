@@ -107,11 +107,10 @@ a,
   background-color: transparent;
   font-size: inherit;
   font-weight: inherit;
-  text-decoration: none;
-  transition: color ease-in-out 0.3s;
+  transition: color ease-in-out var(--animation-speed);
   padding: 0;
   &:hover {
-    text-decoration-line: underline;
+    color: var(--color-blue2);
   }
   &:focused {
     filter: drop-shadow(0px 0px 10px rgba(0, 80, 199, 0.8));
@@ -122,6 +121,10 @@ a,
   &:disabled {
     color: var(--text-disabled);
   }
+}
+
+.txt-link {
+  text-decoration: underline;
 }
 
 a {
