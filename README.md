@@ -40,25 +40,6 @@ To update organisations data:
 
 And move the formatted data to the `enums.py` file.
 
-# Frontend development
-
-Open the `web` folder for all the following
-
-## How to run the project
-
-```
-npm ci
-npm run dev
-```
-
-> Note: You will still need the previous steps to have ETF running on docker (http://localhost:8010/) to preview the site as you update any CSS and JS
-
-## How to generate the static build
-
-```
-npm run build
-```
-
 ## Uploading initial data
 
 Data to initially populate the registry has been provided in a specified Excel format.
@@ -69,4 +50,17 @@ Save the data file in the folder `etf/data` then run:
 
 ```
 docker-compose run web python manage.py upload_rsm_data --filename <name-of-excel-file.xlsx>
+```
+
+# Frontend development
+
+> Note: You will still need the previous steps to have ETF running on docker (http://localhost:8010/).
+
+Open the `web` folder for all the following
+
+## How to run the project
+
+```
+npm ci
+npm run dev
 ```
