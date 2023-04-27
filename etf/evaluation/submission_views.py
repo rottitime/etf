@@ -78,8 +78,8 @@ def evaluation_view(request, evaluation_id, page_name, title):
     errors = {}
     statuses = choices.EvaluationStatus.choices
     page_statuses = evaluation["page_statuses"]
-    multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_eval_design_name"]
-    # TODO - add "impact_eval_design_name" when choices have been added
+    multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_design_name"]
+    # TODO - add "impact_design_name" when choices have been added
     if request.GET.get("completed"):
         interface.facade.evaluation.update_page_status(
             user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
@@ -341,7 +341,7 @@ def evaluation_types_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_impact_eval_design_view(request, evaluation_id):
+def evaluation_impact_design_view(request, evaluation_id):
     page_data = {
         "title": "Impact evaluation design",
         "page_name": "impact-design",
@@ -349,7 +349,7 @@ def evaluation_impact_eval_design_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_impact_eval_analysis_view(request, evaluation_id):
+def evaluation_impact_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Impact evaluation analysis",
         "page_name": "impact-analysis",
@@ -357,7 +357,7 @@ def evaluation_impact_eval_analysis_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_process_eval_design_view(request, evaluation_id):
+def evaluation_process_design_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation design",
         "page_name": "process-design",
@@ -365,7 +365,7 @@ def evaluation_process_eval_design_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_process_eval_analysis_view(request, evaluation_id):
+def evaluation_process_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation analysis",
         "page_name": "process-analysis",
@@ -373,7 +373,7 @@ def evaluation_process_eval_analysis_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_economic_eval_design_view(request, evaluation_id):
+def evaluation_economic_design_view(request, evaluation_id):
     page_data = {
         "title": "Economic evaluation design",
         "page_name": "economic-design",
@@ -381,7 +381,7 @@ def evaluation_economic_eval_design_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_economic_eval_analysis_view(request, evaluation_id):
+def evaluation_economic_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Economic evaluation analysis",
         "page_name": "economic-analysis",
@@ -389,7 +389,7 @@ def evaluation_economic_eval_analysis_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_other_eval_design_view(request, evaluation_id):
+def evaluation_other_design_view(request, evaluation_id):
     page_data = {
         "title": "Other evaluation design",
         "page_name": "other-design",
@@ -397,7 +397,7 @@ def evaluation_other_eval_design_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_other_eval_analysis_view(request, evaluation_id):
+def evaluation_other_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Other evaluation analysis",
         "page_name": "other-analysis",

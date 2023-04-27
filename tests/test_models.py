@@ -41,7 +41,7 @@ def test_search_text():
         title="Test search eval",
         brief_description="Dancing elephants",
         organisations=["uk-health-security-agency", "department-for-education"],
-        economic_eval_type="COST_BENEFIT_ANALYSIS",
+        economic_type="COST_BENEFIT_ANALYSIS",
     )
     test_eval.save()
     outcome_measure = models.OutcomeMeasure(evaluation=test_eval, name="My new outcome measure")
