@@ -19,7 +19,7 @@ label.checkbox {
     display: flex;
     align-items: center;
     &:before {
-      content: url("data:image/svg+xml,<svg width='24px' height='24px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21.9181 7.18763L9.51771 19.588C9.40849 19.6972 9.23163 19.6972 9.12266 19.588L2.08173 12.5468C1.97276 12.4381 1.97276 12.2612 2.08173 12.152L3.79258 10.4412C3.90181 10.3322 4.07866 10.3322 4.18763 10.4412L9.32044 15.5737L19.8124 5.08173C19.9219 4.97276 20.0983 4.97276 20.2075 5.08173L21.9181 6.79258C22.0273 6.90155 22.0273 7.07815 21.9181 7.18763Z' fill='white'/></svg>");
+      content: svg-load('tick.svg', fill=#ffffff, width=24, height=24);
       height: var(--size-small);
       width: var(--size-small);
       transition-delay: var(--animation-speed);
@@ -70,7 +70,7 @@ label.checkbox {
       flex: 0 0 var(--size-large);
       height: var(--size-large);
       &:before {
-        content: url("data:image/svg+xml,<svg width='32px' height='32px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M21.9181 7.18763L9.51771 19.588C9.40849 19.6972 9.23163 19.6972 9.12266 19.588L2.08173 12.5468C1.97276 12.4381 1.97276 12.2612 2.08173 12.152L3.79258 10.4412C3.90181 10.3322 4.07866 10.3322 4.18763 10.4412L9.32044 15.5737L19.8124 5.08173C19.9219 4.97276 20.0983 4.97276 20.2075 5.08173L21.9181 6.79258C22.0273 6.90155 22.0273 7.07815 21.9181 7.18763Z' fill='white'/></svg>");
+        content: svg-load('tick.svg', fill=#ffffff, width=32, height=32);
         height: var(--size-large);
         width: var(--size-large);
       }
