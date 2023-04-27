@@ -176,20 +176,14 @@ def test_incorrect_user_id_and_code_caught():
 
 
 def test_correct_email_domains():
-    correct_emails = [
-        "test@education.gov.uk",
-        "test@no10.gov.uk",
-        "test@justice.gov.uk",
-        "test@beis.gov.uk",
-        "test@levellingup.gov.uk",
-    ]
+    correct_emails = ["test@example.com"]
     for email in correct_emails:
         cleaned_email = restrict_email.clean_email(email)
         assert email == cleaned_email
 
 
 def test_incorrect_email_domains():
-    incorrect_emails = ["test@fake.gov.uk", "test@example.org"]
+    incorrect_emails = ["test@example.net", "test@example.org"]
     for email in incorrect_emails:
         try:
             cleaned_email = restrict_email.clean_email(email)
