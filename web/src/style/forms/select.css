@@ -30,8 +30,4 @@
       outline: 2px solid var(--input-stroke-dark);
     }
   }
-
-  &.error select {
-    outline: 2px solid var(--color-red);
-  }
 }
