@@ -1,0 +1,35 @@
+.select {
+  position: relative;
+  display: inline-block;
+
+  /* icon */
+  &:after {
+    content: svg-load('arrow-up.svg', fill=#343F51, width=12, height=12);
+    transition: transform ease-in-out var(--animation-speed);
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 14px;
+    pointer-events: none;
+  }
+
+  &:not(.has-value) {
+    &:after {
+      transform: translate(0, -50%) rotate(180deg);
+    }
+    & select {
+      font-style: italic;
+      color: var(--text-disabled);
+    }
+  }
+
+  & select {
+    padding-right: 32px;
+    appearance: none;
+    width: 100%;
+
+    &:hover {
+      outline: 2px solid var(--input-stroke-dark);
+    }
+  }
+}
