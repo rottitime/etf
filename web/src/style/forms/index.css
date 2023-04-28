@@ -1,4 +1,4 @@
-select[multiple],
+select,
 textarea,
 input {
   font-family: var(--text-font-family);
@@ -9,6 +9,7 @@ input {
   font-size: 16px;
   padding: 8px 16px;
   box-sizing: border-box;
+  transition: outline ease-in-out var(--animation-speed);
   &::placeholder {
     color: var(--color-grey-light);
     font-style: italic;
@@ -16,6 +17,12 @@ input {
 
   &:focus {
     outline: 2px solid var(--input-stroke-dark);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: not-allowed;
   }
 
   &.full-width {
