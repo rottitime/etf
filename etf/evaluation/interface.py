@@ -26,6 +26,17 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
     status = marshmallow.fields.Str()
 
 
+class UpdateEvaluationUsersSchema(marshmallow.Schema):
+    evaluation_id = marshmallow.fields.UUID()
+    user_data = marshmallow.fields.Nested(schemas.UserSchema)
+
+
+class UpdatedEvaluationUsersSchema(marshmallow.Schema):
+    evaluation_id = marshmallow.fields.UUID()
+    user_id = marshmallow.fields.UUID()
+    user_created = marshmallow.fields.Boolean()
+
+
 class Evaluation(Entity):
     @with_schema(load=CreateEvaluationSchema, dump=schemas.EvaluationSchema)
     @register_event("Evaluation created")
@@ -53,10 +64,20 @@ class Evaluation(Entity):
 
     @with_schema(load=UpdateEvaluationVisibilitySchema, dump=schemas.EvaluationSchema)
     def update_page_status(self, user_id, evaluation_id, page_name, status):
-        evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
+        evaluation = models.Evaluation.objects.get(id=evaluation_id)
         evaluation.update_evaluation_page_status(page_name, status)
         evaluation.save()
         return evaluation
+
+    @with_schema(load=UpdateEvaluationUsersSchema, dump=UpdatedEvaluationUsersSchema)
+    @register_event("User added to evaluation")
+    def add_user_to_evaluation(self, evaluation_id, user_data):
+        evaluation = models.Evaluation.objects.get(id=evaluation_id)
+        user, user_created = models.User.objects.update_or_create(email=user_data["email"], defaults=user_data)
+        print(f"user created: {user_created}")
+        evaluation.users.add(user)
+        output = {"evaluation_id": evaluation_id, "user_id": user.id, "user_created": user_created}
+        return output
 
 
 facade = Facade(evaluation=Evaluation())

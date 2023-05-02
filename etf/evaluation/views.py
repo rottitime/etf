@@ -172,28 +172,24 @@ class EvaluationContributor(MethodDispatcher):
 
     def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        email = request.POST.get("email")
         errors = {}
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
+            user_email = serialized_user["email"]
+            # At the moment only have civil servant users, but this ensures works fine when external
+            is_external_user = not is_civil_service_email(user_email)
+            serialized_user["is_external_user"] = is_external_user
+            output = interface.facade.evaluation.add_user_to_evaluation(
+                evaluation_id=evaluation_id, user_data=serialized_user
+            )
+            is_new_user = output["user_created"]
+            user = models.User.objects.get(id=output["user_id"])
+            if is_new_user:
+                send_invite_email(user)
+            else:
+                send_contributor_added_email(user, evaluation_id)
         except ValidationError as err:
             errors = dict(err.messages)
-        is_existing_user = models.User.objects.filter(email=email).exists()
-        if is_existing_user:
-            user = models.User.objects.get(email=email)
-            evaluation.users.add(user)
-            evaluation.save()
-            send_contributor_added_email(user, evaluation_id)
-        else:
-            is_external_user = not is_civil_service_email(email)
-            user = models.User.objects.create(email=email)
-            user.save()
-            if is_external_user:
-                user.is_external_user = True
-                user.save()
-            evaluation.users.add(user)
-            evaluation.save()
-            send_invite_email(user)
         users = evaluation.users.all()
         return render(request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation})
 
