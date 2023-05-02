@@ -120,7 +120,7 @@
 {% macro checkbox(name, label) -%}
   <label class="checkbox {{errors.get(name) and 'error'}}">
     <input type="checkbox" id="{{name}}" name="{{name}}" {{data.get(name) and 'checked' or ''}}>
-    <div class="checkmark"></div>
+    <span class="checkmark"></span>
     <span>{{label}}</span>
   </label>
   {% for error in errors.get(name, []) %}

@@ -32,7 +32,7 @@
                 
                   <label class="checkbox">
                     <input name="organisations" {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" />
-                    <div class="checkmark"></div>
+                    <span class="checkmark"></span>
                     <span>{{organisation[1]}}</span>
                   </label>
                 
@@ -63,7 +63,7 @@
                 
                   <label class="checkbox">
                     <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
-                    <div class="checkmark"></div>
+                    <span class="checkmark"></span>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
                 
@@ -94,7 +94,7 @@
                 
                   <label class="checkbox">
                     <input name="status" type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
-                    <div class="checkmark"></div>
+                    <span class="checkmark"></span>
                     <span>{{status[1]}}</span>
                   </label>
                 
