@@ -250,7 +250,7 @@ def save_intervention_data(evaluation, evaluation_df):
             intervention.save()
 
 
-def save_document_data(evaluation, evevaluation_dfal_df):
+def save_document_data(evaluation, evaluation_df):
     document_df = evaluation_df[list(DOCUMENTS_MAPPING.values())]
     document_df = document_df.dropna(how="all")
     for _, row in document_df.iterrows():

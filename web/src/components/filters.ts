@@ -11,18 +11,6 @@ const submit = (filterControl: HTMLElement, category?: string) => {
   !!form && form.submit()
 }
 
-// const setTotal = (filterControl: HTMLElement, name: string) => {
-// const total = filterControl.querySelectorAll(`[name=${name}]:checked`).length
-// const reset = filterControl.querySelector('button[type="reset"]')
-// if (reset)
-//   total ? reset.removeAttribute('disabled') : reset.setAttribute('disabled', 'true')
-// document
-//   .querySelectorAll(`.filter-control-total[data-name=${name}]`)
-//   .forEach((control) => {
-//     control.innerHTML = total.toString()
-//   })
-// }
-
 const onReset = (filterControl: HTMLElement) => {
   filterControl.querySelectorAll('button[type="reset"]').forEach((button) => {
     button.addEventListener('click', () => {
@@ -34,8 +22,6 @@ const onReset = (filterControl: HTMLElement) => {
         checkbox.removeAttribute('checked')
         checkbox.checked = false
       })
-
-      // !!checkboxes.length && setTotal(filterControl, checkboxes[0].name)
 
       submit(filterControl, checkboxes[0]?.name)
     })
@@ -54,10 +40,10 @@ const setupSearch = (filterControl: HTMLElement) => {
             `input[type=checkbox][name=${controls}][value]`
           )
           .forEach((checkbox) => {
-            const parent = checkbox.closest<HTMLDivElement>('.row')
+            const parent = checkbox.closest<HTMLLabelElement>('.checkbox')
             if (parent) {
               parent?.textContent?.toLowerCase().includes(value)
-                ? (parent.style.display = 'block')
+                ? (parent.style.display = '')
                 : (parent.style.display = 'none')
             }
           })

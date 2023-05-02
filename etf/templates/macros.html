@@ -1,20 +1,20 @@
 {% macro input(name, label, placeholder='', type='text', min='') -%}
-<div class="row">
-  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+<div class="form-group {{errors.get(name) and 'error'}}" for="{{name}}">
+  <label class="label">{{label}}</label>
   {{input_description(name)}}
   <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
   {% endfor %}
 
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
 </div>
 {%- endmacro %}
 
 
 {% macro input_date(name, label, placeholder='') -%}
-<div class="row">
-  <label class="label {{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+<div class="form-group {{errors.get(name) and 'error'}}">
+  <label class="label" for="{{name}}">{{label}}</label>
   {{input_description(name)}}
 
   <div class="date-picker full-width">
@@ -24,61 +24,50 @@
     <div class="helper">{{error}}</div>
   {% endfor %}
 
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
 {%- endmacro %}
 
 
-{% macro hintbox(content, label) -%}
-{% set short_description = get_field_help_text(object_name, content) %}
-{% if short_description %}
-<div is="hint-box" aria-label="{{label}}">
-  <div class="content">
-    {{short_description}}
-  </div>
+{% macro guidance(name, label) -%}
+{% set guidance = get_field_guidance_text(object_name, name) %}
+{% if guidance %}
+  <div is="hint-box" aria-label="{{label}}">
+    <div class="content">
+      {% for para in guidance %}
+        <p>{{para}}</p>
+      {% endfor %}
+    </div>
 </div>
 {% endif %}
 {%- endmacro %}
 
 
 {%- macro input_description(name) %}
-  {% set description = get_field_tooltip_text(object_name, name) %}
+  {% set description = get_field_help_text(object_name, name) %}
   {% if description %}
-      {% for text in description %}
-        <p class="description">{{text}}</p>
-      {% endfor %}
+    <p class="description">{{description}}</p>
   {% endif %}
 {%- endmacro %}
 
 
-
-{% macro inpu_oldt(name, label, placeholder='', type='text', min='') -%}
-  <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-  {{field_tooltip_reveal(name)}}
-  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
-  {% for error in errors.get(name, []) %}
-    <span class="form-error">{{error}}</span>
-  {% endfor %}
-  {{field_help_text(name)}}
-{%- endmacro %}
-
 {% macro textarea(name, label, placeholder='') -%}
-<div class="row">
-  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+<div class="form-group {{errors.get(name) and 'error'}}">
+  <label for="{{name}}">{{label}}</label>
   {{input_description(name)}}
   <textarea placeholder="{{placeholder}}" id="{{name}}" name="{{name}}" class="full-width">{{data.get(name)}}</textarea>
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
   {% endfor %}
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
 </div>
 {%- endmacro %}
 
 {% macro select(name, label, options, empty_option=DEFAULT) -%}
 
-  <div class="row">
-    <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+  <div class="form-group {{errors.get(name) and 'error'}}">
+    <label for="{{name}}">{{label}}</label>
     
     {{input_description(name)}}
 
@@ -92,38 +81,21 @@
         {% endfor %}
       </select>
     </div>
-    {{macros.hintbox(content=name, label="Additional guidance")}}
+    {{macros.guidance(name=name, label="Additional guidance")}}
   </div>
 {%- endmacro %}
 
-{% macro select_many_from_formfield(name, label, field) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    {{field}}
-    {{field_help_text(name)}}
-  </div>
-{%- endmacro %}
-
-{% macro select_from_formfield(name, label, field) -%}
-  <div>
-    <label class="label {{errors.get(name) and 'is-invalid-label'}}" for="{{name}}">{{label}}</label>
-    {{field_tooltip_reveal(name)}}
-    {{field}}
-    {{field_help_text(name)}}
-  </div>
-{%- endmacro %}
 
 {% macro select_many_from_list(name, label, list) -%}
-<div class="row">
-  <label class="{{errors.get(name) and 'error'}}" for="{{name}}">{{label}}</label>
+<div class="form-group {{errors.get(name) and 'error'}}">
+  <label for="{{name}}">{{label}}</label>
   {{input_description(name)}}
   <select multiple name="{{name}}" id="{{name}}" class="full-width">
     {% for item in list %}
       <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
     {% endfor %}
   </select>
-  {{macros.hintbox(content=name, label="Additional guidance")}}
+  {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
 {%- endmacro %}
@@ -154,24 +126,6 @@
   {% for error in errors.get(name, []) %}
   <span class="helper">{{error}}</span>
   {% endfor %}
-{%- endmacro %}
-
-{% macro checkboxes(name, label, options) -%}
-  <fieldset>
-    <legend>{{label}}</legend>
-    {{field_tooltip_reveal(name)}}
-    <div class="grid-container">
-      <div class="grid-x large-up-4 medium-up-2">
-        {% for option in options %}
-          <div class="cell">
-            <input type="checkbox" class="{{errors.get(name) and 'is-invalid-input'}}" value="{{option.value}}" id="{{name}}_{{option.value}}" name="{{name}}" {{data.get(name) == option.value and 'checked' or ''}}>
-            <label class="label" for="{{name}}_{{option.value}}">{{option.text}}</label>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-    {{field_help_text(name)}}
-  </fieldset>
 {%- endmacro %}
 
 
@@ -262,20 +216,6 @@
   {% endif %}
 {%- endmacro %}
 
-{%- macro field_tooltip_reveal(name) %}
-  {% set tooltip = get_field_tooltip_text(object_name, name) %}
-  {% if tooltip %}
-    <div class="reveal" id="tooltip-modal-{{name}}" data-reveal>
-    <button class="close-button" data-close aria-label="Close reveal" type="button">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      {% for tt in tooltip %}
-        {{markdown(tt)|safe}}
-      {% endfor %}
-    </div>
-    <button type="button" class="help-text-button" name="help-text-modal" data-open="tooltip-modal-{{name}}"><i class="bi-question"></i></button>
-  {% endif %}
-{%- endmacro %}
 
 {%- macro field_help_text(name)  %}
   {% set short_description = get_field_help_text(object_name, name) %}
