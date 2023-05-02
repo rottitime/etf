@@ -8,14 +8,15 @@ from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
-from marshmallow.exceptions import ValidationError
 from marshmallow import EXCLUDE
+from marshmallow.exceptions import ValidationError
+
+from etf.evaluation import interface, schemas
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
 from .restrict_email import is_civil_service_email
 from .utils import restrict_to_permitted_evaluations
-from etf.evaluation import schemas, interface
 
 
 class MethodDispatcher:

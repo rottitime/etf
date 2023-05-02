@@ -1,7 +1,8 @@
 from marshmallow import Schema, ValidationError, fields, validate
 
-from . import choices
 from etf.evaluation.restrict_email import is_civil_service_email
+
+from . import choices
 
 
 def make_values_in_choices(choices_values):

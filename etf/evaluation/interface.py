@@ -74,7 +74,6 @@ class Evaluation(Entity):
     def add_user_to_evaluation(self, evaluation_id, user_data):
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
         user, user_created = models.User.objects.update_or_create(email=user_data["email"], defaults=user_data)
-        print(f"user created: {user_created}")
         evaluation.users.add(user)
         output = {"evaluation_id": evaluation_id, "user_id": user.id, "user_created": user_created}
         return output
