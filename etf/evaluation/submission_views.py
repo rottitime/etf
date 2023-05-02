@@ -79,7 +79,6 @@ def evaluation_view(request, evaluation_id, page_name, title):
     statuses = choices.EvaluationStatus.choices
     page_statuses = evaluation["page_statuses"]
     multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_design_name"]
-    # TODO - add "impact_design_name" when choices have been added
     if request.GET.get("completed"):
         interface.facade.evaluation.update_page_status(
             user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
