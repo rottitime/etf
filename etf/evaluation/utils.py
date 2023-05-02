@@ -237,11 +237,11 @@ def check_evaluation_view_permission(func):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         evaluation_users = evaluation.users.all()
         civil_service_user = not request.user.is_external_user
-        eval_is_public = evaluation.status == choices.EvaluationStatus.PUBLIC
-        eval_is_civil_service = evaluation.status == choices.EvaluationStatus.CIVIL_SERVICE
-        if eval_is_public:
+        evaluation_is_public = evaluation.status == choices.EvaluationStatus.PUBLIC
+        evaluation_is_civil_service = evaluation.status == choices.EvaluationStatus.CIVIL_SERVICE
+        if evaluation_is_public:
             return func(request, *args, **kwargs)
-        elif eval_is_civil_service and civil_service_user:
+        elif evaluation_is_civil_service and civil_service_user:
             return func(request, *args, **kwargs)
         else:
             if request.user not in evaluation_users:

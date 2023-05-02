@@ -10,20 +10,20 @@
         <p>[PLACEHOLDER - analysis plan document upload]</p>
       </div>
 
-      {{macros.select_from_list("impact_eval_framework", "Framework", list=dropdown_choices.impact_eval_framework)}}
+      {{macros.select_from_list("impact_framework", "Framework", list=dropdown_choices.impact_framework)}}
       
-      {{macros.select_from_list("impact_eval_basis", "Analysis basis", list=dropdown_choices.impact_eval_basis)}}
-      {{macros.textarea("impact_eval_analysis_set", "Analysis set")}}
-      {{macros.select_from_list("impact_eval_effect_measure_type", "Primary effect size measure type", list=dropdown_choices.impact_eval_effect_measure_type)}}
-      {{macros.textarea("impact_eval_primary_effect_size_measure", "Primary effect size measure")}}
-      {{macros.select_from_list("impact_eval_effect_measure_interval", "Primary effect size measure interval", list=dropdown_choices.impact_eval_effect_measure_interval)}}
-      {{macros.textarea("impact_eval_primary_effect_size_desc", "Primary effect size measure description")}}
-      {{macros.select_from_list("impact_eval_interpretation_type", "Interpretation type", list=dropdown_choices.impact_eval_interpretation_type)}}
-      {{macros.textarea("impact_eval_sensitivity_analysis", "Sensitivity analysis")}}
-      {{macros.textarea("impact_eval_subgroup_analysis", "Subgroup analysis")}}
-      {{macros.textarea("impact_eval_missing_data_handling", "Missing data handling")}}
-      {{macros.yes_no("impact_eval_fidelity", "Fidelity reporting")}}
-      {{macros.textarea("impact_eval_desc_planned_analysis", "Description of planned analysis")}}
+      {{macros.select_from_list("impact_basis", "Analysis basis", list=dropdown_choices.impact_basis)}}
+      {{macros.textarea("impact_analysis_set", "Analysis set")}}
+      {{macros.select_from_list("impact_effect_measure_type", "Primary effect size measure type", list=dropdown_choices.impact_effect_measure_type)}}
+      {{macros.textarea("impact_primary_effect_size_measure", "Primary effect size measure")}}
+      {{macros.select_from_list("impact_effect_measure_interval", "Primary effect size measure interval", list=dropdown_choices.impact_effect_measure_interval)}}
+      {{macros.textarea("impact_primary_effect_size_desc", "Primary effect size measure description")}}
+      {{macros.select_from_list("impact_interpretation_type", "Interpretation type", list=dropdown_choices.impact_interpretation_type)}}
+      {{macros.textarea("impact_sensitivity_analysis", "Sensitivity analysis")}}
+      {{macros.textarea("impact_subgroup_analysis", "Subgroup analysis")}}
+      {{macros.textarea("impact_missing_data_handling", "Missing data handling")}}
+      {{macros.yes_no("impact_fidelity", "Fidelity reporting")}}
+      {{macros.textarea("impact_description_planned_analysis", "Description of planned analysis")}}
 
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>

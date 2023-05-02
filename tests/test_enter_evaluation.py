@@ -245,13 +245,13 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Impact evaluation design",
             {
-                "impact_eval_design_name": [choices.ImpactEvalDesign.REALISE_EVALUATION.value],
-                "impact_eval_design_justification": "A justification for the design",
-                "impact_eval_design_description": "A description of the design used",
-                "impact_eval_design_features": "The main features that the design offers",
-                "impact_eval_design_equity": "The equity of the design",
-                "impact_eval_design_assumptions": "The assumptions made based on this design",
-                "impact_eval_design_approach_limitations": "The limitations of this design approach",
+                "impact_design_name": [choices.ImpactEvalDesign.REALISE_EVALUATION.value],
+                "impact_design_justification": "A justification for the design",
+                "impact_design_description": "A description of the design used",
+                "impact_design_features": "The main features that the design offers",
+                "impact_design_equity": "The equity of the design",
+                "impact_design_assumptions": "The assumptions made based on this design",
+                "impact_design_approach_limitations": "The limitations of this design approach",
             },
             evaluation.id,
         ),
@@ -259,19 +259,19 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Impact evaluation analysis",
             {
-                "impact_eval_framework": choices.ImpactFramework.EQUIVALENCE.value,
-                "impact_eval_basis": choices.ImpactAnalysisBasis.INTENTION_TO_TREAT.value,
-                "impact_eval_analysis_set": "Analysis set",
-                "impact_eval_effect_measure_type": choices.ImpactMeasureType.ABSOLUTE.value,
-                "impact_eval_primary_effect_size_measure": "Primary effect size measure",
-                "impact_eval_effect_measure_interval": choices.ImpactMeasureInterval.BAYESIAN.value,
-                "impact_eval_primary_effect_size_desc": "A description of the primary effect size measure",
-                "impact_eval_interpretation_type": choices.ImpactInterpretationType.NONE,
-                "impact_eval_sensitivity_analysis": "The sensitivity analysis",
-                "impact_eval_subgroup_analysis": "A subgroup analysis",
-                "impact_eval_missing_data_handling": "A summary of missing data handling",
-                "impact_eval_fidelity": "YES",
-                "impact_eval_desc_planned_analysis": "The planned analysis of the impact",
+                "impact_framework": choices.ImpactFramework.EQUIVALENCE.value,
+                "impact_basis": choices.ImpactAnalysisBasis.INTENTION_TO_TREAT.value,
+                "impact_analysis_set": "Analysis set",
+                "impact_effect_measure_type": choices.ImpactMeasureType.ABSOLUTE.value,
+                "impact_primary_effect_size_measure": "Primary effect size measure",
+                "impact_effect_measure_interval": choices.ImpactMeasureInterval.BAYESIAN.value,
+                "impact_primary_effect_size_desc": "A description of the primary effect size measure",
+                "impact_interpretation_type": choices.ImpactInterpretationType.NONE,
+                "impact_sensitivity_analysis": "The sensitivity analysis",
+                "impact_subgroup_analysis": "A subgroup analysis",
+                "impact_missing_data_handling": "A summary of missing data handling",
+                "impact_fidelity": "YES",
+                "impact_description_planned_analysis": "The planned analysis of the impact",
             },
             evaluation.id,
         ),
@@ -281,7 +281,7 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Process evaluation analysis",
             {
-                "process_eval_analysis_description": "A description about the process evaluation description",
+                "process_analysis_description": "A description about the process evaluation description",
             },
             evaluation.id,
         ),
@@ -289,26 +289,26 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Economic evaluation design",
             {
-                "economic_eval_type": choices.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value,
+                "economic_type": choices.EconomicEvaluationType.COST_BENEFIT_ANALYSIS.value,
                 "perspective_costs": "The perspective costs of the evaluation",
                 "perspective_benefits": "The benefits associated with the evaluation",
                 "monetisation_approaches": "The approach to monetisation",
-                "economic_eval_design_details": "Any details about the economic evaluation design",
+                "economic_design_details": "Any details about the economic evaluation design",
             },
             evaluation.id,
         ),
         # Economic analysis page
         _make_simple_step(
             "Economic evaluation design",
-            {"economic_eval_analysis_description": "Description of the economic analysis"},
+            {"economic_analysis_description": "Description of the economic analysis"},
             evaluation.id,
         ),
         # Other design page
         _make_simple_step(
             "Other evaluation design",
             {
-                "other_eval_design_type": "The other evaluation design type",
-                "other_eval_design_details": "A description of the other design type",
+                "other_design_type": "The other evaluation design type",
+                "other_design_details": "A description of the other design type",
             },
             evaluation.id,
         ),
@@ -316,7 +316,7 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Other evaluation analysis",
             {
-                "other_eval_analysis_description": "A description of the other analysis",
+                "other_analysis_description": "A description of the other analysis",
             },
             evaluation.id,
         ),
@@ -393,12 +393,12 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Impact evaluation findings",
             {
-                "impact_eval_comparison": "An evaluation comparison",
-                "impact_eval_outcome": "The outcome of the evaluation findings",
-                "impact_eval_interpretation": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
-                "impact_eval_point_estimate_diff": "The point estimate difference of the evaluation findings",
-                "impact_eval_lower_uncertainty": "The lower uncertainty of the evaluation findings",
-                "impact_eval_upper_uncertainty": "The upper uncertainty of the evaluation findings",
+                "impact_comparison": "An evaluation comparison",
+                "impact_outcome": "The outcome of the evaluation findings",
+                "impact_interpretation": choices.ImpactEvalInterpretation.EQUIVALENCE_EQUIVALENT.value,
+                "impact_point_estimate_diff": "The point estimate difference of the evaluation findings",
+                "impact_lower_uncertainty": "The lower uncertainty of the evaluation findings",
+                "impact_upper_uncertainty": "The upper uncertainty of the evaluation findings",
             },
             evaluation.id,
         ),
@@ -406,8 +406,8 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Economic evaluation findings",
             {
-                "economic_eval_summary_findings": "A summary of the economic findings of the evaluation",
-                "economic_eval_findings": "The findings of the evaluation",
+                "economic_summary_findings": "A summary of the economic findings of the evaluation",
+                "economic_findings": "The findings of the evaluation",
             },
             evaluation.id,
         ),
@@ -415,8 +415,8 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Process evaluation findings",
             {
-                "process_eval_summary_findings": "The summary process findings of the evaluation",
-                "process_eval_findings": "The process findings of the evaluation",
+                "process_summary_findings": "The summary process findings of the evaluation",
+                "process_findings": "The process findings of the evaluation",
             },
             evaluation.id,
         ),
@@ -424,8 +424,8 @@ def test_step_through_evaluation():
         _make_simple_step(
             "Other evaluation findings",
             {
-                "other_eval_summary_findings": "The summary other findings of the evaluation",
-                "other_eval_findings": "The other findings of the evaluation",
+                "other_summary_findings": "The summary other findings of the evaluation",
+                "other_findings": "The other findings of the evaluation",
             },
             evaluation.id,
         ),

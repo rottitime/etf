@@ -63,37 +63,37 @@
           <tr>
             <th>Comparison</th>
             <td>
-              {{ data.evaluation.impact_eval_comparison and data.evaluation.impact_eval_comparison or "Not answered" }}
+              {{ data.evaluation.impact_comparison and data.evaluation.impact_comparison or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Outcome</th>
             <td>
-              {{ data.evaluation.impact_eval_outcome and data.evaluation.impact_eval_outcome or "Not answered" }}
+              {{ data.evaluation.impact_outcome and data.evaluation.impact_outcome or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Interpretation</th>
             <td>
-              {{ data.evaluation.impact_eval_interpretation and data.evaluation.get_impact_eval_interpretation_display_name() or "Not answered" }}
+              {{ data.evaluation.impact_interpretation and data.evaluation.get_impact_interpretation_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Point estimate of difference</th>
             <td>
-              {{ data.evaluation.impact_eval_point_estimate_diff and data.evaluation.impact_eval_point_estimate_diff or "Not answered" }}
+              {{ data.evaluation.impact_point_estimate_diff and data.evaluation.impact_point_estimate_diff or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Lower uncertainty bound</th>
             <td>
-              {{ data.evaluation.impact_eval_lower_uncertainty and data.evaluation.impact_eval_lower_uncertainty or "Not answered" }}
+              {{ data.evaluation.impact_lower_uncertainty and data.evaluation.impact_lower_uncertainty or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Upper uncertainty bound</th>
             <td>
-              {{ data.evaluation.impact_eval_upper_uncertainty and data.evaluation.impact_eval_upper_uncertainty or "Not answered" }}
+              {{ data.evaluation.impact_upper_uncertainty and data.evaluation.impact_upper_uncertainty or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -105,13 +105,13 @@
           <tr>
             <th>Summary findings</th>
             <td>
-              {{ data.evaluation.process_eval_summary_findings and data.evaluation.process_eval_summary_findings or "Not answered" }}
+              {{ data.evaluation.process_summary_findings and data.evaluation.process_summary_findings or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Findings</th>
             <td>
-              {{ data.evaluation.process_eval_findings and data.evaluation.process_eval_findings or "Not answered" }}
+              {{ data.evaluation.process_findings and data.evaluation.process_findings or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -123,13 +123,13 @@
           <tr>
             <th>Summary findings</th>
             <td>
-              {{ data.evaluation.economic_eval_summary_findings and data.evaluation.economic_eval_summary_findings or "Not answered" }}
+              {{ data.evaluation.economic_summary_findings and data.evaluation.economic_summary_findings or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Findings</th>
             <td>
-              {{ data.evaluation.economic_eval_findings and data.evaluation.economic_eval_findings or "Not answered" }}
+              {{ data.evaluation.economic_findings and data.evaluation.economic_findings or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -141,13 +141,13 @@
           <tr>
             <th>Summary findings</th>
             <td>
-              {{ data.evaluation.other_eval_summary_findings and data.evaluation.other_eval_summary_findings or "Not answered" }}
+              {{ data.evaluation.other_summary_findings and data.evaluation.other_summary_findings or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Findings</th>
             <td>
-              {{ data.evaluation.other_eval_findings and data.evaluation.other_eval_findings or "Not answered" }}
+              {{ data.evaluation.other_findings and data.evaluation.other_findings or "Not answered" }}
             </td>
           </tr>
         </table>

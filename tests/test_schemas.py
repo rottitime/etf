@@ -109,7 +109,7 @@ def test_evaluation_schema():
         "status": choices.EvaluationStatus.DRAFT.value,
         "evaluation_type": [choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.IMPACT],
         "ethics_committee_approval": "YES",
-        "impact_eval_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
+        "impact_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
     }
     invalid_evaluation_type = {
         "title": "Title",

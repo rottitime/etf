@@ -64,11 +64,11 @@
         <table>
           <tr>
             <th>Design name</th>
-          {% if not data.evaluation.impact_eval_design_name %}
+          {% if not data.evaluation.impact_design_name %}
             <td>Not answered</td>
           {% else %}
             <td>
-            {% for design_name in data.evaluation.get_impact_eval_design_name_display_name() %}
+            {% for design_name in data.evaluation.get_impact_design_name_display_name() %}
               <p>{{design_name}}</p>
             {% endfor %}
             </td>
@@ -77,37 +77,37 @@
           <tr>
             <th>Justification for design</th>
             <td>
-              {{ data.evaluation.impact_eval_design_justification and data.evaluation.impact_eval_design_justification or "Not answered" }}
+              {{ data.evaluation.impact_design_justification and data.evaluation.impact_design_justification or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Description of planned design</th>
             <td>
-              {{ data.evaluation.impact_eval_design_description and data.evaluation.impact_eval_design_description or "Not answered" }}
+              {{ data.evaluation.impact_design_description and data.evaluation.impact_design_description or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Features to reflect real-world implementation</th>
             <td>
-              {{ data.evaluation.impact_eval_design_features and data.evaluation.impact_eval_design_features or "Not answered" }}
+              {{ data.evaluation.impact_design_features and data.evaluation.impact_design_features or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Equity</th>
             <td>
-              {{ data.evaluation.impact_eval_design_equity and data.evaluation.impact_eval_design_equity or "Not answered" }}
+              {{ data.evaluation.impact_design_equity and data.evaluation.impact_design_equity or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Assumptions</th>
             <td>
-              {{ data.evaluation.impact_eval_design_assumptions and data.evaluation.impact_eval_design_assumptions or "Not answered" }}
+              {{ data.evaluation.impact_design_assumptions and data.evaluation.impact_design_assumptions or "Not answered" }}
             </td>
           </tr>
           <tr>
             <th>Limitations of approach</th>
             <td>
-              {{ data.evaluation.impact_eval_design_approach_limitations and data.evaluation.impact_eval_design_approach_limitations or "Not answered" }}
+              {{ data.evaluation.impact_design_approach_limitations and data.evaluation.impact_design_approach_limitations or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -132,7 +132,7 @@
           <tr>
             <th>Economic evaluation</th>
             <td>
-              {{ data.evaluation.economic_eval_type and data.evaluation.get_economic_eval_type_display_name() or "Not answered" }}
+              {{ data.evaluation.economic_type and data.evaluation.get_economic_type_display_name() or "Not answered" }}
             </td>
           </tr>
         <tr>
@@ -156,7 +156,7 @@
         <tr>
             <th>Design details</th>
             <td>
-              {{ data.evaluation.economic_eval_design_details and data.evaluation.economic_eval_design_details or "Not answered" }}
+              {{ data.evaluation.economic_design_details and data.evaluation.economic_design_details or "Not answered" }}
             </td>
           </tr>
         </table>
@@ -168,13 +168,13 @@
           <tr>
             <th>Design type</th>
             <td>
-              {{ data.evaluation.other_eval_design_type and data.evaluation.other_eval_design_type or "Not answered" }}
+              {{ data.evaluation.other_design_type and data.evaluation.other_design_type or "Not answered" }}
             </td>
           </tr>
         <tr>
             <th>Design details</th>
             <td>
-              {{ data.evaluation.other_eval_design_details and data.evaluation.other_eval_design_details or "Not answered" }}
+              {{ data.evaluation.other_design_details and data.evaluation.other_design_details or "Not answered" }}
             </td>
           </tr>
         </table>
