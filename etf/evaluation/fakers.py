@@ -277,7 +277,7 @@ def make_evaluation():
         impact_subgroup_analysis=fake.text(),
         impact_missing_data_handling=fake.text(),
         impact_fidelity=random.choice(choices.YesNo.values),
-        impact_desc_planned_analysis=fake.text(),
+        impact_description_planned_analysis=fake.text(),
         process_methods=fake.text(256),
         process_analysis_description=fake.text(),
         economic_type=random.choice(choices.EconomicEvaluationType.values),
@@ -309,8 +309,8 @@ def make_evaluation():
 def add_evals_to_users(user, allow_empty=True):
     num_evals = random.randint(0 if allow_empty is True else 1, 3)
     for j in range(num_evals):
-        eval_data = make_evaluation()
-        evaluation = models.Evaluation.objects.create(**eval_data)
+        evaluation_data = make_evaluation()
+        evaluation = models.Evaluation.objects.create(**evaluation_data)
         generate_costs(evaluation)
         generate_documents(evaluation)
         generate_dates(evaluation)

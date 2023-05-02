@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name="evaluation",
             old_name="impact_eval_desc_planned_analysis",
-            new_name="impact_desc_planned_analysis",
+            new_name="impact_description_planned_analysis",
         ),
         migrations.RenameField(
             model_name="evaluation",

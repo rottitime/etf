@@ -3,7 +3,6 @@ import functools
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
-
 from . import utils
 
 
@@ -271,7 +270,7 @@ def test_step_through_evaluation():
                 "impact_subgroup_analysis": "A subgroup analysis",
                 "impact_missing_data_handling": "A summary of missing data handling",
                 "impact_fidelity": "YES",
-                "impact_desc_planned_analysis": "The planned analysis of the impact",
+                "impact_description_planned_analysis": "The planned analysis of the impact",
             },
             evaluation.id,
         ),

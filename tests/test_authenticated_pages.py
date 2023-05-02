@@ -1,7 +1,6 @@
 from nose import with_setup
 
 from etf.evaluation import choices, fields, interface, models
-
 from . import utils
 
 OVERVIEW_URLS = [
@@ -129,13 +128,13 @@ def get_evaluation_ids():
     civil_service_eval = models.Evaluation.objects.get(title="Civil Service")
     draft_eval1 = models.Evaluation.objects.get(title="Draft 1")
     draft_eval2 = models.Evaluation.objects.get(title="Draft 2")
-    eval_ids = {
+    evaluation_ids = {
         "public": public_eval.id,
         "civil_service": civil_service_eval.id,
         "draft_not_a_contributor": draft_eval1.id,
         "draft_contributor": draft_eval2.id,
     }
-    return eval_ids
+    return evaluation_ids
 
 
 def check_overview_urls(client, evaluation_id, expected_status_code):
@@ -148,18 +147,18 @@ def check_overview_urls(client, evaluation_id, expected_status_code):
 @utils.with_authenticated_client
 @with_setup(setup_evaluations, teardown_evaluations)
 def test_overview_internal_access(client):
-    eval_ids = get_evaluation_ids()
-    check_overview_urls(client, eval_ids["public"], expected_status_code=200)
-    check_overview_urls(client, eval_ids["civil_service"], expected_status_code=200)
-    check_overview_urls(client, eval_ids["draft_not_a_contributor"], expected_status_code=404)
-    check_overview_urls(client, eval_ids["draft_contributor"], expected_status_code=200)
+    evaluation_ids = get_evaluation_ids()
+    check_overview_urls(client, evaluation_ids["public"], expected_status_code=200)
+    check_overview_urls(client, evaluation_ids["civil_service"], expected_status_code=200)
+    check_overview_urls(client, evaluation_ids["draft_not_a_contributor"], expected_status_code=404)
+    check_overview_urls(client, evaluation_ids["draft_contributor"], expected_status_code=200)
 
 
 @utils.with_authenticated_external_client
 @with_setup(setup_evaluations, teardown_evaluations)
 def test_overview_external_access(client):
-    eval_ids = get_evaluation_ids()
-    check_overview_urls(client, eval_ids["public"], expected_status_code=200)
-    check_overview_urls(client, eval_ids["civil_service"], expected_status_code=404)
-    check_overview_urls(client, eval_ids["draft_not_a_contributor"], expected_status_code=404)
-    check_overview_urls(client, eval_ids["draft_contributor"], expected_status_code=200)
+    evaluation_ids = get_evaluation_ids()
+    check_overview_urls(client, evaluation_ids["public"], expected_status_code=200)
+    check_overview_urls(client, evaluation_ids["civil_service"], expected_status_code=404)
+    check_overview_urls(client, evaluation_ids["draft_not_a_contributor"], expected_status_code=404)
+    check_overview_urls(client, evaluation_ids["draft_contributor"], expected_status_code=200)

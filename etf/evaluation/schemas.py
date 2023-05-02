@@ -167,7 +167,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_subgroup_analysis = fields.Str()
     impact_missing_data_handling = fields.Str()
     impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
-    impact_desc_planned_analysis = fields.Str()
+    impact_description_planned_analysis = fields.Str()
 
     # Process evaluation design
     process_methods = fields.Str(validate=validate.Length(max=256))

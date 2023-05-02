@@ -173,7 +173,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_subgroup_analysis = models.TextField(blank=True, null=True)
     impact_missing_data_handling = models.TextField(blank=True, null=True)
     impact_fidelity = models.CharField(max_length=10, blank=True, null=True)
-    impact_desc_planned_analysis = models.TextField(blank=True, null=True)
+    impact_description_planned_analysis = models.TextField(blank=True, null=True)
     # TODO - add more
 
     # Process evaluation design

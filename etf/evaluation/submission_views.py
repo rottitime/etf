@@ -74,7 +74,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = f"submissions/{page_name}.html"
-    eval_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
+    evaluation_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
     statuses = choices.EvaluationStatus.choices
     page_statuses = evaluation["page_statuses"]
@@ -87,7 +87,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
         try:
-            serialized_evaluation = eval_schema.load(data=data, partial=True)
+            serialized_evaluation = evaluation_schema.load(data=data, partial=True)
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
         else:

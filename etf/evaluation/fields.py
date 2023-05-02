@@ -427,7 +427,7 @@ impact_analysis_tooltip_text = defaultdict(
             "Subgroup analyses involve examining the results for a specified subset of the participants in a study. These should normally be specified before the study starts. If you are intending to conduct a subgroup analysis, it will normally be necessary to ensure that the sample size for that subgroup is large enough.",
             "Particular caution should be exercised over subgroup analyses that are specified after the data have been seen. A common mistake in studies is that if an intervention appears unsuccessful for the population as a whole, researchers can go 'fishing' through the data to find any subset of people it does work for. This is invariably a mistake because there will typically be some way of slicing the population that shows a positive outcome just by random variation.",
         ],
-        "impact_desc_planned_analysis": [
+        "impact_description_planned_analysis": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
         ],
     },
