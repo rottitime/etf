@@ -12,16 +12,19 @@ label.checkbox {
   & .checkmark {
     flex: 0 0 var(--size-small);
     height: var(--size-small);
+    width: var(--size-small);
     border: 2px solid var(--input-stroke-light);
     border-radius: 4px;
+    box-sizing: border-box;
     transition: border-color var(--animation-speed),
       background-color var(--animation-speed);
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 0;
     &:before {
-      content: svg-load('tick.svg', fill=#ffffff, width=24, height=24);
-      height: var(--size-small);
-      width: var(--size-small);
+      content: svg-load('tick.svg', fill=#ffffff, width=18, height=18);
+      line-height: 0;
       transition-delay: var(--animation-speed);
       transition: all var(--animation-speed);
       opacity: 0;
@@ -70,9 +73,7 @@ label.checkbox {
       flex: 0 0 var(--size-large);
       height: var(--size-large);
       &:before {
-        content: svg-load('tick.svg', fill=#ffffff, width=32, height=32);
-        height: var(--size-large);
-        width: var(--size-large);
+        content: svg-load('tick.svg', fill=#ffffff, width=24, height=24);
       }
     }
   }
