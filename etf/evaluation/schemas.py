@@ -1,6 +1,7 @@
 from marshmallow import Schema, ValidationError, fields, validate
 
 from . import choices
+from etf.evaluation.restrict_email import is_civil_service_email
 
 
 def make_values_in_choices(choices_values):
@@ -10,6 +11,12 @@ def make_values_in_choices(choices_values):
                 raise ValidationError(f"All values in list should be one of: {choices_values}")
 
     return values_in_choices
+
+
+def validate_email(email):
+    if not is_civil_service_email(email):
+        raise ValidationError("This should be a valid Civil Service email")
+    return True
 
 
 class DateAndBlankField(fields.Date):
@@ -67,7 +74,7 @@ def is_non_neg_int_or_none(value):
 
 
 class UserSchema(Schema):
-    email = fields.Str()
+    email = fields.Str(validate=validate_email)
 
 
 class TimeStampedModelSchema(Schema):
