@@ -11,8 +11,12 @@ const setupAccordions = () => {
   }
 
   //icons
-  document.querySelectorAll('.accordion .icon').forEach((icon) => {
-    icon.insertAdjacentHTML('beforeend', iconRaw)
+  document.querySelectorAll('.accordion li > h3 button').forEach((icon) => {
+    const iconWrapper = document.createElement('span')
+    iconWrapper.classList.add('icon')
+    iconWrapper.innerHTML = iconRaw
+
+    icon.append(iconWrapper)
   })
 
   //create wrapper

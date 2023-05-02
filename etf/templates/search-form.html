@@ -14,8 +14,7 @@
           <li>
            <h3 {% if data.active_filter == "organisations" %} class="active" {% endif %}>
              <button type="button">
-              <div class="title">Organisations{% if data.selected_organisations %} <div class="badge filter-control-total" data-name="organisations">{{data.selected_organisations|length}}</div>{% endif %}</div>
-              <div class="icon"></div>
+              <span class="title">Organisations{% if data.selected_organisations %} <div class="badge filter-control-total" data-name="organisations">{{data.selected_organisations|length}}</div>{% endif %}</span>
             </button>
            </h3>
             <div class="accordion-content">
@@ -44,8 +43,7 @@
           <li>
             <h3{% if data.active_filter == "evaluation_types" %} class="active" {% endif %}>
               <button type="button">
-                <div class="title">Evaluation types{% if data.selected_evaluation_types %} <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div>{% endif %}</div>
-                <div class="icon"></div>
+                <span class="title">Evaluation types{% if data.selected_evaluation_types %} <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div>{% endif %}</span>
               </button>
             </h3>
             <div class="accordion-content">
@@ -76,8 +74,7 @@
           <li>
             <h3{% if data.active_filter == "status" %} class="active" {% endif %}>
               <button type="button">
-                <div class="title">Status{% if data.selected_statuses %} <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div>{% endif %}</div>
-                <div class="icon"></div>
+                <span class="title">Status{% if data.selected_statuses %} <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div>{% endif %}</span>
               </button>
             </h3>
             <div class="accordion-content">
