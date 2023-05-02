@@ -64,7 +64,7 @@ class Evaluation(Entity):
 
     @with_schema(load=UpdateEvaluationVisibilitySchema, dump=schemas.EvaluationSchema)
     def update_page_status(self, user_id, evaluation_id, page_name, status):
-        evaluation = models.Evaluation.objects.get(id=evaluation_id)
+        evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
         evaluation.update_evaluation_page_status(page_name, status)
         evaluation.save()
         return evaluation
