@@ -11,13 +11,11 @@ const setupAccordions = () => {
   }
 
   //icons
-  document.querySelectorAll('.accordion li > h3 button').forEach((icon) => {
-    const iconWrapper = document.createElement('span')
-    iconWrapper.classList.add('icon')
-    iconWrapper.innerHTML = iconRaw
-
-    icon.append(iconWrapper)
-  })
+  document
+    .querySelectorAll('.accordion li > h3 button')
+    .forEach((button) =>
+      button.insertAdjacentHTML('beforeend', '<gov-icon key="arrow-down"></gov-icon>')
+    )
 
   //create wrapper
   document.querySelectorAll('.accordion-content').forEach((content) => {
