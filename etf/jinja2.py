@@ -103,7 +103,7 @@ def environment(**options):
             "get_page_progress_icon": get_page_progress_icon,
             "list_to_options": list_to_options,
             "get_field_help_text": fields.get_field_help_text,
-            "get_field_tooltip_text": fields.get_field_tooltip_text,
+            "get_field_guidance_text": fields.get_field_guidance_text,
             "space_name": settings.VCAP_APPLICATION.get("space_name", "unknown"),
             "markdown": markdown,
         }
