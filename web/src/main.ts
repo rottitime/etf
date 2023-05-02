@@ -43,17 +43,19 @@ if (import.meta.env.MODE === 'development') {
   ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
 }
 
+/* web components */
+icon()
+setupHintbox()
+
+/* defer loading */
 window.addEventListener('load', () => {
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
-
   accordion()
   setupCard()
-  icon()
   setupSelect()
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
-  setupHintbox()
   setupCircularProgressBar()
 })
 
