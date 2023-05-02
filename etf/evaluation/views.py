@@ -8,11 +8,14 @@ from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
+from marshmallow.exceptions import ValidationError
+from marshmallow import EXCLUDE
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
 from .restrict_email import is_civil_service_email
 from .utils import restrict_to_permitted_evaluations
+from etf.evaluation import schemas, interface
 
 
 class MethodDispatcher:
@@ -169,7 +172,12 @@ class EvaluationContributor(MethodDispatcher):
 
     def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        email = request.POST.get("add-user-email")
+        email = request.POST.get("email")
+        errors = {}
+        try:
+            serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
+        except ValidationError as err:
+            errors = dict(err.messages)
         is_existing_user = models.User.objects.filter(email=email).exists()
         if is_existing_user:
             user = models.User.objects.get(email=email)
