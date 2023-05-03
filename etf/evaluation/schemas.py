@@ -76,7 +76,6 @@ def is_non_neg_int_or_none(value):
 
 class UserSchema(Schema):
     email = fields.Str(validate=validate_email)
-    is_external_user = fields.Boolean()
 
 
 class TimeStampedModelSchema(Schema):
