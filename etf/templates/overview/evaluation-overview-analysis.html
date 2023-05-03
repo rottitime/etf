@@ -76,12 +76,28 @@
               {{ data.evaluation.impact_framework and data.evaluation.get_impact_framework_display_name() or "Not answered" }}
             </td>
           </tr>
+          {% if data.evaluation.impact_framework == "OTHER" and data.evaluation.impact_framework_other | length > 0 %}
+            <tr>
+            <th>Framework (Other)</th>
+            <td>
+              {{ data.evaluation.impact_framework_other }}
+            </td>
+          </tr>
+          {% endif %}
           <tr>
             <th>Analysis basis</th>
             <td>
               {{ data.evaluation.impact_basis and data.evaluation.get_impact_basis_display_name() or "Not answered" }}
             </td>
           </tr>
+          {% if data.evaluation.impact_basis == "OTHER" and data.evaluation.impact_basis_other | length > 0 %}
+            <tr>
+              <th>Analysis basis (Other)</th>
+              <td>
+                {{ data.evaluation.impact_basis_other }}
+              </td>
+            </tr>
+          {% endif %}
           <tr>
             <th>Analysis set</th>
             <td>
@@ -94,6 +110,14 @@
               {{ data.evaluation.impact_effect_measure_type and data.evaluation.get_impact_effect_measure_type_display_name() or "Not answered" }}
             </td>
           </tr>
+          {% if data.evaluation.impact_effect_measure_type == "OTHER" and data.evaluation.impact_effect_measure_type_other | length > 0 %}
+            <tr>
+              <th>Primary effect size measure type (Other)</th>
+              <td>
+                {{ data.evaluation.impact_effect_measure_type_other }}
+              </td>
+            </tr>
+          {% endif %}
           <tr>
             <th>Primary effect size measure</th>
             <td>
@@ -106,6 +130,14 @@
               {{ data.evaluation.impact_effect_measure_interval and data.evaluation.get_impact_effect_measure_interval_display_name() or "Not answered" }}
             </td>
           </tr>
+          {% if data.evaluation.impact_effect_measure_interval == "OTHER" and data.evaluation.impact_effect_measure_interval_other | length > 0 %}
+            <tr>
+              <th>Primary effect size measure interval (Other)</th>
+              <td>
+                {{ data.evaluation.impact_effect_measure_interval_other }}
+              </td>
+            </tr>
+          {% endif %}
           <tr>
             <th>Primary effect size measure description</th>
             <td>
@@ -118,6 +150,14 @@
               {{ data.evaluation.impact_interpretation_type and data.evaluation.get_impact_interpretation_type_display_name() or "Not answered" }}
             </td>
           </tr>
+        {% if data.evaluation.impact_interpretation_type == "OTHER" and data.evaluation.impact_interpretation_type_other | length > 0 %}
+            <tr>
+              <th>Interpretation type (Other)</th>
+              <td>
+                {{ data.evaluation.impact_interpretation_type_other }}
+              </td>
+            </tr>
+          {% endif %}
         <tr>
             <th>Sensitivity analysis</th>
             <td>

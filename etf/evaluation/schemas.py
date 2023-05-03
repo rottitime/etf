@@ -308,6 +308,7 @@ class EventDateSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     event_date_name = make_choice_field(max_len=256, values=choices.EventDateOption.values)
+    event_date_name_other = SingleLineStr(validate=validate.Length(max=256))
     date = DateAndBlankField()
     event_date_type = make_choice_field(max_len=10, values=choices.EventDateType.values)
     reasons_for_change = fields.Str()

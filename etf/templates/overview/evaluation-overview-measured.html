@@ -212,7 +212,6 @@
               </tr>
               <tr>
                 <th>Measure type (other)</th>
-                <td>{% if outcome_measure.measure_type_other %}{{outcome_measure.measure_type_other}}{% else %}N/A{% endif %}</td>
                 <td>
                   {{ outcome_measure.measure_type_other and outcome_measure.measure_type_other or "Not answered" }}
                 </td>

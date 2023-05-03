@@ -74,6 +74,12 @@
             </td>
           {% endif %}
           </tr>
+          {% if "OTHER" in data.evaluation.impact_design_name and data.evaluation.impact_design_name_other | length > 0 %}
+            <tr>
+            <th>Design name (Other)</th>
+            <td>{{data.evaluation.impact_design_name_other}}</td>
+          </tr>
+          {% endif %}
           <tr>
             <th>Justification for design</th>
             <td>
