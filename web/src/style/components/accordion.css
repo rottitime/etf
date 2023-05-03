@@ -40,7 +40,7 @@
         align-items: center;
         justify-content: space-between;
 
-        & .icon {
+        & gov-icon {
           display: flex;
           align-items: center;
           gap: 10px;
@@ -60,7 +60,7 @@
           }
         }
 
-        & .icon svg {
+        & gov-icon svg {
           transform: rotate(180deg);
         }
       }

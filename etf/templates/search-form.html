@@ -14,8 +14,7 @@
           <li>
            <h3 {% if data.active_filter == "organisations" %} class="active" {% endif %}>
              <button type="button">
-              <div class="title">Organisations{% if data.selected_organisations %} <div class="badge filter-control-total" data-name="organisations">{{data.selected_organisations|length}}</div>{% endif %}</div>
-              <div class="icon"></div>
+              <span class="title">Organisations{% if data.selected_organisations %} <span class="badge filter-control-total" data-name="organisations">{{data.selected_organisations|length}}</span>{% endif %}</span>
             </button>
            </h3>
             <div class="accordion-content">
@@ -23,7 +22,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="organisations" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="organisations">
                   <button type="reset" class="txt-link small" {% if data.selected_organisations|length < 1 or data.organisations|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
@@ -31,8 +30,8 @@
                 {% for organisation in data.organisations %}
                 
                   <label class="checkbox">
-                    <input name="organisations" {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}" />
-                    <div class="checkmark"></div>
+                    <input name="organisations" {% if is_in(data, "selected_organisations", organisation[0]) %}checked{% endif %} type="checkbox" value="{{ organisation[0] }}">
+                    <span class="checkmark"></span>
                     <span>{{organisation[1]}}</span>
                   </label>
                 
@@ -44,8 +43,7 @@
           <li>
             <h3{% if data.active_filter == "evaluation_types" %} class="active" {% endif %}>
               <button type="button">
-                <div class="title">Evaluation types{% if data.selected_evaluation_types %} <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div>{% endif %}</div>
-                <div class="icon"></div>
+                <span class="title">Evaluation types{% if data.selected_evaluation_types %} <div class="badge filter-control-total" data-name="evaluation_types">{{data.selected_evaluation_types|length}}</div>{% endif %}</span>
               </button>
             </h3>
             <div class="accordion-content">
@@ -54,7 +52,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="evaluation_types" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="evaluation_types">
                   <button type="reset" class="txt-link small" {% if data.selected_evaluation_types|length < 1 or data.evaluation_types|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
@@ -62,8 +60,8 @@
               {% for evaluation_type in data.evaluation_types %}
                 
                   <label class="checkbox">
-                    <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
-                    <div class="checkmark"></div>
+                    <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}">
+                    <span class="checkmark"></span>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
                 
@@ -76,8 +74,7 @@
           <li>
             <h3{% if data.active_filter == "status" %} class="active" {% endif %}>
               <button type="button">
-                <div class="title">Status{% if data.selected_statuses %} <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div>{% endif %}</div>
-                <div class="icon"></div>
+                <span class="title">Status{% if data.selected_statuses %} <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div>{% endif %}</span>
               </button>
             </h3>
             <div class="accordion-content">
@@ -85,7 +82,7 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="status" />
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="status">
                   <button type="reset" class="txt-link small" {% if data.selected_statuses|length < 1 or data.statuses|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
@@ -93,8 +90,8 @@
                 {% for status in data.statuses %}
                 
                   <label class="checkbox">
-                    <input name="status" type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}" />
-                    <div class="checkmark"></div>
+                    <input name="status" type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}">
+                    <span class="checkmark"></span>
                     <span>{{status[1]}}</span>
                   </label>
                 
@@ -108,7 +105,7 @@
     </div>
     <div class="col">
       <div class="searchbox mb-16">
-        <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width search-icon" />
+        <input name="search_term" type="search" value="{{data.search_term}}" placeholder="Search keywords..." class="large full-width search-icon">
         <button class="bttn-primary" type="submit">Search</button>
       </div>
       {% if not data.evaluations or data.evaluations|length == 0 %}

@@ -16,24 +16,24 @@
       {% csrf_token %}
       <div class="row mb-16">
         <label for="id_login">Email:</label>
-        <input type="email" placeholder="Email address" name="login" id="id_login" required class="full-width" />
+        <input type="email" placeholder="Email address" name="login" id="id_login" required class="full-width">
       </div>
       <div class="row  mb-16">
         <label for="id_password">Password:</label>
-        <input type="password" name="password" placeholder="Password" id="id_password" required autocomplete="off" class="full-width" />
+        <input type="password" name="password" placeholder="Password" id="id_password" required autocomplete="off" class="full-width">
       </div>
 
       <div class="form-group">
         <label class="checkbox">
           <input type="checkbox" name="remember" id="id_remember">
-        <div class="checkmark"></div>
+        <span class="checkmark"></span>
         <span>Remember me</span>
       </label>
     </div>
       
       
       {% if redirect_field_value %}
-        <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+        <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}">
       {% endif %}
 
       

@@ -1,5 +1,3 @@
-import iconRaw from '../svg/arrow-down.svg'
-
 const setupAccordions = () => {
   const accordionItems = document.querySelectorAll('.accordion li')
 
@@ -11,9 +9,11 @@ const setupAccordions = () => {
   }
 
   //icons
-  document.querySelectorAll('.accordion .icon').forEach((icon) => {
-    icon.insertAdjacentHTML('beforeend', iconRaw)
-  })
+  document
+    .querySelectorAll('.accordion li > h3 button')
+    .forEach((button) =>
+      button.insertAdjacentHTML('beforeend', '<gov-icon key="arrow-down"></gov-icon>')
+    )
 
   //create wrapper
   document.querySelectorAll('.accordion-content').forEach((content) => {

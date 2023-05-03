@@ -10,7 +10,7 @@
   <p class="small mb-0"><a href="{{url("search")}}">Back to Search Results</a></p>
   <div class="right">
     <form action="#">
-      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
+      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px">
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
@@ -31,7 +31,7 @@
 
         <ul>
           <li>
-            <a href="{{url('evaluation-summary-overview', data.evaluation.id)}}" aria-selected="true">Overview</a>
+            <a href="{{url('evaluation-summary-overview', data.evaluation.id)}}" aria-current="page">Overview</a>
             <ul>
               <li><a href="#event-dates" class="smooth-scroll">Event Dates</a></li>
               <li><a href="#where-else-is-this-evaluation-registered" class="smooth-scroll">Where else is this evaluation registered?</a></li>
@@ -124,7 +124,7 @@
           <p class="small">
           {% for link in data.links %}
             {% if link.link %}
-              <a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}" rel="external" target="_blank">{% if link.name %}{{link.name}}{% else %}No name provided for link{% endif %}</a><br />
+              <a href="{% if not (link.link.startswith('https://')) %}https://{% endif %}{{link.link}}" rel="external" target="_blank">{% if link.name %}{{link.name}}{% else %}No name provided for link{% endif %}</a><br>
             {% else %}
               <p>{% if link.name %}{{link.name}} (No link address provided){% else %}No name or link address provided for link{% endif %}</p>
             {% endif %}
@@ -186,4 +186,5 @@
     {% endif %}
   </div>
   </div>
+</div>
 {% endblock %}

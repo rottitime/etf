@@ -10,7 +10,7 @@
   <p class="small mb-0"><a href="{{url("search")}}">Back to Search Results</a></p>
   <div class="right">
     <form action="#">
-      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
+      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px">
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
@@ -36,7 +36,7 @@
           <li><a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}">Analysis</a></li>
           <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
           <li>
-            <a href="{{url('evaluation-summary-cost', data.evaluation.id)}}" aria-selected="true">Cost</a>
+            <a href="{{url('evaluation-summary-cost', data.evaluation.id)}}" aria-current="page">Cost</a>
             <ul>
               {% if data.costs | length == 0 %}
                 <li><a href="#evaluation-costs" class="smooth-scroll">Evaluation costs</a></li>
@@ -130,4 +130,6 @@
     {% endif %}
   </div>
   </div>
+
+</div>
 {% endblock %}

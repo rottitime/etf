@@ -2,17 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <meta charset="UTF-8"/>
-      <link rel="icon" type="image/svg+xml" href="{% static 'i-dot-ai/images/crown.svg' %}"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-      <title>Evaluation Registry: {% block head_title %}{% endblock %}</title>
-      <link rel="stylesheet" href="{% static 'i-dot-ai/fonts.css' %}"/>
-      <link rel="stylesheet" href="{% static 'dist/assets/index.css' %}" id="main-css"/>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale = 1.0"> 
+      <title>Evaluation Registry</title>
+      <link rel="icon" type="image/svg+xml" href="{% static 'i-dot-ai/images/crown.svg' %}">
+      <link rel="stylesheet" href="{% static 'i-dot-ai/fonts.css' %}">
+      <link rel="stylesheet" href="{% static 'dist/assets/index.css' %}" id="main-css">
         {% if space_name and space_name == "local" %}
           <!-- Dev script for local development -->
-          <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+          <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
         {% endif %}
-      <script src="{% static 'dist/assets/index.js' %}" id="main-script" defer></script>
+        <script src="{% static 'dist/assets/index.js' %}" id="main-script"></script>
    </head>
    {% url 'search' as search_url %}
    {% url 'my-evaluations' as my_evaluation_url %}
@@ -22,7 +22,7 @@
       <header id="main-header">
          <div class="container">
             <a href="/" class="logo">
-              <i class="icon-crest"></i>
+               <gov-icon key="crest"></gov-icon>
               <h2 class="body-text">Evaluation Registry</h2>
             </a>
          </div>
@@ -44,7 +44,7 @@
                <a href="#">Feedback</a>
             </nav>
             <div class="disclaimer">
-               &#169; Crown copyright <i class="icon-crest"></i>
+               &#169; Crown copyright <gov-icon key="crest"></gov-icon>
             </div>
          </div>
       </footer>

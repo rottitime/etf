@@ -10,7 +10,7 @@
   <p class="small mb-0"><a href="{{url("search")}}">Back to Search Results</a></p>
   <div class="right">
     <form action="#">
-      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px" />
+      <input type="search" placeholder="Search Evaluation..." class="small" style="width:222px">
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
@@ -34,7 +34,7 @@
           <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}">What is measured?</a></li>
           <li><a href="{{url('evaluation-summary-design', data.evaluation.id)}}">Evaluation design</a></li>
           <li>
-            <a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}" aria-selected="true">Analysis</a>
+            <a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}" aria-current="page">Analysis</a>
             <ul>
               <li><a href="#impact-evaluation-analysis" class="smooth-scroll">Impact evaluation analysis</a></li>
               <li><a href="#process-evaluation-analysis" class="smooth-scroll">Process evaluation analysis</a></li>
@@ -307,4 +307,5 @@
     {% endif %}
   </div>
   </div>
+</div>
 {% endblock %}

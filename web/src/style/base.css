@@ -250,3 +250,8 @@ small,
     }
   }
 }
+
+/* web components */
+gov-icon {
+  display: contents;
+}

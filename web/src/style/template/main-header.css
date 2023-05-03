@@ -106,9 +106,9 @@
   }
 
   /* icon */
-  & > div,
-  & > div:before,
-  & > div:after {
+  & > span,
+  & > span:before,
+  & > span:after {
     width: 20px;
     height: 2px;
     border-radius: 5px;
@@ -116,7 +116,7 @@
     transition: all var(--animation-speed) ease-in-out;
   }
 
-  & > div {
+  & > span {
     &:before,
     &:after {
       content: '';
@@ -138,7 +138,7 @@
       left: 0;
     }
 
-    & > div {
+    & > span {
       transform: translateX(-20px);
       background: transparent;
       &:before {

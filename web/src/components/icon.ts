@@ -1,10 +1,18 @@
-const setupIcons = () => {
-  const prefix = 'icon-'
-  document.querySelectorAll(`i[class^="${prefix}"]`).forEach(async (e) => {
-    const iconName = e.className.replace(prefix, '')
+class Govicon extends HTMLElement {
+  constructor() {
+    super()
+    this.setup()
+  }
+
+  private async setup() {
+    const iconName = this.getAttribute('key')
     const html = await import(`../svg/${iconName}.svg`)
-    e.outerHTML = html.default
-  })
+    this.innerHTML = html.default
+  }
 }
 
-export default setupIcons
+const setupIcon = () => {
+  customElements.define('gov-icon', Govicon)
+}
+
+export default setupIcon
