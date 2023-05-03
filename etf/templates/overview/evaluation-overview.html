@@ -86,6 +86,16 @@
             {% endif %}
           </td>
           </tr>
+        {% if "Other" in data.evaluation_types %}
+          <tr>
+              <th>Evaluation type (Other)</th>
+              <td>
+              {% if data.evaluation.evaluation_type_other | length > 0 %}
+                  <p>{{data.evaluation.evaluation_type_other}}</p>
+              {% endif %}
+            </td>
+          </tr>
+        {% endif %}
         </table>
       </div>
 
@@ -102,6 +112,12 @@
             <th>Event Name</th>
             <td>{{date.get_event_date_name_display_name()}}</td>
           </tr>
+          {% if date.event_date_name == "OTHER" and date.event_date_name_other | length > 0 %}
+            <tr>
+            <th>Event Name (Other)</th>
+            <td>{{date.event_date_name_other}}</td>
+          </tr>
+          {% endif %}
           <tr>
             <th>Event Date</th>
             <td>

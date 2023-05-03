@@ -8,6 +8,7 @@
         <h1>{{title}}</h1>
       </legend>
       {{macros.select_many_from_list("evaluation_type", "Evaluation type", dropdown_choices.evaluation_type)}}
+      {{macros.textarea("evaluation_type_other", "If evaluation type is 'Other', please provide more detail")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
