@@ -163,6 +163,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_basis_other = models.CharField(max_length=256, blank=True, null=True)
     impact_analysis_set = models.TextField(blank=True, null=True)
     impact_effect_measure_type = models.CharField(max_length=64, blank=True, null=True)
+    impact_effect_measure_type_other = models.CharField(max_length=256, blank=True, null=True)
     impact_primary_effect_size_measure = models.TextField(blank=True, null=True)
     impact_effect_measure_interval = models.CharField(max_length=64, blank=True, null=True)
     impact_effect_measure_interval_other = models.CharField(max_length=256, blank=True, null=True)
@@ -207,6 +208,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_comparison = models.TextField(blank=True, null=True)
     impact_outcome = models.TextField(blank=True, null=True)
     impact_interpretation = models.CharField(max_length=256, blank=True, null=True)
+    impact_interpretation_other = models.CharField(max_length=256, blank=True, null=True)
     impact_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_lower_uncertainty = models.TextField(blank=True, null=True)
     impact_upper_uncertainty = models.TextField(blank=True, null=True)
@@ -599,6 +601,7 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationO
 class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="event_dates", on_delete=models.CASCADE)
     event_date_name = models.CharField(max_length=256, blank=True, null=True)
+    event_date_name_other = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     event_date_type = models.CharField(max_length=10, blank=True, null=True)
     reasons_for_change = models.TextField(blank=True, null=True)
