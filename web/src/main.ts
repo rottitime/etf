@@ -43,12 +43,8 @@ if (import.meta.env.MODE === 'development') {
   ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
 }
 
-/* web components */
-icon()
-setupHintbox()
-
-/* defer loading */
 window.addEventListener('load', () => {
+  //check: dev mode has already been set then do not run prod files
   if (globalThis.devMode && import.meta.env.MODE === 'production') return
   accordion()
   setupCard()
@@ -57,11 +53,12 @@ window.addEventListener('load', () => {
   setupSmoothScroll()
   setupMobileMenu()
   setupCircularProgressBar()
+  icon()
+  setupHintbox()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
   const isTablet = window.matchMedia('(min-width: 800px)')
-
   const onViewportChange = () => {
     if (isTablet.matches) {
       mobileMenuCleanup()
