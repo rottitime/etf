@@ -60,7 +60,7 @@
               {% for evaluation_type in data.evaluation_types %}
                 
                   <label class="checkbox">
-                    <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}" />
+                    <input name="evaluation_types" type="checkbox" {% if is_in(data, "selected_evaluation_types", evaluation_type[0]) %}checked{% endif %} value="{{ evaluation_type[0] }}">
                     <span class="checkmark"></span>
                     <span>{{evaluation_type[1]}}</span>
                   </label>
