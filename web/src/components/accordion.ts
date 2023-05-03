@@ -1,5 +1,3 @@
-import iconRaw from '../svg/arrow-down.svg'
-
 const setupAccordions = () => {
   const accordionItems = document.querySelectorAll('.accordion li')
 
