@@ -36,7 +36,7 @@
           <li><a href="{{url('evaluation-summary-analysis', data.evaluation.id)}}">Analysis</a></li>
           <li><a href="{{url('evaluation-summary-findings', data.evaluation.id)}}">Findings</a></li>
           <li>
-            <a href="{{url('evaluation-summary-cost', data.evaluation.id)}}" aria-selected="true">Cost</a>
+            <a href="{{url('evaluation-summary-cost', data.evaluation.id)}}" aria-current="page">Cost</a>
             <ul>
               {% if data.costs | length == 0 %}
                 <li><a href="#evaluation-costs" class="smooth-scroll">Evaluation costs</a></li>

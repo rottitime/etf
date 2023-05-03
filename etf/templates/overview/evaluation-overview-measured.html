@@ -33,7 +33,7 @@
           <li>
             <a href="{{url('evaluation-summary-overview', data.evaluation.id)}}">Overview</a>
           </li>
-          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}" aria-selected="true">What is measured?</a>
+          <li><a href="{{url('evaluation-summary-measured', data.evaluation.id)}}" aria-current="page">What is measured?</a>
             <ul>
               {% if data.interventions | length == 0 %}
                 <li><a href="#interventions" class="smooth-scroll">Interventions</a></li>
