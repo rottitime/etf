@@ -4,9 +4,13 @@ import itertools
 import marshmallow
 from nose.tools import assert_raises, with_setup
 
-from etf.evaluation import utils
-from etf.evaluation import models
-from .utils import with_authenticated_client, create_fake_evaluations, remove_fake_evaluations
+from etf.evaluation import models, utils
+
+from .utils import (
+    create_fake_evaluations,
+    remove_fake_evaluations,
+    with_authenticated_client,
+)
 
 
 def test_get_arguments():

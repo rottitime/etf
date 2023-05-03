@@ -8,7 +8,7 @@ import testino
 import etf.wsgi
 from etf import settings
 from etf.evaluation import choices
-from etf.evaluation.models import User, Evaluation
+from etf.evaluation.models import Evaluation, User
 
 TEST_SERVER_URL = "http://etf-testserver:8010/"
 
