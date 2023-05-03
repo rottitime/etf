@@ -7,7 +7,8 @@ import testino
 
 import etf.wsgi
 from etf import settings
-from etf.evaluation.models import User
+from etf.evaluation import choices
+from etf.evaluation.models import User, Evaluation
 
 TEST_SERVER_URL = "http://etf-testserver:8010/"
 
@@ -89,3 +90,33 @@ def _get_latest_email_url():
     whole_url = email_url.strip(",")
     url = f"/{whole_url.split('http://localhost:8010/')[-1]}".replace("?", "?")
     return url
+
+
+def create_fake_evaluations():
+    user, _ = User.objects.update_or_create(email="peter.rabbit@example.com")
+    draft_1 = Evaluation(title="Draft evaluation 1", status=choices.EvaluationStatus.DRAFT)
+    draft_1.save()
+    draft_2 = Evaluation(title="Draft evaluation 2", status=choices.EvaluationStatus.DRAFT)
+    draft_2.users.add(user)
+    draft_2.save()
+    cs_1 = Evaluation(title="Civil Service evaluation 1", status=choices.EvaluationStatus.CIVIL_SERVICE)
+    cs_1.save()
+    cs_2 = Evaluation(title="Civil Service evaluation 2", status=choices.EvaluationStatus.CIVIL_SERVICE)
+    cs_2.users.add(user)
+    cs_2.save()
+    public_1 = Evaluation(title="Public evaluation 1", status=choices.EvaluationStatus.PUBLIC)
+    public_1.save()
+    public_2 = Evaluation(title="Public evaluation 2", status=choices.EvaluationStatus.PUBLIC)
+    public_2.users.add(user)
+
+
+def remove_fake_evaluations():
+    fake_evaluation_titles = [
+        "Draft evaluation 1",
+        "Draft evaluation 2",
+        "Civil Service evaluation 1",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    ]
+    Evaluation.objects.filter(title__in=fake_evaluation_titles).delete()
