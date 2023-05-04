@@ -3,7 +3,6 @@ import functools
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
-
 from . import utils
 
 
@@ -229,7 +228,7 @@ def test_step_through_evaluation():
         _make_multple_object_step(
             "Event dates",
             "New event date",
-            choices.EventDateOption.INTERVENTION_END_DATE.value,
+            choices.EventDateOption.INTERVENTION_END_DATE.label,
             {
                 "event_date_name": choices.EventDateOption.INTERVENTION_END_DATE.value,
                 "date": "2022-03-07",
@@ -456,6 +455,7 @@ def test_step_through_evaluation():
     ]
 
     for step in steps:
+        print(step)
         page = step(page)
 
     end_page = page
