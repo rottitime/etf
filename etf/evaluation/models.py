@@ -49,6 +49,8 @@ class NamedModel:
         setattr(self, self._name_field, value)
 
     def get_name(self):
+        if hasattr(self, "get_readable_name"):
+            return self.get_readable_name()
         return getattr(self, self._name_field)
 
 
@@ -230,6 +232,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # For matching with initial data upload from RSM - evaluation id
     rsm_id = models.FloatField(blank=True, null=True)
+
+    def get_readable_name(self):
+        return self.title
 
     def update_evaluation_page_status(self, page_name, status):
         # TODO: Fix ignoring unknown pages
@@ -451,6 +456,9 @@ class Intervention(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluat
     resource_requirements = models.TextField(blank=True, null=True)
     geographical_information = models.TextField(blank=True, null=True)
 
+    def get_readable_name(self):
+        return self.name
+
     def get_search_text(self):
         searchable_fields = [
             str(self.name),
@@ -484,6 +492,9 @@ class OutcomeMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
     timepoint = models.TextField(blank=True, null=True)
     minimum_difference = models.TextField(blank=True, null=True)
     relevance = models.TextField(blank=True, null=True)
+
+    def get_readable_name(self):
+        return self.name
 
     def get_primary_or_secondary_display_name(self):
         return choices.OutcomeType.mapping[self.primary_or_secondary]
@@ -529,6 +540,9 @@ class OtherMeasure(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluat
     description = models.TextField(blank=True, null=True)
     collection_process = models.TextField(blank=True, null=True)
 
+    def get_readable_name(self):
+        return self.name
+
     def get_measure_type_display_name(self):
         return choices.MeasureType.mapping[self.measure_type]
 
@@ -553,6 +567,9 @@ class ProcessStandard(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEval
     name = models.CharField(max_length=1024)
     conformity = models.CharField(max_length=10, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+
+    def get_readable_name(self):
+        return self.name
 
     def get_conformity_display_name(self):
         return choices.FullNoPartial.mapping[self.conformity]
@@ -582,6 +599,9 @@ class Document(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationO
 
     _name_field = "title"
 
+    def get_readable_name(self):
+        return self.title
+
     def get_search_text(self):
         document_types = [value[1] for value in choices.DocumentType.choices if value[0] in self.document_types]
 
@@ -607,8 +627,10 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluation
 
     _name_field = "event_date_name"
 
-    def get_event_date_name_display_name(self):
+    def get_readable_name(self):
         if self.event_date_name in choices.EventDateOption.values:
+            if self.event_date_name == choices.EventDateOption.OTHER.value:
+                return self.event_date_name_other
             return choices.EventDateOption.mapping[self.event_date_name]
         return self.event_date_name
 
@@ -634,6 +656,9 @@ class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEva
 
     _name_field = "name_of_service"
 
+    def get_readable_name(self):
+        return self.name_of_service
+
     def get_search_text(self):
         searchable_fields = [
             str(self.name_of_service),
@@ -656,6 +681,9 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
     # TODO - add column for notes on evaluation costs
 
     _name_field = "item_name"
+
+    def get_readable_name(self):
+        return self.item_name
 
     def get_search_text(self):
         searchable_fields = [
