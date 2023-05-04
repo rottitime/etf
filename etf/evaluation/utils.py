@@ -6,9 +6,9 @@ import types
 import marshmallow
 from django.http import Http404
 
-from . import choices, models
 from etf.settings import ALLOWED_CIVIL_SERVICE_DOMAINS
 
+from . import choices, models
 
 event_names = set()
 

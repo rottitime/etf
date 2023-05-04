@@ -15,7 +15,7 @@ from etf.evaluation import interface, schemas
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
-from .utils import restrict_to_permitted_evaluations, is_civil_service_email
+from .utils import is_civil_service_email, restrict_to_permitted_evaluations
 
 
 class MethodDispatcher:
