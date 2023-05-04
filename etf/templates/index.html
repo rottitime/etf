@@ -1,26 +1,28 @@
-{% extends "base.html" %} {% block content %} {% if not request.user or not
-request.user.is_authenticated %}
+{% extends "base.html" %}
 
-<div class="card">
-  <h1 class="header3 highlight">Login or register</h1>
-  <div class="content"></div>
-  <footer class="actions">
-    <div>
-      <a class="bttn-quaternary small" href="{{url('account_login')}}">Login</a>
-      <a class="bttn-quaternary small" href="{{url('account_signup')}}"
-        >Register</a
-      >
+{% block content %}
+  {% if not request.user or not request.user.is_authenticated %}
+
+    <div class="card">
+      <h1 class="header3 highlight">Login or register</h1>
+      <div class="content"></div>
+      <footer class="actions">
+        <div>
+          <a class="bttn-quaternary small" href="{{url('account_login')}}">Login</a>
+          <a class="bttn-quaternary small" href="{{url('account_signup')}}">Register</a>
+        </div>
+      </footer>
     </div>
-  </footer>
-</div>
 
-{% endif %} {% if request.user and request.user.is_authenticated %}
+  {% endif %}
 
-<div class="card">
-  <form method="POST">
-    {{csrf_input}}
-    <button class="bttn-primary" type="submit">Create evaluation</button>
-  </form>
-</div>
+  {% if request.user and request.user.is_authenticated %}
 
-{% endif %} {% endblock %}
+    <div class="card">
+      <form method="POST">{{csrf_input}}
+        <button class="bttn-primary" type="submit">Create evaluation</button>
+      </form>
+    </div>
+  
+  {% endif %}
+{% endblock %}
