@@ -71,7 +71,9 @@
 
     {% if data.costs|length == 0 %}
         <div class="card small" id="evaluation-costs">
-          <h4 class="header4 highlight">Evaluation costs</h4>
+          <header>
+            <h4 class="header4 highlight">Evaluation costs</h4>
+          </header>
           <p>No evaluation costs found for this evaluation.</p>
         </div>
       {% else %}
@@ -114,7 +116,9 @@
       {% endif %}
 
     <div class="card small" id="policy-costs-and-budget">
-        <h4 class="header4 highlight">Policy costs and budget</h4>
+        <header>
+          <h4 class="header4 highlight">Policy costs and budget</h4>
+        </header>
         <table>
           <tr>
             <th>Not yet completed</th>

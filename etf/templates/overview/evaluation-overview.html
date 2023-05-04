@@ -58,7 +58,9 @@
 
 
       <div class="card small">
-        <h3 class="header3 highlight">Overview</h3>
+        <header>
+          <h3 class="header3 highlight">Overview</h3>
+        </header>
         <p class="small">{{data.evaluation.brief_description}}</p>
 
         <table>
@@ -100,7 +102,9 @@
       </div>
 
       <div class="card small" id="event-dates">
-        <h4 class="header4 highlight">Event Dates</h4>
+        <header>
+          <h4 class="header4 highlight">Event Dates</h4>
+        </header>
       {% if data.date|length == 0 %}
         <p>No dates found for this evaluation.</p>
       {% endif %}
@@ -131,7 +135,9 @@
 
 
       <div class="card small" id="where-else-is-this-evaluation-registered">
-        <h4 class="header4 highlight">Where else is this evaluation registered?</h4>
+        <header>
+          <h4 class="header4 highlight">Where else is this evaluation registered?</h4>
+        </header>
           {% if data.links|length == 0 %}
             <p>No links found for this evaluation.</p>
           {% endif %}
@@ -150,7 +156,9 @@
       </div>
 
       <div class="card small" id="issue-description">
-        <h4 class="header4 highlight">Issue description</h4>
+        <header>
+          <h4 class="header4 highlight">Issue description</h4>
+        </header>
       <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
         <table>
           <tr>
@@ -181,12 +189,16 @@
       </div>
 
       <div class="card small" id="theory-of-change">
-        <h4 class="header4 highlight">Theory of change</h4>
+        <header>
+          <h4 class="header4 highlight">Theory of change</h4>
+        </header>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
       <div class="card small" id="technical-report">
-        <h4 class="header4 highlight">Technical report</h4>
+        <header>
+          <h4 class="header4 highlight">Technical report</h4>
+        </header>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
