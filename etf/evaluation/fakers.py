@@ -114,7 +114,6 @@ def generate_dates(evaluation):
                 event_date_name=random.choice(choices.EventDateOption.values),
                 date=fake.date(),
                 event_date_type=random.choice(choices.EventDateType.values),
-                reasons_for_change=fake.text(),
             )
         )
     models.EventDate.objects.bulk_create(set_dates)

@@ -604,7 +604,6 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluation
     event_date_name_other = models.CharField(max_length=256, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
     event_date_type = models.CharField(max_length=10, blank=True, null=True)
-    reasons_for_change = models.TextField(blank=True, null=True)
 
     _name_field = "event_date_name"
 
@@ -619,7 +618,6 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluation
 
         searchable_fields = [
             str(self.date),
-            str(self.reasons_for_change),
             "|".join(event_date_type),
             "|".join(event_date_name),
         ]
