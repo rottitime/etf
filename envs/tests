@@ -16,3 +16,4 @@ ALLOW_EXAMPLE_EMAILS=True
 SEND_VERIFICATION_EMAIL = False
 CONTACT_EMAIL="test@example.com"
 FROM_EMAIL="test@example.com"
+VCAP_APPLICATION='{"space_name": "tests"}'
