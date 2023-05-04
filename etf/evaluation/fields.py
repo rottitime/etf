@@ -69,7 +69,6 @@ event_date_help_text = defaultdict(
     str,
     {
         "event_date_name": "Select all types of information covered in this document.",
-        "reasons_for_change": "Only requested when amending an existing entry.",
     },
 )
 
@@ -406,16 +405,6 @@ evaluation_type_guidance_text = defaultdict(
 )
 
 
-event_date_guidance_text = defaultdict(
-    list,
-    {
-        "reasons_for_change": [
-            "Please enter a reason why the date is changing eg 'Targeted number of participants recruited quicker than expected so evaluation now scheduled to finish sooner'."
-        ],
-    },
-)
-
-
 impact_analysis_guidance_text = defaultdict(
     list,
     {
@@ -679,7 +668,6 @@ field_guidance_text = defaultdict(
         "ethics": ethics_guidance_text,
         "evaluation cost": evaluation_cost_guidance_text,
         "evaluation-types": evaluation_type_guidance_text,
-        "event date": event_date_guidance_text,
         "impact-analysis": impact_analysis_guidance_text,
         "impact-design": impact_design_guidance_text,
         "impact-findings": impact_findings_guidance_text,

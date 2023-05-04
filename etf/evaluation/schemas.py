@@ -311,7 +311,6 @@ class EventDateSchema(TimeStampedModelSchema):
     event_date_name_other = SingleLineStr(validate=validate.Length(max=256))
     date = DateAndBlankField()
     event_date_type = make_choice_field(max_len=10, values=choices.EventDateType.values)
-    reasons_for_change = fields.Str()
 
 
 class LinkOtherServiceSchema(TimeStampedModelSchema):

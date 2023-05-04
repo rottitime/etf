@@ -234,7 +234,6 @@ def test_step_through_evaluation():
                 "event_date_name": choices.EventDateOption.INTERVENTION_END_DATE.value,
                 "date": "2022-03-07",
                 "event_date_type": choices.EventDateType.ACTUAL.value,
-                "reasons_for_change": "A description of the reason for this change",
             },
         ),
         # Impact evaluation design page
