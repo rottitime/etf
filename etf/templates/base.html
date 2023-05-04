@@ -10,9 +10,9 @@
       <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css">
         {% if space_name and space_name == "local" %}
           <!-- Dev script for local development -->
-          <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
+          <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
         {% endif %}
-      <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
+      <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
    </head>
    <body {% if request.path==url('search') %}id="search"{% endif %}>
       <header id="main-header">
