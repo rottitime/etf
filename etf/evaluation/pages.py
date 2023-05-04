@@ -18,8 +18,6 @@ page_display_names = {
     "studied-population": "Studied population",
     "participant-recruitment": "Participant recruitment",
     "evaluation-costs": "Evaluation costs",
-    "policy-costs": "Policy costs and budget",
-    "publication-intention": "Publication intention",
     "documents": "Documents",
     "event-dates": "Event dates",
     "evaluation-types": "Evaluation types",
@@ -41,7 +39,6 @@ page_display_names = {
     "other-findings": "Other evaluation findings",
     "processes-standards": "Processes and standards",
     "links": "Links and IDs",
-    "metadata": "Metadata",
     "status": "Evaluation status",
     "end": "End",
 }
@@ -54,8 +51,6 @@ page_url_names = (
     "studied-population",
     "participant-recruitment",
     "evaluation-costs",
-    "policy-costs",
-    "publication-intention",
     "documents",
     "evaluation-types",
     "event-dates",
@@ -77,7 +72,6 @@ page_url_names = (
     "other-findings",
     "processes-standards",
     "links",
-    "metadata",
     "status",
     "end",
 )

@@ -200,10 +200,6 @@ def test_step_through_evaluation():
                 "latest_spend_date": "2022-03-07",
             },
         ),
-        # Policy costs page
-        _make_simple_step("Policy costs and budget", {}, evaluation.id),
-        # Publication intention page
-        _make_simple_step("Publication intention", {}, evaluation.id),
         # Documents page
         _make_multple_object_step(
             "Documents",
@@ -450,8 +446,6 @@ def test_step_through_evaluation():
                 "link_or_identifier": "https://example.com",
             },
         ),
-        # Metadata page
-        _make_simple_step("Metadata", {}, evaluation.id),
         # Status page
         _make_simple_step(
             "Evaluation status",

@@ -66,16 +66,6 @@ evaluation_entry_urlpatterns = [
         name="participant-recruitment",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/policy-costs/",
-        submission_views.evaluation_policy_costs_view,
-        name="policy-costs",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/publication-intention/",
-        submission_views.evaluation_publication_intention_view,
-        name="publication-intention",
-    ),
-    path(
         "evaluation/<uuid:evaluation_id>/evaluation-types/",
         submission_views.evaluation_types_view,
         name="evaluation-types",
@@ -144,11 +134,6 @@ evaluation_entry_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/other-findings/",
         submission_views.evaluation_other_findings_view,
         name="other-findings",
-    ),
-    path(
-        "evaluation/<uuid:evaluation_id>/metadata/",
-        submission_views.evaluation_metadata_view,
-        name="metadata",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/status/",
