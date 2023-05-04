@@ -9,7 +9,6 @@ from etf.evaluation import models, utils
 from .utils import (
     create_fake_evaluations,
     remove_fake_evaluations,
-    with_authenticated_client,
 )
 
 
