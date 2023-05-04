@@ -6,7 +6,7 @@ USER_DATA = {"email": "mr_interface_test@example.com", "password": "1-h4t3-p455w
 def test_evaluation_facade():
     user, _ = models.User.objects.get_or_create(email=USER_DATA["email"])
     result = interface.facade.evaluation.create(user_id=user.id)
-    expected = [{"email": "mr_interface_test@example.com", "is_external_user": False}]
+    expected = [{"email": "mr_interface_test@example.com"}]
     assert result["users"] == expected, result["users"]
 
     evaluation_id = result["id"]
@@ -18,14 +18,14 @@ def test_evaluation_facade():
     assert result["title"] == "Flibble"
     assert result["monetisation_approaches"] == "Sell, sell, sell"
 
-    data = {"evaluation_id": evaluation_id, "user_data": {"email": "new_user@example.com", "is_external_user": False}}
+    data = {"evaluation_id": evaluation_id, "user_data": {"email": "new_user@example.com"}}
     result = interface.facade.evaluation.add_user_to_evaluation(data)
     assert result["user_created"], result
     assert result["evaluation_id"] == evaluation_id, result
 
     data = {
         "evaluation_id": evaluation_id,
-        "user_data": {"email": "mr_interface_test@example.com", "is_external_user": False},
+        "user_data": {"email": "mr_interface_test@example.com"},
     }
     result = interface.facade.evaluation.add_user_to_evaluation(data)
     assert not result["user_created"], result
