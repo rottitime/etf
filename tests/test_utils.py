@@ -106,14 +106,12 @@ def test_dictify():
 
 
 @with_setup(create_fake_evaluations, remove_fake_evaluations)
-@with_authenticated_client
-def test_restrict_to_permitted_evaluations(client):
+def test_restrict_to_permitted_evaluations():
     all_evaluations = models.Evaluation.objects.all()
-    user = models.User.objects.get(email="peter.rabbit@example.com")
-    user.is_external_user = True
-    user.save()
+    peter_rabbit = models.User.objects.get(email="peter.rabbit@example.com")
+    mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.com")
 
-    qs = test_restrict_to_permitted_evaluations(user, all_evaluations)
+    qs = test_restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
     expected_viewable_evaluation_titles = set(
         "Draft evaluation 2",
         "Civil Service evaluation 1",
@@ -125,9 +123,7 @@ def test_restrict_to_permitted_evaluations(client):
     assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
 
-    user.is_external_user = False
-    user.save()
-    qs = test_restrict_to_permitted_evaluations(user, all_evaluations)
+    qs = test_restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
     expected_viewable_evaluation_titles = set(
         "Draft evaluation 2",
         "Civil Service evaluation 2",

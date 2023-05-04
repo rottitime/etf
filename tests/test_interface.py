@@ -24,10 +24,8 @@ def test_evaluation_facade():
     assert result["user_created"], result
     assert result["evaluation_id"] == evaluation_id, result
 
-    data = {
-        "evaluation_id": evaluation_id,
-        "user_data": {"email": "mr_interface_test@example.com"},
-    }
-    result = interface.facade.evaluation.add_user_to_evaluation(data)
+    result = interface.facade.evaluation.add_user_to_evaluation(
+        evaluation_id=evaluation_id, user_data={"email": "mr_interface_test@example.com"}
+    )
     assert not result["user_created"], result
     assert result["evaluation_id"] == evaluation_id, result
