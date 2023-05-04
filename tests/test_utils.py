@@ -104,8 +104,8 @@ def test_dictify():
 @with_setup(create_fake_evaluations, remove_fake_evaluations)
 def test_restrict_to_permitted_evaluations():
     all_evaluations = models.Evaluation.objects.all()
-    peter_rabbit = models.User.objects.get(email="peter.rabbit@example.com")
-    mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.com")
+    peter_rabbit = models.User.objects.get(email="peter.rabbit2@example.com")
+    mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.org")
 
     qs = test_restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
     expected_viewable_evaluation_titles = set(
