@@ -25,7 +25,7 @@ def test_get_prev_next_page_name_middle_impact():
 def test_get_prev_next_page_name_penultimate():
     page_name = "status"
     result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
-    expected = ("metadata", "end")
+    expected = ("links", "end")
     assert result == expected, result
 
 
@@ -38,9 +38,9 @@ def test_get_prev_next_page_name_last():
 
 def test_get_page_name_and_order():
     page_names_and_order = pages.get_page_name_and_order(["flibble"])
-    assert len(page_names_and_order) == 21, len(page_names_and_order)
+    assert len(page_names_and_order) == 18, len(page_names_and_order)
     assert "impact-analysis" not in page_names_and_order
 
     page_names_and_order = pages.get_page_name_and_order(["IMPACT"])
-    assert len(page_names_and_order) == 24, len(page_names_and_order)
+    assert len(page_names_and_order) == 21, len(page_names_and_order)
     assert "impact-analysis" in page_names_and_order
