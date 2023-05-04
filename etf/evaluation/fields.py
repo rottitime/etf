@@ -94,7 +94,7 @@ impact_design_help_text = defaultdict(
     {
         "impact_design_name": "Descriptive name for the design/method. You may select more than one.",
         "impact_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
-        "impact_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+        "impact_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study and how?",
     },
 )
 
@@ -440,7 +440,8 @@ impact_design_guidance_text = defaultdict(
         ],
         "impact_design_equity": [
             "Description of any design features, including data collection and analysis plans, that support the assessment of equity issues in the study.",
-            "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions. The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation.",
+            "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions.",
+            "The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation.",
         ],
         "impact_design_assumptions": ["Any assumptions made as part of the design."],
         "impact_design_approach_limitations": [
