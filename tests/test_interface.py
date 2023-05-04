@@ -18,8 +18,9 @@ def test_evaluation_facade():
     assert result["title"] == "Flibble"
     assert result["monetisation_approaches"] == "Sell, sell, sell"
 
-    data = {"evaluation_id": evaluation_id, "user_data": {"email": "new_user@example.com"}}
-    result = interface.facade.evaluation.add_user_to_evaluation(data)
+    result = interface.facade.evaluation.add_user_to_evaluation(
+        evaluation_id=evaluation_id, user_data={"email": "new_user@example.com"}
+    )
     assert result["user_created"], result
     assert result["evaluation_id"] == evaluation_id, result
 

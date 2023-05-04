@@ -7,7 +7,7 @@ import marshmallow
 from django.http import Http404
 
 from . import choices, models
-from etf.allowed_domains import CIVIL_SERVICE_DOMAINS
+from etf.settings import ALLOWED_CIVIL_SERVICE_DOMAINS
 
 
 event_names = set()
@@ -257,6 +257,6 @@ def is_civil_service_email(email):
     allowed = False
     email = email.lower()
     email_split = email.split("@")
-    if email_split[-1] in CIVIL_SERVICE_DOMAINS:
+    if email_split[-1] in ALLOWED_CIVIL_SERVICE_DOMAINS:
         allowed = True
     return allowed
