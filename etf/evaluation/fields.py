@@ -51,7 +51,7 @@ ethics_help_text = defaultdict(
         "ethics_committee_approval": "Will the study be submitted to an ethics committee for approval?",
         "ethics_committee_details": "If the study will be submitted to an ethics committee, which one?",
         "ethical_state_given_existing_evidence_base": "Is the study ethically justified because there is uncertainty over which option is most beneficial? Or are there other reasons why conducting this study is ethical?",
-        "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.",
+        "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Record any other ethical considerations here.",
     },
 )
 
@@ -170,7 +170,7 @@ other_findings_help_text = defaultdict(
 outcome_measure_help_text = defaultdict(
     str,
     {
-        "name": "Please provide a name or brief phrase that describes the outcome.",
+        "name": "A name or brief phrase that describes the outcome.",
         "primary_or_secondary": "Will this outcome be treated as a primary or secondary outcome in this study?",
         "direct_or_surrogate": "Is this measure intended to directly reflect an outcome of interest or is it a surrogate measure that is intended to act as a proxy for an outcome that is hard to measure directly?",
         "description": "Details of what data will be gathered and of any processing that will be applied to raw data in order to create the measure.",
@@ -221,8 +221,8 @@ studied_population_help_text = defaultdict(
 title_help_text = defaultdict(
     str,
     {
-        "title": "Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
-        "short_title": "Please provide a short/abbreviated title for the evaluation, if you would like.",
+        "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
+        "short_title": "A short/abbreviated title for the evaluation, especially if the full title is long.",
     },
 )
 
@@ -275,7 +275,7 @@ document_page_guidance_text = defaultdict(
         ],
         "document_types": [
             "Information on an evaluation might be contained in one document or split across several. For example, in the planning stage a single document might contain both a study protocol and the analysis plan. And in reporting findings, technical details could be included in a separate document, but they could equally be included as appendices in a main report document.",
-            "If a document contains elements that spans several of the document type options listed here, please select all that apply.",
+            "If a document contains elements that spans several of the document type options listed here, select all that apply.",
         ],
     },
 )
@@ -296,11 +296,11 @@ economic_design_guidance_text = defaultdict(
     {
         "economic_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
-            "In **cost-minimisation** analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
-            "In **cost-effectiveness** analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
-            "In **cost-benefit** analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
-            "In **cost-utility** analysis, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
-            "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s).",
+            "In **cost-minimisation analysis**, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+            "In **cost-effectiveness analysis**, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+            "In **cost-benefit analysis**, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+            "In **cost-utility analysis**, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+            "If the economic evaluation is of a type not listed, select Other and specify the additional type(s).",
         ],
         "perspective_costs": [
             "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
@@ -380,10 +380,10 @@ evaluation_cost_guidance_text = defaultdict(
     list,
     {
         "earliest_spend_date": [
-            "If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+            "If possible, provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
         ],
         "latest_spend_date": [
-            "If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+            "If possible, provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
         ],
     },
 )
@@ -393,13 +393,13 @@ evaluation_type_guidance_text = defaultdict(
     list,
     {
         "evaluation_type": [
-            "Please specify what type or types of evaluation this is.",
+            "Specify the type or types of evaluation this is.",
             "Do not use this field to specify the methods used; those are collected separately.",
-            "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, please select all types of evaluation that are included.",
-            "Impact evaluations are any evaluations that are intended to identify the effectiveness of interventions, including comparing different interventions against each other, or comparing a novel intervention against business-as-usual.",
-            "Process evaluations are undertaken with the intention of increasing understanding of how an intervention is implemented, why it seems to work or not, and what contextual factors are affecting it, as distinct from whether an outcome was achieved.",
-            "Economic evaluations (sometimes called value-for-money evaluations) are comparative analyses of alternative courses of action in terms of both their costs and consequences.",
-            "If the evaluation includes types of evaluation not listed, please select Other and specify the additional type(s).",
+            "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, select all types of evaluation that are included.",
+            "**Impact evaluations** are any evaluations that are intended to identify the effectiveness of interventions, including comparing different interventions against each other, or comparing a novel intervention against business-as-usual.",
+            "**Process evaluations** are undertaken with the intention of increasing understanding of how an intervention is implemented, why it seems to work or not, and what contextual factors are affecting it, as distinct from whether an outcome was achieved.",
+            "**Economic evaluations** (sometimes called value-for-money evaluations) are comparative analyses of alternative courses of action in terms of both their costs and consequences.",
+            "If the evaluation includes types of evaluation not listed, select Other and specify the additional type(s).",
         ],
     },
 )
@@ -464,9 +464,9 @@ intervention_guidance_text = defaultdict(
     list,
     {
         "brief_description": [
-            "Please provide one or two sentences to describe the intervention. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
+            "One or two sentences to describe the intervention. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
         ],
-        "name": ["Please provide a name or brief phrase that describes the intervention."],
+        "name": ["Name or brief phrase that describes the intervention."],
         "provider_description": [
             "For each category of intervention provider (eg housing officer) description of their expertise, background and any specific training they will receive."
         ],
