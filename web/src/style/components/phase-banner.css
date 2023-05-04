@@ -104,7 +104,7 @@
     }
   }
 
-  /* icon */
+  
   & > div,
   & > div:before,
   & > div:after {
@@ -131,7 +131,7 @@
     }
   }
 
-  /* animation */
+  
   &[aria-expanded='true'] {
     & + nav {
       left: 0;
