@@ -188,7 +188,6 @@ LOGIN_REDIRECT_URL = "index"
 
 ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 
-DEFAULT_ALLOWED_DOMAINS = frozenset([])  # TODO - more to be added
 
 if ALLOW_EXAMPLE_EMAILS:
     ALLOWED_CIVIL_SERVICE_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS.union({"example.com"})
