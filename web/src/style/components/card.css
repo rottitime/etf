@@ -1,3 +1,12 @@
+.phase-banner {
+  background-color: var(--color-bg-white);
+  background-color: white;
+  /* margin-bottom: 10px;
+  border-bottom: 2px solid var(--color-grey-light2);
+  padding: var(--spacing-4);
+  font-size: var(--text-small); */
+}
+
 .card {
   background-color: var(--color-bg-white);
   padding: var(--spacing-24);
