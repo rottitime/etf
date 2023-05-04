@@ -84,6 +84,8 @@ MIDDLEWARE = [
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
+SESSION_COOKIE_SECURE = True
+
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = True
 
