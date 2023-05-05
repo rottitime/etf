@@ -18,11 +18,7 @@ main {
   flex: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+:is(h1, h2, h3, h4, h5, h6) {
   margin-top: 0;
   font-weight: 700;
   font-style: normal;
@@ -32,30 +28,35 @@ h1,
 .header1 {
   font-size: 36px;
   line-height: 48px;
+  margin-bottom: var(--spacing-8);
 }
 
 h2,
 .header2 {
   font-size: 30px;
   line-height: 40px;
+  margin-bottom: var(--spacing-8);
 }
 
 h3,
 .header3 {
   font-size: 24px;
   line-height: 32px;
+  margin-bottom: var(--spacing-8);
 }
 
 h4,
 .header4 {
   font-size: 20px;
   line-height: 24px;
+  margin-bottom: var(--spacing-8);
 }
 
 h5,
 .header5 {
   font-size: 18px;
   line-height: 24px;
+  margin-bottom: 0;
 }
 
 body {

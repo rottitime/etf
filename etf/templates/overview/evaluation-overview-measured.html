@@ -84,13 +84,17 @@
 
 
       <div class="card small">
-        <h3 class="header3 highlight">What is measured?</h3>
+        <header>
+          <h3 class="header3 highlight">What is measured?</h3>
+        </header>
         <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
       {% if data.interventions|length == 0 %}
         <div class="card small" id="interventions">
-          <h4 class="header4 highlight">Interventions</h4>
+          <header>
+            <h4 class="header4 highlight">Interventions</h4>
+          </header>
           <p>No interventions found for this evaluation.</p>
         </div>
       {% else %}
@@ -181,7 +185,9 @@
 
     {% if data.outcome_measures|length == 0 %}
         <div class="card small" id="outcome-measures">
-          <h4 class="header4 highlight">Outcome measures</h4>
+          <header>
+            <h4 class="header4 highlight">Outcome measures</h4>
+          </header>
           <p>No outcome measures found for this evaluation.</p>
         </div>
       {% else %}
@@ -259,7 +265,9 @@
 
       {% if data.other_measures|length == 0 %}
         <div class="card small" id="other-measures">
-          <h4 class="header4 highlight">Other measures</h4>
+          <header>
+            <h4 class="header4 highlight">Other measures</h4>
+          </header>
           <p>No other measures found for this evaluation.</p>
         </div>
       {% else %}
