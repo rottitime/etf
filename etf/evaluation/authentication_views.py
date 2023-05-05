@@ -50,7 +50,7 @@ class CustomResendVerificationView(MethodDispatcher):
         if not email:
             return render(request, "account/resend_verification_email.html", {})
         else:
-            user = models.User.objects.get(email=email)
+            user = models.User.objects.filter(email=email).first()
             if not user:
                 return render(request, "account/resend_verification_email.html", {})
             email_handler.send_verification_email(user)
@@ -79,7 +79,7 @@ class CustomResendVerificationView(MethodDispatcher):
                 for error in errors:
                     messages.error(request, error)
             return render(request, "account/resend_verification_email.html", {})
-        user = models.User.objects.get(email=email)
+        user = models.User.objects.filter(email=email).first()
         if user:
             email_handler.send_verification_email(user)
         return render(request, "account/signup_complete.html", {})
