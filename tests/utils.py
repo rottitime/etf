@@ -99,19 +99,23 @@ def create_fake_evaluations():
     draft_1 = Evaluation(title="Draft evaluation 1", status=choices.EvaluationStatus.DRAFT)
     draft_1.save()
     draft_2 = Evaluation(title="Draft evaluation 2", status=choices.EvaluationStatus.DRAFT)
+    draft_2.save()
     draft_2.users.add(peter_rabbit)
     draft_2.users.add(mrs_tiggywinkle)
     draft_2.save()
     cs_1 = Evaluation(title="Civil Service evaluation 1", status=choices.EvaluationStatus.CIVIL_SERVICE)
     cs_1.save()
     cs_2 = Evaluation(title="Civil Service evaluation 2", status=choices.EvaluationStatus.CIVIL_SERVICE)
+    cs_2.save()
     cs_2.users.add(peter_rabbit)
     cs_2.users.add(mrs_tiggywinkle)
     cs_2.save()
     public_1 = Evaluation(title="Public evaluation 1", status=choices.EvaluationStatus.PUBLIC)
     public_1.save()
     public_2 = Evaluation(title="Public evaluation 2", status=choices.EvaluationStatus.PUBLIC)
+    public_2.save()
     public_2.users.add(peter_rabbit)
+    public_2.save()
 
 
 def remove_fake_evaluations():
