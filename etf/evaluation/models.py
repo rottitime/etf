@@ -607,8 +607,10 @@ class EventDate(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluation
 
     _name_field = "event_date_name"
 
-    def get_event_date_name_display_name(self):
+    def get_name(self):
         if self.event_date_name in choices.EventDateOption.values:
+            if self.event_date_name == choices.EventDateOption.OTHER.value:
+                return self.event_date_name_other
             return choices.EventDateOption.mapping[self.event_date_name]
         return self.event_date_name
 
