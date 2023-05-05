@@ -5,7 +5,7 @@ import marshmallow
 from nose.tools import assert_raises, with_setup
 
 from etf.evaluation import models, utils
-
+from etf.evaluation.utils import restrict_to_permitted_evaluations
 from .utils import create_fake_evaluations, remove_fake_evaluations
 
 
@@ -107,7 +107,7 @@ def test_restrict_to_permitted_evaluations():
     peter_rabbit = models.User.objects.get(email="peter.rabbit2@example.com")
     mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.org")
 
-    qs = test_restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
+    qs = restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
     expected_viewable_evaluation_titles = set(
         "Draft evaluation 2",
         "Civil Service evaluation 1",
@@ -119,7 +119,7 @@ def test_restrict_to_permitted_evaluations():
     assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
 
-    qs = test_restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
+    qs = restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
     expected_viewable_evaluation_titles = set(
         "Draft evaluation 2",
         "Civil Service evaluation 2",
