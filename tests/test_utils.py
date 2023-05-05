@@ -6,6 +6,7 @@ from nose.tools import assert_raises, with_setup
 
 from etf.evaluation import models, utils
 from etf.evaluation.utils import restrict_to_permitted_evaluations
+
 from .utils import create_fake_evaluations, remove_fake_evaluations
 
 
@@ -108,15 +109,24 @@ def test_restrict_to_permitted_evaluations():
     mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.org")
 
     qs = restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
-    expected_viewable_evaluation_titles = {"Draft evaluation 2", "Civil Service evaluation 1",
-                                           "Civil Service evaluation 2", "Public evaluation 1", "Public evaluation 2"}
+    expected_viewable_evaluation_titles = {
+        "Draft evaluation 2",
+        "Civil Service evaluation 1",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    }
     actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
     assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
 
     qs = restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
-    expected_viewable_evaluation_titles = {"Draft evaluation 2", "Civil Service evaluation 2", "Public evaluation 1",
-                                           "Public evaluation 2"}
+    expected_viewable_evaluation_titles = {
+        "Draft evaluation 2",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    }
     actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
     assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
