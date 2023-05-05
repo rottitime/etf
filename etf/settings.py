@@ -84,6 +84,9 @@ MIDDLEWARE = [
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
+if VCAP_APPLICATION.get("space_name", "unknown") not in ["tests", "local"]:
+    SESSION_COOKIE_SECURE = True
+
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = True
 
