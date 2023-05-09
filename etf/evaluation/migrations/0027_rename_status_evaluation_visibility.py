@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0026_remove_eventdate_reasons_for_change'),
+        ("evaluation", "0026_remove_eventdate_reasons_for_change"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='evaluation',
-            old_name='status',
-            new_name='visibility',
+            model_name="evaluation",
+            old_name="status",
+            new_name="visibility",
         ),
     ]
