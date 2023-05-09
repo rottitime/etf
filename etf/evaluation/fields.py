@@ -638,10 +638,10 @@ processes_standard_guidance_text = defaultdict(
 )
 
 
-status_guidance_text = defaultdict(
+visibility_guidance_text = defaultdict(
     list,
     {
-        "status": [
+        "visibility": [
             "Draft evaluations are only visible to the users assigned to it.",
             "Evaluations marked 'Civil Service' are visible to all civil servants.",
             "Evaluations marked 'public' are visible to anyone",
@@ -712,7 +712,7 @@ field_guidance_text = defaultdict(
         "participant-recruitment": participant_recruitment_guidance_text,
         "process-analysis": process_analysis_guidance_text,
         "process or standard": processes_standard_guidance_text,
-        "status": status_guidance_text,
+        "visibility": visibility_guidance_text,
         "studied-population": studied_population_guidance_text,
         "title": title_guidance_text,
     },
