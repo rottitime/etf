@@ -2,60 +2,66 @@
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
-<h1 class="header2 highlight">Manage contributors</h1>
 
-<div class="sidebarcolumn">
 
-  <div class="col sidebar">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <ol>
+    <li>
+      <a href="#">Back to My evaluations</a>
+    </li>
+    <li>
+      <a href="#">Evaluation name #01</a>
+    </li>
+    <li aria-current="true">Collaborators</li>
+  </ol>
+</nav>
 
-    <div class="card">
+<h1 class="header2 highlight">Collaborators</h1>
 
-      <h2 class="header5 highlight" id="add-heading">Add contributor</h3>
+<div class="card mb-24">
 
-      <form method="POST">{{csrf_input}}
-         
-        <div class="form-group">
+  <h2 class="header3 highlight" id="add-heading">Invite collaborator</h3>
 
-        <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Contributors email..." />
-        </div>
+  <form method="POST" class="invite-collaborator space-between" style="align-items: end;">{{csrf_input}}
 
-         <footer class="actions">
-          <div></div>
-          <button type="submit" class="bttn-primary small">Add</button>
-         </footer>
-       </form>
+    <div class="form-group full-width mb-0">
+      <label for="add-user-email">Email</label>
+      <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Contributors email..." required>
     </div>
-
+    <button type="submit" class="bttn-primary">Invite collaborator</button>
+   </form>
 </div>
 
-  <div class="col">
 
-    <div class="card small">
-      <h3 class="header3 highlight">Manage contributors</h3>
+<div class="card small">
       
-      <table>
-        <tbody>
-        {% for c in contributors %}
-          <tr>
-            <td style="width:100%">{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-            <td>
-              <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
-                <button class="bttn-secondary small" type="submit"
-                {% if contributors | length <= 1 %} disabled {% endif %}>Remove</button>
-              </form>
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-
-    </div>
-
-
-  </div>
+  <table class="datagrid">
+    <thead>
+      <tr>
+        <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for c in contributors %}
+      <tr>
+        <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
+        <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
+        <td>Owner</td>
+        <td class="cta">
+          <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
+            <button class="txt-link error small" type="submit"
+            {% if contributors | length <= 1 %} disabled {% endif %}>Remove</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
 </div>
-  
 
 
 {% endblock %}

@@ -106,39 +106,3 @@ input {
   display: flex;
   align-items: center;
 }
-
-.form-group {
-  margin-bottom: var(--spacing-24);
-  & label {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: var(--spacing-8);
-    display: block;
-    font-weight: 600;
-  }
-
-  & .description {
-    font-size: var(--text-small);
-    margin-bottom: var(--spacing-8);
-    line-height: 24px;
-  }
-
-  & [is='hint-box'] {
-    margin-top: var(--spacing-8);
-  }
-
-  &.error {
-    & .helper {
-      color: var(--color-error);
-      &:before {
-        content: svg-load('error.svg', fill=#ce2d1e, width=12, height=12);
-        margin-right: var(--spacing-4);
-        line-height: 0;
-      }
-    }
-    & select,
-    & input {
-      border-color: var(--color-error);
-    }
-  }
-}

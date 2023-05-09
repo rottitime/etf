@@ -127,6 +127,9 @@ a,
 
 .txt-link {
   text-decoration: underline;
+  &.error {
+    color: var(--color-error);
+  }
 }
 
 a {

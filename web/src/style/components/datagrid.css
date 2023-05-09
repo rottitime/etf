@@ -1,0 +1,28 @@
+.datagrid {
+  width: 100%;
+  border-collapse: collapse;
+
+  & th,
+  & td {
+    padding: var(--spacing-8) 0;
+  }
+
+  & td {
+    &.cta {
+      text-align: right;
+    }
+  }
+
+  & th {
+    text-align: left;
+  }
+
+  & tr {
+    border-bottom: 1px solid var(--input-stroke-light);
+  }
+  & thead {
+    & tr {
+      border-bottom: 1px solid color-mod(var(--input-stroke-light) a(0.3));
+    }
+  }
+}
