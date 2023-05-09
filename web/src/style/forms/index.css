@@ -123,3 +123,21 @@ fieldset {
     }
   }
 }
+
+.radio,
+.checkbox {
+  & + .controller-subfield {
+    display: none;
+    border-left: 4px solid var(--color-link);
+    padding: 0 var(--spacing-16);
+    margin-left: calc(var(--checkmark-size-small) / 2);
+  }
+
+  &.large + .controller-subfield {
+    margin-left: calc(var(--checkmark-size-large) / 2);
+  }
+
+  &:has(input:checked) + .controller-subfield {
+    display: block;
+  }
+}
