@@ -5,6 +5,7 @@ from nose.tools import with_setup
 
 from etf.evaluation import choices, models, schemas
 from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
+
 from .utils import with_authenticated_client
 
 
