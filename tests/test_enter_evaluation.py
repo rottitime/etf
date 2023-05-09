@@ -3,7 +3,6 @@ import functools
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
-
 from . import utils
 
 
@@ -447,9 +446,9 @@ def test_step_through_evaluation():
         ),
         # Status page
         _make_simple_step(
-            "Evaluation status",
+            "Evaluation visibility",
             {
-                "status": choices.EvaluationVisibility.CIVIL_SERVICE.value,
+                "visibility": choices.EvaluationVisibility.CIVIL_SERVICE.value,
             },
             evaluation.id,
         ),
