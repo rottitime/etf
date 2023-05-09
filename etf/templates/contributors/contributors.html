@@ -38,9 +38,7 @@
   <table class="datagrid">
     <thead>
       <tr>
-        <th>Name</th>
         <th>Email</th>
-        <th>Role</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -48,8 +46,6 @@
     {% for c in contributors %}
       <tr>
         <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-        <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-        <td>Collaborator</td>
         <td class="cta">
           {% if not contributors | length <= 1 %}
           <form method="POST" action="{{url("evaluation-contributor-remove", evaluation.id, c.email)}}">{{csrf_input}}
