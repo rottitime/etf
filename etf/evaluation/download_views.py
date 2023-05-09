@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from etf.evaluation import choices
 from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
 
@@ -12,10 +13,10 @@ from etf.evaluation.schemas import EvaluationSchema
 def filter_evaluations_to_download(request):
     output_evaluations_qs = Evaluation.objects.none()
     if "civil_service_only" in request.GET:
-        civil_service_evals = Evaluation.objects.filter(status="CIVIL_SERVICE")
+        civil_service_evals = Evaluation.objects.filter(visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value)
         output_evaluations_qs = output_evaluations_qs | civil_service_evals
     if "public" in request.GET:
-        public_evals = Evaluation.objects.filter(status="PUBLIC")
+        public_evals = Evaluation.objects.filter(visibility=choices.EvaluationVisibility.PUBLIC.value)
         output_evaluations_qs = output_evaluations_qs | public_evals
     if "my_evaluations" in request.GET:
         user = request.user
