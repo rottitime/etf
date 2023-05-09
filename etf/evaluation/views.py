@@ -4,6 +4,7 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
+from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
@@ -109,12 +110,14 @@ class EvaluationSearchView(MethodDispatcher):
             qs = evaluation_types_qs
         filters = get_search_filters(qs, organisations, topics, visibility, evaluation_types)
         if visibility:
+            query = Q()
             if choices.EvaluationVisibility.DRAFT.value in visibility:
-                qs = qs.filter(visibility=choices.EvaluationVisibility.DRAFT.value)
+                query |= Q(visibility__contains=choices.EvaluationVisibility.DRAFT.value)
             if choices.EvaluationVisibility.PUBLIC.value in visibility:
-                qs = qs.filter(visibility=choices.EvaluationVisibility.PUBLIC.value)
+                query |= Q(visibility__contains=choices.EvaluationVisibility.PUBLIC.value)
             if choices.EvaluationVisibility.CIVIL_SERVICE.value in visibility:
-                qs = qs.filter(visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value)
+                query |= Q(visibility__contains=choices.EvaluationVisibility.CIVIL_SERVICE.value)
+            qs = qs.filter(query)
         # For now, place the highest weight on title and description
         if search_term:
             search_vector = SearchVector("title", "brief_description", weight="A") + SearchVector(
