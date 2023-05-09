@@ -3,10 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.textarea("name", "Intervention name")}}
       {{macros.textarea("brief_description", "Intervention brief description")}}
       {{macros.textarea("rationale", "Intervention rationale")}}
@@ -22,6 +19,5 @@
       {{macros.textarea("geographical_information", "Geographical information")}}
 
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 {% endblock %}

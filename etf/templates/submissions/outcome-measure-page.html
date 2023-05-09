@@ -3,11 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
-      </ul>
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.input("name", "Outcome name")}}
       {{macros.select("primary_or_secondary", "Primary or secondary",
         options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
@@ -22,7 +18,6 @@
       {{macros.textarea("relevance", "Relevance of outcome")}}
 
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 
 {% endblock %}

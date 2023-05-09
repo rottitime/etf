@@ -3,10 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
+    <h1 class="highlight header3">{{title}}</h1>
 
       {{macros.select_many_from_list("impact_design_name", "Design name", list=dropdown_choices.impact_design_name)}}
       {{macros.textarea("impact_design_name_other", "If design name is 'Other', please provide more detail")}}
@@ -17,6 +14,5 @@
       {{macros.textarea("impact_design_assumptions", "Assumptions")}}
       {{macros.textarea("impact_design_approach_limitations", "Limitations of approach")}}
       {{macros.buttons(prev_url, id=data.id)}}
-    </fieldset>
   </form>
 {% endblock %}
