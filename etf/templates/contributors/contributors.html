@@ -7,10 +7,10 @@
 <nav aria-label="Breadcrumb" class="breadcrumb">
   <ol>
     <li>
-      <a href="#">Back to My evaluations</a>
+      <a href="{{url("my-evaluations")}}">Back to My evaluations</a>
     </li>
     <li>
-      <a href="#">Evaluation name #01</a>
+      <a href="{{url("intro", evaluation.id)}}">{{evaluation.title and evaluation.title or "Back to evaluation"}}</a>
     </li>
     <li aria-current="true">Collaborators</li>
   </ol>
@@ -39,9 +39,9 @@
     <thead>
       <tr>
         <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>&nbsp;</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -49,12 +49,13 @@
       <tr>
         <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
         <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-        <td>Owner</td>
+        <td>Collaborator</td>
         <td class="cta">
-          <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
-            <button class="txt-link error small" type="submit"
-            {% if contributors | length <= 1 %} disabled {% endif %}>Remove</button>
+          {% if not contributors | length <= 1 %}
+          <form method="POST" action="{{url("evaluation-contributor-remove", evaluation.id, c.email)}}">{{csrf_input}}
+            <button class="txt-link error small" type="submit">Remove</button>
           </form>
+        {% endif %}
         </td>
       </tr>
     {% endfor %}

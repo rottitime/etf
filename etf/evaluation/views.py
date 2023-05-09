@@ -157,7 +157,7 @@ class EvaluationContributor(MethodDispatcher):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         users = evaluation.users.all()
         return render(
-            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
+            request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation}
         )
 
     def post(self, request, evaluation_id):
@@ -181,7 +181,7 @@ class EvaluationContributor(MethodDispatcher):
             send_invite_email(user)
         users = evaluation.users.all()
         return render(
-            request, "contributors/contributors.html", {"contributors": users, "evaluation_id": evaluation_id}
+            request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation}
         )
 
 
