@@ -69,7 +69,7 @@ class Topic(utils.Choices):
     WELFARE = "Welfare"
 
 
-class EvaluationStatus(utils.Choices):
+class EvaluationVisibility(utils.Choices):
     DRAFT = "Draft"
     CIVIL_SERVICE = "Civil Service"
     PUBLIC = "Public"
