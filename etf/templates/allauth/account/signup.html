@@ -35,6 +35,16 @@
             <div class="helper">{{form.errors.password2}}</div>
           {% endif %}
         </div>
+        <div is="hint-box" aria-label="Additional guidance">
+          <div class="content">
+            <p>Password requirements:</p>
+            <ul>
+              <li>8 or more characters</li>
+              <li>Cannot be only numbers</li>
+              <li>Cannot be any common user information such as email</li>
+            </ul>
+          </div>
+        </div>
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
         {% endif %}
