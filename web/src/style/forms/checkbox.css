@@ -34,8 +34,7 @@ label.checkbox {
   }
 
   & input[type='checkbox'] {
-    position: absolute;
-    z-index: -1;
+    display: none;
 
     &:checked {
       & + .checkmark {
