@@ -1,7 +1,4 @@
 label.radio {
-  --size-small: 24px;
-  --size-large: 32px;
-
   font-weight: 400;
   font-size: 16px;
   display: flex;
@@ -11,8 +8,8 @@ label.radio {
 
   & .checkmark {
     border: 2px solid var(--input-stroke-light);
-    width: var(--size-small);
-    height: var(--size-small);
+    width: var(--checkmark-size-small);
+    height: var(--checkmark-size-small);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -66,8 +63,8 @@ label.radio {
 
   &.large {
     & .checkmark {
-      width: var(--size-large);
-      height: var(--size-large);
+      width: var(--checkmark-size-large);
+      height: var(--checkmark-size-large);
     }
   }
 }
