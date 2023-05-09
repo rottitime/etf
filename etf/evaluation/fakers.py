@@ -222,7 +222,7 @@ def make_evaluation():
         brief_description=fake.text(),
         topics=topics,
         organisations=organisations,
-        status=random.choice(choices.EvaluationStatus.values),
+        status=random.choice(choices.EvaluationVisibility.values),
         doi=fake.text(64),
         page_statuses=get_default_page_statuses(),
         issue_description=fake.text(),
