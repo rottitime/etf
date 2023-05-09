@@ -1,6 +1,7 @@
 from nose import with_setup
 
 from etf.evaluation import choices, fields, interface, models
+
 from . import utils
 
 OVERVIEW_URLS = [
