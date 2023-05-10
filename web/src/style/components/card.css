@@ -10,10 +10,6 @@
     }
   }
 
-  & .form-group:last-of-type {
-    margin-bottom: 0;
-  }
-
   &.with-accordion {
     & .content {
       max-height: 10000000px;
