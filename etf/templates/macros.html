@@ -1,8 +1,8 @@
-{% macro input(name, label, placeholder='', type='text', min='') -%}
+{% macro input(name, label, placeholder='', type='text', min='', required=false) -%}
 <div class="form-group {{errors.get(name) and 'error'}}" for="{{name}}">
   <label class="label">{{label}}</label>
   {{input_description(name)}}
-  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" {% if required == true %}required{% endif %} name="{{name}}">
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
   {% endfor %}

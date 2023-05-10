@@ -19,9 +19,7 @@
   {% if request.user and request.user.is_authenticated %}
 
     <div class="card">
-      <form method="POST">{{csrf_input}}
-        <button class="bttn-primary" type="submit">Create evaluation</button>
-      </form>
+      <a class="bttn-primary" href="{{url('create-evaluation')}}">Create evaluation</a>
     </div>
   
   {% endif %}

@@ -9,14 +9,6 @@ from .utils import check_edit_evaluation_permission
 
 @login_required
 def index_view(request):
-    if request.method == "POST":
-        user = request.user
-        evaluation_data = interface.facade.evaluation.create(user_id=user.id)
-        evaluation_id = evaluation_data["id"]
-        return redirect(
-            intro_page_view,
-            evaluation_id=evaluation_id,
-        )
     return render(request, "index.html")
 
 
@@ -24,6 +16,25 @@ def make_evaluation_url(evaluation_id, page_name):
     if not page_name:
         return None
     return reverse(page_name, args=(evaluation_id,))
+
+
+@login_required
+def create_evaluation(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        short_title = request.POST.get("short_title")
+        user = request.user
+        evaluation_data = interface.facade.evaluation.create(user_id=user.id)
+        evaluation_data = interface.facade.evaluation.update(
+            user_id=user.id, evaluation_id=evaluation_data["id"], data={"title": title, "short_title": short_title}
+        )
+        evaluation_id = evaluation_data["id"]
+        return redirect(
+            intro_page_view,
+            evaluation_id=evaluation_id,
+        )
+    else:
+        return render(request, "submissions/create.html", {"title": "Create evaluation", "errors": {}, "data": {}})
 
 
 @login_required
