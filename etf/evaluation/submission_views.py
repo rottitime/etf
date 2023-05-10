@@ -25,7 +25,9 @@ def create_evaluation(request):
         short_title = request.POST.get("short_title")
         user = request.user
         evaluation_data = interface.facade.evaluation.create(user_id=user.id)
-        evaluation_data = interface.facade.evaluation.update(user_id=user.id, evaluation_id=evaluation_data["id"], data={"title":title, "short_title":short_title})
+        evaluation_data = interface.facade.evaluation.update(
+            user_id=user.id, evaluation_id=evaluation_data["id"], data={"title": title, "short_title": short_title}
+        )
         evaluation_id = evaluation_data["id"]
         return redirect(
             intro_page_view,
