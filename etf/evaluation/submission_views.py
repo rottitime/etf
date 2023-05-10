@@ -612,6 +612,38 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     return response
 
 
+def summary_grants_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Grants",
+        "template_name": "submissions/grants.html",
+        "summary_page_name": "grants",
+        "object_name": "grant",
+        "object_name_plural": "grants",
+    }
+    model_name = "Grant"
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
+
+
+def grant_page_view(request, evaluation_id, grant_id):
+    model_name = "Grant"
+    title = "Grant"
+    template_name = "submissions/grant-page.html"
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("grants", evaluation["evaluation_type"])
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=grant_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+    )
+    return response
+
+
 def summary_evaluation_costs_page_view(request, evaluation_id):
     form_data = {
         "title": "Evaluation costs and budget",

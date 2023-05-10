@@ -76,6 +76,14 @@ evaluation_cost_help_text = defaultdict(
 event_date_help_text = defaultdict(
     str,
     {
+        "grant_details": "Provide any further details about this grant as required.",
+    },
+)
+
+
+grant_help_text = defaultdict(
+    str,
+    {
         "event_date_name": "Select all types of information covered in this document.",
     },
 )
@@ -249,6 +257,7 @@ field_help_text = defaultdict(
         "ethics": ethics_help_text,
         "evaluation cost": evaluation_cost_help_text,
         "event date": event_date_help_text,
+        "grant": grant_help_text,
         "impact-analysis": impact_analysis_help_text,
         "impact-design": impact_design_help_text,
         "impact-findings": impact_findings_help_text,
@@ -406,6 +415,17 @@ evaluation_cost_guidance_text = defaultdict(
         ],
         "latest_spend_date": [
             "If possible, provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+        ],
+    },
+)
+
+
+grant_guidance_text = defaultdict(
+    list,
+    {
+        "grant_number": [
+            "Provide the grant number or other similar unique identifier for this grant.",
+            "For UK government grants, use the Government Grants Information System (GGIS) number.",
         ],
     },
 )
@@ -721,6 +741,7 @@ field_guidance_text = defaultdict(
         "ethics": ethics_guidance_text,
         "evaluation cost": evaluation_cost_guidance_text,
         "evaluation-types": evaluation_type_guidance_text,
+        "grant": grant_guidance_text,
         "impact-analysis": impact_analysis_guidance_text,
         "impact-design": impact_design_guidance_text,
         "impact-findings": impact_findings_guidance_text,

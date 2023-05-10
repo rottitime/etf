@@ -242,7 +242,12 @@ class EvaluationSchema(TimeStampedModelSchema):
         lambda e: ProcessStandardSchema(many=True, exclude=("evaluation",)).dump(e.process_standards.all())
     )
 
-    # Links and IDs
+    # Grants
+    grants = fields.Function(
+        lambda e: GrantSchema(many=True, exclude=("evaluation",)).dump(e.grants.all())
+    )
+
+   # Links and IDs
     link_other_services = fields.Function(
         lambda e: LinkOtherServiceSchema(many=True, exclude=("evaluation",)).dump(e.link_other_services.all())
     )
@@ -300,6 +305,14 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     name = SingleLineStr(validate=validate.Length(max=1024))
     conformity = make_choice_field(max_len=10, values=choices.FullNoPartial.values)
     description = fields.Str()
+
+
+class GrantSchema(TimeStampedModelSchema):
+    evaluation = fields.Nested(EvaluationSchema)
+    id = fields.UUID(dump_only=True)
+    name_of_grant = SingleLineStr(validate=validate.Length(max=1024))
+    grant_number = SingleLineStr(validate=validate.Length(max=1024))
+    grant_details = fields.Str()
 
 
 class DocumentSchema(TimeStampedModelSchema):

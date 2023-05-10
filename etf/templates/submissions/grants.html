@@ -1,0 +1,23 @@
+{% extends "submissions/evaluation-base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block evaluation_content %}
+  <form method="POST" id="create-evaluation">{{csrf_input}}
+    <fieldset>
+      <legend>
+        <h1>{{title}}</h1>
+      </legend>
+      <div class="content caption">
+      <p>
+        In this section you can add information on any grants related to the evaluation.
+      </p>
+      <p>
+        Record any grants that fund either the evaluation itself or any of the interventions being evaluated. Include grants that fund these either in full or in part.
+      </p>
+        {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

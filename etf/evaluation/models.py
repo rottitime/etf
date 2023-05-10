@@ -325,6 +325,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             "process_standards",
             "link_other_services",
             "costs",
+            "grants",
             "documents",
             "event_dates",
         ]
@@ -649,6 +650,24 @@ class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEva
 
         return "|".join(searchable_fields)
 
+
+class Grant(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="grant", on_delete=models.CASCADE)
+    name_of_grant = models.CharField(max_length=256, blank=True, null=True)
+    grant_number = models.CharField(max_length=256, blank=True, null=True)
+    grant_details = models.TextField(blank=True, null=True)
+
+    _name_field = "name_of_grant"
+
+    def get_search_text(self):
+        searchable_fields = [
+            str(self.name_of_grant),
+            str(self.grant_number),
+        ]
+
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
+
+        return "|".join(searchable_fields)
 
 class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)

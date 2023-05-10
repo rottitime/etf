@@ -199,6 +199,19 @@ processes_standards_urlpatterns = [
     ),
 ]
 
+grants_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/",
+        submission_views.summary_grants_page_view,
+        name="grants",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/<uuid:grant_id>/",
+        submission_views.grant_page_view,
+        name="grant-page",
+    ),
+]
+
 evaluation_costs_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/evaluation-costs/",
@@ -301,6 +314,7 @@ urlpatterns = (
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
     + other_measure_urlpatterns
+    + grants_urlpatterns
     + processes_standards_urlpatterns
     + evaluation_costs_urlpatterns
     + documents_urlpatterns
