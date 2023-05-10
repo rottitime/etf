@@ -212,6 +212,7 @@ process_findings_help_text = defaultdict(
 processes_standard_help_text = defaultdict(
     str,
     {
+        "name": "If you have completed most fields in the Evaluation Registry, you will normally be able to claim at least partial conformity with the Standard for producing evidence of the effectiveness of interventions (StEv2-1::2016). https://repository.essex.ac.uk/32376/1/StEv2-1-2016%20Effectiveness-Specification.pdf",
         "description": "Provide any information needed to describe the evaluation's conformity with the standard.",
     },
 )
