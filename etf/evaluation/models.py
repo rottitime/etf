@@ -652,7 +652,7 @@ class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEva
 
 
 class Grant(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
-    evaluation = models.ForeignKey(Evaluation, related_name="grant", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="grants", on_delete=models.CASCADE)
     name_of_grant = models.CharField(max_length=256, blank=True, null=True)
     grant_number = models.CharField(max_length=256, blank=True, null=True)
     grant_details = models.TextField(blank=True, null=True)
