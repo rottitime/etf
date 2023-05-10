@@ -504,7 +504,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="intervention"
+        object_name="intervention",
     )
     return response
 
@@ -537,7 +537,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="outcome measure"
+        object_name="outcome measure",
     )
     return response
 
@@ -570,7 +570,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="other measure"
+        object_name="other measure",
     )
     return response
 
@@ -603,7 +603,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="process or standard"
+        object_name="process or standard",
     )
     return response
 
@@ -636,7 +636,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="evaluation cost"
+        object_name="evaluation cost",
     )
     return response
 
@@ -682,7 +682,7 @@ def document_page_view(request, evaluation_id, document_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="document"
+        object_name="document",
     )
     return response
 
@@ -715,7 +715,7 @@ def links_page_view(request, evaluation_id, link_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="links"
+        object_name="links",
     )
     return response
 
@@ -748,6 +748,6 @@ def event_date_page_view(request, evaluation_id, event_date_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="cost"
+        object_name="cost",
     )
     return response
