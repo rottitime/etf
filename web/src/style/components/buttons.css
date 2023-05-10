@@ -43,6 +43,11 @@
     background: var(--color-bg-disabled);
     color: var(--text-disabled);
   }
+  & a:hover,
+  button:hover {
+    color: var(--color-white);
+    background: linear-gradient(180deg, #0047b0 0%, #003077 100%);
+  }
 }
 
 .bttn-secondary {
