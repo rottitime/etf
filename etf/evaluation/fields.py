@@ -663,7 +663,7 @@ visibility_guidance_text = defaultdict(
         "visibility": [
             "Draft evaluations are only visible to the users assigned to it.",
             "Evaluations marked 'Civil Service' are visible to all civil servants.",
-            "Evaluations marked 'public' are visible to anyone",
+            "Evaluations marked 'Public' are visible to anyone. Before marking an evaluation as public, please ensure you have completed any processes in your organisation / department that are required for publishing.",
         ],
     },
 )
