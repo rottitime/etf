@@ -106,14 +106,14 @@ def test_evaluation_schema():
     valid_data = {
         "title": "My first evaluation",
         "brief_description": "Hello, I am a brief description",
-        "status": choices.EvaluationStatus.DRAFT.value,
+        "visibility": choices.EvaluationVisibility.DRAFT.value,
         "evaluation_type": [choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.IMPACT],
         "ethics_committee_approval": "YES",
         "impact_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
     }
     invalid_evaluation_type = {
         "title": "Title",
-        "status": choices.EvaluationStatus.CIVIL_SERVICE.value,
+        "visibility": choices.EvaluationVisibility.CIVIL_SERVICE.value,
         "evaluation_type": ["STAR"],
     }
     assert evaluation_schema.load(valid_data)

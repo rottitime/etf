@@ -39,7 +39,7 @@ page_display_names = {
     "other-findings": "Other evaluation findings",
     "processes-standards": "Processes and standards",
     "links": "Links and IDs",
-    "status": "Evaluation status",
+    "visibility": "Evaluation visibility",
     "end": "End",
 }
 
@@ -72,7 +72,7 @@ page_url_names = (
     "other-findings",
     "processes-standards",
     "links",
-    "status",
+    "visibility",
     "end",
 )
 

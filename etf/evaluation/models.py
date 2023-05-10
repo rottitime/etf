@@ -69,8 +69,8 @@ def get_list_evaluation_types_display_name(db_name):
     return result[0]
 
 
-def get_status_display_name(db_name):
-    result = [status[1] for status in choices.EvaluationStatus.choices if status[0] == db_name]
+def get_visibility_display_name(db_name):
+    result = [visibility[1] for visibility in choices.EvaluationVisibility.choices if visibility[0] == db_name]
     return result[0]
 
 
@@ -103,7 +103,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     brief_description = models.TextField(blank=True, null=True)
     topics = models.JSONField(default=list)  # TODO - do we use these?
     organisations = models.JSONField(default=list)  # TODO - how are we going to do orgs?
-    status = models.CharField(max_length=256, blank=False, null=False, default=choices.EvaluationStatus.DRAFT.value)
+    visibility = models.CharField(
+        max_length=256, blank=False, null=False, default=choices.EvaluationVisibility.DRAFT.value
+    )
     doi = models.CharField(max_length=64, blank=True, null=True)
     page_statuses = models.JSONField(default=get_default_page_statuses)
 
@@ -265,8 +267,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         names = [i.name for i in related_outcome_measures]
         return names
 
-    def get_status_display_name(self):
-        return get_status_display_name(self.status)
+    def get_visibility_display_name(self):
+        return get_visibility_display_name(self.visibility)
 
     def get_impact_framework_display_name(self):
         return choices.ImpactFramework.mapping[self.impact_framework]

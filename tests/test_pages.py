@@ -23,7 +23,7 @@ def test_get_prev_next_page_name_middle_impact():
 
 
 def test_get_prev_next_page_name_penultimate():
-    page_name = "status"
+    page_name = "visibility"
     result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
     expected = ("links", "end")
     assert result == expected, result
@@ -32,7 +32,7 @@ def test_get_prev_next_page_name_penultimate():
 def test_get_prev_next_page_name_last():
     page_name = "end"
     result = pages.get_prev_next_page_name(page_name, evaluation_types=["flibble"])
-    expected = ("status", None)
+    expected = ("visibility", None)
     assert result == expected, result
 
 

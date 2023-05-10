@@ -137,9 +137,9 @@ evaluation_entry_urlpatterns = [
         name="other-findings",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/status/",
-        submission_views.evaluation_status_view,
-        name="status",
+        "evaluation/<uuid:evaluation_id>/visibility/",
+        submission_views.evaluation_visibility_view,
+        name="visibility",
     ),
     path("evaluation/<uuid:evaluation_id>/end/", submission_views.end_page_view, name="end"),
 ]

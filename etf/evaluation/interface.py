@@ -19,7 +19,7 @@ class UpdateEvaluationSchema(marshmallow.Schema):
     data = marshmallow.fields.Nested(schemas.EvaluationSchema)
 
 
-class UpdateEvaluationStatusSchema(marshmallow.Schema):
+class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
     user_id = marshmallow.fields.UUID()
     evaluation_id = marshmallow.fields.UUID()
     page_name = marshmallow.fields.Str()
@@ -51,7 +51,7 @@ class Evaluation(Entity):
         evaluation.save()
         return evaluation
 
-    @with_schema(load=UpdateEvaluationStatusSchema, dump=schemas.EvaluationSchema)
+    @with_schema(load=UpdateEvaluationVisibilitySchema, dump=schemas.EvaluationSchema)
     def update_page_status(self, user_id, evaluation_id, page_name, status):
         evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
         evaluation.update_evaluation_page_status(page_name, status)

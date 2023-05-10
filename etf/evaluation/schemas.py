@@ -84,8 +84,8 @@ class EvaluationSchema(TimeStampedModelSchema):
     brief_description = fields.Str()
     topics = make_multi_choice_field(max_len=64, values=choices.Topic.values)
     organisations = fields.Raw()
-    status = make_choice_field(
-        max_len=256, values=choices.EvaluationStatus.values, default=choices.EvaluationStatus.DRAFT.value
+    visibility = make_choice_field(
+        max_len=256, values=choices.EvaluationVisibility.values, default=choices.EvaluationVisibility.DRAFT.value
     )
 
     doi = fields.Str(validate=validate.Length(max=64))

@@ -4,6 +4,7 @@ from django.contrib.postgres.search import (
     SearchRank,
     SearchVector,
 )
+from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
@@ -34,7 +35,7 @@ def beta_test_view(request, exception=None):
     return render(request, "beta/beta-test.html", {})
 
 
-def get_search_filters(qs, organisations, topics, status, evaluation_types):
+def get_search_filters(qs, organisations, topics, visibility, evaluation_types):
     organisation_filters = enums.Organisation.choices
     filtered_organisation_filters = [
         organisation_filter
@@ -49,11 +50,11 @@ def get_search_filters(qs, organisations, topics, status, evaluation_types):
         if topic_filter[0] in topics or any(topic_filter[0] in i.topics for i in qs)
     ]
 
-    status_filters = choices.EvaluationStatus.choices
-    filtered_status_filters = [
-        status_filter
-        for status_filter in status_filters
-        if status_filter[0] in status or any(status_filter[0] in i.status for i in qs)
+    visibility_filters = choices.EvaluationVisibility.choices
+    filtered_visibility_filters = [
+        visibility_filter
+        for visibility_filter in visibility_filters
+        if visibility_filter[0] in visibility or any(visibility_filter[0] in i.visibility for i in qs)
     ]
 
     evaluation_types_filters = choices.EvaluationTypeOptions.choices
@@ -65,7 +66,7 @@ def get_search_filters(qs, organisations, topics, status, evaluation_types):
     ]
 
     output = {
-        "statuses": filtered_status_filters,
+        "visibilities": filtered_visibility_filters,
         "evaluation_types": filtered_evaluation_types_filters,
         "topics": filtered_topics_filters,
         "organisations": filtered_organisation_filters,
@@ -81,7 +82,7 @@ class EvaluationSearchView(MethodDispatcher):
         organisations = request.GET.getlist("organisations")
         topics = request.GET.getlist("topics")
         evaluation_types = request.GET.getlist("evaluation_types")
-        status = request.GET.getlist("status")
+        visibility = request.GET.getlist("visibility")
         active_filter = request.GET.get("active_filter")
         current_url = request.get_full_path()
 
@@ -107,9 +108,17 @@ class EvaluationSearchView(MethodDispatcher):
                 evaluation_type_qs = qs.filter(evaluation_type__contains=evaluation_type)
                 evaluation_types_qs = evaluation_types_qs | evaluation_type_qs
             qs = evaluation_types_qs
-        filters = get_search_filters(qs, organisations, topics, status, evaluation_types)
-
-        # For now, place highest weight on title and description
+        filters = get_search_filters(qs, organisations, topics, visibility, evaluation_types)
+        if visibility:
+            query = Q()
+            if choices.EvaluationVisibility.DRAFT.value in visibility:
+                query |= Q(visibility__contains=choices.EvaluationVisibility.DRAFT.value)
+            if choices.EvaluationVisibility.PUBLIC.value in visibility:
+                query |= Q(visibility__contains=choices.EvaluationVisibility.PUBLIC.value)
+            if choices.EvaluationVisibility.CIVIL_SERVICE.value in visibility:
+                query |= Q(visibility__contains=choices.EvaluationVisibility.CIVIL_SERVICE.value)
+            qs = qs.filter(query)
+        # For now, place the highest weight on title and description
         if search_term:
             search_vector = SearchVector("title", "brief_description", weight="A") + SearchVector(
                 "search_text", weight="B"
@@ -120,11 +129,11 @@ class EvaluationSearchView(MethodDispatcher):
 
         data = {
             "evaluations": qs,
-            "statuses": filters["statuses"],
+            "visibilities": filters["visibilities"],
             "evaluation_types": filters["evaluation_types"],
             "topics": filters["topics"],
             "organisations": filters["organisations"],
-            "selected_statuses": status or [],
+            "selected_visibilities": visibility or [],
             "selected_evaluation_types": evaluation_types or [],
             "selected_topics": topics or [],
             "selected_organisations": organisations or [],

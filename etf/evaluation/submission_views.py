@@ -87,7 +87,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
     template_name = f"submissions/{page_name}.html"
     evaluation_schema = schemas.EvaluationSchema(unknown=marshmallow.EXCLUDE)
     errors = {}
-    statuses = choices.EvaluationStatus.choices
+    visibilities = choices.EvaluationVisibility.choices
     page_statuses = evaluation["page_statuses"]
     multiple_value_vars = ["topics", "organisations", "evaluation_type", "impact_design_name"]
     if request.GET.get("completed"):
@@ -118,7 +118,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
         {
             "errors": errors,
             "dropdown_choices": choices.dropdown_choices,
-            "statuses": statuses,
+            "visibilities": visibilities,
             "data": data,
             "next_url": next_url,
             "prev_url": prev_url,
@@ -463,8 +463,8 @@ def evaluation_metadata_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-def evaluation_status_view(request, evaluation_id):
-    page_data = {"title": "Evaluation status", "page_name": "status"}
+def evaluation_visibility_view(request, evaluation_id):
+    page_data = {"title": "Evaluation visibility", "page_name": "visibility"}
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
