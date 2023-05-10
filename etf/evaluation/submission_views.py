@@ -246,7 +246,7 @@ def make_related_object_context(user_id, evaluation_id, title, object_name, url_
 
 @login_required
 @check_edit_evaluation_permission
-def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names):
+def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names, object_name):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
@@ -272,7 +272,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    context = make_related_object_context(request.user.id, evaluation_id, title, template_name, url_names)
+    context = make_related_object_context(request.user.id, evaluation_id, title, object_name, url_names)
     context = {"errors": errors, "data": data, **context}
     return render(request, template_name, context)
 
@@ -504,6 +504,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="intervention"
     )
     return response
 
@@ -536,6 +537,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="outcome measure"
     )
     return response
 
@@ -568,6 +570,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="other measure"
     )
     return response
 
@@ -600,6 +603,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="process or standard"
     )
     return response
 
@@ -632,6 +636,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="evaluation cost"
     )
     return response
 
@@ -677,6 +682,7 @@ def document_page_view(request, evaluation_id, document_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="document"
     )
     return response
 
@@ -709,6 +715,7 @@ def links_page_view(request, evaluation_id, link_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="links"
     )
     return response
 
@@ -741,5 +748,6 @@ def event_date_page_view(request, evaluation_id, event_date_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="cost"
     )
     return response
