@@ -640,6 +640,7 @@ def grant_page_view(request, evaluation_id, grant_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
+        object_name="grant",
     )
     return response
 
