@@ -10,15 +10,16 @@ def test_intervention():
     page = client.get("/")
     assert page.status_code == 200, page.status_code
 
-    form = page.get_form("""form[action="/"]""")
+    page = page.click(contains="Create evaluation", index=0)
+    assert page.status_code == 200, page.status_code
+
+    form = page.get_form()
+    form["title"] = "Test evaluation"
     page = form.submit().follow()
     assert page.status_code == 200, page.status_code
+    assert page.url.endswith("/")
 
-    page = page.click(contains="Next")
-    assert page.status_code == 200, page.status_code
-    assert page.url.endswith("/title/")
-
-    intervention_url = "/".join(page.url.split("/")[:-2] + ["interventions/"])
+    intervention_url = "/".join(page.url.split("/")[:-1] + ["interventions/"])
     page = client.get(intervention_url)
 
     form = page.get_form(""".intervention-add-form""")
