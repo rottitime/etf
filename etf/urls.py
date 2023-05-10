@@ -45,6 +45,7 @@ evaluation_contributor_urlpatterns = [
 ]
 
 evaluation_entry_urlpatterns = [
+    path("evaluation/create/", submission_views.create_evaluation, name="create-evaluation"),
     path("evaluation/<uuid:evaluation_id>/", submission_views.intro_page_view, name="intro"),
     path("evaluation/<uuid:evaluation_id>/title/", submission_views.evaluation_title_view, name="title"),
     path(
