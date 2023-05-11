@@ -43,6 +43,39 @@ page_display_names = {
     "end": "End",
 }
 
+section_display_names = {
+    "general": "General",
+    "interventions": "Interventions",
+    "outcomes-measures": "Outcome measures",
+    "other-measures": "Other measures",
+    "design-analysis": "Design analysis",
+    "findings": "Findings",
+    "further-information": "Further information",
+}
+
+section_pages = {
+    "general": {
+        "intro",
+        "title",
+        "description",
+        "organisations",
+        "event-dates",
+        "visibility",
+    },
+    "interventions": {
+
+    },
+    "measures": {
+
+    },
+    "design-analysis": {
+
+    },
+    "further-information": {
+
+    }
+}
+
 page_url_names = (
     "intro",
     "title",
