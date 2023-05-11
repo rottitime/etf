@@ -129,7 +129,7 @@ object_page_url_names = {
     "outcome-measures": "outcome-measure-page",
     "other-measures": "other-measure-page",
     "processes-standards": "processes-standard-page",
-    "grants": "grants",
+    "grants": "grant-page",
     "evaluation-costs": "evaluation-cost-page",
     "links": "link-page",
     "event-dates": "event-date-page",
