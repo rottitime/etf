@@ -4,7 +4,7 @@
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
-      {{macros.checkbox_from_list("impact_design_name", "EDesign name", dropdown_choices.impact_design_name)}}
+      {{macros.checkbox_from_list("impact_design_name", "Design name", dropdown_choices.impact_design_name)}}
       {{macros.textarea("impact_design_justification", "Justification for design")}}
       {{macros.textarea("impact_design_description", "Description of planned design")}}
       {{macros.textarea("impact_design_features", "Features to reflect real-world implementation")}}
