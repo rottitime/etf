@@ -6,10 +6,7 @@
     <h1 class="highlight header3">{{title}}</h1>
       <div class="content caption">
       {{macros.input("name", "Measurement name")}}
-
-      {{macros.select_from_list("measure_type", "Measure type", list=dropdown_choices.measure_type)}}
-      {{macros.textarea("measure_type_other", "If measure type is 'Other', please provide more detail")}}
-
+      {{macros.radios_from_list("measure_type", "Measure type", dropdown_choices.measure_type)}}
       {{macros.textarea("description", "Description of measurement")}}
       {{macros.textarea("collection_process", "Collection procedures and timing")}}
       
