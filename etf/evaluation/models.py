@@ -110,6 +110,12 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     doi = models.CharField(max_length=64, blank=True, null=True)
     page_statuses = models.JSONField(default=get_default_page_statuses)
 
+    # Options
+    issue_description_option = models.CharField(max_length=3, blank=True, null=True)
+    ethics_option = models.CharField(max_length=3, blank=True, null=True)
+    grants_option = models.CharField(max_length=3, blank=True, null=True)
+    
+
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
     those_experiencing_issue = models.TextField(blank=True, null=True)
@@ -298,6 +304,16 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_impact_design_name_display_name(self):
         return [name[1] for name in choices.ImpactEvalDesign.choices if name[0] in self.impact_design_name]
 
+    def get_issue_description_option_display_name(self):
+        return choices.YesNo.mapping[self.issue_description_option]
+
+    def get_ethics_option_display_name(self):
+        return choices.YesNo.mapping[self.ethics_option]
+
+    def get_grants_option_display_name(self):
+        return choices.YesNo.mapping[self.grants_option]
+
+
     def __str__(self):
         return f"{self.id} : {self.title}"
 
@@ -337,6 +353,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         yes_no_fields = [
             "ethics_committee_approval",
             "impact_fidelity",
+            "issue_description_option",
+            "ethics_option",
+            "grants_option",
         ]
 
         # Single choice fields

@@ -99,6 +99,12 @@ class EvaluationSchema(TimeStampedModelSchema):
     doi = fields.Str(validate=validate.Length(max=64))
     page_statuses = fields.Raw()
 
+    # Options
+    issue_description_option = make_choice_field(max_len=3, values=choices.YesNo.values)
+    ethics_option = make_choice_field(max_len=3, values=choices.YesNo.values)
+    grants_option = make_choice_field(max_len=3, values=choices.YesNo.values)
+
+
     # Issue description
     issue_description = fields.Str()
     those_experiencing_issue = fields.Str()

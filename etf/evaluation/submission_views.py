@@ -299,6 +299,14 @@ def evaluation_description_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
+def evaluation_options_view(request, evaluation_id):
+    page_data = {
+        "title": "Optional information",
+        "page_name": "options",
+    }
+    return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
+
+
 def evaluation_issue_description_view(request, evaluation_id):
     page_data = {
         "title": "Issue description",

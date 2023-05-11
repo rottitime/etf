@@ -167,6 +167,16 @@ links_help_text = defaultdict(
 )
 
 
+options_help_text = defaultdict(
+    str,
+    {
+        "issue_description_option": "Do you want to complete an issue description for this evaluation?",
+        "ethics_option": "Do you want to provide ethical information for this evaluation?",
+        "grants_option": "Was this evaluation, or any of the interventions being evaluated, funded by a grant?",
+    },
+)
+
+
 other_design_help_text = defaultdict(
     str,
     {
@@ -264,6 +274,7 @@ field_help_text = defaultdict(
         "intervention": intervention_help_text,
         "issue-description": issue_description_help_text,
         "link": links_help_text,
+        "options": options_help_text,
         "other-design": other_design_help_text,
         "other-findings": other_findings_help_text,
         "outcome measure": outcome_measure_help_text,
@@ -573,6 +584,21 @@ issue_description_guidance_text = defaultdict(
 )
 
 
+options_guidance_text = defaultdict(
+    list,
+    {
+        "issue_description_option": [
+            "Select whether to complete a set of questions providing a structured description of the issue being investigated by the evaluation.",
+            "An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption.",
+            "The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.",
+        ],
+        "ethics_option": [
+            "Select whether to complete a set of questions providing information addressing ethical considerations regarding the evaluation.",
+        ],
+    },
+)
+
+
 other_analysis_guidance_text = defaultdict(
     list,
     {
@@ -747,6 +773,7 @@ field_guidance_text = defaultdict(
         "impact-findings": impact_findings_guidance_text,
         "intervention": intervention_guidance_text,
         "issue-description": issue_description_guidance_text,
+        "options": options_guidance_text,
         "other-analysis": other_analysis_guidance_text,
         "other-design": other_design_guidance_text,
         "other-findings": other_findings_guidance_text,

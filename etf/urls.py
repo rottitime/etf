@@ -52,6 +52,11 @@ evaluation_entry_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/description/", submission_views.evaluation_description_view, name="description"
     ),
     path(
+        "evaluation/<uuid:evaluation_id>/options/",
+        submission_views.evaluation_options_view,
+        name="options",
+    ),
+    path(
         "evaluation/<uuid:evaluation_id>/issue-description/",
         submission_views.evaluation_issue_description_view,
         name="issue-description",
