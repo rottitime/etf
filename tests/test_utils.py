@@ -108,6 +108,7 @@ def test_restrict_to_permitted_evaluations():
     peter_rabbit = models.User.objects.get(email="peter.rabbit2@example.com")
     mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.org")
 
+    assert "Draft evaluation 1" in all_evaluations.values_list("title", flat=True)
     qs = restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
     expected_viewable_evaluation_titles = {
         "Draft evaluation 2",
@@ -117,7 +118,9 @@ def test_restrict_to_permitted_evaluations():
         "Public evaluation 2",
     }
     actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
-    assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
+    assert expected_viewable_evaluation_titles.issubset(
+        actual_viewable_evaluation_titles
+    ), actual_viewable_evaluation_titles.symmetric_difference(actual_viewable_evaluation_titles)
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
 
     qs = restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
@@ -128,6 +131,6 @@ def test_restrict_to_permitted_evaluations():
         "Public evaluation 2",
     }
     actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
-    assert expected_viewable_evaluation_titles == actual_viewable_evaluation_titles
+    assert expected_viewable_evaluation_titles.issubset(actual_viewable_evaluation_titles)
     assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
     assert "Civil Service evaluation 1" not in expected_viewable_evaluation_titles

@@ -92,30 +92,34 @@ def _get_latest_email_url():
     return url
 
 
+def create_fake_evaluation(title, visibility, users=None):
+    evaluation = Evaluation(title=title, visibility=visibility)
+    evaluation.save()
+    if users:
+        for user in users:
+            evaluation.users.add(user)
+            evaluation.save()
+    print(evaluation)
+    return evaluation
+
+
 def create_fake_evaluations():
     # For testing "example.com" is counted as "Civil Service", "example.org" is not
     peter_rabbit, _ = User.objects.update_or_create(email="peter.rabbit2@example.com")
     mrs_tiggywinkle, _ = User.objects.update_or_create(email="mrs.tiggywinkle@example.org")
-    draft_1 = Evaluation(title="Draft evaluation 1", status=choices.EvaluationStatus.DRAFT)
-    draft_1.save()
-    draft_2 = Evaluation(title="Draft evaluation 2", status=choices.EvaluationStatus.DRAFT)
-    draft_2.save()
-    draft_2.users.add(peter_rabbit)
-    draft_2.users.add(mrs_tiggywinkle)
-    draft_2.save()
-    cs_1 = Evaluation(title="Civil Service evaluation 1", status=choices.EvaluationStatus.CIVIL_SERVICE)
-    cs_1.save()
-    cs_2 = Evaluation(title="Civil Service evaluation 2", status=choices.EvaluationStatus.CIVIL_SERVICE)
-    cs_2.save()
-    cs_2.users.add(peter_rabbit)
-    cs_2.users.add(mrs_tiggywinkle)
-    cs_2.save()
-    public_1 = Evaluation(title="Public evaluation 1", status=choices.EvaluationStatus.PUBLIC)
-    public_1.save()
-    public_2 = Evaluation(title="Public evaluation 2", status=choices.EvaluationStatus.PUBLIC)
-    public_2.save()
-    public_2.users.add(peter_rabbit)
-    public_2.save()
+    users = [peter_rabbit, mrs_tiggywinkle]
+    create_fake_evaluation(title="Draft evaluation 1", visibility=choices.EvaluationVisibility.DRAFT.value)
+    create_fake_evaluation(title="Draft evaluation 2", visibility=choices.EvaluationVisibility.DRAFT.value, users=users)
+    create_fake_evaluation(
+        title="Civil Service evaluation 1", visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value
+    )
+    create_fake_evaluation(
+        title="Civil Service evaluation 2", visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value, users=users
+    )
+    create_fake_evaluation(title="Public evaluation 1", visibility=choices.EvaluationVisibility.PUBLIC.value)
+    create_fake_evaluation(
+        title="Public evaluation 2", visibility=choices.EvaluationVisibility.PUBLIC.value, users=users
+    )
 
 
 def remove_fake_evaluations():
