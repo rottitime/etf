@@ -166,16 +166,18 @@ def my_evaluations_view(request):
 @require_http_methods(["GET", "POST", "DELETE"])
 class EvaluationContributor(MethodDispatcher):
     def get(self, request, evaluation_id):
+        errors = {}
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         users = evaluation.users.all()
-        return render(request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation})
+        return render(
+            request,
+            "contributors/contributors.html",
+            {"contributors": users, "evaluation": evaluation, "errors": errors},
+        )
 
     def post(self, request, evaluation_id):
-        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        print("request")
-        print(request.POST)
-
         errors = {}
+        evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
             user_email = serialized_user["email"]
@@ -194,7 +196,6 @@ class EvaluationContributor(MethodDispatcher):
         except ValidationError as err:
             errors = dict(err.messages)
         users = evaluation.users.all()
-        print(errors)
         return render(
             request,
             "contributors/contributors.html",

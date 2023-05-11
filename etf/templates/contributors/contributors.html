@@ -27,6 +27,9 @@
     <div class="form-group full-width mb-0">
       <label for="email">Email</label>
       <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="email" placeholder="Contributors email..." required>
+      {% if errors.get("email", []) %}
+        <div class="helper">{{errors.get("email")}}</div>
+      {% endif %}
     </div>
     <button type="submit" class="bttn-primary">Invite collaborator</button>
    </form>
