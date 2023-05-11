@@ -13,8 +13,8 @@ class EvaluationPageStatus(utils.Choices):
 page_display_names = {
     "intro": "Intro",
     "title": "Title",
-    "description": "Description",
     "options": "Optional information",
+    "description": "Description",
     "issue-description": "Issue description",
     "studied-population": "Studied population",
     "participant-recruitment": "Participant recruitment",
@@ -95,8 +95,8 @@ section_pages = {
 page_url_names = (
     "intro",
     "title",
-    "description",
     "options",
+    "description",
     "issue-description",
     "studied-population",
     "participant-recruitment",
@@ -147,8 +147,9 @@ evaluation_type_page_mapping = {
 all_evaluation_type_pages = set().union(*evaluation_type_page_mapping.values())
 
 
-def get_prev_next_page_name(page_name, evaluation_types):
-    pages = tuple(get_page_name_and_order(evaluation_types).keys())
+def get_prev_next_page_name(page_name, page_options):
+    evaluation_types = page_options["evaluation_types"]
+    pages = tuple(get_page_name_and_order(evaluation_types, page_options).keys())
     assert page_name in pages
     page_index = pages.index(page_name)
     if page_index == 0:
@@ -166,17 +167,19 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 
 
 @utils.dictify
-def get_page_name_and_order(evaluation_types):
+def get_page_name_and_order(evaluation_types, page_options):
+    #evaluation_types = page_options["evaluation_types"]
+    issue_description_option = page_options["issue_description_option"]
     pages_to_keep = set().union(
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
     pages_to_remove = _all_evaluation_type_pages - pages_to_keep
-    #if issue_description_option != "Yes":
-    #    pages_to_remove.add("issue-description")
-    #if ethics_option != "Yes":
-    #    pages_to_remove.add("ethics")
-    #if grants_option != "Yes":
-    #    pages_to_remove.add("grants")
+    if issue_description_option != "YES":
+        pages_to_remove.add("issue-description")
+    if page_options["ethics_option"] != "YES":
+        pages_to_remove.add("ethics")
+    if page_options["grants_option"] != "YES":
+        pages_to_remove.add("grants")
     counter = itertools.count(0)
 
     for page_name in page_url_names:

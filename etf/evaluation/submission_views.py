@@ -47,7 +47,7 @@ def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     user = request.user
     evaluation = interface.facade.evaluation.get(evaluation_id)
-    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, get_page_options(evaluation))
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     page_name = page_data["page_name"]
@@ -60,7 +60,7 @@ def simple_page_view(request, evaluation_id, page_data):
         "next_url": next_url,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
         "current_page": page_name,
     }
     interface.facade.evaluation.update_page_status(
@@ -85,7 +85,7 @@ def transform_post_data(post_data, multiselect_dropdown_choices):
 def evaluation_view(request, evaluation_id, page_name, title):
     user = request.user
     evaluation = interface.facade.evaluation.get(evaluation_id)
-    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, get_page_options(evaluation))
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = f"submissions/{page_name}.html"
@@ -127,7 +127,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
-            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
@@ -147,8 +147,18 @@ def add_related_object_for_evaluation(evaluation_id, model_name, redirect_url_na
     return response
 
 
-def get_related_object_page_url_names(summary_page_name, evaluation_type):
-    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name, evaluation_type)
+def get_page_options(evaluation):
+    page_options = {
+        "evaluation_types": evaluation["evaluation_type"],
+        "issue_description_option": evaluation["issue_description_option"],
+        "ethics_option": evaluation["ethics_option"],
+        "grants_option": evaluation["grants_option"],
+    }
+    return page_options
+
+
+def get_related_object_page_url_names(summary_page_name, page_options):
+    prev_section_url_name, next_section_url_name = pages.get_prev_next_page_name(summary_page_name, page_options)
     url_names = {
         "page": pages.object_page_url_names[summary_page_name],
         "prev_section_url_name": prev_section_url_name,
@@ -167,7 +177,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     object_name_plural = form_data["object_name_plural"]
     summary_page_name = form_data["summary_page_name"]
     object_page_name = pages.object_page_url_names[summary_page_name]
-    url_names = get_related_object_page_url_names(summary_page_name, evaluation["evaluation_type"])
+    url_names = get_related_object_page_url_names(summary_page_name, get_page_options(evaluation))
     prev_url_name = url_names["prev_section_url_name"]
     next_url_name = url_names["next_section_url_name"]
     prev_url = reverse(prev_url_name, args=(evaluation_id,))
@@ -188,7 +198,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
         "data": data,
         "prev_url": prev_url,
         "next_url": next_url,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
         "current_page": summary_page_name,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
@@ -233,14 +243,14 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
     page_statuses = evaluation["page_statuses"]
-    url_names = get_related_object_page_url_names(url_names["summary_page"], evaluation["evaluation_type"])
+    url_names = get_related_object_page_url_names(url_names["summary_page"], get_page_options(evaluation))
     return {
         "title": title,
         "next_url": next_url,
         "prev_url": prev_url,
         "object_name": object_name,
         "summary_url": summary_url,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
         "current_page": url_names["summary_page"],
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
@@ -506,8 +516,13 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
     template_name = "submissions/intervention-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("interventions", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("interventions", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -539,8 +554,13 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
     title = "Outcome measures"
     template_name = "submissions/outcome-measure-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("outcome-measures", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("outcome-measures", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -572,8 +592,13 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     model_name = "OtherMeasure"
     title = "Other measures"
     template_name = "submissions/other-measure-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("other-measures", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("other-measures", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -605,8 +630,13 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     model_name = "ProcessStandard"
     title = "Processes and standards"
     template_name = "submissions/processes-standard-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("processes-standards", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("processes-standards", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -672,7 +702,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
     evaluation = interface.facade.evaluation.get(evaluation_id)
-    url_names = get_related_object_page_url_names("evaluation-costs", evaluation["evaluation_type"])
+    url_names = get_related_object_page_url_names("evaluation-costs", get_page_options(evaluation))
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -714,6 +744,9 @@ def evaluation_overview_view(request, evaluation_id):
         "new": section_statuses,
         "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
         "evaluation": evaluation,
+        "statuses": statuses,
+        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+        "evaluation_id": evaluation_id,
     }
     errors = {}
     return render(request, "submissions/overview.html", {"errors": errors, "data": data})
@@ -737,8 +770,13 @@ def document_page_view(request, evaluation_id, document_id):
     model_name = "Document"
     title = "Document"
     template_name = "submissions/document-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("documents", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("documents", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -770,8 +808,13 @@ def links_page_view(request, evaluation_id, link_id):
     model_name = "LinkOtherService"
     title = "Links to other service"
     template_name = "submissions/links-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("links", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("links", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -803,8 +846,13 @@ def event_date_page_view(request, evaluation_id, event_date_id):
     model_name = "EventDate"
     title = "Event date"
     template_name = "submissions/event-date-page.html"
+<<<<<<< HEAD
     evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("event-dates", evaluation["evaluation_type"])
+=======
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("event-dates", get_page_options(evaluation))
+>>>>>>> 0b926c30 (Working conditionality)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
