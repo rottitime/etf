@@ -34,7 +34,11 @@ def create_evaluation(request):
             evaluation_id=evaluation_id,
         )
     else:
-        return render(request, "submissions/create.html", {"title": "Create evaluation", "errors": {}, "data": {}, "object_name": "create"})
+        return render(
+            request,
+            "submissions/create.html",
+            {"title": "Create evaluation", "errors": {}, "data": {}, "object_name": "create"},
+        )
 
 
 @login_required
