@@ -45,35 +45,50 @@ page_display_names = {
 
 section_display_names = {
     "general": "General",
-    "interventions": "Interventions",
-    "outcomes-measures": "Outcome measures",
-    "other-measures": "Other measures",
-    "design-analysis": "Design analysis",
+    "interventions-and-measures": "Interventions and measures",
+    "design-analysis": "Design and analysis",
     "findings": "Findings",
     "further-information": "Further information",
 }
 
 section_pages = {
-    "general": {
+    "general": (
         "intro",
         "title",
         "description",
-        "organisations",
         "event-dates",
-        "visibility",
-    },
-    "interventions": {
-
-    },
-    "measures": {
-
-    },
-    "design-analysis": {
-
-    },
-    "further-information": {
-
-    }
+        "evaluation-types",
+        "status",
+    ),
+    "interventions-and-measures": (
+        "interventions",
+        "outcome-measures",
+        "other-measures",
+    ),
+    "design-analysis": (
+        "studied-population",
+        "participant-recruitment",
+        "impact-design",
+        "impact-analysis",
+        "economic-design",
+        "economic-analysis",
+        "process-design",
+        "process-analysis",
+        "other-design",
+        "other-analysis",
+    ),
+    "findings": (
+        "impact-findings",
+        "economic-findings",
+        "process-findings",
+        "other-findings",
+    ),
+    "further-information": (
+        "processes-standards",
+        "evaluation-costs",
+        "links",
+        "ethics",
+    ),
 }
 
 page_url_names = (
