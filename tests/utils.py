@@ -99,7 +99,6 @@ def create_fake_evaluation(title, visibility, users=None):
         for user in users:
             evaluation.users.add(user)
             evaluation.save()
-    print(evaluation)
     return evaluation
 
 
