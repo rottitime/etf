@@ -131,7 +131,7 @@
     {% for item in list %}
     <div class="form-group">
       <label class="radio">
-        <input type="radio" {{is_in(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <input type="radio" {{is_selected(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
         <span class="checkmark"></span>
         <span>{{item[1]}}</span>
       </label>
