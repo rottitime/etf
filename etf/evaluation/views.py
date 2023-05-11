@@ -172,6 +172,9 @@ class EvaluationContributor(MethodDispatcher):
 
     def post(self, request, evaluation_id):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+        print("request")
+        print(request.POST)
+
         errors = {}
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
@@ -191,7 +194,12 @@ class EvaluationContributor(MethodDispatcher):
         except ValidationError as err:
             errors = dict(err.messages)
         users = evaluation.users.all()
-        return render(request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation})
+        print(errors)
+        return render(
+            request,
+            "contributors/contributors.html",
+            {"contributors": users, "evaluation": evaluation, "errors": errors},
+        )
 
 
 @login_required
