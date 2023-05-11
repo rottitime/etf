@@ -24,11 +24,11 @@
 
   <form method="POST" class="invite-collaborator space-between" style="align-items: end;">{{csrf_input}}
 
-    <div class="form-group full-width mb-0">
+    <div class="form-group {% if errors.get("email", []) %}error{% endif %} full-width mb-0">
       <label for="email">Email</label>
       <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="email" placeholder="Contributors email..." required>
       {% if errors.get("email", []) %}
-        <div class="helper">{{errors.get("email")}}</div>
+        <div class="helper">{{errors.get("email")|join(" ")}}</div>
       {% endif %}
     </div>
     <button type="submit" class="bttn-primary">Invite collaborator</button>
