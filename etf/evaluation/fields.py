@@ -3,6 +3,14 @@
 
 from collections import defaultdict
 
+create_help_text = defaultdict(
+    str,
+    {
+        "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
+        "short_title": "A short/abbreviated title for the evaluation, especially if the full title is long.",
+    },
+)
+
 description_help_text = defaultdict(
     str,
     {
@@ -232,6 +240,7 @@ title_help_text = defaultdict(
 field_help_text = defaultdict(
     lambda: defaultdict(str),
     {
+        "create": create_help_text,
         "description": description_help_text,
         "document": document_page_help_text,
         "economic-design": economic_design_help_text,
@@ -253,6 +262,16 @@ field_help_text = defaultdict(
         "process or standard": processes_standard_help_text,
         "studied-population": studied_population_help_text,
         "title": title_help_text,
+    },
+)
+
+create_guidance_text = defaultdict(
+    list,
+    {
+        "title": [
+            "This should be a title for the evaluation as a whole, not for a given report or document associated with it, like 'Evaluation of the relative impact of ABC and DEF on XYZ outcomes' rater than 'Findings from an evaluation of ABC...' or 'Plans for an evaluation of ABC...'.",
+            "This could include an indication of the evaluation type (eg impact evaluation) or method (eg randomised controlled trial) if known.",
+        ],
     },
 )
 
@@ -691,6 +710,7 @@ title_guidance_text = defaultdict(
 field_guidance_text = defaultdict(
     lambda: defaultdict(list),
     {
+        "create": create_guidance_text,
         "description": description_guidance_text,
         "document": document_page_guidance_text,
         "economic-analysis": economic_analysis_guidance_text,
