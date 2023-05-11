@@ -1,7 +1,4 @@
 label.checkbox {
-  --size-small: 24px;
-  --size-large: 32px;
-
   font-weight: 400;
   font-size: 16px;
   display: flex;
@@ -10,9 +7,9 @@ label.checkbox {
   cursor: pointer;
 
   & .checkmark {
-    flex: 0 0 var(--size-small);
-    height: var(--size-small);
-    width: var(--size-small);
+    flex: 0 0 var(--checkmark-size-small);
+    height: var(--checkmark-size-small);
+    width: var(--checkmark-size-small);
     border: 2px solid var(--input-stroke-light);
     border-radius: 4px;
     box-sizing: border-box;
@@ -34,8 +31,7 @@ label.checkbox {
   }
 
   & input[type='checkbox'] {
-    position: absolute;
-    z-index: -1;
+    display: none;
 
     &:checked {
       & + .checkmark {
@@ -70,8 +66,8 @@ label.checkbox {
 
   &.large {
     & .checkmark {
-      flex: 0 0 var(--size-large);
-      height: var(--size-large);
+      flex: 0 0 var(--checkmark-size-large);
+      height: var(--checkmark-size-large);
       &:before {
         content: svg-load('tick.svg', fill=#ffffff, width=24, height=24);
       }

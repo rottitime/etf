@@ -3,12 +3,9 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
-      
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.input(name="title", label="Evaluation title")}}
       {{macros.input(name="short_title", label="Short title for evaluation")}}
-    </fieldset>
     {{macros.buttons(prev_url, id=data.id)}}
   </form>
 {% endblock %}

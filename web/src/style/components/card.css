@@ -10,10 +10,6 @@
     }
   }
 
-  & .form-group:last-of-type {
-    margin-bottom: 0;
-  }
-
   &.with-accordion {
     & .content {
       max-height: 10000000px;
@@ -56,25 +52,5 @@
     justify-content: space-between;
     align-items: center;
     margin-top: var(--spacing-32);
-  }
-}
-
-.card fieldset {
-  border: none;
-  padding: 0;
-  margin: 0;
-
-  & legend {
-    margin-bottom: var(--spacing-8);
-    & h1,
-    & h2,
-    & h3,
-    & h4,
-    & h5,
-    & h6 {
-      font-size: 24px;
-      color: var(--color-highlight1);
-      margin: 0;
-    }
   }
 }

@@ -1,3 +1,7 @@
+
+
+<hr>
+
 <gov-icon key="pencil"></gov-icon>
 
 <hr>
@@ -168,6 +172,89 @@ Visibility:
 
 <hr>
 
+<fieldset>
+  <legend>Measure type (radio)</legend>
+  <div class="form-group">
+    <label class="radio">
+      <input type="radio" name="measure_type" value="CONTINUOUS">
+      <span class="checkmark"></span>
+      <span>Continuous</span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="measure_type" value="DISCRETE">
+      <span class="checkmark"></span>
+      <span>Discrete</span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="measure_type" value="BINARY">
+      <span class="checkmark"></span>
+      <span>Binary</span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="measure_type" value="ORDINAL">
+      <span class="checkmark"></span>
+      <span>Ordinal</span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="measure_type" value="NOMINAL">
+      <span class="checkmark"></span>
+      <span>Nominal</span>      
+    </label>
+    <label class="radio">
+      <input type="radio" name="measure_type" value="OTHER" aria-controls="conditional-7b4039ab">
+      <span class="checkmark"></span>
+      <span>Other</span>
+    </label>
+    <div class="form-group controller-subfield" id="conditional-7b4039ab">
+      <label for="measure_type_other">If measure type is 'Other', please provide more detail</label>
+      <textarea placeholder="" id="measure_type_other" name="measure_type_other" class="full-width"></textarea>
+    </div>
+
+  </div>
+
+</fieldset>
+
+<fieldset>
+  <legend>Measure type (checkbox)</legend>
+  <div class="form-group">
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="CONTINUOUS">
+      <span class="checkmark"></span>
+      <span>Continuous</span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="DISCRETE">
+      <span class="checkmark"></span>
+      <span>Discrete</span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="BINARY">
+      <span class="checkmark"></span>
+      <span>Binary</span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="ORDINAL">
+      <span class="checkmark"></span>
+      <span>Ordinal</span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="NOMINAL">
+      <span class="checkmark"></span>
+      <span>Nominal</span>      
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="measure_type" value="OTHER" aria-controls="conditional-dyt6y3i">
+      <span class="checkmark"></span>
+      <span>Other</span>
+    </label>
+    <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+      <label for="measure_type_other">If measure type is 'Other', please provide more detail</label>
+      <textarea placeholder="" id="measure_type_other" name="measure_type_other" class="full-width"></textarea>
+    </div>
+  </div>
+
+</fieldset>
+
 <div class="form-group error">
     <div class="select full-width">
     <select name="sort" >
@@ -181,3 +268,25 @@ Visibility:
     <div class="helper">Lorem ipsum dolor sit</div>
     </div>
     <hr>
+
+    <div class="form-group ">
+      <label for="measure_type">Measure type</label>
+      <div class="select full-width">
+        <select name="measure_type" id="measure_type">
+            <option value="" disabled="" selected="">Please choose one...</option>
+            <option value="CONTINUOUS">Continuous</option>
+            <option value="DISCRETE">Discrete</option>
+            <option value="BINARY">Binary</option>
+            <option value="ORDINAL">Ordinal</option>
+            <option value="NOMINAL">Nominal</option>      
+            <option value="OTHER">Other</option>
+          
+        </select>
+      </div>
+    </div>
+    
+    <div class="form-group ">
+      <label for="measure_type_other">If measure type is 'Other', please provide more detail</label>
+      <textarea placeholder="" id="measure_type_other" name="measure_type_other" class="full-width"></textarea>
+    </div>
+    

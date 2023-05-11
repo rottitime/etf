@@ -3,10 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
-      <div class="content caption">
-      </div>
+    <h1 class="highlight header3">{{title}}</h1>
 
       {{macros.select_from_list("economic_type", "Economic evaluation type", list=dropdown_choices.economic_type)}}
       {{macros.textarea("perspective_costs", "Perspective: costs")}}
@@ -14,7 +11,6 @@
       {{macros.textarea("monetisation_approaches", "Monetisation approach(es)")}}
       {{macros.textarea("economic_design_details", "Design details")}}
       {{macros.buttons(prev_url, id=data.id)}}
-    </fieldset>
   </form>
 {% endblock %}
 

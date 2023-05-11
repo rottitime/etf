@@ -100,6 +100,69 @@
 </div>
 {%- endmacro %}
 
+{% macro checkbox_from_list(name, label, list, empty_option=DEFAULT) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="checkbox">
+        <input type="checkbox" {{is_in(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+      <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+        {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
+      </div>
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
+{%- endmacro %}
+
+{% macro radios(name, label, list) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="radio">
+        <input type="radio" {{is_selected(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
+{%- endmacro %}
+
+{% macro radios_from_list(name, label, list, empty_option=DEFAULT) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="radio">
+        <input type="radio" {{is_selected(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+      <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+        {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
+      </div>
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
+{%- endmacro %}
+
 {% macro select_from_list(name, label, list, empty_option=DEFAULT) -%}
   {{select(name, label, list_to_options(list), empty_option="Please choose one...")}}
 {%- endmacro %}

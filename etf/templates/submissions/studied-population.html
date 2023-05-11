@@ -3,16 +3,12 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.textarea("studied_population", "Studied population including location(s)")}}
       {{macros.textarea("eligibility_criteria", "Eligibility criteria")}}
       {{macros.input("sample_size", "Sample size")}}
       {{macros.input("sample_size_units", "Sample size units")}}
       {{macros.textarea("sample_size_details", "Sample size details")}}
       {{macros.buttons(prev_url, id=data.id)}}
-    </fieldset>
   </form>
 {% endblock %}

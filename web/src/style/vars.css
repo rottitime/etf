@@ -54,4 +54,8 @@
   --status-color-red: #ff151f;
   --status-color-default: #545864;
   --status-color-blue: var(--color-blue);
+
+  /* forms */
+  --checkmark-size-small: 24px;
+  --checkmark-size-large: 32px;
 }

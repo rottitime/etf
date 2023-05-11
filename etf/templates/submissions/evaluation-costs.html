@@ -3,8 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
+      <h1 class="highlight header3">{{title}}</h1>
       <div class="content caption">
         <p>Enter the costs associated with the evaluation, broken down however makes sense for your project.</p>
 
@@ -25,6 +24,5 @@
         {% endblock %}
 
       </div>
-    </fieldset>
   </form>
 {% endblock %}

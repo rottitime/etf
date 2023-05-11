@@ -3,8 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
+    <h1 class="highlight">{{title}}</h1>
       <div class="content caption">
       <p>
         These are things you measure in the evaluations other than outcomes. This might be something that you want to include within your analysis, but you are not expecting it to be an outcome of the intervention in any way.
@@ -14,6 +13,5 @@
       </p>
       {% include "submissions/multiple-objects.html" %}
       </div>
-    </fieldset>
   </form>
 {% endblock %}

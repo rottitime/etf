@@ -3,13 +3,10 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
-      {{macros.select_from_list("event_date_name", "Event name", list=dropdown_choices.event_date_name)}}
-      {{macros.textarea("event_date_name_other", "If event name is 'Other', please provide more detail")}}
+    <h1 class="highlight header3">{{title}}</h1>
+      {{macros.radios_from_list("event_date_name", "Event type", dropdown_choices.event_date_name)}}
       {{macros.input_date("date", "Event date")}}
       {{macros.select_from_list("event_date_type", "Intended or actual date", list=dropdown_choices.event_date_type)}}
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 {% endblock %}
