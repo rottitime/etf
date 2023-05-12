@@ -648,11 +648,32 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
 def evaluation_overview_view(request, evaluation_id):
     user = request.user
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    relevant_pages = set().union(
+        *(
+            pages.evaluation_type_page_mapping.get(evaluation_type, set())
+            for evaluation_type in evaluation["evaluation_type"]
+        )
+    )
+    pages_to_remove = pages.all_evaluation_type_pages - relevant_pages
+    sections = pages.section_display_names
+    section_pages = pages.section_pages
+    section_pages = {
+        section: tuple(page for page in s_page if page not in pages_to_remove)
+        for section, s_page in section_pages.items()
+    }
+    section_statuses = {"sections": {}}
     statuses = evaluation["page_statuses"]
+
+    for section in sections:
+        pages_in_section = section_pages[section]
+        section_statuses["sections"][section] = {}
+        for page_in_section in pages_in_section:
+            section_statuses["sections"][section][page_in_section] = {"status": statuses[page_in_section]}
+
     data = {
-        "statuses": statuses,
+        "new": section_statuses,
         "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
-        "evaluation_id": evaluation_id,
+        "evaluation": evaluation,
     }
     errors = {}
     return render(request, "submissions/overview.html", {"errors": errors, "data": data})

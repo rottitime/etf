@@ -4,7 +4,7 @@ from etf.evaluation import utils
 
 
 class EvaluationPageStatus(utils.Choices):
-    DONE = "Done"
+    DONE = "Completed"
     IN_PROGRESS = "In progress"
     INCOMPLETE = "Incomplete"
     NOT_STARTED = "Not started"
@@ -41,6 +41,53 @@ page_display_names = {
     "links": "Links and IDs",
     "visibility": "Evaluation visibility",
     "end": "End",
+}
+
+section_display_names = {
+    "general": "General",
+    "interventions-and-measures": "Interventions and measures",
+    "design-analysis": "Design and analysis",
+    "findings": "Findings",
+    "further-information": "Further information",
+}
+
+section_pages = {
+    "general": (
+        "intro",
+        "title",
+        "description",
+        "event-dates",
+        "evaluation-types",
+    ),
+    "interventions-and-measures": (
+        "interventions",
+        "outcome-measures",
+        "other-measures",
+    ),
+    "design-analysis": (
+        "studied-population",
+        "participant-recruitment",
+        "impact-design",
+        "impact-analysis",
+        "economic-design",
+        "economic-analysis",
+        "process-design",
+        "process-analysis",
+        "other-design",
+        "other-analysis",
+    ),
+    "findings": (
+        "impact-findings",
+        "economic-findings",
+        "process-findings",
+        "other-findings",
+    ),
+    "further-information": (
+        "processes-standards",
+        "evaluation-costs",
+        "links",
+        "ethics",
+    ),
 }
 
 page_url_names = (
@@ -87,14 +134,14 @@ object_page_url_names = {
     "event-dates": "event-date-page",
 }
 
-_evaluation_type_page_mapping = {
+evaluation_type_page_mapping = {
     "IMPACT": set(("impact-analysis", "impact-design", "impact-findings")),
     "PROCESS": set(("process-analysis", "process-design", "process-findings")),
     "ECONOMIC": set(("economic-analysis", "economic-design", "economic-findings")),
     "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }
 
-_all_evaluation_type_pages = set().union(*_evaluation_type_page_mapping.values())
+all_evaluation_type_pages = set().union(*evaluation_type_page_mapping.values())
 
 
 def get_prev_next_page_name(page_name, evaluation_types):
@@ -118,9 +165,9 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 @utils.dictify
 def get_page_name_and_order(evaluation_types):
     pages_to_keep = set().union(
-        *(_evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
+        *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
-    pages_to_remove = _all_evaluation_type_pages - pages_to_keep
+    pages_to_remove = all_evaluation_type_pages - pages_to_keep
     counter = itertools.count(0)
 
     for page_name in page_url_names:
@@ -130,3 +177,7 @@ def get_page_name_and_order(evaluation_types):
 
 def get_default_page_statuses():
     return dict(default_page_statuses)
+
+
+def get_section_title(section):
+    return section_display_names[section] or section
