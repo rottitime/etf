@@ -212,6 +212,7 @@ process_findings_help_text = defaultdict(
 processes_standard_help_text = defaultdict(
     str,
     {
+        "name": "If you have completed most fields in the Evaluation Registry, you will normally be able to claim at least partial conformity with the [Standard for producing evidence of the effectiveness of interventions (StEv2-1::2016)](https://repository.essex.ac.uk/32376/1/StEv2-1-2016%20Effectiveness-Specification.pdf)",
         "description": "Provide any information needed to describe the evaluation's conformity with the standard.",
     },
 )
@@ -223,7 +224,7 @@ studied_population_help_text = defaultdict(
         "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
         "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
         "sample_size": "The overall sample size of the evaluation.",
-        "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
+        "sample_size_details": "Details of the sample size and how the sample size was determined.",
     },
 )
 
@@ -663,7 +664,7 @@ visibility_guidance_text = defaultdict(
         "visibility": [
             "Draft evaluations are only visible to the users assigned to it.",
             "Evaluations marked 'Civil Service' are visible to all civil servants.",
-            "Evaluations marked 'public' are visible to anyone",
+            "Evaluations marked 'Public' are visible to anyone. Before marking an evaluation as public, please ensure you have completed any processes in your organisation / department that are required for publishing.",
         ],
     },
 )
@@ -689,6 +690,7 @@ studied_population_guidance_text = defaultdict(
             "This will normally be 'people' as each unit within an evaluation is a person. It can, however, be another unit if the population is of some other type, eg if the results are per-school or similar."
         ],
         "sample_size_details": [
+            "For an evaluation that is comparing two or more interventions, this should include the number per 'arm' of the study (the number allocated to each intervention).",
             "If a calculation was used to determine the sample size, identify the primary outcome on which the calculation was based, all the quantities used in the calculation, and the resulting target sample size per arm.",
             "Details should be given of any allowance made for attrition or non-compliance during the study.",
         ],
