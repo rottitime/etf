@@ -43,7 +43,7 @@
   </div>
   <div class="col sidebar">
     <div class="card mb-24 small">
-      <h3 class="header5 highlight mb-0">Publish Status</h3>
+      <h3 class="header5 highlight mb-0">Publish status</h3>
       {% if data.evaluation.visibility == "DRAFT" %}
         <p>Currently not viewable by anybody</p>
       {% elif data.evaluation.visibility == "CIVIL_SERVICE" %}
@@ -61,7 +61,7 @@
       <hr class="my-16">
 
       <p>
-        Want to review what other Civil Servants will see when this evaluation
+        Want to review what other civil servants will see when this evaluation
         is published?
       </p>
       <a href="{{url('evaluation-summary', data.evaluation.id)}}" class="bttn-secondary full-width small">Preview</a>
