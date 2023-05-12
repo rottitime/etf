@@ -522,6 +522,14 @@ def test_invite_collaborators():
     evaluation = models.Evaluation.objects.first()
     evaluation.users.add(user)
     evaluation_id = evaluation.id
-    evaluation_page = client.get(f"/evaluation/{evaluation_id}/")
-    assert evaluation_page.status_code == 200
+    contributor_page = client.get(f"/evaluation-contributors/{evaluation_id}/")
+    assert contributor_page.status_code == 200
     # TODO - add actually inviting collaborators!
+    form = contributor_page.get_form("""form:not([action])""")
+    form.set(field_name="add-user-email", value="nina@example.com")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("nina@example.com")
+
+
+# TODO
