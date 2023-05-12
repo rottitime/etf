@@ -3,16 +3,11 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
-
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.input("name_of_grant", "Name of grant")}}
       {{macros.input("grant_number", "Grant number")}}
       {{macros.input("grant_details", "Grant details")}}
 
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 {% endblock %}

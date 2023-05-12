@@ -76,7 +76,7 @@ evaluation_cost_help_text = defaultdict(
 event_date_help_text = defaultdict(
     str,
     {
-        "grant_details": "Provide any further details about this grant as required.",
+        "event_date_name": "Select all types of information covered in this document.",
     },
 )
 
@@ -84,7 +84,7 @@ event_date_help_text = defaultdict(
 grant_help_text = defaultdict(
     str,
     {
-        "event_date_name": "Select all types of information covered in this document.",
+        "grant_details": "Provide any further details about this grant as required.",
     },
 )
 

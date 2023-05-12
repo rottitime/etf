@@ -663,6 +663,7 @@ class Grant(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSa
         searchable_fields = [
             str(self.name_of_grant),
             str(self.grant_number),
+            str(self.grant_details),
         ]
 
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
