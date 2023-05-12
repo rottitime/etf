@@ -595,6 +595,9 @@ options_guidance_text = defaultdict(
         "ethics_option": [
             "Select whether to complete a set of questions providing information addressing ethical considerations regarding the evaluation.",
         ],
+        "grants_option": [
+            "If there is grant funding, there will be an opportunity later for you to provide brief information about each relevant grant.",
+        ],
     },
 )
 
