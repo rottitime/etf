@@ -663,9 +663,7 @@ def evaluation_overview_view(request, evaluation_id):
                 "status": statuses[page_in_section]
             }
 
-    astatuses = evaluation["page_statuses"]
     data = {
-        "statuses": astatuses,
         "new": section_statuses,
         "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
         "evaluation": evaluation,
