@@ -9,6 +9,7 @@ from . import utils
 
 def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
+    user.set_password("pink-elephant")
     user.save()
     evaluation = models.Evaluation(title="An Evaluation")
     evaluation.save()
@@ -511,3 +512,16 @@ def complete_verify_multiple_object_page(page, title, new_item_name, added_item_
     assert not object_deleted_summary_page.has_text(new_item_name)
     assert not object_deleted_summary_page.has_text(added_item_name)
     return object_deleted_summary_page.click(contains="Next")
+
+
+@with_setup(setup_eval, teardown_eval)
+def test_invite_collaborators():
+    client = utils.make_testino_client()
+    utils.register(client, email="test-contributors@example.com", password="pink-elephants")
+    user = models.User.objects.get(email="test-contributors@example.com")
+    evaluation = models.Evaluation.objects.first()
+    evaluation.users.add(user)
+    evaluation_id = evaluation.id
+    evaluation_page = client.get(f"/evaluation/{evaluation_id}/")
+    assert evaluation_page.status_code == 200
+    # TODO - add actually inviting collaborators!
