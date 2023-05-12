@@ -36,6 +36,7 @@ class CustomLoginView(MethodDispatcher):
                             request, "account/login.html", {"resend_verification": True, "resend_email": user.email}
                         )
                 login(request, user)
+                request.session["session_created_at"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
                 return redirect("index")
             else:
                 messages.error(request, "The email address or password you entered is incorrect. Please try again.")
