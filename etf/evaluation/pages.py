@@ -182,4 +182,3 @@ def get_default_page_statuses():
 
 def get_section_title(section):
     return section_display_names[section] or section
-

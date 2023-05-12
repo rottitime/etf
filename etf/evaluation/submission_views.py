@@ -650,18 +650,14 @@ def evaluation_overview_view(request, evaluation_id):
     evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
     sections = pages.section_display_names
     section_pages = pages.section_pages
-    section_statuses = {
-        "sections": {}
-    }
+    section_statuses = {"sections": {}}
     statuses = evaluation["page_statuses"]
 
     for section in sections:
         pages_in_section = section_pages[section]
         section_statuses["sections"][section] = {}
         for page_in_section in pages_in_section:
-            section_statuses["sections"][section][page_in_section] = {
-                "status": statuses[page_in_section]
-            }
+            section_statuses["sections"][section][page_in_section] = {"status": statuses[page_in_section]}
 
     data = {
         "new": section_statuses,
