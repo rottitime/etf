@@ -112,19 +112,14 @@ def test_verify_email():
     assert signed_up_page.has_text("A verification email has been sent to your email address.")
 
     verify_url = utils._get_latest_email_url()
-
     verify_page = client.get(verify_url)
-
     assert verify_page.has_text("Your account has been successfully verified.")
 
     login_page = client.get("/accounts/login/")
-
     form = login_page.get_form()
     form["login"] = "test-verification@example.com"
     form["password"] = VALID_USER_PASSWORD1
-
     home_page = form.submit().follow()
-
     assert home_page.has_text("Create evaluation")
 
 
@@ -137,30 +132,21 @@ def test_password_reset():
     form = page.get_form()
     form["email"] = VALID_USER_EMAIL
     page = form.submit()
-
     assert page.has_text("Please check your email for a link to reset your password.")
 
     url = utils._get_latest_email_url()
-
     page = client.get(url)
-
     form = page.get_form()
     form["password1"] = VALID_USER_PASSWORD2
     form["password2"] = VALID_USER_PASSWORD2
-
     page = form.submit()
-
     assert page.has_text("Your password has been successfully updated, please login again.")
 
     page = client.get("/accounts/login/")
-
     form = page.get_form()
-
     form["login"] = VALID_USER_EMAIL
     form["password"] = VALID_USER_PASSWORD2
-
     page = form.submit().follow()
-
     assert page.has_text("Create evaluation")
 
 
