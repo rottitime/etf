@@ -64,6 +64,10 @@ def get_page_progress_icon(progress_status):
     return page_progress_icon_dict[progress_status]
 
 
+def get_section_title(section):
+    return pages.get_section_title(section)
+
+
 def list_to_options(iterable):
     result = tuple({"value": item[0], "text": item[1]} for item in iterable)
     return result
@@ -78,6 +82,21 @@ def markdown(text, cls=None):
     html = markdown_converter.render(text).strip()
     html = html.replace("<p>", f'<p class="{cls or ""}">', 1).replace("</p>", "", 1)
     return html
+
+
+def get_status_chip_colour(status):
+    if status == pages.EvaluationPageStatus.NOT_STARTED:
+        return "blue"
+    if status == pages.EvaluationPageStatus.DONE:
+        return "green"
+    if status == pages.EvaluationPageStatus.INCOMPLETE:
+        return "orange"
+    return "blue"
+
+
+def get_visibility_display_name_for_evaluation(evaluation_id):
+    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
+    return evaluation.get_visibility_display_name()
 
 
 def environment(**options):
@@ -106,6 +125,9 @@ def environment(**options):
             "get_field_guidance_text": fields.get_field_guidance_text,
             "space_name": settings.VCAP_APPLICATION.get("space_name", "unknown"),
             "markdown": markdown,
+            "get_section_title": get_section_title,
+            "get_status_chip_colour": get_status_chip_colour,
+            "get_visibility_display_name_for_evaluation": get_visibility_display_name_for_evaluation
         }
     )
     return env
