@@ -524,12 +524,15 @@ def test_invite_collaborators():
     evaluation_id = evaluation.id
     contributor_page = client.get(f"/evaluation-contributors/{evaluation_id}/")
     assert contributor_page.status_code == 200
-    # TODO - add actually inviting collaborators!
+    # Check adding valid and invalid emails
     form = contributor_page.get_form("""form:not([action])""")
-    form.set(field_name="add-user-email", value="nina@example.com")
+    form.set(field_name="email", value="nina@example.com")
     response = form.submit()
     assert response.status_code == 200
     assert response.has_text("nina@example.com")
-
-
-# TODO
+    form = response.get_form("""form:not([action])""")
+    form.set(field_name="email", value="invalid@example.org")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("This should be a valid Civil Service email")
+    assert not response.has_text("invalid@example.org")
