@@ -44,7 +44,13 @@
   <div class="col sidebar">
     <div class="card mb-24 small">
       <h3 class="header5 highlight mb-0">Publish Status</h3>
-      <p>Currently not viewable by anybody</p>
+      {% if data.evaluation.visibility == "DRAFT" %}
+        <p>Currently not viewable by anybody</p>
+      {% elif data.evaluation.visibility == "CIVIL_SERVICE" %}
+        <p>Currently viewable by civil servants only</p>
+      {% elif data.evaluation.visibility == "PUBLIC" %}
+        <p>Currently viewable by anybody</p>
+      {% endif %}
 
       <div class="chip orange" role="status">{{get_visibility_display_name_for_evaluation(data.evaluation.id)}}</div>
       <hr class="my-16">
