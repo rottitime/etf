@@ -24,6 +24,11 @@
           <h3 class="header5">{{  get_section_title(section) }}</h3>
         </header>
         <ul class="index">
+          {% if data.new["sections"][section] | length <= 0 %}
+            <li>
+              <span>Choose <a href="{{url('evaluation-types', data.evaluation.id)}}"> Evaluation type</a> to add</span>
+            </li>
+          {% endif %}
           {% for page in data.new["sections"][section] %}
           <li>
             <a href="{{url(page, data.evaluation.id)}}">{{ get_page_display_name(page) }}</a>

@@ -58,7 +58,6 @@ section_pages = {
         "description",
         "event-dates",
         "evaluation-types",
-        "visibility",
     ),
     "interventions-and-measures": (
         "interventions",
@@ -135,14 +134,14 @@ object_page_url_names = {
     "event-dates": "event-date-page",
 }
 
-_evaluation_type_page_mapping = {
+evaluation_type_page_mapping = {
     "IMPACT": set(("impact-analysis", "impact-design", "impact-findings")),
     "PROCESS": set(("process-analysis", "process-design", "process-findings")),
     "ECONOMIC": set(("economic-analysis", "economic-design", "economic-findings")),
     "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }
 
-_all_evaluation_type_pages = set().union(*_evaluation_type_page_mapping.values())
+all_evaluation_type_pages = set().union(*evaluation_type_page_mapping.values())
 
 
 def get_prev_next_page_name(page_name, evaluation_types):
@@ -166,9 +165,9 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 @utils.dictify
 def get_page_name_and_order(evaluation_types):
     pages_to_keep = set().union(
-        *(_evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
+        *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
-    pages_to_remove = _all_evaluation_type_pages - pages_to_keep
+    pages_to_remove = all_evaluation_type_pages - pages_to_keep
     counter = itertools.count(0)
 
     for page_name in page_url_names:
