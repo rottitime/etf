@@ -127,7 +127,7 @@ def environment(**options):
             "markdown": markdown,
             "get_section_title": get_section_title,
             "get_status_chip_colour": get_status_chip_colour,
-            "get_visibility_display_name_for_evaluation": get_visibility_display_name_for_evaluation
+            "get_visibility_display_name_for_evaluation": get_visibility_display_name_for_evaluation,
         }
     )
     return env
