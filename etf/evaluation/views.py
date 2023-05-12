@@ -15,7 +15,7 @@ from etf.evaluation import interface, schemas
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
-from .utils import is_civil_service_email, restrict_to_permitted_evaluations
+from .utils import restrict_to_permitted_evaluations
 
 
 class MethodDispatcher:
@@ -180,10 +180,6 @@ class EvaluationContributor(MethodDispatcher):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
-            user_email = serialized_user["email"]
-            # At the moment only have civil servant users, but this ensures works fine when external
-            is_external_user = not is_civil_service_email(user_email)
-            serialized_user["is_external_user"] = is_external_user
             output = interface.facade.evaluation.add_user_to_evaluation(
                 evaluation_id=evaluation_id, user_data=serialized_user
             )
