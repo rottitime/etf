@@ -4,7 +4,7 @@ from etf.evaluation import utils
 
 
 class EvaluationPageStatus(utils.Choices):
-    DONE = "Done"
+    DONE = "Completed"
     IN_PROGRESS = "In progress"
     INCOMPLETE = "Incomplete"
     NOT_STARTED = "Not started"
@@ -58,7 +58,7 @@ section_pages = {
         "description",
         "event-dates",
         "evaluation-types",
-        "status",
+        "visibility",
     ),
     "interventions-and-measures": (
         "interventions",
@@ -178,3 +178,8 @@ def get_page_name_and_order(evaluation_types):
 
 def get_default_page_statuses():
     return dict(default_page_statuses)
+
+
+def get_section_title(section):
+    return section_display_names[section] or section
+
