@@ -5,3 +5,13 @@
   overflow-x: hidden;
   max-height: 530px;
 }
+
+.invite-collaborator {
+  &.space-between {
+    align-items: start;
+  }
+
+  & .bttn-primary {
+    margin-top: 32px;
+  }
+}
