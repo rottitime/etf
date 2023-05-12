@@ -168,13 +168,11 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 
 @utils.dictify
 def get_page_name_and_order(evaluation_types, page_options):
-    #evaluation_types = page_options["evaluation_types"]
-    issue_description_option = page_options["issue_description_option"]
     pages_to_keep = set().union(
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
     pages_to_remove = _all_evaluation_type_pages - pages_to_keep
-    if issue_description_option != "YES":
+    if page_options["issue_description_option"] != "YES":
         pages_to_remove.add("issue-description")
     if page_options["ethics_option"] != "YES":
         pages_to_remove.add("ethics")
