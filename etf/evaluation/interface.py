@@ -37,6 +37,11 @@ class UpdatedEvaluationUsersSchema(marshmallow.Schema):
     user_created = marshmallow.fields.Boolean()
 
 
+class RemoveEvaluationUserSchema(marshmallow.Schema):
+    evaluation_id = marshmallow.fields.UUID()
+    user_id = marshmallow.fields.UUID()
+
+
 class Evaluation(Entity):
     @with_schema(load=CreateEvaluationSchema, dump=schemas.EvaluationSchema)
     @register_event("Evaluation created")
@@ -77,6 +82,14 @@ class Evaluation(Entity):
         evaluation.users.add(user)
         output = {"evaluation_id": evaluation_id, "user_id": user.id, "user_created": user_created}
         return output
+
+    @with_schema(load=RemoveEvaluationUserSchema, dump=schemas.UserSchema)
+    @register_event("User removed from evaluation")
+    def remove_user_from_evaluation(self, evaluation_id, user_id):
+        evaluation = models.Evaluation.objects.get(id=evaluation_id)
+        user = models.User.objects.get(id=user_id)
+        evaluation.users.remove(user)
+        return evaluation.users.all()
 
 
 facade = Facade(evaluation=Evaluation())
