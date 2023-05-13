@@ -43,7 +43,7 @@
   </div>
   <div class="col sidebar">
     <div class="card mb-24 small">
-      <h3 class="header5 highlight mb-0">Publish status</h3>
+      <h3 class="header5 highlight mb-0">Visibility status</h3>
       {% if data.evaluation.visibility == "DRAFT" %}
         <p>Currently not viewable by anybody</p>
       {% elif data.evaluation.visibility == "CIVIL_SERVICE" %}
@@ -54,22 +54,21 @@
 
       <div class="chip orange" role="status">{{get_visibility_display_name_for_evaluation(data.evaluation.id)}}</div>
       <hr class="my-16">
-      <p>Ready to publish this evaluation?</p>
+      <p>Ready to share this evaluation?</p>
 
       <a href="{{url('visibility', data.evaluation.id)}}" class="bttn-primary full-width small">Manage visibility</a>
 
       <hr class="my-16">
 
       <p>
-        Want to review what other civil servants will see when this evaluation
-        is published?
+        Want to review what others will see when this evaluation is shared?
       </p>
       <a href="{{url('evaluation-summary', data.evaluation.id)}}" class="bttn-secondary full-width small">Preview</a>
     </div>
 
     <div class="mb-24 card small">
       <h3 class="mb-0 header5 highlight">Collaborators</h3>
-      <p>Add collaborators to this evaluation, so they can edit and publish</p>
+      <p>Add collaborators to this evaluation, so they can edit and share</p>
       <a href="{{url('evaluation-contributors', data.evaluation.id)}}" class="bttn-secondary full-width small">
         Manage collaborators
       </a>
