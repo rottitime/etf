@@ -39,6 +39,7 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
 
 
 class AddUserToEvaluationSchema(marshmallow.Schema):
+    user_id = marshmallow.fields.UUID()
     evaluation_id = marshmallow.fields.UUID()
     user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)
 
@@ -104,7 +105,7 @@ class Evaluation(Entity):
 
     @with_schema(load=AddUserToEvaluationSchema, dump=UpdatedEvaluationUsersSchema)
     @register_event("User added to evaluation")
-    def add_user_to_evaluation(self, evaluation_id, user_to_add_data):
+    def add_user_to_evaluation(self, user_id, evaluation_id, user_to_add_data):
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
         user_added, is_new_user = models.User.objects.update_or_create(
             email=user_to_add_data["email"], defaults=user_to_add_data
