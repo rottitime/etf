@@ -181,7 +181,7 @@ class EvaluationContributor(MethodDispatcher):
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
             output = interface.facade.evaluation.add_user_to_evaluation(
-                evaluation_id=evaluation_id, user_data=serialized_user
+                evaluation_id=evaluation_id, user_to_add_data=serialized_user
             )
             user_added = models.User.objects.get(id=output["user_added_id"])
             if output["is_new_user"]:
