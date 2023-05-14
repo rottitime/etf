@@ -27,9 +27,9 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
 
 
 class AddUserToEvaluationSchema(marshmallow.Schema):
-    user_id = marshmallow.fields.UUID()
+    user_id = marshmallow.fields.UUID()  # User making request
     evaluation_id = marshmallow.fields.UUID()
-    user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)
+    user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)  # User being added
 
 
 class UpdatedEvaluationUsersSchema(marshmallow.Schema):
