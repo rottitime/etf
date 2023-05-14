@@ -201,12 +201,12 @@ class EvaluationContributor(MethodDispatcher):
 @login_required
 @require_http_methods(["POST", "GET"])
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "POST":
         email = email_to_remove
-        user = models.User.objects.get(email=email)
-        evaluation.users.remove(user)
-        evaluation.save()
-        if request.user == user:
+        user_to_remove = models.User.objects.get(email=email)
+        interface.facade.evaluation.remove_user_from_evaluation(
+            user_id=request.user.id, evaluation_id=evaluation_id, user_to_remove_id=user_to_remove.id
+        )
+        if request.user == user_to_remove:
             return redirect("index")
         return redirect("evaluation-contributors", evaluation_id=evaluation_id)
