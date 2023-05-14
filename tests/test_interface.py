@@ -37,3 +37,6 @@ def test_evaluation_facade():
     user_emails = [x["email"] for x in result]
     assert "new_user@example.com" not in user_emails, user_emails
     assert "mr_interface_test@example.com" in user_emails, user_emails
+
+
+# TODO - more tests for load/dump
