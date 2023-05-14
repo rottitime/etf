@@ -38,7 +38,7 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
 #     is_new_user = marshmallow.fields.Boolean()
 
 
-class UpdateEvaluationUsersSchema(marshmallow.Schema):
+class AddUserToEvaluationSchema(marshmallow.Schema):
     evaluation_id = marshmallow.fields.UUID()
     user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)
 
@@ -102,7 +102,7 @@ class Evaluation(Entity):
     #     output = {"evaluation_id": evaluation_id, "user_added_id": user_added.id, "is_new_user": is_new_user}
     #     return output
 
-    @with_schema(load=UpdateEvaluationUsersSchema, dump=UpdatedEvaluationUsersSchema)
+    @with_schema(load=AddUserToEvaluationSchema, dump=UpdatedEvaluationUsersSchema)
     @register_event("User added to evaluation")
     def add_user_to_evaluation(self, evaluation_id, user_to_add_data):
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
