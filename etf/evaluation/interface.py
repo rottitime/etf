@@ -87,7 +87,7 @@ class Evaluation(Entity):
         output = {"evaluation_id": evaluation_id, "user_added_id": user_added.id, "is_new_user": is_new_user}
         return output
 
-    @with_schema(load=RemoveEvaluationUserSchema, dump=schemas.UserSchema, load_many=False, dump_many=True)
+    @with_schema(load=RemoveEvaluationUserSchema, dump=schemas.UserSchema(many=True))
     @register_event("User removed from evaluation")
     def remove_user_from_evaluation(self, user_id, evaluation_id, user_to_remove_id):
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
