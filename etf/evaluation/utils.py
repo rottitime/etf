@@ -52,10 +52,10 @@ def _register_event(event_name, arguments):
     event.save()
 
 
-def resolve_schema(schema):
+def resolve_schema(schema, many=False):
     """Allow either a class or an instance to be passed"""
     if isinstance(schema, marshmallow.schema.SchemaMeta):
-        schema = schema()
+        schema = schema(many=many)
     return schema
 
 
@@ -94,19 +94,19 @@ def check_edit_evaluation_permission(func):
     return wrapper
 
 
-def apply_schema(schema, data, load_or_dump):
+def apply_schema(schema, data, load_or_dump, many=False):
     """Apply a schema to some data"""
     if not schema:
         return data
     if load_or_dump not in ("load", "dump"):
         raise ValueError(f"Unknown value {load_or_dump}")
     if schema:
-        schema = resolve_schema(schema)
+        schema = resolve_schema(schema, many)
         arguments = getattr(schema, load_or_dump)(data)
     return arguments
 
 
-def with_schema(default=None, load=None, dump=None):
+def with_schema(default=None, load=None, dump=None, load_many=False, dump_many=False):
     """Applies the load_schema.load on the arguments to the function,
     and dump_schema.dump on the result of the function.
 
@@ -120,9 +120,9 @@ def with_schema(default=None, load=None, dump=None):
         def _inner(*args, **kwargs):
             arguments = get_arguments(func, *args, **kwargs)
             bound_func, arguments = process_self(func, arguments)
-            arguments = apply_schema(load_schema, arguments, "load")
+            arguments = apply_schema(load_schema, arguments, "load", many=load_many)
             result = bound_func(**arguments)
-            result = apply_schema(dump_schema, result, "dump")
+            result = apply_schema(dump_schema, result, "dump", many=dump_many)
             return result
 
         return _inner

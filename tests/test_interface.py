@@ -19,13 +19,21 @@ def test_evaluation_facade():
     assert result["monetisation_approaches"] == "Sell, sell, sell"
 
     result = interface.facade.evaluation.add_user_to_evaluation(
-        evaluation_id=evaluation_id, user_data={"email": "new_user@example.com"}
+        evaluation_id=evaluation_id, user_id=user.id, user_to_add_data={"email": "new_user@example.com"}
     )
-    assert result["user_created"], result
+    assert result["is_new_user"], result
     assert result["evaluation_id"] == evaluation_id, result
+    new_user_id = result["user_added_id"]
 
     result = interface.facade.evaluation.add_user_to_evaluation(
-        evaluation_id=evaluation_id, user_data={"email": "mr_interface_test@example.com"}
+        user_id=user.id, evaluation_id=evaluation_id, user_to_add_data={"email": "mr_interface_test@example.com"}
     )
-    assert not result["user_created"], result
+    assert not result["is_new_user"], result
     assert result["evaluation_id"] == evaluation_id, result
+
+    result = interface.facade.evaluation.remove_user_from_evaluation(
+        user_id=user.id, evaluation_id=evaluation_id, user_to_remove_id=new_user_id
+    )
+    user_emails = [x["email"] for x in result]
+    assert "new_user@example.com" not in user_emails, user_emails
+    assert "mr_interface_test@example.com" in user_emails, user_emails

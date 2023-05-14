@@ -26,20 +26,22 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
     status = marshmallow.fields.Str()
 
 
-class UpdateEvaluationUsersSchema(marshmallow.Schema):
+class AddUserToEvaluationSchema(marshmallow.Schema):
+    user_id = marshmallow.fields.UUID()  # User doing adding
     evaluation_id = marshmallow.fields.UUID()
-    user_data = marshmallow.fields.Nested(schemas.UserSchema)
+    user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)  # User being added
 
 
 class UpdatedEvaluationUsersSchema(marshmallow.Schema):
     evaluation_id = marshmallow.fields.UUID()
-    user_id = marshmallow.fields.UUID()
-    user_created = marshmallow.fields.Boolean()
+    user_added_id = marshmallow.fields.UUID()
+    is_new_user = marshmallow.fields.Boolean()
 
 
 class RemoveEvaluationUserSchema(marshmallow.Schema):
-    evaluation_id = marshmallow.fields.UUID()
     user_id = marshmallow.fields.UUID()
+    evaluation_id = marshmallow.fields.UUID()
+    user_to_remove_id = marshmallow.fields.UUID()
 
 
 class Evaluation(Entity):
@@ -74,21 +76,27 @@ class Evaluation(Entity):
         evaluation.save()
         return evaluation
 
-    @with_schema(load=UpdateEvaluationUsersSchema, dump=UpdatedEvaluationUsersSchema)
+    @with_schema(load=AddUserToEvaluationSchema, dump=UpdatedEvaluationUsersSchema)
     @register_event("User added to evaluation")
-    def add_user_to_evaluation(self, evaluation_id, user_data):
+    def add_user_to_evaluation(self, user_id, evaluation_id, user_to_add_data):
+        print("adding user...")
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
-        user, user_created = models.User.objects.update_or_create(email=user_data["email"], defaults=user_data)
-        evaluation.users.add(user)
-        output = {"evaluation_id": evaluation_id, "user_id": user.id, "user_created": user_created}
+        print(f"user_to_add_data: {user_to_add_data}")
+        user_added, is_new_user = models.User.objects.update_or_create(
+            email=user_to_add_data["email"], defaults=user_to_add_data
+        )
+        print("user_added")
+        print(user_added)
+        evaluation.users.add(user_added)
+        output = {"evaluation_id": evaluation_id, "user_added_id": user_added.id, "is_new_user": is_new_user}
         return output
 
-    @with_schema(load=RemoveEvaluationUserSchema, dump=schemas.UserSchema)
+    @with_schema(load=RemoveEvaluationUserSchema, dump=schemas.UserSchema, load_many=False, dump_many=True)
     @register_event("User removed from evaluation")
-    def remove_user_from_evaluation(self, evaluation_id, user_id):
+    def remove_user_from_evaluation(self, user_id, evaluation_id, user_to_remove_id):
         evaluation = models.Evaluation.objects.get(id=evaluation_id)
-        user = models.User.objects.get(id=user_id)
-        evaluation.users.remove(user)
+        user_to_remove = models.User.objects.get(id=user_to_remove_id)
+        evaluation.users.remove(user_to_remove)
         return evaluation.users.all()
 
 

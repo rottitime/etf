@@ -180,15 +180,15 @@ class EvaluationContributor(MethodDispatcher):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         try:
             serialized_user = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
+            print(f"serialized user: {serialized_user}")
             output = interface.facade.evaluation.add_user_to_evaluation(
-                evaluation_id=evaluation_id, user_data=serialized_user
+                user_id=request.user, evaluation_id=evaluation_id, user_to_add_data=serialized_user
             )
-            is_new_user = output["user_created"]
-            user = models.User.objects.get(id=output["user_id"])
-            if is_new_user:
-                send_invite_email(user)
+            added_user = models.User.objects.get(id=output["user_added_id"])
+            if output["is_new_user"]:
+                send_invite_email(added_user)
             else:
-                send_contributor_added_email(user, evaluation_id)
+                send_contributor_added_email(added_user, evaluation_id)
         except ValidationError as err:
             errors = dict(err.messages)
         users = evaluation.users.all()
