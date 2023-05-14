@@ -26,18 +26,6 @@ class UpdateEvaluationVisibilitySchema(marshmallow.Schema):
     status = marshmallow.fields.Str()
 
 
-# class AddUserToEvaluationSchema(marshmallow.Schema):
-#     user_id = marshmallow.fields.UUID()  # User doing adding
-#     evaluation_id = marshmallow.fields.UUID()
-#     user_to_add_data = marshmallow.fields.Nested(schemas.UserSchema)  # User being added
-
-
-# class UpdatedEvaluationUsersSchema(marshmallow.Schema):
-#     evaluation_id = marshmallow.fields.UUID()
-#     user_added_id = marshmallow.fields.UUID()
-#     is_new_user = marshmallow.fields.Boolean()
-
-
 class AddUserToEvaluationSchema(marshmallow.Schema):
     user_id = marshmallow.fields.UUID()
     evaluation_id = marshmallow.fields.UUID()
@@ -87,21 +75,6 @@ class Evaluation(Entity):
         evaluation.update_evaluation_page_status(page_name, status)
         evaluation.save()
         return evaluation
-
-    # @with_schema(load=AddUserToEvaluationSchema, dump=UpdatedEvaluationUsersSchema)
-    # @register_event("User added to evaluation")
-    # def add_user_to_evaluation(self, user_id, evaluation_id, user_to_add_data):
-    #     print("adding user...")
-    #     evaluation = models.Evaluation.objects.get(id=evaluation_id)
-    #     print(f"user_to_add_data: {user_to_add_data}")
-    #     user_added, is_new_user = models.User.objects.update_or_create(
-    #         email=user_to_add_data["email"], defaults=user_to_add_data
-    #     )
-    #     print("user_added")
-    #     print(user_added)
-    #     evaluation.users.add(user_added)
-    #     output = {"evaluation_id": evaluation_id, "user_added_id": user_added.id, "is_new_user": is_new_user}
-    #     return output
 
     @with_schema(load=AddUserToEvaluationSchema, dump=UpdatedEvaluationUsersSchema)
     @register_event("User added to evaluation")
