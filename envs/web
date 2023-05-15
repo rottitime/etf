@@ -16,4 +16,5 @@ SEND_VERIFICATION_EMAIL = True
 VCAP_APPLICATION='{"space_name": "local"}'
 CONTACT_EMAIL="test@example.com"
 FROM_EMAIL="test@example.com"
+SESSION_COOKIE_AGE=86400
 SESSION_MAX_AGE=604800

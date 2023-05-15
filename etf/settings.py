@@ -88,7 +88,8 @@ MIDDLEWARE = [
 if VCAP_APPLICATION.get("space_name", "unknown") not in ["tests", "local"]:
     SESSION_COOKIE_SECURE = True
 
-SESSION_COOKIE_AGE = 86400  # 24 hours in seconds
+SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", default=60*60*24)  # Rolling timeout of 24 hours
+SESSION_MAX_AGE = env.int("SESSION_MAX_AGE", default=60*60*24*7)  # Forced logout 7 days after login
 SESSION_SAVE_EVERY_REQUEST = True
 
 # CSRF settings
