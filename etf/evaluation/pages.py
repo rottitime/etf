@@ -58,6 +58,7 @@ section_pages = {
         "description",
         "event-dates",
         "evaluation-types",
+        "issue-description",
     ),
     "interventions-and-measures": (
         "interventions",
