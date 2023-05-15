@@ -75,6 +75,7 @@ if DEBUG:
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "etf.evaluation.session_middleware.MaxAgeSessionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -86,6 +87,10 @@ MIDDLEWARE = [
 
 if VCAP_APPLICATION.get("space_name", "unknown") not in ["tests", "local"]:
     SESSION_COOKIE_SECURE = True
+
+SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", default=60 * 60 * 24)  # Rolling timeout of 24 hours
+SESSION_MAX_AGE = env.int("SESSION_MAX_AGE", default=60 * 60 * 24 * 7)  # Forced logout 7 days after login
+SESSION_SAVE_EVERY_REQUEST = True
 
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = True
