@@ -7,6 +7,7 @@ from django.shortcuts import render
 from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
 from etf.evaluation.utils import restrict_to_permitted_evaluations
+from etf.evaluation.choices import EvaluationVisibility
 
 
 @login_required
@@ -16,13 +17,12 @@ def filter_evaluations_to_download(request):
     restricted_evaluations = restrict_to_permitted_evaluations(user, qs)
     output_qs = Evaluation.objects.none()
     if "civil_service_only" in request.GET:
-        civil_service_evals = restricted_evaluations.filter(status="CIVIL_SERVICE")
+        civil_service_evals = restricted_evaluations.filter(visibility=EvaluationVisibility.CIVIL_SERVICE.value)
         output_qs = output_qs | civil_service_evals
     if "public" in request.GET:
-        public_evals = restricted_evaluations.filter(status="PUBLIC")
+        public_evals = restricted_evaluations.filter(visibility=EvaluationVisibility.PUBLIC.value)
         output_qs = output_qs | public_evals
     if "my_evaluations" in request.GET:
-        user = request.user
         user_evals = user.evaluations.all()
         output_qs = output_qs | user_evals
     return output_qs
