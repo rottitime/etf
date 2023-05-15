@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from etf.evaluation.choices import EvaluationVisibility
 from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
 from etf.evaluation.utils import restrict_to_permitted_evaluations
-from etf.evaluation.choices import EvaluationVisibility
 
 
 @login_required
