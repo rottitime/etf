@@ -3,7 +3,6 @@ import functools
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
-
 from . import utils
 
 
@@ -198,18 +197,6 @@ def test_step_through_evaluation():
                 "item_cost": str(1000.0),
                 "earliest_spend_date": "2022-03-07",
                 "latest_spend_date": "2022-03-07",
-            },
-        ),
-        # Documents page
-        _make_multple_object_step(
-            "Documents",
-            "New document",
-            "An example document",
-            {
-                "title": "An example document",
-                "url": "https://example.com",
-                "document_types": [choices.DocumentType.ANALYSIS_CODE.value],
-                "description": "A description of an example document",
             },
         ),
         # Evaluation types page
