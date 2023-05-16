@@ -23,6 +23,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
+    path("evaluation/<uuid:evaluation_id>/overview/filter-users/", submission_views.filter_evaluation_overview_users_view, name="evaluation-overview-filter-users"),
     path(
         "evaluation/<uuid:evaluation_id>/overview/",
         submission_views.evaluation_overview_view,
