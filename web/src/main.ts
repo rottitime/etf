@@ -1,5 +1,6 @@
 import './style/vars.css'
 import './style/animation.css'
+import './style/fonts.css'
 import './style/base.css'
 import './style/template/index.css'
 import './style/template/main-header.css'
