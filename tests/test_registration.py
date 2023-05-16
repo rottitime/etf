@@ -3,6 +3,7 @@ from nose import with_setup
 
 from etf import settings as etf_settings
 from etf.evaluation import models, restrict_email
+
 from . import utils
 from .utils import _get_latest_email_text
 
@@ -93,7 +94,8 @@ def test_user_already_registered():
     assert page.has_text("A verification email has been sent to your email address.")
     assert page.has_text("Please click on the link in this email to verify your account and then try to sign in.")
     assert signup_email.__contains__(
-        "Someone using this email address has just tried to register for the Evaluation Registry, you can find this at the following link.")
+        "Someone using this email address has just tried to register for the Evaluation Registry, you can find this at the following link."
+    )
 
 
 @with_setup(
