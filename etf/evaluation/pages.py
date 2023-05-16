@@ -18,7 +18,6 @@ page_display_names = {
     "studied-population": "Studied population",
     "participant-recruitment": "Participant recruitment",
     "evaluation-costs": "Evaluation costs",
-    "documents": "Documents",
     "event-dates": "Event dates",
     "evaluation-types": "Evaluation types",
     "impact-design": "Impact evaluation design",
@@ -99,7 +98,6 @@ page_url_names = (
     "studied-population",
     "participant-recruitment",
     "evaluation-costs",
-    "documents",
     "evaluation-types",
     "event-dates",
     "impact-design",
@@ -130,7 +128,6 @@ object_page_url_names = {
     "other-measures": "other-measure-page",
     "processes-standards": "processes-standard-page",
     "evaluation-costs": "evaluation-cost-page",
-    "documents": "document-page",
     "links": "link-page",
     "event-dates": "event-date-page",
 }
