@@ -76,7 +76,7 @@ EMAIL_MAPPING = {
         "subject": "Evaluation Registry: registration attempt",
         "template_name": "email/account-already-exists.txt",
         "url_path": "/accounts/password-reset/",
-    }
+    },
 }
 
 
@@ -143,7 +143,13 @@ def send_account_already_exists_email(user):
     reset_url.path.add(data["url_path"])
     reset_url = str(reset_url)
     context = {"contact_address": settings.CONTACT_EMAIL, "url": base_url, "reset_link": reset_url}
-    response = _send_normal_email(subject=data["subject"], template_name=data["template_name"], from_address=data["from_address"], to_address=user.email, context=context)
+    response = _send_normal_email(
+        subject=data["subject"],
+        template_name=data["template_name"],
+        from_address=data["from_address"],
+        to_address=user.email,
+        context=context,
+    )
     return response
 
 
