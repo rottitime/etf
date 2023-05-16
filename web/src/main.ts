@@ -49,6 +49,7 @@ const hasDevScripts = (): boolean =>
 //high priority scripts
 ;(function () {
   if (hasDevScripts()) return
+  icon()
   setupHintbox()
 })()
 
@@ -63,7 +64,6 @@ window.addEventListener('load', () => {
   setupSmoothScroll()
   setupMobileMenu()
   setupCircularProgressBar()
-  icon()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
