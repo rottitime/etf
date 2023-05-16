@@ -1,12 +1,16 @@
 import help from '../svg/help.svg'
 
-class Hintbox extends HTMLDivElement {
+class HintBox extends HTMLElement {
   constructor() {
     super()
-    this.setupDom()
   }
 
-  private setupDom() {
+  connectedCallback() {
+    this.setAttribute('hidden', 'true') //hide while rendering. prevents flash of unstyled content
+    setTimeout(() => this.setup())
+  }
+
+  private setup() {
     const id = crypto.randomUUID()
     const idContent = `content_${id}`
     const idButton = `button_${id}`
@@ -36,11 +40,10 @@ class Hintbox extends HTMLDivElement {
     wrapper.setAttribute('role', 'region')
     parent?.insertBefore(wrapper, content)
     wrapper.appendChild(content)
+    this.removeAttribute('hidden')
   }
 }
 
-const setupHintbox = () => {
-  customElements.define('hint-box', Hintbox, { extends: 'div' })
-}
+const setupHintbox = () => customElements.define('hint-box', HintBox)
 
 export default setupHintbox

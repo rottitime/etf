@@ -11,6 +11,7 @@
         {% if space_name and space_name == "local" %}
           <!-- Dev script for local development -->
           <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
+          <script src="http://127.0.0.1:5173/dev.js"></script>
         {% endif %}
         <script src="{% static 'dist/assets/index.js' %}" id="main-script"></script>
    </head>

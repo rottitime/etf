@@ -1,5 +1,6 @@
-[is='hint-box'] {
+:is(hint-box, [is='hint-box']) {
   margin-bottom: var(--spacing-24);
+  display: block;
   & .content {
     background-color: color-mod(var(--color-grey-light2) a(0.2));
     padding: var(--spacing-8) var(--spacing-16);
