@@ -1,51 +1,39 @@
-import './button.css';
+// import './button.css'
+import '../style/vars.css'
+import '../style/base.css'
+import '../style/components/buttons.css'
 
 export interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: 'small' | 'medium' | 'large';
+  category: 'primary' | 'secondary' | 'tertiary' | 'negative'
+
+  small?: boolean
   /**
    * Button contents
    */
-  label: string;
+  label: string
   /**
    * Optional click handler
    */
-  onClick?: () => void;
+  onClick?: () => void
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const createButton = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
+  category = 'primary',
+  small = false,
   label,
-  onClick,
+  onClick
 }: ButtonProps) => {
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.innerText = label;
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.innerText = label
   if (onClick) {
-    btn.addEventListener('click', onClick);
+    btn.addEventListener('click', onClick)
   }
 
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-  btn.className = ['storybook-button', `storybook-button--${size}`, mode].join(' ');
+  btn.className = [`bttn-${category}`, small ? 'small' : null].join(' ')
 
-  if (backgroundColor) {
-    btn.style.backgroundColor = backgroundColor;
-  }
-
-  return btn;
-};
+  return btn
+}

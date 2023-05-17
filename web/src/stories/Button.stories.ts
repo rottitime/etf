@@ -1,6 +1,6 @@
-import type { StoryObj, Meta } from '@storybook/html';
-import type { ButtonProps } from './Button';
-import { createButton } from './Button';
+import type { StoryObj, Meta } from '@storybook/html'
+import type { ButtonProps } from './Button'
+import { createButton } from './Button'
 
 // More on how to set up stories at: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta = {
@@ -9,47 +9,52 @@ const meta = {
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
     // return `<div>${label}</div>`;
-    return createButton(args);
+    return createButton(args)
   },
   argTypes: {
-    backgroundColor: { control: 'color' },
     label: { control: 'text' },
     onClick: { action: 'onClick' },
-    primary: { control: 'boolean' },
-    size: {
-      control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
-    },
+    small: { control: 'boolean' }
+    // category: {
+    //   control: { type: 'select' },
+    //   options: ['primary', 'secondary', 'tertiary', 'negative']
+    // }
   },
-} satisfies Meta<ButtonProps>;
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/pN3VtobnXOlTUDK4aiZa94/i-AI-DS?type=design&node-id=1-388&t=wYAx110qILxbxZUz-0'
+    }
+  }
+} satisfies Meta<ButtonProps>
 
-export default meta;
-type Story = StoryObj<ButtonProps>;
+export default meta
+type Story = StoryObj<ButtonProps>
 
 // More on writing stories with args: https://storybook.js.org/docs/html/writing-stories/args
 export const Primary: Story = {
   args: {
-    primary: true,
-    label: 'Button',
-  },
-};
+    label: 'Button'
+  }
+}
 
 export const Secondary: Story = {
   args: {
-    label: 'Button',
-  },
-};
+    ...Primary.args,
+    category: 'secondary'
+  }
+}
 
-export const Large: Story = {
+export const Tertiary: Story = {
   args: {
-    size: 'large',
-    label: 'Button',
-  },
-};
+    ...Primary.args,
+    category: 'tertiary'
+  }
+}
 
-export const Small: Story = {
+export const Negative: Story = {
   args: {
-    size: 'small',
-    label: 'Button',
-  },
-};
+    ...Primary.args,
+    category: 'negative'
+  }
+}
