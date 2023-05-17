@@ -291,13 +291,7 @@ evaluation_summary_urlpatterns = [
     ),
 ]
 
-feedback_and_help_urlpatterns = [
-    path(
-        "feedback-and-help/",
-        views.feedback_and_help_view,
-        name="feedback-and-help"
-    )
-]
+feedback_and_help_urlpatterns = [path("feedback-and-help/", views.feedback_and_help_view, name="feedback-and-help")]
 
 
 urlpatterns = (
