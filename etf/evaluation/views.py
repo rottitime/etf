@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import (
     SearchQuery,
@@ -204,7 +205,6 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
         return redirect("evaluation-contributors", evaluation_id=evaluation_id)
 
 
-@login_required
 @require_http_methods(["GET"])
 def feedback_and_help_view(request):
-    return render(request, "feedback-and-help.html", {})
+    return render(request, "feedback-and-help.html", {"feedback_email": settings.FEEDBACK_EMAIL})
