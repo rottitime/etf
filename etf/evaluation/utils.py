@@ -6,6 +6,8 @@ import types
 import marshmallow
 from django.http import Http404
 
+from etf.settings import ALLOWED_CIVIL_SERVICE_DOMAINS
+
 from . import choices, models
 
 event_names = set()
@@ -249,3 +251,12 @@ def check_evaluation_view_permission(func):
             return func(request, *args, **kwargs)
 
     return wrapper
+
+
+def is_civil_service_email(email):
+    allowed = False
+    email = email.lower()
+    email_split = email.split("@")
+    if email_split[-1] in ALLOWED_CIVIL_SERVICE_DOMAINS:
+        allowed = True
+    return allowed

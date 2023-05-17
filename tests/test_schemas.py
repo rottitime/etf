@@ -123,3 +123,18 @@ def test_evaluation_schema():
     except ValidationError as e:
         error_message = e.messages["evaluation_type"][0]
     assert error_message == "All values in list should be one of: ('IMPACT', 'PROCESS', 'ECONOMIC', 'OTHER')"
+
+
+def test_user_schema():
+    user_schema = schemas.UserSchema()
+    error_message = ""
+    try:
+        user_schema.load({"email": "invalid@example.org"})
+    except ValidationError as e:
+        error_message = e.messages["email"][0]
+    assert error_message == "This should be a valid Civil Service email", error_message
+    try:
+        user_schema.load({"email": "p"})
+    except ValidationError as e:
+        error_message = e.messages["email"][0]
+    assert error_message == "This should be a valid Civil Service email", error_message

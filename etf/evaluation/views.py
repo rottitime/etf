@@ -8,10 +8,13 @@ from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
+from marshmallow import EXCLUDE
+from marshmallow.exceptions import ValidationError
+
+from etf.evaluation import interface, schemas
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
-from .restrict_email import is_civil_service_email
 from .utils import restrict_to_permitted_evaluations
 
 
@@ -163,42 +166,47 @@ def my_evaluations_view(request):
 @require_http_methods(["GET", "POST", "DELETE"])
 class EvaluationContributor(MethodDispatcher):
     def get(self, request, evaluation_id):
+        errors = {}
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         users = evaluation.users.all()
-        return render(request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation})
+        return render(
+            request,
+            "contributors/contributors.html",
+            {"contributors": users, "evaluation": evaluation, "errors": errors},
+        )
 
     def post(self, request, evaluation_id):
+        errors = {}
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
-        email = request.POST.get("add-user-email")
-        is_existing_user = models.User.objects.filter(email=email).exists()
-        if is_existing_user:
-            user = models.User.objects.get(email=email)
-            evaluation.users.add(user)
-            evaluation.save()
-            send_contributor_added_email(user, evaluation_id)
-        else:
-            is_external_user = not is_civil_service_email(email)
-            user = models.User.objects.create(email=email)
-            user.save()
-            if is_external_user:
-                user.is_external_user = True
-                user.save()
-            evaluation.users.add(user)
-            evaluation.save()
-            send_invite_email(user)
+        try:
+            serialized_user_to_add = schemas.UserSchema().load(request.POST, unknown=EXCLUDE)
+            output = interface.facade.evaluation.add_user_to_evaluation(
+                user_id=request.user.id, evaluation_id=evaluation_id, user_to_add_data=serialized_user_to_add
+            )
+            user_added = models.User.objects.get(id=output["user_added_id"])
+            if output["is_new_user"]:
+                send_invite_email(user_added)
+            else:
+                send_contributor_added_email(user_added, evaluation_id)
+        except ValidationError as err:
+            errors = dict(err.messages)
         users = evaluation.users.all()
-        return render(request, "contributors/contributors.html", {"contributors": users, "evaluation": evaluation})
+        return render(
+            request,
+            "contributors/contributors.html",
+            {"contributors": users, "evaluation": evaluation, "errors": errors},
+        )
 
 
 @login_required
 @require_http_methods(["POST", "GET"])
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
-    evaluation = models.Evaluation.objects.get(pk=evaluation_id)
     if request.method == "POST":
         email = email_to_remove
-        user = models.User.objects.get(email=email)
-        evaluation.users.remove(user)
-        evaluation.save()
-        if request.user == user:
+        user_to_remove = models.User.objects.get(email=email)
+        interface.facade.evaluation.remove_user_from_evaluation(
+            user_id=request.user.id, evaluation_id=evaluation_id, user_to_remove_id=user_to_remove.id
+        )
+        if request.user == user_to_remove:
             return redirect("index")
         return redirect("evaluation-contributors", evaluation_id=evaluation_id)

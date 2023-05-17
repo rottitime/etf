@@ -51,3 +51,14 @@ def test_search_text():
     assert "DfE" in search_text, search_text
     assert "My new outcome measure" in search_text, search_text
     assert "Cost-benefit analysis" in search_text, search_text
+
+
+def test_user_save():
+    new_email1 = "New_User1@example.org"
+    new_email2 = "New_User2@Example.com"
+    new_user1, _ = models.User.objects.update_or_create(email=new_email1)
+    new_user2, _ = models.User.objects.update_or_create(email=new_email2)
+    assert new_user1.email == "new_user1@example.org", new_user1.email
+    assert new_user1.is_external_user, new_user1.is_external_user
+    assert new_user2.email == "new_user2@example.com", new_user2.email
+    assert not new_user2.is_external_user, new_user2.is_external_user

@@ -9,6 +9,7 @@ from . import utils
 
 def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
+    user.set_password("pink-elephant")
     user.save()
     evaluation = models.Evaluation(title="An Evaluation")
     evaluation.save()
@@ -499,3 +500,27 @@ def complete_verify_multiple_object_page(page, title, new_item_name, added_item_
     assert not object_deleted_summary_page.has_text(new_item_name)
     assert not object_deleted_summary_page.has_text(added_item_name)
     return object_deleted_summary_page.click(contains="Next")
+
+
+@with_setup(setup_eval, teardown_eval)
+def test_invite_collaborators():
+    client = utils.make_testino_client()
+    utils.register(client, email="test-contributors@example.com", password="pink-elephants")
+    user = models.User.objects.get(email="test-contributors@example.com")
+    evaluation = models.Evaluation.objects.first()
+    evaluation.users.add(user)
+    evaluation_id = evaluation.id
+    contributor_page = client.get(f"/evaluation-contributors/{evaluation_id}/")
+    assert contributor_page.status_code == 200
+    # Check adding valid and invalid emails
+    form = contributor_page.get_form("""form:not([action])""")
+    form.set(field_name="email", value="nina@example.com")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("nina@example.com")
+    form = response.get_form("""form:not([action])""")
+    form.set(field_name="email", value="invalid@example.org")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("This should be a valid Civil Service email")
+    assert not response.has_text("invalid@example.org")

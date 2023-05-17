@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from django_use_email_as_username.models import BaseUser, BaseUserManager
 
-from . import choices, enums
+from . import choices, enums, utils
 from .pages import EvaluationPageStatus, get_default_page_statuses
 
 
@@ -36,6 +36,7 @@ class User(BaseUser, UUIDPrimaryKeyBase):
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
+        self.is_external_user = not utils.is_civil_service_email(self.email)
         super().save(*args, **kwargs)
 
     def has_signed_up(self):

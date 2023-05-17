@@ -7,7 +7,8 @@ import testino
 
 import etf.wsgi
 from etf import settings
-from etf.evaluation.models import User
+from etf.evaluation import choices
+from etf.evaluation.models import Evaluation, User
 
 TEST_SERVER_URL = "http://etf-testserver:8010/"
 
@@ -89,3 +90,45 @@ def _get_latest_email_url():
     whole_url = email_url.strip(",")
     url = f"/{whole_url.split('http://localhost:8010/')[-1]}".replace("?", "?")
     return url
+
+
+def create_fake_evaluation(title, visibility, users=None):
+    evaluation = Evaluation(title=title, visibility=visibility)
+    evaluation.save()
+    if users:
+        for user in users:
+            evaluation.users.add(user)
+            evaluation.save()
+    return evaluation
+
+
+def create_fake_evaluations():
+    # For testing "example.com" is counted as "Civil Service", "example.org" is not
+    peter_rabbit, _ = User.objects.update_or_create(email="peter.rabbit2@example.com")
+    mrs_tiggywinkle, _ = User.objects.update_or_create(email="mrs.tiggywinkle@example.org")
+    users = [peter_rabbit, mrs_tiggywinkle]
+    create_fake_evaluation(title="Draft evaluation 1", visibility=choices.EvaluationVisibility.DRAFT.value)
+    create_fake_evaluation(title="Draft evaluation 2", visibility=choices.EvaluationVisibility.DRAFT.value, users=users)
+    create_fake_evaluation(
+        title="Civil Service evaluation 1", visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value
+    )
+    create_fake_evaluation(
+        title="Civil Service evaluation 2", visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value, users=users
+    )
+    create_fake_evaluation(title="Public evaluation 1", visibility=choices.EvaluationVisibility.PUBLIC.value)
+    create_fake_evaluation(
+        title="Public evaluation 2", visibility=choices.EvaluationVisibility.PUBLIC.value, users=users
+    )
+
+
+def remove_fake_evaluations():
+    fake_evaluation_titles = [
+        "Draft evaluation 1",
+        "Draft evaluation 2",
+        "Civil Service evaluation 1",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    ]
+    Evaluation.objects.filter(title__in=fake_evaluation_titles).delete()
+    User.objects.filter(email__in=["mrs.tiggywinkle@example.com", "peter.rabbit2@example."]).delete()
