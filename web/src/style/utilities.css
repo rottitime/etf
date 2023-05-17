@@ -63,3 +63,8 @@ small,
 .nowrap {
   white-space: nowrap;
 }
+
+[hidden],
+.hidden {
+  display: none;
+}

@@ -33,13 +33,13 @@
 {% macro guidance(name, label) -%}
 {% set guidance = get_field_guidance_text(object_name, name) %}
 {% if guidance %}
-  <div is="hint-box" aria-label="{{label}}">
-    <div class="content">
-      {% for para in guidance %}
-        <p>{{markdown(para) | safe}}</p>
-      {% endfor %}
-    </div>
-</div>
+<hint-box aria-label="{{label}}">
+  <div class="content">
+    {% for para in guidance %}
+      <p>{{markdown(para) | safe}}</p>
+    {% endfor %}
+  </div>
+</hint-box>
 {% endif %}
 {%- endmacro %}
 

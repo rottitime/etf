@@ -1,5 +1,6 @@
 import './style/vars.css'
 import './style/animation.css'
+import './style/fonts.css'
 import './style/base.css'
 import './style/template/index.css'
 import './style/template/main-header.css'
@@ -42,14 +43,21 @@ declare global {
   var devMode: boolean
 }
 
-if (import.meta.env.MODE === 'development') {
-  globalThis.devMode = true
-  ;['main-script', 'main-css'].forEach((id) => document.getElementById(id)?.remove())
-}
+//check if dev scripts have executed when in prod mode
+const hasDevScripts = (): boolean =>
+  globalThis.devMode && globalThis.devMode && import.meta.env.MODE !== 'development'
 
+//high priority scripts
+;(function () {
+  if (hasDevScripts()) return
+  icon()
+  setupHintbox()
+})()
+
+//low priority scripts
 window.addEventListener('load', () => {
   //check: dev mode has already been set then do not run prod files
-  if (globalThis.devMode && import.meta.env.MODE === 'production') return
+  if (hasDevScripts()) return
   accordion()
   setupCard()
   setupSelect()
@@ -57,8 +65,6 @@ window.addEventListener('load', () => {
   setupSmoothScroll()
   setupMobileMenu()
   setupCircularProgressBar()
-  icon()
-  setupHintbox()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
