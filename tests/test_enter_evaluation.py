@@ -200,18 +200,6 @@ def test_step_through_evaluation():
                 "latest_spend_date": "2022-03-07",
             },
         ),
-        # Documents page
-        _make_multple_object_step(
-            "Documents",
-            "New document",
-            "An example document",
-            {
-                "title": "An example document",
-                "url": "https://example.com",
-                "document_types": [choices.DocumentType.ANALYSIS_CODE.value],
-                "description": "A description of an example document",
-            },
-        ),
         # Evaluation types page
         _make_simple_step(
             "Evaluation types",

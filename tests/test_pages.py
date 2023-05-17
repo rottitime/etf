@@ -38,9 +38,9 @@ def test_get_prev_next_page_name_last():
 
 def test_get_page_name_and_order():
     page_names_and_order = pages.get_page_name_and_order(["flibble"])
-    assert len(page_names_and_order) == 18, len(page_names_and_order)
+    assert len(page_names_and_order) == 17, len(page_names_and_order)
     assert "impact-analysis" not in page_names_and_order
 
     page_names_and_order = pages.get_page_name_and_order(["IMPACT"])
-    assert len(page_names_and_order) == 21, len(page_names_and_order)
+    assert len(page_names_and_order) == 20, len(page_names_and_order)
     assert "impact-analysis" in page_names_and_order
