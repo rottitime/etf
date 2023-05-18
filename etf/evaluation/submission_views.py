@@ -46,7 +46,7 @@ def create_evaluation(request):
 def simple_page_view(request, evaluation_id, page_data):
     page_name = page_data["page_name"]
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
@@ -84,7 +84,7 @@ def transform_post_data(post_data, multiselect_dropdown_choices):
 @check_edit_evaluation_permission
 def evaluation_view(request, evaluation_id, page_name, title):
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
@@ -199,7 +199,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
 @check_edit_evaluation_permission
 def summary_related_object_page_view(request, evaluation_id, model_name, form_data):
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     object_name = form_data["object_name"]
     summary_page_name = form_data["summary_page_name"]
 
@@ -228,7 +228,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
 
 
 def make_related_object_context(user_id, evaluation_id, title, object_name, url_names):
-    evaluation = interface.facade.evaluation.get(user_id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
@@ -498,7 +498,7 @@ def intervention_page_view(request, evaluation_id, intervention_id):
     model_name = "Intervention"
     title = "Interventions"
     template_name = "submissions/intervention-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("interventions", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -531,7 +531,7 @@ def outcome_measure_page_view(request, evaluation_id, outcome_measure_id):
     model_name = "OutcomeMeasure"
     title = "Outcome measures"
     template_name = "submissions/outcome-measure-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("outcome-measures", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -564,7 +564,7 @@ def other_measure_page_view(request, evaluation_id, other_measure_id):
     model_name = "OtherMeasure"
     title = "Other measures"
     template_name = "submissions/other-measure-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("other-measures", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -597,7 +597,7 @@ def process_standard_page_view(request, evaluation_id, process_standard_id):
     model_name = "ProcessStandard"
     title = "Processes and standards"
     template_name = "submissions/processes-standard-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("processes-standards", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -630,7 +630,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
     model_name = "EvaluationCost"
     title = "Evaluation costs and budget"
     template_name = "submissions/evaluation-cost-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("evaluation-costs", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -647,7 +647,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
 
 def evaluation_overview_view(request, evaluation_id):
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     relevant_pages = set().union(
         *(
             pages.evaluation_type_page_mapping.get(evaluation_type, set())
@@ -697,7 +697,7 @@ def document_page_view(request, evaluation_id, document_id):
     model_name = "Document"
     title = "Document"
     template_name = "submissions/document-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("documents", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -730,7 +730,7 @@ def links_page_view(request, evaluation_id, link_id):
     model_name = "LinkOtherService"
     title = "Links to other service"
     template_name = "submissions/links-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("links", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -763,7 +763,7 @@ def event_date_page_view(request, evaluation_id, event_date_id):
     model_name = "EventDate"
     title = "Event date"
     template_name = "submissions/event-date-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("event-dates", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
