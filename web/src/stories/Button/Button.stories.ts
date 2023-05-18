@@ -4,7 +4,7 @@ import { createButton } from './Button'
 
 // More on how to set up stories at: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta = {
-  title: 'Example/Button',
+  title: 'ETF/Button',
   tags: ['autodocs'],
   render: (args) => {
     // You can either use a function to create DOM elements or use a plain html string!
@@ -12,9 +12,9 @@ const meta = {
     return createButton(args)
   },
   argTypes: {
-    label: { control: 'text' },
-    onClick: { action: 'onClick' },
-    small: { control: 'boolean' }
+    // label: { control: 'text' },
+    // onClick: { action: 'onClick' },
+    // small: { control: 'boolean' }
     // category: {
     //   control: { type: 'select' },
     //   options: ['primary', 'secondary', 'tertiary', 'negative']
