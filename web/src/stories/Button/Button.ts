@@ -1,7 +1,6 @@
-// import './button.css'
-import '../style/vars.css'
-import '../style/base.css'
-import '../style/components/buttons.css'
+import '../../style/vars.css'
+import '../../style/base.css'
+import '../../style/components/buttons.css'
 
 export interface ButtonProps {
   category: 'primary' | 'secondary' | 'tertiary' | 'negative'
