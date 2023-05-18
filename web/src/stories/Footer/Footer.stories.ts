@@ -40,7 +40,7 @@ type Story = StoryObj<Props>
 
 export const Default: Story = {
   args: {
-    copywright: '© 2021 i-AI-DS',
+    copywright: `© ${new Date().getFullYear()} i-AI-DS`,
     links
   }
 }
