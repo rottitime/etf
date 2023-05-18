@@ -10,7 +10,7 @@ def test_evaluation_facade():
     assert result["users"] == expected, result["users"]
 
     evaluation_id = result["id"]
-    result = interface.facade.evaluation.get(user_id=user.id, evaluation_id=evaluation_id)
+    result = interface.facade.evaluation.get(evaluation_id=evaluation_id)
     assert result["users"] == expected
 
     data = {"title": "Flibble", "monetisation_approaches": "Sell, sell, sell"}
