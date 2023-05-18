@@ -227,7 +227,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     return response
 
 
-def make_related_object_context(user_id, evaluation_id, title, object_name, url_names):
+def make_related_object_context(evaluation_id, title, object_name, url_names):
     evaluation = interface.facade.evaluation.get(evaluation_id)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
@@ -276,7 +276,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    context = make_related_object_context(request.user.id, evaluation_id, title, object_name, url_names)
+    context = make_related_object_context(evaluation_id, title, object_name, url_names)
     context = {"errors": errors, "data": data, **context}
     return render(request, template_name, context)
 
