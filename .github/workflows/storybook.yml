@@ -8,7 +8,7 @@ on:
         "web/src/**/*.ts",
         "web/src/**/*.css",
         "web/public/**",
-        "web/.storybook/*.js",
+        "web/.storybook/**",
       ] # Trigger the action only when files change in the folders defined here
 permissions:
   contents: write
