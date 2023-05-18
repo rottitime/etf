@@ -1,5 +1,5 @@
 // import icon from '../Icon/Icon'
-import '../../main'
+// import '../../main'
 
 export interface Props {
   key:
