@@ -11,7 +11,7 @@
     "test:all": "npm run lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "storybook:build": "storybook build",
+    "storybook:build": "storybook build && touch ./storybook-static/.nojekyll",
     "storybook:build:preview": "http-server ./storybook-static"
   },
   "devDependencies": {
