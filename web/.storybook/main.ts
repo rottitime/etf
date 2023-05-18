@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/html-vite'
+import type { StorybookConfig } from '@storybook/html-vite' //v1
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
