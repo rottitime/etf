@@ -646,7 +646,6 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
 
 
 def evaluation_overview_view(request, evaluation_id):
-    user = request.user
     evaluation = interface.facade.evaluation.get(evaluation_id)
     relevant_pages = set().union(
         *(
