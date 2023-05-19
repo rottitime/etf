@@ -6,20 +6,23 @@
 
 
   <div class="card">
-    <div class="card-divider">
-      Resend verification email
-    </div>
+   
+    <h1 class="header2 highlight">Resend verification email</h1>
+
     <div class="card-section">
 
       <p>Don't have an account? Then please <a href="{% url 'account_signup' %}">sign up</a>.</p>
 
       <form method="post">
         {% csrf_token %}
-        <p>
+        <div class="form-group mb-16">
+        
           <label for="id_email">Email:</label>
           <input type="email" placeholder="Email address" name="email" id="id_email" required autocomplete="off">
-        </p>
-        <button class="button float-right" type="submit">Submit</button>
+        </div>
+        
+      </form>
+        <button class="bttn-primary" type="submit">Submit</button>
       </form>
 
     </div>
