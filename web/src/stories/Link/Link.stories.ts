@@ -2,6 +2,7 @@ import type { StoryObj, Meta } from '@storybook/html'
 
 type Props = {
   text: string
+  external?: boolean
 }
 
 /**
@@ -9,9 +10,12 @@ type Props = {
  */
 const meta = {
   title: 'Components/Link',
-  render: ({ text }) => `<a href="#" class="txt-link">${text}</a>`,
+  tags: ['autodocs'],
+  render: ({ text, external }) =>
+    `<a href="#" class="txt-link"${external ? ' rel="external"' : ''}>${text}</a>`,
   argTypes: {
-    text: { control: 'text' }
+    text: { control: 'text' },
+    external: { control: 'boolean' }
   },
   parameters: {
     design: {

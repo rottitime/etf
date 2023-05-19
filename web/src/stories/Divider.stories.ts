@@ -5,10 +5,11 @@ type Props = {
 }
 
 /**
- * A banner to indicate the current phase of the service.
+ * A divider to separate content.
  */
 const meta = {
   title: 'Components/Divider',
+  tags: ['autodocs'],
   render: ({ spacing }) => {
     const hr = document.createElement('hr')
     if (spacing) hr.classList.add(`my-${spacing}`)
