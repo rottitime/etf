@@ -6,7 +6,7 @@ type Props = {
 }
 
 /**
- * A banner to indicate the current phase of the service.
+ * A link to another page.
  */
 const meta = {
   title: 'Components/Link',
@@ -15,7 +15,9 @@ const meta = {
     `<a href="#" class="txt-link"${external ? ' rel="external"' : ''}>${text}</a>`,
   argTypes: {
     text: { control: 'text' },
-    external: { control: 'boolean' }
+    external: {
+      control: 'boolean'
+    }
   },
   parameters: {
     design: {
@@ -31,5 +33,12 @@ type Story = StoryObj<Props>
 export const Link: Story = {
   args: {
     text: 'My link'
+  }
+}
+
+export const External: Story = {
+  args: {
+    ...Link.args,
+    external: true
   }
 }
