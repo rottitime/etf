@@ -424,6 +424,13 @@ def test_step_through_evaluation():
                 "description": "A description of the process or standard",
             },
         ),
+        # Grants
+        _make_multple_object_step(
+            title="Grants",
+            new_item_name="New grant",
+            added_item_name="Grant 47",
+            fields={"name_of_grant": "Grant 47", "grant_number": "REF47", "grant_details": "Loads more grant info"},
+        ),
         # Links page
         _make_multple_object_step(
             "Links to other service",
