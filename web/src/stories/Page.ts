@@ -1,41 +1,41 @@
-import './page.css';
-import { createHeader } from './Header';
+import './page.css'
+// import { createHeader } from './Header';
 
-type User = {
-  name: string;
-};
+// type User = {
+//   name: string
+// }
 
 export const createPage = () => {
-  const article = document.createElement('article');
-  let user: User | undefined;
-  let header: HTMLElement | null = null;
+  const article = document.createElement('article')
+  // let user: User | undefined
+  // let header: HTMLElement | null = null
 
-  const rerenderHeader = () => {
-    const wrapper = document.getElementsByTagName('article')[0];
-    wrapper.replaceChild(createHeaderElement(), wrapper.firstChild as HTMLElement);
-  };
+  // const rerenderHeader = () => {
+  //   // const wrapper = document.getElementsByTagName('article')[0]
+  //   // wrapper.replaceChild(createHeaderElement(), wrapper.firstChild as HTMLElement)
+  // }
 
-  const onLogin = () => {
-    user = { name: 'Jane Doe' };
-    rerenderHeader();
-  };
+  // const onLogin = () => {
+  //   user = { name: 'Jane Doe' }
+  //   rerenderHeader()
+  // }
 
-  const onLogout = () => {
-    user = undefined;
-    rerenderHeader();
-  };
+  // const onLogout = () => {
+  //   user = undefined
+  //   rerenderHeader()
+  // }
 
-  const onCreateAccount = () => {
-    user = { name: 'Jane Doe' };
-    rerenderHeader();
-  };
+  // const onCreateAccount = () => {
+  //   user = { name: 'Jane Doe' }
+  //   rerenderHeader()
+  // }
 
-  const createHeaderElement = () => {
-    return createHeader({ onLogin, onLogout, onCreateAccount, user });
-  };
+  // const createHeaderElement = () => {
+  //   return createHeader({ onLogin, onLogout, onCreateAccount, user })
+  // }
 
-  header = createHeaderElement();
-  article.appendChild(header);
+  // header = createHeaderElement();
+  // article.appendChild(header);
 
   const section = `
   <section class="storybook-page">
@@ -90,9 +90,9 @@ export const createPage = () => {
       Viewports addon in the toolbar
     </div>
   </section>
-`;
+`
 
-  article.insertAdjacentHTML('beforeend', section);
+  article.insertAdjacentHTML('beforeend', section)
 
-  return article;
-};
+  return article
+}
