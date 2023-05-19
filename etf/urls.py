@@ -324,11 +324,8 @@ evaluation_summary_urlpatterns = [
 
 feedback_and_help_urlpatterns = [path("feedback-and-help/", views.feedback_and_help_view, name="feedback-and-help")]
 
-
-urlpatterns = (
-    initial_urlpatterns
-    + account_urlpatterns
-    + evaluation_contributor_urlpatterns
+evaluation_edit_patterns = (
+    evaluation_contributor_urlpatterns
     + evaluation_entry_urlpatterns
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
@@ -339,15 +336,23 @@ urlpatterns = (
     + documents_urlpatterns
     + links_urlpatterns
     + event_date_urlpatterns
+)
+
+urlpatterns = (
+    initial_urlpatterns
+    + account_urlpatterns
+    + evaluation_edit_patterns
     + evaluation_summary_urlpatterns
     + feedback_and_help_urlpatterns
 )
 
-if settings.DEBUG:
-    urlpatterns = urlpatterns + [
-        path("admin/", admin.site.urls),
-        path("test/", views.beta_test_view, name="test"),
-    ]
+debug_urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("test/", views.beta_test_view, name="test"),
+]
 
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + debug_urlpatterns
 
 handler404 = "etf.evaluation.views.view_404"
