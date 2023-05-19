@@ -43,7 +43,7 @@
 
          {% if messages %}
            {% for message in messages %}
-             <div class="alert {{message.tags}}"><p>{{message}}</p></div>
+             <div class="alert {{message.tags}}"><p>{{message|safe}}</p></div>
            {% endfor %}
        {% endif %}
 
