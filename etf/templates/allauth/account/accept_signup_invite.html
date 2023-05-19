@@ -5,16 +5,17 @@
 {% block content %}
 
   <div class="card">
-    <h1 class="header2 highlight">Accept invitation</h1>
-    <div class="content">
-
+    <header>
+      <h1 class="header2 highlight">Accept invitation</h1>
+    </header>
+    
       <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
-      <p>If you don't think you should have received this invite, please contact an administrator at {{contact_email}}</p>
+      <p class="mb-24">If you don't think you should have received this invite, please contact an administrator at {{contact_email}}</p>
 
       <form method="post">
         {% csrf_token %}
 
-        <div class="row mb-16">
+        <div class="form-group">
           
           <label for="id_password1">Password</label>
           <input type="password" name="password1" id="id_password1" required autocomplete="off" class="full-width" >
@@ -22,7 +23,7 @@
             <span class="form-error">{{form.errors.password1}}</span>
           {% endif %}
         </div>
-        <div class="row mb-16">
+        <div class="form-group">
           <label for="id_password2">Confirm Password</label>
           <input type="password" name="password2" id="id_password2" required autocomplete="off"  class="full-width">
           {% if form.errors.email %}
@@ -30,8 +31,7 @@
           {% endif %}
         </div>
 
-
-      </div>
+      
         <footer class="actions">
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
