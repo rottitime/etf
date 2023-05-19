@@ -4,25 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0028_grant'),
+        ("evaluation", "0028_grant"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='evaluation',
-            name='ethics_option',
+            model_name="evaluation",
+            name="ethics_option",
             field=models.CharField(blank=True, max_length=3, null=True),
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='grants_option',
+            model_name="evaluation",
+            name="grants_option",
             field=models.CharField(blank=True, max_length=3, null=True),
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='issue_description_option',
+            model_name="evaluation",
+            name="issue_description_option",
             field=models.CharField(blank=True, max_length=3, null=True),
         ),
     ]

@@ -114,7 +114,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     issue_description_option = models.CharField(max_length=3, blank=True, null=True)
     ethics_option = models.CharField(max_length=3, blank=True, null=True)
     grants_option = models.CharField(max_length=3, blank=True, null=True)
-    
 
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
@@ -312,7 +311,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     def get_grants_option_display_name(self):
         return choices.YesNo.mapping[self.grants_option]
-
 
     def __str__(self):
         return f"{self.id} : {self.title}"
@@ -688,6 +686,7 @@ class Grant(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSa
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
 
         return "|".join(searchable_fields)
+
 
 class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="costs", on_delete=models.CASCADE)

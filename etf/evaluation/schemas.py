@@ -104,7 +104,6 @@ class EvaluationSchema(TimeStampedModelSchema):
     ethics_option = make_choice_field(max_len=3, values=choices.YesNo.values)
     grants_option = make_choice_field(max_len=3, values=choices.YesNo.values)
 
-
     # Issue description
     issue_description = fields.Str()
     those_experiencing_issue = fields.Str()
@@ -249,11 +248,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     )
 
     # Grants
-    grants = fields.Function(
-        lambda e: GrantSchema(many=True, exclude=("evaluation",)).dump(e.grants.all())
-    )
+    grants = fields.Function(lambda e: GrantSchema(many=True, exclude=("evaluation",)).dump(e.grants.all()))
 
-   # Links and IDs
+    # Links and IDs
     link_other_services = fields.Function(
         lambda e: LinkOtherServiceSchema(many=True, exclude=("evaluation",)).dump(e.link_other_services.all())
     )
