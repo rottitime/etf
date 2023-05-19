@@ -13,6 +13,7 @@ from django.views.decorators.http import require_http_methods
 
 from etf import settings
 from etf.evaluation import email_handler, models, restrict_email
+from etf.evaluation.email_handler import send_account_already_exists_email
 from etf.evaluation.views import MethodDispatcher
 
 
@@ -50,7 +51,7 @@ class CustomResendVerificationView(MethodDispatcher):
         if not email:
             return render(request, "account/resend_verification_email.html", {})
         else:
-            user = models.User.objects.get(email=email)
+            user = models.User.objects.filter(email=email).first()
             if not user:
                 return render(request, "account/resend_verification_email.html", {})
             email_handler.send_verification_email(user)
@@ -79,7 +80,7 @@ class CustomResendVerificationView(MethodDispatcher):
                 for error in errors:
                     messages.error(request, error)
             return render(request, "account/resend_verification_email.html", {})
-        user = models.User.objects.get(email=email)
+        user = models.User.objects.filter(email=email).first()
         if user:
             email_handler.send_verification_email(user)
         return render(request, "account/signup_complete.html", {})
@@ -115,9 +116,14 @@ class CustomSignupView(SignupView):
             if password1 != password2:
                 messages.error(request, "You must type the same password each time.")
                 return render(request, self.template_name)
-            if models.User.objects.filter(email=email).exists():
-                messages.error(request, "Registration was unsuccessful, please try again.")
-                return render(request, self.template_name)
+            existing_user = models.User.objects.filter(email=email)
+            if existing_user.exists():
+                send_account_already_exists_email(existing_user.first())
+                return render(
+                    request,
+                    "account/signup_complete.html",
+                    {},
+                )
             user = models.User.objects.create_user(email=email, password=password1)
             user.save()
             if settings.SEND_VERIFICATION_EMAIL:
