@@ -1,15 +1,15 @@
 import type { StoryObj, Meta } from '@storybook/html'
 
 enum Color {
-  Pink = '',
-  Purple = 'purple',
+  Default = '',
   Green = 'green',
-  Orange = 'orange'
+  Orange = 'orange',
+  Red = 'red',
+  Blue = 'blue'
 }
 
 type Props = {
   color?: keyof typeof Color
-  hasClose?: boolean
   label: string
 }
 
@@ -17,27 +17,18 @@ type Props = {
  * A divider to separate content.
  */
 const meta = {
-  title: 'Components/Chip',
+  title: 'Components/Status',
   tags: ['autodocs'],
-  render: ({ color, label, hasClose }) => {
+  render: ({ color, label }) => {
     const chip = document.createElement('div')
     chip.classList.add('chip')
+    chip.setAttribute('role', 'status')
     chip.innerText = label
-    if (color) chip.classList.add(color)
-
-    if (hasClose) {
-      const close = document.createElement('a')
-      close.setAttribute('title', 'close')
-      close.classList.add('close')
-      close.innerHTML = '<gov-icon key="cross"></gov-icon>'
-      chip.appendChild(close)
-    }
-
+    if (color) chip.classList.add(color.toLowerCase())
     return chip
   },
   argTypes: {
     label: { control: 'text' },
-    hasClose: { control: 'boolean', table: { disable: true } },
     color: {
       control: { type: 'select' },
       options: Color
@@ -60,9 +51,30 @@ export const Default: Story = {
   }
 }
 
-export const WithClose: Story = {
+export const Green: Story = {
   args: {
     ...Default.args,
-    hasClose: true
+    color: 'Green'
+  }
+}
+
+export const Orange: Story = {
+  args: {
+    ...Default.args,
+    color: 'Orange'
+  }
+}
+
+export const Red: Story = {
+  args: {
+    ...Default.args,
+    color: 'Red'
+  }
+}
+
+export const Blue: Story = {
+  args: {
+    ...Default.args,
+    color: 'Blue'
   }
 }
