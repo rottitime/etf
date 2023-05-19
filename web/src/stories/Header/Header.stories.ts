@@ -1,30 +1,61 @@
 import type { StoryObj, Meta } from '@storybook/html'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { Link } from '../types'
 
 type Props = {
-  copywright: string
-  links: string[]
+  title: string
+  links: Link[]
+  loggedIn: boolean
+  primaryCta: string
+  logout: string
 }
 
-const links = [...Array(3).keys()].map((i) => `Link ${i}`)
+const links = [...Array(3).keys()].map((i) => ({ text: `Link ${i}`, href: '#' }))
 
+/**
+ * The ETF header with navigation and user account controls.
+ */
 const meta = {
   title: 'Components/Header',
   tags: ['autodocs'],
-  render: ({ copywright, links }) =>
-    `<footer class="main-footer">
-    <div class="container">
-       <nav>
-          ${links.map((link) => `<a href="#">${link}</a>`).join('')}
-       </nav>
-       <div class="disclaimer">
-          ${copywright} <gov-icon key='crest'></gov-icon>
-       </div>
-    </div>
- </footer>`,
+  render: ({ links, title, loggedIn, primaryCta, logout }) =>
+    `
+      <header id="main-header">
+        <div class="container">
+          <a href="/" class="logo">
+            <gov-icon key="crest"></gov-icon>
+            <h2 class="body-text">${title}</h2>
+          </a>
+
+          ${
+            loggedIn
+              ? `
+          <button id="main-header-mobile-menu">
+            <span></span>
+          </button>
+
+          <nav id="main-header-menu">
+            ${links.map(({ text, href }) => `<a href="${href}">${text}</a>`).join('')}
+
+            <a class="bttn-primary" href="#">${primaryCta}</a>
+            <a href="#">${logout}</a>
+          </nav>`
+              : ''
+          }
+        </div>
+      </header>
+    `,
   argTypes: {
-    copywright: { control: 'text' }
+    title: { control: 'text' },
+    primaryCta: { control: 'text' },
+    logout: { control: 'text' },
+    loggedIn: { control: 'boolean', table: { disable: true } }
   },
   parameters: {
+    viewpoert: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'desktop'
+    },
     backgrounds: {
       default: 'light grey'
     },
@@ -40,7 +71,25 @@ type Story = StoryObj<Props>
 
 export const Default: Story = {
   args: {
-    copywright: `© ${new Date().getFullYear()} i-AI-DS`,
+    title: 'Evaluation Registry'
+  }
+}
+
+export const Authenticated: Story = {
+  args: {
+    title: 'Evaluation Registry',
+    primaryCta: 'Create an evaluation',
+    logout: 'Logout',
+    loggedIn: true,
     links
+  }
+}
+
+export const Mobile: Story = {
+  ...Authenticated,
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1'
+    }
   }
 }
