@@ -12,13 +12,14 @@ const meta = {
     return createButton(args)
   },
   argTypes: {
-    // label: { control: 'text' },
-    // onClick: { action: 'onClick' },
-    // small: { control: 'boolean' }
-    // category: {
-    //   control: { type: 'select' },
-    //   options: ['primary', 'secondary', 'tertiary', 'negative']
-    // }
+    label: { control: 'text' },
+    onClick: {
+      action: 'onClick',
+      table: {
+        disable: true
+      }
+    },
+    small: { control: 'boolean' }
   },
   parameters: {
     design: {
