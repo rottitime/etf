@@ -5,9 +5,7 @@
 {% block content %}
 
   <div class="card">
-    <div class="card-divider">
-      Accept invitation
-    </div>
+    <h1 class="header2 highlight">Accept invitation</h1>
     <div class="card-section">
 
       <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
@@ -33,7 +31,7 @@
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
         {% endif %}
-        <button class="button float-right" type="submit">Sign up</button>
+        <button class="bttn-primary" type="submit">Sign up</button>
       </form>
     </div>
   </div>
