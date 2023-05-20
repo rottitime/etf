@@ -421,9 +421,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = "submissions/process-design-aspects.html"
     errors = {}
-    # visibilities = choices.EvaluationVisibility.choices
-    page_statuses = evaluation["page_statuses"]  # TODO - sort out page_statuses
-
+    page_statuses = evaluation["page_statuses"]
     aspects = models.Evaluation(id=evaluation_id).process_evaluation_aspects.all()
     aspect_name = list(aspects.values_list("aspect_name", flat=True))
     try:
@@ -434,6 +432,10 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
     except models.ProcessEvaluationAspect.DoesNotExist:
         aspect_name_other = ""
     input_schema = schemas.ProcessEvaluationDesignAspectsSchema(unknown=marshmallow.EXCLUDE)
+    if request.GET.get("completed"):
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+        )
     if request.method == "POST":
         data = transform_post_data(request.POST, ["aspect_name"])
         try:
@@ -444,7 +446,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
             aspect_name = serialized_aspects["aspect_name"]
             aspect_name_other = serialized_aspects["aspect_name_other"]
             for aspect in aspect_name:
-                if aspect == choices.ProcessEvaluationAspects.OTHER:  # TODO - get definition
+                if aspect == choices.ProcessEvaluationAspects.OTHER:
                     models.ProcessEvaluationAspect.objects.update_or_create(
                         evaluation_id=evaluation_id,
                         aspect_name=aspect,
@@ -457,9 +459,14 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
                         defaults={"aspect_name": aspect},
                     )
             models.Evaluation(id=evaluation_id).process_evaluation_aspects.exclude(aspect_name__in=aspect_name).delete()
+            interface.facade.evaluation.update_page_status(
+                user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+            )
             return redirect(next_url)
     else:
-        # TODO - page status
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.IN_PROGRESS.name
+        )
         data = {"aspect_name": aspect_name, "aspect_name_other": aspect_name_other}
     return render(
         request,
@@ -473,7 +480,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
             "title": title,
             "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
             "evaluation_id": evaluation_id,
-            #  "page_statuses": page_statuses,
+            "page_statuses": page_statuses,
         },
     )
 
