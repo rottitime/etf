@@ -718,6 +718,8 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
     evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
     aspect_name = models.CharField(max_length=256, blank=True, null=True)
     aspect_other_specify = models.CharField(max_length=256, blank=True, null=True)
+    summary_findings = models.TextField(blank=True, null=True)
+    findings = models.TextField(blank=True, null=True)
 
     _name_field = "aspect_name"
 
@@ -729,6 +731,34 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
         return self.aspect_name
 
     def get_search_text(self):
-        searchable_fields = [str(self.aspect_name), str(self.other_specify)]
+        searchable_fields = [
+            str(self.aspect_name),
+            str(self.aspect_other_specify),
+            str(self.summary_findings),
+            str(self.findings),
+        ]
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
+        return "|".join(searchable_fields)
+
+
+class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
+    method_name = models.CharField(max_length=256, blank=True, null=True)
+    method_other_specify = models.CharField(max_length=256, blank=True, null=True)
+
+    _name_field = "method_name"
+
+    def get_name(self):
+        if self.method_name in choices.ProcessEvaluationMethods.values:
+            if self.method_name == choices.ProcessEvaluationMethods.OTHER.value:
+                return self.method_other_specify
+            return choices.ProcessEvaluationMethods.mapping[self.method_name]
+        return self.method_name
+
+    def get_search_text(self):
+        searchable_fields = [
+            str(self.method_name),
+            str(self.method_other_specify),
+        ]
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
         return "|".join(searchable_fields)
