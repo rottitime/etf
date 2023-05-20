@@ -231,6 +231,17 @@ class ProcessEvaluationAspects(utils.Choices):
     OTHER = "Other"
 
 
+class ProcessEvaluationMethods(utils.Choices):
+    INDIVIDUAL_INTERVIEWS = "Individual interviews"
+    FOCUS_GROUPS = "Focus groups or group interviews"
+    CASE_STUDIES = "Case studies"
+    SURVEYS_AND_POLLING = "Surveys and polling"
+    OUTPUT_OR_PERFORMANCE_MONITORING = "Output or performance modelling"
+    QUALITATIVE_OBSERVATIONAL_STUDIES = "Qualitative observational studies"
+    CONSULTATIVE_METHODS = "Consultative/deliberative methods"
+    OTHER = "Other"
+
+
 dropdown_choices = {
     "document_types": DocumentType.choices,
     "economic_type": EconomicEvaluationType.choices,
