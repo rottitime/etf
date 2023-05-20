@@ -213,6 +213,24 @@ class ImpactMeasureType(utils.Choices):
     OTHER = "Other"
 
 
+class ProcessEvaluationAspects(utils.Choices):
+    IMPLEMENTATION = "Implementation feasibility"
+    FIDELITY = "Fidelity"
+    ACCEPTABLITILY_TARGET_POPULATION = "Acceptability to target population"
+    ACCEPTABILITY_IMPLEMENTERS = "Acceptability to implementers"
+    PARTICIPATION = "Participation"
+    PERCEPTION_OF_RELEVANCE = "Participants’ perceptions of relevance of intervention"
+    INTENTION_TO_USE = "Participants’ intention to use (for example, knowledge gained from intervention)"
+    IMPACT_INTERMEDIATE_OUTCOMES = "Impact on intermediate outcomes"
+    QUALITATIVE_STUDY_CAUSAL_PROCESSES = "Qualitative study to explore causal processes"
+    UNANTICIPATED_OUTCOMES = "Unanticipated outcomes (beneficial or adverse)"
+    CONTEXT_IMPACT_IMPLEMENTATION = "Context: impact on implementation"
+    CONTEXT_IMPACT_OUTCOMES = "Context: impact on outcomes"
+    SUSTAINABILITY_OF_PROGRAMME = "Sustainability of the programme"
+    EVALUATION_FEASIBILITY = "Evaluation feasibility"
+    OTHER = "Other"
+
+
 dropdown_choices = {
     "document_types": DocumentType.choices,
     "economic_type": EconomicEvaluationType.choices,
