@@ -732,7 +732,7 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 
     def get_search_text(self):
         searchable_fields = [
-            str(self.aspect_name),
+            str(self.aspect_name),  # TODO - get corresponding names
             str(self.aspect_other_specify),
             str(self.summary_findings),
             str(self.findings),
@@ -745,6 +745,8 @@ class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
     evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_methods", on_delete=models.CASCADE)
     method_name = models.CharField(max_length=256, blank=True, null=True)
     method_other_specify = models.CharField(max_length=256, blank=True, null=True)
+    more_information = models.TextField(blank=True, null=True)
+    aspects_measured = models.JSONField(default=list)
 
     _name_field = "method_name"
 
@@ -757,8 +759,9 @@ class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 
     def get_search_text(self):
         searchable_fields = [
-            str(self.method_name),
+            str(self.method_name),  # TODO - get corresponding names
             str(self.method_other_specify),
+            str(self.more_information),  # TODO - get corresponding names
         ]
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
         return "|".join(searchable_fields)

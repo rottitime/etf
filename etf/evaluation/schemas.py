@@ -352,3 +352,17 @@ class EvaluationCostSchema(TimeStampedModelSchema):
     item_cost = FloatAndBlankField()
     earliest_spend_date = DateAndBlankField()
     latest_spend_date = DateAndBlankField()
+
+
+class ProcessEvaluationDesignAspectPage(Schema):  # Not the same as model
+    aspects = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
+    aspect_other_specify = SingleLineStr(validate=validate.Length(max=256))
+
+
+class ProcessEvaluationMethodSchema(TimeStampedModelSchema):
+    evaluation = fields.Nested(EvaluationSchema)
+    id = fields.UUID(dump_only=True)
+    method_name = SingleLineStr(validate=validate.Length(max=256))
+    method_other_specify = SingleLineStr(validate=validate.Length(max=256))
+    more_information = fields.Str()
+    aspects_measured = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
