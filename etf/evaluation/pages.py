@@ -23,7 +23,7 @@ page_display_names = {
     "evaluation-types": "Evaluation types",
     "impact-design": "Impact evaluation design",
     "impact-analysis": "Impact evaluation analysis",
-    "process-design-aspects": "Process evaluation design: Aspects to be investigate",
+    "process-design-aspects": "Process evaluation design: Aspects to investigate",
     "process-analysis": "Process evaluation analysis",
     "economic-design": "Economic evaluation design",
     "economic-analysis": "Economic evaluation analysis",
