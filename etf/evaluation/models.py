@@ -715,7 +715,7 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
 
 
 class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
-    evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_aspects", on_delete=models.CASCADE)
     aspect_name = models.CharField(max_length=256, blank=True, null=True)
     aspect_other_specify = models.CharField(max_length=256, blank=True, null=True)
     summary_findings = models.TextField(blank=True, null=True)
@@ -742,7 +742,7 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 
 
 class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
-    evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_methods", on_delete=models.CASCADE)
     method_name = models.CharField(max_length=256, blank=True, null=True)
     method_other_specify = models.CharField(max_length=256, blank=True, null=True)
 
