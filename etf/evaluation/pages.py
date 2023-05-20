@@ -172,11 +172,11 @@ def get_page_name_and_order(evaluation_types, page_options):
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
     pages_to_remove = all_evaluation_type_pages - pages_to_keep
-    if page_options["issue_description_option"] != choices.YesNo.YES.value:
+    if page_options.get("issue_description_option") != choices.YesNo.YES.value:
         pages_to_remove.add("issue-description")
-    if page_options["ethics_option"] != choices.YesNo.YES.value:
+    if page_options.get("ethics_option") != choices.YesNo.YES.value:
         pages_to_remove.add("ethics")
-    if page_options["grants_option"] != choices.YesNo.YES.value:
+    if page_options.get("grants_option") != choices.YesNo.YES.value:
         pages_to_remove.add("grants")
     counter = itertools.count(0)
 
