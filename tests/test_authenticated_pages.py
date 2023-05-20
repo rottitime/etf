@@ -62,7 +62,7 @@ def test_evaluation_permissions(client):
         f"evaluation/{evaluation.id}/evaluation-types/",
         f"evaluation/{evaluation.id}/impact-design/",
         f"evaluation/{evaluation.id}/impact-analysis/",
-        f"evaluation/{evaluation.id}/process-design/",
+        f"evaluation/{evaluation.id}/process-design-aspects/",
         f"evaluation/{evaluation.id}/process-analysis/",
         f"evaluation/{evaluation.id}/economic-design/",
         f"evaluation/{evaluation.id}/economic-analysis/",

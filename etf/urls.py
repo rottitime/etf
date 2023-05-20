@@ -95,9 +95,9 @@ evaluation_entry_urlpatterns = [
         name="impact-analysis",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/process-design/",
-        submission_views.evaluation_process_design_view,
-        name="process-design",
+        "evaluation/<uuid:evaluation_id>/process-design-aspects/",
+        submission_views.evaluation_process_design_aspects_view,
+        name="process-design-aspects",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/process-analysis/",
