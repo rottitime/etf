@@ -818,7 +818,9 @@ def evaluation_overview_view(request, evaluation_id):
         pages_in_section = section_pages[section]
         section_statuses["sections"][section] = {}
         for page_in_section in pages_in_section:
-            section_statuses["sections"][section][page_in_section] = {"status": statuses[page_in_section]}
+            section_statuses["sections"][section][page_in_section] = {
+                "status": statuses.get(page_in_section, pages.EvaluationPageStatus.NOT_STARTED.name)
+            }
 
     data = {
         "new": section_statuses,
