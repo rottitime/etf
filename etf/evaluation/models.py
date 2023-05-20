@@ -717,7 +717,7 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
 class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_aspects", on_delete=models.CASCADE)
     aspect_name = models.CharField(max_length=256, blank=True, null=True)
-    aspect_other_specify = models.CharField(max_length=256, blank=True, null=True)
+    aspect_name_other = models.CharField(max_length=256, blank=True, null=True)
     summary_findings = models.TextField(blank=True, null=True)
     findings = models.TextField(blank=True, null=True)
 
@@ -726,14 +726,14 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
     def get_name(self):
         if self.aspect_name in choices.ProcessEvaluationAspects.values:
             if self.aspect_name == choices.ProcessEvaluationAspects.OTHER.value:
-                return self.aspect_other_specify
+                return self.aspect_name_other
             return choices.ProcessEvaluationAspects.mapping[self.aspect_name]
         return self.aspect_name
 
     def get_search_text(self):
         searchable_fields = [
             str(self.aspect_name),  # TODO - get corresponding names
-            str(self.aspect_other_specify),
+            str(self.aspect_name_other),
             str(self.summary_findings),
             str(self.findings),
         ]

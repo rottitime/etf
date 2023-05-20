@@ -255,6 +255,8 @@ dropdown_choices = {
     "impact_effect_measure_interval": ImpactMeasureInterval.choices,
     "impact_interpretation": ImpactEvalInterpretation.choices,
     "impact_interpretation_type": ImpactInterpretationType.choices,
+    "process_evaluation_aspect": ProcessEvaluationAspects.choices,
+    "process_evaluation_method": ProcessEvaluationMethods.choices,
     "measure_type": MeasureType.choices,
     "organisations": enums.Organisation.choices,
     "topics": Topic.choices,

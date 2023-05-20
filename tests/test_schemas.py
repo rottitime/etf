@@ -51,6 +51,14 @@ def test_other_measure_schema_has_relevant_fields():
     check_schema_model_match_fields(model_name="OtherMeasure", schema_name="OtherMeasureSchema")
 
 
+def test_process_evaluation_method_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="ProcessEvaluationMethod", schema_name="ProcessEvaluationMethodSchema")
+
+
+def test_process_evaluation_aspect_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="ProcessEvaluationAspect", schema_name="ProcessEvaluationAspectSchema")
+
+
 def setup_evaluation():
     user, _ = models.User.objects.get_or_create(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
     user.save()

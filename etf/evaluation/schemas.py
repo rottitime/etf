@@ -355,8 +355,8 @@ class EvaluationCostSchema(TimeStampedModelSchema):
 
 
 class ProcessEvaluationDesignAspectsSchema(Schema):  # Not the same as model
-    aspects = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
-    aspect_other_specify = SingleLineStr(validate=validate.Length(max=256))
+    aspect_name = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
+    aspect_name_other = SingleLineStr(validate=validate.Length(max=256))
 
 
 class ProcessEvaluationMethodSchema(TimeStampedModelSchema):
