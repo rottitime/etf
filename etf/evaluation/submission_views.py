@@ -60,7 +60,7 @@ def simple_page_view(request, evaluation_id, page_data):
         "next_url": next_url,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+        "page_order": pages.get_page_name_and_order(get_page_options(evaluation)),
         "current_page": page_name,
     }
     interface.facade.evaluation.update_page_status(
@@ -127,7 +127,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
-            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+            "page_order": pages.get_page_name_and_order(get_page_options(evaluation)),
             "current_page": page_name,
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
@@ -198,7 +198,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
         "data": data,
         "prev_url": prev_url,
         "next_url": next_url,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+        "page_order": pages.get_page_name_and_order(get_page_options(evaluation)),
         "current_page": summary_page_name,
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
@@ -250,7 +250,7 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
         "prev_url": prev_url,
         "object_name": object_name,
         "summary_url": summary_url,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+        "page_order": pages.get_page_name_and_order(get_page_options(evaluation)),
         "current_page": url_names["summary_page"],
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
@@ -744,7 +744,7 @@ def evaluation_overview_view(request, evaluation_id):
         "new": section_statuses,
         "evaluation": evaluation,
         "statuses": statuses,
-        "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"], get_page_options(evaluation)),
+        "page_order": pages.get_page_name_and_order(get_page_options(evaluation)),
         "evaluation_id": evaluation_id,
     }
     errors = {}

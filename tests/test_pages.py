@@ -42,10 +42,12 @@ def test_get_prev_next_page_name_last():
 
 
 def test_get_page_name_and_order():
-    page_names_and_order = pages.get_page_name_and_order(["flibble"])
-    assert len(page_names_and_order) == 18, len(page_names_and_order)
+    page_options = dict(evaluation_types=["flibble"], ethics_options="NO")
+    page_names_and_order = pages.get_page_name_and_order(page_options)
+    assert len(page_names_and_order) == 16, len(page_names_and_order)
     assert "impact-analysis" not in page_names_and_order
 
-    page_names_and_order = pages.get_page_name_and_order(["IMPACT"])
-    assert len(page_names_and_order) == 21, len(page_names_and_order)
+    page_options = dict(evaluation_types=["IMPACT"], grants_options="NO")
+    page_names_and_order = pages.get_page_name_and_order(page_options)
+    assert len(page_names_and_order) == 19, len(page_names_and_order)
     assert "impact-analysis" in page_names_and_order

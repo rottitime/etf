@@ -144,12 +144,18 @@ evaluation_type_page_mapping = {
     "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }
 
+page_options_mapping = {
+    "issue_description_option": "issue_description",
+    "ethics_option": "ethics",
+    "grants_option": "grants",
+}
+
 all_evaluation_type_pages = set().union(*evaluation_type_page_mapping.values())
+all_other_optional_pages = set(page_options_mapping.values())
 
 
 def get_prev_next_page_name(page_name, page_options):
-    evaluation_types = page_options["evaluation_types"]
-    pages = tuple(get_page_name_and_order(evaluation_types, page_options).keys())
+    pages = tuple(get_page_name_and_order(page_options).keys())
     assert page_name in pages
     page_index = pages.index(page_name)
     if page_index == 0:
@@ -167,17 +173,19 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 
 
 @utils.dictify
-def get_page_name_and_order(evaluation_types, page_options):
-    pages_to_keep = set().union(
+def get_page_name_and_order(page_options):
+    evaluation_types = page_options["evaluation_types"]
+    evaluation_pages_to_keep = set().union(
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
-    pages_to_remove = all_evaluation_type_pages - pages_to_keep
-    if page_options.get("issue_description_option") != choices.YesNo.YES.value:
-        pages_to_remove.add("issue-description")
-    if page_options.get("ethics_option") != choices.YesNo.YES.value:
-        pages_to_remove.add("ethics")
-    if page_options.get("grants_option") != choices.YesNo.YES.value:
-        pages_to_remove.add("grants")
+    optional_pages_to_keep = set()
+    for k, v in page_options.items():
+        if k != "evaluation_types" and v == choices.YesNo.YES.value:
+            optional_pages_to_keep.add(page_options_mapping[k])
+
+    evaluation_pages_to_remove = all_evaluation_type_pages - evaluation_pages_to_keep
+    other_optional_pages_to_remove = all_other_optional_pages - optional_pages_to_keep
+    pages_to_remove = evaluation_pages_to_remove.union(other_optional_pages_to_remove)
     counter = itertools.count(0)
 
     for page_name in page_url_names:
