@@ -712,3 +712,23 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
 
         return "|".join(searchable_fields)
+
+
+class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="outcome_measures", on_delete=models.CASCADE)
+    aspect_name = models.CharField(max_length=256, blank=True, null=True)
+    aspect_other_specify = models.CharField(max_length=256, blank=True, null=True)
+
+    _name_field = "aspect_name"
+
+    def get_name(self):
+        if self.aspect_name in choices.ProcessEvaluationAspects.values:
+            if self.aspect_name == choices.ProcessEvaluationAspects.OTHER.value:
+                return self.aspect_other_specify
+            return choices.ProcessEvaluationAspects.mapping[self.aspect_name]
+        return self.aspect_name
+
+    def get_search_text(self):
+        searchable_fields = [str(self.aspect_name), str(self.other_specify)]
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
+        return "|".join(searchable_fields)
