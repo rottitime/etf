@@ -145,6 +145,12 @@ def test_step_through_evaluation():
     steps = [
         # Title page
         _make_simple_step("Title", {"title": "Test evaluation title", "short_title": "Test evaluation"}, evaluation.id),
+        # Option page
+        _make_simple_step(
+            "Optional information",
+            {"issue_description_option": "YES", "ethics_option": "YES", "grants_option": "YES"},
+            evaluation.id,
+        ),
         # Description page
         _make_simple_step(
             "Description",
