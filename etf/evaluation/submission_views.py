@@ -256,7 +256,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     return response
 
 
-def make_related_object_context(evaluation_id, title, object_name, url_names):
+def make_related_object_context(evaluation_id, title, object_name, url_names, dropdown_choices):
     evaluation = interface.facade.evaluation.get(evaluation_id)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     prev_url = reverse(url_names["prev_section_url_name"], args=(evaluation_id,))
@@ -273,13 +273,23 @@ def make_related_object_context(evaluation_id, title, object_name, url_names):
         "current_page": url_names["summary_page"],
         "evaluation_id": evaluation_id,
         "page_statuses": page_statuses,
-        "dropdown_choices": choices.dropdown_choices,
+        "dropdown_choices": dropdown_choices,
     }
 
 
 @login_required
 @check_edit_evaluation_permission
-def related_object_page_view(request, evaluation_id, id, model_name, title, template_name, url_names, object_name):
+def related_object_page_view(
+    request,
+    evaluation_id,
+    id,
+    model_name,
+    title,
+    template_name,
+    url_names,
+    object_name,
+    dropdown_choices=choices.dropdown_choices,
+):
     model = getattr(models, model_name)
     schema = getattr(schemas, f"{model_name}Schema")
     obj = model.objects.get(id=id)
@@ -305,7 +315,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
             errors = dict(err.messages)
     else:
         data = model_schema.dump(obj)
-    context = make_related_object_context(evaluation_id, title, object_name, url_names)
+    context = make_related_object_context(evaluation_id, title, object_name, url_names, dropdown_choices)
     context = {"errors": errors, "data": data, **context}
     return render(request, template_name, context)
 
@@ -958,6 +968,26 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
     title = "Process evaluation method"
     template_name = "submissions/process-evaluation-method-page.html"
     evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    process_evaluation_aspects = evaluation["process_evaluation_aspects"]
+    aspect_names = [aspect["aspect_name"] for aspect in process_evaluation_aspects]
+    other_specify = [
+        aspect["aspect_name_other"]
+        for aspect in process_evaluation_aspects
+        if aspect["aspect_name"] == choices.ProcessEvaluationAspects.OTHER.value
+    ]  # There should be at most one
+    if other_specify:
+        other_specify = other_specify[0]
+    else:
+        other_specify = ""
+    aspect_name_choices = choices.restrict_choices(
+        choices.ProcessEvaluationAspects.choices,
+        values_to_restrict_to=aspect_names,
+        specified_other=other_specify,
+    )
+    dropdown_choices = {
+        "aspect_names": aspect_name_choices,
+        "process_evaluation_method": choices.ProcessEvaluationMethods.choices,
+    }
     url_names = get_related_object_page_url_names("process-evaluation-methods", evaluation["evaluation_type"])
     response = related_object_page_view(
         request,
@@ -968,5 +998,6 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
         template_name=template_name,
         url_names=url_names,
         object_name="process_evaluation_methods",
+        dropdown_choices=dropdown_choices,
     )
     return response

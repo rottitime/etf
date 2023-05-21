@@ -306,7 +306,17 @@ def turn_choices_list_to_string(db_list, choices_options):
     return output
 
 
-def restrict_choices(choices, values_to_restrict_to):
+def map_other(pair, specified_other_description):
+    if pair[0] == "OTHER":
+        other_name = pair[1]
+        full_other_name = f"{other_name} ({specified_other_description})"
+        return (pair[0], full_other_name)
+    return pair
+
+
+def restrict_choices(choices, values_to_restrict_to, specified_other=""):
     restricted = (choice for choice in choices if choice[0] in values_to_restrict_to)
     restricted_tuple = (*restricted,)
+    if specified_other and "OTHER" in values_to_restrict_to:
+        restricted_tuple = (map_other(x, specified_other) for x in restricted_tuple)
     return restricted_tuple
