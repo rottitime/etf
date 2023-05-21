@@ -268,13 +268,7 @@ def test_step_through_evaluation():
         # Process evaluation design page
         _make_simple_step("Process evaluation design", {}, evaluation.id),
         # Process evaluation analysis page
-        _make_simple_step(
-            "Process evaluation analysis",
-            {
-                "process_analysis_description": "A description about the process evaluation description",
-            },
-            evaluation.id,
-        ),
+        _make_simple_step("Process evaluation analysis", {}, evaluation.id),
         # Economic design page
         _make_simple_step(
             "Economic evaluation design",
@@ -402,14 +396,7 @@ def test_step_through_evaluation():
             evaluation.id,
         ),
         # Process evaluation findings page
-        _make_simple_step(
-            "Process evaluation findings",
-            {
-                "process_summary_findings": "The summary process findings of the evaluation",
-                "process_findings": "The process findings of the evaluation",
-            },
-            evaluation.id,
-        ),
+        _make_simple_step("Process evaluation findings", {}, evaluation.id),
         # Other evaluation findings page
         _make_simple_step(
             "Other evaluation findings",

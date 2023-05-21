@@ -218,15 +218,6 @@ participant_recruitment_help_text = defaultdict(
 )
 
 
-process_findings_help_text = defaultdict(
-    str,
-    {
-        "process_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
-        "process_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
-    },
-)
-
-
 processes_standard_help_text = defaultdict(
     str,
     {
@@ -279,7 +270,6 @@ field_help_text = defaultdict(
         "other-findings": other_findings_help_text,
         "outcome measure": outcome_measure_help_text,
         "participant-recruitment": participant_recruitment_help_text,
-        "process-findings": process_findings_help_text,
         "process or standard": processes_standard_help_text,
         "studied-population": studied_population_help_text,
         "title": title_help_text,
@@ -687,16 +677,6 @@ participant_recruitment_guidance_text = defaultdict(
 )
 
 
-process_analysis_guidance_text = defaultdict(
-    list,
-    {
-        "process_analysis_description": [
-            "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
-        ],
-    },
-)
-
-
 processes_standard_guidance_text = defaultdict(
     list,
     {
@@ -783,7 +763,6 @@ field_guidance_text = defaultdict(
         "other measure": other_measures_guidance_text,
         "outcome measure": outcome_measure_guidance_text,
         "participant-recruitment": participant_recruitment_guidance_text,
-        "process-analysis": process_analysis_guidance_text,
         "process or standard": processes_standard_guidance_text,
         "visibility": visibility_guidance_text,
         "studied-population": studied_population_guidance_text,

@@ -4,8 +4,6 @@
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
-      {{macros.textarea("process_summary_findings", "Summary findings")}}
-      {{macros.textarea("process_findings", "Findings")}}
       {{macros.buttons(prev_url, id=data.id)}}
   </form>
 {% endblock %}
