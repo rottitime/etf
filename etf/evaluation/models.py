@@ -716,7 +716,7 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 
     def get_search_text(self):
         searchable_fields = [
-            str(self.aspect_name),  # TODO - get corresponding names
+            str(choices.ProcessEvaluationAspects.mapping[self.aspect_name]),
             str(self.aspect_name_other),
             str(self.summary_findings),
             str(self.findings),
@@ -737,15 +737,20 @@ class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
     def get_name(self):
         if self.method_name in choices.ProcessEvaluationMethods.values:
             if self.method_name == choices.ProcessEvaluationMethods.OTHER.value:
-                return self.method_other_specify
+                return self.method_name_other
             return choices.ProcessEvaluationMethods.mapping[self.method_name]
         return self.method_name
 
     def get_search_text(self):
         searchable_fields = [
-            str(self.method_name),  # TODO - get corresponding names
-            str(self.method_other_specify),
-            str(self.more_information),  # TODO - get corresponding names
+            str(choices.ProcessEvaluationMethods.mapping[self.method_name]),
+            str(self.method_name_other),
+            self.more_information,
+            "|".join(
+                choices.turn_list_to_display_values(
+                    self.aspects_measured, choices.ProcessEvaluationAspects.options, self.more_information
+                )
+            ),
         ]
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
         return "|".join(searchable_fields)
