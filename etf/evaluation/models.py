@@ -183,15 +183,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_missing_data_handling = models.TextField(blank=True, null=True)
     impact_fidelity = models.CharField(max_length=10, blank=True, null=True)
     impact_description_planned_analysis = models.TextField(blank=True, null=True)
-    # TODO - add more
-
-    # Process evaluation design
-    process_methods = models.CharField(blank=True, null=True, max_length=256)
-    # TODO - add more
-
-    # Process evaluation analysis
-    # TODO - add analysis plan document
-    process_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
     economic_type = models.CharField(max_length=256, blank=True, null=True)
@@ -202,7 +193,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Economic evaluation analysis
     economic_analysis_description = models.TextField(blank=True, null=True)
-    # TODO - add more details
 
     # Other evaluation design
     other_design_type = models.TextField(blank=True, null=True)
@@ -210,7 +200,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Other evaluation analysis
     other_analysis_description = models.TextField(blank=True, null=True)
-    # TODO - add more
 
     # Impact evaluation findings
     impact_comparison = models.TextField(blank=True, null=True)
@@ -224,10 +213,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Economic evaluation findings
     economic_summary_findings = models.TextField(blank=True, null=True)
     economic_findings = models.TextField(blank=True, null=True)
-
-    # Process evaluation findings
-    process_summary_findings = models.TextField(blank=True, null=True)
-    process_findings = models.TextField(blank=True, null=True)
 
     # Other evaluation findings
     other_summary_findings = models.TextField(blank=True, null=True)
