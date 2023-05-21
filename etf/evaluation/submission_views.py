@@ -453,8 +453,8 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
         except marshmallow.exceptions.ValidationError as err:
             errors = dict(err.messages)
         else:
-            aspect_name = serialized_aspects["aspect_name"]
-            aspect_name_other = serialized_aspects["aspect_name_other"]
+            aspect_name = serialized_aspects.get("aspect_name")
+            aspect_name_other = serialized_aspects.get("aspect_name_other")
             for aspect in aspect_name:
                 if aspect == choices.ProcessEvaluationAspects.OTHER.value:
                     models.ProcessEvaluationAspect.objects.update_or_create(

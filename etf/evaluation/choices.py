@@ -319,3 +319,11 @@ def restrict_choices(choices, values_to_restrict_to, specified_other=""):
     if specified_other and "OTHER" in values_to_restrict_to:
         restricted = (map_other(x, specified_other) for x in restricted)
     return restricted
+
+
+def get_display_value_or_blank(value, choices):
+    try:
+        output = choices.mapping[value]
+    except KeyError as e:
+        output = ""
+    return output
