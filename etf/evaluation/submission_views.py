@@ -287,7 +287,7 @@ def related_object_page_view(request, evaluation_id, id, model_name, title, temp
     model_schema = schema(unknown=marshmallow.EXCLUDE)
     next_url = reverse(url_names["next_section_url_name"], args=(evaluation_id,))
     summary_url = reverse(url_names["summary_page"], args=(evaluation_id,))
-    multiple_value_vars = ["document_types"]
+    multiple_value_vars = ["document_types", "aspects_measured"]
     if request.method == "POST":
         data = transform_post_data(request.POST, multiple_value_vars)
         if "delete" in request.POST:
@@ -934,6 +934,39 @@ def event_date_page_view(request, evaluation_id, event_date_id):
         title=title,
         template_name=template_name,
         url_names=url_names,
-        object_name="cost",
+        object_name="event_dates",
+    )
+    return response
+
+
+def summary_process_evaluation_methods_page_view(request, evaluation_id):
+    form_data = {
+        "title": "Process evaluation design: Methods",
+        "template_name": "submissions/process-evaluation-methods.html",
+        "summary_page_name": "process-evaluation-methods",
+        "object_name": "process evaluation method",
+        "object_name_plural": "process evaluation methods",
+    }
+    model_name = "ProcessEvaluationMethod"
+    return summary_related_object_page_view(
+        request, model_name=model_name, form_data=form_data, evaluation_id=evaluation_id
+    )
+
+
+def process_evaluation_method_page_view(request, evaluation_id, process_evaluation_method_id):
+    model_name = "ProcessEvaluationMethod"
+    title = "Process evaluation method"
+    template_name = "submissions/process-evaluation-method-page.html"
+    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    url_names = get_related_object_page_url_names("process-evaluation-methods", evaluation["evaluation_type"])
+    response = related_object_page_view(
+        request,
+        evaluation_id=evaluation_id,
+        id=process_evaluation_method_id,
+        model_name=model_name,
+        title=title,
+        template_name=template_name,
+        url_names=url_names,
+        object_name="process_evaluation_methods",
     )
     return response

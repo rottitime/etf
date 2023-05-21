@@ -1,0 +1,12 @@
+{% extends "submissions/evaluation-base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block evaluation_content %}
+  <form method="POST" id="create-evaluation">{{csrf_input}}
+    <h1 class="highlight header3">{{title}}</h1>
+      {{macros.radios_from_list("method_name", "Method", dropdown_choices.process_evaluation_method)}}
+      {{macros.textarea("more_information", "More information")}}
+      {{macros.checkbox_from_list("aspects_measured", "Which of the aspects you have already entered does this intend to measure or evaluate?", list=dropdown_choices.process_evaluation_aspect)}}
+      {% include "submissions/multiple-objects-page.html" %}
+  </form>
+{% endblock %}

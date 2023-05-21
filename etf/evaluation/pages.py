@@ -24,6 +24,7 @@ page_display_names = {
     "impact-design": "Impact evaluation design",
     "impact-analysis": "Impact evaluation analysis",
     "process-design-aspects": "Process evaluation design: Aspects to investigate",
+    "process-evaluation-methods": "Process evaluation design methods",
     "process-analysis": "Process evaluation analysis",
     "economic-design": "Economic evaluation design",
     "economic-analysis": "Economic evaluation analysis",
@@ -75,6 +76,7 @@ section_pages = {
         "economic-design",
         "economic-analysis",
         "process-design-aspects",
+        "process-evaluation-methods",
         "process-analysis",
         "other-design",
         "other-analysis",
@@ -108,6 +110,7 @@ page_url_names = (
     "impact-design",
     "impact-analysis",
     "process-design-aspects",
+    "process-evaluation-methods",
     "process-analysis",
     "economic-design",
     "economic-analysis",
@@ -137,11 +140,12 @@ object_page_url_names = {
     "evaluation-costs": "evaluation-cost-page",
     "links": "link-page",
     "event-dates": "event-date-page",
+    "process-evaluation-methods": "process-evaluation-method-page",
 }
 
 evaluation_type_page_mapping = {
     "IMPACT": set(("impact-analysis", "impact-design", "impact-findings")),
-    "PROCESS": set(("process-analysis", "process-design-aspects", "process-findings")),
+    "PROCESS": set(("process-analysis", "process-design-aspects", "process-evaluation-methods", "process-findings")),
     "ECONOMIC": set(("economic-analysis", "economic-design", "economic-findings")),
     "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }

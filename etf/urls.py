@@ -243,7 +243,6 @@ evaluation_costs_urlpatterns = [
     ),
 ]
 
-
 documents_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/documents/",
@@ -281,6 +280,19 @@ event_date_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/event-dates/<uuid:event_date_id>/",
         submission_views.event_date_page_view,
         name="event-date-page",
+    ),
+]
+
+process_evaluation_methods_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/process-evaluation-methods/",
+        submission_views.summary_process_evaluation_methods_page_view,
+        name="process-evaluation-methods",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/process-evaluation-methods/<uuid:process_evaluation_method_id>/",
+        submission_views.process_evaluation_method_page_view,
+        name="process-evaluation-method-page",
     ),
 ]
 
@@ -342,6 +354,7 @@ urlpatterns = (
     initial_urlpatterns
     + account_urlpatterns
     + evaluation_edit_patterns
+    + process_evaluation_methods_urlpatterns
     + evaluation_summary_urlpatterns
     + feedback_and_help_urlpatterns
 )
