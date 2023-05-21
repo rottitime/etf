@@ -183,12 +183,6 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
     impact_description_planned_analysis = fields.Str()
 
-    # Process evaluation design
-    process_methods = fields.Str(validate=validate.Length(max=256))
-
-    # Process evaluation analysis
-    process_analysis_description = fields.Str()
-
     # Process evaluation aspects
     process_evaluation_aspects = fields.Function(
         lambda e: ProcessEvaluationAspectSchema(many=True, exclude=("evaluation",)).dump(
@@ -247,10 +241,6 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Economic evaluation findings
     economic_summary_findings = fields.Str()
     economic_findings = fields.Str()
-
-    # Process evaluation findings
-    process_summary_findings = fields.Str()
-    process_findings = fields.Str()
 
     # Other evaluation findings
     other_summary_findings = fields.Str()

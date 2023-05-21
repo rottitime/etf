@@ -324,6 +324,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             "grants",
             "documents",
             "event_dates",
+            "process_evaluation_aspects",
+            "process_evaluation_methods",
         ]
 
         # Multiple choice fields
