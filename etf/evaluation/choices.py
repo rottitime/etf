@@ -304,3 +304,9 @@ def turn_choices_list_to_string(db_list, choices_options):
     if output:
         output = f"{output}{utils.SEPARATOR}"
     return output
+
+
+def restrict_choices(choices, values_to_restrict_to):
+    restricted = (choice for choice in choices if choice[0] in values_to_restrict_to)
+    restricted_tuple = (*restricted,)
+    return restricted_tuple
