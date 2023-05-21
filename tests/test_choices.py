@@ -32,7 +32,7 @@ def test_restrict_choices():
     restricted_values = ["SUPERIORITY", "OTHER"]
     actual = choices.restrict_choices(choices.ImpactFramework.choices, restricted_values)
     expected = (("SUPERIORITY", "Superiority"), ("OTHER", "Other"))
-    assert actual == expected, actual
+    assert tuple(actual) == expected, actual
 
 
 def test_restrict_choices_with_other():
@@ -41,4 +41,4 @@ def test_restrict_choices_with_other():
         choices.ImpactFramework.choices, restricted_values, specified_other="specified text"
     )
     expected = (("SUPERIORITY", "Superiority"), ("OTHER", "Other (specified text)"))
-    assert actual == expected, actual
+    assert tuple(actual) == expected, actual
