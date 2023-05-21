@@ -707,6 +707,9 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 
     _name_field = "aspect_name"
 
+    class Meta:
+        unique_together = ("evaluation", "aspect_name")
+
     def get_name(self):
         if self.aspect_name in choices.ProcessEvaluationAspects.values:
             if self.aspect_name == choices.ProcessEvaluationAspects.OTHER.value:
@@ -723,6 +726,15 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
         ]
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
         return "|".join(searchable_fields)
+
+    def delete(self):
+        # If aspect removed from evaluation, should be removed from all methods of this evaluation
+        for method in self.evaluation.process_evaluation_methods.all():
+            method_aspects = method.aspects_measured
+            if self.aspect_name in method_aspects:
+                method_aspects.remove(self.aspect_name)
+            method.save()
+        super().delete()
 
 
 class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
