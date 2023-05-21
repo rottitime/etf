@@ -426,7 +426,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
     aspect_name = list(aspects.values_list("aspect_name", flat=True))
     try:
         other_aspect = models.Evaluation(id=evaluation_id).process_evaluation_aspects.get(
-            aspect_name=choices.ProcessEvaluationAspects.OTHER
+            aspect_name=choices.ProcessEvaluationAspects.OTHER.value
         )
         aspect_name_other = other_aspect.aspect_name_other
     except models.ProcessEvaluationAspect.DoesNotExist:
@@ -446,7 +446,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
             aspect_name = serialized_aspects["aspect_name"]
             aspect_name_other = serialized_aspects["aspect_name_other"]
             for aspect in aspect_name:
-                if aspect == choices.ProcessEvaluationAspects.OTHER:
+                if aspect == choices.ProcessEvaluationAspects.OTHER.value:
                     models.ProcessEvaluationAspect.objects.update_or_create(
                         evaluation_id=evaluation_id,
                         aspect_name=aspect,

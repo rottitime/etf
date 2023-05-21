@@ -741,7 +741,7 @@ class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
 class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
     evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_methods", on_delete=models.CASCADE)
     method_name = models.CharField(max_length=256, blank=True, null=True)
-    method_other_specify = models.CharField(max_length=256, blank=True, null=True)
+    method_name_other = models.CharField(max_length=256, blank=True, null=True)
     more_information = models.TextField(blank=True, null=True)
     aspects_measured = models.JSONField(default=list)
 

@@ -189,6 +189,20 @@ class EvaluationSchema(TimeStampedModelSchema):
     # Process evaluation analysis
     process_analysis_description = fields.Str()
 
+    # Process evaluation aspects
+    process_evaluation_aspects = fields.Function(
+        lambda e: ProcessEvaluationAspectSchema(many=True, exclude=("evaluation",)).dump(
+            e.process_evaluation_aspects.all()
+        )
+    )
+
+    # Process evaluation method
+    process_evaluation_methods = fields.Function(
+        lambda e: ProcessEvaluationMethodSchema(many=True, exclude=("evaluation",)).dump(
+            e.process_evaluation_methods.all()
+        )
+    )
+
     # Economic evaluation design
     economic_type = make_choice_field(max_len=256, values=choices.EconomicEvaluationType.values)
     perspective_costs = fields.Str()
@@ -363,7 +377,7 @@ class ProcessEvaluationMethodSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     method_name = make_choice_field(max_len=256, values=choices.ProcessEvaluationMethods.values)
-    method_other_specify = SingleLineStr(validate=validate.Length(max=256))
+    method_name_other = SingleLineStr(validate=validate.Length(max=256))
     more_information = fields.Str()
     aspects_measured = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
 
@@ -372,6 +386,6 @@ class ProcessEvaluationAspectSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
     aspect_name = make_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
-    aspect_other_specify = SingleLineStr(validate=validate.Length(max=256))
+    aspect_name_other = SingleLineStr(validate=validate.Length(max=256))
     summary_findings = fields.Str()
     findings = fields.Str()
