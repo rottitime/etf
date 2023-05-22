@@ -648,7 +648,7 @@ def grant_page_view(request, evaluation_id, grant_id):
     model_name = "Grant"
     title = "Grant"
     template_name = "submissions/grant-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     url_names = get_related_object_page_url_names("grants", get_page_options(evaluation))
     response = related_object_page_view(
         request,
