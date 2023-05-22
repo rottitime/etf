@@ -17,6 +17,7 @@ NAMES_TO_IGNORE = [
     "document-page",
     "link-page",
     "event-date-page",
+    "grant-page",
     "evaluation-contributor-remove",
     "create-evaluation",
     "evaluation-overview",
