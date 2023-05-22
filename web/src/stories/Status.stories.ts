@@ -14,7 +14,7 @@ type Props = {
 }
 
 /**
- * A divider to separate content.
+ * To show the status of an item.
  */
 const meta = {
   title: 'Components/Status',
