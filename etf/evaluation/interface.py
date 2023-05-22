@@ -9,7 +9,6 @@ class CreateEvaluationSchema(marshmallow.Schema):
 
 
 class GetEvaluationSchema(marshmallow.Schema):
-    user_id = marshmallow.fields.UUID()
     evaluation_id = marshmallow.fields.UUID()
 
 
@@ -56,8 +55,8 @@ class Evaluation(Entity):
         return evaluation
 
     @with_schema(load=GetEvaluationSchema, dump=schemas.EvaluationSchema)
-    def get(self, user_id, evaluation_id):
-        evaluation = models.Evaluation.objects.get(id=evaluation_id, users__id=user_id)
+    def get(self, evaluation_id):
+        evaluation = models.Evaluation.objects.get(id=evaluation_id)
         return evaluation
 
     @with_schema(load=UpdateEvaluationSchema(partial=True), dump=schemas.EvaluationSchema)
