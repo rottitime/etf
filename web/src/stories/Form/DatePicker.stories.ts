@@ -1,18 +1,20 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createInput, Input as Props } from '../utils'
 
-/**
- * Standard input field
- */
 const meta = {
-  title: 'Components/Form/Input',
+  title: 'Components/Form/DatePicker',
   tags: ['autodocs'],
-  render: createInput,
+  render: (props) => {
+    const datePicker = document.createElement('div')
+    datePicker.classList.add('date-picker')
+    datePicker.appendChild(createInput(props))
+    return datePicker
+  },
   argTypes: {
     fullWidth: { control: 'boolean' },
     value: { control: 'text' },
-    placeholder: { control: 'text' },
-    onkeyup: { action: 'changed', table: { disable: true } }
+    onkeyup: { action: 'changed', table: { disable: true } },
+    type: { control: 'text', defaultValue: 'date', table: { disable: true } }
   },
   parameters: {
     design: {
@@ -25,9 +27,8 @@ const meta = {
 export default meta
 type Story = StoryObj<Props>
 
-export const Default: Story = {
+export const DatePicker: Story = {
   args: {
-    placeholder: 'e.g. Joe Blogs',
-    type: 'text'
+    type: 'date'
   }
 }
