@@ -180,7 +180,7 @@ def get_page_name_and_order(page_options):
     )
     optional_pages_to_keep = set()
     for k, v in page_options.items():
-        if k != "evaluation_types" and v == choices.YesNo.YES.value:
+        if k in page_options_mapping.keys() and v == choices.YesNo.YES.value:
             optional_pages_to_keep.add(page_options_mapping[k])
 
     evaluation_pages_to_remove = all_evaluation_type_pages - evaluation_pages_to_keep
