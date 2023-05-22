@@ -62,9 +62,7 @@ def test_email_is_valid():
 def test_email_is_invalid_domain_extension():
     page = enter_signup_form_data("jane.doe@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
-    assert page.has_text(
-        "This email domain is not yet supported. Please contact the site admin team if you think this is incorrect."
-    )
+    assert page.has_text("Currently you need a Civil Service email address to register.")
 
 
 def test_email_is_invalid_no_extension():
@@ -180,4 +178,4 @@ def test_incorrect_email_domains():
             cleaned_email = restrict_email.clean_email(email)
             assert not cleaned_email
         except ValidationError as e:
-            assert e.message.startswith("This email domain is not yet supported")
+            assert e.message.startswith("Currently you need a Civil Service email address to register.")
