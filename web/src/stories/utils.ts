@@ -1,4 +1,4 @@
-import { Input, Select } from './types'
+import { Input, Select, Textarea } from './types'
 
 export const createInput = ({ fullWidth, dimension, onkeyup, ...props }: Input) => {
   const input = document.createElement('input')
@@ -41,6 +41,19 @@ export const createSelect = ({
   typeof onkeyup === 'function' && select.addEventListener('keyup', onkeyup)
 
   return wrapper
+}
+
+export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
+  const textarea = document.createElement('textarea')
+
+  for (const [key, value] of Object.entries(props)) {
+    textarea.setAttribute(key, value?.toString() || '')
+  }
+  fullWidth && textarea.classList.add('full-width')
+
+  typeof onkeyup === 'function' && textarea.addEventListener('keyup', onkeyup)
+
+  return textarea
 }
 
 export * from './types'

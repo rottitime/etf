@@ -10,8 +10,6 @@ const meta = {
   render: createInput,
   argTypes: {
     fullWidth: { control: 'boolean' },
-    value: { control: 'text' },
-    placeholder: { control: 'text' },
     onkeyup: { action: 'changed', table: { disable: true } },
     dimension: {
       control: { type: 'select' },

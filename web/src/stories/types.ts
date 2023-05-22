@@ -2,11 +2,14 @@ export type Link = { href: string; text: string }
 
 export type Input = HTMLInputElement & {
   fullWidth: boolean
-  placeholder: string
   dimension?: 'small' | 'medium' | 'large'
+}
+
+export type Textarea = HTMLTextAreaElement & {
+  fullWidth: boolean
 }
 
 export type Select = {
   fullWidth: boolean
-  optionsList: string[]
+  optionList: string[]
 } & HTMLSelectElement
