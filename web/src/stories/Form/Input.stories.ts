@@ -12,7 +12,11 @@ const meta = {
     fullWidth: { control: 'boolean' },
     value: { control: 'text' },
     placeholder: { control: 'text' },
-    onkeyup: { action: 'changed', table: { disable: true } }
+    onkeyup: { action: 'changed', table: { disable: true } },
+    dimension: {
+      control: { type: 'select' },
+      options: ['small', 'medium', 'large']
+    }
   },
   parameters: {
     design: {
@@ -28,6 +32,7 @@ type Story = StoryObj<Props>
 export const Default: Story = {
   args: {
     placeholder: 'e.g. Joe Blogs',
+    dimension: 'medium',
     type: 'text'
   }
 }
