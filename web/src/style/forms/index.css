@@ -54,9 +54,8 @@ input {
   }
 }
 
-.select,
-.date-picker {
-  &.full-width {
+:is(.select, .date-picker) {
+  &:has(.full-width) {
     width: 100%;
     box-sizing: border-box;
   }
