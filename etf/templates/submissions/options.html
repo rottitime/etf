@@ -1,0 +1,19 @@
+{% extends "submissions/evaluation-base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block evaluation_content %}
+  <form method="POST" id="create-evaluation">{{csrf_input}}
+    <fieldset>
+      <legend>
+        <h1>{{title}}</h1>
+      </legend>
+      
+      
+      {{macros.yes_no("issue_description_option", "Complete issue description?")}}
+      {{macros.yes_no("ethics_option", "Provide ethical information?")}}
+      {{macros.yes_no("grants_option", "Grant funding")}}
+
+      {{macros.buttons(prev_url, id=data.id)}}
+    </fieldset>
+  </form>
+{% endblock %}

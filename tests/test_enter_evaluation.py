@@ -145,6 +145,12 @@ def test_step_through_evaluation():
     steps = [
         # Title page
         _make_simple_step("Title", {"title": "Test evaluation title", "short_title": "Test evaluation"}, evaluation.id),
+        # Option page
+        _make_simple_step(
+            "Optional information",
+            {"issue_description_option": "YES", "ethics_option": "YES", "grants_option": "YES"},
+            evaluation.id,
+        ),
         # Description page
         _make_simple_step(
             "Description",
@@ -423,6 +429,13 @@ def test_step_through_evaluation():
                 "conformity": "FULL",
                 "description": "A description of the process or standard",
             },
+        ),
+        # Grants
+        _make_multple_object_step(
+            title="Grants",
+            new_item_name="New grant",
+            added_item_name="Grant 47",
+            fields={"name_of_grant": "Grant 47", "grant_number": "REF47", "grant_details": "Loads more grant info"},
         ),
         # Links page
         _make_multple_object_step(

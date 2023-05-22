@@ -52,6 +52,11 @@ evaluation_entry_urlpatterns = [
         "evaluation/<uuid:evaluation_id>/description/", submission_views.evaluation_description_view, name="description"
     ),
     path(
+        "evaluation/<uuid:evaluation_id>/options/",
+        submission_views.evaluation_options_view,
+        name="options",
+    ),
+    path(
         "evaluation/<uuid:evaluation_id>/issue-description/",
         submission_views.evaluation_issue_description_view,
         name="issue-description",
@@ -199,6 +204,19 @@ processes_standards_urlpatterns = [
     ),
 ]
 
+grants_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/",
+        submission_views.summary_grants_page_view,
+        name="grants",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/<uuid:grant_id>/",
+        submission_views.grant_page_view,
+        name="grant-page",
+    ),
+]
+
 evaluation_costs_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/evaluation-costs/",
@@ -301,6 +319,7 @@ urlpatterns = (
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
     + other_measure_urlpatterns
+    + grants_urlpatterns
     + processes_standards_urlpatterns
     + evaluation_costs_urlpatterns
     + documents_urlpatterns

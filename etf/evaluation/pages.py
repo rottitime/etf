@@ -1,6 +1,6 @@
 import itertools
 
-from etf.evaluation import utils
+from etf.evaluation import choices, utils
 
 
 class EvaluationPageStatus(utils.Choices):
@@ -13,6 +13,7 @@ class EvaluationPageStatus(utils.Choices):
 page_display_names = {
     "intro": "Intro",
     "title": "Title",
+    "options": "Optional information",
     "description": "Description",
     "issue-description": "Issue description",
     "studied-population": "Studied population",
@@ -37,6 +38,7 @@ page_display_names = {
     "process-findings": "Process evaluation findings",
     "other-findings": "Other evaluation findings",
     "processes-standards": "Processes and standards",
+    "grants": "Grants",
     "links": "Links and IDs",
     "visibility": "Evaluation visibility",
     "end": "End",
@@ -93,6 +95,7 @@ section_pages = {
 page_url_names = (
     "intro",
     "title",
+    "options",
     "description",
     "issue-description",
     "studied-population",
@@ -117,6 +120,7 @@ page_url_names = (
     "process-findings",
     "other-findings",
     "processes-standards",
+    "grants",
     "links",
     "visibility",
     "end",
@@ -127,6 +131,7 @@ object_page_url_names = {
     "outcome-measures": "outcome-measure-page",
     "other-measures": "other-measure-page",
     "processes-standards": "processes-standard-page",
+    "grants": "grant-page",
     "evaluation-costs": "evaluation-cost-page",
     "links": "link-page",
     "event-dates": "event-date-page",
@@ -139,11 +144,18 @@ evaluation_type_page_mapping = {
     "OTHER": set(("other-analysis", "other-design", "other-findings")),
 }
 
+page_options_mapping = {
+    "issue_description_option": "issue_description",
+    "ethics_option": "ethics",
+    "grants_option": "grants",
+}
+
 all_evaluation_type_pages = set().union(*evaluation_type_page_mapping.values())
+all_other_optional_pages = set(page_options_mapping.values())
 
 
-def get_prev_next_page_name(page_name, evaluation_types):
-    pages = tuple(get_page_name_and_order(evaluation_types).keys())
+def get_prev_next_page_name(page_name, page_options):
+    pages = tuple(get_page_name_and_order(page_options).keys())
     assert page_name in pages
     page_index = pages.index(page_name)
     if page_index == 0:
@@ -161,11 +173,19 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 
 
 @utils.dictify
-def get_page_name_and_order(evaluation_types):
-    pages_to_keep = set().union(
+def get_page_name_and_order(page_options):
+    evaluation_types = page_options["evaluation_types"]
+    evaluation_pages_to_keep = set().union(
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
     )
-    pages_to_remove = all_evaluation_type_pages - pages_to_keep
+    optional_pages_to_keep = set()
+    for k, v in page_options.items():
+        if k in page_options_mapping.keys() and v == choices.YesNo.YES.value:
+            optional_pages_to_keep.add(page_options_mapping[k])
+
+    evaluation_pages_to_remove = all_evaluation_type_pages - evaluation_pages_to_keep
+    other_optional_pages_to_remove = all_other_optional_pages - optional_pages_to_keep
+    pages_to_remove = evaluation_pages_to_remove.union(other_optional_pages_to_remove)
     counter = itertools.count(0)
 
     for page_name in page_url_names:

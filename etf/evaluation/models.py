@@ -110,6 +110,11 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     doi = models.CharField(max_length=64, blank=True, null=True)
     page_statuses = models.JSONField(default=get_default_page_statuses)
 
+    # Options
+    issue_description_option = models.CharField(max_length=3, blank=True, null=True)
+    ethics_option = models.CharField(max_length=3, blank=True, null=True)
+    grants_option = models.CharField(max_length=3, blank=True, null=True)
+
     # Issue description
     issue_description = models.TextField(blank=True, null=True)
     those_experiencing_issue = models.TextField(blank=True, null=True)
@@ -298,6 +303,15 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     def get_impact_design_name_display_name(self):
         return [name[1] for name in choices.ImpactEvalDesign.choices if name[0] in self.impact_design_name]
 
+    def get_issue_description_option_display_name(self):
+        return choices.YesNo.mapping[self.issue_description_option]
+
+    def get_ethics_option_display_name(self):
+        return choices.YesNo.mapping[self.ethics_option]
+
+    def get_grants_option_display_name(self):
+        return choices.YesNo.mapping[self.grants_option]
+
     def __str__(self):
         return f"{self.id} : {self.title}"
 
@@ -325,6 +339,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             "process_standards",
             "link_other_services",
             "costs",
+            "grants",
             "documents",
             "event_dates",
         ]
@@ -336,6 +351,9 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
         yes_no_fields = [
             "ethics_committee_approval",
             "impact_fidelity",
+            "issue_description_option",
+            "ethics_option",
+            "grants_option",
         ]
 
         # Single choice fields
@@ -643,6 +661,26 @@ class LinkOtherService(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEva
         searchable_fields = [
             str(self.name_of_service),
             str(self.link_or_identifier),
+        ]
+
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
+
+        return "|".join(searchable_fields)
+
+
+class Grant(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="grants", on_delete=models.CASCADE)
+    name_of_grant = models.CharField(max_length=256, blank=True, null=True)
+    grant_number = models.CharField(max_length=256, blank=True, null=True)
+    grant_details = models.TextField(blank=True, null=True)
+
+    _name_field = "name_of_grant"
+
+    def get_search_text(self):
+        searchable_fields = [
+            str(self.name_of_grant),
+            str(self.grant_number),
+            str(self.grant_details),
         ]
 
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]

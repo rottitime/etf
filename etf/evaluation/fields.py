@@ -81,6 +81,14 @@ event_date_help_text = defaultdict(
 )
 
 
+grant_help_text = defaultdict(
+    str,
+    {
+        "grant_details": "Provide any further details about this grant as required.",
+    },
+)
+
+
 impact_analysis_help_text = defaultdict(
     str,
     {
@@ -155,6 +163,16 @@ links_help_text = defaultdict(
     {
         "links_name_of_service": "Which service is this an identifier for?",
         "links_link_or_identifier": "What is the link/identifier?",
+    },
+)
+
+
+options_help_text = defaultdict(
+    str,
+    {
+        "issue_description_option": "Do you want to complete an issue description for this evaluation?",
+        "ethics_option": "Do you want to provide ethical information for this evaluation?",
+        "grants_option": "Was this evaluation, or any of the interventions being evaluated, funded by a grant?",
     },
 )
 
@@ -249,12 +267,14 @@ field_help_text = defaultdict(
         "ethics": ethics_help_text,
         "evaluation cost": evaluation_cost_help_text,
         "event date": event_date_help_text,
+        "grant": grant_help_text,
         "impact-analysis": impact_analysis_help_text,
         "impact-design": impact_design_help_text,
         "impact-findings": impact_findings_help_text,
         "intervention": intervention_help_text,
         "issue-description": issue_description_help_text,
         "link": links_help_text,
+        "options": options_help_text,
         "other-design": other_design_help_text,
         "other-findings": other_findings_help_text,
         "outcome measure": outcome_measure_help_text,
@@ -411,6 +431,17 @@ evaluation_cost_guidance_text = defaultdict(
 )
 
 
+grant_guidance_text = defaultdict(
+    list,
+    {
+        "grant_number": [
+            "Provide the grant number or other similar unique identifier for this grant.",
+            "For UK government grants, use the Government Grants Information System (GGIS) number.",
+        ],
+    },
+)
+
+
 evaluation_type_guidance_text = defaultdict(
     list,
     {
@@ -548,6 +579,24 @@ issue_description_guidance_text = defaultdict(
             "Are there deadlines for making those decisions?",
             "How might practice be changed if an effective intervention is identified or an intervention is found to be ineffective?",
             "What information would this study need to generate to be able to affect these decisions?",
+        ],
+    },
+)
+
+
+options_guidance_text = defaultdict(
+    list,
+    {
+        "issue_description_option": [
+            "Select whether to complete a set of questions providing a structured description of the issue being investigated by the evaluation.",
+            "An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption.",
+            "The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.",
+        ],
+        "ethics_option": [
+            "Select whether to complete a set of questions providing information addressing ethical considerations regarding the evaluation.",
+        ],
+        "grants_option": [
+            "If there is grant funding, there will be an opportunity later for you to provide brief information about each relevant grant.",
         ],
     },
 )
@@ -721,11 +770,13 @@ field_guidance_text = defaultdict(
         "ethics": ethics_guidance_text,
         "evaluation cost": evaluation_cost_guidance_text,
         "evaluation-types": evaluation_type_guidance_text,
+        "grant": grant_guidance_text,
         "impact-analysis": impact_analysis_guidance_text,
         "impact-design": impact_design_guidance_text,
         "impact-findings": impact_findings_guidance_text,
         "intervention": intervention_guidance_text,
         "issue-description": issue_description_guidance_text,
+        "options": options_guidance_text,
         "other-analysis": other_analysis_guidance_text,
         "other-design": other_design_guidance_text,
         "other-findings": other_findings_guidance_text,
