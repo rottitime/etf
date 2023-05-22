@@ -9,7 +9,7 @@ const meta = {
     name: { control: 'text', table: { disable: true } },
     fullWidth: { control: 'boolean' },
     disabled: { control: 'boolean', defaultValue: false },
-    onkeyup: { action: 'changed', table: { disable: true } }
+    onchange: { action: 'changed', table: { disable: true } }
   },
   parameters: {
     design: {

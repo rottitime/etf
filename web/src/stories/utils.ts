@@ -16,7 +16,7 @@ export const createInput = ({ fullWidth, dimension, onkeyup, ...props }: Input) 
 export const createSelect = ({
   fullWidth,
   disabled,
-  onkeyup,
+  onchange,
   optionList,
   ...props
 }: Select) => {
@@ -38,12 +38,12 @@ export const createSelect = ({
   wrapper.classList.add('select')
   wrapper.appendChild(select)
 
-  typeof onkeyup === 'function' && select.addEventListener('keyup', onkeyup)
+  typeof onchange === 'function' && select.addEventListener('change', onchange)
 
   return wrapper
 }
 
-export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
+export const createTextarea = ({ fullWidth, onchange, ...props }: Textarea) => {
   const textarea = document.createElement('textarea')
 
   for (const [key, value] of Object.entries(props)) {
