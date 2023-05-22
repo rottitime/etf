@@ -29,13 +29,13 @@
           {% endif %}
         </div>
         <div class="row mb-16">
-          <label for="id_password2" {% if form.errors.password2 %}class="error"{% endif %}>Password</label>
+          <label for="id_password2" {% if form.errors.password2 %}class="error"{% endif %}>Confirm password</label>
           <input type="password" name="password2" id="id_password2" required autocomplete="off" class="full-width" />
           {% if form.errors.password2 %}
             <div class="helper">{{form.errors.password2}}</div>
           {% endif %}
         </div>
-        <div is="hint-box" aria-label="Additional guidance">
+        <hint-box aria-label="Password requirements">
           <div class="content">
             <p>Password requirements:</p>
             <ul>
