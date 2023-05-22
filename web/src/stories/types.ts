@@ -5,3 +5,8 @@ export type Input = HTMLInputElement & {
   placeholder: string
   dimension?: 'small' | 'medium' | 'large'
 }
+
+export type Select = {
+  fullWidth: boolean
+  optionsList: string[]
+} & HTMLSelectElement
