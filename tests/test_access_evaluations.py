@@ -1,3 +1,10 @@
+"""
+Tests to ensure can't access evaluation views if you don't have the right permissions.
+
+Initial tests check all URLs and deliberate exclude some - this is so we ensure new
+URLs get tested. You will have to be explicit about URLs that don't need to be tested (for access).
+"""
+
 from django.urls import reverse
 from nose import with_setup
 
@@ -5,7 +12,6 @@ from etf import urls
 from etf.evaluation import models
 
 from . import utils
-
 
 # Explicitly excluding URLs, to ensure that we don't miss out new URLs
 EDIT_OR_VIEW_EVALUATION_URL_PATTERNS = (
@@ -25,8 +31,9 @@ VIEW_EVALUATION_URL_PATTERNS = (
     - set(urls.debug_urlpatterns)
 )
 
+EDIT_EVALUATIONS = set(EDIT_OR_VIEW_EVALUATION_URL_PATTERNS) - set(VIEW_EVALUATION_URL_PATTERNS)
 
-# Non-standard URLs - explicitly write tests
+# Non-standard URLs to ignore by standard tests - explicitly write tests
 NAMES_TO_IGNORE = [
     "evaluation-contributor-remove",
     "create-evaluation",
@@ -34,6 +41,7 @@ NAMES_TO_IGNORE = [
 ]
 
 
+# URLs also get ignored - have explicitly written tests for these related objects
 RELATED_OBJECTS = {
     "intervention-page": "Intervention",
     "outcome-measure-page": "OutcomeMeasure",
@@ -60,28 +68,44 @@ def get_url_for_evaluation_and_related_object(client, url_name, evaluation_id, r
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
 @utils.with_authenticated_client
-def test_edit_or_view_evaluations(client):
-    evaluation_not_editable = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
+def test_cant_edit_or_view_evaluations(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
     for url_pattern in EDIT_OR_VIEW_EVALUATION_URL_PATTERNS:
-        response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation_not_editable.id)
-        if response:
-            assert response.status_code == 404, response.status_code
-
-
-# TODO - test edit only
-
-# TODO - test can view but not edit some
+        response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation_draft.id)
+    if response:
+        assert response.status_code == 404, url_pattern.name
 
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
 @utils.with_authenticated_client
-def test_edit_or_view_related_objects(client):
-    evaluation_not_editable = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
-    for url_name, model_name in RELATED_OBJECTS.items():
-        model = getattr(models, model_name)
-        new_obj = model(evaluation=evaluation_not_editable)
-        new_obj.save()
-        related_id = new_obj.id
-        response = get_url_for_evaluation_and_related_object(client, url_name, evaluation_not_editable.id, related_id)
-        if response:
-            assert response.status_code == 404, response.status_code
+def test_cant_edit_or_view_related_objects(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
+    evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
+    evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
+    for evaluation in [evaluation_draft, evaluation_cs, evaluation_public]:
+        for url_name, model_name in RELATED_OBJECTS.items():
+            model = getattr(models, model_name)
+            new_obj = model(evaluation=evaluation)
+            new_obj.save()
+            related_id = new_obj.id
+            response = get_url_for_evaluation_and_related_object(client, url_name, evaluation.id, related_id)
+            if response:
+                print(evaluation.title)
+                print(url_name)
+                assert response.status_code == 404, response.status_code
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_client
+def test_view_not_edit_evaluations(client):
+    evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
+    evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
+    for evaluation in [evaluation_cs, evaluation_public]:
+        for url_pattern in EDIT_EVALUATIONS:
+            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
+            if response:
+                assert response.status_code == 404, response.status_code
+        for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
+            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
+            if response:
+                assert response.status_code == 200, response.status_code
