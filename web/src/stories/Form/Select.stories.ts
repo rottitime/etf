@@ -3,7 +3,7 @@ import { createSelect, createSingleFieldWithMeta, FieldMeta, Select } from '../u
 
 type Props = Select & FieldMeta
 
-const optionList = [...Array(5).keys()].map((i) => `Option ${i}`)
+const list = [...Array(5).keys()].map((i) => `Option ${i}`)
 
 const meta = {
   title: 'Components/Form/Select',
@@ -35,7 +35,7 @@ type Story = StoryObj<Props>
 export const Default: Story = {
   args: {
     name: 'my-select',
-    optionList
+    list
   }
 }
 
@@ -52,7 +52,7 @@ export const Labels: Story = {
 export const Error: Story = {
   args: {
     ...Labels.args,
-    value: optionList[1],
+    value: list[1],
     error: true
   }
 }

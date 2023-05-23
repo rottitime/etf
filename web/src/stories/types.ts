@@ -7,6 +7,10 @@ export type FieldMeta = {
   error?: boolean
 }
 
+export type Radio = {
+  text: string
+} & HTMLInputElement
+
 export type Input = HTMLInputElement & {
   fullWidth: boolean
   dimension?: 'small' | 'medium' | 'large'
@@ -18,7 +22,7 @@ export type Textarea = HTMLTextAreaElement & {
 
 export type Select = {
   fullWidth: boolean
-  optionList: string[]
+  list: string[]
 } & HTMLSelectElement
 
 export type FormGroup = FieldMeta
