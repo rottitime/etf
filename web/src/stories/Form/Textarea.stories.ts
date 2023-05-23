@@ -1,10 +1,18 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { createTextarea, Textarea as Props } from '../utils'
+import { createTextarea, Textarea, createSingleFieldWithMeta } from '../utils'
+
+type Props = Textarea & FieldMeta
 
 const meta = {
   title: 'Components/Form/Textarea',
   tags: ['autodocs'],
-  render: createTextarea,
+  render: ({ error, label, description, helperText, ...args }) =>
+    createSingleFieldWithMeta(createTextarea(args), {
+      error,
+      label,
+      description,
+      helperText
+    }),
   argTypes: {
     fullWidth: { control: 'boolean' },
     placeholder: { control: 'text' },
@@ -23,6 +31,22 @@ type Story = StoryObj<Props>
 
 export const Default: Story = {
   args: {
-    placeholder: 'e.g. Joe Blogs'
+    label: 'Short descritpion',
+    placeholder: 'e.g. Describe your problem here'
+  }
+}
+
+export const Description: Story = {
+  args: {
+    ...Default.args,
+    helperText: 'Only user letters and not numbers',
+    description: 'A description helps users understand the context of the field'
+  }
+}
+
+export const Error: Story = {
+  args: {
+    ...Description.args,
+    error: true
   }
 }
