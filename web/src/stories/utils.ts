@@ -43,7 +43,7 @@ export const createSelect = ({
   return wrapper
 }
 
-export const createTextarea = ({ fullWidth, onchange, ...props }: Textarea) => {
+export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
   const textarea = document.createElement('textarea')
 
   for (const [key, value] of Object.entries(props)) {
