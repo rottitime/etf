@@ -19,17 +19,9 @@ export const createInput = ({
   !!dimension && dimension !== 'medium' && input.classList.add(dimension)
   typeof onkeyup === 'function' && input.addEventListener('keyup', onkeyup)
 
-  if (label || helperText || description) {
-    const elements: HTMLElement[] = [input]
-    const id = crypto.randomUUID()
-    description && elements.unshift(createDescription(description))
-    label && elements.unshift(createLabel(label, id))
-    helperText && elements.push(createHelperText(helperText))
-
-    return createFormGroup({ elements, error })
-  }
-
-  return input
+  return label || helperText || description
+    ? createFormGroup(input, { error, label, helperText, description })
+    : input
 }
 
 const createHelperText = (text: string) => {
@@ -96,7 +88,10 @@ export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
   return textarea
 }
 
-export const createFormGroup = ({ elements, error }: FormGroup) => {
+export const createFormGroup = (
+  elements: HTMLElement[] | HTMLElement,
+  { error, label, description, helperText }: FormGroup
+): HTMLDivElement => {
   const div = document.createElement('div')
   div.classList.add('form-group')
   error && div.classList.add('error')
@@ -105,6 +100,13 @@ export const createFormGroup = ({ elements, error }: FormGroup) => {
     (elements instanceof Array
       ? elements.forEach((child) => div.appendChild(child))
       : div.appendChild(elements))
+
+  if (label || helperText || description) {
+    const id = crypto.randomUUID()
+    description && div.prepend(createDescription(description))
+    label && div.prepend(createLabel(label, id))
+    helperText && div.append(createHelperText(helperText))
+  }
 
   return div
 }

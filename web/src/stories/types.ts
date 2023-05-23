@@ -22,6 +22,5 @@ export type Select = {
 } & HTMLSelectElement
 
 export type FormGroup = {
-  elements: HTMLElement[] | HTMLElement
   error?: boolean
 } & FieldMeta
