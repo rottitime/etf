@@ -1,5 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { createInput, Input as Props } from '../utils'
+import { createInput, createSingleFieldWithMeta, FieldMeta, Input } from '../utils'
+
+type Props = Input & FieldMeta
 
 /**
  * Standard input field
@@ -7,7 +9,13 @@ import { createInput, Input as Props } from '../utils'
 const meta = {
   title: 'Components/Form/Input',
   tags: ['autodocs'],
-  render: createInput,
+  render: ({ error, label, description, helperText, ...args }) =>
+    createSingleFieldWithMeta(createInput(args), {
+      error,
+      label,
+      description,
+      helperText
+    }),
   argTypes: {
     fullWidth: { control: 'boolean' },
     error: { control: 'boolean' },

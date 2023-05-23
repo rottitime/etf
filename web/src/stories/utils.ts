@@ -1,15 +1,6 @@
-import { FormGroup, Input, Select, Textarea } from './types'
+import { FieldMeta, FormGroup, Input, Select, Textarea } from './types'
 
-export const createInput = ({
-  fullWidth,
-  dimension,
-  onkeyup,
-  label,
-  helperText,
-  description,
-  error,
-  ...props
-}: Input) => {
+export const createInput = ({ fullWidth, dimension, onkeyup, ...props }: Input) => {
   const input = document.createElement('input')
 
   for (const [key, value] of Object.entries(props)) {
@@ -19,9 +10,7 @@ export const createInput = ({
   !!dimension && dimension !== 'medium' && input.classList.add(dimension)
   typeof onkeyup === 'function' && input.addEventListener('keyup', onkeyup)
 
-  return label || helperText || description
-    ? createFormGroup(input, { error, label, helperText, description })
-    : input
+  return input
 }
 
 const createHelperText = (text: string) => {
@@ -90,7 +79,7 @@ export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
 
 export const createFormGroup = (
   elements: HTMLElement[] | HTMLElement,
-  { error, label, description, helperText }: FormGroup
+  { error }: FormGroup
 ): HTMLDivElement => {
   const div = document.createElement('div')
   div.classList.add('form-group')
@@ -101,14 +90,25 @@ export const createFormGroup = (
       ? elements.forEach((child) => div.appendChild(child))
       : div.appendChild(elements))
 
+  return div
+}
+
+/* Combination of elements */
+export const createSingleFieldWithMeta = (
+  element: HTMLElement,
+  { error, label, description, helperText }: FieldMeta
+): HTMLElement => {
   if (label || helperText || description) {
+    const formGroup = createFormGroup(element, { error, label, description, helperText })
     const id = crypto.randomUUID()
-    description && div.prepend(createDescription(description))
-    label && div.prepend(createLabel(label, id))
-    helperText && div.append(createHelperText(helperText))
+    description && formGroup.prepend(createDescription(description))
+    label && formGroup.prepend(createLabel(label, id))
+    helperText && formGroup.append(createHelperText(helperText))
+    element.setAttribute('id', id)
+    return formGroup
   }
 
-  return div
+  return element
 }
 
 export * from './types'
