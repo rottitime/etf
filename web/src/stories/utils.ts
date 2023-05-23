@@ -39,6 +39,7 @@ export const createSelect = ({
   disabled,
   onchange,
   optionList,
+  value,
   ...props
 }: Select) => {
   const select = document.createElement('select')
@@ -50,6 +51,7 @@ export const createSelect = ({
     const optionElement = document.createElement('option')
     optionElement.value = option
     optionElement.text = option
+    if (option === value) optionElement.setAttribute('selected', 'true')
     select.appendChild(optionElement)
   })
   fullWidth && select.classList.add('full-width')

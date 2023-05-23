@@ -1,5 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { createTextarea, Textarea, createSingleFieldWithMeta } from '../utils'
+import { createTextarea, Textarea, createSingleFieldWithMeta, FieldMeta } from '../utils'
 
 type Props = Textarea & FieldMeta
 

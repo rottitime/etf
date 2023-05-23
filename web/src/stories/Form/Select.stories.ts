@@ -1,10 +1,20 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { createSelect, Select as Props } from '../utils'
+import { createSelect, createSingleFieldWithMeta, FieldMeta, Select } from '../utils'
+
+type Props = Select & FieldMeta
+
+const optionList = [...Array(5).keys()].map((i) => `Option ${i}`)
 
 const meta = {
   title: 'Components/Form/Select',
   tags: ['autodocs'],
-  render: createSelect,
+  render: ({ error, label, description, helperText, ...args }) =>
+    createSingleFieldWithMeta(createSelect(args), {
+      error,
+      label,
+      description,
+      helperText
+    }),
   argTypes: {
     name: { control: 'text', table: { disable: true } },
     fullWidth: { control: 'boolean' },
@@ -25,6 +35,24 @@ type Story = StoryObj<Props>
 export const Default: Story = {
   args: {
     name: 'my-select',
-    optionList: [...Array(5).keys()].map((i) => `Option ${i}`)
+    optionList
+  }
+}
+
+export const Labels: Story = {
+  args: {
+    ...Default.args,
+    label: 'Type of problem',
+    helperText: 'This is a invalid choice',
+    description: 'A description helps users understand the context of the field',
+    fullWidth: true
+  }
+}
+
+export const Error: Story = {
+  args: {
+    ...Labels.args,
+    value: optionList[1],
+    error: true
   }
 }
