@@ -10,6 +10,10 @@ const meta = {
   render: createInput,
   argTypes: {
     fullWidth: { control: 'boolean' },
+    error: { control: 'boolean' },
+    label: { control: 'text' },
+    helperText: { control: 'text' },
+    description: { control: 'text' },
     onkeyup: { action: 'changed', table: { disable: true } },
     dimension: {
       control: { type: 'select' },
@@ -31,6 +35,22 @@ export const Default: Story = {
   args: {
     placeholder: 'e.g. Joe Blogs',
     dimension: 'medium',
-    type: 'text'
+    type: 'text',
+    label: 'Your name'
+  }
+}
+
+export const Description: Story = {
+  args: {
+    ...Default.args,
+    helperText: 'Only user letters and not numbers',
+    description: 'A description helps users understand the context of the field'
+  }
+}
+
+export const Error: Story = {
+  args: {
+    ...Description.args,
+    error: true
   }
 }
