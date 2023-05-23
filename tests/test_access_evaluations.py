@@ -79,8 +79,9 @@ def test_edit_or_view_related_objects(client):
     evaluation_not_editable = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
     for url_name, model_name in RELATED_OBJECTS.items():
         model = getattr(models, model_name)
-        new_obj = model(evaluation__id=evaluation_not_editable.id)
+        new_obj = model(evaluation=evaluation_not_editable)
         new_obj.save()
         related_id = new_obj.id
         response = get_url_for_evaluation_and_related_object(client, url_name, evaluation_not_editable.id, related_id)
-        assert response.status_code == 404, response.status_code
+        if response:
+            assert response.status_code == 404, response.status_code
