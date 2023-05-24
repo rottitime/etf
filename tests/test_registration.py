@@ -123,7 +123,7 @@ def test_verify_email():
     form["login"] = "test-verification@example.com"
     form["password"] = VALID_USER_PASSWORD1
     home_page = form.submit().follow()
-    assert home_page.has_text("Create evaluation")
+    assert home_page.has_text("Add evaluation")
 
 
 def test_password_reset():
@@ -150,7 +150,7 @@ def test_password_reset():
     form["login"] = VALID_USER_EMAIL
     form["password"] = VALID_USER_PASSWORD2
     page = form.submit().follow()
-    assert page.has_text("Create evaluation")
+    assert page.has_text("Add evaluation")
 
 
 def test_incorrect_user_id_and_code_caught():
