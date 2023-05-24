@@ -10,7 +10,7 @@ def test_intervention():
     page = client.get("/")
     assert page.status_code == 200, page.status_code
 
-    page = page.click(contains="Create evaluation", index=0)
+    page = page.click(contains="Add evaluation", index=0)
     assert page.status_code == 200, page.status_code
 
     form = page.get_form()
