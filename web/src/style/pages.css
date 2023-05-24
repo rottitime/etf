@@ -1,3 +1,5 @@
+@import './vars-viewport.css';
+
 /* unique page styles */
 
 .sidebar.search-filters .accordion .scroll {
@@ -21,11 +23,14 @@
   gap: var(--spacing-16);
   flex-wrap: wrap;
   & .card {
-    display: flex;
-    flex-direction: column;
-    flex: calc(50% - (var(--spacing-16) / 2));
-    /* margin-bottom: var(--spacing-16); */
-    box-sizing: border-box;
+    @media (--viewport-medium) {
+      & {
+        display: flex;
+        flex-direction: column;
+        flex: calc(50% - (var(--spacing-16) / 2));
+        box-sizing: border-box;
+      }
+    }
 
     & footer.actions {
       flex: 1;
