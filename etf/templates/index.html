@@ -2,6 +2,7 @@
 
 {% block content %}
   {% if not request.user or not request.user.is_authenticated %}
+  
 
     <div class="card">
       <h1 class="header3 highlight">Login or register</h1>
@@ -17,13 +18,57 @@
   {% endif %}
 
   {% if request.user and request.user.is_authenticated %}
+    <h2 class="header2 highlight">Evaluation Registry</h2>
 
-    <div class="card">
-      <p>The Evaluation Registry is a place for recording information about evaluations across government.</p>
-      <p>Ideally, you would register each evaluation before it starts and keep the information up to date as it progresses. However, if an evaluation was not registered before it started, it can still be registered later, such as registering it before data analysis commences, or even registering it after completion, along with its findings.</p>
-  
-      <a class="bttn-primary" href="{{url('create-evaluation')}}">Add evaluation</a>
+    <p class="mb-24">The Evaluation Registry is a place for recording information about evaluations across government. Civil servants can <a href="{{url('create-evaluation')}}">share plans and findings of evaluations</a> and <a href="{{url('search')}}">search for evaluations</a>.</p>
+
+    <div class="homepage-grid">
+
+      <div class="card small">
+        <header>
+          <h3 class="header3 highlight">Add an evaluation</h3>
+        </header>
+        <p>You are encouraged to share an evaluation as soon as it is being planned, however it can be shared at any point during the process. You can come back and update it as you have more information or findings.</p>
+        <p>You should only share evaluations of Official status, nothing Secret or above. The first version of the Evaluation Registry is for civil servants only. You will be able to control if your evaluation is visible to others or not.</p>
+        <footer class="actions">
+          <a class="bttn-primary small" href="{{url('create-evaluation')}}">
+            Add evaluation
+          </a>
+        </footer>
+      </div>
+
+      <div class="card small">
+        <header>
+          <h3 class="header3 highlight">Find an evaluation</h3>
+        </header>
+
+        <a href="#" class="header1 highlight"><b>12</b></a>
+
+        <p>There are 12 evaluations in the registry, you can search to find those that are interesting and relevant to you.</p>
+        <footer class="actions">
+          <a class="bttn-primary small" href="{{url('search')}}">
+            Evaluation search
+          </a>
+        </footer>
+      </div>
+
+      <div class="card small">
+        <header>
+          <h3 class="header3 highlight">Evaluation Task Force</h3>
+        </header>
+        <p>The Evaluation Task Force built the Evaluation Registry as part of the strategy to improve the quality and quantity of evaluation across HM Government. Contact the Evaluation Task Force on <a href="mailto:insert@email.here">insert@email.here</a> for support using the Evaluation Registry or with feedback.</p>
+      </div>
+
+      <div class="card small">
+        <header>
+          <h3 class="header3 highlight">i.AI</h3>
+        </header>
+        <p>This site was built by i.AI a team working to catalyse change in the civil service using rapid prototyping. Contact the i.AI team on <a href="mailto:insert@email.here">insert@email.here</a> for more about their work.</p>
+      </div>
+
     </div>
+
+
   
   {% endif %}
 {% endblock %}

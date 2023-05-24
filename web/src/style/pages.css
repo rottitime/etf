@@ -15,3 +15,21 @@
     margin-top: 32px;
   }
 }
+
+.homepage-grid {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  & .card {
+    display: flex;
+    flex-direction: column;
+    flex: calc(50% - 7.5px);
+    margin-bottom: 10px;
+    box-sizing: border-box;
+
+    & footer.actions {
+      flex: 1;
+      align-items: flex-end;
+    }
+  }
+}
