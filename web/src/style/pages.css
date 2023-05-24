@@ -18,13 +18,13 @@
 
 .homepage-grid {
   display: flex;
-  gap: 15px;
+  gap: var(--spacing-16);
   flex-wrap: wrap;
   & .card {
     display: flex;
     flex-direction: column;
-    flex: calc(50% - 7.5px);
-    margin-bottom: 10px;
+    flex: calc(50% - (var(--spacing-16) / 2));
+    margin-bottom: var(--spacing-16);
     box-sizing: border-box;
 
     & footer.actions {
