@@ -1,4 +1,46 @@
-import { FieldMeta, FormGroup, Input, Select, Textarea } from './types'
+import { FieldMeta, FormGroup, Input, Select, Textarea, Radio } from './types'
+
+export const createRadio = ({ text, ...props }: Radio): HTMLLabelElement => {
+  const radio = document.createElement('input')
+  radio.setAttribute('type', 'radio')
+  for (const [key, value] of Object.entries(props)) {
+    radio.setAttribute(key, value?.toString() || '')
+  }
+
+  const span = document.createElement('span')
+  span.innerText = text
+
+  const label = document.createElement('label')
+  label.classList.add('radio')
+  label.append(radio, createCheckmark(), span)
+
+  return label
+}
+
+export const createFieldset = (
+  elements: HTMLElement[] | HTMLElement,
+  legend?: string
+): HTMLFieldSetElement => {
+  const fieldset = document.createElement('fieldset')
+  elements &&
+    (elements instanceof Array
+      ? elements.forEach((child) => fieldset.appendChild(child))
+      : fieldset.appendChild(elements))
+
+  if (legend) {
+    const legendElement = document.createElement('legend')
+    legendElement.innerText = legend
+    fieldset.appendChild(legendElement)
+  }
+
+  return fieldset
+}
+
+const createCheckmark = () => {
+  const span = document.createElement('span')
+  span.classList.add('checkmark')
+  return span
+}
 
 export const createInput = ({ fullWidth, dimension, onkeyup, ...props }: Input) => {
   const input = document.createElement('input')
@@ -38,7 +80,7 @@ export const createSelect = ({
   fullWidth,
   disabled,
   onchange,
-  optionList,
+  list,
   value,
   ...props
 }: Select) => {
@@ -47,7 +89,7 @@ export const createSelect = ({
     select.setAttribute(key, value?.toString() || '')
   }
   select.innerHTML = `<option>Please select</option>`
-  optionList.forEach((option) => {
+  list.forEach((option) => {
     const optionElement = document.createElement('option')
     optionElement.value = option
     optionElement.text = option
