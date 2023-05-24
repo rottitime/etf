@@ -1,6 +1,6 @@
 import { FieldMeta, FormGroup, Input, Select, Textarea, Radio } from './types'
 
-export const createRadio = ({ text, ...props }: Radio): HTMLLabelElement => {
+export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement => {
   const radio = document.createElement('input')
   radio.setAttribute('type', 'radio')
   for (const [key, value] of Object.entries(props)) {
@@ -12,6 +12,7 @@ export const createRadio = ({ text, ...props }: Radio): HTMLLabelElement => {
 
   const label = document.createElement('label')
   label.classList.add('radio')
+  large && label.classList.add('large')
   label.append(radio, createCheckmark(), span)
 
   return label
@@ -30,7 +31,7 @@ export const createFieldset = (
   if (legend) {
     const legendElement = document.createElement('legend')
     legendElement.innerText = legend
-    fieldset.appendChild(legendElement)
+    fieldset.prepend(legendElement)
   }
 
   return fieldset

@@ -9,6 +9,7 @@ export type FieldMeta = {
 
 export type Radio = {
   text: string
+  large?: boolean
 } & HTMLInputElement
 
 export type Input = HTMLInputElement & {
@@ -24,5 +25,10 @@ export type Select = {
   fullWidth: boolean
   list: string[]
 } & HTMLSelectElement
+
+export type Fieldset = {
+  legend?: string
+  elements: HTMLElement[] | HTMLElement
+}
 
 export type FormGroup = FieldMeta
