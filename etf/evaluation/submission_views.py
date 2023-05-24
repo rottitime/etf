@@ -37,7 +37,7 @@ def create_evaluation(request):
         return render(
             request,
             "submissions/create.html",
-            {"title": "Create evaluation", "errors": {}, "data": {}, "object_name": "create"},
+            {"title": "Add evaluation", "errors": {}, "data": {}, "object_name": "create"},
         )
 
 
