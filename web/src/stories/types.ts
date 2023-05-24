@@ -12,6 +12,11 @@ export type Radio = {
   large?: boolean
 } & HTMLInputElement
 
+export type Checkbox = {
+  text: string
+  large?: boolean
+} & HTMLInputElement
+
 export type Input = HTMLInputElement & {
   fullWidth: boolean
   dimension?: 'small' | 'medium' | 'large'

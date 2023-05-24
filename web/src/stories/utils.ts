@@ -1,4 +1,4 @@
-import { FieldMeta, FormGroup, Input, Select, Textarea, Radio } from './types'
+import { FieldMeta, FormGroup, Input, Select, Textarea, Radio, Checkbox } from './types'
 
 export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement => {
   const radio = document.createElement('input')
@@ -12,6 +12,24 @@ export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement 
 
   const label = document.createElement('label')
   label.classList.add('radio')
+  large && label.classList.add('large')
+  label.append(radio, createCheckmark(), span)
+
+  return label
+}
+
+export const createCheckbox = ({ text, large, ...props }: Checkbox): HTMLLabelElement => {
+  const radio = document.createElement('input')
+  radio.setAttribute('type', 'checkbox')
+  for (const [key, value] of Object.entries(props)) {
+    radio.setAttribute(key, value?.toString() || '')
+  }
+
+  const span = document.createElement('span')
+  span.innerText = text
+
+  const label = document.createElement('label')
+  label.classList.add('checkbox')
   large && label.classList.add('large')
   label.append(radio, createCheckmark(), span)
 
