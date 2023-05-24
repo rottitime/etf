@@ -61,12 +61,19 @@ const createCheckmark = () => {
   return span
 }
 
-export const createInput = ({ fullWidth, dimension, onkeyup, ...props }: Input) => {
+export const createInput = ({
+  fullWidth,
+  dimension,
+  className,
+  onkeyup,
+  ...props
+}: Input) => {
   const input = document.createElement('input')
 
   for (const [key, value] of Object.entries(props)) {
     input.setAttribute(key, value?.toString() || '')
   }
+  className && input.classList.add(className)
   fullWidth && input.classList.add('full-width')
   !!dimension && dimension !== 'medium' && input.classList.add(dimension)
   typeof onkeyup === 'function' && input.addEventListener('keyup', onkeyup)

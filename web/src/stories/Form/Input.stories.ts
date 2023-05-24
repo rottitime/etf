@@ -56,6 +56,14 @@ export const Description: Story = {
   }
 }
 
+export const Search: Story = {
+  args: {
+    className: 'search-icon',
+    placeholder: 'Search keywords...',
+    fullWidth: true
+  }
+}
+
 export const Error: Story = {
   args: {
     ...Description.args,
