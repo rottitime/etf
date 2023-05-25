@@ -34,11 +34,7 @@ VIEW_EVALUATION_URL_PATTERNS = (
 EDIT_EVALUATIONS = set(EDIT_OR_VIEW_EVALUATION_URL_PATTERNS) - set(VIEW_EVALUATION_URL_PATTERNS)
 
 # Non-standard URLs to ignore by standard tests - explicitly write tests
-NAMES_TO_IGNORE = [
-    "evaluation-contributor-remove",
-    "create-evaluation",
-    "evaluation-overview",
-]
+NAMES_TO_IGNORE = ["evaluation-contributor-remove", "evaluation-overview", "create-evaluation"]
 
 
 # URLs also get ignored - have explicitly written tests for these related objects
@@ -145,3 +141,23 @@ def test_external_cant_create_evaluation(client):
 def test_internal_create_evaluation(client):
     response = client.get(reverse("create-evaluation"))
     assert response.status_code == 200
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_client
+def test_internal_evaluation_overview(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
+    url = reverse("evaluation-overview", args=(evaluation_draft.id,))
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_external_client
+def test_external_evaluation_overview(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
+    evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
+    for evaluation in [evaluation_draft, evaluation_cs]:
+        url = reverse("evaluation-overview", args=(evaluation.id,))
+        response = client.get(url)
+        assert response.status_code == 404
