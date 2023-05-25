@@ -66,6 +66,17 @@ def get_url_for_evaluation_and_related_object(client, url_name, evaluation_id, r
     return response
 
 
+def check_related_objects_status(client, evaluation, expected_status):
+    for url_name, model_name in RELATED_OBJECTS.items():
+        model = getattr(models, model_name)
+        new_obj = model(evaluation=evaluation)
+        new_obj.save()
+        related_id = new_obj.id
+        response = get_url_for_evaluation_and_related_object(client, url_name, evaluation.id, related_id)
+        if response:
+            assert response.status_code == 404, response.status_code
+
+
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
 @utils.with_authenticated_client
 def test_cant_edit_or_view_evaluations(client):
@@ -83,21 +94,28 @@ def test_cant_edit_or_view_related_objects(client):
     evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
     evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
     for evaluation in [evaluation_draft, evaluation_cs, evaluation_public]:
-        for url_name, model_name in RELATED_OBJECTS.items():
-            model = getattr(models, model_name)
-            new_obj = model(evaluation=evaluation)
-            new_obj.save()
-            related_id = new_obj.id
-            response = get_url_for_evaluation_and_related_object(client, url_name, evaluation.id, related_id)
-            if response:
-                print(evaluation.title)
-                print(url_name)
-                assert response.status_code == 404, response.status_code
+        check_related_objects_status(client, evaluation, expected_status=404)
 
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
 @utils.with_authenticated_client
 def test_view_not_edit_evaluations(client):
+    evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
+    evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
+    for evaluation in [evaluation_cs, evaluation_public]:
+        for url_pattern in EDIT_EVALUATIONS:
+            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
+            if response:
+                assert response.status_code == 404, response.status_code
+        for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
+            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
+            if response:
+                assert response.status_code == 200, response.status_code
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_client
+def test_view_not_edit_evaluations_related_objects(client):
     evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
     evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
     for evaluation in [evaluation_cs, evaluation_public]:
