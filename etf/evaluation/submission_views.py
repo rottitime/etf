@@ -6,7 +6,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import choices, interface, models, pages, schemas
-from .utils import check_edit_evaluation_permission, check_is_civil_service_user
+from .utils import (
+    check_edit_evaluation_permission,
+    check_is_civil_service_user,
+)
 
 
 @login_required
