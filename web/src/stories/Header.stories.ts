@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { Link } from '../types'
+import { Link } from './types'
 
 type Props = {
   title: string
