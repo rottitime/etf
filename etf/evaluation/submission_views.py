@@ -418,83 +418,6 @@ def evaluation_impact_analysis_view(request, evaluation_id):
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
 
 
-# TODO - update to use facade
-@login_required
-@check_edit_evaluation_permission
-def evaluation_process_design_aspects_view(request, evaluation_id):
-    user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
-    page_name = "process-design-aspects"
-    title = "Process design: Aspects to investigate"
-    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
-    next_url = make_evaluation_url(evaluation_id, next_url_name)
-    prev_url = make_evaluation_url(evaluation_id, prev_url_name)
-    template_name = "submissions/process-design-aspects.html"
-    errors = {}
-    page_statuses = evaluation["page_statuses"]
-    aspects = models.Evaluation(id=evaluation_id).process_evaluation_aspects.all()
-    aspect_name = list(aspects.values_list("aspect_name", flat=True))
-    try:
-        other_aspect = models.Evaluation(id=evaluation_id).process_evaluation_aspects.get(
-            aspect_name=choices.ProcessEvaluationAspects.OTHER.value
-        )
-        aspect_name_other = other_aspect.aspect_name_other
-    except models.ProcessEvaluationAspect.DoesNotExist:
-        aspect_name_other = ""
-    input_schema = schemas.ProcessEvaluationDesignAspectsSchema(unknown=marshmallow.EXCLUDE)
-    if request.GET.get("completed"):
-        interface.facade.evaluation.update_page_status(
-            user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
-        )
-    if request.method == "POST":
-        data = transform_post_data(request.POST, ["aspect_name"])
-        try:
-            serialized_aspects = input_schema.load(data=data, partial=True)
-        except marshmallow.exceptions.ValidationError as err:
-            errors = dict(err.messages)
-        else:
-            aspect_name = serialized_aspects.get("aspect_name")
-            aspect_name_other = serialized_aspects.get("aspect_name_other")
-            for aspect in aspect_name:
-                if aspect == choices.ProcessEvaluationAspects.OTHER.value:
-                    models.ProcessEvaluationAspect.objects.update_or_create(
-                        evaluation_id=evaluation_id,
-                        aspect_name=aspect,
-                        defaults={"aspect_name": aspect, "aspect_name_other": aspect_name_other},
-                    )
-                else:
-                    models.ProcessEvaluationAspect.objects.update_or_create(
-                        evaluation_id=evaluation_id,
-                        aspect_name=aspect,
-                        defaults={"aspect_name": aspect},
-                    )
-            models.Evaluation(id=evaluation_id).process_evaluation_aspects.exclude(aspect_name__in=aspect_name).delete()
-            interface.facade.evaluation.update_page_status(
-                user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
-            )
-            return redirect(next_url)
-    else:
-        interface.facade.evaluation.update_page_status(
-            user.id, evaluation_id, page_name, models.EvaluationPageStatus.IN_PROGRESS.name
-        )
-        data = {"aspect_name": aspect_name, "aspect_name_other": aspect_name_other}
-    return render(
-        request,
-        template_name,
-        {
-            "errors": errors,
-            "dropdown_choices": choices.dropdown_choices,
-            "data": data,
-            "next_url": next_url,
-            "prev_url": prev_url,
-            "title": title,
-            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
-            "evaluation_id": evaluation_id,
-            "page_statuses": page_statuses,
-        },
-    )
-
-
 def evaluation_process_analysis_view(request, evaluation_id):
     page_data = {
         "title": "Process evaluation analysis",
@@ -1001,3 +924,80 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
         dropdown_choices=dropdown_choices,
     )
     return response
+
+
+# TODO - update to use facade
+@login_required
+@check_edit_evaluation_permission
+def evaluation_process_design_aspects_view(request, evaluation_id):
+    user = request.user
+    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    page_name = "process-design-aspects"
+    title = "Process design: Aspects to investigate"
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
+    next_url = make_evaluation_url(evaluation_id, next_url_name)
+    prev_url = make_evaluation_url(evaluation_id, prev_url_name)
+    template_name = "submissions/process-design-aspects.html"
+    errors = {}
+    page_statuses = evaluation["page_statuses"]
+    aspects = models.Evaluation(id=evaluation_id).process_evaluation_aspects.all()
+    aspect_name = list(aspects.values_list("aspect_name", flat=True))
+    try:
+        other_aspect = models.Evaluation(id=evaluation_id).process_evaluation_aspects.get(
+            aspect_name=choices.ProcessEvaluationAspects.OTHER.value
+        )
+        aspect_name_other = other_aspect.aspect_name_other
+    except models.ProcessEvaluationAspect.DoesNotExist:
+        aspect_name_other = ""
+    input_schema = schemas.ProcessEvaluationDesignAspectsSchema(unknown=marshmallow.EXCLUDE)
+    if request.GET.get("completed"):
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+        )
+    if request.method == "POST":
+        data = transform_post_data(request.POST, ["aspect_name"])
+        try:
+            serialized_aspects = input_schema.load(data=data, partial=True)
+        except marshmallow.exceptions.ValidationError as err:
+            errors = dict(err.messages)
+        else:
+            aspect_name = serialized_aspects.get("aspect_name")
+            aspect_name_other = serialized_aspects.get("aspect_name_other")
+            for aspect in aspect_name:
+                if aspect == choices.ProcessEvaluationAspects.OTHER.value:
+                    models.ProcessEvaluationAspect.objects.update_or_create(
+                        evaluation_id=evaluation_id,
+                        aspect_name=aspect,
+                        defaults={"aspect_name": aspect, "aspect_name_other": aspect_name_other},
+                    )
+                else:
+                    models.ProcessEvaluationAspect.objects.update_or_create(
+                        evaluation_id=evaluation_id,
+                        aspect_name=aspect,
+                        defaults={"aspect_name": aspect},
+                    )
+            models.Evaluation(id=evaluation_id).process_evaluation_aspects.exclude(aspect_name__in=aspect_name).delete()
+            interface.facade.evaluation.update_page_status(
+                user.id, evaluation_id, page_name, models.EvaluationPageStatus.DONE.name
+            )
+            return redirect(next_url)
+    else:
+        interface.facade.evaluation.update_page_status(
+            user.id, evaluation_id, page_name, models.EvaluationPageStatus.IN_PROGRESS.name
+        )
+        data = {"aspect_name": aspect_name, "aspect_name_other": aspect_name_other}
+    return render(
+        request,
+        template_name,
+        {
+            "errors": errors,
+            "dropdown_choices": choices.dropdown_choices,
+            "data": data,
+            "next_url": next_url,
+            "prev_url": prev_url,
+            "title": title,
+            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+            "evaluation_id": evaluation_id,
+            "page_statuses": page_statuses,
+        },
+    )

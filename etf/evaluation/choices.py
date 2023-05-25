@@ -324,6 +324,6 @@ def restrict_choices(choices, values_to_restrict_to, specified_other=""):
 def get_display_value_or_blank(value, choices):
     try:
         output = choices.mapping[value]
-    except KeyError as e:
+    except KeyError:
         output = ""
     return output
