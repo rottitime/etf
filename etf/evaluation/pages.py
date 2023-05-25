@@ -88,6 +88,7 @@ section_pages = {
     "further-information": (
         "processes-standards",
         "evaluation-costs",
+        "grants",
         "links",
         "ethics",
     ),
