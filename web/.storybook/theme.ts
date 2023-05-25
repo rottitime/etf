@@ -4,5 +4,5 @@ export default create({
   base: 'light',
   brandTitle: 'Evaluation Registry',
   brandUrl: 'https://github.com/i-dot-ai/etf/',
-  brandImage: 'images/10ds.png'
+  brandImage: 'images/i-dot-ai.svg'
 })

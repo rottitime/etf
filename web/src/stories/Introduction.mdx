@@ -1,17 +1,22 @@
-import { Meta } from '@storybook/blocks';
-import Code from './assets/code-brackets.svg';
-import Colors from './assets/colors.svg';
-import Comments from './assets/comments.svg';
-import Direction from './assets/direction.svg';
-import Flow from './assets/flow.svg';
-import Plugin from './assets/plugin.svg';
-import Repo from './assets/repo.svg';
-import StackAlt from './assets/stackalt.svg';
+import { Meta } from '@storybook/blocks'
+import Code from './assets/code-brackets.svg'
+import Colors from './assets/colors.svg'
+import Comments from './assets/comments.svg'
+import Direction from './assets/direction.svg'
+import Flow from './assets/flow.svg'
+import Plugin from './assets/plugin.svg'
+import Repo from './assets/repo.svg'
+import StackAlt from './assets/stackalt.svg'
 
 <Meta title="Example/Introduction" />
 
 <style>
   {`
+
+    .main-logo {
+      height:100px; 
+    }
+
     .subheading {
       --mediumdark: '#999999';
       font-weight: 700;
@@ -116,6 +121,8 @@ import StackAlt from './assets/stackalt.svg';
   `}
 </style>
 
+<img src="/images/i-dot-ai.svg" alt="i.AI logo" class="main-logo" />
+
 # Welcome to Storybook
 
 Storybook helps you build UI components in isolation from your app's business logic, data, and context.
@@ -191,7 +198,11 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
       Best practices from leading teams
     </span>
   </a>
-  <a className="link-item" href="https://github.com/storybookjs/storybook" target="_blank">
+  <a
+    className="link-item"
+    href="https://github.com/storybookjs/storybook"
+    target="_blank"
+  >
     <img src={Code} alt="code" />
     <span>
       <strong>GitHub project</strong>
