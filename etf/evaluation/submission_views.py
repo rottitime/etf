@@ -967,7 +967,7 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
     model_name = "ProcessEvaluationMethod"
     title = "Process evaluation method"
     template_name = "submissions/process-evaluation-method-page.html"
-    evaluation = interface.facade.evaluation.get(request.user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     process_evaluation_aspects = evaluation["process_evaluation_aspects"]
     aspect_names = [aspect["aspect_name"] for aspect in process_evaluation_aspects]
     other_specify = [
