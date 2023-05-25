@@ -3,7 +3,7 @@ import type { Props } from './Icon'
 import { createIcon } from './Icon'
 
 const meta = {
-  title: 'ETF/Icon',
+  title: 'Atoms/Icon',
   tags: ['autodocs'],
   render: (args) => {
     return createIcon(args)

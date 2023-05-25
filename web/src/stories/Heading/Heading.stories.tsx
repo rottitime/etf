@@ -15,7 +15,7 @@ type Props = {
 }
 
 const meta = {
-  title: 'ETF/Headings',
+  title: 'Atoms/Headings',
   tags: ['autodocs'],
   render: ({ label, heading, highlight }) =>
     `<h1 class="${heading}${highlight ? ' highlight' : ''}">${label}</h1>`,

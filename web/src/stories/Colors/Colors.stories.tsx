@@ -17,7 +17,7 @@ const palette = [
 ]
 
 const meta = {
-  title: 'ETF/Colors',
+  title: 'Atoms/Colors',
   render: () =>
     `<div class="color-wrapper">${palette
       .map(
