@@ -16,10 +16,7 @@ from etf.evaluation import interface, schemas
 
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
-from .utils import (
-    check_edit_evaluation_permission,
-    restrict_to_permitted_evaluations,
-)
+from .utils import check_edit_evaluation_permission, restrict_to_permitted_evaluations, check_is_civil_service_user
 
 
 class MethodDispatcher:
@@ -204,7 +201,7 @@ class EvaluationContributor(MethodDispatcher):
 
 
 @login_required
-@check_edit_evaluation_permission
+@check_is_civil_service_user
 @require_http_methods(["POST", "GET"])
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
     if request.method == "POST":

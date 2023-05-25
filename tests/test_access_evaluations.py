@@ -167,8 +167,8 @@ def test_external_evaluation_overview(client):
 @utils.with_authenticated_external_client
 def test_remove_contributor(client):
     evaluation = models.Evaluation.objects.filter(title="Civil Service evaluation 2").first()
-    user = models.Evaluation.objects.get(email="jemima.puddleduck@example.org")
-    evaluation.add(user)
+    user = models.User.objects.get(email="jemima.puddleduck@example.org")
+    evaluation.users.add(user)
     evaluation.save()
     url = reverse("evaluation-contributor-remove", args=(evaluation.id, "mrs.tiggywinkle@example.com"))
     response = client.get(url)
