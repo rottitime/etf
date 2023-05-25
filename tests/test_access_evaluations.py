@@ -133,3 +133,15 @@ def test_cant_edit_or_view_related_objects_external(client):
     evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
     for evaluation in [evaluation_draft, evaluation_cs, evaluation_public]:
         check_related_objects_status(client, evaluation, expected_status=404)
+
+
+@utils.with_authenticated_external_client
+def test_external_cant_create_evaluation(client):
+    response = client.get(reverse("create-evaluation"))
+    assert response.status_code == 404
+
+
+@utils.with_authenticated_client
+def test_internal_create_evaluation(client):
+    response = client.get(reverse("create-evaluation"))
+    assert response.status_code == 200
