@@ -1,4 +1,13 @@
-import { FieldMeta, FormGroup, Input, Select, Textarea, Radio, Checkbox } from './types'
+import {
+  FieldMeta,
+  FormGroup,
+  Input,
+  Select,
+  Textarea,
+  Radio,
+  Checkbox,
+  Icon
+} from './types'
 
 export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement => {
   const radio = document.createElement('input')
@@ -179,6 +188,15 @@ export const createSingleFieldWithMeta = (
   }
 
   return element
+}
+
+export const createIcon = ({ key, size, color = '' }: Icon) => {
+  const govIcon = document.createElement('gov-icon')
+  govIcon.setAttribute('key', key)
+  govIcon.style.fontSize = `${size}px`
+  govIcon.style.color = color
+
+  return govIcon
 }
 
 export * from './types'

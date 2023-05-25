@@ -37,3 +37,26 @@ export type Fieldset = {
 }
 
 export type FormGroup = FieldMeta
+
+export interface Icon {
+  key:
+    | 'add'
+    | 'arrow-down'
+    | 'arrow-up'
+    | 'calendar'
+    | 'chevron-down'
+    | 'crest'
+    | 'cross'
+    | 'error'
+    | 'help'
+    | 'logo'
+    | 'menu'
+    | 'new-tab'
+    | 'pencil'
+    | 'search'
+    | 'success'
+    | 'tick'
+    | 'warning'
+  color?: string
+  size?: number
+}

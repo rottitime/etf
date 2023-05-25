@@ -1,9 +1,8 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import type { Props } from './Icon'
-import { createIcon } from './Icon'
+import { createIcon, Icon as Props } from './utils'
 
 const meta = {
-  title: 'Atoms/Icon',
+  title: 'Components/Icon',
   tags: ['autodocs'],
   render: (args) => {
     return createIcon(args)
