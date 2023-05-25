@@ -7,6 +7,7 @@ on:
         "web/src/**/*.tsx",
         "web/src/**/*.ts",
         "web/src/**/*.css",
+        "web/src/stories/**",
         "web/public/**",
         "web/.storybook/**",
       ] # Trigger the action only when files change in the folders defined here
