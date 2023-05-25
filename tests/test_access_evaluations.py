@@ -74,7 +74,7 @@ def check_related_objects_status(client, evaluation, expected_status):
         related_id = new_obj.id
         response = get_url_for_evaluation_and_related_object(client, url_name, evaluation.id, related_id)
         if response:
-            assert response.status_code == 404, response.status_code
+            assert response.status_code == expected_status, response.status_code
 
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
@@ -114,12 +114,22 @@ def test_view_not_edit_evaluations(client):
 
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
-@utils.with_authenticated_client
-def test_view_not_edit_evaluations_related_objects(client):
+@utils.with_authenticated_external_client
+def test_cant_edit_or_view_evaluations_external(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
+    evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
+    for evaluation in [evaluation_cs, evaluation_draft]:
+        for url_pattern in EDIT_OR_VIEW_EVALUATION_URL_PATTERNS:
+            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
+        if response:
+            assert response.status_code == 404, url_pattern.name
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_external_client
+def test_cant_edit_or_view_related_objects_external(client):
+    evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
     evaluation_cs = models.Evaluation.objects.filter(title="Civil Service evaluation 1").first()
     evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
-    for evaluation in [evaluation_cs, evaluation_public]:
-        for url_pattern in EDIT_EVALUATIONS:
-            check_related_objects_status(client, evaluation, expected_status=404)
-        for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
-            check_related_objects_status(client, evaluation, expected_status=200)
+    for evaluation in [evaluation_draft, evaluation_cs, evaluation_public]:
+        check_related_objects_status(client, evaluation, expected_status=404)
