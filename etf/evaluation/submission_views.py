@@ -721,6 +721,8 @@ def filter_evaluation_overview_users_view(request, evaluation_id):
     return redirect("evaluation-summary", evaluation_id)
 
 
+@login_required
+@check_edit_evaluation_permission
 def evaluation_overview_view(request, evaluation_id):
     evaluation = interface.facade.evaluation.get(evaluation_id)
     relevant_pages = set().union(
