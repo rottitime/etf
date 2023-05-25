@@ -1,5 +1,7 @@
 import marshmallow
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -9,7 +11,20 @@ from .utils import check_edit_evaluation_permission
 
 @login_required
 def index_view(request):
-    return render(request, "index.html")
+    user = request.user
+    evaluations = models.Evaluation.objects.all()
+    query = Q()
+    query |= Q(visibility__contains=choices.EvaluationVisibility.PUBLIC.value)
+    query |= Q(users__in=[user])
+    total_evaluation_visible_to_user_count = evaluations.filter(query).count()
+    my_evaluations_count = evaluations.filter(users__in=[user]).count()
+    feedback_email = settings.FEEDBACK_EMAIL
+    context = {
+        "total_evaluation_visible_to_user_count": total_evaluation_visible_to_user_count,
+        "my_evaluations_count": my_evaluations_count,
+        "feedback_email": feedback_email,
+    }
+    return render(request, "index.html", context)
 
 
 def make_evaluation_url(evaluation_id, page_name):

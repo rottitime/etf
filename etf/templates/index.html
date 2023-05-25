@@ -42,12 +42,10 @@
           <h3 class="header3 highlight">Find an evaluation</h3>
         </header>
 
-        <!-- TODO: Dynamic data -->
-        <a href="{{url('search')}}" class="header1 highlight mb-0"><b>12</b></a>
+        <a href="{{url('search')}}" class="header1 highlight mb-0"><b>{{total_evaluation_visible_to_user_count}}</b></a>
         <p class="mb-16"><b class="header4 highlight">Evaluations</b></p>
 
-        <!-- TODO: Dynamic data -->
-        <a href="{{url('my-evaluations')}}" class="header1 highlight mb-0"><b>0</b></a>
+        <a href="{{url('my-evaluations')}}" class="header1 highlight mb-0"><b>{{my_evaluations_count}}</b></a>
         <p class="mb-16"><b class="header4 highlight">My evaluations</b></p>
 
         <p>There are 12 evaluations in the registry, you can search to find those that are interesting and relevant to you.</p>
@@ -62,16 +60,14 @@
         <header>
           <h3 class="header3 highlight">Evaluation Task Force</h3>
         </header>
-        <!-- TODO: Email via env vars -->
-        <p>The Evaluation Task Force built the Evaluation Registry as part of the strategy to improve the quality and quantity of evaluation across HM Government. Contact the Evaluation Task Force on <a href="mailto:insert@email.here">insert@email.here</a> for support using the Evaluation Registry or with feedback.</p>
+        <p>The Evaluation Task Force built the Evaluation Registry as part of the strategy to improve the quality and quantity of evaluation across HM Government. Contact the Evaluation Task Force on <a href="mailto:{{feedback_email}}">{{feedback_email}}</a> for support using the Evaluation Registry or with feedback.</p>
       </div>
 
       <div class="card small">
         <header>
           <h3 class="header3 highlight">i.AI</h3>
         </header>
-        <!-- TODO: Email via env vars -->
-        <p>This site was built by i.AI a team working to catalyse change in the civil service using rapid prototyping. Contact the i.AI team on <a href="mailto:insert@email.here">insert@email.here</a> for more about their work.</p>
+        <p>This site was built by i.AI a team working to catalyse change in the civil service using rapid prototyping. Contact the i.AI team on <a href="mailto:{{feedback_email}}">{{feedback_email}}</a> for more about their work.</p>
       </div>
 
     </div>
