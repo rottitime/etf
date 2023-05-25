@@ -713,7 +713,7 @@ def evaluation_cost_page_view(request, evaluation_id, evaluation_cost_id):
 
 def filter_evaluation_overview_users_view(request, evaluation_id):
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     email_exists = any(email["email"] == user.email for email in evaluation["users"])
     if email_exists:
         return redirect("evaluation-overview", evaluation_id)
