@@ -120,10 +120,6 @@ def test_view_not_edit_evaluations_related_objects(client):
     evaluation_public = models.Evaluation.objects.filter(title="Public evaluation 1").first()
     for evaluation in [evaluation_cs, evaluation_public]:
         for url_pattern in EDIT_EVALUATIONS:
-            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
-            if response:
-                assert response.status_code == 404, response.status_code
+            check_related_objects_status(client, evaluation, expected_status=404)
         for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
-            response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
-            if response:
-                assert response.status_code == 200, response.status_code
+            check_related_objects_status(client, evaluation, expected_status=200)
