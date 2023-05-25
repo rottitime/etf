@@ -1,6 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import type { ButtonProps } from './Button'
-import { createButton } from './Button'
+import { createButton, Button } from './utils'
 
 // More on how to set up stories at: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta = {
@@ -27,10 +26,10 @@ const meta = {
       url: 'https://www.figma.com/file/pN3VtobnXOlTUDK4aiZa94/i-AI-DS?type=design&node-id=1-388&t=wYAx110qILxbxZUz-0'
     }
   }
-} satisfies Meta<ButtonProps>
+} satisfies Meta<Button>
 
 export default meta
-type Story = StoryObj<ButtonProps>
+type Story = StoryObj<Button>
 
 // More on writing stories with args: https://storybook.js.org/docs/html/writing-stories/args
 export const Primary: Story = {

@@ -38,6 +38,20 @@ export type Fieldset = {
 
 export type FormGroup = FieldMeta
 
+export interface Button {
+  category: 'primary' | 'secondary' | 'tertiary' | 'negative'
+
+  small?: boolean
+  /**
+   * Button contents
+   */
+  label: string
+  /**
+   * Optional click handler
+   */
+  onClick?: () => void
+}
+
 export interface Icon {
   key:
     | 'add'

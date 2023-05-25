@@ -6,7 +6,8 @@ import {
   Textarea,
   Radio,
   Checkbox,
-  Icon
+  Icon,
+  Button
 } from './types'
 
 export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement => {
@@ -188,6 +189,24 @@ export const createSingleFieldWithMeta = (
   }
 
   return element
+}
+
+export const createButton = ({
+  category = 'primary',
+  small = false,
+  label,
+  onClick
+}: Button) => {
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.innerText = label
+  if (onClick) {
+    btn.addEventListener('click', onClick)
+  }
+
+  btn.className = [`bttn-${category}`, small ? 'small' : null].join(' ')
+
+  return btn
 }
 
 export const createIcon = ({ key, size, color = '' }: Icon) => {
