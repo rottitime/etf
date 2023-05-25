@@ -56,6 +56,7 @@ section_pages = {
     "general": (
         "intro",
         "title",
+        "options",
         "description",
         "event-dates",
         "evaluation-types",
@@ -87,6 +88,7 @@ section_pages = {
     "further-information": (
         "processes-standards",
         "evaluation-costs",
+        "grants",
         "links",
         "ethics",
     ),
@@ -145,7 +147,7 @@ evaluation_type_page_mapping = {
 }
 
 page_options_mapping = {
-    "issue_description_option": "issue_description",
+    "issue_description_option": "issue-description",
     "ethics_option": "ethics",
     "grants_option": "grants",
 }

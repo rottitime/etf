@@ -728,7 +728,15 @@ def evaluation_overview_view(request, evaluation_id):
             for evaluation_type in evaluation["evaluation_type"]
         )
     )
+    page_options = get_page_options(evaluation)
+    optional_pages_to_keep = set()
+    for k, v in page_options.items():
+        if k in pages.page_options_mapping.keys() and v == choices.YesNo.YES.value:
+            optional_pages_to_keep.add(pages.page_options_mapping[k])
+
     pages_to_remove = pages.all_evaluation_type_pages - relevant_pages
+    other_optional_pages_to_remove = pages.all_other_optional_pages - optional_pages_to_keep
+    pages_to_remove = pages_to_remove.union(other_optional_pages_to_remove)
     sections = pages.section_display_names
     section_pages = pages.section_pages
     section_pages = {
