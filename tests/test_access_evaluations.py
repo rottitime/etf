@@ -149,7 +149,7 @@ def test_internal_evaluation_overview(client):
     evaluation_draft = models.Evaluation.objects.filter(title="Draft evaluation 1").first()
     url = reverse("evaluation-overview", args=(evaluation_draft.id,))
     response = client.get(url)
-    assert response.status_code == 200
+    assert response.status_code == 404
 
 
 @with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
@@ -161,3 +161,15 @@ def test_external_evaluation_overview(client):
         url = reverse("evaluation-overview", args=(evaluation.id,))
         response = client.get(url)
         assert response.status_code == 404
+
+
+@with_setup(utils.create_fake_evaluations, utils.remove_fake_evaluations)
+@utils.with_authenticated_external_client
+def test_remove_contributor(client):
+    evaluation = models.Evaluation.objects.filter(title="Civil Service evaluation 2").first()
+    user = models.Evaluation.objects.get(email="jemima.puddleduck@example.org")
+    evaluation.add(user)
+    evaluation.save()
+    url = reverse("evaluation-contributor-remove", args=(evaluation.id, "mrs.tiggywinkle@example.com"))
+    response = client.get(url)
+    assert response.status_code == 404
