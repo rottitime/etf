@@ -205,8 +205,8 @@ class EvaluationContributor(MethodDispatcher):
 
 
 @login_required
-@check_is_civil_service_user
-@require_http_methods(["POST", "GET"])
+@check_edit_evaluation_permission
+@require_http_methods(["POST"])
 def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
     if request.method == "POST":
         email = email_to_remove

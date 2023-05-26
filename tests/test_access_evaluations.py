@@ -172,4 +172,4 @@ def test_remove_contributor(client):
     evaluation.save()
     url = reverse("evaluation-contributor-remove", args=(evaluation.id, "mrs.tiggywinkle@example.com"))
     response = client.get(url)
-    assert response.status_code == 404
+    assert response.status_code == 405, response.status_code
