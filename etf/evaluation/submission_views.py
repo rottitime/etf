@@ -931,10 +931,14 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
 @check_edit_evaluation_permission
 def evaluation_process_design_aspects_view(request, evaluation_id):
     user = request.user
-    evaluation = interface.facade.evaluation.get(user.id, evaluation_id)
+    evaluation = interface.facade.evaluation.get(evaluation_id)
     page_name = "process-design-aspects"
     title = "Process design: Aspects to investigate"
-    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, evaluation["evaluation_type"])
+    page_options = {k: evaluation[k] for k in pages.page_options_mapping.keys()}
+    page_options["evaluation_types"] = evaluation["evaluation_type"]
+    print("evaluation_process_design_aspects_view")
+    print(f"page_options: {page_options}")
+    prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, page_options)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
     template_name = "submissions/process-design-aspects.html"

@@ -161,6 +161,8 @@ all_other_optional_pages = set(page_options_mapping.values())
 
 
 def get_prev_next_page_name(page_name, page_options):
+    print("get_prev_next_page_name")
+    print(f"page_optsions: {page_options}")
     pages = tuple(get_page_name_and_order(page_options).keys())
     assert page_name in pages
     page_index = pages.index(page_name)
@@ -180,6 +182,8 @@ default_page_statuses = {page_name: EvaluationPageStatus.NOT_STARTED.name for pa
 
 @utils.dictify
 def get_page_name_and_order(page_options):
+    print("get_page_name_and_options")
+    print(f"page_options: {page_options}")
     evaluation_types = page_options["evaluation_types"]
     evaluation_pages_to_keep = set().union(
         *(evaluation_type_page_mapping.get(evaluation_type, set()) for evaluation_type in evaluation_types)
