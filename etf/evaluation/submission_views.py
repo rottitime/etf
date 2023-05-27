@@ -891,6 +891,8 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
     title = "Process evaluation method"
     template_name = "submissions/process-evaluation-method-page.html"
     evaluation = interface.facade.evaluation.get(evaluation_id)
+    page_options = {k: evaluation[k] for k in pages.page_options_mapping.keys()}
+    page_options["evaluation_types"] = evaluation["evaluation_type"]
     process_evaluation_aspects = evaluation["process_evaluation_aspects"]
     aspect_names = [aspect["aspect_name"] for aspect in process_evaluation_aspects]
     other_specify = [
@@ -911,7 +913,7 @@ def process_evaluation_method_page_view(request, evaluation_id, process_evaluati
         "aspect_names": aspect_name_choices,
         "process_evaluation_method": choices.ProcessEvaluationMethods.choices,
     }
-    url_names = get_related_object_page_url_names("process-evaluation-methods", evaluation["evaluation_type"])
+    url_names = get_related_object_page_url_names("process-evaluation-methods", page_options)
     response = related_object_page_view(
         request,
         evaluation_id=evaluation_id,
@@ -936,8 +938,6 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
     title = "Process design: Aspects to investigate"
     page_options = {k: evaluation[k] for k in pages.page_options_mapping.keys()}
     page_options["evaluation_types"] = evaluation["evaluation_type"]
-    print("evaluation_process_design_aspects_view")
-    print(f"page_options: {page_options}")
     prev_url_name, next_url_name = pages.get_prev_next_page_name(page_name, page_options)
     next_url = make_evaluation_url(evaluation_id, next_url_name)
     prev_url = make_evaluation_url(evaluation_id, prev_url_name)
@@ -1000,7 +1000,7 @@ def evaluation_process_design_aspects_view(request, evaluation_id):
             "next_url": next_url,
             "prev_url": prev_url,
             "title": title,
-            "page_order": pages.get_page_name_and_order(evaluation["evaluation_type"]),
+            "page_order": pages.get_page_name_and_order(page_options),
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
         },
