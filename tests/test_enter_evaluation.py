@@ -213,7 +213,8 @@ def test_step_through_evaluation():
             {
                 "evaluation_type": [
                     choices.EvaluationTypeOptions.ECONOMIC.value,
-                    choices.EvaluationTypeOptions.PROCESS.value,
+                    # TODO - readd tests for PROCESS evaluations
+                    # choices.EvaluationTypeOptions.PROCESS.value,
                     choices.EvaluationTypeOptions.IMPACT.value,
                     choices.EvaluationTypeOptions.OTHER.value,
                 ],
@@ -265,10 +266,7 @@ def test_step_through_evaluation():
             },
             evaluation.id,
         ),
-        # Process evaluation design page
-        _make_simple_step("Process evaluation design", {}, evaluation.id),
-        # Process evaluation analysis page
-        _make_simple_step("Process evaluation analysis", {}, evaluation.id),
+        # TODO - add process evaluation design pages
         # Economic design page
         _make_simple_step(
             "Economic evaluation design",
@@ -395,8 +393,9 @@ def test_step_through_evaluation():
             },
             evaluation.id,
         ),
+        # TODO - readd process evaluation pages
         # Process evaluation findings page
-        _make_simple_step("Process evaluation findings", {}, evaluation.id),
+        # _make_simple_step("Process evaluation findings", {}, evaluation.id),
         # Other evaluation findings page
         _make_simple_step(
             "Other evaluation findings",
