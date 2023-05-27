@@ -54,5 +54,5 @@ def test_get_page_name_and_order():
 
     page_options = dict(evaluation_types=["PROCESS"], grants_option="YES", ethics_option="YES")
     page_names_and_order = pages.get_page_name_and_order(page_options)
-    assert len(page_names_and_order) == 21, len(page_names_and_order)
+    assert len(page_names_and_order) == 22, len(page_names_and_order)
     assert "process-analysis" in page_names_and_order
