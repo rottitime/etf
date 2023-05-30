@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - develop
+      - feature/789-breadcrumbs
     paths: [
         "web/src/**/*.tsx",
         "web/src/**/*.ts",
