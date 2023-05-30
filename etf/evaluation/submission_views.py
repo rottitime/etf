@@ -6,7 +6,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from . import choices, interface, models, pages, schemas
-from .utils import check_edit_evaluation_permission
+from .utils import (
+    check_edit_evaluation_permission,
+    check_is_civil_service_user,
+)
 
 
 @login_required
@@ -34,6 +37,7 @@ def make_evaluation_url(evaluation_id, page_name):
 
 
 @login_required
+@check_is_civil_service_user
 def create_evaluation(request):
     if request.method == "POST":
         title = request.POST.get("title")
@@ -720,6 +724,8 @@ def filter_evaluation_overview_users_view(request, evaluation_id):
     return redirect("evaluation-summary", evaluation_id)
 
 
+@login_required
+@check_edit_evaluation_permission
 def evaluation_overview_view(request, evaluation_id):
     evaluation = interface.facade.evaluation.get(evaluation_id)
     relevant_pages = set().union(

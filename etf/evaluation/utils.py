@@ -253,6 +253,15 @@ def check_evaluation_view_permission(func):
     return wrapper
 
 
+def check_is_civil_service_user(func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_external_user:
+            raise Http404()
+        return func(request, *args, **kwargs)
+
+    return wrapper
+
+
 def is_civil_service_email(email):
     allowed = False
     email = email.lower()

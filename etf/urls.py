@@ -11,18 +11,11 @@ from etf.evaluation import (
     views,
 )
 
-urlpatterns = [
+initial_urlpatterns = [
     path("", submission_views.index_view, name="index"),
-    path("accounts/verify/", authentication_views.CustomVerifyUserEmail, name="verify-email"),
-    path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
-    path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
-    path("accounts/login/", authentication_views.CustomLoginView, name="account_login"),
-    path("accounts/signup/", authentication_views.CustomSignupView.as_view(), name="account_signup"),
-    path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
-    path("accounts/accept-invite/", authentication_views.AcceptInviteSignupView, name="accept-invite"),
-    path("accounts/", include("allauth.urls")),
     path("search/", views.EvaluationSearchView, name="search"),
     path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
+    path("data-download/", download_views.download_page_view, name="data-download"),
     path(
         "evaluation/<uuid:evaluation_id>/overview/filter-users/",
         submission_views.filter_evaluation_overview_users_view,
@@ -33,7 +26,17 @@ urlpatterns = [
         submission_views.evaluation_overview_view,
         name="evaluation-overview",
     ),
-    path("data-download/", download_views.download_page_view, name="data-download"),
+]
+
+account_urlpatterns = [
+    path("accounts/verify/", authentication_views.CustomVerifyUserEmail, name="verify-email"),
+    path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
+    path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
+    path("accounts/login/", authentication_views.CustomLoginView, name="account_login"),
+    path("accounts/signup/", authentication_views.CustomSignupView.as_view(), name="account_signup"),
+    path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
+    path("accounts/accept-invite/", authentication_views.AcceptInviteSignupView, name="accept-invite"),
+    path("accounts/", include("allauth.urls")),
 ]
 
 evaluation_contributor_urlpatterns = [
@@ -152,6 +155,11 @@ evaluation_entry_urlpatterns = [
         name="visibility",
     ),
     path("evaluation/<uuid:evaluation_id>/end/", submission_views.end_page_view, name="end"),
+    path(
+        "evaluation/<uuid:evaluation_id>/overview/",
+        submission_views.evaluation_overview_view,
+        name="evaluation-overview",
+    ),
 ]
 
 intervention_urlpatterns = [
@@ -316,10 +324,8 @@ evaluation_summary_urlpatterns = [
 
 feedback_and_help_urlpatterns = [path("feedback-and-help/", views.feedback_and_help_view, name="feedback-and-help")]
 
-
-urlpatterns = (
-    urlpatterns
-    + evaluation_contributor_urlpatterns
+evaluation_edit_patterns = (
+    evaluation_contributor_urlpatterns
     + evaluation_entry_urlpatterns
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
@@ -330,15 +336,23 @@ urlpatterns = (
     + documents_urlpatterns
     + links_urlpatterns
     + event_date_urlpatterns
+)
+
+urlpatterns = (
+    initial_urlpatterns
+    + account_urlpatterns
+    + evaluation_edit_patterns
     + evaluation_summary_urlpatterns
     + feedback_and_help_urlpatterns
 )
 
-if settings.DEBUG:
-    urlpatterns = urlpatterns + [
-        path("admin/", admin.site.urls),
-        path("test/", views.beta_test_view, name="test"),
-    ]
+debug_urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("test/", views.beta_test_view, name="test"),
+]
 
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + debug_urlpatterns
 
 handler404 = "etf.evaluation.views.view_404"
