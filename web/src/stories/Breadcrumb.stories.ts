@@ -1,5 +1,4 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Link } from './types'
 
 type Props = {
@@ -14,7 +13,7 @@ const links = [
 ]
 
 /**
- * The ETF header with navigation and user account controls.
+ * A breadcrumb trail for indicating the current page's location within a navigational hierarchy.
  */
 const meta = {
   title: 'Components/Breadcrumb',
