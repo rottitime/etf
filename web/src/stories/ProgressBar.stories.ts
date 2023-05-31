@@ -1,16 +1,8 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { Link } from './types'
 
 type Props = {
-  links: Link[]
-  activeLink: string
+  level: number
 }
-
-const links = [
-  { text: 'Home', href: '#' },
-  { text: 'Food', href: '#' },
-  { text: 'Fruit', href: '#' }
-]
 
 /**
  * A progress bar to indicate the current phase of the service.
@@ -18,22 +10,22 @@ const links = [
 const meta = {
   title: 'Components/ProgressBar',
   tags: ['autodocs'],
-  render: ({ links, activeLink }) =>
+  render: ({ level }) =>
     `
-    <nav aria-label="Breadcrumb" class="breadcrumb">
-    <ol>
-      ${
-        links &&
-        links.map(({ text, href }) => `<li><a href="${href}">${text}</a></li>`).join('')
-      }
-      ${activeLink ? `<li aria-current="true">${activeLink}</li>` : ''}
-      
-    </ol>
-  </nav>
+    <div class="progress-bar-horizontal-wide">
+    ${[...Array(5).keys()]
+      .map((i) => `<div class="square ${i < level ? 'filled' : ''}"></div>`)
+      .join(``)}
+      </div>
 
-   
     `,
-  argTypes: {},
+  argTypes: {
+    level: {
+      name: 'level',
+      description: 'Number of squares filled in the progress bar',
+      control: { type: 'range', min: 0, max: 5 }
+    }
+  },
   parameters: {
     design: {
       type: 'figma',
@@ -47,7 +39,6 @@ type Story = StoryObj<Props>
 
 export const ProgressBar: Story = {
   args: {
-    links,
-    activeLink: 'Apples'
+    level: 2
   }
 }
