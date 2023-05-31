@@ -54,7 +54,7 @@ docker-compose run web python manage.py upload_rsm_data --filename <name-of-exce
 
 # Frontend development
 
-## Documentation
+## UI Documentation
 
 See the full [UI Documentation](https://i-dot-ai.github.io/etf/).
 
