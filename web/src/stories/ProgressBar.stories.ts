@@ -2,6 +2,8 @@ import type { StoryObj, Meta } from '@storybook/html'
 
 type Props = {
   level: number
+  type: 'progress-bar-horizontal-wide' | 'progress-bar-horizontal'
+  maximum: number
 }
 
 /**
@@ -10,19 +12,20 @@ type Props = {
 const meta = {
   title: 'Components/ProgressBar',
   tags: ['autodocs'],
-  render: ({ level }) =>
+  render: ({ level, type, maximum }) =>
     `
-    <div class="progress-bar-horizontal-wide">
-    ${[...Array(5).keys()]
+    <div class="${type}">
+    ${[...Array(maximum).keys()]
       .map((i) => `<div class="square ${i < level ? 'filled' : ''}"></div>`)
       .join(``)}
       </div>
 
     `,
   argTypes: {
+    maximum: {
+      table: { disable: true }
+    },
     level: {
-      name: 'level',
-      description: 'Number of squares filled in the progress bar',
       control: { type: 'range', min: 0, max: 5 }
     }
   },
@@ -37,8 +40,23 @@ const meta = {
 export default meta
 type Story = StoryObj<Props>
 
-export const ProgressBar: Story = {
+export const Standard: Story = {
   args: {
-    level: 2
+    level: 2,
+    type: 'progress-bar-horizontal-wide',
+    maximum: 5
+  }
+}
+
+export const Mini: Story = {
+  args: {
+    ...Standard.args,
+    type: 'progress-bar-horizontal',
+    maximum: 7
+  },
+  argTypes: {
+    level: {
+      control: { type: 'range', min: 0, max: 7 }
+    }
   }
 }
