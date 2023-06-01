@@ -1,0 +1,46 @@
+{
+    "sandbox": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "CONSOLE",
+            "DEBUG": "False",
+            "FEEDBACK_EMAIL": "evaluation.registry@cabinetoffice.gov.uk",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "SENTRY_DSN": "https://0d9e4f768d424723b5b5a6f177b8850c@o1366404.ingest.sentry.io/4504600165351424",
+            "SENTRY_ENVIRONMENT": "sandbox"
+        }
+    },
+    "develop": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "TEAM_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "FEEDBACK_EMAIL": "evaluation.registry@cabinetoffice.gov.uk",
+            "SENTRY_DSN": "https://0d9e4f768d424723b5b5a6f177b8850c@o1366404.ingest.sentry.io/4504600165351424",
+            "SENTRY_ENVIRONMENT": "develop",
+            "DEBUG": "False"
+        }
+    },
+    "staging": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "LIVE_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SHOW_FRONTDOOR": "True",
+            "OS_API_KEY": "OS_API_KEY"
+        }
+    },
+    "suppliers": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "LIVE_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SHOW_FRONTDOOR": "True",
+            "OS_API_KEY": "OS_API_KEY"
+        }
+    }    
+}
