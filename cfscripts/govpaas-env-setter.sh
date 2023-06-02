@@ -56,5 +56,6 @@ for APP in $(echo "${APPS}" | jq -r 'keys | .[]'); do
     if [ $CHANGES_MADE -eq 1 ]; then
         echo "Restaging ${APP}-${CF_SPACE} in $CF_SPACE"
         ./cf restage ${APP}-${CF_SPACE} &> /dev/null
+        # ./cf restage etf-sandbox
     fi
 done

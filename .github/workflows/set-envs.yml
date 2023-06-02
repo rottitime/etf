@@ -64,10 +64,11 @@ jobs:
           LIVE_DJANGO_SECRET_KEY: ${{ secrets.LIVE_DJANGO_SECRET_KEY }}
           LIVE_NOTIFY_API_KEY: ${{ secrets.LIVE_NOTIFY_API_KEY }}
           TEAM_NOTIFY_API_KEY: ${{ secrets.TEAM_NOTIFY_API_KEY }}
+          FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
           NOTIFY_PLAIN_EMAIL_TEMPLATE_ID: ${{ secrets.NOTIFY_PLAIN_EMAIL_TEMPLATE_ID }}
         run: |
             echo "THE CF_SPACE IS: ${CF_SPACE}"
-            ./etf-envs.sh
+            ./govpaas-env-setter.sh
 
       - uses: actions/checkout@v2
       - name: Slack Notification
