@@ -10,6 +10,8 @@ on:
       - develop
       - staging
       - testing
+  release:
+    types: [published]
 
 permissions:
   packages: write
