@@ -10,6 +10,7 @@ on:
       - develop
       - staging
       - testing
+      - prod
 
 jobs:
   add_environment_vars:
