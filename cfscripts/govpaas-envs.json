@@ -1,0 +1,51 @@
+{
+    "sandbox": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "CONSOLE",
+            "DEBUG": "False",
+            "FEEDBACK_EMAIL": "FEEDBACK_EMAIL",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "SENTRY_ENVIRONMENT": "sandbox"
+        }
+    },
+    "develop": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "TEAM_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "FEEDBACK_EMAIL": "FEEDBACK_EMAIL",
+            "SENTRY_DSN": "SENTRY_DSN",
+            "SENTRY_ENVIRONMENT": "develop",
+            "DEBUG": "False"
+        }
+    },
+    "staging": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "LIVE_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "FEEDBACK_EMAIL": "FEEDBACK_EMAIL",
+            "SENTRY_DSN": "SENTRY_DSN",
+            "SENTRY_ENVIRONMENT": "staging",
+            "DEBUG": "False"
+        }
+    },
+    "prod": {
+        "etf": {
+            "DJANGO_SECRET_KEY": "DJANGO_SECRET_KEY",
+            "EMAIL_BACKEND_TYPE": "GOVUKNOTIFY",
+            "GOVUK_NOTIFY_API_KEY": "LIVE_NOTIFY_API_KEY",
+            "GOVUK_NOTIFY_PLAIN_EMAIL_TEMPLATE_ID": "NOTIFY_PLAIN_EMAIL_TEMPLATE_ID",
+            "SEND_VERIFICATION_EMAIL": "False",
+            "FEEDBACK_EMAIL": "FEEDBACK_EMAIL",
+            "SENTRY_DSN": "SENTRY_DSN",
+            "SENTRY_ENVIRONMENT": "prod",
+            "DEBUG": "False"
+        }
+    }    
+}
