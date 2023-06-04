@@ -10,10 +10,11 @@ on:
       - develop
       - staging
       - testing
+      - prod
 
 jobs:
   add_environment_vars:
-    if:  ${{ github.event_name != 'release' && github.ref_name != 'prod' }}
+    if:  ${{ github.event_name != 'release' }}
 
     runs-on: ubuntu-latest
 
@@ -33,19 +34,10 @@ jobs:
               "develop": {"CF_SPACE": "develop"},
               "staging": {"CF_SPACE": "staging"},
               "testing": {"CF_SPACE": "testing"},
+              "prod": {"CF_SPACE": "prod"},
               "feature/deploy-from-main": {"CF_SPACE": "flibble"}
             }
 
-      - name: Get prod space name
-        if:  ${{ github.event_name == 'release' }}
-        uses: kanga333/variable-mapper@v0.2.2
-        with:
-          key: "${{github.ref_name}}"
-          map: |
-            {
-              "v?.?.?": {"CF_SPACE": "prod"},
-              "feature/deploy-from-main": {"CF_SPACE": "flibble"}
-            }
 
       - name: Download CF CLI
         working-directory: ./cfscripts
