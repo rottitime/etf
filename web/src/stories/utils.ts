@@ -124,7 +124,7 @@ export const createSelect = ({
   for (const [key, value] of Object.entries(props)) {
     select.setAttribute(key, value?.toString() || '')
   }
-  select.innerHTML = `<option>Please select</option>`
+  select.innerHTML = `<option value="">Please select</option>`
   list.forEach((option) => {
     const optionElement = document.createElement('option')
     optionElement.value = option
@@ -136,7 +136,7 @@ export const createSelect = ({
   disabled && select.setAttribute('disabled', 'true')
 
   const wrapper = document.createElement('div')
-  wrapper.classList.add('select')
+  wrapper.setAttribute('is', 'select-field')
   wrapper.appendChild(select)
 
   typeof onchange === 'function' && select.addEventListener('change', onchange)
