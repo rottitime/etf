@@ -42,12 +42,11 @@ class MultiSelect extends HTMLDivElement {
     multiselect.prepend(button)
 
     options.forEach((option) => {
-      if (option.selected) this.multiAdd(option.value) //TODO: breaks eventlistener
+      if (option.selected) this.multiAdd(option.value)
       multiselect.appendChild(option)
     })
 
     multiselect.addEventListener('click', (e) => {
-      console.log('click', e.target)
       const option = (e.target as HTMLElement)?.closest('option')
       if (!option) return
 
