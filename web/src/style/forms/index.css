@@ -1,6 +1,7 @@
 select,
 textarea,
-input {
+input,
+[is='multi-select'] selectmenu {
   font-family: var(--text-font-family);
   background-color: var(--color-bg-white);
   border: 1px solid var(--input-stroke-light);

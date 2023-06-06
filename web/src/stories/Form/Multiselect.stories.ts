@@ -13,7 +13,9 @@ const meta = {
     <select multiple name="demo" class="full-width">
     ${list.map((option) => `<option>${option}</option>`).join('')}
     </select>
-    </div>`,
+    </div>
+
+    `,
   argTypes: {
     name: { control: 'text', table: { disable: true } },
     fullWidth: { control: 'boolean' },

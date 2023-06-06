@@ -14,4 +14,20 @@
       display: none;
     }
   }
+
+  /* web component  */
+  &.active select {
+    display: none;
+  }
+
+  & selectmenu {
+    display: block;
+    max-height: 167px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    & [selected] {
+      background-color: var(--color-blue);
+      color: var(--color-white);
+    }
+  }
 }
