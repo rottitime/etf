@@ -8,9 +8,11 @@ const list = [...Array(20).keys()].map((i) => `Option ${i}`)
 const meta = {
   title: 'Components/Form/Multiselect',
   tags: ['autodocs'],
-  render: ({ error, label, description, helperText, ...args }) =>
+  render: ({ name, fullWidth, list, disabled }) =>
     `<div is='multi-select'>
-    <select multiple name="demo" class="full-width">
+    <select multiple name="${name}" class="${fullWidth ? 'full-width' : ''}" ${
+      disabled ? 'disabled' : ''
+    }>
     ${list.map((option) => `<option>${option}</option>`).join('')}
     </select>
     </div>
@@ -30,24 +32,15 @@ type Story = StoryObj<Props>
 export const Default: Story = {
   args: {
     name: 'my-select',
-    list
+    list,
+    fullWidth: false,
+    disabled: false
   }
 }
 
-export const Labels: Story = {
+export const Disabled: Story = {
   args: {
     ...Default.args,
-    label: 'Type of problem',
-    helperText: 'This is a invalid choice',
-    description: 'A description helps users understand the context of the field',
-    fullWidth: true
-  }
-}
-
-export const Error: Story = {
-  args: {
-    ...Labels.args,
-    value: list[1],
-    error: true
+    disabled: true
   }
 }

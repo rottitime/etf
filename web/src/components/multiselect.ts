@@ -25,8 +25,18 @@ class MultiSelect extends HTMLDivElement {
 
   private createMuliSelect() {
     const multiselect = document.createElement('selectmenu')
-    const options = this.querySelectorAll('select option')
+    const source = this.querySelector('select')
+    //copy all attributes from multiselect
+    Array.from(source?.attributes || []).forEach((attribute) => {
+      multiselect.setAttribute(
+        attribute.nodeName === 'id' ? 'data-id' : attribute.nodeName,
+        attribute?.nodeValue || ''
+      )
+    })
+
+    const options = source?.querySelectorAll<HTMLOptionElement>('option') || []
     const button = document.createElement('div')
+
     button.setAttribute('slot', 'button')
     button.setAttribute('behavior', 'button')
     multiselect.prepend(button)
@@ -62,25 +72,20 @@ class MultiSelect extends HTMLDivElement {
   private multiRefreshSelectedValues() {
     const selectedValues = this.querySelector('.selected-values') as HTMLDivElement
     selectedValues.innerHTML = ''
-
     this.multiValues.forEach((value) => selectedValues.appendChild(this.createTag(value)))
   }
 
   private multiRefreshOptions() {
     const multiselect = this.querySelector('selectmenu') as HTMLSelectElement
     const options = multiselect.querySelectorAll('option')
-    options.forEach((option) => {
-      if (this.multiValues.includes(option.value)) {
-        option.setAttribute('selected', '')
-      } else {
-        option.removeAttribute('selected')
-      }
-    })
+    options.forEach((option) =>
+      this.multiValues.includes(option.value)
+        ? option.setAttribute('selected', '')
+        : option.removeAttribute('selected')
+    )
   }
 
   private setup() {
-    this.classList.add('active')
-
     const selectedValues = document.createElement('div')
     selectedValues.classList.add('selected-values')
     this.append(selectedValues)

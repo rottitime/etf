@@ -16,7 +16,7 @@
   }
 
   /* web component  */
-  &.active select {
+  &:has(selectmenu) select {
     display: none;
   }
 
@@ -28,6 +28,11 @@
     & [selected] {
       background-color: var(--color-blue);
       color: var(--color-white);
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      pointer-events: none;
     }
   }
 }
