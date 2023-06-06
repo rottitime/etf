@@ -41,9 +41,13 @@ class MultiSelect extends HTMLDivElement {
     button.setAttribute('behavior', 'button')
     multiselect.prepend(button)
 
-    options.forEach((option) => multiselect.appendChild(option))
+    options.forEach((option) => {
+      if (option.selected) this.multiAdd(option.value) //TODO: breaks eventlistener
+      multiselect.appendChild(option)
+    })
 
     multiselect.addEventListener('click', (e) => {
+      console.log('click', e.target)
       const option = (e.target as HTMLElement)?.closest('option')
       if (!option) return
 
@@ -77,7 +81,7 @@ class MultiSelect extends HTMLDivElement {
 
   private multiRefreshOptions() {
     const multiselect = this.querySelector('selectmenu') as HTMLSelectElement
-    const options = multiselect.querySelectorAll('option')
+    const options = (multiselect && multiselect.querySelectorAll('option')) || []
     options.forEach((option) =>
       this.multiValues.includes(option.value)
         ? option.setAttribute('selected', '')
@@ -91,6 +95,9 @@ class MultiSelect extends HTMLDivElement {
     this.prepend(selectedValues)
 
     this.querySelector('select')?.replaceWith(this.createMuliSelect())
+
+    this.multiRefreshSelectedValues()
+    this.multiRefreshOptions()
   }
 }
 

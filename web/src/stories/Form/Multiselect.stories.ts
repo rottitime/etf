@@ -14,7 +14,7 @@ const meta = {
       label,
       description,
       helperText
-    }),
+    }).outerHTML,
   argTypes: {
     name: { control: 'text', table: { disable: true } },
     fullWidth: { control: 'boolean' },

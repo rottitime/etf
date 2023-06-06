@@ -162,7 +162,7 @@ export const createMultiSelect = ({
     const optionElement = document.createElement('option')
     optionElement.value = option
     optionElement.text = option
-    if (option === value) optionElement.setAttribute('selected', 'true')
+    if (option === value) optionElement.setAttribute('selected', '')
     select.appendChild(optionElement)
   })
   fullWidth && select.classList.add('full-width')
