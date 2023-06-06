@@ -4,20 +4,17 @@ class MultiSelect extends HTMLDivElement {
   }
 
   connectedCallback() {
-    console.log('connected')
     this.setup()
-    // this.setAttribute('hidden', 'true') //hide while rendering. prevents flash of unstyled content
-    // setTimeout(() => this.setup())
   }
 
   private populateTags() {
     const options = this.querySelector('select')?.selectedOptions
+
+    console.log('options', { options })
     const values = options ? Array.from(options).map(({ value }) => value) : []
 
     const selectedValues = this.querySelector('.selected-values') as HTMLDivElement
     selectedValues.innerHTML = ''
-
-    console.log(values)
 
     values.forEach((value) => {
       const tag = document.createElement('div')
@@ -33,15 +30,20 @@ class MultiSelect extends HTMLDivElement {
 
       selectedValues?.appendChild(tag)
     })
+  }
 
-    // values?.forEach((value) => {
-    //   const tag = document.createElement('span')
-    //   tag.classList.add('tag')
-    //   tag.innerHTML = value.innerHTML
-    //   selectedValues?.appendChild(tag)
-    // })
-
-    // debugger
+  private toggleOption(value: HTMLSelectElement) {
+    value.selected = !value.selected
+    // value.focus()
+    // const multiselect = this.querySelector('select')
+    // const options = multiselect?.querySelectorAll('option')
+    // const option = Array.from(options || []).find((option) => option.value === value)
+    // if (options) {
+    //   const isSelected = options[0].selected
+    //   console.log('option', { option, isSelected })
+    //   options[1].selected = !isSelected
+    // }
+    // option?.setAttribute('selected', option.selected ? 'false' : 'true')
   }
 
   private setup() {
@@ -50,10 +52,16 @@ class MultiSelect extends HTMLDivElement {
     this.prepend(selectedValues)
 
     const multiselect = this.querySelector('select')
-    this.populateTags()
 
-    multiselect?.addEventListener('change', () => {
-      this.populateTags()
+    this.populateTags()
+    multiselect?.addEventListener('change', () => this.populateTags())
+
+    multiselect?.addEventListener('mousedown', (event) => {
+      event.preventDefault()
+      const option = event.target as HTMLSelectElement
+      this.toggleOption(option)
+      this.populateTags() //TODO: bug causes jumping
+      // console.log('dedede', { event, value })
     })
 
     //   const id = crypto.randomUUID()
