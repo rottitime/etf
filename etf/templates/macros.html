@@ -90,11 +90,14 @@
 <div class="form-group {{errors.get(name) and 'error'}}">
   <label for="{{name}}">{{label}}</label>
   {{input_description(name)}}
-  <select multiple name="{{name}}" id="{{name}}" class="full-width">
-    {% for item in list %}
-      <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
-    {% endfor %}
-  </select>
+
+  <div is="multi-select">  
+    <select multiple name="{{name}}" id="{{name}}" class="full-width">
+      {% for item in list %}
+        <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
+      {% endfor %}
+    </select>
+  </div>
   {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
