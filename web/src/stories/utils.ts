@@ -144,6 +144,39 @@ export const createSelect = ({
   return wrapper
 }
 
+export const createMultiSelect = ({
+  fullWidth,
+  disabled,
+  onchange,
+  list,
+  value,
+  ...props
+}: Select) => {
+  const select = document.createElement('select')
+  select.setAttribute('multiple', 'true')
+  for (const [key, value] of Object.entries(props)) {
+    select.setAttribute(key, value?.toString() || '')
+  }
+
+  list.forEach((option) => {
+    const optionElement = document.createElement('option')
+    optionElement.value = option
+    optionElement.text = option
+    if (option === value) optionElement.setAttribute('selected', 'true')
+    select.appendChild(optionElement)
+  })
+  fullWidth && select.classList.add('full-width')
+  disabled && select.setAttribute('disabled', 'true')
+
+  const wrapper = document.createElement('div')
+  wrapper.setAttribute('is', 'multi-select')
+  wrapper.appendChild(select)
+
+  typeof onchange === 'function' && select.addEventListener('change', onchange)
+
+  return wrapper
+}
+
 export const createTextarea = ({ fullWidth, onkeyup, ...props }: Textarea) => {
   const textarea = document.createElement('textarea')
 

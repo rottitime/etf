@@ -33,8 +33,8 @@ class MultiSelect extends HTMLDivElement {
         attribute?.nodeValue || ''
       )
     })
-
     const options = source?.querySelectorAll<HTMLOptionElement>('option') || []
+
     const button = document.createElement('div')
 
     button.setAttribute('slot', 'button')
@@ -88,9 +88,9 @@ class MultiSelect extends HTMLDivElement {
   private setup() {
     const selectedValues = document.createElement('div')
     selectedValues.classList.add('selected-values')
-    this.append(selectedValues)
+    this.prepend(selectedValues)
 
-    this.append(this.createMuliSelect())
+    this.querySelector('select')?.replaceWith(this.createMuliSelect())
   }
 }
 
