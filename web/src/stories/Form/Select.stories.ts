@@ -8,13 +8,14 @@ const list = [...Array(5).keys()].map((i) => `Option ${i}`)
 const meta = {
   title: 'Components/Form/Select',
   tags: ['autodocs'],
-  render: ({ error, label, description, helperText, ...args }) =>
-    createSingleFieldWithMeta(createSelect(args), {
+  render: ({ error, label, description, helperText, ...args }) => {
+    return createSingleFieldWithMeta(createSelect(args), {
       error,
       label,
       description,
       helperText
-    }),
+    }).outerHTML
+  },
   argTypes: {
     name: { control: 'text', table: { disable: true } },
     fullWidth: { control: 'boolean' },

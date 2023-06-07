@@ -52,6 +52,7 @@ const hasDevScripts = (): boolean =>
   if (hasDevScripts()) return
   icon()
   setupHintbox()
+  setupSelect()
 })()
 
 //low priority scripts
@@ -60,7 +61,7 @@ window.addEventListener('load', () => {
   if (hasDevScripts()) return
   accordion()
   setupCard()
-  setupSelect()
+
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
