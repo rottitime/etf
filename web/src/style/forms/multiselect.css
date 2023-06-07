@@ -16,9 +16,9 @@
   }
 
   /* web component  */
-  &:has(selectmenu) select {
+  /* &:has(selectmenu) select {
     display: none;
-  }
+  } */
 
   & selectmenu {
     display: block;

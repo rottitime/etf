@@ -43,8 +43,14 @@ class MultiSelect extends HTMLDivElement {
 
     options.forEach((option) => {
       if (option.selected) this.multiAdd(option.value)
-      multiselect.appendChild(option)
+      multiselect.appendChild(option.cloneNode(true))
     })
+
+    //seelected value element
+    const selectedValue = document.createElement('div')
+    selectedValue.setAttribute('slot', 'selected-value')
+    selectedValue.setAttribute('behavior', 'selected-value')
+    multiselect.appendChild(selectedValue)
 
     multiselect.addEventListener('click', (e) => {
       const option = (e.target as HTMLElement)?.closest('option')
@@ -73,27 +79,37 @@ class MultiSelect extends HTMLDivElement {
   }
 
   private multiRefreshSelectedValues() {
-    const selectedValues = this.querySelector('.selected-values') as HTMLDivElement
-    selectedValues.innerHTML = ''
-    this.multiValues.forEach((value) => selectedValues.appendChild(this.createTag(value)))
+    const selectedValues = this.querySelector('.selected-values')
+    if (selectedValues) {
+      selectedValues.innerHTML = ''
+      this.multiValues.forEach((value) =>
+        selectedValues.appendChild(this.createTag(value))
+      )
+    }
   }
 
   private multiRefreshOptions() {
     const multiselect = this.querySelector('selectmenu') as HTMLSelectElement
     const options = (multiselect && multiselect.querySelectorAll('option')) || []
-    options.forEach((option) =>
-      this.multiValues.includes(option.value)
-        ? option.setAttribute('selected', '')
-        : option.removeAttribute('selected')
-    )
+    const optionsHidden = this.querySelector('select')?.querySelectorAll('option') || []
+    options.forEach((option, index) => {
+      if (this.multiValues.includes(option.value)) {
+        option.setAttribute('selected', '')
+        optionsHidden[index].setAttribute('selected', '')
+      } else {
+        option.removeAttribute('selected')
+        optionsHidden[index].removeAttribute('selected')
+      }
+    })
   }
 
   private setup() {
     const selectedValues = document.createElement('div')
     selectedValues.classList.add('selected-values')
+    this.prepend(this.createMuliSelect())
     this.prepend(selectedValues)
 
-    this.querySelector('select')?.replaceWith(this.createMuliSelect())
+    // this.querySelector('select')?.replaceWith(this.createMuliSelect())
 
     this.multiRefreshSelectedValues()
     this.multiRefreshOptions()
