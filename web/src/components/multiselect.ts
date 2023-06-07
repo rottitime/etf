@@ -24,15 +24,18 @@ class MultiSelect extends HTMLDivElement {
   }
 
   private createMuliSelect() {
+    // Create a <selectmenu> element to replace the original <select> element
     const multiselect = document.createElement('selectmenu')
+    // Copy data-* attributes from the <select> element to the <selectmenu> element
     const source = this.querySelector('select')
-    //copy all attributes from multiselect
+
     Array.from(source?.attributes || []).forEach((attribute) => {
       multiselect.setAttribute(
         attribute.nodeName === 'id' ? 'data-id' : attribute.nodeName,
         attribute?.nodeValue || ''
       )
     })
+    // Copy <option> elements from the <select> element to the <selectmenu> element
     const options = source?.querySelectorAll<HTMLOptionElement>('option') || []
 
     const button = document.createElement('div')
@@ -46,7 +49,6 @@ class MultiSelect extends HTMLDivElement {
       multiselect.appendChild(option.cloneNode(true))
     })
 
-    //seelected value element
     const selectedValue = document.createElement('div')
     selectedValue.setAttribute('slot', 'selected-value')
     selectedValue.setAttribute('behavior', 'selected-value')
@@ -79,9 +81,12 @@ class MultiSelect extends HTMLDivElement {
   }
 
   private multiRefreshSelectedValues() {
+    // Get the container element for the selected values
     const selectedValues = this.querySelector('.selected-values')
+    // If it exists, clear it
     if (selectedValues) {
       selectedValues.innerHTML = ''
+      // For each selected value, create a tag and append it to the container
       this.multiValues.forEach((value) =>
         selectedValues.appendChild(this.createTag(value))
       )
@@ -103,13 +108,17 @@ class MultiSelect extends HTMLDivElement {
     })
   }
 
+  // Create a div to store the selected values
   private setup() {
     const selectedValues = document.createElement('div')
     selectedValues.classList.add('selected-values')
+
+    // Hide the original select element and prepend the new elements
     this.querySelector('select')?.setAttribute('hidden', '')
     this.prepend(this.createMuliSelect())
     this.prepend(selectedValues)
 
+    // Add the selected values and options to the new elements
     this.multiRefreshSelectedValues()
     this.multiRefreshOptions()
   }
