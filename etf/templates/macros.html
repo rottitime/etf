@@ -71,7 +71,7 @@
     
     {{input_description(name)}}
 
-    <div class="select">
+    <div is="select-field">
       <select name="{{name}}" id="{{name}}" class="full-width">
         {% if not empty_option is sameas DEFAULT %}
           <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>

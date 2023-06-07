@@ -151,7 +151,7 @@ issue_description_help_text = defaultdict(
         "issue_description": "The problem, circumstance or situation that it is intended that an intervention should respond to.",
         "those_experiencing_issue": "Those directly experiencing the issue.",
         "why_improvements_matter": "Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?",
-        "who_improvements_matter_to": "May be wider than those experiencing the issue directly.",
+        "who_improvements_matter_to": "This may be wider than those experiencing the issue directly.",
         "current_practice": "How is the issue currently typically attended to (if at all)?",
         "issue_relevance": "How will the results of the evaluation ultimately contribute to practice?",
     },
