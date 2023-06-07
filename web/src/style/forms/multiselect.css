@@ -15,11 +15,6 @@
     }
   }
 
-  /* web component  */
-  /* &:has(selectmenu) select {
-    display: none;
-  } */
-
   & selectmenu {
     display: block;
     max-height: 167px;

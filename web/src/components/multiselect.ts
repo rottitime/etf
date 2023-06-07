@@ -106,10 +106,9 @@ class MultiSelect extends HTMLDivElement {
   private setup() {
     const selectedValues = document.createElement('div')
     selectedValues.classList.add('selected-values')
+    this.querySelector('select')?.setAttribute('hidden', '')
     this.prepend(this.createMuliSelect())
     this.prepend(selectedValues)
-
-    // this.querySelector('select')?.replaceWith(this.createMuliSelect())
 
     this.multiRefreshSelectedValues()
     this.multiRefreshOptions()
