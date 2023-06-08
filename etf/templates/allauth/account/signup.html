@@ -14,22 +14,22 @@
 
       <form method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        <div class="row mb-16">
-          <label for="id_email" {% if form.errors.email %}class="error"{% endif %}>Email</label>
+        <div class="form-group {% if form.errors.email %}error{% endif %}">
+          <label for="id_email" >Email</label>
           <input type="email" name="email" id="id_email" required autocomplete="off" class="full-width" />
           {% if form.errors.email %}
             <div class="helper">{{form.errors.email}}</div>
           {% endif %}
         </div>
-        <div class="row mb-16">
-          <label for="id_password1" {% if form.errors.password1 %}class="error"{% endif %}>Password</label>
+        <div class="form-group {% if form.errors.password1 %}error{% endif %}">
+          <label for="id_password1">Password</label>
           <input type="password" name="password1" id="id_password1" required autocomplete="off" class="full-width" />
           {% if form.errors.password1 %}
             <div class="helper">{{form.errors.password1}}</div>
           {% endif %}
         </div>
-        <div class="row mb-16">
-          <label for="id_password2" {% if form.errors.password2 %}class="error"{% endif %}>Confirm password</label>
+        <div class="form-group {% if form.errors.password2 %}error{% endif %}">
+          <label for="id_password2">Confirm password</label>
           <input type="password" name="password2" id="id_password2" required autocomplete="off" class="full-width" />
           {% if form.errors.password2 %}
             <div class="helper">{{form.errors.password2}}</div>
