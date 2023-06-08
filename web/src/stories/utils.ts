@@ -7,8 +7,85 @@ import {
   Radio,
   Checkbox,
   Icon,
-  Button
+  Button,
+  Card
 } from './types'
+
+export const createCard = ({
+  title,
+  content,
+  actions,
+  onClick,
+  accordion,
+  open,
+  small
+}: Card) => {
+  const card = document.createElement('div')
+  card.classList.add('card')
+  if (small) card.classList.add('small')
+
+  //header
+  const header = document.createElement('header')
+  const h1 = document.createElement('h1')
+  h1.textContent = title
+  h1.classList.add('header2', 'highlight')
+  header.append(h1)
+
+  const p = document.createElement('p')
+  p.textContent = content
+
+  //accordion
+  if (accordion) {
+    card.classList.add('with-accordion')
+    const content = document.createElement('div')
+    content.classList.add('content')
+    content.append(p)
+
+    open
+      ? header.setAttribute('aria-expanded', 'true')
+      : header.setAttribute('aria-expanded', 'false')
+
+    card.append(content)
+  } else {
+    card.append(p)
+  }
+
+  card.prepend(header)
+
+  if (actions) {
+    const footer = document.createElement('footer')
+    footer.classList.add('actions')
+    const btnPrimary = document.createElement('button')
+    btnPrimary.classList.add('bttn-primary', 'primary-action')
+    btnPrimary.setAttribute('type', 'submit')
+    btnPrimary.textContent = 'Save'
+    btnPrimary.addEventListener('click', onClick)
+
+    const div = document.createElement('div')
+    const btnCancel = document.createElement('a')
+    btnCancel.classList.add('bttn-quaternary', 'small')
+    btnCancel.setAttribute('href', '#')
+    btnCancel.textContent = 'Cancel'
+    btnCancel.addEventListener('click', onClick)
+
+    // btnCancel.addEventListener('click', () => {
+    //   action('Link Clicked')()
+    // })
+
+    const btnDelete = document.createElement('button')
+    btnDelete.classList.add('bttn-negative', 'small')
+    btnDelete.setAttribute('type', 'submit')
+    btnDelete.textContent = 'Delete'
+    btnDelete.addEventListener('click', onClick)
+    div.append(btnCancel)
+    div.append(btnDelete)
+    footer.append(btnPrimary)
+    footer.append(div)
+    card.append(footer)
+  }
+
+  return card
+}
 
 export const createRadio = ({ text, large, ...props }: Radio): HTMLLabelElement => {
   const radio = document.createElement('input')

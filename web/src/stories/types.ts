@@ -1,5 +1,15 @@
 export type Link = { href: string; text: string }
 
+export type Card = {
+  title: string
+  content: string
+  actions: boolean
+  small: boolean
+  accordion: boolean
+  onClick: () => void
+  open?: boolean
+}
+
 export type FieldMeta = {
   label?: string
   helperText?: string
