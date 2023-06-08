@@ -1,13 +1,14 @@
 {% extends "submissions/evaluation-base.html" %}
 
 {% block evaluation_content %}
-  
-    <h1 class="header3 highlight">Enter your evaluation</h1>
-    <div class="content">
-      <p> The following pages will collect information about a range of aspects of the evaluation. As you work through the pages, provide as much information as you can. Leave blank any fields that are not applicable to your evaluation.</p>
-      <p>Once you have input your information, you will be able to select who gets to see it.</p>
-      <p><a href="{{next_url}}" class="button float-right">Next</a></p>
-    </div>
-    
-  
+<header>
+  <h1 class="header2 highlight">Enter your evaluation</h1>
+</header>
+<p> The following pages will collect information about a range of aspects of the evaluation. As you work through the pages, provide as much information as you can. Leave blank any fields that are not applicable to your evaluation.</p>
+<p>Once you have input your information, you will be able to select who gets to see it.</p>
+
+<footer class="actions">
+<div></div>
+<a href="{{next_url}}" class="bttn-primary">Next</a>
+</footer>
 {% endblock %}
