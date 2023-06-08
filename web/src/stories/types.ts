@@ -7,6 +7,7 @@ export type Card = {
   small: boolean
   accordion: boolean
   onClick: () => void
+  open?: boolean
 }
 
 export type FieldMeta = {

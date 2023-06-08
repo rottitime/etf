@@ -17,6 +17,7 @@ export const createCard = ({
   actions,
   onClick,
   accordion,
+  open,
   small
 }: Card) => {
   const card = document.createElement('div')
@@ -29,7 +30,6 @@ export const createCard = ({
   h1.textContent = title
   h1.classList.add('header2', 'highlight')
   header.append(h1)
-  card.append(header)
 
   const p = document.createElement('p')
   p.textContent = content
@@ -40,10 +40,17 @@ export const createCard = ({
     const content = document.createElement('div')
     content.classList.add('content')
     content.append(p)
+
+    open
+      ? header.setAttribute('aria-expanded', 'true')
+      : header.setAttribute('aria-expanded', 'false')
+
     card.append(content)
   } else {
     card.append(p)
   }
+
+  card.prepend(header)
 
   if (actions) {
     const footer = document.createElement('footer')

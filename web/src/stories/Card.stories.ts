@@ -1,15 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/html'
-// import { action } from '@storybook/addon-actions'
-import { createCard } from './utils'
-
-type Props = {
-  title: string
-  content: string
-  actions: boolean
-  small: boolean
-  accordion: boolean
-  onClick: () => void
-}
+import { createCard, Card as Props } from './utils'
+import setupCards from '../components/card'
 
 const meta = {
   title: 'Components/Card',
@@ -55,6 +46,13 @@ export const WithButtons: Story = {
 export const WithAccordion: Story = {
   args: {
     ...Default.args,
-    accordion: true
-  }
+    accordion: true,
+    open: true
+  },
+  //reload the accordion setup for cards
+  loaders: [
+    async () => {
+      return setTimeout(() => Promise.resolve(setupCards()))
+    }
+  ]
 }
