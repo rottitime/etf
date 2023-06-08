@@ -3,12 +3,13 @@ import '../style/filters.css'
 const submit = (filterControl: HTMLElement, category?: string) => {
   const form = filterControl.closest('form') as HTMLFormElement
 
-  //set active filter
-  form
-    .querySelector('input[type="hidden"][name="active_filter"]')
-    ?.setAttribute('value', category ? category : '')
-
-  !!form && form.submit()
+  if (form) {
+    //set active filter
+    form
+      .querySelector<HTMLInputElement>('input[type="hidden"][name="active_filter"]')
+      ?.setAttribute('value', category ? category : '')
+    form.submit()
+  }
 }
 
 const onReset = (filterControl: HTMLElement) => {
@@ -58,17 +59,11 @@ const onFilterClick = (filterControl: HTMLElement) => {
     .forEach((checkbox) => {
       // if (checkbox.checked) checked = true
       checkbox.addEventListener('change', () => {
-        // const checkbox = e.target as HTMLInputElement
-        // const { name } = checkbox
-        // setTotal(filterControl, name)
         const { name } = checkbox
 
         submit(filterControl, name)
       })
     })
-
-  // if (!checked)
-  //   filterControl.querySelector('button[type="reset"]')?.setAttribute('disabled', 'true')
 }
 
 const setupFilters = () => {
