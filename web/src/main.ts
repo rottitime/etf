@@ -9,6 +9,7 @@ import './style/forms/form-group.css'
 import './style/forms/checkbox.css'
 import './style/forms/radio.css'
 import './style/forms/select.css'
+import './style/forms/multiselect.css'
 import './style/components/index.css'
 import './style/components/alert.css'
 import './style/components/buttons.css'
@@ -34,6 +35,7 @@ import setupFilters from './components/filters'
 import setupSmoothScroll from './components/smooth-scroll'
 import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobile-menu'
 import setupHintbox from './components/hintbox'
+import setupMultiselect from './components/multiselect'
 import setupCircularProgressBar from './components/circular-progress-bar'
 
 //local development purposes only. to replace prod assets with dev
@@ -53,6 +55,7 @@ const hasDevScripts = (): boolean =>
   icon()
   setupHintbox()
   setupSelect()
+  setupMultiselect()
 })()
 
 //low priority scripts
@@ -61,7 +64,6 @@ window.addEventListener('load', () => {
   if (hasDevScripts()) return
   accordion()
   setupCard()
-
   setupFilters()
   setupSmoothScroll()
   setupMobileMenu()
