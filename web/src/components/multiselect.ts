@@ -6,7 +6,7 @@ class MultiSelect extends HTMLDivElement {
   }
 
   connectedCallback() {
-    this.setup()
+    setTimeout(() => this.setup())
   }
 
   private createTag(value: string) {

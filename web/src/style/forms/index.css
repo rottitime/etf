@@ -141,3 +141,7 @@ fieldset {
     display: block;
   }
 }
+
+option {
+  cursor: default;
+}
