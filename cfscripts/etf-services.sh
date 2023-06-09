@@ -67,7 +67,6 @@ do
         else
             $(./cf create-service postgres medium-13 $value &> /dev/null)
         fi
-    fi
     elif grep -q "scale" <<< "$value" && [ $autoscale ]; then
         echo "Adding service ${value}..........."
         $(./cf create-service autoscaler autoscaler-free-plan $value &> /dev/null)
