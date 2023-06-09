@@ -1,6 +1,7 @@
 from marshmallow import Schema, ValidationError, fields, validate
 
 from etf.evaluation.utils import is_civil_service_email
+
 from . import choices
 
 
@@ -56,12 +57,17 @@ def validate_choice_and_length_or_none(values):
     def validator(value):
         if value != "" and not validate.OneOf(values):
             raise ValidationError(f"Value needs to be in {values} or None")
+
     return validator
 
 
 def make_choice_field(max_len, values, allow_none=False, **kwargs):
     if allow_none:
-        field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate_choice_and_length_or_none(values)), allow_none=True, **kwargs)
+        field = SingleLineStr(
+            validate=validate.And(validate.Length(max=max_len), validate_choice_and_length_or_none(values)),
+            allow_none=True,
+            **kwargs,
+        )
     else:
         field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
     return field
