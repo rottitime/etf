@@ -68,3 +68,11 @@ Open the `web` folder for all the following
 npm ci
 npm run dev
 ```
+
+## How to run storybook
+
+Open the `web` folder for all the following
+
+```
+npm run storybook
+`
