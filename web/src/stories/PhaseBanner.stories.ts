@@ -7,6 +7,10 @@ type Props = {
 
 /**
  * A banner to indicate the current phase of the service.
+ * ## When to use this component
+ * Services must use the phase banner until they pass a live assessment.
+ * Use an alpha banner when your service is in alpha, and a beta banner if your service is in private or public beta.
+ *
  */
 const meta = {
   title: 'Components/Phase Banner',
@@ -21,8 +25,12 @@ const meta = {
     </div>
  </div>`,
   argTypes: {
-    tag: { control: 'text' },
-    text: { control: 'text' }
+    tag: {
+      control: 'text',
+      name: 'Tag text',
+      description: 'The tag to display in the banner e.g. ALPHA, BETA'
+    },
+    text: { control: 'text', name: 'Content', description: 'Banner content' }
   },
   parameters: {
     backgrounds: {
