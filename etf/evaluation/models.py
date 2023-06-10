@@ -754,9 +754,9 @@ class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, 
         return self.method_name
 
     def get_search_text(self):
-        method_name = choices.ProcessEvaluationMethods.mapping.get(self.method_name, "")
+        #  method_name = choices.ProcessEvaluationMethods.mapping.get(self.method_name, "")
         searchable_fields = [
-            method_name,
+            self.get_name(),
             self.method_name_other,
             self.more_information,
             "|".join(

@@ -319,4 +319,3 @@ def restrict_choices(choices, values_to_restrict_to, specified_other=""):
     if specified_other and "OTHER" in values_to_restrict_to:
         restricted = (map_other(x, specified_other) for x in restricted)
     return restricted
-

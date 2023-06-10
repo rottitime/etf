@@ -49,7 +49,7 @@ RELATED_OBJECTS = {
     "link-page": "LinkOtherService",
     "event-date-page": "EventDate",
     "grant-page": "Grant",
-    "process-evaluation-method-page": "ProcessEvaluationMethod"
+    "process-evaluation-method-page": "ProcessEvaluationMethod",
 }
 
 
@@ -176,4 +176,3 @@ def test_remove_contributor(client):
     url = reverse("evaluation-contributor-remove", args=(evaluation.id, "mrs.tiggywinkle@example.com"))
     response = client.get(url)
     assert response.status_code == 405, response.status_code
-
