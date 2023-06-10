@@ -310,7 +310,7 @@ def map_other(pair, specified_other_description):
     if pair[0] == "OTHER":
         other_name = pair[1]
         full_other_name = f"{other_name} ({specified_other_description})"
-        return (pair[0], full_other_name)
+        return ("OTHER", full_other_name)
     return pair
 
 
