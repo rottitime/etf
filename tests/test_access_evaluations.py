@@ -108,7 +108,6 @@ def test_view_not_edit_evaluations(client):
         for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
             response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
             if response:
-                print(url_pattern.name)
                 assert response.status_code == 200, response.status_code
 
 
