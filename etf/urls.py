@@ -348,13 +348,13 @@ evaluation_edit_patterns = (
     + documents_urlpatterns
     + links_urlpatterns
     + event_date_urlpatterns
+    + process_evaluation_methods_urlpatterns
 )
 
 urlpatterns = (
     initial_urlpatterns
     + account_urlpatterns
     + evaluation_edit_patterns
-    + process_evaluation_methods_urlpatterns
     + evaluation_summary_urlpatterns
     + feedback_and_help_urlpatterns
 )

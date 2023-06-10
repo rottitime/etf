@@ -13,7 +13,8 @@ from etf.evaluation import models
 
 from . import utils
 
-# Explicitly excluding URLs, to ensure that we don't miss out new URLs
+# Explicitly excluding URLs if they need different tests
+# This is to ensure that we don't miss out new URLs
 EDIT_OR_VIEW_EVALUATION_URL_PATTERNS = (
     set(urls.urlpatterns)
     - set(urls.initial_urlpatterns)
@@ -48,6 +49,7 @@ RELATED_OBJECTS = {
     "link-page": "LinkOtherService",
     "event-date-page": "EventDate",
     "grant-page": "Grant",
+    "process-evaluation-method-page": "ProcessEvaluationMethod"
 }
 
 
@@ -106,6 +108,7 @@ def test_view_not_edit_evaluations(client):
         for url_pattern in VIEW_EVALUATION_URL_PATTERNS:
             response = get_url_for_evaluation_and_related_object(client, url_pattern.name, evaluation.id)
             if response:
+                print(url_pattern.name)
                 assert response.status_code == 200, response.status_code
 
 
@@ -173,3 +176,4 @@ def test_remove_contributor(client):
     url = reverse("evaluation-contributor-remove", args=(evaluation.id, "mrs.tiggywinkle@example.com"))
     response = client.get(url)
     assert response.status_code == 405, response.status_code
+
