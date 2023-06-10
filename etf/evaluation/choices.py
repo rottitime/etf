@@ -316,6 +316,6 @@ def map_other(pair, specified_other_description):
 
 def restrict_choices(choices, values_to_restrict_to, specified_other=""):
     restricted = (choice for choice in choices if choice[0] in values_to_restrict_to)
-    if specified_other and "OTHER" in values_to_restrict_to:
+    if specified_other and ("OTHER" in values_to_restrict_to):
         restricted = (map_other(x, specified_other) for x in restricted)
     return restricted
