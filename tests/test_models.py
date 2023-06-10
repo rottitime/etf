@@ -60,7 +60,7 @@ def test_search_text():
         evaluation=test_eval,
         method_name=choices.ProcessEvaluationMethods.OTHER.value,
         method_name_other="other process method",
-        aspects_measured=[choices.ProcessEvaluationAspects.IMPLEMENTATION, choices.ProcessEvaluationAspects.OTHER],
+        aspects_measured=[choices.ProcessEvaluationAspects.IMPLEMENTATION.value, choices.ProcessEvaluationAspects.OTHER.value],
     )
     process_evaluation_method.save()
     search_text = test_eval.search_text
