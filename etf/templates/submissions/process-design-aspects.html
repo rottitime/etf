@@ -4,6 +4,7 @@
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
+      {{macros.checkbox_from_list("aspect_name", "Process evaluation aspect", dropdown_choices.process_evaluation_aspect)}} 
       {{macros.buttons(prev_url, id=data.id)}}
   </form>
 {% endblock %}

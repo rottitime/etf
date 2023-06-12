@@ -26,3 +26,19 @@ def test_turn_list_to_display_values():
     output_list = choices.turn_list_to_display_values(input_list, choices.EvaluationTypeOptions.options)
     expected = ["Impact evaluation", "Economic evaluation", "Specified value"]
     assert output_list == expected, output_list
+
+
+def test_restrict_choices():
+    restricted_values = ["SUPERIORITY", "OTHER"]
+    actual = choices.restrict_choices(choices.ImpactFramework.choices, restricted_values)
+    expected = (("SUPERIORITY", "Superiority"), ("OTHER", "Other"))
+    assert tuple(actual) == expected, actual
+
+
+def test_restrict_choices_with_other():
+    restricted_values = ["SUPERIORITY", "OTHER"]
+    actual = choices.restrict_choices(
+        choices.ImpactFramework.choices, restricted_values, specified_other="specified text"
+    )
+    expected = (("SUPERIORITY", "Superiority"), ("OTHER", "Other (specified text)"))
+    assert tuple(actual) == expected, actual

@@ -183,15 +183,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_missing_data_handling = models.TextField(blank=True, null=True)
     impact_fidelity = models.CharField(max_length=10, blank=True, null=True)
     impact_description_planned_analysis = models.TextField(blank=True, null=True)
-    # TODO - add more
-
-    # Process evaluation design
-    process_methods = models.CharField(blank=True, null=True, max_length=256)
-    # TODO - add more
-
-    # Process evaluation analysis
-    # TODO - add analysis plan document
-    process_analysis_description = models.TextField(blank=True, null=True)
 
     # Economic evaluation design
     economic_type = models.CharField(max_length=256, blank=True, null=True)
@@ -202,7 +193,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Economic evaluation analysis
     economic_analysis_description = models.TextField(blank=True, null=True)
-    # TODO - add more details
 
     # Other evaluation design
     other_design_type = models.TextField(blank=True, null=True)
@@ -210,7 +200,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
 
     # Other evaluation analysis
     other_analysis_description = models.TextField(blank=True, null=True)
-    # TODO - add more
 
     # Impact evaluation findings
     impact_comparison = models.TextField(blank=True, null=True)
@@ -225,10 +214,6 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     economic_summary_findings = models.TextField(blank=True, null=True)
     economic_findings = models.TextField(blank=True, null=True)
 
-    # Process evaluation findings
-    process_summary_findings = models.TextField(blank=True, null=True)
-    process_findings = models.TextField(blank=True, null=True)
-
     # Other evaluation findings
     other_summary_findings = models.TextField(blank=True, null=True)
     other_findings = models.TextField(blank=True, null=True)
@@ -240,10 +225,7 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     rsm_id = models.FloatField(blank=True, null=True)
 
     def update_evaluation_page_status(self, page_name, status):
-        # TODO: Fix ignoring unknown pages
-        if page_name not in self.page_statuses:
-            return
-        if self.page_statuses[page_name] == EvaluationPageStatus.DONE.name:
+        if self.page_statuses.get(page_name) == EvaluationPageStatus.DONE.name:
             return
         self.page_statuses[page_name] = status
         self.save()
@@ -342,6 +324,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
             "grants",
             "documents",
             "event_dates",
+            "process_evaluation_aspects",
+            "process_evaluation_methods",
         ]
 
         # Multiple choice fields
@@ -711,4 +695,73 @@ class EvaluationCost(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvalu
 
         searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
 
+        return "|".join(searchable_fields)
+
+
+class ProcessEvaluationAspect(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_aspects", on_delete=models.CASCADE)
+    aspect_name = models.CharField(max_length=256, blank=True, null=True)
+    aspect_name_other = models.CharField(max_length=256, blank=True, null=True)
+    summary_findings = models.TextField(blank=True, null=True)
+    findings = models.TextField(blank=True, null=True)
+
+    _name_field = "aspect_name"
+
+    class Meta:
+        unique_together = ("evaluation", "aspect_name")
+
+    def get_name(self):
+        if self.aspect_name in choices.ProcessEvaluationAspects.values:
+            if self.aspect_name == choices.ProcessEvaluationAspects.OTHER.value:
+                return self.aspect_name_other
+            return choices.ProcessEvaluationAspects.mapping[self.aspect_name]
+        return self.aspect_name
+
+    def get_search_text(self):
+        searchable_fields = [
+            str(choices.ProcessEvaluationAspects.mapping[self.aspect_name]),
+            str(self.aspect_name_other),
+            str(self.summary_findings),
+            str(self.findings),
+        ]
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
+        return "|".join(searchable_fields)
+
+    def delete(self):
+        # If aspect removed from evaluation, should be removed from all methods of this evaluation
+        for method in self.evaluation.process_evaluation_methods.all():
+            method_aspects = method.aspects_measured
+            if self.aspect_name in method_aspects:
+                method_aspects.remove(self.aspect_name)
+            method.save()
+        super().delete()
+
+
+class ProcessEvaluationMethod(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel, SaveEvaluationOnSave):
+    evaluation = models.ForeignKey(Evaluation, related_name="process_evaluation_methods", on_delete=models.CASCADE)
+    method_name = models.CharField(max_length=256, blank=True, null=True)
+    method_name_other = models.CharField(max_length=256, blank=True, null=True)
+    more_information = models.TextField(blank=True, null=True)
+    aspects_measured = models.JSONField(default=list)
+
+    _name_field = "method_name"
+
+    def get_name(self):
+        if self.method_name in choices.ProcessEvaluationMethods.values:
+            if self.method_name == choices.ProcessEvaluationMethods.OTHER.value:
+                return self.method_name_other
+            return choices.ProcessEvaluationMethods.mapping[self.method_name]
+        return self.method_name
+
+    def get_search_text(self):
+        #  method_name = choices.ProcessEvaluationMethods.mapping.get(self.method_name, "")
+        searchable_fields = [
+            self.get_name(),
+            self.method_name_other,
+            self.more_information,
+            "|".join(
+                choices.turn_list_to_display_values(self.aspects_measured, choices.ProcessEvaluationAspects.options)
+            ),
+        ]
+        searchable_fields = [field for field in searchable_fields if field not in (None, "", " ", "None")]
         return "|".join(searchable_fields)

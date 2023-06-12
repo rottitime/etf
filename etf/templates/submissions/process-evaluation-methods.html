@@ -5,7 +5,10 @@
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
       <div class="content caption">
-      </div>
-      {{macros.buttons(prev_url, id=data.id)}}
+      <p>Enter methods for process evaluation here. [PLACEHOLDER: find actual text]</p>
+      {% block multipleobjects %}
+        {% include "submissions/multiple-objects.html" %}
+      {% endblock %}
+    </div>
   </form>
 {% endblock %}

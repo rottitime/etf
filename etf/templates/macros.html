@@ -103,7 +103,7 @@
 </div>
 {%- endmacro %}
 
-{% macro checkbox_from_list(name, label, list, empty_option=DEFAULT) -%}
+{% macro checkbox_from_list(name, label, list, empty_option=DEFAULT, other_specify=true) -%}
   <fieldset>
     <legend>
       {{label}}
@@ -117,9 +117,11 @@
         <span>{{item[1]}}</span>
       </label>
       {% endfor %}
-      <div class="form-group controller-subfield" id="conditional-dyt6y3i">
-        {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
-      </div>
+      {% if other_specify %}
+        <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+          {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
+        </div>
+      {% endif %}
     </div>
   </fieldset>
   {{macros.guidance(name=name, label="Additional guidance")}}

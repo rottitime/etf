@@ -13,7 +13,8 @@ from etf.evaluation import models
 
 from . import utils
 
-# Explicitly excluding URLs, to ensure that we don't miss out new URLs
+# Explicitly excluding URLs if they need different tests
+# This is to ensure that we don't miss out new URLs
 EDIT_OR_VIEW_EVALUATION_URL_PATTERNS = (
     set(urls.urlpatterns)
     - set(urls.initial_urlpatterns)
@@ -48,6 +49,7 @@ RELATED_OBJECTS = {
     "link-page": "LinkOtherService",
     "event-date-page": "EventDate",
     "grant-page": "Grant",
+    "process-evaluation-method-page": "ProcessEvaluationMethod",
 }
 
 

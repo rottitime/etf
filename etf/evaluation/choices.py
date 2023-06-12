@@ -213,6 +213,35 @@ class ImpactMeasureType(utils.Choices):
     OTHER = "Other"
 
 
+class ProcessEvaluationAspects(utils.Choices):
+    IMPLEMENTATION = "Implementation feasibility"
+    FIDELITY = "Fidelity"
+    ACCEPTABILITY_TARGET_POPULATION = "Acceptability to target population"
+    ACCEPTABILITY_IMPLEMENTERS = "Acceptability to implementers"
+    PARTICIPATION = "Participation"
+    PERCEPTION_OF_RELEVANCE = "Participants' perceptions of relevance of intervention"
+    INTENTION_TO_USE = "Participants' intention to use (for example, knowledge gained from intervention)"
+    IMPACT_INTERMEDIATE_OUTCOMES = "Impact on intermediate outcomes"
+    QUALITATIVE_STUDY_CAUSAL_PROCESSES = "Qualitative study to explore causal processes"
+    UNANTICIPATED_OUTCOMES = "Unanticipated outcomes (beneficial or adverse)"
+    CONTEXT_IMPACT_IMPLEMENTATION = "Context: impact on implementation"
+    CONTEXT_IMPACT_OUTCOMES = "Context: impact on outcomes"
+    SUSTAINABILITY_OF_PROGRAMME = "Sustainability of the programme"
+    EVALUATION_FEASIBILITY = "Evaluation feasibility"
+    OTHER = "Other"
+
+
+class ProcessEvaluationMethods(utils.Choices):
+    INDIVIDUAL_INTERVIEWS = "Individual interviews"
+    FOCUS_GROUPS = "Focus groups or group interviews"
+    CASE_STUDIES = "Case studies"
+    SURVEYS_AND_POLLING = "Surveys and polling"
+    OUTPUT_OR_PERFORMANCE_MONITORING = "Output or performance modelling"
+    QUALITATIVE_OBSERVATIONAL_STUDIES = "Qualitative observational studies"
+    CONSULTATIVE_METHODS = "Consultative/deliberative methods"
+    OTHER = "Other"
+
+
 dropdown_choices = {
     "document_types": DocumentType.choices,
     "economic_type": EconomicEvaluationType.choices,
@@ -226,6 +255,8 @@ dropdown_choices = {
     "impact_effect_measure_interval": ImpactMeasureInterval.choices,
     "impact_interpretation": ImpactEvalInterpretation.choices,
     "impact_interpretation_type": ImpactInterpretationType.choices,
+    "process_evaluation_aspect": ProcessEvaluationAspects.choices,
+    "process_evaluation_method": ProcessEvaluationMethods.choices,
     "measure_type": MeasureType.choices,
     "organisations": enums.Organisation.choices,
     "topics": Topic.choices,
@@ -273,3 +304,18 @@ def turn_choices_list_to_string(db_list, choices_options):
     if output:
         output = f"{output}{utils.SEPARATOR}"
     return output
+
+
+def map_other(pair, specified_other_description):
+    if pair[0] == "OTHER":
+        other_name = pair[1]
+        full_other_name = f"{other_name} ({specified_other_description})"
+        return ("OTHER", full_other_name)
+    return pair
+
+
+def restrict_choices(choices, values_to_restrict_to, specified_other=""):
+    restricted = (choice for choice in choices if choice[0] in values_to_restrict_to)
+    if specified_other and ("OTHER" in values_to_restrict_to):
+        restricted = (map_other(x, specified_other) for x in restricted)
+    return restricted
