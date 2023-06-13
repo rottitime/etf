@@ -15,7 +15,26 @@ type Props = {
 const options = [...Array(4).keys()].map((i) => `Option ${i}`)
 
 const filterList = [...Array(3).keys()].map((i) => ({ title: `Option ${i}`, options }))
+/**
+ * Allows the users select one or more options by using the checkboxes component.
+ * 
+ * ## When to use this component
+* Use the checkboxes component when you need to help users:
+* - select multiple options from a list
+* - toggle a single option on or off
 
+*##How it works
+To ensure maximum accessibility, checkboxes should be positioned to the left of their corresponding labels. This is particularly helpful for users of screen magnifiers.
+
+While radios only allow for a single selection, checkboxes permit choosing multiple options from a list. Avoid assuming that users can determine the number of options they may select based purely on the designs of radios and checkboxes.
+
+Consider providing a "Select all that apply" prompt or other hints to clarify the available selections.
+
+Pre-selecting checkbox options might increase the likelihood of user errors such as missing a question or submitting an incorrect answer. Thus, it's best to avoid pre-selecting options.
+
+By default, arrange checkbox options alphabetically to ensure consistency in selection order.
+
+ */
 const meta = {
   title: 'Components/Filter',
   tags: ['autodocs'],
