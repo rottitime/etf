@@ -12,7 +12,7 @@ input,
   box-sizing: border-box;
   transition: outline ease-in-out var(--animation-speed);
   &::placeholder {
-    color: var(--color-grey-light);
+    color: var(--color-grey-light2);
     font-style: italic;
   }
 
@@ -113,9 +113,10 @@ fieldset {
   margin: 0;
 
   & legend {
-    margin-bottom: var(--spacing-8);
+    margin-bottom: var(--spacing-16);
     font-weight: 600;
-    font-size: 16px;
+    font-size: 20px;
+    padding: 0;
     & :is(h1, h2, h3, h4, h5, h6) {
       font-size: inherit;
       font-weight: inherit;
