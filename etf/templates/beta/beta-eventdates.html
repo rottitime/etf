@@ -1,10 +1,12 @@
+<h1 class="highlight header3">Event dates</h1>
+
 <div class="card">
       
   <form method="POST" id="create-evaluation"><input type="hidden" name="csrfmiddlewaretoken" value="W3rXX4fYmpQ70BPr1ff6WDr5Snx3JkVwEHbQeslDF9GNOnXhgVwF6fOLLZb7hVAR">
-    <h1 class="highlight header3">Event dates</h1>
-      <div class="content caption">
-
-
+    
+      
+    <h1 class="highlight header4">Key event types</h1>
+    
       
 
       <form action="">
@@ -12,11 +14,33 @@
         
 
         <fieldset>
-          <legend>Key event dates</legend>
-          <div class="form-group">
-            <label for="evaluation-start-date">Evaluation start date</label>
-            <div class="date-picker"><input id="evaluation-start-date" type="month"></div>
+          <legend>Evaluation start date</legend>
+          <div class="form-group inline">
+            <label for="evaluation-start-date-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="evaluation-start-date-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
+
+          <div class="form-group inline">
+            <label for="evaluation-start-date-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="evaluation-start-date-year">
+          </div>
+
 
           <div class="form-group">
           <label class="radio">
@@ -30,28 +54,35 @@
             <span>Actual date</span>
           </label>
           </div>
+
+        </fieldset>
+        <fieldset>
+          <legend>Publicaton of interim results</legend>
         
-          <div class="form-group">
-            <label for="publicaton-of-interim-results">Publicaton of interim results</label>
-            <div class="date-picker"><input id="publicaton-of-interim-results" type="month"></div>
+          <div class="form-group inline">
+            <label for="publicaton-of-interim-results-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="publicaton-of-interim-results-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group">
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Intended date</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Actual date</span>
-          </label>
-          </div>
-        
-          <div class="form-group">
-            <label for="publicaton-of-final-results">Publicaton of final results</label>
-            <div class="date-picker"><input id="publicaton-of-final-results" type="month"></div>
+          <div class="form-group inline">
+            <label for="publicaton-of-interim-results-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="publicaton-of-interim-results-year">
           </div>
 
           <div class="form-group">
@@ -68,42 +99,149 @@
           </div>
         </fieldset>
 
-        <h2 class="header4 mb-16">Additional event types</h2>
+        <fieldset>
+          <legend>Publicaton of final results</legend>
+
+
+          <div class="form-group inline">
+            <label for="publicaton-of-final-results-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="publicaton-of-final-results-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group inline">
+            <label for="publicaton-of-final-results-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="publicaton-of-final-results-year">
+          </div>
+
+          <div class="form-group">
+          <label class="radio">
+            <input type="radio" name="event_date_name" value="EVALUATION_START">
+            <span class="checkmark"></span>
+            <span>Intended date</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="event_date_name" value="EVALUATION_START">
+            <span class="checkmark"></span>
+            <span>Actual date</span>
+          </label>
+          </div>
+
+        </fieldset>
+        
+
+        <hr class="my-24">
+        <h2 class="header4 highlight mb-16">Additional event types</h2>
 
         <fieldset>
           <legend>Participant recruitment</legend>
-          <div class="form-group">
-            <label for="first-participant-recruited">First participant recruited</label>
-            <div class="date-picker"><input id="first-participant-recruited" type="month"></div>
+
+          <div class="form-group inline">
+            <label for="first-participant-recruited-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="first-participant-recruited-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="last-participant-recruited">Last participant recruited</label>
-            <div class="date-picker"><input id="last-participant-recruited" type="month"></div>
+          <div class="form-group inline">
+            <label for="first-participant-recruited-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="first-participant-recruited-year">
           </div>
+
+  
 
         </fieldset>
 
         <fieldset>
           <legend>Intervention timings</legend>
-          <div class="form-group">
-            <label for="intervention-start-date">Intervention start date</label>
-            <div class="date-picker"><input id="intervention-start-date" type="month"></div>
+
+          <div class="form-group inline">
+            <label for="intervention--month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="intervention--month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="intervention-end-date">Intervention end date</label>
-            <div class="date-picker"><input id="intervention-end-date" type="month"></div>
+          <div class="form-group inline">
+            <label for="intervention--year">Year</label>
+            <input type="number" id="year" maxlength="4" id="intervention--year">
           </div>
 
         </fieldset>
 
         <fieldset>
           <legend>Interim analysis</legend>
-          <div class="form-group">
-            <label for="interim-data-extraction-date">Interim data extraction date</label>
-            <div class="date-picker"><input id="interim-data-extraction-date" type="month"></div>
+
+          <div class="form-group inline">
+            <label for="interim-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="interim-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
+
+          <div class="form-group inline">
+            <label for="interim-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="interim-year">
+          </div>
+
+
 
           <div class="form-group">
           <label class="radio">
@@ -121,10 +259,34 @@
 
         <fieldset>
           <legend>Final analysis</legend>
-          <div class="form-group">
-            <label for="final-data-extraction-date">Final data extraction date</label>
-            <div class="date-picker"><input id="final-data-extraction-date" type="month"></div>
+
+
+          <div class="form-group inline">
+            <label for="final-month">Month</label>
+            <div is="select-field">
+              <select name="my-select" id="final-month">
+                <option value="">Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+            </div>
           </div>
+
+          <div class="form-group inline">
+            <label for="final-year">Year</label>
+            <input type="number" id="year" maxlength="4" id="final-year">
+          </div>
+
 
           <div class="form-group">
           <label class="radio">
@@ -166,7 +328,7 @@
 
   </footer>
       
-    </div>
+    
   </form>
 
       </div>
