@@ -36,4 +36,8 @@
   &.full-width {
     width: 100%;
   }
+
+  &.inline {
+    display: inline-block;
+  }
 }
