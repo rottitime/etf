@@ -37,7 +37,7 @@ DEPT_FOR_BUSINESS_AND_TRADE = frozenset(
         "companieshouse.gov.uk",
         "landregistry.gov.uk",
         "cma.gov.uk",
-        "go-science.gov.uk"
+        "go-science.gov.uk",
         "officeforlifesciences.gov.uk",
         "rpc.gov.uk",
         "ukspaceagency.gov.uk",
