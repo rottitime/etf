@@ -148,164 +148,170 @@
         <hr class="my-24">
         <h2 class="header4 highlight mb-16">Additional event types</h2>
 
-        <fieldset>
-          <legend>Participant recruitment</legend>
 
-          <div class="form-group inline">
-            <label for="first-participant-recruited-month">Month</label>
-            <div is="select-field">
-              <select name="my-select" id="first-participant-recruited-month">
-                <option value="">Month</option>
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-              </select>
+        <div id="idotai-accordion">
+
+          <button type="button" class="govuk-accordion__show-all" aria-expanded="false">
+            Show all sections
+          </button>
+
+          <div class="accordion-title">
+            <h3 class="header4">Participant recruitment</h3>
+          </div>
+          <div class="accordion-panel">
+            <div class="form-group inline">
+              <label for="first-participant-recruited-month">Month</label>
+              <div is="select-field">
+                <select name="my-select" id="first-participant-recruited-month">
+                  <option value="">Month</option>
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </div>
             </div>
-          </div>
-
-          <div class="form-group inline">
-            <label for="first-participant-recruited-year">Year</label>
-            <input type="number" id="year" maxlength="4" id="first-participant-recruited-year">
-          </div>
-
   
-
-        </fieldset>
-
-        <fieldset>
-          <legend>Intervention timings</legend>
-
-          <div class="form-group inline">
-            <label for="intervention--month">Month</label>
-            <div is="select-field">
-              <select name="my-select" id="intervention--month">
-                <option value="">Month</option>
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-              </select>
+            <div class="form-group inline">
+              <label for="first-participant-recruited-year">Year</label>
+              <input type="number" id="year" maxlength="4" id="first-participant-recruited-year">
             </div>
           </div>
 
-          <div class="form-group inline">
-            <label for="intervention--year">Year</label>
-            <input type="number" id="year" maxlength="4" id="intervention--year">
+          <div class="accordion-title">
+            <h3 class="header4">Intervention timings</h3>
           </div>
-
-        </fieldset>
-
-        <fieldset>
-          <legend>Interim analysis</legend>
-
-          <div class="form-group inline">
-            <label for="interim-month">Month</label>
-            <div is="select-field">
-              <select name="my-select" id="interim-month">
-                <option value="">Month</option>
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-              </select>
+          <div class="accordion-panel">
+            <div class="form-group inline">
+              <label for="intervention--month">Month</label>
+              <div is="select-field">
+                <select name="my-select" id="intervention--month">
+                  <option value="">Month</option>
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group inline">
+              <label for="intervention--year">Year</label>
+              <input type="number" id="year" maxlength="4" id="intervention--year">
             </div>
           </div>
 
-          <div class="form-group inline">
-            <label for="interim-year">Year</label>
-            <input type="number" id="year" maxlength="4" id="interim-year">
+
+          <div class="accordion-title">
+            <h3 class="header4">Interim analysis</h3>
+          </div>
+          <div class="accordion-panel">
+            <div class="form-group inline">
+              <label for="interim-month">Month</label>
+              <div is="select-field">
+                <select name="my-select" id="interim-month">
+                  <option value="">Month</option>
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group inline">
+              <label for="interim-year">Year</label>
+              <input type="number" id="year" maxlength="4" id="interim-year">
+            </div>
+            <div class="form-group">
+            <label class="radio">
+              <input type="radio" name="event_date_name" value="EVALUATION_START">
+              <span class="checkmark"></span>
+              <span>Interim data analysis start</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="event_date_name" value="EVALUATION_START">
+              <span class="checkmark"></span>
+              <span>Interim data analysis end</span>
+            </label>
+            </div>
           </div>
 
+          <div class="accordion-title">
+            <h3 class="header4">Final analysis</h3>
+          </div>
+          <div class="accordion-panel">
+            <div class="form-group inline">
+              <label for="final-month">Month</label>
+              <div is="select-field">
+                <select name="my-select" id="final-month">
+                  <option value="">Month</option>
+                  <option>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group inline">
+              <label for="final-year">Year</label>
+              <input type="number" id="year" maxlength="4" id="final-year">
+            </div>
+            <div class="form-group">
+            <label class="radio">
+              <input type="radio" name="event_date_name" value="EVALUATION_START">
+              <span class="checkmark"></span>
+              <span>Final data analysis start</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="event_date_name" value="EVALUATION_START">
+              <span class="checkmark"></span>
+              <span>Final data analysis end</span>
+            </label>
+            </div>
+          </div>
 
+        </div>
 
+        <div class="accordion-title">
+          <h3 class="header4">Other</h3>
+        </div>
+        <div class="accordion-panel">
           <div class="form-group">
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Interim data analysis start</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Interim data analysis end</span>
-          </label>
+            <label for="83b6b281-6310-4f91-9f0a-dc13e234cf33">Other</label>
+            <input type="text" id="83b6b281-6310-4f91-9f0a-dc13e234cf33">
+  
           </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Final analysis</legend>
-
-
-          <div class="form-group inline">
-            <label for="final-month">Month</label>
-            <div is="select-field">
-              <select name="my-select" id="final-month">
-                <option value="">Month</option>
-                <option>January</option>
-                <option>February</option>
-                <option>March</option>
-                <option>April</option>
-                <option>May</option>
-                <option>June</option>
-                <option>July</option>
-                <option>August</option>
-                <option>September</option>
-                <option>October</option>
-                <option>November</option>
-                <option>December</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group inline">
-            <label for="final-year">Year</label>
-            <input type="number" id="year" maxlength="4" id="final-year">
-          </div>
-
-
-          <div class="form-group">
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Final data analysis start</span>
-          </label>
-          <label class="radio">
-            <input type="radio" name="event_date_name" value="EVALUATION_START">
-            <span class="checkmark"></span>
-            <span>Final data analysis end</span>
-          </label>
-          </div>
-        </fieldset>
-
-        <div class="form-group">
-          <label for="83b6b281-6310-4f91-9f0a-dc13e234cf33">Other</label>
-          <input type="text" id="83b6b281-6310-4f91-9f0a-dc13e234cf33">
-
         </div>
 
       </form>
