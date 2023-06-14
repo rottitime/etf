@@ -21,13 +21,14 @@ import './style/components/hintbox.css'
 import './style/components/menu-list.css'
 import './style/components/phase-banner.css'
 import './style/components/progress-list.css'
-import './style/components/accordion.css'
+import './style/components/filters-accordion.css'
 import './style/components/circular-progress-bar.css'
 import './style/pages.css'
 import './style/components/progress-bar-horizontal.css'
 import './style/components/progress-bar-horizontal-wide.css'
 import './style/utilities.css'
 import setupFiltersAccordion from './components/filters-accordion'
+import setupAccordion from './components/accordion'
 import setupCard from './components/card'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
@@ -56,6 +57,7 @@ const hasDevScripts = (): boolean =>
   setupHintbox()
   setupSelect()
   setupMultiselect()
+  setupAccordion()
 })()
 
 //low priority scripts
