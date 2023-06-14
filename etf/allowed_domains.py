@@ -103,7 +103,7 @@ WELSH_GOVERNMENT = frozenset(["wales.gov.uk", "gov.wales"])
 NI_GOVERNMENT = frozenset(["assemblyni.gov.uk", "assembly-ni.gov.uk"])  # Note, this is not part of UK Civil Service
 
 # Other emails
-DIGITAL_ACCESSIBILITY_CENTRE = frozenset(["digitalaccessibilitycentre.org"])  # Note, for accessibility testing
+DIGITAL_ACCESSIBILITY_CENTRE = frozenset(["digitalaccessibilitycentre.org"])  # Note, for accessibility testing (to be removed once testing complete)
 
 # Things like profession emails, Fast Stream emails etc
 
@@ -159,5 +159,6 @@ CIVIL_SERVICE_DOMAINS = frozenset.union(
     SCOTTISH_GOVERNMENT,
     WELSH_GOVERNMENT,
     NI_GOVERNMENT,
+    DIGITAL_ACCESSIBILITY_CENTRE,
     OTHER,
 )
