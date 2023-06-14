@@ -1,4 +1,4 @@
-const setupAccordions = () => {
+const setupFiltersAccordion = () => {
   const accordionItems = document.querySelectorAll('.accordion li')
 
   //remove all active classname
@@ -67,4 +67,4 @@ const setupAccordions = () => {
   })
 }
 
-export default setupAccordions
+export default setupFiltersAccordion

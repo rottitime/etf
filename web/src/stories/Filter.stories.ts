@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import setupFilters from '../components/filters'
-import setupAccordions from '../components/accordion'
+import setupFiltersAccordion from '../components/filters-accordion'
 
 import { slugify } from '../components/utils'
 
@@ -23,7 +23,7 @@ const meta = {
     async () => {
       return setTimeout(() => {
         Promise.resolve(setupFilters())
-        Promise.resolve(setupAccordions())
+        Promise.resolve(setupFiltersAccordion())
       })
     }
   ],

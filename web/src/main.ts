@@ -27,7 +27,7 @@ import './style/pages.css'
 import './style/components/progress-bar-horizontal.css'
 import './style/components/progress-bar-horizontal-wide.css'
 import './style/utilities.css'
-import accordion from './components/accordion'
+import setupFiltersAccordion from './components/filters-accordion'
 import setupCard from './components/card'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
@@ -62,7 +62,7 @@ const hasDevScripts = (): boolean =>
 window.addEventListener('load', () => {
   //check: dev mode has already been set then do not run prod files
   if (hasDevScripts()) return
-  accordion()
+  setupFiltersAccordion()
   setupCard()
   setupFilters()
   setupSmoothScroll()
