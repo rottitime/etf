@@ -74,6 +74,7 @@ def simple_page_view(request, evaluation_id, page_data):
     title = page_data["title"]
     page_statuses = evaluation["page_statuses"]
     form_data = {
+        "evaluation_title": evaluation["title"],
         "title": title,
         "prev_url": prev_url,
         "next_url": next_url,
@@ -151,6 +152,7 @@ def evaluation_view(request, evaluation_id, page_name, title):
             "evaluation_id": evaluation_id,
             "page_statuses": page_statuses,
             "object_name": page_name,
+            "evaluation_title": evaluation["title"],
         },
     )
 
@@ -212,6 +214,7 @@ def make_summary_related_object_context(evaluation, model_name, form_data):
     data["object_name_plural"] = object_name_plural
     data["object_summary_page_name"] = summary_page_name
     return {
+        "evaluation_title": evaluation["title"],
         "title": title,
         "errors": errors,
         "data": data,
@@ -264,6 +267,7 @@ def make_related_object_context(evaluation_id, title, object_name, url_names, dr
     page_statuses = evaluation["page_statuses"]
     url_names = get_related_object_page_url_names(url_names["summary_page"], get_page_options(evaluation))
     return {
+        "evaluation_title": evaluation["title"],
         "title": title,
         "next_url": next_url,
         "prev_url": prev_url,
