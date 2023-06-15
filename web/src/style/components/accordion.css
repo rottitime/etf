@@ -1,2 +1,8 @@
 :is(idotai-accordion, [is='idotai-accordion']) {
+  & .accordion-title[role='button'] {
+    cursor: pointer;
+    &[aria-expanded='false'] + .accordion-panel {
+      display: none;
+    }
+  }
 }
