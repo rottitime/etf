@@ -36,6 +36,7 @@ class Accordion extends HTMLDivElement {
         String(button.getAttribute('aria-expanded') === 'true' || false)
       )
       button.setAttribute('aria-controls', this.sectionId + `-${i}`)
+      button.appendChild(this.createIcon())
 
       //event to toggle aria-expanded
       button.addEventListener('click', () => {
@@ -56,6 +57,14 @@ class Accordion extends HTMLDivElement {
     }
   }
 
+  private createIcon() {
+    const icon = document.createElement('gov-icon')
+    icon.setAttribute('key', 'chevron-down')
+    icon.setAttribute('role', 'presentation')
+    icon.setAttribute('aria-hidden', 'true')
+    return icon
+  }
+
   private createShowAll() {
     const button = document.createElement('button')
     button.setAttribute('type', 'button')
@@ -72,6 +81,8 @@ class Accordion extends HTMLDivElement {
         btn.setAttribute('aria-expanded', String(!expanded))
       )
     })
+
+    button.appendChild(this.createIcon())
     return button
   }
 
