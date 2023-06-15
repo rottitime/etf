@@ -1,39 +1,58 @@
 :is(idotai-accordion, [is='idotai-accordion']) {
-  .show-all,
+  --active-color: #f3f2f1;
+
+  & .show-all,
   & .accordion-title[role='button'] {
     cursor: pointer;
     border: none;
-    background: none;
-
+    background: var(--color-bg-white);
     border-bottom: 1px solid var(--input-stroke-light);
+  }
+
+  & .accordion-title[role='button'] {
     display: flex;
     justify-content: space-between;
-    padding: var(--spacing-16) 0;
+    align-items: center;
+    padding: var(--spacing-16);
+    &:hover {
+      background-color: var(--active-color);
+    }
 
     & :is(h1, h2, h3, h4, h5, h6) {
       margin: 0;
-      font-size: inherit;
+    }
+
+    &[aria-expanded='true'] {
+      background-color: var(--active-color);
     }
   }
 
   & .show-all {
     width: 100%;
+    text-align: right;
+    padding: var(--spacing-8) 0;
+    display: block;
   }
 
   & .accordion-panel {
-    padding: var(--spacing-16) 0;
+    padding: var(--spacing-16);
   }
 
   & gov-icon {
-    transition: transform ease-in-out var(--animation-speed);
-    color: var(--color-grey-light);
-    transform: rotate(180deg);
-    display: inline-block;
+    display: content;
+    & svg {
+      transition: transform ease-in-out var(--animation-speed);
+      color: var(--color-grey-light);
+      transform: rotate(180deg);
+      display: inline-block;
+      font-size: 14px;
+      color: var(--color-blue);
+    }
   }
 
   /* on hide */
   & [aria-expanded='false'] {
-    & gov-icon {
+    & gov-icon svg {
       transform: rotate(0deg);
     }
     & + .accordion-panel {

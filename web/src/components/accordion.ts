@@ -59,7 +59,7 @@ class Accordion extends HTMLDivElement {
 
   private createIcon() {
     const icon = document.createElement('gov-icon')
-    icon.setAttribute('key', 'chevron-down')
+    icon.setAttribute('key', 'arrow-down')
     icon.setAttribute('role', 'presentation')
     icon.setAttribute('aria-hidden', 'true')
     return icon
