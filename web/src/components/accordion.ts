@@ -53,7 +53,7 @@ class Accordion extends HTMLDivElement {
     const showAll = this.querySelector<HTMLButtonElement>('.show-all')
     if (showAll) {
       showAll.setAttribute('aria-expanded', String(open))
-      showAll.innerText = open ? showAllText[1] : showAllText[0]
+      showAll.childNodes[0].nodeValue = open ? showAllText[1] : showAllText[0]
     }
   }
 
@@ -68,9 +68,10 @@ class Accordion extends HTMLDivElement {
   private createShowAll() {
     const button = document.createElement('button')
     button.setAttribute('type', 'button')
-    button.setAttribute('class', 'show-all')
+    button.setAttribute('class', 'show-all txt-link small')
     button.setAttribute('aria-expanded', 'false')
     button.innerText = showAllText[0]
+    // button.appendChild(this.createIcon())
 
     button.addEventListener('click', () => {
       const expanded = button.getAttribute('aria-expanded') === 'true' || false
@@ -82,7 +83,6 @@ class Accordion extends HTMLDivElement {
       )
     })
 
-    button.appendChild(this.createIcon())
     return button
   }
 

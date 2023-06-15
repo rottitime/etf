@@ -1,7 +1,42 @@
 :is(idotai-accordion, [is='idotai-accordion']) {
+  .show-all,
   & .accordion-title[role='button'] {
     cursor: pointer;
-    &[aria-expanded='false'] + .accordion-panel {
+    border: none;
+    background: none;
+
+    border-bottom: 1px solid var(--input-stroke-light);
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-16) 0;
+
+    & :is(h1, h2, h3, h4, h5, h6) {
+      margin: 0;
+      font-size: inherit;
+    }
+  }
+
+  & .show-all {
+    width: 100%;
+  }
+
+  & .accordion-panel {
+    padding: var(--spacing-16) 0;
+  }
+
+  & gov-icon {
+    transition: transform ease-in-out var(--animation-speed);
+    color: var(--color-grey-light);
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+
+  /* on hide */
+  & [aria-expanded='false'] {
+    & gov-icon {
+      transform: rotate(0deg);
+    }
+    & + .accordion-panel {
       display: none;
     }
   }
