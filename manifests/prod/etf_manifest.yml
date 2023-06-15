@@ -4,7 +4,7 @@ applications:
   services:
     - etf-postgres
   routes:
-  - route: etf.london.cloudapps.digital
+  - route: evaluation-registry.service.gov.uk
     protocol: http1
   disk_quota: 4092M
   memory: 1024M
