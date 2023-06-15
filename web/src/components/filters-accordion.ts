@@ -1,0 +1,70 @@
+const setupFiltersAccordion = () => {
+  const accordionItems = document.querySelectorAll('.accordion li')
+
+  //remove all active classname
+  const removeAllActive = (el: Element) => {
+    el.parentNode
+      ?.querySelectorAll('[aria-selected]')
+      .forEach((active) => active.removeAttribute('aria-selected'))
+  }
+
+  //icons
+  document
+    .querySelectorAll('.accordion li > h3 button')
+    .forEach((button) =>
+      button.insertAdjacentHTML('beforeend', '<gov-icon key="arrow-down"></gov-icon>')
+    )
+
+  //create wrapper
+  document.querySelectorAll('.accordion-content').forEach((content) => {
+    const id = `wrapper-${crypto.randomUUID()}`
+    const buttonid = `button-${crypto.randomUUID()}`
+    const wrapper = document.createElement('div')
+    const parent = content.parentNode
+    const parentButton = parent?.querySelector('button')
+
+    wrapper.classList.add('accordion-content-wrapper')
+    wrapper.setAttribute('id', id)
+    wrapper.setAttribute('role', 'region')
+    wrapper.setAttribute('aria-labelledby', buttonid)
+
+    wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
+    parent?.insertBefore(wrapper, content)
+    parentButton?.setAttribute('aria-controls', id)
+    parentButton?.setAttribute('id', buttonid)
+    parentButton?.setAttribute(
+      'aria-expanded',
+      new Boolean(parentButton?.hasAttribute('aria-selected')).toString()
+    )
+
+    wrapper.appendChild(content)
+  })
+
+  //click behaviour
+  accordionItems.forEach((accordion) => {
+    const button = accordion.querySelector('button')
+    const wrapper = accordion.querySelector(
+      '.accordion-content-wrapper'
+    ) as HTMLDivElement
+    const content = wrapper?.querySelector('.accordion-content')
+
+    button?.addEventListener('click', () => {
+      const parent = button.parentNode as Element
+
+      if (parent?.hasAttribute('aria-selected')) {
+        const height = content?.clientHeight
+        wrapper?.setAttribute('style', `height:${height}px`)
+        removeAllActive(accordion)
+        button.setAttribute('aria-expanded', 'false')
+      } else {
+        removeAllActive(accordion)
+        parent.setAttribute('aria-selected', 'true')
+        const height = content?.clientHeight
+        wrapper?.setAttribute('style', `max-height:${height}px`)
+        button.setAttribute('aria-expanded', 'true')
+      }
+    })
+  })
+}
+
+export default setupFiltersAccordion

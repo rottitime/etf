@@ -1,70 +1,36 @@
-const setupAccordions = () => {
-  const accordionItems = document.querySelectorAll('.accordion li')
-
-  //remove all active classname
-  const removeAllActive = (el: Element) => {
-    el.parentNode
-      ?.querySelectorAll('[aria-selected]')
-      .forEach((active) => active.removeAttribute('aria-selected'))
+class Accordion extends HTMLDivElement {
+  constructor() {
+    super()
   }
 
-  //icons
-  document
-    .querySelectorAll('.accordion li > h3 button')
-    .forEach((button) =>
-      button.insertAdjacentHTML('beforeend', '<gov-icon key="arrow-down"></gov-icon>')
-    )
+  connectedCallback() {
+    setTimeout(() => this.setup())
+  }
 
-  //create wrapper
-  document.querySelectorAll('.accordion-content').forEach((content) => {
-    const id = `wrapper-${crypto.randomUUID()}`
-    const buttonid = `button-${crypto.randomUUID()}`
-    const wrapper = document.createElement('div')
-    const parent = content.parentNode
-    const parentButton = parent?.querySelector('button')
-
-    wrapper.classList.add('accordion-content-wrapper')
-    wrapper.setAttribute('id', id)
-    wrapper.setAttribute('role', 'region')
-    wrapper.setAttribute('aria-labelledby', buttonid)
-
-    wrapper?.addEventListener('transitionend', () => wrapper.setAttribute('style', ''))
-    parent?.insertBefore(wrapper, content)
-    parentButton?.setAttribute('aria-controls', id)
-    parentButton?.setAttribute('id', buttonid)
-    parentButton?.setAttribute(
-      'aria-expanded',
-      new Boolean(parentButton?.hasAttribute('aria-selected')).toString()
-    )
-
-    wrapper.appendChild(content)
-  })
-
-  //click behaviour
-  accordionItems.forEach((accordion) => {
-    const button = accordion.querySelector('button')
-    const wrapper = accordion.querySelector(
-      '.accordion-content-wrapper'
-    ) as HTMLDivElement
-    const content = wrapper?.querySelector('.accordion-content')
-
-    button?.addEventListener('click', () => {
-      const parent = button.parentNode as Element
-
-      if (parent?.hasAttribute('aria-selected')) {
-        const height = content?.clientHeight
-        wrapper?.setAttribute('style', `height:${height}px`)
-        removeAllActive(accordion)
-        button.setAttribute('aria-expanded', 'false')
-      } else {
-        removeAllActive(accordion)
-        parent.setAttribute('aria-selected', 'true')
-        const height = content?.clientHeight
-        wrapper?.setAttribute('style', `max-height:${height}px`)
-        button.setAttribute('aria-expanded', 'true')
-      }
+  private setupButtons() {
+    this.querySelectorAll('.accordion-title').forEach((button) => {
+      button.setAttribute('role', 'button')
     })
-  })
+  }
+
+  private createShowAll() {
+    const button = document.createElement('button')
+    button.setAttribute('type', 'button')
+    button.setAttribute('class', 'show-all')
+    button.setAttribute('aria-expanded', 'false')
+    button.innerText = 'Show all sections'
+    return button
+  }
+
+  private setup() {
+    this.setupButtons()
+    const showAll = this.createShowAll()
+
+    this.prepend(showAll)
+  }
 }
 
-export default setupAccordions
+const setupAccordion = () =>
+  customElements.define('idotai-accordion', Accordion, { extends: 'div' })
+
+export default setupAccordion

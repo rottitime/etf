@@ -11,6 +11,7 @@ import './style/forms/radio.css'
 import './style/forms/select.css'
 import './style/forms/multiselect.css'
 import './style/components/index.css'
+import './style/components/accordion.css'
 import './style/components/alert.css'
 import './style/components/buttons.css'
 import './style/components/breadcrumb.css'
@@ -21,13 +22,14 @@ import './style/components/hintbox.css'
 import './style/components/menu-list.css'
 import './style/components/phase-banner.css'
 import './style/components/progress-list.css'
-import './style/components/accordion.css'
+import './style/components/filters-accordion.css'
 import './style/components/circular-progress-bar.css'
 import './style/pages.css'
 import './style/components/progress-bar-horizontal.css'
 import './style/components/progress-bar-horizontal-wide.css'
 import './style/utilities.css'
-import accordion from './components/accordion'
+import setupFiltersAccordion from './components/filters-accordion'
+import setupAccordion from './components/accordion'
 import setupCard from './components/card'
 import icon from './components/icon'
 import setupSelect from './components/dropdown'
@@ -56,13 +58,14 @@ const hasDevScripts = (): boolean =>
   setupHintbox()
   setupSelect()
   setupMultiselect()
+  setupAccordion()
 })()
 
 //low priority scripts
 window.addEventListener('load', () => {
   //check: dev mode has already been set then do not run prod files
   if (hasDevScripts()) return
-  accordion()
+  setupFiltersAccordion()
   setupCard()
   setupFilters()
   setupSmoothScroll()
