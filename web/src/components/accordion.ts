@@ -1,3 +1,5 @@
+const showAllText = ['Show all sections', 'Hide all sections']
+
 class Accordion extends HTMLDivElement {
   buttonId: string
   sectionId: string
@@ -22,6 +24,9 @@ class Accordion extends HTMLDivElement {
     })
   }
 
+  private isAllOpen = () =>
+    this.querySelectorAll('.accordion-title[aria-expanded="false"]').length === 0
+
   private setupButtons() {
     this.querySelectorAll('.accordion-title').forEach((button, i) => {
       button.setAttribute('role', 'button')
@@ -34,10 +39,21 @@ class Accordion extends HTMLDivElement {
 
       //event to toggle aria-expanded
       button.addEventListener('click', () => {
-        const expanded = button.getAttribute('aria-expanded') === 'true' || false
-        button.setAttribute('aria-expanded', String(!expanded))
+        button.setAttribute(
+          'aria-expanded',
+          String(!(button.getAttribute('aria-expanded') === 'true' || false))
+        )
+        this.isAllOpen() && this.setShowAllState(true)
       })
     })
+  }
+
+  private setShowAllState(open: boolean) {
+    const showAll = this.querySelector<HTMLButtonElement>('.show-all')
+    if (showAll) {
+      showAll.setAttribute('aria-expanded', String(open))
+      showAll.innerText = open ? showAllText[1] : showAllText[0]
+    }
   }
 
   private createShowAll() {
@@ -45,7 +61,17 @@ class Accordion extends HTMLDivElement {
     button.setAttribute('type', 'button')
     button.setAttribute('class', 'show-all')
     button.setAttribute('aria-expanded', 'false')
-    button.innerText = 'Show all sections'
+    button.innerText = showAllText[0]
+
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true' || false
+
+      this.setShowAllState(!expanded)
+
+      this.querySelectorAll('.accordion-title').forEach((btn) =>
+        btn.setAttribute('aria-expanded', String(!expanded))
+      )
+    })
     return button
   }
 
