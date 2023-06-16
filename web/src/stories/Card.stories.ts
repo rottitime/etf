@@ -9,7 +9,7 @@ const meta = {
   tags: ['autodocs'],
   render: (p) => createCard(p).outerHTML,
   argTypes: {
-    title: { control: 'text', name: 'title', description: 'Title for the card'  },
+    title: { control: 'text', description: 'title for the card'  },
     content: { control: 'text',name: 'content', description: ' card content'   },
     actions: { control: 'boolean', table: { disable: true } },
     small: { control: 'boolean' },

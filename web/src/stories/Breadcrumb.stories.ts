@@ -13,7 +13,7 @@ const links = [
 ]
 
 /**
- * The breadcrumbs component helps users to understand where they are within a website’s structure and move between levels of the within a navigational hierarchy..
+ * The breadcrumbs component helps users to understand where they are within a website’s structure and move between levels of the within a navigational hierarchy.
  */
 const meta = {
   title: 'Components/Breadcrumb',

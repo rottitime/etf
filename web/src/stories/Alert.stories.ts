@@ -22,7 +22,7 @@ const meta = {
     `<div class="alert ${status?.toLowerCase()}">${text}</div>`,
   argTypes: {
     
-    text: { control: 'text', name: 'Alert', description: 'These alerts are typically color-coded to signify whether it is an error warning or success message.' }
+    text: { control: 'text', name: 'alert', description: 'These alerts are typically color-coded to signify whether it is an error warning or success message.' }
     ,status: {
       control: { type: 'select' },
       options: Object.values(Status).filter((v) => isNaN(Number(v)))
