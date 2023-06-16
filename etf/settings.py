@@ -26,6 +26,7 @@ FEEDBACK_EMAIL = env.str("FEEDBACK_EMAIL", default="test@example.com")
 VCAP_APPLICATION = env.json("VCAP_APPLICATION", default={})
 
 BASE_URL = env.str("BASE_URL")
+BASIC_AUTH = env.str("BASIC_AUTH", default="")
 
 APPEND_SLASH = True
 
@@ -87,6 +88,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
+
+if BASIC_AUTH:
+    MIDDLEWARE = ["etf.auth.basic_auth_middleware"] + MIDDLEWARE
 
 if VCAP_APPLICATION.get("space_name", "unknown") not in ["tests", "local"]:
     SESSION_COOKIE_SECURE = True
