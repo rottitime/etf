@@ -149,7 +149,6 @@ def test_user_schema():
     assert error_message == "This should be a valid Civil Service email", error_message
 
 
-
 def test_make_choice_field():
     schema = MadeUpSchema()
     deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "", "choice_field_two": "YES"})
@@ -160,11 +159,9 @@ def test_make_choice_field():
         deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "NO", "choice_field_two": ""})
     except ValidationError as e:
         error_message = e.messages["choice_field_two"][0]
-        assert 'Must be one of: YES, NO.' in error_message, error_message
+        assert "Must be one of: YES, NO." in error_message, error_message
     try:
         deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "bob", "choice_field_two": "NO"})
     except ValidationError as e:
         error_message = e.messages["choice_field_one"][0]
-        print(error_message)
-        assert 'Must be one of: YES, NO.' in error_message, error_message
-
+        assert "Must be one of: YES, NO." in error_message, error_message
