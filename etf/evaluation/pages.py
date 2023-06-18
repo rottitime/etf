@@ -14,7 +14,7 @@ page_display_names = {
     "intro": "Intro",
     "title": "Title",
     "options": "Optional information",
-    "description": "Description",
+    "description": "Description and organisations",
     "issue-description": "Issue description",
     "studied-population": "Studied population",
     "participant-recruitment": "Participant recruitment",
