@@ -5,7 +5,7 @@
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
       <p>
-      An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption. The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.
+      An issue description makes it clear what questions the evaluation aims to answer and why they are important. Without a good description, it is easy for the issue to remain an implict and unstated assumption.
       </p>
 
       {{macros.textarea("issue_description", "Issue description")}}
