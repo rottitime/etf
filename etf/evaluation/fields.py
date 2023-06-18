@@ -7,7 +7,6 @@ create_help_text = defaultdict(
     str,
     {
         "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
-        "short_title": "A short/abbreviated title for the evaluation, especially if the full title is long.",
     },
 )
 
@@ -241,9 +240,7 @@ studied_population_help_text = defaultdict(
 title_help_text = defaultdict(
     str,
     {
-        "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
-        "short_title": "A short/abbreviated title for the evaluation, especially if the full title is long.",
-    },
+        "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS)."},
 )
 
 

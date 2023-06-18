@@ -218,7 +218,6 @@ def make_evaluation():
     evaluation_type = generate_evaluation_types()
     data = dict(
         title=fake.text(256),
-        short_title=fake.text(64),
         brief_description=fake.text(),
         topics=topics,
         organisations=organisations,

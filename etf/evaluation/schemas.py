@@ -103,7 +103,6 @@ class EvaluationSchema(TimeStampedModelSchema):
     users = fields.Function(lambda e: UserSchema(many=True).dump(e.users.all()))
     id = fields.UUID()
     title = SingleLineStr(required=True, validate=validate.Length(max=1024))
-    short_title = SingleLineStr(validate=validate.Length(max=128))
     brief_description = fields.Str()
     topics = make_multi_choice_field(max_len=64, values=choices.Topic.values)
     organisations = fields.Raw()

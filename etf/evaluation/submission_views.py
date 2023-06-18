@@ -41,11 +41,10 @@ def make_evaluation_url(evaluation_id, page_name):
 def create_evaluation(request):
     if request.method == "POST":
         title = request.POST.get("title")
-        short_title = request.POST.get("short_title")
         user = request.user
         evaluation_data = interface.facade.evaluation.create(user_id=user.id)
         evaluation_data = interface.facade.evaluation.update(
-            user_id=user.id, evaluation_id=evaluation_data["id"], data={"title": title, "short_title": short_title}
+            user_id=user.id, evaluation_id=evaluation_data["id"], data={"title": title}
         )
         evaluation_id = evaluation_data["id"]
         return redirect(

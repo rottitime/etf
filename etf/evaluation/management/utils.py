@@ -14,7 +14,6 @@ INFO_NOT_IDENTIFIED = "Information not identified within the report"
 
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "title": "evaluation_information_evaluation_title",
-    "short_title": "evaluation_information_short_title_for_evaluation",
     "brief_description": "evaluation_information_evaluation_summary",  # TODO - many of these?
     # "issue_description":
     # "those_experiencing_issue":
