@@ -475,13 +475,13 @@ def complete_verify_simple_page(page, title, fields, evaluation_id):
 
 def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields):
     assert page.status_code == 200, page.status_code
-    # TODO: Fix this, all titles are on all pages
     assert page.has_text(title)
     assert page.has_text("Next")
     add_item_form = page.get_form("""form:not([action])""")
     object_added_to_records_page = add_item_form.submit().follow()
-    assert object_added_to_records_page.has_text(new_item_name)
-    editing_new_object_page = object_added_to_records_page.click(contains=new_item_name)
+    summary_page = object_added_to_records_page.click(contains="Cancel")
+    assert summary_page.has_text(new_item_name), new_item_name
+    editing_new_object_page = summary_page.click(contains=new_item_name)
     adding_new_item_form = editing_new_object_page.get_form("""form:not([action])""")
     for field in fields:
         adding_new_item_form[field] = fields[field]
