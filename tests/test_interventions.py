@@ -26,4 +26,5 @@ def test_intervention():
     page = form.submit().follow()
 
     assert page.status_code == 200, page.status_code
-    assert page.url.endswith("/interventions/")
+    assert "/interventions/" in page.url, page.url
+    assert not page.url.endswith("/interventions/"), page.url
