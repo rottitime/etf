@@ -552,9 +552,8 @@ issue_description_guidance_text = defaultdict(
     list,
     {
         "issue_description": [
-            "The problem, circumstance or situation that it is intended that an intervention should respond to.",
-            "When studying interventions to attend to particular problems this should be presented as undesirable aspects of a situation that it is hoped can be improved if an effective intervention can be identified.",
-            "When studying an intervention that is untested but assumed to have a positive influence on aspects of a situation this should be presented as the aspects that it is thought that the intervention may be improving.",
+            "When studying interventions aimed at addressing a specific problem, you need to record the negative aspects of the situation that an effective intervention would improve.",
+            "When studying an intervention that is untested but it is assumed that it would have a positive influence on one aspect of a situation you should record that aspect.",
         ],
         "why_improvements_matter": [
             "It is helpful to check that the identified issue is important and document why it is.",
