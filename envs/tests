@@ -17,3 +17,4 @@ SEND_VERIFICATION_EMAIL = False
 CONTACT_EMAIL="test@example.com"
 FROM_EMAIL="test@example.com"
 VCAP_APPLICATION='{"space_name": "tests"}'
+BASIC_AUTH='mr-flibble:flim-flam-flooble'
