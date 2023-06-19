@@ -31,17 +31,6 @@ const meta = {
     </p>
     </div>
  </div>`,
- title: 'Components/Phase Banner',
-  tags: ['autodocs'],
-  render: ({ tag, text }) =>
-    `<div class="phase-banner">
-    <div class="container">            
-     <p>
-       <strong class="tag">${tag}</strong>
-       <span>${text}</span>
-    </p>
-    </div>
- </div>`,
 
   argTypes: {
     tag: {
