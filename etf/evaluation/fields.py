@@ -137,7 +137,7 @@ intervention_help_text = defaultdict(
         "location": "Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features.",
         "frequency_of_delivery": "Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.",
         "tailoring": "If the intervention will be personalised or adapted for different participants, description of what, why, when and how.",
-        "fidelity": "Describe any strategies used to maintain the extent to which implementation is as-planned, including efforts to improve consistency.",
+        "fidelity": "Describe how closely the implementation of the intervention matches the implementation plan, including efforts to improve consistency.",
         "resource_requirements": "Describe extra resources added to (or resources removed from) usual settings in order to implement intervention.",
         "geographical_information": "In which actual locations (eg, towns, cities, or regions) will the intervention take place during the evaluation?",
     },
