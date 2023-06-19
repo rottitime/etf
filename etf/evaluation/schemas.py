@@ -53,8 +53,23 @@ class SingleLineStr(fields.Str):
         return super()._deserialize(value, attr, data, **kwargs)
 
 
-def make_choice_field(max_len, values, **kwargs):
-    field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
+def validate_choice_and_length_or_none(values):
+    def validator(value):
+        if value != "" and not validate.OneOf(values):
+            raise ValidationError(f"Value needs to be in {values} or None")
+
+    return validator
+
+
+def make_choice_field(max_len, values, allow_none=False, **kwargs):
+    if allow_none:
+        field = SingleLineStr(
+            validate=validate.And(validate.Length(max=max_len), validate_choice_and_length_or_none(values)),
+            allow_none=True,
+            **kwargs,
+        )
+    else:
+        field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
     return field
 
 
@@ -100,9 +115,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     page_statuses = fields.Raw()
 
     # Options
-    issue_description_option = make_choice_field(max_len=3, values=choices.YesNo.values)
-    ethics_option = make_choice_field(max_len=3, values=choices.YesNo.values)
-    grants_option = make_choice_field(max_len=3, values=choices.YesNo.values)
+    issue_description_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
+    ethics_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
+    grants_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
 
     # Issue description
     issue_description = fields.Str()
@@ -139,7 +154,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     recruitment_schedule = fields.Str()
 
     # Ethical considerations
-    ethics_committee_approval = make_choice_field(max_len=3, values=choices.YesNo.values)
+    ethics_committee_approval = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
     risks_to_participants = fields.Str()
@@ -180,7 +195,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_sensitivity_analysis = fields.Str()
     impact_subgroup_analysis = fields.Str()
     impact_missing_data_handling = fields.Str()
-    impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
+    impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values, allow_none=True)
     impact_description_planned_analysis = fields.Str()
 
     # Process evaluation aspects
