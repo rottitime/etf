@@ -6,7 +6,6 @@
     <form method="POST" id="create-evaluation">{{csrf_input}}
       <h1 class="highlight header3">{{title}}</h1>    
         {{macros.input(name="title", label="Evaluation title", required=true)}}
-        {{macros.input(name="short_title", label="Short title for evaluation")}}
       <footer class="actions">
         <a href="{{ url('index') }}" class="bttn-quaternary small">Cancel</a>
         <button class="bttn-primary" type="submit">Add evaluation</button>
