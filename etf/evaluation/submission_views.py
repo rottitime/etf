@@ -335,7 +335,7 @@ def evaluation_title_view(request, evaluation_id):
 
 def evaluation_description_view(request, evaluation_id):
     page_data = {
-        "title": "Description",
+        "title": "Description and organisations",
         "page_name": "description",
     }
     return evaluation_view(request, evaluation_id=evaluation_id, **page_data)
