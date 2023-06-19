@@ -240,7 +240,7 @@ studied_population_help_text = defaultdict(
 title_help_text = defaultdict(
     str,
     {
-        "title": "A full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS)."
+        "title": "A full, descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
     },
 )
 
