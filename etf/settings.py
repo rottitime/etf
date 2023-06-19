@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     "etf-sandbox.london.cloudapps.digital",
     "etf-staging.london.cloudapps.digital",
     "etf-testing.london.cloudapps.digital",
+    "evaluation-registry.service.gov.uk",
     "etf.london.cloudapps.digital",
     "localhost",
     "127.0.0.1",
