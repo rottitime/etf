@@ -1,5 +1,10 @@
+type MultiValue = {
+  value: string
+  text: string
+}
+
 class MultiSelect extends HTMLDivElement {
-  multiValues: string[] = []
+  multiValues: MultiValue[] = []
 
   constructor() {
     super()
@@ -9,16 +14,16 @@ class MultiSelect extends HTMLDivElement {
     setTimeout(() => this.setup())
   }
 
-  private createTag(value: string) {
+  private createTag(option: MultiValue) {
     const tag = document.createElement('div')
     tag.classList.add('chip')
-    tag.innerHTML = value
+    tag.innerHTML = option.text
 
     const icon = document.createElement('gov-icon')
     icon.classList.add('close')
     icon.setAttribute('key', 'cross')
     icon.setAttribute('role', 'button')
-    icon.addEventListener('click', () => this.multiRemove(value), true)
+    icon.addEventListener('click', () => this.multiRemove(option), true)
     tag.appendChild(icon)
     return tag
   }
@@ -45,7 +50,7 @@ class MultiSelect extends HTMLDivElement {
     multiselect.prepend(button)
 
     options.forEach((option) => {
-      if (option.selected) this.multiAdd(option.value)
+      if (option.selected) this.multiAdd({ value: option.value, text: option.innerText })
       multiselect.appendChild(option.cloneNode(true))
     })
 
@@ -55,11 +60,12 @@ class MultiSelect extends HTMLDivElement {
     multiselect.appendChild(selectedValue)
 
     multiselect.addEventListener('click', (e) => {
-      const option = (e.target as HTMLElement)?.closest('option')
+      const option = (e.target as HTMLOptionElement)?.closest('option')
       if (!option) return
 
-      const newValue: string = option.value
-      this.multiValues.includes(newValue)
+      const newValue = { value: option.value, text: option.text }
+
+      this.multiValues.find(({ value }) => value === newValue.value)
         ? this.multiRemove(newValue)
         : this.multiAdd(newValue)
     })
@@ -67,14 +73,14 @@ class MultiSelect extends HTMLDivElement {
     return multiselect
   }
 
-  private multiAdd(value: string) {
+  private multiAdd(value: MultiValue) {
     this.multiValues.push(value)
     this.multiRefreshSelectedValues()
     this.multiRefreshOptions()
   }
 
-  private multiRemove(toRemove: string) {
-    this.multiValues = this.multiValues.filter((value) => value !== toRemove)
+  private multiRemove(toRemove: MultiValue) {
+    this.multiValues = this.multiValues.filter(({ value }) => value !== toRemove.value)
 
     this.multiRefreshSelectedValues()
     this.multiRefreshOptions()
@@ -87,8 +93,8 @@ class MultiSelect extends HTMLDivElement {
     if (selectedValues) {
       selectedValues.innerHTML = ''
       // For each selected value, create a tag and append it to the container
-      this.multiValues.forEach((value) =>
-        selectedValues.appendChild(this.createTag(value))
+      this.multiValues.forEach((option) =>
+        selectedValues.appendChild(this.createTag(option))
       )
     }
   }
@@ -98,7 +104,7 @@ class MultiSelect extends HTMLDivElement {
     const options = (multiselect && multiselect.querySelectorAll('option')) || []
     const optionsHidden = this.querySelector('select')?.querySelectorAll('option') || []
     options.forEach((option, index) => {
-      if (this.multiValues.includes(option.value)) {
+      if (this.multiValues.find(({ value }) => value === option.value)) {
         option.setAttribute('selected', '')
         optionsHidden[index].setAttribute('selected', '')
       } else {
