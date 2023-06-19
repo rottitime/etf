@@ -162,7 +162,8 @@ def add_related_object_for_evaluation(evaluation_id, model_name, redirect_url_na
     if object_name:
         new_object.set_name(f"New {object_name}")
     new_object.save()
-    response = redirect(reverse(redirect_url_name, args=(evaluation_id,)))
+    new_object_id = new_object.id
+    response = redirect(reverse(redirect_url_name, args=(evaluation_id, new_object_id)))
 
     return response
 
@@ -233,6 +234,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
     evaluation = interface.facade.evaluation.get(evaluation_id)
     object_name = form_data["object_name"]
     summary_page_name = form_data["summary_page_name"]
+    page_url_name = form_data["page_url_name"]
 
     if request.GET.get("completed"):
         completed_page_name = request.GET.get("completed")
@@ -245,7 +247,7 @@ def summary_related_object_page_view(request, evaluation_id, model_name, form_da
         return add_related_object_for_evaluation(
             evaluation_id=evaluation_id,
             model_name=model_name,
-            redirect_url_name=summary_page_name,
+            redirect_url_name=page_url_name,
             object_name=object_name,
         )
     else:
@@ -560,6 +562,7 @@ def summary_outcome_measure_page_view(request, evaluation_id):
         "title": "Outcome measures",
         "template_name": "submissions/outcome-measures.html",
         "summary_page_name": "outcome-measures",
+        "page_url_name": "outcome-measure-page",
         "object_name": "outcome measure",
         "object_name_plural": "outcome measures",
     }
@@ -593,6 +596,7 @@ def summary_other_measure_page_view(request, evaluation_id):
         "title": "Other measures",
         "template_name": "submissions/other-measures.html",
         "summary_page_name": "other-measures",
+        "page_url_name": "other-measure-page",
         "object_name": "other measure",
         "object_name_plural": "other measures",
     }
@@ -626,6 +630,7 @@ def summary_processes_standards_page_view(request, evaluation_id):
         "title": "Processes and standards",
         "template_name": "submissions/processes-standards.html",
         "summary_page_name": "processes-standards",
+        "page_url_name": "processes-standard-page",
         "object_name": "process or standard",
         "object_name_plural": "processes and standards",
     }
@@ -659,6 +664,7 @@ def summary_grants_page_view(request, evaluation_id):
         "title": "Grants",
         "template_name": "submissions/grants.html",
         "summary_page_name": "grants",
+        "page_url_name": "grant-page",
         "object_name": "grant",
         "object_name_plural": "grants",
     }
@@ -692,6 +698,7 @@ def summary_evaluation_costs_page_view(request, evaluation_id):
         "title": "Evaluation costs and budget",
         "template_name": "submissions/evaluation-costs.html",
         "summary_page_name": "evaluation-costs",
+        "page_url_name": "evaluation-cost-page",
         "object_name": "evaluation cost",
         "object_name_plural": "evaluation costs",
     }
@@ -781,6 +788,7 @@ def summary_documents_page_view(request, evaluation_id):
         "title": "Documents",
         "template_name": "submissions/documents.html",
         "summary_page_name": "documents",
+        "page_url_name": "document-page",
         "object_name": "document",
         "object_name_plural": "documents",
     }
@@ -814,6 +822,7 @@ def summary_links_page_view(request, evaluation_id):
         "title": "Links to other services",
         "template_name": "submissions/links.html",
         "summary_page_name": "links",
+        "page_url_name": "link-page",
         "object_name": "link",
         "object_name_plural": "links",
     }
@@ -847,6 +856,7 @@ def summary_event_dates_page_view(request, evaluation_id):
         "title": "Event dates",
         "template_name": "submissions/event-dates.html",
         "summary_page_name": "event-dates",
+        "page_url_name": "event-date-page",
         "object_name": "event date",
         "object_name_plural": "event dates",
     }
@@ -880,6 +890,7 @@ def summary_process_evaluation_methods_page_view(request, evaluation_id):
         "title": "Process evaluation design: Methods",
         "template_name": "submissions/process-evaluation-methods.html",
         "summary_page_name": "process-evaluation-methods",
+        "page_url_name": "process-evaluation-method-page",
         "object_name": "process evaluation method",
         "object_name_plural": "process evaluation methods",
     }
