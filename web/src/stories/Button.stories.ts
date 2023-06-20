@@ -26,7 +26,7 @@ const meta = {
     return createButton(args)
   },
   argTypes: {
-    label: { control: 'text'},
+    label: { control: 'text' },
     onClick: {
       action: 'onClick',
       table: {

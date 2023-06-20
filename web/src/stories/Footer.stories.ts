@@ -1,7 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/html'
 
-
-
 type Props = {
   copywright: string
   links: string[]
@@ -13,7 +11,7 @@ const links = [...Array(3).keys()].map((i) => `Link ${i}`)
  * Use the footer at the bottom of every page of your service.
  * 
  * ##How it works
- * Add a copyright notice to the footer to clarify who owns the copyright. For GOV.UK services, add the coat of arms to keep things consistent with the rest of GOV.UK.
+ * Add a copyright notice to the footer to clarify who owns the copyright. Supports logos.
  * ##Adding links
  * You can add links to:
  * - privacy notice
@@ -21,11 +19,6 @@ const links = [...Array(3).keys()].map((i) => `Link ${i}`)
  * - cookies page
  * - terms and conditions
  * - other language options
-
-
-
-
-
 
  * 
 

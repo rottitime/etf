@@ -11,9 +11,7 @@ const meta = {
   title: 'Components/Badge',
   tags: ['autodocs'],
   render: ({ content }) => `<span class="badge">${content}</span>`,
-  argTypes: {
-    content: { control: 'text', name: 'content' }
-  },
+
   parameters: {
     design: {
       type: 'figma',
