@@ -1,5 +1,6 @@
 class Govicon extends HTMLElement {
   newCache?: Cache
+  enableCache = true
 
   constructor() {
     super()
@@ -10,14 +11,18 @@ class Govicon extends HTMLElement {
   }
 
   private async getIcon(icon: string) {
-    const response = await this.newCache?.match(icon)
-    if (response) return response.text()
+    if (this.enableCache) {
+      const response = await this.newCache?.match(icon)
+      if (response) return response.text()
+    }
     const html = (await import(`../svg/${icon}.svg`)).default
 
-    this.newCache?.put(
-      icon,
-      new Response(html, { headers: { 'Content-Type': 'image/svg+xml' } })
-    )
+    if (this.enableCache)
+      this.newCache?.put(
+        icon,
+        new Response(html, { headers: { 'Content-Type': 'image/svg+xml' } })
+      )
+
     return html
   }
 
