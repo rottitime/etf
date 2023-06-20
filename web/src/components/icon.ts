@@ -15,7 +15,7 @@ class Govicon extends HTMLElement {
       const response = await this.newCache?.match(icon)
       if (response) return response.text()
     }
-    const html = (await import(`../svg/${icon}.svg`)).default
+    const html = (await import(`../../public/svg/${icon}.svg`)).default
 
     if (this.enableCache)
       this.newCache?.put(

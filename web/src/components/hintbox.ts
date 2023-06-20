@@ -1,5 +1,3 @@
-import help from '../svg/help.svg'
-
 class HintBox extends HTMLElement {
   constructor() {
     super()
@@ -24,7 +22,8 @@ class HintBox extends HTMLElement {
     toggleBtn.setAttribute('type', 'button')
     toggleBtn.setAttribute('aria-expanded', this.dataset.open || 'false')
     toggleBtn.setAttribute('aria-controls', idContent)
-    toggleBtn.innerHTML = help + (this.getAttribute('aria-label') || 'Hint')
+    toggleBtn.innerHTML =
+      '<gov-icon key="help"></gov-icon>' + (this.getAttribute('aria-label') || 'Hint')
     toggleBtn.addEventListener('click', () => {
       const opened = toggleBtn.getAttribute('aria-expanded') === 'true'
       toggleBtn.setAttribute('aria-expanded', String(!opened))
