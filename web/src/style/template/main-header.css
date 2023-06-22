@@ -20,7 +20,7 @@
     background: #fff;
     height: 100%;
     width: 90%;
-    top: 77px;
+    top: 60px;
     transition: left ease-in-out var(--animation-speed);
 
     @media (--viewport-medium) {
@@ -139,6 +139,10 @@
   &[aria-expanded='true'] {
     & + nav {
       left: 0;
+      & .bttn-primary {
+        display: inline-block;
+        margin: var(--spacing-8);
+      }
     }
 
     & > span {
