@@ -62,7 +62,7 @@ def test_evaluation_permissions(client):
         f"evaluation/{evaluation.id}/evaluation-types/",
         f"evaluation/{evaluation.id}/impact-design/",
         f"evaluation/{evaluation.id}/impact-analysis/",
-        f"evaluation/{evaluation.id}/process-design/",
+        f"evaluation/{evaluation.id}/process-design-aspects/",
         f"evaluation/{evaluation.id}/process-analysis/",
         f"evaluation/{evaluation.id}/economic-design/",
         f"evaluation/{evaluation.id}/economic-analysis/",
@@ -74,7 +74,7 @@ def test_evaluation_permissions(client):
         f"evaluation/{evaluation.id}/process-findings/",
         f"evaluation/{evaluation.id}/other-findings/",
         f"evaluation/{evaluation.id}/metadata/",
-        f"evaluation/{evaluation.id}/status/",
+        f"evaluation/{evaluation.id}/visibility/",
         f"evaluation/{evaluation.id}/end/",
     )
 
@@ -92,26 +92,26 @@ def setup_evaluations():
     interface.facade.evaluation.update(
         user_id=internal_user.id,
         evaluation_id=public_evaluation["id"],
-        data={"title": "Public", "status": choices.EvaluationStatus.PUBLIC.value},
+        data={"title": "Public", "visibility": choices.EvaluationVisibility.PUBLIC.value},
     )
     civil_service_evaluation = interface.facade.evaluation.create(user_id=internal_user.id)
     interface.facade.evaluation.update(
         user_id=internal_user.id,
         evaluation_id=civil_service_evaluation["id"],
-        data={"title": "Civil Service", "status": choices.EvaluationStatus.CIVIL_SERVICE.value},
+        data={"title": "Civil Service", "visibility": choices.EvaluationVisibility.CIVIL_SERVICE.value},
     )
 
     draft_evaluation1 = interface.facade.evaluation.create(user_id=internal_user.id)
     interface.facade.evaluation.update(
         user_id=internal_user.id,
         evaluation_id=draft_evaluation1["id"],
-        data={"title": "Draft 1", "status": choices.EvaluationStatus.DRAFT.value},
+        data={"title": "Draft 1", "visibility": choices.EvaluationVisibility.DRAFT.value},
     )
     draft_evaluation2 = interface.facade.evaluation.create(user_id=internal_user.id)
     interface.facade.evaluation.update(
         user_id=internal_user.id,
         evaluation_id=draft_evaluation2["id"],
-        data={"title": "Draft 2", "status": choices.EvaluationStatus.DRAFT.value},
+        data={"title": "Draft 2", "visibility": choices.EvaluationVisibility.DRAFT.value},
     )
     peter_rabbit, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
     # TODO change to use facade to add users to evaluation

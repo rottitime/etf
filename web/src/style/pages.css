@@ -1,7 +1,40 @@
+@import './vars-viewport.css';
+
 /* unique page styles */
 
 .sidebar.search-filters .accordion .scroll {
   overflow-y: visible;
   overflow-x: hidden;
   max-height: 530px;
+}
+
+.invite-collaborator {
+  &.space-between {
+    align-items: start;
+  }
+
+  & .bttn-primary {
+    margin-top: 32px;
+  }
+}
+
+.homepage-grid {
+  display: flex;
+  gap: var(--spacing-16);
+  flex-wrap: wrap;
+  & .card {
+    @media (--viewport-medium) {
+      & {
+        display: flex;
+        flex-direction: column;
+        flex: calc(50% - (var(--spacing-16) / 2));
+        box-sizing: border-box;
+      }
+    }
+
+    & footer.actions {
+      flex: 1;
+      align-items: flex-end;
+    }
+  }
 }

@@ -1,0 +1,11 @@
+---
+applications:
+- name: etf
+  services:
+    - etf-postgres
+  routes:
+  - route: evaluation-registry.service.gov.uk
+    protocol: http1
+  disk_quota: 4092M
+  memory: 1024M
+  health-check-type: port

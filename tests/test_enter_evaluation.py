@@ -9,6 +9,7 @@ from . import utils
 
 def setup_eval():
     user, _ = models.User.objects.get_or_create(email="peter.rabbit@example.com")
+    user.set_password("pink-elephant")
     user.save()
     evaluation = models.Evaluation(title="An Evaluation")
     evaluation.save()
@@ -143,7 +144,13 @@ def test_step_through_evaluation():
 
     steps = [
         # Title page
-        _make_simple_step("Title", {"title": "Test evaluation title", "short_title": "Test evaluation"}, evaluation.id),
+        _make_simple_step("Title", {"title": "Test evaluation title"}, evaluation.id),
+        # Option page
+        _make_simple_step(
+            "Optional information",
+            {"issue_description_option": "YES", "ethics_option": "YES", "grants_option": "YES"},
+            evaluation.id,
+        ),
         # Description page
         _make_simple_step(
             "Description",
@@ -200,25 +207,14 @@ def test_step_through_evaluation():
                 "latest_spend_date": "2022-03-07",
             },
         ),
-        # Documents page
-        _make_multple_object_step(
-            "Documents",
-            "New document",
-            "An example document",
-            {
-                "title": "An example document",
-                "url": "https://example.com",
-                "document_types": [choices.DocumentType.ANALYSIS_CODE.value],
-                "description": "A description of an example document",
-            },
-        ),
         # Evaluation types page
         _make_simple_step(
             "Evaluation types",
             {
                 "evaluation_type": [
                     choices.EvaluationTypeOptions.ECONOMIC.value,
-                    choices.EvaluationTypeOptions.PROCESS.value,
+                    # TODO - readd tests for PROCESS evaluations
+                    # choices.EvaluationTypeOptions.PROCESS.value,
                     choices.EvaluationTypeOptions.IMPACT.value,
                     choices.EvaluationTypeOptions.OTHER.value,
                 ],
@@ -270,16 +266,7 @@ def test_step_through_evaluation():
             },
             evaluation.id,
         ),
-        # Process evaluation design page
-        _make_simple_step("Process evaluation design", {}, evaluation.id),
-        # Process evaluation analysis page
-        _make_simple_step(
-            "Process evaluation analysis",
-            {
-                "process_analysis_description": "A description about the process evaluation description",
-            },
-            evaluation.id,
-        ),
+        # TODO - add process evaluation design pages
         # Economic design page
         _make_simple_step(
             "Economic evaluation design",
@@ -406,15 +393,9 @@ def test_step_through_evaluation():
             },
             evaluation.id,
         ),
+        # TODO - readd process evaluation pages
         # Process evaluation findings page
-        _make_simple_step(
-            "Process evaluation findings",
-            {
-                "process_summary_findings": "The summary process findings of the evaluation",
-                "process_findings": "The process findings of the evaluation",
-            },
-            evaluation.id,
-        ),
+        # _make_simple_step("Process evaluation findings", {}, evaluation.id),
         # Other evaluation findings page
         _make_simple_step(
             "Other evaluation findings",
@@ -435,6 +416,13 @@ def test_step_through_evaluation():
                 "description": "A description of the process or standard",
             },
         ),
+        # Grants
+        _make_multple_object_step(
+            title="Grants",
+            new_item_name="New grant",
+            added_item_name="Grant 47",
+            fields={"name_of_grant": "Grant 47", "grant_number": "REF47", "grant_details": "Loads more grant info"},
+        ),
         # Links page
         _make_multple_object_step(
             "Links to other service",
@@ -447,9 +435,9 @@ def test_step_through_evaluation():
         ),
         # Status page
         _make_simple_step(
-            "Evaluation status",
+            "Evaluation visibility",
             {
-                "status": choices.EvaluationStatus.CIVIL_SERVICE.value,
+                "visibility": choices.EvaluationVisibility.CIVIL_SERVICE.value,
             },
             evaluation.id,
         ),
@@ -487,13 +475,13 @@ def complete_verify_simple_page(page, title, fields, evaluation_id):
 
 def complete_verify_multiple_object_page(page, title, new_item_name, added_item_name, fields):
     assert page.status_code == 200, page.status_code
-    # TODO: Fix this, all titles are on all pages
     assert page.has_text(title)
     assert page.has_text("Next")
     add_item_form = page.get_form("""form:not([action])""")
     object_added_to_records_page = add_item_form.submit().follow()
-    assert object_added_to_records_page.has_text(new_item_name)
-    editing_new_object_page = object_added_to_records_page.click(contains=new_item_name)
+    summary_page = object_added_to_records_page.click(contains="Cancel")
+    assert summary_page.has_text(new_item_name), new_item_name
+    editing_new_object_page = summary_page.click(contains=new_item_name)
     adding_new_item_form = editing_new_object_page.get_form("""form:not([action])""")
     for field in fields:
         adding_new_item_form[field] = fields[field]
@@ -511,3 +499,27 @@ def complete_verify_multiple_object_page(page, title, new_item_name, added_item_
     assert not object_deleted_summary_page.has_text(new_item_name)
     assert not object_deleted_summary_page.has_text(added_item_name)
     return object_deleted_summary_page.click(contains="Next")
+
+
+@with_setup(setup_eval, teardown_eval)
+def test_invite_collaborators():
+    client = utils.make_testino_client()
+    utils.register(client, email="test-contributors@example.com", password="pink-elephants")
+    user = models.User.objects.get(email="test-contributors@example.com")
+    evaluation = models.Evaluation.objects.first()
+    evaluation.users.add(user)
+    evaluation_id = evaluation.id
+    contributor_page = client.get(f"/evaluation-contributors/{evaluation_id}/")
+    assert contributor_page.status_code == 200
+    # Check adding valid and invalid emails
+    form = contributor_page.get_form("""form:not([action])""")
+    form.set(field_name="email", value="nina@example.com")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("nina@example.com")
+    form = response.get_form("""form:not([action])""")
+    form.set(field_name="email", value="invalid@example.org")
+    response = form.submit()
+    assert response.status_code == 200
+    assert response.has_text("This should be a valid Civil Service email")
+    assert not response.has_text("invalid@example.org")

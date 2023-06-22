@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import 'macros.html' as macros with context %}
+
+{% block content %}
+  <div class="card">
+    <form method="POST" id="create-evaluation">{{csrf_input}}
+      <h1 class="highlight header3">{{title}}</h1>    
+        {{macros.input(name="title", label="Evaluation title", required=true)}}
+      <footer class="actions">
+        <a href="{{ url('index') }}" class="bttn-quaternary small">Cancel</a>
+        <button class="bttn-primary" type="submit">Add evaluation</button>
+      </footer>
+    </form>
+  </div>
+{% endblock %}

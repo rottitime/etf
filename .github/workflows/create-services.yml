@@ -9,10 +9,11 @@ on:
       - sandbox
       - develop
       - staging
+      - prod
 
 jobs:
   create_cfservices:
-    if:  ${{ github.event_name != 'release' && github.ref_name != 'prod' }}
+    if:  ${{ github.event_name != 'release' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -30,20 +31,10 @@ jobs:
               "temp": {"CF_SPACE": "temp"},
               "develop": {"CF_SPACE": "develop"},
               "staging": {"CF_SPACE": "staging"},
-              "pentest": {"CF_SPACE": "pentest"},
+              "prod": {"CF_SPACE": "prod"},
               "feature/deploy-from-main": {"CF_SPACE": "flibble"}
             }
 
-      - name: Get prod space name
-        if:  ${{ github.event_name == 'release' }}
-        uses: kanga333/variable-mapper@v0.2.2
-        with:
-          key: "${{github.ref_name}}"
-          map: |
-            {
-              "v?.?.?": {"CF_SPACE": "prod"},
-              "feature/deploy-from-main": {"CF_SPACE": "flibble"}
-            }
 
       - name: Download CF CLI
         working-directory: ./cfscripts

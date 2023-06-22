@@ -1,8 +1,8 @@
-{% macro input(name, label, placeholder='', type='text', min='') -%}
+{% macro input(name, label, placeholder='', type='text', min='', required=false) -%}
 <div class="form-group {{errors.get(name) and 'error'}}" for="{{name}}">
   <label class="label">{{label}}</label>
   {{input_description(name)}}
-  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="{{type}}" class="full-width" value="{{data.get(name)}}" id="{{name}}" {% if required == true %}required{% endif %} name="{{name}}">
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
   {% endfor %}
@@ -17,8 +17,8 @@
   <label class="label" for="{{name}}">{{label}}</label>
   {{input_description(name)}}
 
-  <div class="date-picker full-width">
-  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="date" value="{{data.get(name)}}" id="{{name}}" name="{{name}}">
+  <div class="date-picker">
+  <input aria-describedby="{{name}}-tt" placeholder="{{placeholder}}" type="date" value="{{data.get(name)}}" id="{{name}}" name="{{name}}" class="full-width">
   </div>
   {% for error in errors.get(name, []) %}
     <div class="helper">{{error}}</div>
@@ -33,13 +33,13 @@
 {% macro guidance(name, label) -%}
 {% set guidance = get_field_guidance_text(object_name, name) %}
 {% if guidance %}
-  <div is="hint-box" aria-label="{{label}}">
-    <div class="content">
-      {% for para in guidance %}
-        <p>{{markdown(para) | safe}}</p>
-      {% endfor %}
-    </div>
-</div>
+<hint-box aria-label="{{label}}">
+  <div class="content">
+    {% for para in guidance %}
+      <p>{{markdown(para) | safe}}</p>
+    {% endfor %}
+  </div>
+</hint-box>
 {% endif %}
 {%- endmacro %}
 
@@ -71,8 +71,8 @@
     
     {{input_description(name)}}
 
-    <div class="select full-width">
-      <select name="{{name}}" id="{{name}}">
+    <div is="select-field">
+      <select name="{{name}}" id="{{name}}" class="full-width">
         {% if not empty_option is sameas DEFAULT %}
           <option value="" disabled {{is_empty_selected(data, name)}}>{{empty_option}}</option>
         {% endif %}
@@ -90,14 +90,82 @@
 <div class="form-group {{errors.get(name) and 'error'}}">
   <label for="{{name}}">{{label}}</label>
   {{input_description(name)}}
-  <select multiple name="{{name}}" id="{{name}}" class="full-width">
-    {% for item in list %}
-      <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
-    {% endfor %}
-  </select>
+
+  <div is="multi-select">  
+    <select multiple name="{{name}}" id="{{name}}" class="full-width">
+      {% for item in list %}
+        <option value="{{item[0]}}" {{is_in(data, name, item[0])}}>{{item[1]}}</option>
+      {% endfor %}
+    </select>
+  </div>
   {{macros.guidance(name=name, label="Additional guidance")}}
   
 </div>
+{%- endmacro %}
+
+{% macro checkbox_from_list(name, label, list, empty_option=DEFAULT, other_specify=true) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="checkbox">
+        <input type="checkbox" {{is_in(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+      {% if other_specify %}
+        <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+          {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
+        </div>
+      {% endif %}
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
+{%- endmacro %}
+
+{% macro radios(name, label, list) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="radio">
+        <input type="radio" {{is_selected(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
+{%- endmacro %}
+
+{% macro radios_from_list(name, label, list, empty_option=DEFAULT) -%}
+  <fieldset>
+    <legend>
+      {{label}}
+    </legend>
+    {{input_description(name)}}
+    {% for item in list %}
+    <div class="form-group">
+      <label class="radio">
+        <input type="radio" {{is_selected(data, name, item[0]) and checked}} name="{{name}}" value="{{item[0]}}">
+        <span class="checkmark"></span>
+        <span>{{item[1]}}</span>
+      </label>
+      {% endfor %}
+      <div class="form-group controller-subfield" id="conditional-dyt6y3i">
+        {{input(name+"_other", "If "+label+" is 'Other', please provide more detail")}}
+      </div>
+    </div>
+  </fieldset>
+  {{macros.guidance(name=name, label="Additional guidance")}}
 {%- endmacro %}
 
 {% macro select_from_list(name, label, list, empty_option=DEFAULT) -%}

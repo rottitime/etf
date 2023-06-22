@@ -72,9 +72,9 @@
             </div>
           </li>
           <li>
-            <h3{% if data.active_filter == "status" %} class="active" {% endif %}>
+            <h3{% if data.active_filter == "visibility" %} class="active" {% endif %}>
               <button type="button">
-                <span class="title">Status{% if data.selected_statuses %} <div class="badge filter-control-total" data-name="status">{{data.selected_statuses|length}}</div>{% endif %}</span>
+                <span class="title">Visibility{% if data.selected_visibilities %} <div class="badge filter-control-total" data-name="visibility">{{data.selected_visibilities|length}}</div>{% endif %}</span>
               </button>
             </h3>
             <div class="accordion-content">
@@ -82,17 +82,17 @@
               <fieldset class="filter-control">
 
                 <div class="mb-16">
-                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="status">
-                  <button type="reset" class="txt-link small" {% if data.selected_statuses|length < 1 or data.statuses|length < 1 %}disabled{% endif %}>Reset</button>
+                  <input type="text" placeholder="Filter..." class="small full-width mb-8" data-controls="visibility">
+                  <button type="reset" class="txt-link small" {% if data.selected_visibilities|length < 1 or data.selected_visibilities|length < 1 %}disabled{% endif %}>Reset</button>
                 </div>
 
               <div class="scroll">
-                {% for status in data.statuses %}
+                {% for visibility in data.visibilities %}
                 
                   <label class="checkbox">
-                    <input name="status" type="checkbox" {% if is_in(data, "selected_statuses", status[0]) %}checked{% endif %} value="{{ status[0] }}">
+                    <input name="visibility" type="checkbox" {% if is_in(data, "selected_visibilities", visibility[0]) %}checked{% endif %} value="{{ visibility[0] }}">
                     <span class="checkmark"></span>
-                    <span>{{status[1]}}</span>
+                    <span>{{visibility[1]}}</span>
                   </label>
                 
               {% endfor %}
@@ -135,11 +135,11 @@
                 </a>
               </div>
             {% endfor %}
-            {% for status in data.selected_statuses %}
+            {% for visibility in data.selected_visibilities %}
               <div class="chip orange">
-              {% set relevant_item = data.statuses | selectattr('0', '==', status) | first %}
+              {% set relevant_item = data.visibilities | selectattr('0', '==', visibility) | first %}
                 {{relevant_item[1]}}
-                <a href="{{data.current_url | replace('status=' + relevant_item[0], '')}}" title="close" class="close">
+                <a href="{{data.current_url | replace('visibility=' + relevant_item[0], '')}}" title="close" class="close">
                   {{macros.cross_svg()}}
                 </a>
               </div>
@@ -150,15 +150,15 @@
 
         <div class="card-results">
           {% for evaluation in data.evaluations %}
-          <a href="{{url('evaluation-summary', evaluation.id)}}" class="basic-link">
+          <a href="{{url('evaluation-overview-filter-users', evaluation.id)}}" class="basic-link">
             <div class="card small">
             <h2 class="header4">{% if evaluation.title %}{{evaluation.title}}{% else %}No title provided{% endif %}</h2>
             <p>{{evaluation.brief_description}}</p>
 
             <table>
               <tr>
-                <th>Status</th>
-                <td>{{evaluation.get_status_display_name()}}</td>
+                <th>Visibility</th>
+                <td>{{evaluation.get_visibility_display_name()}}</td>
               </tr>
               <tr>
                 <th>Organisation(s)</th>

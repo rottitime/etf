@@ -2,9 +2,12 @@ import datetime
 import itertools
 
 import marshmallow
-from nose.tools import assert_raises
+from nose.tools import assert_raises, with_setup
 
-from etf.evaluation import utils
+from etf.evaluation import models, utils
+from etf.evaluation.utils import restrict_to_permitted_evaluations
+
+from .utils import create_fake_evaluations, remove_fake_evaluations
 
 
 def test_get_arguments():
@@ -97,3 +100,37 @@ def test_dictify():
     res = do_numbers(11)
     expected = {"0": 0, "5": 1, "10": 2}
     assert res == expected, (res, expected)
+
+
+@with_setup(create_fake_evaluations, remove_fake_evaluations)
+def test_restrict_to_permitted_evaluations():
+    all_evaluations = models.Evaluation.objects.all()
+    peter_rabbit = models.User.objects.get(email="peter.rabbit2@example.com")
+    mrs_tiggywinkle = models.User.objects.get(email="mrs.tiggywinkle@example.org")
+
+    assert "Draft evaluation 1" in all_evaluations.values_list("title", flat=True)
+    qs = restrict_to_permitted_evaluations(peter_rabbit, all_evaluations)
+    expected_viewable_evaluation_titles = {
+        "Draft evaluation 2",
+        "Civil Service evaluation 1",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    }
+    actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
+    assert expected_viewable_evaluation_titles.issubset(
+        actual_viewable_evaluation_titles
+    ), actual_viewable_evaluation_titles.symmetric_difference(actual_viewable_evaluation_titles)
+    assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
+
+    qs = restrict_to_permitted_evaluations(mrs_tiggywinkle, all_evaluations)
+    expected_viewable_evaluation_titles = {
+        "Draft evaluation 2",
+        "Civil Service evaluation 2",
+        "Public evaluation 1",
+        "Public evaluation 2",
+    }
+    actual_viewable_evaluation_titles = set(qs.values_list("title", flat=True))
+    assert expected_viewable_evaluation_titles.issubset(actual_viewable_evaluation_titles)
+    assert "Draft evaluation 1" not in expected_viewable_evaluation_titles
+    assert "Civil Service evaluation 1" not in expected_viewable_evaluation_titles

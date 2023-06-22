@@ -1,5 +1,7 @@
 from marshmallow import Schema, ValidationError, fields, validate
 
+from etf.evaluation.utils import is_civil_service_email
+
 from . import choices
 
 
@@ -10,6 +12,12 @@ def make_values_in_choices(choices_values):
                 raise ValidationError(f"All values in list should be one of: {choices_values}")
 
     return values_in_choices
+
+
+def validate_email(email):
+    if not is_civil_service_email(email):
+        raise ValidationError("This should be a valid Civil Service email")
+    return True
 
 
 class DateAndBlankField(fields.Date):
@@ -45,8 +53,23 @@ class SingleLineStr(fields.Str):
         return super()._deserialize(value, attr, data, **kwargs)
 
 
-def make_choice_field(max_len, values, **kwargs):
-    field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
+def validate_choice_and_length_or_none(values):
+    def validator(value):
+        if value != "" and not validate.OneOf(values):
+            raise ValidationError(f"Value needs to be in {values} or None")
+
+    return validator
+
+
+def make_choice_field(max_len, values, allow_none=False, **kwargs):
+    if allow_none:
+        field = SingleLineStr(
+            validate=validate.And(validate.Length(max=max_len), validate_choice_and_length_or_none(values)),
+            allow_none=True,
+            **kwargs,
+        )
+    else:
+        field = SingleLineStr(validate=validate.And(validate.Length(max=max_len), validate.OneOf(values)), **kwargs)
     return field
 
 
@@ -67,7 +90,7 @@ def is_non_neg_int_or_none(value):
 
 
 class UserSchema(Schema):
-    email = fields.Str()
+    email = fields.Str(validate=validate_email)
 
 
 class TimeStampedModelSchema(Schema):
@@ -80,16 +103,20 @@ class EvaluationSchema(TimeStampedModelSchema):
     users = fields.Function(lambda e: UserSchema(many=True).dump(e.users.all()))
     id = fields.UUID()
     title = SingleLineStr(required=True, validate=validate.Length(max=1024))
-    short_title = SingleLineStr(validate=validate.Length(max=128))
     brief_description = fields.Str()
     topics = make_multi_choice_field(max_len=64, values=choices.Topic.values)
     organisations = fields.Raw()
-    status = make_choice_field(
-        max_len=256, values=choices.EvaluationStatus.values, default=choices.EvaluationStatus.DRAFT.value
+    visibility = make_choice_field(
+        max_len=256, values=choices.EvaluationVisibility.values, default=choices.EvaluationVisibility.DRAFT.value
     )
 
     doi = fields.Str(validate=validate.Length(max=64))
     page_statuses = fields.Raw()
+
+    # Options
+    issue_description_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
+    ethics_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
+    grants_option = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
 
     # Issue description
     issue_description = fields.Str()
@@ -126,7 +153,7 @@ class EvaluationSchema(TimeStampedModelSchema):
     recruitment_schedule = fields.Str()
 
     # Ethical considerations
-    ethics_committee_approval = make_choice_field(max_len=3, values=choices.YesNo.values)
+    ethics_committee_approval = make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
     ethics_committee_details = fields.Str()
     ethical_state_given_existing_evidence_base = fields.Str()
     risks_to_participants = fields.Str()
@@ -167,14 +194,22 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_sensitivity_analysis = fields.Str()
     impact_subgroup_analysis = fields.Str()
     impact_missing_data_handling = fields.Str()
-    impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values)
+    impact_fidelity = make_choice_field(max_len=10, values=choices.YesNo.values, allow_none=True)
     impact_description_planned_analysis = fields.Str()
 
-    # Process evaluation design
-    process_methods = fields.Str(validate=validate.Length(max=256))
+    # Process evaluation aspects
+    process_evaluation_aspects = fields.Function(
+        lambda e: ProcessEvaluationAspectSchema(many=True, exclude=("evaluation",)).dump(
+            e.process_evaluation_aspects.all()
+        )
+    )
 
-    # Process evaluation analysis
-    process_analysis_description = fields.Str()
+    # Process evaluation method
+    process_evaluation_methods = fields.Function(
+        lambda e: ProcessEvaluationMethodSchema(many=True, exclude=("evaluation",)).dump(
+            e.process_evaluation_methods.all()
+        )
+    )
 
     # Economic evaluation design
     economic_type = make_choice_field(max_len=256, values=choices.EconomicEvaluationType.values)
@@ -221,10 +256,6 @@ class EvaluationSchema(TimeStampedModelSchema):
     economic_summary_findings = fields.Str()
     economic_findings = fields.Str()
 
-    # Process evaluation findings
-    process_summary_findings = fields.Str()
-    process_findings = fields.Str()
-
     # Other evaluation findings
     other_summary_findings = fields.Str()
     other_findings = fields.Str()
@@ -233,6 +264,9 @@ class EvaluationSchema(TimeStampedModelSchema):
     process_standards = fields.Function(
         lambda e: ProcessStandardSchema(many=True, exclude=("evaluation",)).dump(e.process_standards.all())
     )
+
+    # Grants
+    grants = fields.Function(lambda e: GrantSchema(many=True, exclude=("evaluation",)).dump(e.grants.all()))
 
     # Links and IDs
     link_other_services = fields.Function(
@@ -294,6 +328,14 @@ class ProcessStandardSchema(TimeStampedModelSchema):
     description = fields.Str()
 
 
+class GrantSchema(TimeStampedModelSchema):
+    evaluation = fields.Nested(EvaluationSchema)
+    id = fields.UUID(dump_only=True)
+    name_of_grant = SingleLineStr(validate=validate.Length(max=1024))
+    grant_number = SingleLineStr(validate=validate.Length(max=1024))
+    grant_details = fields.Str()
+
+
 class DocumentSchema(TimeStampedModelSchema):
     evaluation = fields.Nested(EvaluationSchema)
     id = fields.UUID(dump_only=True)
@@ -328,3 +370,26 @@ class EvaluationCostSchema(TimeStampedModelSchema):
     item_cost = FloatAndBlankField()
     earliest_spend_date = DateAndBlankField()
     latest_spend_date = DateAndBlankField()
+
+
+class ProcessEvaluationDesignAspectsSchema(Schema):  # Not the same as model
+    aspect_name = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
+    aspect_name_other = SingleLineStr(validate=validate.Length(max=256))
+
+
+class ProcessEvaluationMethodSchema(TimeStampedModelSchema):
+    evaluation = fields.Nested(EvaluationSchema)
+    id = fields.UUID(dump_only=True)
+    method_name = make_choice_field(max_len=256, values=choices.ProcessEvaluationMethods.values)
+    method_name_other = SingleLineStr(validate=validate.Length(max=256))
+    more_information = fields.Str()
+    aspects_measured = make_multi_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
+
+
+class ProcessEvaluationAspectSchema(TimeStampedModelSchema):
+    evaluation = fields.Nested(EvaluationSchema)
+    id = fields.UUID(dump_only=True)
+    aspect_name = make_choice_field(max_len=256, values=choices.ProcessEvaluationAspects.values)
+    aspect_name_other = SingleLineStr(validate=validate.Length(max=256))
+    summary_findings = fields.Str()
+    findings = fields.Str()

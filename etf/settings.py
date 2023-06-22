@@ -21,10 +21,12 @@ DEBUG = env.bool("DEBUG", default=False)
 
 CONTACT_EMAIL = env.str("CONTACT_EMAIL", default="test@example.com")
 FROM_EMAIL = env.str("FROM_EMAIL", default="test@example.com")
+FEEDBACK_EMAIL = env.str("FEEDBACK_EMAIL", default="test@example.com")
 
 VCAP_APPLICATION = env.json("VCAP_APPLICATION", default={})
 
 BASE_URL = env.str("BASE_URL")
+BASIC_AUTH = env.str("BASIC_AUTH", default="")
 
 APPEND_SLASH = True
 
@@ -33,6 +35,8 @@ ALLOWED_HOSTS = [
     "etf-sandbox.london.cloudapps.digital",
     "etf-staging.london.cloudapps.digital",
     "etf-testing.london.cloudapps.digital",
+    "evaluation-registry.service.gov.uk",
+    "etf.london.cloudapps.digital",
     "localhost",
     "127.0.0.1",
     "etf-testserver",
@@ -75,6 +79,7 @@ if DEBUG:
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "etf.evaluation.session_middleware.MaxAgeSessionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -84,8 +89,15 @@ MIDDLEWARE = [
     "global_login_required.GlobalLoginRequiredMiddleware",
 ]
 
+if BASIC_AUTH:
+    MIDDLEWARE = ["etf.auth.basic_auth_middleware"] + MIDDLEWARE
+
 if VCAP_APPLICATION.get("space_name", "unknown") not in ["tests", "local"]:
     SESSION_COOKIE_SECURE = True
+
+SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", default=60 * 60 * 24)  # Rolling timeout of 24 hours
+SESSION_MAX_AGE = env.int("SESSION_MAX_AGE", default=60 * 60 * 24 * 7)  # Forced logout 7 days after login
+SESSION_SAVE_EVERY_REQUEST = True
 
 # CSRF settings
 CSRF_COOKIE_HTTPONLY = True
@@ -188,12 +200,12 @@ LOGIN_REDIRECT_URL = "index"
 
 ALLOW_EXAMPLE_EMAILS = env.bool("ALLOW_EXAMPLE_EMAILS", default=True)
 
-DEFAULT_ALLOWED_DOMAINS = frozenset([])  # TODO - more to be added
 
 if ALLOW_EXAMPLE_EMAILS:
-    ALLOWED_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS.union({"example.com"})
+    ALLOWED_CIVIL_SERVICE_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS.union({"example.com"})
+    # This is domain is used for testing, so for these purposes, count it as a CS domain
 else:
-    ALLOWED_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS
+    ALLOWED_CIVIL_SERVICE_DOMAINS = allowed_domains.CIVIL_SERVICE_DOMAINS
 
 PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
 

@@ -19,7 +19,7 @@ def test_search():
     interface.facade.evaluation.update(
         user_id=user.id, evaluation_id=evaluation["id"], data={"title": "Test evaluation search by title"}
     )
-    evaluation = interface.facade.evaluation.get(user_id=user.id, evaluation_id=evaluation["id"])
+    evaluation = interface.facade.evaluation.get(evaluation_id=evaluation["id"])
 
     search_page = client.get("/search/")
 

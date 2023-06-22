@@ -6,6 +6,8 @@ import types
 import marshmallow
 from django.http import Http404
 
+from etf.settings import ALLOWED_CIVIL_SERVICE_DOMAINS
+
 from . import choices, models
 
 event_names = set()
@@ -223,10 +225,10 @@ class Choices(enum.Enum, metaclass=ChoicesMeta):
 
 def restrict_to_permitted_evaluations(user, evaluations_qs):
     evals_for_user_qs = evaluations_qs.filter(users__in=[user])
-    public_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.PUBLIC)
+    public_evals_qs = evaluations_qs.filter(visibility=choices.EvaluationVisibility.PUBLIC.value)
     restricted_evaluations_qs = evals_for_user_qs | public_evals_qs
     if not user.is_external_user:
-        civil_service_evals_qs = evaluations_qs.filter(status=choices.EvaluationStatus.CIVIL_SERVICE)
+        civil_service_evals_qs = evaluations_qs.filter(visibility=choices.EvaluationVisibility.CIVIL_SERVICE.value)
         restricted_evaluations_qs = civil_service_evals_qs | restricted_evaluations_qs
     return restricted_evaluations_qs
 
@@ -237,8 +239,8 @@ def check_evaluation_view_permission(func):
         evaluation = models.Evaluation.objects.get(pk=evaluation_id)
         evaluation_users = evaluation.users.all()
         civil_service_user = not request.user.is_external_user
-        evaluation_is_public = evaluation.status == choices.EvaluationStatus.PUBLIC
-        evaluation_is_civil_service = evaluation.status == choices.EvaluationStatus.CIVIL_SERVICE
+        evaluation_is_public = evaluation.visibility == choices.EvaluationVisibility.PUBLIC.value
+        evaluation_is_civil_service = evaluation.visibility == choices.EvaluationVisibility.CIVIL_SERVICE.value
         if evaluation_is_public:
             return func(request, *args, **kwargs)
         elif evaluation_is_civil_service and civil_service_user:
@@ -249,3 +251,21 @@ def check_evaluation_view_permission(func):
             return func(request, *args, **kwargs)
 
     return wrapper
+
+
+def check_is_civil_service_user(func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_external_user:
+            raise Http404()
+        return func(request, *args, **kwargs)
+
+    return wrapper
+
+
+def is_civil_service_email(email):
+    allowed = False
+    email = email.lower()
+    email_split = email.split("@")
+    if email_split[-1] in ALLOWED_CIVIL_SERVICE_DOMAINS:
+        allowed = True
+    return allowed

@@ -16,16 +16,25 @@ unencrypted_dbs_envs=(
 
 buckets=()
 
-autoscalers=(
-    scale-etf-${CF_SPACE}
-)
+if [ "${CF_SPACE}" == "prod" ]; then
+    autoscalers=(
+        scale-etf
+    )
 
-dbs=(
-    etf-postgres-${CF_SPACE}
-)
+    dbs=(
+        etf-postgres
+    )
+else
+    autoscalers=(
+        scale-etf-${CF_SPACE}
+    )
+
+    dbs=(
+        etf-postgres-${CF_SPACE}
+    )
+fi
 
 #################################### Set Envs and Services above this line only #################################
-
 
 if [[ " ${autoscale_envs[*]} " =~ " ${CF_SPACE} " ]]; then
     autoscale=true
@@ -47,14 +56,13 @@ needed_svcs=(`echo ${buckets[@]}  ${dbs[@]} ${autoscalers[@]} `)
 
 newservice=(`echo ${cfservices[@]}  ${cfservices[@]} ${needed_svcs[@]} | tr ' ' '\n' | sort | uniq -u `)
 
-
 # Create new services that don't already exist
 for value in "${newservice[@]}"
 do
     if grep -q "postgres" <<< "$value"; then
         echo "Adding service ${value}..........."
         echo "Start Time: `date +%H:%M:%S`"
-        if [ $unencrypted_dbs_envs ]; then
+        if [[ " ${unencrypted_dbs_envs[*]} " =~ " ${CF_SPACE} " ]]; then
             $(./cf create-service postgres tiny-unencrypted-13 $value &> /dev/null)
         else
             $(./cf create-service postgres medium-13 $value &> /dev/null)

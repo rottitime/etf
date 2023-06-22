@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('evaluation-overview', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -108,13 +108,12 @@
       {% if data.date|length == 0 %}
         <p>No dates found for this evaluation.</p>
       {% endif %}
-        <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
 
         {% for date in data.date %}
         <table>
           <tr>
             <th>Event Name</th>
-            <td>{{date.get_readable_name()}}</td>
+            <td>{{date.get_name()}}</td>
           </tr>
           {% if date.event_date_name == "OTHER" and date.event_date_name_other | length > 0 %}
             <tr>
@@ -159,7 +158,6 @@
         <header>
           <h4 class="header4 highlight">Issue description</h4>
         </header>
-      <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
         <table>
           <tr>
             <th>Why would improvements in relation to this issue matter?</th>
@@ -192,14 +190,12 @@
         <header>
           <h4 class="header4 highlight">Theory of change</h4>
         </header>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
       <div class="card small" id="technical-report">
         <header>
           <h4 class="header4 highlight">Technical report</h4>
         </header>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi eu sem tincidunt ultrices hendrerit consectetur mi. Integer non sodales nisl. Proin pulvinar massa sed consequat semper. Etiam pulvinar quam at orci interdum, at vestibulum augue consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
       </div>
 
 

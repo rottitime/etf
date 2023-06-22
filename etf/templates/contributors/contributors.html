@@ -7,10 +7,10 @@
 <nav aria-label="Breadcrumb" class="breadcrumb">
   <ol>
     <li>
-      <a href="#">Back to My evaluations</a>
+      <a href="{{url("my-evaluations")}}">Back to My evaluations</a>
     </li>
     <li>
-      <a href="#">Evaluation name #01</a>
+      <a href="{{url("intro", evaluation.id)}}">{{evaluation.title and evaluation.title or "Back to evaluation"}}</a>
     </li>
     <li aria-current="true">Collaborators</li>
   </ol>
@@ -22,11 +22,14 @@
 
   <h2 class="header3 highlight" id="add-heading">Invite collaborator</h3>
 
-  <form method="POST" class="invite-collaborator space-between" style="align-items: end;">{{csrf_input}}
+  <form method="POST" class="invite-collaborator space-between">{{csrf_input}}
 
-    <div class="form-group full-width mb-0">
+    <div class="form-group {% if errors.get("email", []) %}error{% endif %} full-width mb-0">
       <label for="add-user-email">Email</label>
-      <input aria-labelledby="add-heading" id="add-user-email" type="email" class="full-width" value="" name="add-user-email" placeholder="Contributors email..." required>
+      <input id="add-user-email" type="email" class="full-width" value="" name="email" placeholder="Contributors email..." required>
+      {% if errors.get("email", []) %}
+        <div class="helper">{{errors.get("email")|join(" ")}}</div>
+      {% endif %}
     </div>
     <button type="submit" class="bttn-primary">Invite collaborator</button>
    </form>
@@ -38,23 +41,20 @@
   <table class="datagrid">
     <thead>
       <tr>
-        <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>&nbsp;</th>
+        <th>Email</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
     {% for c in contributors %}
       <tr>
         <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-        <td>{{c.email}}{% if not c.has_signed_up %} (invited){% endif %}</td>
-        <td>Owner</td>
         <td class="cta">
-          <form method="POST" action="{{url("evaluation-contributor-remove", evaluation_id, c.email)}}">{{csrf_input}}
-            <button class="txt-link error small" type="submit"
-            {% if contributors | length <= 1 %} disabled {% endif %}>Remove</button>
+          {% if not contributors | length <= 1 %}
+          <form method="POST" action="{{url("evaluation-contributor-remove", evaluation.id, c.email)}}">{{csrf_input}}
+            <button class="txt-link error small" type="submit">Remove</button>
           </form>
+        {% endif %}
         </td>
       </tr>
     {% endfor %}

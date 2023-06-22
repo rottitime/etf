@@ -3,10 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
+    <h1 class="highlight header3">{{title}}</h1>
       <p>
       Enter details of where the evaluation is conforming to a particular standard or where you have adopted a given set of principles.
       </p>
@@ -14,6 +11,5 @@
       {{macros.select_from_list("conformity", "Conformity", list=[("FULL", "Full"), ("PARTIAL", "Partial"), ("NO", "No")])}}
       {{macros.textarea("description", "Description")}}
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 {% endblock %}

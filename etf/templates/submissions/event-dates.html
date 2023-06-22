@@ -3,8 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset >
-      <legend><h1>{{title}}</h1></legend>
+    <h1 class="highlight header3">{{title}}</h1>
       <div class="content caption">
       <p>Enter dates relevant to this evaluation such as the start and end of the evaluation, dates for participant recruitment, publishing date.</p>
       <p>This may include both intended and actual start dates.</p>
@@ -12,6 +11,5 @@
         {% include "submissions/multiple-objects.html" %}
       {% endblock %}
     </div>
-    </fieldset>
   </form>
 {% endblock %}

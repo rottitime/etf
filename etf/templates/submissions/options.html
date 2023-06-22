@@ -7,9 +7,12 @@
       <legend>
         <h1>{{title}}</h1>
       </legend>
-      <div class="content caption">
-      {{macros.select_from_list("status", "Choose the status of this evaluation", statuses)}}
-      </div>
+      
+      
+      {{macros.yes_no("issue_description_option", "Complete issue description?")}}
+      {{macros.yes_no("ethics_option", "Provide ethical information?")}}
+      {{macros.yes_no("grants_option", "Grant funding")}}
+
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>

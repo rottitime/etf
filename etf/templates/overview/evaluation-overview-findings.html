@@ -14,7 +14,7 @@
       <button type="submit" class="bttn-primary small">Search</button>
     </form>
     <a href="#" class="bttn-tertiary small">Contact</a>
-    {% if data.user_can_edit %}<a href="{{url('intro', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
+    {% if data.user_can_edit %}<a href="{{url('evaluation-overview', evaluation_id=data.evaluation.id)}}" class="bttn-tertiary small">{{macros.pencil_svg()}} Edit</a>{% endif %}
   </div>
 </div>
 
@@ -111,20 +111,7 @@
         <header>
           <h4 class="header4 highlight">Process evaluation findings</h4>
         </header>
-        <table>
-          <tr>
-            <th>Summary findings</th>
-            <td>
-              {{ data.evaluation.process_summary_findings and data.evaluation.process_summary_findings or "Not answered" }}
-            </td>
-          </tr>
-        <tr>
-            <th>Findings</th>
-            <td>
-              {{ data.evaluation.process_findings and data.evaluation.process_findings or "Not answered" }}
-            </td>
-          </tr>
-        </table>
+
       </div>
 
     <div class="card small" id="economic-evaluation-findings">

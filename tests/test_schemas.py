@@ -4,13 +4,14 @@ from marshmallow import Schema, ValidationError
 from nose.tools import with_setup
 
 from etf.evaluation import choices, models, schemas
-from etf.evaluation.schemas import DateAndBlankField, EvaluationSchema
 
 from .utils import with_authenticated_client
 
 
 class MadeUpSchema(Schema):
-    date = DateAndBlankField(allow_none=True)
+    date = schemas.DateAndBlankField(allow_none=True)
+    choice_field_one = schemas.make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=True)
+    choice_field_two = schemas.make_choice_field(max_len=3, values=choices.YesNo.values, allow_none=False)
 
 
 def test_date_and_blank_field():
@@ -51,6 +52,14 @@ def test_other_measure_schema_has_relevant_fields():
     check_schema_model_match_fields(model_name="OtherMeasure", schema_name="OtherMeasureSchema")
 
 
+def test_process_evaluation_method_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="ProcessEvaluationMethod", schema_name="ProcessEvaluationMethodSchema")
+
+
+def test_process_evaluation_aspect_schema_has_relevant_fields():
+    check_schema_model_match_fields(model_name="ProcessEvaluationAspect", schema_name="ProcessEvaluationAspectSchema")
+
+
 def setup_evaluation():
     user, _ = models.User.objects.get_or_create(email="mrs.tiggywinkle@cabinetoffice.gov.uk")
     user.save()
@@ -77,7 +86,7 @@ def teardown_evaluation():
 @with_setup(setup_evaluation, teardown_evaluation)
 @with_authenticated_client
 def test_evaluation_schema_dump(client):
-    evaluation_schema = EvaluationSchema()
+    evaluation_schema = schemas.EvaluationSchema()
     evaluation = models.Evaluation.objects.get(title="Test evaluation schemas")
     serialized_evaluation = evaluation_schema.dump(evaluation)
     assert serialized_evaluation
@@ -106,14 +115,14 @@ def test_evaluation_schema():
     valid_data = {
         "title": "My first evaluation",
         "brief_description": "Hello, I am a brief description",
-        "status": choices.EvaluationStatus.DRAFT.value,
+        "visibility": choices.EvaluationVisibility.DRAFT.value,
         "evaluation_type": [choices.EvaluationTypeOptions.PROCESS, choices.EvaluationTypeOptions.IMPACT],
         "ethics_committee_approval": "YES",
         "impact_design_name": [choices.ImpactEvalDesign.BAYESIAN_UPDATING, choices.ImpactEvalDesign.OTHER],
     }
     invalid_evaluation_type = {
         "title": "Title",
-        "status": choices.EvaluationStatus.CIVIL_SERVICE.value,
+        "visibility": choices.EvaluationVisibility.CIVIL_SERVICE.value,
         "evaluation_type": ["STAR"],
     }
     assert evaluation_schema.load(valid_data)
@@ -123,3 +132,36 @@ def test_evaluation_schema():
     except ValidationError as e:
         error_message = e.messages["evaluation_type"][0]
     assert error_message == "All values in list should be one of: ('IMPACT', 'PROCESS', 'ECONOMIC', 'OTHER')"
+
+
+def test_user_schema():
+    user_schema = schemas.UserSchema()
+    error_message = ""
+    try:
+        user_schema.load({"email": "invalid@example.org"})
+    except ValidationError as e:
+        error_message = e.messages["email"][0]
+    assert error_message == "This should be a valid Civil Service email", error_message
+    try:
+        user_schema.load({"email": "p"})
+    except ValidationError as e:
+        error_message = e.messages["email"][0]
+    assert error_message == "This should be a valid Civil Service email", error_message
+
+
+def test_make_choice_field():
+    schema = MadeUpSchema()
+    deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "", "choice_field_two": "YES"})
+    assert deserialized_obj["date"] == date(2022, 11, 13)
+    assert deserialized_obj["choice_field_one"] == ""
+    assert deserialized_obj["choice_field_two"] == "YES"
+    try:
+        deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "NO", "choice_field_two": ""})
+    except ValidationError as e:
+        error_message = e.messages["choice_field_two"][0]
+        assert "Must be one of: YES, NO." in error_message, error_message
+    try:
+        deserialized_obj = schema.load({"date": "2022-11-13", "choice_field_one": "bob", "choice_field_two": "NO"})
+    except ValidationError as e:
+        error_message = e.messages["choice_field_one"][0]
+        assert "Must be one of: YES, NO." in error_message, error_message

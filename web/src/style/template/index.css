@@ -47,8 +47,20 @@ main.container {
     & {
       display: flex;
       gap: 24px;
-      & .col {
-      }
+    }
+  }
+
+  & div:first-child:is(.col) {
+    width: 63%;
+    & + .col {
+      width: calc(100% - 63%);
+    }
+  }
+
+  & div:first-child:is(.col.sidebar) {
+    width: 276px;
+    & + .col {
+      width: calc(100% - 276px);
     }
   }
 
@@ -58,16 +70,8 @@ main.container {
       & {
         margin-bottom: 0;
         flex-grow: 1;
-        &.sidebar {
-          flex: 0 0 276px;
-        }
       }
     }
-  }
-
-  /* increase width for right hand side  columns */
-  & .col + .sidebar {
-    flex-basis: 304px;
   }
 }
 

@@ -3,25 +3,21 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.textarea("name", "Intervention name")}}
-      {{macros.textarea("brief_description", "Intervention brief description")}}
-      {{macros.textarea("rationale", "Intervention rationale")}}
-      {{macros.textarea("materials_used", "What: Materials")}}
-      {{macros.textarea("procedures", "What: Procedures")}}
-      {{macros.textarea("provider_description", "Who providing")}}
-      {{macros.textarea("modes_of_delivery", "How")}}
-      {{macros.textarea("location", "Where")}}
-      {{macros.textarea("frequency_of_delivery", "When and how much")}}
+      {{macros.textarea("brief_description", "Description")}}
+      {{macros.textarea("rationale", "Rationale")}}
+      {{macros.textarea("materials_used", "Materials")}}
+      {{macros.textarea("procedures", "Procedures")}}
+      {{macros.textarea("provider_description", "Providers")}}
+      {{macros.textarea("modes_of_delivery", "Modes of delivery")}}
+      {{macros.textarea("location", "Location")}}
+      {{macros.textarea("frequency_of_delivery", "Frequency and time frame")}}
       {{macros.textarea("tailoring", "Tailoring")}}
-      {{macros.textarea("fidelity", "How well (fidelity)")}}
+      {{macros.textarea("fidelity", "Fidelity")}}
       {{macros.textarea("resource_requirements", "Resource requirements")}}
       {{macros.textarea("geographical_information", "Geographical information")}}
 
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 {% endblock %}

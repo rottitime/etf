@@ -3,18 +3,13 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
-      </ul>
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.input("name", "Outcome name")}}
       {{macros.select("primary_or_secondary", "Primary or secondary",
         options=({'text': 'Primary', 'value': 'PRIMARY'}, {'text': 'Secondary', 'value': 'SECONDARY'}), empty_option="----")}}
       {{macros.select("direct_or_surrogate", "Direct or surrogate", options=({'text': 'Direct', 'value': 'DIRECT'},
         {'text': 'Surrogate', 'value': 'SURROGATE'}), empty_option="----")}}
-      {{macros.select_from_list("measure_type", "Measure type", list=dropdown_choices.measure_type)}}
-      {{macros.textarea("measure_type_other", "If measure type is 'Other', please provide more detail")}}
+      {{macros.radios_from_list("measure_type", "Measure type", dropdown_choices.measure_type)}}
       {{macros.textarea("description", "Description of measure")}}
       {{macros.textarea("collection_process", "Collection process")}}
       {{macros.textarea("timepoint", "Timepoint(s) of interest")}}
@@ -22,7 +17,6 @@
       {{macros.textarea("relevance", "Relevance of outcome")}}
 
       {% include "submissions/multiple-objects-page.html" %}
-    </fieldset>
   </form>
 
 {% endblock %}

@@ -4,24 +4,28 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from etf.evaluation.choices import EvaluationVisibility
 from etf.evaluation.models import Evaluation
 from etf.evaluation.schemas import EvaluationSchema
+from etf.evaluation.utils import restrict_to_permitted_evaluations
 
 
 @login_required
 def filter_evaluations_to_download(request):
-    output_evaluations_qs = Evaluation.objects.none()
+    user = request.user
+    qs = Evaluation.objects.all()
+    restricted_evaluations = restrict_to_permitted_evaluations(user, qs)
+    output_qs = Evaluation.objects.none()
     if "civil_service_only" in request.GET:
-        civil_service_evals = Evaluation.objects.filter(status="CIVIL_SERVICE")
-        output_evaluations_qs = output_evaluations_qs | civil_service_evals
+        civil_service_evals = restricted_evaluations.filter(visibility=EvaluationVisibility.CIVIL_SERVICE.value)
+        output_qs = output_qs | civil_service_evals
     if "public" in request.GET:
-        public_evals = Evaluation.objects.filter(status="PUBLIC")
-        output_evaluations_qs = output_evaluations_qs | public_evals
+        public_evals = restricted_evaluations.filter(visibility=EvaluationVisibility.PUBLIC.value)
+        output_qs = output_qs | public_evals
     if "my_evaluations" in request.GET:
-        user = request.user
         user_evals = user.evaluations.all()
-        output_evaluations_qs = output_evaluations_qs | user_evals
-    return output_evaluations_qs
+        output_qs = output_qs | user_evals
+    return output_qs
 
 
 @login_required

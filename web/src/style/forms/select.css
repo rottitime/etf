@@ -1,4 +1,4 @@
-.select {
+:is(select-field, [is='select-field']) {
   position: relative;
   display: inline-block;
 

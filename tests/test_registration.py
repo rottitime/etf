@@ -5,6 +5,7 @@ from etf import settings as etf_settings
 from etf.evaluation import models, restrict_email
 
 from . import utils
+from .utils import _get_latest_email_text
 
 VALID_USER_EMAIL = "test@example.com"
 VALID_USER_PASSWORD1 = "elephant99"
@@ -61,9 +62,7 @@ def test_email_is_valid():
 def test_email_is_invalid_domain_extension():
     page = enter_signup_form_data("jane.doe@example.org", VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
 
-    assert page.has_text(
-        "This email domain is not yet supported. Please contact the site admin team if you think this is incorrect."
-    )
+    assert page.has_text("Currently you need a Civil Service email address to register.")
 
 
 def test_email_is_invalid_no_extension():
@@ -89,8 +88,12 @@ def test_user_already_registered():
     user.save()
 
     page = enter_signup_form_data(VALID_USER_EMAIL, VALID_USER_PASSWORD1, VALID_USER_PASSWORD1)
-
-    assert page.has_text("Registration was unsuccessful, please try again.")
+    signup_email = _get_latest_email_text()
+    assert page.has_text("A verification email has been sent to your email address.")
+    assert page.has_text("Please click on the link in this email to verify your account and then try to sign in.")
+    assert signup_email.__contains__(
+        "Someone using this email address has just tried to register for the Evaluation Registry, you can find this at the following link."
+    )
 
 
 @with_setup(
@@ -112,20 +115,15 @@ def test_verify_email():
     assert signed_up_page.has_text("A verification email has been sent to your email address.")
 
     verify_url = utils._get_latest_email_url()
-
     verify_page = client.get(verify_url)
-
     assert verify_page.has_text("Your account has been successfully verified.")
 
     login_page = client.get("/accounts/login/")
-
     form = login_page.get_form()
     form["login"] = "test-verification@example.com"
     form["password"] = VALID_USER_PASSWORD1
-
     home_page = form.submit().follow()
-
-    assert home_page.has_text("Create evaluation")
+    assert home_page.has_text("Add evaluation")
 
 
 def test_password_reset():
@@ -137,31 +135,22 @@ def test_password_reset():
     form = page.get_form()
     form["email"] = VALID_USER_EMAIL
     page = form.submit()
-
     assert page.has_text("Please check your email for a link to reset your password.")
 
     url = utils._get_latest_email_url()
-
     page = client.get(url)
-
     form = page.get_form()
     form["password1"] = VALID_USER_PASSWORD2
     form["password2"] = VALID_USER_PASSWORD2
-
     page = form.submit()
-
     assert page.has_text("Your password has been successfully updated, please login again.")
 
     page = client.get("/accounts/login/")
-
     form = page.get_form()
-
     form["login"] = VALID_USER_EMAIL
     form["password"] = VALID_USER_PASSWORD2
-
     page = form.submit().follow()
-
-    assert page.has_text("Create evaluation")
+    assert page.has_text("Add evaluation")
 
 
 def test_incorrect_user_id_and_code_caught():
@@ -189,4 +178,4 @@ def test_incorrect_email_domains():
             cleaned_email = restrict_email.clean_email(email)
             assert not cleaned_email
         except ValidationError as e:
-            assert e.message.startswith("This email domain is not yet supported")
+            assert e.message.startswith("Currently you need a Civil Service email address to register.")

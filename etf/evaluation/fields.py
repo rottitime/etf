@@ -3,6 +3,13 @@
 
 from collections import defaultdict
 
+create_help_text = defaultdict(
+    str,
+    {
+        "title": "A full, descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
+    },
+)
+
 description_help_text = defaultdict(
     str,
     {
@@ -51,7 +58,7 @@ ethics_help_text = defaultdict(
         "ethics_committee_approval": "Will the study be submitted to an ethics committee for approval?",
         "ethics_committee_details": "If the study will be submitted to an ethics committee, which one?",
         "ethical_state_given_existing_evidence_base": "Is the study ethically justified because there is uncertainty over which option is most beneficial? Or are there other reasons why conducting this study is ethical?",
-        "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Please record any other ethical considerations here.",
+        "other_ethical_information": "The headings on this record are not intended to cover all eventualities. Record any other ethical considerations here.",
     },
 )
 
@@ -73,12 +80,22 @@ event_date_help_text = defaultdict(
 )
 
 
+grant_help_text = defaultdict(
+    str,
+    {
+        "grant_details": "Provide any further details about this grant as required.",
+    },
+)
+
+
 impact_analysis_help_text = defaultdict(
     str,
     {
-        "impact_framework": "Framework of comparisons between interventions.",
+        "impact_framework": "Type of comparisons between interventions.",
         "impact_basis": "Approach to identifying data to include in the analysis.",
         "impact_analysis_set": "Details of any inclusion / exclusion criteria determining data to be used in the analysis.",
+        "impact_effect_measure_type": "Whether effects on outcomes are to be calculated / reported in absolute or relative terms.",
+        "impact_primary_effect_size_measure": "Name of the measure to be used.",
         "impact_effect_measure_interval": "Interval calculation for the effect size.",
         "impact_primary_effect_size_desc": "Description of how the effect size measure and any associated interval are specified, including details of calculation if needed.",
         "impact_sensitivity_analysis": "Description of any sensitivity analysis",
@@ -94,7 +111,7 @@ impact_design_help_text = defaultdict(
     {
         "impact_design_name": "Descriptive name for the design/method. You may select more than one.",
         "impact_design_features": "Features making the evaluation more like 'real-world' implementation ('pragmatic attitude') vs 'perfect' conditions ('explanatory attitude').",
-        "impact_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study?",
+        "impact_design_equity": "Which disadvantaged subgroups (if any) have been identified for particular attention in the study and how?",
     },
 )
 
@@ -120,7 +137,7 @@ intervention_help_text = defaultdict(
         "location": "Description of the type(s) of location(s) where the intervention will occur, including necessary infrastructure or relevant features.",
         "frequency_of_delivery": "Description of the number of times the intervention will be delivered and over what time period including the number of sessions, their schedule, and their duration or intensity. Number of sessions might be determined by some stopping criteria rather than a fixed number, in which case provide details.",
         "tailoring": "If the intervention will be personalised or adapted for different participants, description of what, why, when and how.",
-        "fidelity": "Describe any strategies used to maintain the extent to which implementation is as-planned, including efforts to improve consistency.",
+        "fidelity": "Describe how closely the implementation of the intervention matches the implementation plan, including efforts to improve consistency.",
         "resource_requirements": "Describe extra resources added to (or resources removed from) usual settings in order to implement intervention.",
         "geographical_information": "In which actual locations (eg, towns, cities, or regions) will the intervention take place during the evaluation?",
     },
@@ -133,7 +150,7 @@ issue_description_help_text = defaultdict(
         "issue_description": "The problem, circumstance or situation that it is intended that an intervention should respond to.",
         "those_experiencing_issue": "Those directly experiencing the issue.",
         "why_improvements_matter": "Why are the negative experiences a problem, or why would it be beneficial to achieve the prospective improvements?",
-        "who_improvements_matter_to": "May be wider than those experiencing the issue directly.",
+        "who_improvements_matter_to": "This may be wider than those experiencing the issue directly.",
         "current_practice": "How is the issue currently typically attended to (if at all)?",
         "issue_relevance": "How will the results of the evaluation ultimately contribute to practice?",
     },
@@ -145,6 +162,16 @@ links_help_text = defaultdict(
     {
         "links_name_of_service": "Which service is this an identifier for?",
         "links_link_or_identifier": "What is the link/identifier?",
+    },
+)
+
+
+options_help_text = defaultdict(
+    str,
+    {
+        "issue_description_option": "Do you want to complete an issue description for this evaluation?",
+        "ethics_option": "Do you want to provide ethical information for this evaluation?",
+        "grants_option": "Was this evaluation, or any of the interventions being evaluated, funded by a grant?",
     },
 )
 
@@ -170,7 +197,7 @@ other_findings_help_text = defaultdict(
 outcome_measure_help_text = defaultdict(
     str,
     {
-        "name": "Please provide a name or brief phrase that describes the outcome.",
+        "name": "A name or brief phrase that describes the outcome.",
         "primary_or_secondary": "Will this outcome be treated as a primary or secondary outcome in this study?",
         "direct_or_surrogate": "Is this measure intended to directly reflect an outcome of interest or is it a surrogate measure that is intended to act as a proxy for an outcome that is hard to measure directly?",
         "description": "Details of what data will be gathered and of any processing that will be applied to raw data in order to create the measure.",
@@ -190,18 +217,10 @@ participant_recruitment_help_text = defaultdict(
 )
 
 
-process_findings_help_text = defaultdict(
-    str,
-    {
-        "process_summary_findings": "A short description (one to two sentences) of the findings related to this aspect of the process evaluation.",
-        "process_findings": "A longer description of the findings related to this aspect of the process evaluation, as required.",
-    },
-)
-
-
 processes_standard_help_text = defaultdict(
     str,
     {
+        "name": "If you have completed most fields in the Evaluation Registry, you will normally be able to claim at least partial conformity with the [Standard for producing evidence of the effectiveness of interventions (StEv2-1::2016)](https://repository.essex.ac.uk/32376/1/StEv2-1-2016%20Effectiveness-Specification.pdf)",
         "description": "Provide any information needed to describe the evaluation's conformity with the standard.",
     },
 )
@@ -213,7 +232,7 @@ studied_population_help_text = defaultdict(
         "studied_population": "Description of the population studied including settings and locations where the data are planned to be collected.",
         "eligibility_criteria": "A comprehensive description of the eligibility criteria used to select the study participants.",
         "sample_size": "The overall sample size of the evaluation.",
-        "sample_size_details": "Details of the sample size, including number per arm of the study, and how the sample size was determined.",
+        "sample_size_details": "Details of the sample size and how the sample size was determined.",
     },
 )
 
@@ -221,8 +240,7 @@ studied_population_help_text = defaultdict(
 title_help_text = defaultdict(
     str,
     {
-        "title": "Please provide a full/descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
-        "short_title": "Please provide a short/abbreviated title for the evaluation, if you would like.",
+        "title": "A full, descriptive title for the evaluation, include a name or description of the interventions being evaluated. Spell out any abbreviations unless they are very familiar (eg NHS).",
     },
 )
 
@@ -230,6 +248,7 @@ title_help_text = defaultdict(
 field_help_text = defaultdict(
     lambda: defaultdict(str),
     {
+        "create": create_help_text,
         "description": description_help_text,
         "document": document_page_help_text,
         "economic-design": economic_design_help_text,
@@ -237,20 +256,31 @@ field_help_text = defaultdict(
         "ethics": ethics_help_text,
         "evaluation cost": evaluation_cost_help_text,
         "event date": event_date_help_text,
+        "grant": grant_help_text,
         "impact-analysis": impact_analysis_help_text,
         "impact-design": impact_design_help_text,
         "impact-findings": impact_findings_help_text,
         "intervention": intervention_help_text,
         "issue-description": issue_description_help_text,
         "link": links_help_text,
+        "options": options_help_text,
         "other-design": other_design_help_text,
         "other-findings": other_findings_help_text,
         "outcome measure": outcome_measure_help_text,
         "participant-recruitment": participant_recruitment_help_text,
-        "process-findings": process_findings_help_text,
         "process or standard": processes_standard_help_text,
         "studied-population": studied_population_help_text,
         "title": title_help_text,
+    },
+)
+
+create_guidance_text = defaultdict(
+    list,
+    {
+        "title": [
+            "This should be a title for the evaluation as a whole, not for a given report or document associated with it, like 'Evaluation of the relative impact of ABC and DEF on XYZ outcomes' rater than 'Findings from an evaluation of ABC...' or 'Plans for an evaluation of ABC...'.",
+            "This could include an indication of the evaluation type (eg impact evaluation) or method (eg randomised controlled trial) if known.",
+        ],
     },
 )
 
@@ -275,7 +305,7 @@ document_page_guidance_text = defaultdict(
         ],
         "document_types": [
             "Information on an evaluation might be contained in one document or split across several. For example, in the planning stage a single document might contain both a study protocol and the analysis plan. And in reporting findings, technical details could be included in a separate document, but they could equally be included as appendices in a main report document.",
-            "If a document contains elements that spans several of the document type options listed here, please select all that apply.",
+            "If a document contains elements that spans several of the document type options listed here, select all that apply.",
         ],
     },
 )
@@ -296,11 +326,11 @@ economic_design_guidance_text = defaultdict(
     {
         "economic_type": [
             "The types of economic evaluation all aim to measure the comparative costs of interventions in monetary terms. They vary based on how they aim to report the outcomes.",
-            "In **cost-minimisation** analysis, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
-            "In **cost-effectiveness** analysis, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
-            "In **cost-benefit** analysis, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
-            "In **cost-utility** analysis, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
-            "If the economic evaluation is of a type not listed, please select Other and specify the additional type(s).",
+            "In **cost-minimisation analysis**, the interventions are known or assumed to provide the same outcome and the evaluation is intended to examine which of two (or more) interventions that cause the same outcome does so for the lowest cost.",
+            "In **cost-effectiveness analysis**, the costs of delivering an intervention are compared to the amount of its outcome it achieves, in order to derive a cost-effectiveness ratio, which is expressed in terms of the cost for each unit of the outcome.",
+            "In **cost-benefit analysis**, monetary values are placed on the benefits as well as the costs, in order to report a ratio that is expressed in the same terms (e.g. £2 of benefits for every £1 of expenditure).",
+            "In **cost-utility analysis**, various outcomes are converted to a measure of 'utility', allowing the comparison of different outcomes on a common scale. This is commonly used in health sectors, where the most common measure of utility is the Quality Adjusted Life Year, QALY.",
+            "If the economic evaluation is of a type not listed, select Other and specify the additional type(s).",
         ],
         "perspective_costs": [
             "The perspective is the point of view adopted when deciding which types of costs and benefits are to be included in an economic evaluation. Typical viewpoints are those of the person receiving the intervention, the organisation delivering the intervention, the wider public sector, or society. The broadest perspective is 'societal', which reflects a full range of social opportunity costs associated with different interventions.",
@@ -380,10 +410,21 @@ evaluation_cost_guidance_text = defaultdict(
     list,
     {
         "earliest_spend_date": [
-            "If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+            "If possible, provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
         ],
         "latest_spend_date": [
-            "If possible, please provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+            "If possible, provide at least approximate dates on when expenditure might be incurred in relation to this cost area. Even approximate dates, such as narrowing costs down to a year, will give future users a sense of whether they need to adjust these figures for inflation to intrepret them."
+        ],
+    },
+)
+
+
+grant_guidance_text = defaultdict(
+    list,
+    {
+        "grant_number": [
+            "Provide the grant number or other similar unique identifier for this grant.",
+            "For UK government grants, use the Government Grants Information System (GGIS) number.",
         ],
     },
 )
@@ -393,13 +434,13 @@ evaluation_type_guidance_text = defaultdict(
     list,
     {
         "evaluation_type": [
-            "Please specify what type or types of evaluation this is.",
+            "Specify the type or types of evaluation this is.",
             "Do not use this field to specify the methods used; those are collected separately.",
-            "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, please select all types of evaluation that are included.",
-            "Impact evaluations are any evaluations that are intended to identify the effectiveness of interventions, including comparing different interventions against each other, or comparing a novel intervention against business-as-usual.",
-            "Process evaluations are undertaken with the intention of increasing understanding of how an intervention is implemented, why it seems to work or not, and what contextual factors are affecting it, as distinct from whether an outcome was achieved.",
-            "Economic evaluations (sometimes called value-for-money evaluations) are comparative analyses of alternative courses of action in terms of both their costs and consequences.",
-            "If the evaluation includes types of evaluation not listed, please select Other and specify the additional type(s).",
+            "An evaluation can be designed to be of more than one type, for example assessing both the effectiveness and the cost-effectiveness of the interventions being tested. If so, select all types of evaluation that are included.",
+            "**Impact evaluations** are any evaluations that are intended to identify the effectiveness of interventions, including comparing different interventions against each other, or comparing a novel intervention against business-as-usual.",
+            "**Process evaluations** are undertaken with the intention of increasing understanding of how an intervention is implemented, why it seems to work or not, and what contextual factors are affecting it, as distinct from whether an outcome was achieved.",
+            "**Economic evaluations** (sometimes called value-for-money evaluations) are comparative analyses of alternative courses of action in terms of both their costs and consequences.",
+            "If the evaluation includes types of evaluation not listed, select Other and specify the additional type(s).",
         ],
     },
 )
@@ -408,13 +449,41 @@ evaluation_type_guidance_text = defaultdict(
 impact_analysis_guidance_text = defaultdict(
     list,
     {
+        "impact_framework": [
+            "Is the study analysis designed to test for **superiority** (the intervention being better than the comparison), **non-inferiority** (the intervention being at least as good as the comparison) or **equivalence** (the intervention delivering the same outcomes as the comparison)?",
+            "**Superiority** analysis is the most familiar framework. It is commonly used in the situation where a new intervention is being tested to see whether it out-performs current practice. It can also be used if variants of a new service are being tested to see which is the best.",
+            "**Non-inferiority** analysis can be useful in situations such as when a new intervention has some other benefits (such as being cheaper or easier to deliver). In these cases, you might be happy to start using the new intervention as long as its outcomes are *no worse* than the existing situation.",
+            "**Equivalence** analysis is most commonly used in a situation where you believe that two things should be the same and want to test that they are. These are used in situations such as a new manufacturer producing a version of a medicine and wanting to check that it delivers the same outcomes as existing versions of the medicine.",
+        ],
+        "impact_basis": [
+            "There are options available for selecting whose data is included in the analysis of results, that may include or exclude people if they did not end up receiving the intervention they should have.",
+            "**Intention-to-treat** analysis is an an assessment of the people (or other units) taking part in an evaluation, based on the group they were initially (and randomly) allocated to. This is regardless of whether or not they dropped out, fully adhered to the intervention or switched to an alternative intervention. Intention-to-treat analysis (ITT) analyses are often used to assess effectiveness because they mirror actual practice, when not everyone adheres to the intervention, and the intervention people have may be changed according to how their situation changes based on it.",
+            "**Per-protocol** analysis is a comparison of groups in a trial that includes only those people (or other units) who completed the intervention they were originally allocated to. If done alone, this analysis leads to bias.",
+            "SOURCE: Modified from NICE Glossary https://www.nice.org.uk/glossary?letter=i https://www.nice.org.uk/glossary?letter=p",
+        ],
+        "impact_effect_measure_type": [
+            "Whether effects on outcomes will be calculated / reported in absolute or relative terms.",
+            "**Absolute measures** are those that compare the levels of the outcomes between the groups as the *difference between them*. (Think, for example, of subtracting the baseline result from the achieved result.)",
+            "**Relative measures** are those that compare the levels of the outcomes between the groups as *their ratios*. (Think, for example, of dividing the achieved result by the baseline result.)",
+            "Absolute measures often provide a less distorted perception of the scale of impact of an intervention, so should generally be favoured as the primary form of measures. Consider, for example, a situation where business-as-usual results in 5% of people achieving some desired outcome and the novel intervention results in 15% of people achieving it. An absolute measure would be a prevalence difference of 10 percentage points. A relative measure would be a prevalence ratio of 3 : 1. Readers will typically get a clearer picture of the impact of the intervention from the absolute measure than the relative measure.",
+        ],
         "impact_primary_effect_size_measure": [
             "For binary outcomes, a suitable absolute measure is often the 'prevalence difference': the difference between the proportions of people achieving the outcome in the intervention group and the control group. A relative measure for binary outcomes would be the 'prevalence ratio'.",
-            "For numerical outcomes, suitable absolute measures often include differences in mean levels of the outcome between the groups. If the outcome is measured as a quantity that is meaningful in practice, the differences between mean levels of this quantity will also typically be something meaningful. (Eg, if the outcome if each person's income in £ per week, then it will be meaningful and interpretable to see that weekly incomes are on average £x higher in the intervention group than the control group.)",
+            "For numerical outcomes, suitable absolute measures often include differences in mean levels of the outcome between the groups. If the outcome is measured as a quantity that is meaningful in practice, the differences between mean levels of this quantity will also typically be something meaningful. (For example, if the outcome is each person's income in £ per week, then it will be meaningful and interpretable to see that weekly incomes are on average £x higher in the intervention group than the control group.)",
+        ],
+        "impact_effect_measure_interval": [
+            "An interval should normally be calculated around the point estimate of the effect size to provide information about the level of uncertainty in that estimate or the range of values with which the data are relatively compatible.",
+            "Consider, for example, a case where an evaluation finds that the point estimate for the effect of a financial intervention is that people receiving it end up with £100 per week more that people who do not. It is very helpful to know whether there is a large or small amount of uncertainty around that number. Are the data relatively compatible with values in the region £20 to £180, or only compatible with values from £95 to £105?",
+            "Such intervals can also be used to create a summary interpretation of the effectiveness of an intervention, if such an interpretation is required. An interval that excludes zero (for example, +£10 to +£30) can be interpreted as the intervention being superior, whereas one that spans zero (for example, -£10 to +£20) is inconclusive.",
+        ],
+        "impact_interpretation_type": [
+            "Intervals such as confidence intervals can be used to form an interpretation of findings. This will typically take the form of assessing whether the interval spans some null value or not. The null value is normally 0 (zero) for absolute measures and 1 (one) for relative measures. For example, if a confidence interval for the difference in mean weekly earnings between the intervention group and control group runs from +£5 to +£10, an interpretation of the interval might be that the intervention is superior for increasing earnings. If, however, the interval ran from -£5 to +£20, the interpretation might be that the findings are inconclusive (although both might be associated with the same point estimate for the difference).",
+            "Hypothesis testing methods are often based on the calculation of p-values and the rejection of a null hypothesis if the p-value falls below some threshold (traditionally 0.05). These methods should generally be avoided as they are commonly misinterpreted.",
+            "In some circumstances it might be appropriate to present findings from an evaluation in their numerical form (with associated measures of uncertainty) without attempting to reduce them down to a single interpretation.",
         ],
         "impact_subgroup_analysis": [
             "Subgroup analyses involve examining the results for a specified subset of the participants in a study. These should normally be specified before the study starts. If you are intending to conduct a subgroup analysis, it will normally be necessary to ensure that the sample size for that subgroup is large enough.",
-            "Particular caution should be exercised over subgroup analyses that are specified after the data have been seen. A common mistake in studies is that if an intervention appears unsuccessful for the population as a whole, researchers can go 'fishing' through the data to find any subset of people it does work for. This is invariably a mistake because there will typically be some way of slicing the population that shows a positive outcome just by random variation.",
+            "Particular caution should be exercised over subgroup analyses that are specified after the data have been seen. A common mistake in studies is that if an intervention appears unsuccessful for the population as a whole, researchers can go 'fishing' through the data to find any subset of people it does work for. This is invariably a mistake because there will typically be some way of slicing the population that shows a positive outcome for one slice just due to random variation.",
         ],
         "impact_description_planned_analysis": [
             "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
@@ -440,7 +509,8 @@ impact_design_guidance_text = defaultdict(
         ],
         "impact_design_equity": [
             "Description of any design features, including data collection and analysis plans, that support the assessment of equity issues in the study.",
-            "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions. The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation.",
+            "It may be possible to design a study that is able to address equity issues by identifying disadvantaged groups for subgroup analysis. One factor affecting the feasibility of this will be the available sample sizes, and whether it is possible to have enough participants from the subgroup identified to come to statistically significant conclusions.",
+            "The PROGRESS-Plus mnemonic can be used to consider which disadvantaged groups could be focused on in the study, standing for Place of Residence, Race/Ethnicity, Occupation, Gender, Religion, Education, Socioeconomic Status, and Social Capital, and Plus represents additional categories such as Age, Disability, and Sexual Orientation.",
         ],
         "impact_design_assumptions": ["Any assumptions made as part of the design."],
         "impact_design_approach_limitations": [
@@ -464,9 +534,9 @@ intervention_guidance_text = defaultdict(
     list,
     {
         "brief_description": [
-            "Please provide one or two sentences to describe the intervention. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
+            "One or two sentences to describe the intervention. This only needs to be a short summary as you will have the opportunity to provide more details elsewhere."
         ],
-        "name": ["Please provide a name or brief phrase that describes the intervention."],
+        "name": ["Name or brief phrase that describes the intervention."],
         "provider_description": [
             "For each category of intervention provider (eg housing officer) description of their expertise, background and any specific training they will receive."
         ],
@@ -482,9 +552,8 @@ issue_description_guidance_text = defaultdict(
     list,
     {
         "issue_description": [
-            "The problem, circumstance or situation that it is intended that an intervention should respond to.",
-            "When studying interventions to attend to particular problems this should be presented as undesirable aspects of a situation that it is hoped can be improved if an effective intervention can be identified.",
-            "When studying an intervention that is untested but assumed to have a positive influence on aspects of a situation this should be presented as the aspects that it is thought that the intervention may be improving.",
+            "When studying interventions aimed at addressing a specific problem, you need to record the negative aspects of the situation that an effective intervention would improve.",
+            "When studying an intervention that is untested but it is assumed that it would have a positive influence on one aspect of a situation you should record that aspect.",
         ],
         "why_improvements_matter": [
             "It is helpful to check that the identified issue is important and document why it is.",
@@ -497,6 +566,24 @@ issue_description_guidance_text = defaultdict(
             "Are there deadlines for making those decisions?",
             "How might practice be changed if an effective intervention is identified or an intervention is found to be ineffective?",
             "What information would this study need to generate to be able to affect these decisions?",
+        ],
+    },
+)
+
+
+options_guidance_text = defaultdict(
+    list,
+    {
+        "issue_description_option": [
+            "Select whether to complete a set of questions providing a structured description of the issue being investigated by the evaluation.",
+            "An issue description helps to ensure that it is clear what questions the evaluation is intended to answer and why they are important. Without an issue description, it can be easy for the nature of the issue to remain an implicit and unstated assumption.",
+            "The issue might be a specific problem or negative situation to be resolved or moderated, or it might be an improvement that it is hoped can be achieved.",
+        ],
+        "ethics_option": [
+            "Select whether to complete a set of questions providing information addressing ethical considerations regarding the evaluation.",
+        ],
+        "grants_option": [
+            "If there is grant funding, there will be an opportunity later for you to provide brief information about each relevant grant.",
         ],
     },
 )
@@ -587,16 +674,6 @@ participant_recruitment_guidance_text = defaultdict(
 )
 
 
-process_analysis_guidance_text = defaultdict(
-    list,
-    {
-        "process_analysis_description": [
-            "Description providing sufficient detail that a suitably experienced person would be able to duplicate the analysis based on the information provided."
-        ],
-    },
-)
-
-
 processes_standard_guidance_text = defaultdict(
     list,
     {
@@ -607,13 +684,13 @@ processes_standard_guidance_text = defaultdict(
 )
 
 
-status_guidance_text = defaultdict(
+visibility_guidance_text = defaultdict(
     list,
     {
-        "status": [
+        "visibility": [
             "Draft evaluations are only visible to the users assigned to it.",
             "Evaluations marked 'Civil Service' are visible to all civil servants.",
-            "Evaluations marked 'public' are visible to anyone",
+            "Evaluations marked 'Public' are visible to anyone. Before marking an evaluation as public, please ensure you have completed any processes in your organisation / department that are required for publishing.",
         ],
     },
 )
@@ -639,6 +716,7 @@ studied_population_guidance_text = defaultdict(
             "This will normally be 'people' as each unit within an evaluation is a person. It can, however, be another unit if the population is of some other type, eg if the results are per-school or similar."
         ],
         "sample_size_details": [
+            "For an evaluation that is comparing two or more interventions, this should include the number per 'arm' of the study (the number allocated to each intervention).",
             "If a calculation was used to determine the sample size, identify the primary outcome on which the calculation was based, all the quantities used in the calculation, and the resulting target sample size per arm.",
             "Details should be given of any allowance made for attrition or non-compliance during the study.",
         ],
@@ -660,6 +738,7 @@ title_guidance_text = defaultdict(
 field_guidance_text = defaultdict(
     lambda: defaultdict(list),
     {
+        "create": create_guidance_text,
         "description": description_guidance_text,
         "document": document_page_guidance_text,
         "economic-analysis": economic_analysis_guidance_text,
@@ -668,20 +747,21 @@ field_guidance_text = defaultdict(
         "ethics": ethics_guidance_text,
         "evaluation cost": evaluation_cost_guidance_text,
         "evaluation-types": evaluation_type_guidance_text,
+        "grant": grant_guidance_text,
         "impact-analysis": impact_analysis_guidance_text,
         "impact-design": impact_design_guidance_text,
         "impact-findings": impact_findings_guidance_text,
         "intervention": intervention_guidance_text,
         "issue-description": issue_description_guidance_text,
+        "options": options_guidance_text,
         "other-analysis": other_analysis_guidance_text,
         "other-design": other_design_guidance_text,
         "other-findings": other_findings_guidance_text,
         "other measure": other_measures_guidance_text,
         "outcome measure": outcome_measure_guidance_text,
         "participant-recruitment": participant_recruitment_guidance_text,
-        "process-analysis": process_analysis_guidance_text,
         "process or standard": processes_standard_guidance_text,
-        "status": status_guidance_text,
+        "visibility": visibility_guidance_text,
         "studied-population": studied_population_guidance_text,
         "title": title_guidance_text,
     },

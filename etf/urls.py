@@ -11,8 +11,24 @@ from etf.evaluation import (
     views,
 )
 
-urlpatterns = [
+initial_urlpatterns = [
     path("", submission_views.index_view, name="index"),
+    path("search/", views.EvaluationSearchView, name="search"),
+    path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
+    path("data-download/", download_views.download_page_view, name="data-download"),
+    path(
+        "evaluation/<uuid:evaluation_id>/overview/filter-users/",
+        submission_views.filter_evaluation_overview_users_view,
+        name="evaluation-overview-filter-users",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/overview/",
+        submission_views.evaluation_overview_view,
+        name="evaluation-overview",
+    ),
+]
+
+account_urlpatterns = [
     path("accounts/verify/", authentication_views.CustomVerifyUserEmail, name="verify-email"),
     path("accounts/password-reset/", authentication_views.PasswordReset, name="password-reset"),
     path("accounts/change-password/reset/", authentication_views.PasswordChange, name="password-set"),
@@ -21,14 +37,6 @@ urlpatterns = [
     path("accounts/verify/resend/", authentication_views.CustomResendVerificationView, name="resend-verify-email"),
     path("accounts/accept-invite/", authentication_views.AcceptInviteSignupView, name="accept-invite"),
     path("accounts/", include("allauth.urls")),
-    path("search/", views.EvaluationSearchView, name="search"),
-    path("my-evaluations/", views.my_evaluations_view, name="my-evaluations"),
-    path(
-        "evaluation/<uuid:evaluation_id>/overview/",
-        submission_views.evaluation_overview_view,
-        name="evaluation-overview",
-    ),
-    path("data-download/", download_views.download_page_view, name="data-download"),
 ]
 
 evaluation_contributor_urlpatterns = [
@@ -45,10 +53,16 @@ evaluation_contributor_urlpatterns = [
 ]
 
 evaluation_entry_urlpatterns = [
+    path("evaluation/create/", submission_views.create_evaluation, name="create-evaluation"),
     path("evaluation/<uuid:evaluation_id>/", submission_views.intro_page_view, name="intro"),
     path("evaluation/<uuid:evaluation_id>/title/", submission_views.evaluation_title_view, name="title"),
     path(
         "evaluation/<uuid:evaluation_id>/description/", submission_views.evaluation_description_view, name="description"
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/options/",
+        submission_views.evaluation_options_view,
+        name="options",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/issue-description/",
@@ -81,9 +95,9 @@ evaluation_entry_urlpatterns = [
         name="impact-analysis",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/process-design/",
-        submission_views.evaluation_process_design_view,
-        name="process-design",
+        "evaluation/<uuid:evaluation_id>/process-design-aspects/",
+        submission_views.evaluation_process_design_aspects_view,
+        name="process-design-aspects",
     ),
     path(
         "evaluation/<uuid:evaluation_id>/process-analysis/",
@@ -136,11 +150,16 @@ evaluation_entry_urlpatterns = [
         name="other-findings",
     ),
     path(
-        "evaluation/<uuid:evaluation_id>/status/",
-        submission_views.evaluation_status_view,
-        name="status",
+        "evaluation/<uuid:evaluation_id>/visibility/",
+        submission_views.evaluation_visibility_view,
+        name="visibility",
     ),
     path("evaluation/<uuid:evaluation_id>/end/", submission_views.end_page_view, name="end"),
+    path(
+        "evaluation/<uuid:evaluation_id>/overview/",
+        submission_views.evaluation_overview_view,
+        name="evaluation-overview",
+    ),
 ]
 
 intervention_urlpatterns = [
@@ -198,6 +217,19 @@ processes_standards_urlpatterns = [
     ),
 ]
 
+grants_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/",
+        submission_views.summary_grants_page_view,
+        name="grants",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/grants/<uuid:grant_id>/",
+        submission_views.grant_page_view,
+        name="grant-page",
+    ),
+]
+
 evaluation_costs_urlpatterns = [
     path(
         "evaluation/<uuid:evaluation_id>/evaluation-costs/",
@@ -210,7 +242,6 @@ evaluation_costs_urlpatterns = [
         name="evaluation-cost-page",
     ),
 ]
-
 
 documents_urlpatterns = [
     path(
@@ -252,6 +283,19 @@ event_date_urlpatterns = [
     ),
 ]
 
+process_evaluation_methods_urlpatterns = [
+    path(
+        "evaluation/<uuid:evaluation_id>/process-evaluation-methods/",
+        submission_views.summary_process_evaluation_methods_page_view,
+        name="process-evaluation-methods",
+    ),
+    path(
+        "evaluation/<uuid:evaluation_id>/process-evaluation-methods/<uuid:process_evaluation_method_id>/",
+        submission_views.process_evaluation_method_page_view,
+        name="process-evaluation-method-page",
+    ),
+]
+
 evaluation_summary_urlpatterns = [
     path(
         "evaluation-summary/<uuid:evaluation_id>/",
@@ -290,27 +334,38 @@ evaluation_summary_urlpatterns = [
     ),
 ]
 
+feedback_and_help_urlpatterns = [path("feedback-and-help/", views.feedback_and_help_view, name="feedback-and-help")]
 
-urlpatterns = (
-    urlpatterns
-    + evaluation_contributor_urlpatterns
+evaluation_edit_patterns = (
+    evaluation_contributor_urlpatterns
     + evaluation_entry_urlpatterns
     + intervention_urlpatterns
     + outcome_measure_urlpatterns
     + other_measure_urlpatterns
+    + grants_urlpatterns
     + processes_standards_urlpatterns
     + evaluation_costs_urlpatterns
     + documents_urlpatterns
     + links_urlpatterns
     + event_date_urlpatterns
-    + evaluation_summary_urlpatterns
+    + process_evaluation_methods_urlpatterns
 )
 
-if settings.DEBUG:
-    urlpatterns = urlpatterns + [
-        path("admin/", admin.site.urls),
-        path("test/", views.beta_test_view, name="test"),
-    ]
+urlpatterns = (
+    initial_urlpatterns
+    + account_urlpatterns
+    + evaluation_edit_patterns
+    + evaluation_summary_urlpatterns
+    + feedback_and_help_urlpatterns
+)
 
+debug_urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("test/", views.beta_test_view, name="test"),
+]
+
+
+if settings.DEBUG:
+    urlpatterns = urlpatterns + debug_urlpatterns
 
 handler404 = "etf.evaluation.views.view_404"

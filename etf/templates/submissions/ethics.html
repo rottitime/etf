@@ -3,12 +3,7 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend>
-        <h1>{{title}}</h1>
-      </legend>
-      
-      
+    <h1 class="highlight header3">{{title}}</h1>
       {{macros.yes_no("ethics_committee_approval", "Ethics committee approval")}}
       {{macros.textarea("ethics_committee_details", "Ethics committee details")}}
       {{macros.textarea("ethical_state_given_existing_evidence_base", "Ethical state of study given existing evidence base")}}
@@ -23,6 +18,5 @@
       {{macros.textarea("other_ethical_information", "Other ethical information")}}
 
       {{macros.buttons(prev_url, id=data.id)}}
-    </fieldset>
   </form>
 {% endblock %}

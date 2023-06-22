@@ -5,14 +5,16 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale = 1.0"> 
       <title>Evaluation Registry</title>
+      <link rel="preload" href="{{static('fonts/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2')}}" as="font" type="font/woff2" crossorigin="anonymous">
+      <link rel="preload" href="{{static('fonts/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2')}}" as="font" type="font/woff2" crossorigin="anonymous">
       <link rel="icon" type="image/svg+xml" href="{{static('i-dot-ai/images/crown.svg')}}">
-      <link rel="stylesheet" href="{{static('i-dot-ai/fonts.css')}}">
       <link rel="stylesheet" href="{{static('dist/assets/index.css')}}" id="main-css">
         {% if space_name and space_name == "local" %}
           <!-- Dev script for local development -->
-          <script type="module" src="http://127.0.0.1:5173/src/main.ts" defer></script>
+          <script type="module" src="http://127.0.0.1:5173/src/main.ts"></script>
+          <script src="http://127.0.0.1:5173/dev-setup.js"></script>
         {% endif %}
-      <script src="{{static('dist/assets/index.js')}}" id="main-script" defer></script>
+      <script src="{{static('dist/assets/index.js')}}" id="main-script"></script>
    </head>
    <body {% if request.path==url('search') %}id="search"{% endif %}>
       <header id="main-header">
@@ -37,10 +39,7 @@
             <a href="{{url('my-evaluations')}}" {% if request.path==url('my-evaluations') %}aria-current="page"{% endif %}>
               My evaluations
             </a>
-
-            <form action="{{url('index')}}" method="POST">{{csrf_input}}
-               <button class="bttn-primary" type="submit">New evaluation</button>
-            </form>
+            <a class="bttn-primary" href="{{url('create-evaluation')}}">Add evaluation</a>
             <a href="{{url('account_logout')}}">Logout</a>
             </nav>
             {% endif %}
@@ -52,7 +51,7 @@
          <div class="container">            
           <p>
             <strong class="tag">BETA</strong>
-            <span>This is a new service – your <a class="link" href="#">feedback</a> will help us to improve it.</span>
+            <span>This is a new service - your <a class="link" href="{{url('feedback-and-help')}}">feedback</a> will help us to improve it.</span>
          </p>
          </div>
       </div>
@@ -72,7 +71,7 @@
          <div class="container">
             <nav>
                <a href="#">Privacy</a>
-               <a href="#">Feedback</a>
+               <a href="{{url('feedback-and-help')}}">Feedback and help</a>
             </nav>
             <div class="disclaimer">
                &#169; Crown copyright {{macros.crest_svg()}}

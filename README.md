@@ -54,13 +54,25 @@ docker-compose run web python manage.py upload_rsm_data --filename <name-of-exce
 
 # Frontend development
 
+## UI Documentation
+
+See the full [UI Documentation](https://i-dot-ai.github.io/etf/).
+
+## How to run the project
+
 > Note: You will still need the previous steps to have ETF running on docker (http://localhost:8010/).
 
 Open the `web` folder for all the following
-
-## How to run the project
 
 ```
 npm ci
 npm run dev
 ```
+
+## How to run storybook
+
+Open the `web` folder for all the following
+
+```
+npm run storybook
+`

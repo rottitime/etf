@@ -1,69 +1,64 @@
-.accordion {
-  --accordion-spacing: 16px;
-  margin: 0;
-  padding: 0;
+:is(idotai-accordion, [is='idotai-accordion']) {
+  --active-color: #f3f2f1;
 
-  & .checkbox {
-    margin-bottom: var(--spacing-8);
+  & .show-all,
+  & .accordion-title[role='button'] {
+    cursor: pointer;
+    border: none;
+    background: var(--color-bg-white);
+    border-bottom: 1px solid var(--input-stroke-light);
   }
 
-  & .accordion-content {
-    display: none;
-    position: relative;
-    padding: 0 var(--accordion-spacing) var(--accordion-spacing) var(--accordion-spacing);
-  }
+  & .accordion-title[role='button'] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-16);
+    background-color: var(--color-bg-white);
+    transition: background-color ease-in-out var(--animation-speed);
+    &:hover {
+      background-color: var(--active-color);
+    }
 
-  & .accordion-content-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height ease-in-out var(--animation-speed);
-  }
-
-  & > li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--input-stroke-light);
-
-    & > h3 {
+    & :is(h1, h2, h3, h4, h5, h6) {
       margin: 0;
+    }
 
-      & button {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 24px;
-        width: 100%;
-        border: none;
-        background-color: transparent;
-        padding: var(--accordion-spacing);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    &[aria-expanded='true'] {
+      background-color: var(--active-color);
+    }
+  }
 
-        & gov-icon {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          & svg {
-            color: var(--color-blue);
-            transition: transform ease-in-out var(--animation-speed);
-            transform: rotate(0deg);
-          }
-        }
-      }
+  & .show-all {
+    width: 100%;
+    text-align: right;
+    padding: var(--spacing-8) 0;
+    display: block;
+  }
 
-      &[aria-selected='true'] {
-        & + .accordion-content-wrapper {
-          max-height: 5000px;
-          & .accordion-content {
-            display: block;
-          }
-        }
+  & .accordion-panel {
+    padding: var(--spacing-16);
+  }
 
-        & gov-icon svg {
-          transform: rotate(180deg);
-        }
-      }
+  & gov-icon {
+    display: content;
+    & svg {
+      transition: transform ease-in-out var(--animation-speed);
+      color: var(--color-grey-light);
+      transform: rotate(180deg);
+      display: inline-block;
+      font-size: 14px;
+      color: var(--color-blue);
+    }
+  }
+
+  /* on hide */
+  & [aria-expanded='false'] {
+    & gov-icon svg {
+      transform: rotate(0deg);
+    }
+    & + .accordion-panel {
+      display: none;
     }
   }
 }

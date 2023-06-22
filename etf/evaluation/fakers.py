@@ -218,11 +218,10 @@ def make_evaluation():
     evaluation_type = generate_evaluation_types()
     data = dict(
         title=fake.text(256),
-        short_title=fake.text(64),
         brief_description=fake.text(),
         topics=topics,
         organisations=organisations,
-        status=random.choice(choices.EvaluationStatus.values),
+        visibility=random.choice(choices.EvaluationVisibility.values),
         doi=fake.text(64),
         page_statuses=get_default_page_statuses(),
         issue_description=fake.text(),
@@ -277,8 +276,6 @@ def make_evaluation():
         impact_missing_data_handling=fake.text(),
         impact_fidelity=random.choice(choices.YesNo.values),
         impact_description_planned_analysis=fake.text(),
-        process_methods=fake.text(256),
-        process_analysis_description=fake.text(),
         economic_type=random.choice(choices.EconomicEvaluationType.values),
         perspective_costs=fake.text(),
         perspective_benefits=fake.text(),
@@ -296,8 +293,6 @@ def make_evaluation():
         impact_upper_uncertainty=fake.text(),
         economic_summary_findings=fake.text(),
         economic_findings=fake.text(),
-        process_summary_findings=fake.text(),
-        process_findings=fake.text(),
         other_summary_findings=fake.text(),
         other_findings=fake.text(),
         # TODO - add other fields

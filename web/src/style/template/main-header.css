@@ -40,8 +40,8 @@
       }
     }
 
-    & a {
-      color: #002864;
+    & a:not([class^='bttn-']) {
+      color: var(--color-blue2);
       text-decoration: none;
       &[aria-current='page'] {
         font-weight: bold;

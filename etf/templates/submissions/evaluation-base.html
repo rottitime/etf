@@ -7,7 +7,7 @@
     <li>
       <a href="{{url('my-evaluations')}}">Back to My evaluations</a>
     </li>
-    <li aria-current="true">[Current evaluation]</li>
+    <li aria-current="true">{{evaluation_title}}</li>
   </ol>
 </nav>
 
@@ -24,12 +24,12 @@
 
       <div class="card mb-24">
         <header class="mb-16 space-between">
-          <h3 class="header5 highlight">Section status</h3>
+         <!-- <h3 class="header5 highlight">Section status</h3>
           <div class="chip orange" role="status">Incomplete</div>
           <!-- <div class="chip green" role="status">Completed</div> -->
         </header>
 
-        <div class="progress-bar-horizontal-wide">
+       <!-- <div class="progress-bar-horizontal-wide">
           <div class="square filled"></div>
           <div class="square filled"></div>
           <div class="square"></div>
@@ -43,10 +43,10 @@
 
         <hr class="my-24">
 
-        <a href="{{url('evaluation-contributors', evaluation_id)}}" class="bttn-quaternary full-width small mb-24">Manage contributors</a>
+        <a href="{{url('evaluation-contributors', evaluation_id)}}" class="bttn-quaternary full-width small mb-24">Manage contributors</a>-->
 
         {% if evaluation_id %}
-        <a href="{{ url('evaluation-overview', evaluation_id) }}" class="bttn-quaternary full-width small">Back to evaluation</a>
+        <a href="{{ url('evaluation-overview', evaluation_id) }}" class="bttn-quaternary full-width small">Manage evaluation</a>
         {% endif %}
         
         

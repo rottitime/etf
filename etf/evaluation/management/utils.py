@@ -14,7 +14,6 @@ INFO_NOT_IDENTIFIED = "Information not identified within the report"
 
 EVALUATION_STANDARD_FIELDS_LOOKUP = {
     "title": "evaluation_information_evaluation_title",
-    "short_title": "evaluation_information_short_title_for_evaluation",
     "brief_description": "evaluation_information_evaluation_summary",  # TODO - many of these?
     # "issue_description":
     # "those_experiencing_issue":
@@ -275,7 +274,7 @@ def save_process_standard_data(evaluation, evaluation_df):
 def upload_data_for_id(all_df, rsm_id):
     evaluation_df = all_df[all_df["metadata_evaluation_id"] == rsm_id]
     evaluation, created = models.Evaluation.objects.get_or_create(rsm_id=rsm_id)
-    evaluation.status = choices.EvaluationStatus.PUBLIC.value
+    evaluation.status = choices.EvaluationVisibility.PUBLIC.value
     # Add standard fields
     for model_field_name, rsm_field_name in EVALUATION_STANDARD_FIELDS_LOOKUP.items():
         value = get_data_for_field(evaluation_df, rsm_field_name)

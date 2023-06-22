@@ -5,36 +5,40 @@
 {% block content %}
 
   <div class="card">
-    <div class="card-divider">
-      Accept invitation
-    </div>
-    <div class="card-section">
-
+    <header>
+      <h1 class="header2 highlight">Accept invitation</h1>
+    </header>
+    
       <p>Already have an account? Then please <a href="{{login_url}}">log in</a>.</p>
-      <p>If you don't think you should have received this invite, please contact an administrator at {{contact_email}}</p>
+      <p class="mb-24">If you don't think you should have received this invite, please contact an administrator at {{contact_email}}</p>
 
       <form method="post">
         {% csrf_token %}
 
-        <p>
-          <label for="id_password1">Password:</label>
-          <input type="password" name="password1" placeholder="Password" id="id_password1" required autocomplete="off">
+        <div class="form-group">
+          
+          <label for="id_password1">Password</label>
+          <input type="password" name="password1" id="id_password1" required autocomplete="off" class="full-width" >
           {% if form.errors.email %}
             <span class="form-error">{{form.errors.password1}}</span>
           {% endif %}
-        </p>
-        <p>
-          <label for="id_password2">Password:</label>
-          <input type="password" name="password2" placeholder="Password (again)" id="id_password2" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="id_password2">Confirm Password</label>
+          <input type="password" name="password2" id="id_password2" required autocomplete="off"  class="full-width">
           {% if form.errors.email %}
             <span class="form-error">{{form.errors.password2}}</span>
           {% endif %}
-        </p>
+        </div>
+
+      
+        <footer class="actions">
         {% if redirect_field_value %}
           <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
         {% endif %}
-        <button class="button float-right" type="submit">Sign up</button>
+        <button class="bttn-primary" type="submit">Sign up</button>
+      </footer>
       </form>
-    </div>
+    
   </div>
 {% endblock %}

@@ -2,29 +2,77 @@
 {% import 'macros.html' as macros with context %}
 
 {% block content %}
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li>
+        <a href="{{url('my-evaluations')}}">Back to My evaluations</a>
+      </li>
+      <li>
+        <a href="{{url('intro', data.evaluation.id)}}">Back to {{data.evaluation.title}}</a>
+      </li>
+      <li aria-current="true">{{data.evaluation.title}}</li>
+    </ol>
+  </nav>
+  <h1 class="header2 highlight">{{data.evaluation.title}}</h1>
+<div class="sidebarcolumn">
+  <div class="col">
 
-  <h3 class="header3 highlight">Evaluation progress</h3>
-
-  <div class="card-results">
   <div class="card small">
+      <div class="progress-list">
+        {% for section in data.new["sections"] %}
+        <header>
+          <h3 class="header5">{{  get_section_title(section) }}</h3>
+        </header>
+        <ul class="index">
+          {% if data.new["sections"][section] | length <= 0 %}
+            <li>
+              <span>Choose <a href="{{url('evaluation-types', data.evaluation.id)}}"> Evaluation type</a> to add</span>
+            </li>
+          {% endif %}
+          {% for page in data.new["sections"][section] %}
+          <li>
+            <a href="{{url(page, data.evaluation.id)}}">{{ get_page_display_name(page) }}</a>
+            <div class="chip {{get_status_chip_colour(data.new["sections"][section][page]["status"])}}" role="status">{{get_page_status_display_name(data.new["sections"][section][page]["status"])}}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        <hr class="my-24">
+        {% endfor %}
+      </div>
+  </div>
+  </div>
+  <div class="col sidebar">
+    <div class="card mb-24 small">
+      <h3 class="header5 highlight mb-0">Visibility status</h3>
+      {% if data.evaluation.visibility == "DRAFT" %}
+        <p>Currently not viewable by anybody</p>
+      {% elif data.evaluation.visibility == "CIVIL_SERVICE" %}
+        <p>Currently viewable by civil servants only</p>
+      {% elif data.evaluation.visibility == "PUBLIC" %}
+        <p>Currently viewable by anybody</p>
+      {% endif %}
 
-    <table>
-    {% for page, order in data.page_order|dictsort(by='value') %}      
-        <tr>
-          <th style="width:99%"><a href="{{url(page, data.evaluation_id)}}">{{ get_page_display_name(page) }}</a></th>
-          <td>
-            {% set status = get_page_status_display_name(data.statuses[page]) %}
-            {% if status == "Done" %}
-            <div class="chip green" role="status">{{ status }}</div>
-            {%else%}
-            <div class="chip" role="status">{{ status }}</div>
-            {% endif %}
-            
-          </td>
-        </tr>
-    {% endfor %}
-  </table>
-    
+      <div class="chip orange" role="status">{{get_visibility_display_name_for_evaluation(data.evaluation.id)}}</div>
+      <hr class="my-16">
+      <p>Ready to share this evaluation?</p>
+
+      <a href="{{url('visibility', data.evaluation.id)}}" class="bttn-primary full-width small">Manage visibility</a>
+
+      <hr class="my-16">
+
+      <p>
+        Want to review what others will see when this evaluation is shared?
+      </p>
+      <a href="{{url('evaluation-summary', data.evaluation.id)}}" class="bttn-secondary full-width small">Preview</a>
+    </div>
+
+    <div class="mb-24 card small">
+      <h3 class="mb-0 header5 highlight">Collaborators</h3>
+      <p>Add collaborators to this evaluation, so they can edit and share</p>
+      <a href="{{url('evaluation-contributors', data.evaluation.id)}}" class="bttn-secondary full-width small">
+        Manage collaborators
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}

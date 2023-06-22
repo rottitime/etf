@@ -14,7 +14,7 @@
     line-height: 24px;
   }
 
-  & [is='hint-box'] {
+  & :is(hint-box, [is='hint-box']) {
     margin-top: var(--spacing-8);
   }
 
@@ -35,5 +35,9 @@
 
   &.full-width {
     width: 100%;
+  }
+
+  &.inline {
+    display: inline-block;
   }
 }

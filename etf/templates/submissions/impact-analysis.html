@@ -3,9 +3,9 @@
 
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
-    <fieldset>
-      <legend><h1>{{title}}</h1></legend>
+    <h1 class="highlight header3">{{title}}</h1>
       <div class="content caption">
+
 
              </div>
 
@@ -18,10 +18,9 @@
       {{macros.input("impact_effect_measure_type_other", "If primary effect size measure type is 'Other', please provide more detail")}}
       {{macros.input("impact_primary_effect_size_measure", "Primary effect size measure")}}
       {{macros.select_from_list("impact_effect_measure_interval", "Primary effect size measure interval", list=dropdown_choices.impact_effect_measure_interval)}}
-      {{macros.textarea("impact_effect_measure_interval_other", "If primary effect size measure interval basis is 'Other', please provide more detail")}}
+      {{macros.textarea("impact_effect_measure_interval_other", "If primary effect size measure interval basis is 'Other', please provide more detail")}}   
       {{macros.textarea("impact_primary_effect_size_desc", "Primary effect size measure description")}}
-      {{macros.select_from_list("impact_interpretation_type", "Interpretation type", list=dropdown_choices.impact_interpretation_type)}}
-      {{macros.textarea("impact_interpretation_type_other", "If interpretation type is 'Other', please provide more detail")}}
+      {{macros.radios_from_list("impact_interpretation_type", "Interpretation type", dropdown_choices.impact_interpretation_type)}}
       {{macros.textarea("impact_sensitivity_analysis", "Sensitivity analysis")}}
       {{macros.textarea("impact_subgroup_analysis", "Subgroup analysis")}}
       {{macros.textarea("impact_missing_data_handling", "Missing data handling")}}
@@ -29,6 +28,5 @@
       {{macros.textarea("impact_description_planned_analysis", "Description of planned analysis")}}
 
       {{macros.buttons(prev_url, id=data.id)}}
-    </fieldset>
   </form>
 {% endblock %}
