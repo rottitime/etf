@@ -4,9 +4,7 @@
 {% block evaluation_content %}
   <form method="POST" id="create-evaluation">{{csrf_input}}
     <h1 class="highlight header3">{{title}}</h1>
-      <div class="content caption">
-        <p>[PLACEHOLDER - analysis plan document upload]</p>
-      </div>
+   
 
       {{macros.textarea("economic_analysis_description", "Description of planned analysis")}}
       {{macros.buttons(prev_url, id=data.id)}}
