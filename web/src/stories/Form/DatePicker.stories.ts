@@ -1,6 +1,15 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createInput, Input as Props } from '../utils'
-
+/** The date input component helps users enter a memorable date or one they can easily look up. 
+ * ##When to use this component
+ * Use the date input component when you’re asking users for a date they’ll already know, or can look up without using a calendar.
+ * 
+ * ##When not to use this component
+ * Do not use the date input component if users are unlikely to know the exact date of the event you’re asking about.
+ * 
+ * 
+ * 
+*/
 const meta = {
   title: 'Components/Form/Date Picker',
   tags: ['autodocs'],

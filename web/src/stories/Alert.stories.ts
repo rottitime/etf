@@ -12,7 +12,8 @@ type Props = {
 }
 
 /**
- * A banner to indicate the current phase of the service.
+ *
+ * Alert components are used to display important messages or notifications to users. These alerts are often used to convey critical information such as errors, warnings, and updates related to the system or content being viewed. The alert component is designed to grab the user's attention and provide a clear and concise message with appropriate action steps or instructions if required.
  */
 const meta = {
   title: 'Components/Alert',
@@ -20,7 +21,6 @@ const meta = {
   render: ({ text, status }) =>
     `<div class="alert ${status?.toLowerCase()}">${text}</div>`,
   argTypes: {
-    text: { control: 'text' },
     status: {
       control: { type: 'select' },
       options: Object.values(Status).filter((v) => isNaN(Number(v)))

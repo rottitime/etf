@@ -1,14 +1,16 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createCard, Card as Props } from './utils'
 import setupCards from '../components/card'
-
+/**
+ * Cards are used to present content in an organized and concise manner.
+ */
 const meta = {
   title: 'Components/Card',
   tags: ['autodocs'],
   render: (p) => createCard(p).outerHTML,
   argTypes: {
-    title: { control: 'text' },
-    content: { control: 'text' },
+    title: { control: 'text', description: 'title for the card'  },
+    content: { control: 'text',name: 'content', description: ' card content'   },
     actions: { control: 'boolean', table: { disable: true } },
     small: { control: 'boolean' },
     onClick: { action: 'clicked', table: { disable: true } }

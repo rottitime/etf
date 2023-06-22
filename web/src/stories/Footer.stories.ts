@@ -6,7 +6,23 @@ type Props = {
 }
 
 const links = [...Array(3).keys()].map((i) => `Link ${i}`)
+/**The footer provides copyright, licensing and other information about your service.
+ * ## When to use this component
+ * Use the footer at the bottom of every page of your service.
+ * 
+ * ##How it works
+ * Add a copyright notice to the footer to clarify who owns the copyright. Supports logos.
+ * ##Adding links
+ * You can add links to:
+ * - privacy notice
+ * - accessibility statement
+ * - cookies page
+ * - terms and conditions
+ * - other language options
 
+ * 
+
+ */
 const meta = {
   title: 'Components/Footer',
   tags: ['autodocs'],

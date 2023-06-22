@@ -1,6 +1,21 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createButton, Button } from './utils'
+/**
+ * Use the button component to help users carry out an action like starting an application or saving their information.
+ * ## When to use this component
+ * Services must use the phase banner until they pass a live assessment.
+ * Use an alpha banner when your service is in alpha, and a beta banner if your service is in private or public beta.
+ *
+ * ##How it works
+ * Button text should be written in sentence case and describe the action it performs. For instance:
 
+
+
+*  ##Primary buttons
+* On a page, ensure that the main call to action is represented by a primary button. It is not recommended to have multiple primary buttons on a single page, as having more than one main call to action can lessen their effectiveness. This can confuse users and make it difficult for them to determine what action to take next.
+ *
+ * 
+ */
 // More on how to set up stories at: https://storybook.js.org/docs/html/writing-stories/introduction#default-export
 const meta = {
   title: 'Components/Button',
