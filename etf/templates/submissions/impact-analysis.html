@@ -7,8 +7,7 @@
       <legend><h1>{{title}}</h1></legend>
       <div class="content caption">
 
-        <p>[PLACEHOLDER - analysis plan document upload]</p>
-      </div>
+             </div>
 
       {{macros.select_from_list("impact_framework", "Framework", list=dropdown_choices.impact_framework)}}
       {{macros.textarea("impact_framework_other", "If framework is 'Other', please provide more detail")}}
@@ -16,8 +15,8 @@
       {{macros.textarea("impact_basis_other", "If analysis basis is 'Other', please provide more detail")}}
       {{macros.textarea("impact_analysis_set", "Analysis set")}}
       {{macros.select_from_list("impact_effect_measure_type", "Primary effect size measure type", list=dropdown_choices.impact_effect_measure_type)}}
-      {{macros.textarea("impact_effect_measure_type_other", "If primary effect size measure type is 'Other', please provide more detail")}}
-      {{macros.textarea("impact_primary_effect_size_measure", "Primary effect size measure")}}
+      {{macros.input("impact_effect_measure_type_other", "If primary effect size measure type is 'Other', please provide more detail")}}
+      {{macros.input("impact_primary_effect_size_measure", "Primary effect size measure")}}
       {{macros.select_from_list("impact_effect_measure_interval", "Primary effect size measure interval", list=dropdown_choices.impact_effect_measure_interval)}}
       {{macros.textarea("impact_effect_measure_interval_other", "If primary effect size measure interval basis is 'Other', please provide more detail")}}
       {{macros.textarea("impact_primary_effect_size_desc", "Primary effect size measure description")}}

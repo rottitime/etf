@@ -9,16 +9,16 @@
       </legend>
 
       <div class="content caption">
-        <p>[PLACEHOLDER - document upload for findings report]</p>
+        
       </div>
 
       {{macros.textarea("impact_comparison", "Comparison")}}
       {{macros.textarea("impact_outcome", "Outcome")}}
       {{macros.select_from_list("impact_interpretation", "Interpretation", list=dropdown_choices.impact_interpretation)}}
       {{macros.textarea("impact_interpretation_other", "If interpretation is 'Other', please provide more detail")}}
-      {{macros.textarea("impact_point_estimate_diff", "Point estimate of difference")}}
-      {{macros.textarea("impact_lower_uncertainty", "Lower uncertainty bound")}}
-      {{macros.textarea("impact_upper_uncertainty", "Upper uncertainty bound")}}
+      {{macros.input("impact_point_estimate_diff", "Point estimate of difference")}}
+      {{macros.input("impact_lower_uncertainty", "Lower uncertainty bound")}}
+      {{macros.input("impact_upper_uncertainty", "Upper uncertainty bound")}}
       {{macros.buttons(prev_url, id=data.id)}}
     </fieldset>
   </form>
