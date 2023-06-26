@@ -43,7 +43,6 @@
     & a,
     & form {
       display: block;
-
       border-bottom: 1px solid var(--input-stroke-light);
       &:last-child {
         border-bottom: none;
@@ -139,8 +138,11 @@
   /* animation */
   &[aria-expanded='true'] {
     & + nav {
+      display: flex;
+      flex-direction: column;
       left: 0;
       & .bttn-primary {
+        order: -1;
         display: inline-block;
         margin: var(--spacing-8);
       }
