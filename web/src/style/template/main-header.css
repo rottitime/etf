@@ -13,7 +13,8 @@
   }
 
   & nav {
-    display: block;
+    display: flex;
+    flex-direction: column;
     left: -100%;
     font-size: 16px;
     position: fixed;
@@ -25,12 +26,12 @@
 
     @media (--viewport-medium) {
       & {
+        flex-direction: row;
         position: static;
         padding: 0;
         gap: 0;
         height: auto;
         width: auto;
-        display: flex;
         align-items: center;
 
         & svg {
@@ -61,6 +62,17 @@
         &[aria-current='page'] {
           font-weight: bold;
         }
+      }
+    }
+  }
+
+  & .bttn-primary {
+    order: -1;
+    margin: var(--spacing-8);
+    @media (--viewport-medium) {
+      & {
+        margin: 0;
+        order: unset;
       }
     }
   }
@@ -138,14 +150,7 @@
   /* animation */
   &[aria-expanded='true'] {
     & + nav {
-      display: flex;
-      flex-direction: column;
       left: 0;
-      & .bttn-primary {
-        order: -1;
-        display: inline-block;
-        margin: var(--spacing-8);
-      }
     }
 
     & > span {
