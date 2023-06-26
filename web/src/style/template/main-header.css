@@ -40,18 +40,10 @@
       }
     }
 
-    & a:not([class^='bttn-']) {
-      color: var(--color-blue2);
-      text-decoration: none;
-      &[aria-current='page'] {
-        font-weight: bold;
-      }
-    }
-
     & a,
     & form {
       display: block;
-      padding: var(--spacing-16);
+
       border-bottom: 1px solid var(--input-stroke-light);
       &:last-child {
         border-bottom: none;
@@ -61,6 +53,15 @@
         display: inline-block;
         padding: var(--spacing-8) var(--spacing-16);
         border-bottom: none;
+      }
+
+      &:not([class^='bttn-']) {
+        padding: var(--spacing-16);
+        color: var(--color-blue2);
+        text-decoration: none;
+        &[aria-current='page'] {
+          font-weight: bold;
+        }
       }
     }
   }
