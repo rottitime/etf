@@ -48,19 +48,19 @@ main.container {
       display: flex;
       gap: 24px;
     }
-  }
 
-  & div:first-child:is(.col) {
-    width: 63%;
-    & + .col {
-      width: calc(100% - 63%);
+    & div:first-child:is(.col) {
+      width: 63%;
+      & + .col {
+        width: calc(100% - 63%);
+      }
     }
-  }
 
-  & div:first-child:is(.col.sidebar) {
-    width: 276px;
-    & + .col {
-      width: calc(100% - 276px);
+    & div:first-child:is(.col.sidebar) {
+      width: 276px;
+      & + .col {
+        width: calc(100% - 276px);
+      }
     }
   }
 

@@ -13,24 +13,25 @@
   }
 
   & nav {
-    display: block;
+    display: flex;
+    flex-direction: column;
     left: -100%;
     font-size: 16px;
     position: fixed;
     background: #fff;
     height: 100%;
     width: 90%;
-    top: 77px;
+    top: 60px;
     transition: left ease-in-out var(--animation-speed);
 
     @media (--viewport-medium) {
       & {
+        flex-direction: row;
         position: static;
         padding: 0;
         gap: 0;
         height: auto;
         width: auto;
-        display: flex;
         align-items: center;
 
         & svg {
@@ -40,18 +41,9 @@
       }
     }
 
-    & a:not([class^='bttn-']) {
-      color: var(--color-blue2);
-      text-decoration: none;
-      &[aria-current='page'] {
-        font-weight: bold;
-      }
-    }
-
     & a,
     & form {
       display: block;
-      padding: var(--spacing-16);
       border-bottom: 1px solid var(--input-stroke-light);
       &:last-child {
         border-bottom: none;
@@ -61,6 +53,26 @@
         display: inline-block;
         padding: var(--spacing-8) var(--spacing-16);
         border-bottom: none;
+      }
+
+      &:not([class^='bttn-']) {
+        padding: var(--spacing-16);
+        color: var(--color-blue2);
+        text-decoration: none;
+        &[aria-current='page'] {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  & .bttn-primary {
+    order: -1;
+    margin: var(--spacing-8) var(--spacing-8) var(--spacing-16);
+    @media (--viewport-medium) {
+      & {
+        margin: 0;
+        order: unset;
       }
     }
   }
