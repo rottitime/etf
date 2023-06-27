@@ -1,7 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createFieldset, createFormGroup, createRadio, Fieldset, Radio } from '../utils'
 
-type Props = { radioList: string[] } & Fieldset & Radio
+type Props = { radioList: string[]; otherText?: string } & Fieldset & Radio
 
 const meta = {
   title: 'Components/Form/Radio',
