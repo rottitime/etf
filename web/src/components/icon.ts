@@ -1,4 +1,7 @@
 class Govicon extends HTMLElement {
+  newCache?: Cache
+  enableCache = true
+
   constructor() {
     super()
   }
@@ -7,11 +10,28 @@ class Govicon extends HTMLElement {
     this.setup()
   }
 
+  private async getIcon(icon: string) {
+    if (this.enableCache) {
+      const response = await this.newCache?.match(icon)
+      if (response) return response.text()
+    }
+    const html = (await import(`../../public/svg/${icon}.svg`)).default
+
+    if (this.enableCache)
+      this.newCache?.put(
+        icon,
+        new Response(html, { headers: { 'Content-Type': 'image/svg+xml' } })
+      )
+
+    return html
+  }
+
   private async setup() {
+    this.newCache = await caches.open('new-cache')
     const iconName = this.getAttribute('key')
     if (!iconName) return
-    const html = await import(`../svg/${iconName}.svg`)
-    this.innerHTML = html.default
+
+    this.innerHTML = await this.getIcon(iconName)
   }
 }
 

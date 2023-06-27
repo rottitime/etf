@@ -24,7 +24,7 @@ export default defineConfig({
           importFrom: 'src/style/vars.css'
         }),
         postcssInlineSvg({
-          paths: ['src/svg']
+          paths: ['public/svg']
         })
       ]
     }
