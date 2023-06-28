@@ -1,6 +1,7 @@
 from marshmallow import Schema, ValidationError, fields, validate
 
 from etf.evaluation.utils import is_civil_service_email
+
 from . import choices
 
 
