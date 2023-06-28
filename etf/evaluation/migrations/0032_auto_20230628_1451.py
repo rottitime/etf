@@ -4,30 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('evaluation', '0031_remove_evaluation_short_title'),
+        ("evaluation", "0031_remove_evaluation_short_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='evaluation',
-            name='impact_findings',
+            model_name="evaluation",
+            name="impact_findings",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='impact_summary_findings',
+            model_name="evaluation",
+            name="impact_summary_findings",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='process_findings',
+            model_name="evaluation",
+            name="process_findings",
             field=models.TextField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='evaluation',
-            name='process_summary_findings',
+            model_name="evaluation",
+            name="process_summary_findings",
             field=models.TextField(blank=True, null=True),
         ),
     ]
