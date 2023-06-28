@@ -193,6 +193,10 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     # Economic evaluation analysis
     economic_analysis_description = models.TextField(blank=True, null=True)
 
+    # Process evaluation findings
+    process_summary_findings = models.TextField(blank=True, null=True)
+    process_findings = models.TextField(blank=True, null=True)
+
     # Other evaluation design
     other_design_type = models.TextField(blank=True, null=True)
     other_design_details = models.TextField(blank=True, null=True)
@@ -208,6 +212,8 @@ class Evaluation(TimeStampedModel, UUIDPrimaryKeyBase, NamedModel):
     impact_point_estimate_diff = models.TextField(blank=True, null=True)
     impact_lower_uncertainty = models.TextField(blank=True, null=True)
     impact_upper_uncertainty = models.TextField(blank=True, null=True)
+    impact_summary_findings = models.TextField(blank=True, null=True)
+    impact_findings = models.TextField(blank=True, null=True)
 
     # Economic evaluation findings
     economic_summary_findings = models.TextField(blank=True, null=True)
