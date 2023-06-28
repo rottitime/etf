@@ -1,5 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/html'
 import { createInput, createSingleFieldWithMeta, FieldMeta, Input } from '../utils'
+import { fixNumberMaxLength } from '../../components/utils'
 
 type Props = Input & FieldMeta
 
@@ -14,6 +15,13 @@ type Props = Input & FieldMeta
 const meta = {
   title: 'Components/Form/Input',
   tags: ['autodocs'],
+  loaders: [
+    async () => {
+      return setTimeout(() => {
+        Promise.resolve(fixNumberMaxLength())
+      })
+    }
+  ],
   render: ({ error, label, description, helperText, ...args }) =>
     createSingleFieldWithMeta(createInput(args), {
       error,
@@ -78,5 +86,16 @@ export const Error: Story = {
   args: {
     ...Description.args,
     error: true
+  }
+}
+
+export const Year: Story = {
+  args: {
+    ...Description.args,
+    label: 'Year',
+    helperText: 'Only use numbers in format of YYYY',
+    maxLength: 4,
+    placeholder: 'e.g. 2021',
+    type: 'number'
   }
 }

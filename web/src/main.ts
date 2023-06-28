@@ -39,6 +39,7 @@ import setupMobileMenu, { cleanup as mobileMenuCleanup } from './components/mobi
 import setupHintbox from './components/hintbox'
 import setupMultiselect from './components/multiselect'
 import setupCircularProgressBar from './components/circular-progress-bar'
+import { fixNumberMaxLength } from './components/utils'
 
 //local development purposes only. to replace prod assets with dev
 declare global {
@@ -71,6 +72,7 @@ window.addEventListener('load', () => {
   setupSmoothScroll()
   setupMobileMenu()
   setupCircularProgressBar()
+  fixNumberMaxLength()
 })
 
 window.addEventListener('DOMContentLoaded', () => {
