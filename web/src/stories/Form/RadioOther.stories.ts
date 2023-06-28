@@ -1,5 +1,4 @@
 import type { StoryObj, Meta } from '@storybook/html'
-import { Fieldset, Radio } from '../utils'
 
 type Props = { otherLabel: string }
 
