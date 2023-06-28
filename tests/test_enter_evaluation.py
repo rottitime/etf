@@ -3,7 +3,6 @@ import functools
 from nose.tools import with_setup
 
 from etf.evaluation import choices, enums, models
-
 from . import utils
 
 
@@ -381,6 +380,8 @@ def test_step_through_evaluation():
                 "impact_point_estimate_diff": "The point estimate difference of the evaluation findings",
                 "impact_lower_uncertainty": "The lower uncertainty of the evaluation findings",
                 "impact_upper_uncertainty": "The upper uncertainty of the evaluation findings",
+                "impact_summary_findings": "Summary findings",
+                "impact_findings": "Impact findings",
             },
             evaluation.id,
         ),

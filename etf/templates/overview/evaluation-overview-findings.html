@@ -104,6 +104,18 @@
               {{ data.evaluation.impact_upper_uncertainty and data.evaluation.impact_upper_uncertainty or "Not answered" }}
             </td>
           </tr>
+        <tr>
+            <th>Summary findings</th>
+            <td>
+              {{ data.evaluation.impact_summary_findings and data.evaluation.impact_summary_findings or "Not answered" }}
+            </td>
+          </tr>
+        <tr>
+            <th>Findings</th>
+            <td>
+              {{ data.evaluation.impact_findings and data.evaluation.impact_findings or "Not answered" }}
+            </td>
+          </tr>
         </table>
       </div>
 
@@ -111,7 +123,20 @@
         <header>
           <h4 class="header4 highlight">Process evaluation findings</h4>
         </header>
-
+        <table>
+          <tr>
+            <th>Summary findings</th>
+            <td>
+              {{ data.evaluation.process_summary_findings and data.evaluation.process_summary_findings or "Not answered" }}
+            </td>
+          </tr>
+        <tr>
+            <th>Findings</th>
+            <td>
+              {{ data.evaluation.process_findings and data.evaluation.process_findings or "Not answered" }}
+            </td>
+          </tr>
+        </table>
       </div>
 
     <div class="card small" id="economic-evaluation-findings">
