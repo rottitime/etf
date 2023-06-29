@@ -15,11 +15,11 @@
     
       {% csrf_token %}
       <div class="form-group">
-        <label for="id_login">Email:</label>
+        <label for="id_login">Email</label>
         <input type="email" placeholder="Email address" name="login" id="id_login" required class="full-width">
       </div>
       <div class="form-group ">
-        <label for="id_password">Password:</label>
+        <label for="id_password">Password</label>
         <input type="password" name="password" placeholder="Password" id="id_password" required autocomplete="off" class="full-width">
       </div>
 
@@ -40,6 +40,8 @@
       {% if resend_verification is True and resend_email is not None %}
         <p>Your account is not verified. <a href="{% url 'resend-verify-email' %}?email={{resend_email|urlencode}}">Request a new verification link</a>.</p>
       {% endif %}
+
+        <p class="small">By logging in you accept our <a href="{% url 'terms-and-conditions' %}">terms and conditions</a>.</p>
     
       </div>
 
