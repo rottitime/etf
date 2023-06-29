@@ -336,6 +336,10 @@ evaluation_summary_urlpatterns = [
 
 feedback_and_help_urlpatterns = [path("feedback-and-help/", views.feedback_and_help_view, name="feedback-and-help")]
 
+terms_and_conditions_urlpatterns = [
+    path("terms-and-conditions/", views.terms_and_conditions_view, name="terms-and-conditions")
+]
+
 evaluation_edit_patterns = (
     evaluation_contributor_urlpatterns
     + evaluation_entry_urlpatterns
@@ -357,6 +361,7 @@ urlpatterns = (
     + evaluation_edit_patterns
     + evaluation_summary_urlpatterns
     + feedback_and_help_urlpatterns
+    + terms_and_conditions_urlpatterns
 )
 
 debug_urlpatterns = [

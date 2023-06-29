@@ -13,7 +13,6 @@ from marshmallow import EXCLUDE
 from marshmallow.exceptions import ValidationError
 
 from etf.evaluation import interface, schemas
-
 from . import choices, enums, models
 from .email_handler import send_contributor_added_email, send_invite_email
 from .utils import (
@@ -221,3 +220,8 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
 @require_http_methods(["GET"])
 def feedback_and_help_view(request):
     return render(request, "feedback-and-help.html", {"feedback_email": settings.FEEDBACK_EMAIL})
+
+
+@require_http_methods(["GET"])
+def terms_and_conditions_view(request):
+    return render(request, "terms-and-conditions.html", {})
