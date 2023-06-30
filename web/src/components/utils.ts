@@ -49,3 +49,18 @@ export function scrollToElement(
     behavior: 'smooth'
   })
 }
+
+export const fixNumberMaxLength = () => {
+  const numberFields = document.querySelectorAll('input[type="number"]')
+  numberFields.forEach((field) => {
+    field.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement
+      const maxLength = target.getAttribute('maxlength')
+      if (maxLength) {
+        if (target.value.length > Number(maxLength)) {
+          target.value = target.value.slice(0, Number(maxLength))
+        }
+      }
+    })
+  })
+}
