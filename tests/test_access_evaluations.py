@@ -10,7 +10,6 @@ from nose import with_setup
 
 from etf import urls
 from etf.evaluation import models
-
 from . import utils
 
 # Explicitly excluding URLs if they need different tests
@@ -20,6 +19,7 @@ EDIT_OR_VIEW_EVALUATION_URL_PATTERNS = (
     - set(urls.initial_urlpatterns)
     - set(urls.account_urlpatterns)
     - set(urls.feedback_and_help_urlpatterns)
+    - set(urls.terms_and_conditions_urlpatterns)
     - set(urls.debug_urlpatterns)
 )
 
@@ -28,6 +28,7 @@ VIEW_EVALUATION_URL_PATTERNS = (
     - set(urls.initial_urlpatterns)
     - set(urls.account_urlpatterns)
     - set(urls.feedback_and_help_urlpatterns)
+    - set(urls.terms_and_conditions_urlpatterns)
     - set(urls.evaluation_edit_patterns)
     - set(urls.debug_urlpatterns)
 )
