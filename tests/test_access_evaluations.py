@@ -10,6 +10,7 @@ from nose import with_setup
 
 from etf import urls
 from etf.evaluation import models
+
 from . import utils
 
 # Explicitly excluding URLs if they need different tests
