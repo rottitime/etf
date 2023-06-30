@@ -221,3 +221,8 @@ def evaluation_contributor_remove_view(request, evaluation_id, email_to_remove):
 @require_http_methods(["GET"])
 def feedback_and_help_view(request):
     return render(request, "feedback-and-help.html", {"feedback_email": settings.FEEDBACK_EMAIL})
+
+
+@require_http_methods(["GET"])
+def terms_and_conditions_view(request):
+    return render(request, "terms-and-conditions.html", {})
