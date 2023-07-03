@@ -251,10 +251,16 @@ class EvaluationSchema(TimeStampedModelSchema):
     impact_point_estimate_diff = fields.Str()
     impact_lower_uncertainty = fields.Str()
     impact_upper_uncertainty = fields.Str()
+    impact_summary_findings = fields.Str()
+    impact_findings = fields.Str()
 
     # Economic evaluation findings
     economic_summary_findings = fields.Str()
     economic_findings = fields.Str()
+
+    # Process evaluation findings
+    process_summary_findings = fields.Str()
+    process_findings = fields.Str()
 
     # Other evaluation findings
     other_summary_findings = fields.Str()
