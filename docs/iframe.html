@@ -21,7 +21,6 @@
     window.FEATURES = {"warnOnLegacyHierarchySeparator":true,"buildStoriesJson":false,"storyStoreV7":true,"argTypeTargetsV7":true,"legacyDecoratorFileOrder":false};
     window.STORIES = [{"titlePrefix":"","directory":"./src","files":"**/*.mdx","importPathMatcher":"^\\.[\\\\/](?:src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.mdx)$"},{"titlePrefix":"","directory":"./src","files":"**/*.stories.@(js|jsx|ts|tsx)","importPathMatcher":"^\\.[\\\\/](?:src(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|ts|tsx))$"}];
     window.DOCS_OPTIONS = {"defaultName":"Docs","autodocs":"tag"};
-    window.SERVER_CHANNEL_URL = undefined;
 
     // We do this so that "module && module.hot" etc. in Storybook source code
     // doesn't fail (it will simply be disabled)
@@ -357,8 +356,28 @@
     console.warn('unable to connect to top frame for connecting dev tools');
   }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;1,500;1,700&display=swap"
+  rel="stylesheet"
+/>
 
-  <script type="module" crossorigin src="./assets/iframe-f7bbd5c5.js"></script>
+<style>
+  .color-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .color-block {
+    padding: 10px;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+  <script type="module" crossorigin src="./assets/iframe-bd6a88bf.js"></script>
 </head>
 
 <body>
