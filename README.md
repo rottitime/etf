@@ -69,6 +69,11 @@ npm ci
 npm run dev
 ```
 
+For the python side run the below so you can use your own web instance
+```
+docker-compose up --build --force-recreate nginx
+```
+
 ## How to run storybook
 
 Open the `web` folder for all the following
